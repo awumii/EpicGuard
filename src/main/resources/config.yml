@@ -1,0 +1,58 @@
+#Permission for commands and bot notifications
+main-permission: "epicguard.admin"
+#Prefix for every message.
+prefix: "&8[&6EpicGuard&8] "
+
+messages:
+  no-permission: "&cYou don't have permission!"
+  #Message when a player is not whitelisted. To disable, leave it "".
+  whitelist: "&7Player &c{NICK} &7tried to join but whitelist is enabled"
+
+attack-speed:
+  #How many connections per seconds should me made, to block connections to the server.
+  #Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
+  #Don't set to values lower than 10, smaller attacks has no performance affect.
+  #If deny-join is triggered, Proxy/VPN checking is skipped.
+  deny-join: 10
+
+firewall:
+  #Don't use on free / shared hosting! (It wont work, but it will spam your chat on attack)
+  #You need VPS / Dedicated with IPTables (or something else) installed on your machine.
+  enabled: false
+  #Executed in /guard blacklist <player> OR while player was detected as a BOT
+  command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
+  #Executed in /guard whitelist <player>
+  command-whitelist: "iptables -D INPUT -s {IP} -j DROP"
+
+antibot:
+  #External site for checking Proxy / VPN.
+  #{IP] - Placeholder for player / bot ip.
+  #I reccommend using proxycheck.io, and getting free api key for monitoring attacks.
+  #If you got API KEY, insert it below in "YOUR API KEY HERE".
+  query: "http://proxycheck.io/v2/{IP}?key=YOUR API KEY HERE&vpn=1"
+  #What text should response contain to IP be flagged as Proxy / VPN
+  query-contains: "yes"
+  #Action bar when attack is active and antibot detected someone.
+  actionbar: "&4&l⚠  &7STATUS:  &e{NICK} &8[&f{IP}&8] &7detected for: &6{DET}   &8&m|&a   {CPS}&7/&asec  &7TPS: &c{TPS}  &4&l⚠"
+  #Actionbar when a player has passed checking and is allowed to join.
+  actionbar-passed: "&a✔  &7SUCCESS:  &e{NICK}  &8&m|&7  passed: &6{DET}  &a✔"
+  #Actionbar when there is no attack.
+  actionbar-idle: "&7Listening, attack not detected... {ANIM}"
+  attack:
+    #Minimum Connections Per Second to show title.
+    cps-min: 5
+    title: "&6⚠ &cServer is attacked ({MAX})! &6⚠"
+    subtitle: "&7Attack speed: &a{CPS}&7/&asec&7!"
+  kick-messages:
+    #Kick message when player has detected Proxy/VPN
+    proxy: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our systems have detected, that you are using Proxy or VPN.\n&7Please disable VPN programs, and join server.\n&7If you think this is an issue, contact our staff."
+    #Kick message when player's IP is blacklisted
+    blacklist: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your IP have been blacklisted.\n&7If you think this is an issue, please contact our staff."
+
+hook:
+  #If you have a plugin called Bot-Sentry,
+  #my plugin will use their API.
+  bot-sentry: true
+
+#Ignore this option. Only for DEV for testing.
+server-id: ""
