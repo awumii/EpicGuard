@@ -118,6 +118,8 @@ public class GuardCommand implements CommandExecutor {
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard op &8- &flist of opped players"));
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard status &8- &ftoggle title and actionbar."));
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard player <nick> &8- &fcheck basic info about player."));
+        p.sendMessage(ChatUtil.fix("&8▪ &7/guard whitelist <adress> &8- &fadd adress to whitelist and remove from blacklist."));
+        p.sendMessage(ChatUtil.fix("&8▪ &7/guard blacklist <adress> &8- &fadd adress to blacklist."));
         p.sendMessage(ChatUtil.fix(""));
         p.sendMessage(ChatUtil.fix("&6[Plugin Statistics]"));
         p.sendMessage(ChatUtil.fix("&8▪ &7Blacklisted IPs: &f" + BlacklistManager.IP_BL.size()));

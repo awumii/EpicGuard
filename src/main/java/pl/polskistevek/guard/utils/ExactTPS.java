@@ -3,15 +3,15 @@ package pl.polskistevek.guard.utils;
 import java.text.DecimalFormat;
 
 public class ExactTPS implements Runnable {
-    public static int TICK_COUNT= 0;
-    public static long[] TICKS= new long[600];
-    private static DecimalFormat df2 = new DecimalFormat("#.##");
+    private static int TICK_COUNT= 0;
+    private static final long[] TICKS= new long[600];
+    private static final DecimalFormat df2 = new DecimalFormat("#.##");
 
-    public static double getTPS() {
+    private static double getTPS() {
         return getTPS(100);
     }
 
-    public static double getTPS(int ticks) {
+    private static double getTPS(int ticks) {
         if (TICK_COUNT< ticks) {
             return 20.0D;
         }

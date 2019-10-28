@@ -7,15 +7,14 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class Updater {
-    public static String currentVersion = BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion();
+    public static final String currentVersion = BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion();
     public static String lastestVersion;
     public static boolean updateAvaible = false;
-    public static String resource = "https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-staff-protection-tools-%E2%9C%A9.72369/";
+    private static final String resource = "https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-staff-protection-tools-%E2%9C%A9.72369/";
 
-    public static boolean checkForUpdates() {
-        lastestVersion = lookup("https://api.spigotmc.org/legacy/update.php?resource=72369");
+    public static void checkForUpdates() {
+        lastestVersion = lookup();
         updateAvaible = !lastestVersion.equals(currentVersion);
-        return !lastestVersion.equals(currentVersion);
     }
 
     public static void notify(Player p){
@@ -27,10 +26,10 @@ public class Updater {
         }
     }
 
-    public static String lookup(String url) {
+    private static String lookup() {
         String line = null;
         try {
-            final Scanner scanner = new Scanner(new URL(url).openStream());
+            final Scanner scanner = new Scanner(new URL("https://api.spigotmc.org/legacy/update.php?resource=72369").openStream());
             line = scanner.next();
         } catch (IOException e) {
             e.printStackTrace();

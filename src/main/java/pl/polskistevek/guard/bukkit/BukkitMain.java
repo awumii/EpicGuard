@@ -5,14 +5,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
-import pl.polskistevek.guard.bukkit.listeners.AntiBotListener;
+import pl.polskistevek.guard.bukkit.listener.AntiBotListener;
 import pl.polskistevek.guard.utils.*;
 import pl.polskistevek.guard.utils.dev.a;
 import pl.polskistevek.guard.utils.dev.c;
 import pl.polskistevek.guard.bukkit.manager.ConfigManager;
 import pl.polskistevek.guard.bukkit.task.ActionTask;
 import pl.polskistevek.guard.bukkit.task.SaveTask;
-import java.io.IOException;
 
 public class BukkitMain extends JavaPlugin {
     public static int CPS_MIN;
@@ -26,7 +25,6 @@ public class BukkitMain extends JavaPlugin {
     public static String ANTIBOT_QUERY_CONTAINS;
     public static String PERMISSION;
     public static String PASSED_ACTION;
-    public static String ACTION_ERROR;
     public static String ACTION_IDLE;
     public static String PREFIX;
     public static String WHITELIST_MESSAGE;
@@ -40,6 +38,7 @@ public class BukkitMain extends JavaPlugin {
     public static String SERVER_ID;
 
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         long ms = System.currentTimeMillis();
@@ -86,7 +85,7 @@ public class BukkitMain extends JavaPlugin {
         ANTIBOT_QUERY_CONTAINS = cfg.getString("antibot.query-contains");
         PERMISSION = cfg.getString("main-permission");
         PASSED_ACTION = cfg.getString("antibot.actionbar-passed");
-        ACTION_ERROR = cfg.getString("antibot.actionbar-error");
+        String ACTION_ERROR = cfg.getString("antibot.actionbar-error");
         ACTION_IDLE = cfg.getString("antibot.actionbar-idle");
         PREFIX = cfg.getString("prefix");
         WHITELIST_MESSAGE = cfg.getString("messages.whitelist");

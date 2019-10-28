@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.bukkit.listeners;
+package pl.polskistevek.guard.bukkit.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -9,10 +9,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.Notificator;
-import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.ExactTPS;
 import pl.polskistevek.guard.utils.Updater;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
@@ -32,9 +30,9 @@ public class AntiBotListener implements Listener {
         String adress = e.getAddress().getHostAddress();
         String url = BukkitMain.ANTIBOT_QUERY.replace("{IP}", adress);
         String p = e.getName();
-        if (BukkitMain.WHITELIST_MESSAGE != "") {
+        if (!BukkitMain.WHITELIST_MESSAGE.equals("")) {
             if (Bukkit.hasWhitelist()) {
-                if (Bukkit.getPlayer(p) != null && !Bukkit.getPlayer(p).isOp()) {
+                if (!Bukkit.getOfflinePlayer(e.getUniqueId()).isWhitelisted()) {
                     Bukkit.broadcast(BukkitMain.WHITELIST_MESSAGE.replace("{NICK}", p), BukkitMain.PERMISSION);
                 }
             }
@@ -76,7 +74,7 @@ public class AntiBotListener implements Listener {
             rem();
             return;
         }
-        if (lookup(url)){
+        if (checkUrl(url)){
             BlacklistManager.add(adress);
             blocked++;
             cps++;
@@ -109,7 +107,7 @@ public class AntiBotListener implements Listener {
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);
     }
 
-    private static boolean lookup(String url) {
+    private static boolean checkUrl(String url) {
         try {
             final Scanner s = new Scanner(new URL(url).openStream());
             if (s.hasNextLine()) {
