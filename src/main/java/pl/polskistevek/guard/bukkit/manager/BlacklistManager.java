@@ -43,8 +43,6 @@ public class BlacklistManager {
                 Bukkit.broadcast(ChatUtil.fix(BukkitMain.PREFIX + "ERROR WHILE EXECUTING FIREWALL COMMAND! &cCHECK SERVER CONSOLE ASAP."), BukkitMain.PERMISSION);
             }
         }
-        if (IP_BL.contains(adress)){
-            IP_BL.remove(adress);
-        }
+        IP_BL.remove(adress);
     }
 }

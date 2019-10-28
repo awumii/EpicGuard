@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Constructor;
 
+@SuppressWarnings("ConstantConditions")
 public class TitleAPI extends JavaPlugin implements Listener {
 
     private static void sendPacket(final Player player, final Object packet) {

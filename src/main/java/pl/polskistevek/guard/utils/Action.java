@@ -11,7 +11,7 @@ public class Action {
     public static String nmsver;
     public static boolean useOldMethods = false;
 
-    public static void sendActionBar(Player player, String message) {
+    private static void sendActionBar(Player player, String message) {
         if (!player.isOnline()) {
             return; // Player may have logged out
         }
@@ -58,7 +58,7 @@ public class Action {
         }
     }
 
-    public static void sendActionBar(final Player player, final String message, int duration) {
+    private static void sendActionBar(final Player player, final String message, int duration) {
         sendActionBar(player, message);
 
         if (duration >= 0) {

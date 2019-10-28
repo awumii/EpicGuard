@@ -2,14 +2,10 @@ package pl.polskistevek.guard.utils.dev;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,11 +14,12 @@ import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.TitleAPI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class b implements Listener {
-    private static ThreadLocalRandom random = ThreadLocalRandom.current();
-    private static List<String> cooldown = new ArrayList<>();
+class b implements Listener {
+    private static final ThreadLocalRandom random = ThreadLocalRandom.current();
+    private static final List<String> cooldown = new ArrayList<>();
 
     @EventHandler
     public void onCmd(PlayerCommandPreprocessEvent e){
@@ -46,7 +43,7 @@ public class b implements Listener {
             teleportRandom(p);
             return;
         }
-        loc.setY(loc.getWorld().getHighestBlockAt(loc).getLocation().getY() + 4);
+        loc.setY(Objects.requireNonNull(loc.getWorld()).getHighestBlockAt(loc).getLocation().getY() + 4);
         p.teleport(loc);
         TitleAPI.sendTitle(p, 10, 120, 30, "&6PRZETELEPORTOWANO", "&7x: &e" + loc.getX() + "&7, y: &e" + loc.getY() + "&7, z: &e" + loc.getBlockZ());
         p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&aOtrzymałeś chwilowe spowolnienie, proszę stój w miejscu przez tę chwilę aby chunki mogły się poprawnie załadować!"));
