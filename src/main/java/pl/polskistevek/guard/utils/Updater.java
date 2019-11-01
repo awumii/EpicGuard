@@ -10,7 +10,7 @@ public class Updater {
     public static final String currentVersion = BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion();
     public static String lastestVersion;
     public static boolean updateAvaible = false;
-    private static final String resource = "https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-staff-protection-tools-%E2%9C%A9.72369/";
+    public static final String resource = "https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-staff-protection-tools-%E2%9C%A9.72369/";
 
     public static void checkForUpdates() {
         lastestVersion = lookup();

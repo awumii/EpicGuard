@@ -28,8 +28,8 @@ antibot:
   #External site for checking Proxy / VPN.
   #{IP] - Placeholder for player / bot ip.
   #I reccommend using proxycheck.io, and getting free api key for monitoring attacks.
-  #If you got API KEY, insert it below in "YOUR API KEY HERE".
-  query: "http://proxycheck.io/v2/{IP}?key=YOUR API KEY HERE&vpn=1"
+  #If you got API KEY, replace value below to: "http://proxycheck.io/v2/{IP}?key=YOUR API KEY HERE&vpn=1"
+  query: "http://proxycheck.io/v2/{IP}&vpn=1"
   #What text should response contain to IP be flagged as Proxy / VPN
   query-contains: "yes"
   #Action bar when attack is active and antibot detected someone.
