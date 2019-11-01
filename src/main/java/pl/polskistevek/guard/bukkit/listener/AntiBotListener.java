@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
@@ -19,10 +20,22 @@ public class AntiBotListener implements Listener {
     public static int cps = 0;
     private static int blocked = 0;
     private static boolean attack = false;
+    public static int cps_ping = 0;
 
     @EventHandler
     public void updateCheckOnJoin(PlayerJoinEvent e){
         Updater.notify(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onPing(ServerListPingEvent e){
+        cps_ping++;
+        if (cps_ping > 20){
+            title();
+            Notificator.action(BukkitMain.ACTION_BOT.replace("{NICK}", "Unknown").replace("{IP}", e.getAddress().getHostAddress()).replace("{DET}", "Ping Detection").replace("{CPS}", cps + " Pings").replace("{TPS}", String.valueOf(ExactTPS.getTPS2())));
+            attack = true;
+        }
+        rem(1);
     }
 
     @EventHandler
@@ -50,7 +63,7 @@ public class AntiBotListener implements Listener {
                 cps++;
                 title();
                 Notificator.action(BukkitMain.ACTION_BOT.replace("{NICK}", p).replace("{IP}", adress).replace("{DET}", "Protection Enabled").replace("{CPS}", String.valueOf(cps)).replace("{TPS}", String.valueOf(ExactTPS.getTPS2())));
-                rem();
+                rem(0);
                 return;
             }
         }
@@ -64,14 +77,21 @@ public class AntiBotListener implements Listener {
             title();
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, BukkitMain.MESSAGE_KICK_BLACKLIST);
             Notificator.action(BukkitMain.ACTION_BOT.replace("{NICK}", p).replace("{IP}", adress).replace("{DET}", "Blacklist Detection").replace("{CPS}", String.valueOf(cps)).replace("{TPS}", String.valueOf(ExactTPS.getTPS2())));
-            rem();
+            rem(0);
+            return;
+        }
+        if (attack){
+            cps++;
+            blocked++;
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, BukkitMain.MESSAGE_KICK_ATTACK);
+            rem(0);
             return;
         }
         if (cps > BukkitMain.CPS_ACTIVATE){
             cps++;
             blocked++;
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, BukkitMain.MESSAGE_KICK_ATTACK);
-            rem();
+            rem(0);
             return;
         }
         if (checkUrl(url)){
@@ -81,7 +101,7 @@ public class AntiBotListener implements Listener {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, BukkitMain.MESSAGE_KICK_PROXY);
             title();
             Notificator.action(BukkitMain.ACTION_BOT.replace("{NICK}", p).replace("{IP}", adress).replace("{DET}", "Proxy/VPN Detection").replace("{CPS}", String.valueOf(cps)).replace("{TPS}", String.valueOf(ExactTPS.getTPS2())));
-            rem();
+            rem(0);
             return;
         }
         BlacklistManager.addWhitelist(adress);
@@ -98,11 +118,18 @@ public class AntiBotListener implements Listener {
         Notificator.action(BukkitMain.PASSED_ACTION.replace("{NICK}", a).replace("{DET}", b));
     }
 
-    private static void rem(){
+    private static void rem(int type){
         new BukkitRunnable() {
             @Override
             public void run() {
-                cps--;
+                if (type == 0) {
+                    cps--;
+                    return;
+                }
+                cps_ping--;
+                if (cps == 0){
+                    attack = false;
+                }
             }
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);
     }

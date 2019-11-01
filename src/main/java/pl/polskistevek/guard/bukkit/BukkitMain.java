@@ -1,6 +1,7 @@
 package pl.polskistevek.guard.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,6 +42,7 @@ public class BukkitMain extends JavaPlugin {
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
+        log("Starting plugin...");
         long ms = System.currentTimeMillis();
         PluginManager pm = this.getServer().getPluginManager();
         saveDefaultConfig();
@@ -49,8 +51,10 @@ public class BukkitMain extends JavaPlugin {
         Action.nmsver = Bukkit.getServer().getClass().getPackage().getName();
         Action.nmsver = Action.nmsver.substring(Action.nmsver.lastIndexOf(".") + 1);
         if (Action.nmsver.equalsIgnoreCase("v1_8_R1") || Action.nmsver.startsWith("v1_7_")) {
+            log("Using old NMS Methods for 1.8.");
             Action.useOldMethods = true;
         }
+        log("NMS Version: " + Action.nmsver);
         loadConfig();
         ActionTask.start();
         SaveTask.start();
@@ -58,8 +62,10 @@ public class BukkitMain extends JavaPlugin {
         try {
             Class.forName("dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI");
             API = true;
+            log("Enabling External API...");
         } catch(ClassNotFoundException e){
             API = false;
+            log("External API not found, enabling internal methods...");
         }
         if (SERVER_ID.equals("IJUF-ADHJ-N1UE")){
             c.a();
@@ -69,6 +75,7 @@ public class BukkitMain extends JavaPlugin {
         Updater.checkForUpdates();
         Metrics metrics = new Metrics(this);
         Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Succesfully loaded plugin. &8(&c" + (System.currentTimeMillis() - ms) + "ms&8)"));
+        log("Succesfully loaded!");
     }
 
     public static void loadConfig(){
@@ -100,5 +107,9 @@ public class BukkitMain extends JavaPlugin {
     public void onDisable() {
         Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Restarting ..."));
         ConfigManager.save();
+    }
+    public static void log(String msg) {
+        msg = ChatColor.translateAlternateColorCodes('&', "&8[&6EpicGuard - Loader&8]&8 " + msg);
+        Bukkit.getConsoleSender().sendMessage(msg);
     }
 }
