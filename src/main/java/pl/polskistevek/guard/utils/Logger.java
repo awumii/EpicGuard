@@ -1,7 +1,7 @@
 package pl.polskistevek.guard.utils;
 
-import org.bukkit.Bukkit;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bungee.BungeeMain;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,9 +10,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Logger {
-    private static File file = new File(BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/logs.txt");
+    private static File file;
+    public static boolean spigot = false;
 
     public static void create(){
+        if (spigot){
+            file = new File(BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/logs.txt");
+        } else {
+            file = new File(BungeeMain.plugin.getDataFolder() + "/logs.txt");
+        }
         if (!file.exists()){
             try {
                 file.createNewFile();
@@ -27,7 +33,7 @@ public class Logger {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         String time = sdf.format(cal.getTime());
         String msg = "[" + time + "] [EpicGuard/Logger] " + message;
-        Bukkit.getConsoleSender().sendMessage(msg);
+        System.out.println(msg);
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
             bw.append(msg);

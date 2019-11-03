@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class a implements Listener {
     @EventHandler
-    public void noUproot(PlayerInteractEvent event) {
+    public void a(PlayerInteractEvent event) {
         if (event.getAction() == Action.PHYSICAL && Objects.requireNonNull(event.getClickedBlock()).getType() == Material.WHEAT) {
             event.setCancelled(true);
         }

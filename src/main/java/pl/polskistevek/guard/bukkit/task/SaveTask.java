@@ -3,7 +3,7 @@ package pl.polskistevek.guard.bukkit.task;
 import org.bukkit.Bukkit;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.manager.ConfigManager;
-import pl.polskistevek.guard.utils.Updater;
+import pl.polskistevek.guard.utils.spigot.Updater;
 
 public class SaveTask {
     public static void start(){
