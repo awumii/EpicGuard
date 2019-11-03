@@ -18,6 +18,24 @@ public class Notificator {
         }
     }
 
+    public static void broadcast(String text){
+        if (BukkitMain.STATUS){
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.hasPermission(BukkitMain.PERMISSION)) {
+                    p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + text));
+                }
+            }
+        }
+    }
+
+    public static void send(Player p, String text){
+        if (BukkitMain.STATUS){
+            if (p.hasPermission(BukkitMain.PERMISSION)){
+                p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + text));
+            }
+        }
+    }
+
     public static void action(String text){
         if (BukkitMain.STATUS) {
             Action.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, BukkitMain.PERMISSION);

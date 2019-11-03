@@ -1,5 +1,6 @@
 package pl.polskistevek.guard.bukkit.command;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -7,9 +8,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.geo.GEO;
+import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
+import pl.polskistevek.guard.bukkit.manager.ConfigManager;
+import pl.polskistevek.guard.bukkit.manager.PlayerManager;
 import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.Updater;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +32,13 @@ public class GuardCommand implements CommandExecutor {
         Updater.notify(p);
         if (args.length > 0) {
             switch (args[0]) {
+                case "save":
+                    p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Succesfully saved data file."));
+                    ConfigManager.save();
+                    break;
+                case "protection":
+                    p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Protection is now: &c" + PreLoginListener.attack));
+                    break;
                 case "whitelist":
                     if (args.length == 2) {
                         BlacklistManager.addWhitelist(args[1]);
@@ -50,14 +63,21 @@ public class GuardCommand implements CommandExecutor {
                         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
                         p.sendMessage(ChatUtil.fix(""));
                         p.sendMessage(ChatUtil.fix("&6[Basic Information]"));
+                        p.sendMessage(ChatUtil.fix("&8▪ &7Name: &f" + player.getName()));
                         p.sendMessage(ChatUtil.fix("&8▪ &7UUID: &f" + player.getUniqueId()));
                         p.sendMessage(ChatUtil.fix("&8▪ &7First Join: &f" + new Date(player.getFirstPlayed())));
+                        try {
+                            p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GEO.dbReader.country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                        } catch (IOException | GeoIp2Exception e) {
+                            e.printStackTrace();
+                        }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        p.sendMessage(ChatUtil.fix(""));
-                        p.sendMessage(ChatUtil.fix("&6[Additional Information]"));
-                        p.sendMessage(ChatUtil.fix("&8▪ &7Language: &f" + player.getLocale()));
-                        p.sendMessage(ChatUtil.fix("&8▪ &7Location: &fx: " + player.getLocation().getX() + ", y: " + player.getLocation().getY() + ", z: " + player.getLocation().getZ()));
                         p.sendMessage(ChatUtil.fix("&8▪ &7Online since: &f" + TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - player.getLastPlayed()) + "min"));
+                        p.sendMessage(ChatUtil.fix(""));
+                        p.sendMessage(ChatUtil.fix("&6[IP History]"));
+                        for (String adress : PlayerManager.getUser(player).getAdresses()){
+                            p.sendMessage(ChatUtil.fix("&8▪ &7IP: &f" + adress));
+                        }
                         p.sendMessage(ChatUtil.fix(""));
                         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
                         return false;

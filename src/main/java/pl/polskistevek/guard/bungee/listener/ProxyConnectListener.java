@@ -4,10 +4,8 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bungee.BungeeMain;
 import pl.polskistevek.guard.bungee.util.ConnectionCloser;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
@@ -35,7 +33,7 @@ public class ProxyConnectListener implements Listener {
                 return;
             }
         }
-        if (cps > BukkitMain.CPS_ACTIVATE){
+        if (cps > BungeeMain.CPS_ACTIVATE){
             cps++;
             blocked++;
             ConnectionCloser.closeAttack(e.getConnection());

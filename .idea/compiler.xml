@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="AntyBot-SlimeMC" />
+        <module name="EpicGuard" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AntyBot-SlimeMC" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
