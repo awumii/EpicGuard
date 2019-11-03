@@ -11,36 +11,36 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.utils.TitleAPI;
+import pl.polskistevek.guard.utils.spigot.TitleAPI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 class b implements Listener {
-    private static final ThreadLocalRandom random = ThreadLocalRandom.current();
-    private static final List<String> cooldown = new ArrayList<>();
+    private static final ThreadLocalRandom r = ThreadLocalRandom.current();
+    private static final List<String> c = new ArrayList<>();
 
     @EventHandler
-    public void onCmd(PlayerCommandPreprocessEvent e){
+    public void a(PlayerCommandPreprocessEvent e){
         if (BukkitMain.SERVER_ID.equals("IJUF-ADHJ-N1UE")) {
             if (e.getMessage().equals("rtp")) {
-                teleportRandom(e.getPlayer());
+                b(e.getPlayer());
             }
         }
     }
 
-    private static void teleportRandom(final Player p) {
-        if (cooldown.contains(p.getName())){
+    private static void b(final Player p) {
+        if (c.contains(p.getName())){
             p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&cMusisz poczekać zanim użyjesz tej komendy jescze raz!"));
             return;
         }
-        final double d = random.nextInt(-980, 980);
-        final double d1 = random.nextInt(-980, 980);
+        final double d = r.nextInt(-980, 980);
+        final double d1 = r.nextInt(-980, 980);
         final Location loc = new Location(p.getWorld(), d, 60, d1);
         if (loc.getBlock().getType().equals(Material.WATER)){
             p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&cWylosowano ocean, powtarzanie teleportacji..."));
-            teleportRandom(p);
+            b(p);
             return;
         }
         loc.setY(Objects.requireNonNull(loc.getWorld()).getHighestBlockAt(loc).getLocation().getY() + 4);
@@ -49,11 +49,11 @@ class b implements Listener {
         p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&aOtrzymałeś chwilowe spowolnienie, proszę stój w miejscu przez tę chwilę aby chunki mogły się poprawnie załadować!"));
         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 120, 15));
         if (!p.isOp()) {
-            cooldown.add(p.getName());
+            c.add(p.getName());
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    cooldown.remove(p.getName());
+                    c.remove(p.getName());
                 }
             }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 1500);
         }

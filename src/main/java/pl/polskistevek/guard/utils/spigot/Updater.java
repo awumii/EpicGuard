@@ -1,7 +1,9 @@
-package pl.polskistevek.guard.utils;
+package pl.polskistevek.guard.utils.spigot;
 
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.utils.ChatUtil;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;

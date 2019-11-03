@@ -5,7 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
-import pl.polskistevek.guard.bukkit.geo.GEO;
+import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.JoinListener;
 import pl.polskistevek.guard.bukkit.listener.PingListener;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
@@ -17,6 +17,8 @@ import pl.polskistevek.guard.utils.dev.c;
 import pl.polskistevek.guard.bukkit.manager.ConfigManager;
 import pl.polskistevek.guard.bukkit.task.ActionTask;
 import pl.polskistevek.guard.bukkit.task.SaveTask;
+import pl.polskistevek.guard.utils.spigot.*;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +74,8 @@ public class BukkitMain extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         saveDefaultConfig();
+        GEO.spigot = true;
+        Logger.spigot = true;
         Logger.create();
         Logger.log("Starting plugin...");
         long ms = System.currentTimeMillis();
@@ -114,8 +118,10 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
         Updater.checkForUpdates();
+        Piracy.register();
+        Logger.log("Your server ID: " + Piracy.getServerId());
         Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Succesfully loaded plugin. &8(&c" + (System.currentTimeMillis() - ms) + "ms&8)"));
-        Logger.log("Succesfully loaded!");
+        Logger.log("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
 
     public static void loadConfig(){

@@ -12,7 +12,7 @@ import pl.polskistevek.guard.bukkit.manager.Notificator;
 import pl.polskistevek.guard.bukkit.manager.PlayerManager;
 import pl.polskistevek.guard.bukkit.object.User;
 import pl.polskistevek.guard.utils.Logger;
-import pl.polskistevek.guard.utils.Updater;
+import pl.polskistevek.guard.utils.spigot.Updater;
 import java.util.List;
 
 public class JoinListener implements Listener {
