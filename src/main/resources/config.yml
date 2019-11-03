@@ -1,58 +1,130 @@
-#Permission for commands and bot notifications
-main-permission: "epicguard.admin"
-#Prefix for every message.
-prefix: "&8[&6EpicGuard&8] "
+#
+#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
+#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
+#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
+#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
+#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
+#
+# ▪ Thank you for downloading my plugin!
+# ▪ SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
+# ▪ My Discord: PolskiStevek#2198
 
+###############################
+##    Main Options           ##
+###############################
+
+main-permission: "epicguard.admin"
+prefix: "&8[&6EpicGuard&8] "
+updater: true
+
+# Messages will be moved to messages.yml in 2.0 Update.
 messages:
   no-permission: "&cYou don't have permission!"
-  #Message when a player is not whitelisted. To disable, leave it "".
+  # Message when a player is not whitelisted. To disable, leave it "".
   whitelist: "&7Player &c{NICK} &7tried to join but whitelist is enabled"
+  new-ip: "&7Player &f{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
+
+###############################
+##           Countries       ##
+###############################
+
+countries:
+  # This has three values:
+  # WHITELIST = countries listed below CAN join, every other can't.
+  # BLACKLIST = countries listed below CAN'T join, every other can.
+  # DISABLED = disable this module.
+  mode: WHITELIST
+  # List of country codes:
+  # https://dev.maxmind.com/geoip/legacy/codes/iso3166/
+  list:
+    - PL
+
+###############################
+##           Advanced        ##
+###############################
 
 attack-speed:
-  #How many connections per seconds should me made, to block connections to the server.
-  #Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
-  #Don't set to values lower than 10, smaller attacks has no performance affect.
-  #If deny-join is triggered, Proxy/VPN checking is skipped.
-  deny-join: 10
+  # How many connections per seconds should me made, to block connections to the server.
+  # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
+  # If deny-join is triggered, Proxy/VPN checking is skipped.
+  deny-join: 3
+  # How many pings per seconds should be made to block connections to the server.
+  ping-speed: 10
+
+auto-whitelist:
+  # Enable automatic player whitelisting.
+  # When player is whitelisted, all checks are skipped (like Proxy check).
+  # Whitelisted players can join even when ATTACK_MODE is activated. Bots can't join but players can.
+  enabled: true
+  # How much time (in ticks), player should be online to be added to whitelist.
+  # 20 ticks = 1 second
+  time: 2400
+
+###############################
+##           Firewall        ##
+###############################
 
 firewall:
-  #Don't use on free / shared hosting! (It wont work, but it will spam your chat on attack)
-  #You need VPS / Dedicated with IPTables (or something else) installed on your machine.
+  # Don't use on free / shared hosting! (It wont work, but it will spam your chat on attack)
+  # You need VPS / Dedicated with IPTables (or something else) installed on your machine.
   enabled: false
-  #Executed in /guard blacklist <player> OR while player was detected as a BOT
+  # Executed in /guard blacklist <player> OR while player was detected as a BOT
   command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
-  #Executed in /guard whitelist <player>
+  # Executed in /guard whitelist <player>
   command-whitelist: "iptables -D INPUT -s {IP} -j DROP"
 
+###############################
+##           AntiBot         ##
+###############################
+
 antibot:
-  #External site for checking Proxy / VPN.
-  #{IP] - Placeholder for player / bot ip.
-  #I reccommend using proxycheck.io, and getting free api key for monitoring attacks.
-  #If you got API KEY, replace value below to: "http://proxycheck.io/v2/{IP}?key=YOUR API KEY HERE&vpn=1"
-  query: "http://proxycheck.io/v2/{IP}&vpn=1"
-  #What text should response contain to IP be flagged as Proxy / VPN
-  query-contains: "yes"
-  #Action bar when attack is active and antibot detected someone.
-  actionbar: "&4&l⚠  &7STATUS:  &e{NICK} &8[&f{IP}&8] &7detected for: &6{DET}   &8&m|&a   {CPS}&7/&asec  &7TPS: &c{TPS}  &4&l⚠"
-  #Actionbar when a player has passed checking and is allowed to join.
+  # You can fuly disable ALL antibot modules if you don't want it.
+  # Disabling antibot will not disable country checking (look above)
+  enabled: true
+  # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
+  # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
+  # "http://proxycheck.io/v2/%ip%?key=API_KEY&vpn=1"
+  checkers:
+    '1':
+      adress: "http://proxycheck.io/v2/{IP}&vpn=1"
+    '2':
+      adress: "http://www.stopforumspam.com/api?ip={IP}"
+    '3':
+      adress: "https://ip.teoh.io/{IP}"
+    # What should any of above sites return?
+    responses:
+      - "yes"
+      - "true"
+      - "Bad"
+  # Action bar when attack is active and antibot detected a bot.
+  actionbar: "&4⚠ &cSTATUS: &b{NICK} &8[&e{IP}&8] &7failed &6{DET} &8&m| &a{CPS}&7/&asec &8&m| &7TPS: &c{TPS} &4⚠"
+  # Actionbar when a player has passed checking and is allowed to join.
   actionbar-passed: "&a✔  &7SUCCESS:  &e{NICK}  &8&m|&7  passed: &6{DET}  &a✔"
-  #Actionbar when there is no attack.
+  # Idle actionbar when there is no attack.
   actionbar-idle: "&7Listening, attack not detected... {ANIM}"
   attack:
-    #Minimum Connections Per Second to show title.
-    cps-min: 5
+    # Minimum Connections Per Second to show title.
+    cps-min: 3
     title: "&6⚠ &cServer is attacked ({MAX})! &6⚠"
     subtitle: "&7Attack speed: &a{CPS}&7/&asec&7!"
   kick-messages:
-    #Kick message when player has detected Proxy/VPN
+    # Better multiline kick-messages coming in 2.0 Update.
     proxy: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our systems have detected, that you are using Proxy or VPN.\n&7Please disable VPN programs, and join server.\n&7If you think this is an issue, contact our staff."
-    #Kick message when player's IP is blacklisted
     blacklist: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your IP have been blacklisted.\n&7If you think this is an issue, please contact our staff."
+    attack: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our server is being attacked.\n&7Please wait some minutes and join."
+    country: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your country is not allowed.\n&7If you think this is an issue, please contact our staff."
+
+
+###############################
+##       Miscellaneous       ##
+###############################
 
 hook:
-  #If you have a plugin called Bot-Sentry,
-  #my plugin will use their API.
+  # If you have a plugin called Bot-Sentry,
+  # my plugin will use their API.
+  # This will drastically improve bot checking performance.
   bot-sentry: true
 
-#Ignore this option. Only for DEV for testing.
+# Ignore this option. Only for DEV for testing.
 server-id: ""
