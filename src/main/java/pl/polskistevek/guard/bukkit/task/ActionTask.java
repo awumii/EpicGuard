@@ -1,7 +1,9 @@
 package pl.polskistevek.guard.bukkit.task;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.Notificator;
 
@@ -10,6 +12,11 @@ public class ActionTask {
 
     public static void start(){
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BukkitMain.getPlugin(BukkitMain.class), () -> {
+            for (Player p : Bukkit.getOnlinePlayers()){
+                if (p.getOpenInventory().getTitle().equals("EpicGuard Menu")){
+                    GuiMain.show(p);
+                }
+            }
             if (PreLoginListener.cps == 0) {
                 if (anim == 0) {
                     Notificator.action(BukkitMain.ACTION_IDLE.replace("{ANIM}", "&8O&7oo"));

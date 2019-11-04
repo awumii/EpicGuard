@@ -123,11 +123,5 @@ antibot:
 ##       Miscellaneous       ##
 ###############################
 
-hook:
-  # If you have a plugin called Bot-Sentry,
-  # my plugin will use their API.
-  # This will drastically improve bot checking performance.
-  bot-sentry: true
-
 # Ignore this option. Only for DEV for testing.
 server-id: ""
