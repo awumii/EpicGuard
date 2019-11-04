@@ -24,8 +24,7 @@ public class Updater {
     public static void notify(Player p){
         if (p.hasPermission(BukkitMain.PERMISSION)){
             if (Updater.updateAvaible){
-                p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Your version &8(&c" + Updater.currentVersion + "&8) &7is outdated! Latest version: &a" + Updater.lastestVersion));
-                p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Download new version here: &6" + Updater.resource));
+                p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Your version &8(&c" + Updater.currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&a" + Updater.lastestVersion + "&8)&7. Please update it when you can."));
             }
         }
     }

@@ -8,24 +8,27 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class Piracy {
-    private static boolean b = false;
+    public static boolean b = false;
 
     public static void register(){
+        Logger.log("Waiting for API response...");
         try {
-            final Scanner s = new Scanner(new URL("http://infinity-cloud.cba.pl/api/" + getServerId() + ".txt").openStream());
+            final Scanner s = new Scanner(new URL("http://infinity-cloud.cba.pl/api/guard-license.txt").openStream());
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
-                    if (s.next().contains("true")) {
+                    if (s.next().contains(getServerId() + ":true")) {
                         Logger.log("Premium features unlocked. Thanks for your support :)");
                         b = true;
                     }
+                    if (s.next().contains(getServerId() + ":false")) {
+                        Logger.log("Your plugin / premium features has been disabled. Please contact plugin developer. Plugin will now shut down.");
+                        BukkitMain.plugin.getPluginLoader().disablePlugin(BukkitMain.plugin);
+                        b = false;
+                    }
                 }
-                Logger.log("Your plugin / premium features has been disabled. Please contact plugin developer. Plugin will now shut down.");
-                b = false;
-                BukkitMain.plugin.getPluginLoader().disablePlugin(BukkitMain.plugin);
             }
         } catch (IOException ignored) {
-            Logger.log("Premium is not active.");
+            Logger.log("Premium features is not active. (This message is only an debug info, premium coming soon in 2.0)");
             b = false;
         }
     }

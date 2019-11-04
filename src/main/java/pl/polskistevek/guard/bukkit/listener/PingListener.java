@@ -7,13 +7,13 @@ import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.utils.Logger;
 
 public class PingListener implements Listener {
-    public static int cps_ping;
+    public static int cps_ping = 0;
 
     @EventHandler
     public void onPing(ServerListPingEvent e){
         cps_ping++;
         if (cps_ping > BukkitMain.PING_SPEED){
-            Logger.log("ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress());
+            Logger.log("[" + cps_ping + "] ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress());
             PreLoginListener.attack = true;
         }
         PreLoginListener.rem(1);

