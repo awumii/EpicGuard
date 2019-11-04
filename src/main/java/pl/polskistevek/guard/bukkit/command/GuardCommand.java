@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.listener.JoinListener;
 import pl.polskistevek.guard.bukkit.listener.PingListener;
 import pl.polskistevek.guard.utils.GEO;
@@ -34,6 +35,9 @@ public class GuardCommand implements CommandExecutor {
         Updater.notify(p);
         if (args.length > 0) {
             switch (args[0]) {
+                case "menu":
+                    GuiMain.show(p);
+                    break;
                 case "save":
                     p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Succesfully saved data file."));
                     ConfigManager.save();
@@ -71,7 +75,6 @@ public class GuardCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        p.sendMessage(ChatUtil.fix("&8▪ &7Online since: &f" + TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - player.getLastPlayed()) + "min"));
                         p.sendMessage(ChatUtil.fix(""));
                         p.sendMessage(ChatUtil.fix("&6[IP History]"));
                         for (String adress : PlayerManager.getUser(player).getAdresses()){

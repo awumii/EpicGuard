@@ -29,7 +29,7 @@ public class PreLoginListener implements Listener {
         if (!BukkitMain.WHITELIST_MESSAGE.equals("")) {
             if (Bukkit.hasWhitelist()) {
                 if (!Bukkit.getOfflinePlayer(e.getUniqueId()).isWhitelisted()) {
-                    Bukkit.broadcast(ChatUtil.fix(BukkitMain.WHITELIST_MESSAGE).replace("{NICK}", p), BukkitMain.PERMISSION);
+                    Bukkit.broadcast(ChatUtil.fix(BukkitMain.PREFIX + BukkitMain.WHITELIST_MESSAGE).replace("{NICK}", p), BukkitMain.PERMISSION);
                 }
             }
         }
@@ -42,7 +42,7 @@ public class PreLoginListener implements Listener {
         String url1 = BukkitMain.ANTIBOT_QUERY_1.replace("{IP}", adress);
         String url2 = BukkitMain.ANTIBOT_QUERY_2.replace("{IP}", adress);
         String url3 = BukkitMain.ANTIBOT_QUERY_3.replace("{IP}", adress);
-        if (BukkitMain.API){
+        /*if (BukkitMain.API){
             if (dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI.isWhitelisted(adress)){
                 passed(p, "Whitelist Check (External)");
                 Logger.log(adress + " (" + p + ") connected -> External Whitelist check [✔]");
@@ -60,7 +60,7 @@ public class PreLoginListener implements Listener {
                 rem(0);
                 return;
             }
-        }
+        }*/
         if (BlacklistManager.checkWhitelist(adress)){
             Logger.log(adress + " (" + p + ") connected -> Internal whitelist check [✔]");
             passed(p, "Whitelist Check (Internal)");

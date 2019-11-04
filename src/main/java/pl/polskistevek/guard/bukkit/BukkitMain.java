@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
+import pl.polskistevek.guard.bukkit.gui.GuiListener;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.JoinListener;
 import pl.polskistevek.guard.bukkit.listener.PingListener;
@@ -84,6 +85,7 @@ public class BukkitMain extends JavaPlugin {
         pm.registerEvents(new PingListener(), this);
         pm.registerEvents(new JoinListener(), this);
         pm.registerEvents(new QuitListener(), this);
+        pm.registerEvents(new GuiListener(), this);
         getCommand("core").setExecutor(new GuardCommand());
         Action.nmsver = Bukkit.getServer().getClass().getPackage().getName();
         Action.nmsver = Action.nmsver.substring(Action.nmsver.lastIndexOf(".") + 1);
@@ -97,14 +99,14 @@ public class BukkitMain extends JavaPlugin {
         SaveTask.start();
         AttackTask.start();
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
-        try {
+        /*try {
             Class.forName("dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI");
             API = true;
             Logger.log("Enabling External API...");
         } catch(ClassNotFoundException e){
             API = false;
             Logger.log("External API not found, enabling internal methods...");
-        }
+        }*/
         if (SERVER_ID.equals("IJUF-ADHJ-N1UE")){
             c.a();
             pm.registerEvents(new a(),this);
