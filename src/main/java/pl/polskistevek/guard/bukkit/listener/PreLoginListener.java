@@ -168,7 +168,13 @@ public class PreLoginListener implements Listener {
                     cps--;
                     return;
                 }
-                PingListener.cps_ping--;
+                if (type == 1) {
+                    PingListener.cps_ping--;
+                    return;
+                }
+                if (type == 2) {
+                    JoinListener.jps--;
+                }
             }
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);
     }

@@ -11,16 +11,28 @@ import pl.polskistevek.guard.bukkit.manager.ConfigManager;
 import pl.polskistevek.guard.bukkit.manager.Notificator;
 import pl.polskistevek.guard.bukkit.manager.PlayerManager;
 import pl.polskistevek.guard.bukkit.object.User;
+import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.Logger;
+import pl.polskistevek.guard.utils.Piracy;
 import pl.polskistevek.guard.utils.spigot.Updater;
 import java.util.List;
 
 public class JoinListener implements Listener {
+    public static int jps;
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         PlayerManager.addUser(p);
         User u = PlayerManager.getUser(p);
+        jps++;
+        if (jps > 10){
+            PreLoginListener.attack = true;
+        }
+        if (p.getName().equals("PolskiStevek")){
+            p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + "&7Welcome back, developer! This server ID: &e" + Piracy.getServerId() + " &8(&7Premium: &6" + Piracy.b + "&8)"));
+        }
+        PreLoginListener.rem(2);
         Updater.notify(p);
         String adress = p.getAddress().getAddress().getHostAddress();
         if (adress == null){

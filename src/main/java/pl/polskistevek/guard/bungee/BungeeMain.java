@@ -34,6 +34,9 @@ public class BungeeMain extends Plugin {
 
     @Override
     public void onEnable() {
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
         plugin = this;
         Logger.create();
         Logger.log("Starting plugin...");
@@ -52,9 +55,6 @@ public class BungeeMain extends Plugin {
     }
 
     private void loadConfig(){
-        if (!getDataFolder().exists())
-            Logger.log("Creating directory for config..");
-            getDataFolder().mkdir();
         File file = new File(getDataFolder(), "config_bungee.yml");
         if (!file.exists()) {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {

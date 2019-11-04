@@ -1,5 +1,5 @@
 name: EpicGuard
-version: 1.2
+version: 1.4.0
 main: pl.polskistevek.guard.bukkit.BukkitMain
 softdepend: [ProtocolLib]
 author: PolskiStevek
