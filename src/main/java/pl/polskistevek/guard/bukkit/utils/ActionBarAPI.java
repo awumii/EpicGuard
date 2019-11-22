@@ -1,15 +1,31 @@
-package pl.polskistevek.guard.utils.spigot;
+/*
+  Author: ConnorLinfoot
+  Plugin link: https://www.spigotmc.org/resources/actionbarapi-1-8-1-14-2.1315/
+  I used parts of his code, so users don't need to download any other depencies
+ */
+
+package pl.polskistevek.guard.bukkit.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.utils.Logger;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class Action {
+public class ActionBarAPI {
     public static String nmsver;
-    public static boolean useOldMethods = false;
+    private static boolean useOldMethods = false;
+
+    public static void register(){
+        nmsver = Bukkit.getServer().getClass().getPackage().getName();
+        nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
+        if (nmsver.equalsIgnoreCase("v1_8_R1") || nmsver.startsWith("v1_7_")) {
+            Logger.log("Using old NMS Methods for 1.8/1.7");
+            useOldMethods = true;
+        }
+    }
 
     private static void sendActionBar(Player player, String message) {
         if (!player.isOnline()) {

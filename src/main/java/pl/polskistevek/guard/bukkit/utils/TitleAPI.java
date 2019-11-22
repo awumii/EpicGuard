@@ -1,4 +1,10 @@
-package pl.polskistevek.guard.utils.spigot;
+/*
+  Author: ConnorLinfoot
+  Plugin link: https://www.spigotmc.org/resources/titleapi-1-8-1-14-2.1325/
+  I used parts of his code, so users don't need to download any other depencies
+ */
+
+package pl.polskistevek.guard.bukkit.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

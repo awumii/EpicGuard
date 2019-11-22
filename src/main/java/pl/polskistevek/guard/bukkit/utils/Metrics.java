@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.utils.spigot;
+package pl.polskistevek.guard.bukkit.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -16,12 +16,14 @@ import java.util.Date;
 import java.util.List;
 
 public class GuiPlayers {
+    public static Inventory inv;
+
     public static void show(Player p){
-        Inventory inv = Bukkit.createInventory(p, 45, "EpicGuard Player Manager");
         int i = 0;
         for (Player player : Bukkit.getOnlinePlayers()){
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
+            assert meta != null;
             meta.setOwningPlayer(player);
             meta.setDisplayName(ChatUtil.fix("&a" + player.getName()));
             List<String> l = new ArrayList<>();

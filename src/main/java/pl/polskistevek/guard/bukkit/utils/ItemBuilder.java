@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.utils.spigot;
+package pl.polskistevek.guard.bukkit.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;

@@ -3,9 +3,9 @@ package pl.polskistevek.guard.bukkit.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
-import pl.polskistevek.guard.utils.spigot.Action;
+import pl.polskistevek.guard.bukkit.utils.ActionBarAPI;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.utils.spigot.TitleAPI;
+import pl.polskistevek.guard.bukkit.utils.TitleAPI;
 
 public class Notificator {
     public static void title(String title, String subtitle){
@@ -38,7 +38,7 @@ public class Notificator {
 
     public static void action(String text){
         if (BukkitMain.STATUS) {
-            Action.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, BukkitMain.PERMISSION);
+            ActionBarAPI.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, BukkitMain.PERMISSION);
         }
     }
 }

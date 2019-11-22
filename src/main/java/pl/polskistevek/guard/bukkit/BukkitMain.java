@@ -2,24 +2,28 @@ package pl.polskistevek.guard.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
 import pl.polskistevek.guard.bukkit.gui.GuiListener;
+import pl.polskistevek.guard.bukkit.gui.GuiMain;
+import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
+import pl.polskistevek.guard.bukkit.manager.PlayerManager;
+import pl.polskistevek.guard.bukkit.utils.ActionBarAPI;
+import pl.polskistevek.guard.bukkit.utils.ExactTPS;
+import pl.polskistevek.guard.bukkit.utils.Metrics;
+import pl.polskistevek.guard.bukkit.utils.Updater;
 import pl.polskistevek.guard.utils.GEO;
-import pl.polskistevek.guard.bukkit.listener.JoinListener;
-import pl.polskistevek.guard.bukkit.listener.PingListener;
+import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
+import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
-import pl.polskistevek.guard.bukkit.listener.QuitListener;
+import pl.polskistevek.guard.bukkit.listener.PlayerQuitListener;
 import pl.polskistevek.guard.bukkit.task.AttackTask;
 import pl.polskistevek.guard.utils.*;
-import pl.polskistevek.guard.utils.dev.a;
-import pl.polskistevek.guard.utils.dev.c;
 import pl.polskistevek.guard.bukkit.manager.ConfigManager;
 import pl.polskistevek.guard.bukkit.task.ActionTask;
 import pl.polskistevek.guard.bukkit.task.SaveTask;
-import pl.polskistevek.guard.utils.spigot.*;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
@@ -27,37 +31,28 @@ import java.util.List;
 public class BukkitMain extends JavaPlugin {
     public static int CPS_MIN;
     public static String MESSAGE_NOPERM;
-
     public static String MESSAGE_KICK_PROXY;
     public static String MESSAGE_KICK_BLACKLIST;
     public static String MESSAGE_KICK_ATTACK;
     public static String MESSAGE_KICK_COUNTRY;
-
     public static String ACTION_BOT;
     public static String ATTACK_TITLE;
     public static String ATTACK_SUBTITLE;
-
     public static String PERMISSION;
     public static String PASSED_ACTION;
     public static String ACTION_IDLE;
     public static String PREFIX;
     public static String WHITELIST_MESSAGE;
-
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;
     public static boolean FIREWALL;
-
-    public static boolean API = false;
     public static boolean STATUS = true;
-
     public static int CPS_ACTIVATE;
     public static String SERVER_ID;
     public static int PING_SPEED;
     public static String NEW_IP;
-
     public static boolean AUTO_WHITELIST;
     public static int AUTO_WHITELIST_TIME;
-
     public static String ANTIBOT_QUERY_1;
     public static String ANTIBOT_QUERY_2;
     public static String ANTIBOT_QUERY_3;
@@ -67,52 +62,34 @@ public class BukkitMain extends JavaPlugin {
     public static String COUNTRY_MODE;
 
     public static boolean ANTIBOT;
-    public static BukkitMain plugin;
     public static boolean UPDATER;
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
-        plugin = this;
+        long ms = System.currentTimeMillis();
         saveDefaultConfig();
         GEO.spigot = true;
         Logger.spigot = true;
         Logger.create();
         Logger.log("Starting plugin...");
-        long ms = System.currentTimeMillis();
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PreLoginListener(), this);
-        pm.registerEvents(new PingListener(), this);
-        pm.registerEvents(new JoinListener(), this);
-        pm.registerEvents(new QuitListener(), this);
+        pm.registerEvents(new ServerListPingListener(), this);
+        pm.registerEvents(new PlayerJoinListener(), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new GuiListener(), this);
         getCommand("core").setExecutor(new GuardCommand());
-        Action.nmsver = Bukkit.getServer().getClass().getPackage().getName();
-        Action.nmsver = Action.nmsver.substring(Action.nmsver.lastIndexOf(".") + 1);
-        if (Action.nmsver.equalsIgnoreCase("v1_8_R1") || Action.nmsver.startsWith("v1_7_")) {
-            Logger.log("Using old NMS Methods for 1.8.");
-            Action.useOldMethods = true;
-        }
-        Logger.log("NMS Version: " + Action.nmsver);
+        Logger.log("NMS Version: " + ActionBarAPI.nmsver);
         loadConfig();
-        ActionTask.start();
+
+        //Registering tasks
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionTask(), 30L, 0L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
         SaveTask.start();
         AttackTask.start();
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
-        /*try {
-            Class.forName("dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI");
-            API = true;
-            Logger.log("Enabling External API...");
-        } catch(ClassNotFoundException e){
-            API = false;
-            Logger.log("External API not found, enabling internal methods...");
-        }*/
-        if (SERVER_ID.equals("IJUF-ADHJ-N1UE")){
-            c.a();
-            pm.registerEvents(new a(),this);
-        }
+
         ConfigManager.load();
-        Metrics metrics = new Metrics(this);
         try {
             Logger.log("Loading GeoIP database...");
             GEO.registerDatabase();
@@ -120,14 +97,21 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
         Updater.checkForUpdates();
-        Piracy.register();
-        Logger.log("Your server ID: " + Piracy.getServerId());
-        Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Succesfully loaded plugin. &8(&c" + (System.currentTimeMillis() - ms) + "ms&8)"));
+
+        //Fixes GUI not loading while plugin updated using plugman.
+        for (Player p : Bukkit.getOnlinePlayers()){
+            PlayerManager.addUser(p);
+        }
+        Metrics metrics = new Metrics(this);
+        //Creating GUI's
+        GuiMain.i = Bukkit.createInventory(null, 27, "EpicGuard Menu");
+        GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
+
         Logger.log("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
 
     public static void loadConfig(){
-        FileConfiguration cfg = plugin.getConfig();
+        FileConfiguration cfg = BukkitMain.getPlugin(BukkitMain.class).getConfig();
         Logger.log("Loading configuration...");
         MESSAGE_NOPERM = cfg.getString("messages.no-permission");
         MESSAGE_KICK_PROXY = cfg.getString("antibot.kick-messages.proxy");
@@ -205,7 +189,7 @@ public class BukkitMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Restarting ..."));
+        Bukkit.broadcastMessage(ChatUtil.fix(PREFIX + "&7Saving data and restarting... &8(&cMANUAL_RESTART&8)"));
         ConfigManager.save();
     }
 }

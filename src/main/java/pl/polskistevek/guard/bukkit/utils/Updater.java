@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.utils.spigot;
+package pl.polskistevek.guard.bukkit.utils;
 
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
