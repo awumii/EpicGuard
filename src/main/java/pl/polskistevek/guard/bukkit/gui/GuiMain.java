@@ -12,7 +12,7 @@ import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.utils.ServerUtils;
+import pl.polskistevek.guard.bukkit.utils.ServerUtils;
 import pl.polskistevek.guard.bukkit.utils.ExactTPS;
 import pl.polskistevek.guard.bukkit.utils.ItemBuilder;
 import pl.polskistevek.guard.bukkit.utils.Updater;
@@ -32,10 +32,10 @@ public class GuiMain {
         l1.add("");
         l1.add(ChatUtil.fix("&7Server Build: &c" + Bukkit.getVersion()));
         l1.add(ChatUtil.fix("&7Bukkit Version: &c" + Bukkit.getServer().getBukkitVersion()));
-        l1.add(ChatUtil.fix("&7RAM Usage: &6" + ServerUtils.getRamUsage() + "&8/&6" + ServerUtils.getRam()));
+        l1.add(ChatUtil.fix("&7RAM Usage: &6" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
         l1.add(ChatUtil.fix("&7TPS: &a" + ExactTPS.getTPS2()));
         l1.add("");
-        ItemStack i1 = new ItemBuilder(Material.PAPER).setTitle("&aBasic Information").addLores(l1).build();
+        ItemStack i1 = new ItemBuilder(Material.BOOK).setTitle("&aBasic Information").addLores(l1).build();
 
         List<String> l2 = new ArrayList<>();
         l2.add("");
@@ -49,7 +49,7 @@ public class GuiMain {
         l2.add(ChatUtil.fix(""));
         l2.add(ChatUtil.fix("&7Blacklisted IPs: &c" + BlacklistManager.IP_BL.size()));
         l2.add(ChatUtil.fix("&7Whitelisted IPs: &a" + BlacklistManager.IP_WL.size()));
-        ItemStack i2 = new ItemBuilder(Material.EXPERIENCE_BOTTLE).setTitle("&6AntiBot Status").addLores(l2).build();
+        ItemStack i2 = new ItemBuilder(Material.COMMAND_BLOCK).setTitle("&6AntiBot Status").addLores(l2).build();
 
         List<String> l3 = new ArrayList<>();
         l3.add("");
@@ -63,15 +63,6 @@ public class GuiMain {
         l3.add("");
         l3.add(ChatUtil.fix("&7Use &6Right Click&7 to show list."));
         ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&6Player Manager").addLores(l3).build();
-
-        List<String> l4 = new ArrayList<>();
-        l4.add("");
-        l4.add(ChatUtil.fix("&7Buy additional features."));
-        l4.add(ChatUtil.fix("&7More information coming soon!"));
-        l4.add("");
-        l4.add(ChatUtil.fix("&7ID: &6" + Piracy.getServerId()));
-        l4.add(ChatUtil.fix("&7License: &6" + Piracy.b));
-        ItemStack i4 = new ItemBuilder(Material.GOLD_BLOCK).setTitle("&6Premium Features").addLores(l4).build();
 
         List<String> l5 = new ArrayList<>();
         l5.add("");
@@ -107,7 +98,6 @@ public class GuiMain {
         i.setItem(16, i7);
         i.setItem(18, i5);
         i.setItem(22, i6);
-        i.setItem(26, i4);
         p.openInventory(i);
     }
 }

@@ -13,7 +13,7 @@ public class ServerListPingListener implements Listener {
     public void onPing(ServerListPingEvent e){
         cps_ping++;
         if (cps_ping > BukkitMain.PING_SPEED){
-            Logger.log("[" + cps_ping + "] ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress());
+            Logger.log("[" + cps_ping + "] ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress(), true);
             PreLoginListener.attack = true;
         }
         PreLoginListener.rem(1);

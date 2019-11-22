@@ -7,11 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.manager.MessageFileManager;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
-import pl.polskistevek.guard.bukkit.manager.Notificator;
+import pl.polskistevek.guard.bukkit.utils.Notificator;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.bukkit.utils.ExactTPS;
 import pl.polskistevek.guard.utils.Logger;
 import java.io.IOException;
 import java.net.URL;
@@ -22,19 +22,17 @@ public class PreLoginListener implements Listener {
     private static int blocked = 0;
     public static boolean attack = false;
 
+    /*
+    This code is really messy.
+    I will need to remake it soon.
+     */
+
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent e) throws IOException, GeoIp2Exception {
         String adress = e.getAddress().getHostAddress();
         String p = e.getName();
         if (Bukkit.hasWhitelist()){
             return;
-        }
-        if (!BukkitMain.WHITELIST_MESSAGE.equals("")) {
-            if (Bukkit.hasWhitelist()) {
-                if (!Bukkit.getOfflinePlayer(e.getUniqueId()).isWhitelisted()) {
-                    Bukkit.broadcast(ChatUtil.fix(BukkitMain.PREFIX + BukkitMain.WHITELIST_MESSAGE).replace("{NICK}", p), BukkitMain.PERMISSION);
-                }
-            }
         }
         if (!BukkitMain.ANTIBOT){
             return;
@@ -45,36 +43,17 @@ public class PreLoginListener implements Listener {
         String url1 = BukkitMain.ANTIBOT_QUERY_1.replace("{IP}", adress);
         String url2 = BukkitMain.ANTIBOT_QUERY_2.replace("{IP}", adress);
         String url3 = BukkitMain.ANTIBOT_QUERY_3.replace("{IP}", adress);
-        /*if (BukkitMain.API){
-            if (dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI.isWhitelisted(adress)){
-                passed(p, "Whitelist Check (External)");
-                Logger.log(adress + " (" + p + ") connected -> External Whitelist check [✔]");
-                if (!BlacklistManager.checkWhitelist(adress)){
-                    BlacklistManager.addWhitelist(adress);
-                }
-                return;
-            }
-            if (dev.jaqobb.bot_sentry_spigot.api.BotSentryAPI.isAntiBotEnabled()){
-                blocked++;
-                cps++;
-                title();
-                Logger.log(adress + " (" + p + ") detected for ---> ATTACK_LEGACY [✖]");
-                failed("Attack Legacy", p, adress);
-                rem(0);
-                return;
-            }
-        }*/
+        Logger.log("###  CHECKING PLAYER " + p + " [" + adress + "]  ###", true);
         if (BlacklistManager.checkWhitelist(adress)){
-            Logger.log(adress + " (" + p + ") connected -> Internal whitelist check [✔]");
-            passed(p, "Whitelist Check (Internal)");
+            Logger.log("# Whitelist Check - Passed", true);
             return;
         }
         if (BlacklistManager.check(adress)){
             blocked++;
             cps++;
             title();
-            Logger.log(adress + " (" + p + ") detected for ---> BLACKLIST_CHECK [✖]");
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_BLACKLIST));
+            Logger.log("# Blacklist Check - FAILED", true);
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_BLACKLIST));
             failed("Blacklist Check", p, adress);
             rem(0);
             return;
@@ -83,9 +62,9 @@ public class PreLoginListener implements Listener {
             cps++;
             blocked++;
             title();
-            Logger.log(adress + " (" + p + ") detected for ---> ATTACK_MODE [✖]");
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_ATTACK));
-            failed("Protection Mode", p, adress);
+            Logger.log("# Attack Mode Check - FAILED", true);
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_ATTACK));
+            failed("Attack Mode", p, adress);
             rem(0);
             return;
         }
@@ -93,14 +72,14 @@ public class PreLoginListener implements Listener {
             String country = GEO.dbReader.country(e.getAddress()).getCountry().getIsoCode();
             if (BukkitMain.COUNTRY_MODE.equals("WHITELIST")){
                 if (BukkitMain.COUNTRIES.contains(country)){
-                    Logger.log(adress + " (" + p + ") passed COUNTRY_WHITELIST check, but need to go for proxy check...");
+                    Logger.log("# Country Check - Passed", true);
                 } else {
                     cps++;
                     blocked++;
                     title();
-                    Logger.log(adress + " (" + p + ") detected for ---> COUNTRY_WHITELIST [✖]");
-                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_COUNTRY));
-                    failed("Country Whitelist", p, adress);
+                    Logger.log("# Country Check - FAILED", true);
+                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_COUNTRY));
+                    failed("Country Check", p, adress);
                     rem(0);
                     return;
                 }
@@ -110,60 +89,55 @@ public class PreLoginListener implements Listener {
                     cps++;
                     blocked++;
                     title();
-                    Logger.log(adress + " (" + p + ") detected for ---> COUNTRY_BLACKLIST [✖]");
-                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_COUNTRY));
-                    failed("Country Blacklist", p, adress);
+                    Logger.log("# Country Check - FAILED", true);
+                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_COUNTRY));
+                    failed("Country Check", p, adress);
                     rem(0);
                     return;
                 } else {
-                    Logger.log(adress + " (" + p + ") passed COUNTRY_BLACKLIST check, but need to go for proxy check...");
+                    Logger.log("# Country Check - Passed", true);
                 }
             }
         }
         if (checkUrl(url1)){
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(ChatUtil.fix(BukkitMain.MESSAGE_KICK_PROXY)));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(ChatUtil.fix(MessageFileManager.MESSAGE_KICK_PROXY)));
             detected(adress, p);
             return;
         }
         if (checkUrl(url2)){
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_PROXY));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_PROXY));
             detected(adress, p);
             return;
         }
         if (checkUrl(url3)){
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(BukkitMain.MESSAGE_KICK_PROXY));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtil.fix(MessageFileManager.MESSAGE_KICK_PROXY));
             detected(adress, p);
             return;
         }
-        Logger.log(adress + " (" + p + ") connected -> Passed Checks [✔]");
-        passed(p, "Safe Player");
+        Logger.log("###  PLAYER " + p + " [" + adress + "]  PASSED EVERY CHECK ###", true);
     }
 
     private static void failed(String reason, String p, String adress){
-        Notificator.action(BukkitMain.ACTION_BOT.replace("{NICK}", p).replace("{IP}", adress).replace("{DET}", reason).replace("{CPS}", String.valueOf(cps)).replace("{TPS}", String.valueOf(ExactTPS.getTPS2())));
+        Notificator.action(MessageFileManager.ACTIONBAR_ATTACK.replace("{NICK}", p).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(cps)));
     }
 
     private static void detected(String adress, String p){
-        Logger.log(adress + " (" + p + ") detected for ---> PROXY_VPN [✖]");
+        Logger.log("# Proxy Check - FAILED", true);
         BlacklistManager.add(adress);
         blocked++;
         cps++;
         title();
-        failed("Proxy / VPN", p, adress);
+        failed("Proxy Check", p, adress);
         rem(0);
     }
 
     private static void title(){
         if (cps > BukkitMain.CPS_MIN) {
-            Notificator.title(BukkitMain.ATTACK_TITLE.replace("{MAX}", String.valueOf(blocked)), BukkitMain.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(cps)));
+            Notificator.title(MessageFileManager.ATTACK_TITLE.replace("{MAX}", String.valueOf(blocked)), MessageFileManager.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(cps)));
         }
     }
 
-    private static void passed(String a, String b){
-        Notificator.action(BukkitMain.PASSED_ACTION.replace("{NICK}", a).replace("{DET}", b));
-    }
-
-    public static void rem(int type){
+    static void rem(int type){
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -194,7 +168,7 @@ public class PreLoginListener implements Listener {
                 return false;
             }
         } catch (IOException e) {
-            Logger.log("[RATE LIMIT] Website returned code 403, it may be down, or rate limited. URL: " + url);
+            Logger.log("[RATE LIMIT] Website returned code 403, it may be down, or rate limited. URL: " + url, true);
             return false;
         }
         return false;

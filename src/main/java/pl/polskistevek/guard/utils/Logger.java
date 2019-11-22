@@ -11,15 +11,15 @@ import java.util.Calendar;
 
 public class Logger {
     private static File file;
-    public static boolean spigot = false;
 
-    public static void create(){
-        if (spigot){
+    public static void create(ServerType type) {
+        if (type == ServerType.SPIGOT) {
             file = new File(BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/logs.txt");
-        } else {
+        }
+        if (type == ServerType.BUNGEE) {
             file = new File(BungeeMain.plugin.getDataFolder() + "/logs.txt");
         }
-        if (!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -28,12 +28,17 @@ public class Logger {
         }
     }
 
-    public static void log(String message) {
+    public static void log(String message, boolean hide) {
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
         String time = sdf.format(cal.getTime());
-        String msg = "[" + time + "] [EpicGuard/Logger] " + message;
-        System.out.println(msg);
+        String msg;
+        if (!hide) {
+            msg = "[" + time + "] [EpicGuard/Logger] " + message;
+            System.out.println(msg);
+        } else {
+            msg = "[" + time + "] [Connection Debugger] " + message;
+        }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
             bw.append(msg);

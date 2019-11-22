@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import pl.polskistevek.guard.bukkit.manager.PlayerManager;
+import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.GEO;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class GuiPlayers {
             l.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYES" : "&cNO")));
             l.add("");
             l.add(ChatUtil.fix("&7IP History:"));
-            for (String adress : PlayerManager.getUser(player).getAdresses()){
+            for (String adress : UserManager.getUser(player).getAdresses()){
                 if (player.getAddress().getAddress().getHostAddress().equals(adress)){
                     l.add(ChatUtil.fix("&8- &c" + adress + " &8(&aCurrent&8)"));
                 } else {

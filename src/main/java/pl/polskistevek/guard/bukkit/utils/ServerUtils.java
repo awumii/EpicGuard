@@ -1,7 +1,7 @@
-package pl.polskistevek.guard.utils;
+package pl.polskistevek.guard.bukkit.utils;
 
 public class ServerUtils {
-    private static String humanReadableByteCount(final long bytes) {
+    private static String format(final long bytes) {
         if (bytes < 1536L) {
             return bytes + " B";
         }
@@ -10,13 +10,13 @@ public class ServerUtils {
         return String.format("%.2f %sB", bytes / Math.pow(1024.0, exp), pre);
     }
 
-    public static String getRamUsage(){
+    public static String getMemoryUsage(){
         final long freeMemory = Runtime.getRuntime().freeMemory();
         final long totalMemory = Runtime.getRuntime().totalMemory();
-        return humanReadableByteCount(totalMemory - freeMemory);
+        return format(totalMemory - freeMemory);
     }
 
-    public static String getRam(){
-        return humanReadableByteCount(Runtime.getRuntime().totalMemory());
+    public static String getTotalMemory(){
+        return format(Runtime.getRuntime().totalMemory());
     }
 }
