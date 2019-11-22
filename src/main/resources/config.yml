@@ -13,19 +13,7 @@
 ###############################
 ##    Main Options           ##
 ###############################
-
-main-permission: "epicguard.admin"
-prefix: "&c&lEpicGuard &8● "
 updater: true
-# Debug will log all config values.
-debug: false
-
-# Messages will be moved to messages.yml in 2.0 Update.
-messages:
-  no-permission: "&cYou don't have permission!"
-  # Message when a player is not whitelisted. To disable, leave it "".
-  whitelist: "&7Player &c{NICK} &7tried to join but whitelist is enabled"
-  new-ip: "&7Player &f{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
 
 ###############################
 ##           Countries       ##
@@ -46,13 +34,15 @@ countries:
 ##           Advanced        ##
 ###############################
 
-attack-speed:
+speed:
   # How many connections per seconds should me made, to block connections to the server.
   # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
   # If deny-join is triggered, Proxy/VPN checking is skipped.
   deny-join: 3
   # How many pings per seconds should be made to block connections to the server.
   ping-speed: 10
+  # Time before antibot will disable.
+  attack-timer-reset: 240
 
 auto-whitelist:
   # Enable automatic player whitelisting.
@@ -99,20 +89,3 @@ antibot:
       - "yes"
       - "true"
       - "Bad"
-  # Action bar when attack is active and antibot detected a bot.
-  actionbar: "&4⚠ &cSTATUS: &b{NICK} &8[&e{IP}&8] &7failed &6{DET} &8&m| &a{CPS}&7/&asec &8&m| &7TPS: &c{TPS} &4⚠"
-  # Actionbar when a player has passed checking and is allowed to join.
-  actionbar-passed: "&a✔  &7SUCCESS:  &e{NICK}  &8&m|&7  passed: &6{DET}  &a✔"
-  # Idle actionbar when there is no attack.
-  actionbar-idle: "&7Listening, attack not detected... {ANIM}"
-  attack:
-    # Minimum Connections Per Second to show title.
-    cps-min: 3
-    title: "&6⚠ &cServer is attacked ({MAX})! &6⚠"
-    subtitle: "&7Attack speed: &a{CPS}&7/&asec&7!"
-  kick-messages:
-    # Better multiline kick-messages coming in 2.0 Update.
-    proxy: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our systems have detected, that you are using Proxy or VPN.\n&7Please disable VPN programs, and join server.\n&7If you think this is an issue, contact our staff."
-    blacklist: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your IP have been blacklisted.\n&7If you think this is an issue, please contact our staff."
-    attack: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our server is being attacked.\n&7Please wait some minutes and join."
-    country: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your country is not allowed.\n&7If you think this is an issue, please contact our staff."

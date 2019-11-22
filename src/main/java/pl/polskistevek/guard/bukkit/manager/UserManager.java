@@ -5,7 +5,7 @@ import pl.polskistevek.guard.bukkit.object.User;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerManager {
+public class UserManager {
     private static final Map<Player, User> userMap = new HashMap<>();
 
     public static User getUser(Player p){

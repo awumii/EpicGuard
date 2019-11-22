@@ -3,43 +3,32 @@ package pl.polskistevek.guard.utils;
 import com.maxmind.geoip2.DatabaseReader;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bungee.BungeeMain;
-
 import java.io.*;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
 public class GEO {
     public static DatabaseReader dbReader;
     public static boolean spigot = false;
 
-    public static void registerDatabase() throws IOException {
-        File dataFolder;
+    public static void registerDatabase(ServerType type) throws IOException {
+        File dataFolder = null;
         String dbLocation;
-        if (spigot) {
+        if (type == ServerType.SPIGOT) {
             dataFolder = BukkitMain.getPlugin(BukkitMain.class).getDataFolder();
-        } else {
+        }
+        if (type == ServerType.BUNGEE) {
             dataFolder = BungeeMain.plugin.getDataFolder();
         }
         dbLocation = dataFolder + "/GeoLite2-Country.mmdb";
         if(!new File(dbLocation).exists()){
             if (spigot) {
-                Logger.log("GeoIP Database not found! Starting download...");
+                Logger.log("GeoIP Database not found! Starting download...", false);
             }
-            URL url = new URL("http://infinity-cloud.cba.pl/api/GeoLite2-Country.mmdb");
-            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-            FileOutputStream fos = new FileOutputStream(dbLocation);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            //I need to download it from external site (my cloud) because official site has only tar.zip packed version (plugin don't need to extract it)
+            Downloader.download("http://epicmc.cba.pl/cloud/uploads/GeoLite2-Country.mmdb", dbLocation);
         }
         File database;
         database = new File(dbLocation);
-        try {
-            dbReader = new DatabaseReader.Builder(database).build();
-            if (spigot) {
-                Logger.log("GeoIP Database succesfully loaded.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dbReader = new DatabaseReader.Builder(database).build();
+        Logger.log("GeoIP Database succesfully loaded.", false);
     }
 }

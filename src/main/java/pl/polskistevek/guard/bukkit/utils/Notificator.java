@@ -1,11 +1,9 @@
-package pl.polskistevek.guard.bukkit.manager;
+package pl.polskistevek.guard.bukkit.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
-import pl.polskistevek.guard.bukkit.utils.ActionBarAPI;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.bukkit.utils.TitleAPI;
 
 public class Notificator {
     public static void title(String title, String subtitle){
@@ -22,7 +20,7 @@ public class Notificator {
         if (BukkitMain.STATUS){
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(BukkitMain.PERMISSION)) {
-                    p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + text));
+                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + text));
                 }
             }
         }
@@ -31,7 +29,7 @@ public class Notificator {
     public static void send(Player p, String text){
         if (BukkitMain.STATUS){
             if (p.hasPermission(BukkitMain.PERMISSION)){
-                p.sendMessage(ChatUtil.fix(BukkitMain.PREFIX + text));
+                p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + text));
             }
         }
     }

@@ -6,11 +6,10 @@ import pl.polskistevek.guard.bukkit.BukkitMain;
 import java.io.File;
 import java.io.IOException;
 
-public class ConfigManager {
+public class DataFileManager {
     private static final String file = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/data.yml";
     private static YamlConfiguration configuration;
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void load(){
         File customYml = new File(file);
         if (!customYml.exists()){
