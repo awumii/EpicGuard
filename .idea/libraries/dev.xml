@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="dev">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/AntyBot.jar!/dev" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

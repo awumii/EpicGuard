@@ -11,7 +11,7 @@ import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.Notificator;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.utils.spigot.ExactTPS;
+import pl.polskistevek.guard.bukkit.utils.ExactTPS;
 import pl.polskistevek.guard.utils.Logger;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +26,9 @@ public class PreLoginListener implements Listener {
     public void onPreLogin(AsyncPlayerPreLoginEvent e) throws IOException, GeoIp2Exception {
         String adress = e.getAddress().getHostAddress();
         String p = e.getName();
+        if (Bukkit.hasWhitelist()){
+            return;
+        }
         if (!BukkitMain.WHITELIST_MESSAGE.equals("")) {
             if (Bukkit.hasWhitelist()) {
                 if (!Bukkit.getOfflinePlayer(e.getUniqueId()).isWhitelisted()) {
@@ -169,11 +172,11 @@ public class PreLoginListener implements Listener {
                     return;
                 }
                 if (type == 1) {
-                    PingListener.cps_ping--;
+                    ServerListPingListener.cps_ping--;
                     return;
                 }
                 if (type == 2) {
-                    JoinListener.jps--;
+                    PlayerJoinListener.jps--;
                 }
             }
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);

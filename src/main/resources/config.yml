@@ -6,19 +6,18 @@
 #    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
 #    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
 #
-# ▪ Thank you for downloading my plugin!
-# ▪ SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
-# ▪ My Discord: PolskiStevek#2198
+# Thank you for downloading my plugin!
+# SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
+# My Discord: PolskiStevek#2198
 
 ###############################
 ##    Main Options           ##
 ###############################
 
 main-permission: "epicguard.admin"
-prefix: "&8[&6EpicGuard&8] "
+prefix: "&c&lEpicGuard &8● "
 updater: true
-# Debug will log all config values, so if you got "null" error,
-# you should enable it before reporting error to developer.
+# Debug will log all config values.
 debug: false
 
 # Messages will be moved to messages.yml in 2.0 Update.
@@ -117,11 +116,3 @@ antibot:
     blacklist: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your IP have been blacklisted.\n&7If you think this is an issue, please contact our staff."
     attack: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Our server is being attacked.\n&7Please wait some minutes and join."
     country: "&8▪ &cEpicGuard AntiBot &8▪\n\n&7Your country is not allowed.\n&7If you think this is an issue, please contact our staff."
-
-
-###############################
-##       Miscellaneous       ##
-###############################
-
-# Ignore this option. Only for DEV for testing.
-server-id: ""
