@@ -1,9 +1,10 @@
 name: EpicGuard
-version: 1.4.1
+version: 2.0.0
 main: pl.polskistevek.guard.bukkit.BukkitMain
 softdepend: [ProtocolLib]
 author: PolskiStevek
-description: Lightweight antibot for your server!
+description: Increase your server security. Fast and effective, Block bots, griefers, Bungeecord Supported!
+api-version: 1.14
 
 commands:
   core:

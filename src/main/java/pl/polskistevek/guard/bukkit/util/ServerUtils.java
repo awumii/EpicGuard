@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.bukkit.utils;
+package pl.polskistevek.guard.bukkit.util;
 
 public class ServerUtils {
     private static String format(final long bytes) {

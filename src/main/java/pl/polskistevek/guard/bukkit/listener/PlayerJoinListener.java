@@ -8,12 +8,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
-import pl.polskistevek.guard.bukkit.manager.MessageFileManager;
-import pl.polskistevek.guard.bukkit.utils.Notificator;
+import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
+import pl.polskistevek.guard.bukkit.util.Notificator;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.bukkit.object.User;
 import pl.polskistevek.guard.utils.Logger;
-import pl.polskistevek.guard.bukkit.utils.Updater;
+import pl.polskistevek.guard.bukkit.util.Updater;
 import java.util.List;
 
 public class PlayerJoinListener implements Listener {
@@ -28,16 +28,16 @@ public class PlayerJoinListener implements Listener {
         }
         User u = UserManager.getUser(p);
         jps++;
-        if (jps > 10){
+        if (jps > BukkitMain.JOIN_SPEED){
             PreLoginListener.attack = true;
         }
-        PreLoginListener.rem(2);
+        PreLoginListener.remove(2);
         Updater.notify(p);
         String adress = p.getAddress().getAddress().getHostAddress();
         List<String> history = DataFileManager.get().getStringList("history." + p.getName());
         if (!history.contains(adress)) {
             if (!history.isEmpty()) {
-                Notificator.broadcast(MessageFileManager.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
+                Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
             }
             history.add(adress);
         }

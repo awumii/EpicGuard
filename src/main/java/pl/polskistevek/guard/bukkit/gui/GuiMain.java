@@ -11,11 +11,12 @@ import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
 import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
+import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.bukkit.utils.ServerUtils;
-import pl.polskistevek.guard.bukkit.utils.ExactTPS;
-import pl.polskistevek.guard.bukkit.utils.ItemBuilder;
-import pl.polskistevek.guard.bukkit.utils.Updater;
+import pl.polskistevek.guard.bukkit.util.ServerUtils;
+import pl.polskistevek.guard.bukkit.util.ExactTPS;
+import pl.polskistevek.guard.bukkit.util.ItemBuilder;
+import pl.polskistevek.guard.bukkit.util.Updater;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +50,7 @@ public class GuiMain {
         l2.add(ChatUtil.fix(""));
         l2.add(ChatUtil.fix("&7Blacklisted IPs: &c" + BlacklistManager.IP_BL.size()));
         l2.add(ChatUtil.fix("&7Whitelisted IPs: &a" + BlacklistManager.IP_WL.size()));
-        ItemStack i2 = new ItemBuilder(Material.COMMAND_BLOCK).setTitle("&6AntiBot Status").addLores(l2).build();
+        ItemStack i2 = new ItemBuilder(Material.COMPASS).setTitle("&6AntiBot Status").addLores(l2).build();
 
         List<String> l3 = new ArrayList<>();
         l3.add("");
@@ -64,6 +65,15 @@ public class GuiMain {
         l3.add(ChatUtil.fix("&7Use &6Right Click&7 to show list."));
         ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&6Player Manager").addLores(l3).build();
 
+        List<String> l4 = new ArrayList<>();
+        l4.add("");
+        l4.add(ChatUtil.fix("&7Blocked bots: &6" + DataFileManager.blockedBots));
+        l4.add(ChatUtil.fix("&7Checked connections: &6" + DataFileManager.checkedConnections));
+        l4.add("");
+        l4.add(ChatUtil.fix("&7Thank you for using my plugin!"));
+        l4.add("");
+        ItemStack i4 = new ItemBuilder(Material.EMERALD_BLOCK).setTitle("&6Statistics").addLores(l4).build();
+
         List<String> l5 = new ArrayList<>();
         l5.add("");
         l5.add(ChatUtil.fix("&7/guard menu &8- &7Opens this GUI."));
@@ -75,13 +85,13 @@ public class GuiMain {
         l5.add(ChatUtil.fix("&7/guard whitelist <adress> &8- &7Whitelist specified adress."));
         l5.add(ChatUtil.fix("&7/guard blacklist <adress> &8- &7Blacklist specified adress."));
         l5.add("");
-        ItemStack i5 = new ItemBuilder(Material.NAME_TAG).setTitle("&9Command List").addLores(l5).build();
+        ItemStack i5 = new ItemBuilder(Material.NAME_TAG).setTitle("&6Command List").addLores(l5).build();
 
         List<String> l6 = new ArrayList<>();
         l6.add("");
         l6.add(ChatUtil.fix("&7Click to reload config."));
         l6.add(ChatUtil.fix("&7After click GUI will close."));
-        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&cReload Config").addLores(l6).build();
+        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&6Reload Config").addLores(l6).build();
 
         List<String> l7 = new ArrayList<>();
         l7.add("");
@@ -90,7 +100,7 @@ public class GuiMain {
             l7.add(ChatUtil.fix("&8* &7" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8, &7" + currentDate + "&8]"));
         }
         l7.add("");
-        ItemStack i7 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&3OP List").addLores(l7).build();
+        ItemStack i7 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&6OP List").addLores(l7).build();
 
         i.setItem(10, i1);
         i.setItem(12, i2);
@@ -98,6 +108,7 @@ public class GuiMain {
         i.setItem(16, i7);
         i.setItem(18, i5);
         i.setItem(22, i6);
+        i.setItem(26, i4);
         p.openInventory(i);
     }
 }
