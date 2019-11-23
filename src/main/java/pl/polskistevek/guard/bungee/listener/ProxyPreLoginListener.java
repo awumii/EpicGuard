@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class PreLoginListener implements Listener {
+public class ProxyPreLoginListener implements Listener {
     public static int cps = 0;
     public static boolean attack = false;
     public static int cps_ping = 0;
