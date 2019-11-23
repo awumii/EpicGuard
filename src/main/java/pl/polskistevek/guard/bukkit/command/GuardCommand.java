@@ -11,49 +11,59 @@ import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
 import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
-import pl.polskistevek.guard.bukkit.manager.MessageFileManager;
+import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
+import pl.polskistevek.guard.bungee.util.MessagesBungee;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.bukkit.utils.Updater;
+import pl.polskistevek.guard.bukkit.util.Updater;
 import java.io.IOException;
 import java.util.Date;
 
 public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if (!(sender instanceof Player)){
+            System.out.println("[EpicGuard] You are running EpicGuard v" + BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion());
+            System.out.println("[EpicGuard] Use this command in-game.");
+            return false;
+        }
         Player p = (Player) sender;
+        if (!p.hasPermission(BukkitMain.PERMISSION)){
+            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.NO_PERMISSION));
+            return false;
+        }
         if (args.length > 0) {
             switch (args[0]) {
                 case "menu":
                     GuiMain.show(p);
                     break;
                 case "save":
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Succesfully saved data file."));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Succesfully saved data file."));
                     DataFileManager.save();
                     break;
                 case "whitelist":
                     if (args.length == 2) {
                         BlacklistManager.addWhitelist(args[1]);
-                        p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Succesfully whitelisted IP: &a" + args[1]));
+                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Succesfully whitelisted IP: &a" + args[1]));
                     }
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Correct usage: &f/guard whitelist <adress>"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard whitelist <adress>"));
                     break;
                 case "blacklist":
                     if (args.length == 2) {
                         BlacklistManager.add(args[1]);
-                        p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Succesfully blacklisted IP: &c" + args[1]));
+                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Succesfully blacklisted IP: &c" + args[1]));
                     }
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Correct usage: &f/guard blacklist <adress>"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard blacklist <adress>"));
                     break;
                 case "player":
                     if (args.length == 2){
                         Player player = Bukkit.getPlayerExact(args[1]);
                         if (player == null){
-                            p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7The player &f" + args[1] + " &7is &coffline&7!"));
+                            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7The player &f" + args[1] + " &7is &coffline&7!"));
                             return false;
                         }
                         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
@@ -77,7 +87,7 @@ public class GuardCommand implements CommandExecutor {
                         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
                         return false;
                     }
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Correct usage: &f/guard player <nick>"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard player <nick>"));
                     break;
                 case "op":
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
@@ -95,13 +105,13 @@ public class GuardCommand implements CommandExecutor {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman load epicguard");
                     break;
                 case "status":
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + (BukkitMain.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (BukkitMain.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
                     BukkitMain.STATUS = !BukkitMain.STATUS;
                     break;
                 case "reload":
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Reloading config..."));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
                     BukkitMain.loadConfig();
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&aSuccesfully &7reloaded config!"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;
                 case "antibot":
                     p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
@@ -121,7 +131,7 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
                     break;
                 default:
-                    p.sendMessage(ChatUtil.fix(MessageFileManager.PREFIX + "&7Unknown command! &7Use &f/guard&7."));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Unknown command! &7Use &f/guard&7."));
             }
             return false;
         }

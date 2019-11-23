@@ -5,6 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
+import pl.polskistevek.guard.bukkit.util.ActionBarAPI;
+import pl.polskistevek.guard.utils.ChatUtil;
+import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 
 public class GuiListener implements Listener {
     @EventHandler
@@ -20,6 +23,11 @@ public class GuiListener implements Listener {
                 return;
             }
             if (im.getDisplayName().contains("Player Manager")){
+                if (!ActionBarAPI.nmsver.startsWith("v1_14")){
+                    p.closeInventory();
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your server version &8(&c" + ActionBarAPI.nmsver + "&8) &7has no support for this feature!"));
+                    return;
+                }
                 GuiPlayers.show(p);
             }
             if (im.getDisplayName().contains("Reload Config")){

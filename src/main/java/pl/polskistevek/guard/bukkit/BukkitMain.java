@@ -8,12 +8,12 @@ import pl.polskistevek.guard.bukkit.command.GuardCommand;
 import pl.polskistevek.guard.bukkit.gui.GuiListener;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
-import pl.polskistevek.guard.bukkit.manager.MessageFileManager;
+import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.task.AttackTimerTask;
-import pl.polskistevek.guard.bukkit.utils.ActionBarAPI;
-import pl.polskistevek.guard.bukkit.utils.ExactTPS;
-import pl.polskistevek.guard.bukkit.utils.Metrics;
-import pl.polskistevek.guard.bukkit.utils.Updater;
+import pl.polskistevek.guard.bukkit.util.ActionBarAPI;
+import pl.polskistevek.guard.bukkit.util.ExactTPS;
+import pl.polskistevek.guard.bukkit.util.Metrics;
+import pl.polskistevek.guard.bukkit.util.Updater;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
 import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
@@ -35,6 +35,7 @@ public class BukkitMain extends JavaPlugin {
     public static boolean STATUS = true;
     public static int CPS_ACTIVATE;
     public static int PING_SPEED;
+    public static int JOIN_SPEED;
     public static boolean AUTO_WHITELIST;
     public static int AUTO_WHITELIST_TIME;
     public static String ANTIBOT_QUERY_1;
@@ -71,9 +72,9 @@ public class BukkitMain extends JavaPlugin {
         loadConfig();
 
         //Registering tasks
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 30L, 0L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), ATTACK_TIMER, 0L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 1000L, 0L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 0L, ATTACK_TIMER);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
 
         try {
@@ -85,7 +86,7 @@ public class BukkitMain extends JavaPlugin {
         Updater.checkForUpdates();
         Metrics metrics = new Metrics(this);
         DataFileManager.load();
-        MessageFileManager.load();
+        MessagesBukkit.load();
 
         //Creating GUI's
         GuiMain.i = Bukkit.createInventory(null, 27, "EpicGuard Menu");
@@ -115,6 +116,7 @@ public class BukkitMain extends JavaPlugin {
         ANTIBOT = cfg.getBoolean("antibot.enabled");
         UPDATER = cfg.getBoolean("updater");
         ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
+        JOIN_SPEED = cfg.getInt("speed.join-speed");
     }
 
     @Override

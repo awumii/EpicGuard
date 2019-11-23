@@ -1,19 +1,19 @@
-package pl.polskistevek.guard.bukkit.manager;
+package pl.polskistevek.guard.bungee.util;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
+import pl.polskistevek.guard.bungee.BungeeMain;
 import pl.polskistevek.guard.utils.Downloader;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
-public class MessageFileManager {
-    private static final String file = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/messages.yml";
-
-    public static String MESSAGE_KICK_PROXY;
-    public static String MESSAGE_KICK_COUNTRY;
-    public static String MESSAGE_KICK_ATTACK;
-    public static String MESSAGE_KICK_BLACKLIST;
+public class MessagesBungee {
+    public static List<String> MESSAGE_KICK_PROXY;
+    public static List<String> MESSAGE_KICK_COUNTRY;
+    public static List<String> MESSAGE_KICK_ATTACK;
+    public static List<String> MESSAGE_KICK_BLACKLIST;
     public static String ACTIONBAR_ATTACK;
     public static String ACTIONBAR_NO_ATTACK;
     public static String ATTACK_TITLE;
@@ -22,7 +22,8 @@ public class MessageFileManager {
     public static String NO_PERMISSION;
     public static String PREFIX;
 
-    public static void load(){
+    public static void load() throws IOException {
+        String file = BungeeMain.plugin.getDataFolder() + "/messages.yml";
         File configFile = new File(file);
         if (!configFile.exists()){
             try {
@@ -31,11 +32,11 @@ public class MessageFileManager {
                 e.printStackTrace();
             }
         }
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
-        MESSAGE_KICK_PROXY = cfg.getString("kick-messages.proxy");
-        MESSAGE_KICK_COUNTRY = cfg.getString("kick-messages.country");
-        MESSAGE_KICK_ATTACK = cfg.getString("kick-messages.attack");
-        MESSAGE_KICK_BLACKLIST = cfg.getString("kick-messages.blacklist");
+        Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(file));
+        MESSAGE_KICK_PROXY = cfg.getStringList("kick-messages.proxy");
+        MESSAGE_KICK_COUNTRY = cfg.getStringList("kick-messages.country");
+        MESSAGE_KICK_ATTACK = cfg.getStringList("kick-messages.attack");
+        MESSAGE_KICK_BLACKLIST = cfg.getStringList("kick-messages.blacklist");
         ACTIONBAR_ATTACK = cfg.getString("actionbar.attack");
         ACTIONBAR_NO_ATTACK = cfg.getString("actionbar.no-attack");
         ATTACK_TITLE = cfg.getString("attack-title.title");

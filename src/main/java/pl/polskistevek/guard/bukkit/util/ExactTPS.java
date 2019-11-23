@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.bukkit.utils;
+package pl.polskistevek.guard.bukkit.util;
 
 import java.text.DecimalFormat;
 

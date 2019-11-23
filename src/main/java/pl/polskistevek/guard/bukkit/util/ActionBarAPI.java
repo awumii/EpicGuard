@@ -4,7 +4,7 @@
   I used parts of his code, so users don't need to download any other depencies
  */
 
-package pl.polskistevek.guard.bukkit.utils;
+package pl.polskistevek.guard.bukkit.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,22 +16,21 @@ import java.lang.reflect.Method;
 
 public class ActionBarAPI {
     public static String nmsver;
-    private static boolean useOldMethods = false;
+    public static boolean useOldMethods = false;
 
     public static void register(){
         nmsver = Bukkit.getServer().getClass().getPackage().getName();
         nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
         if (nmsver.equalsIgnoreCase("v1_8_R1") || nmsver.startsWith("v1_7_")) {
-            Logger.log("Using old NMS Methods for 1.8/1.7");
+            Logger.log("Using old NMS Methods for 1.7 (or old 1.8 version, you should update it)", false);
             useOldMethods = true;
         }
     }
 
     private static void sendActionBar(Player player, String message) {
         if (!player.isOnline()) {
-            return; // Player may have logged out
+            return;
         }
-
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit." + nmsver + ".entity.CraftPlayer");
             Object craftPlayer = craftPlayerClass.cast(player);

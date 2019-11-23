@@ -1,6 +1,6 @@
-prefix: "&c&lEpicGuard &8● "
+prefix: "&c&lEpicGuard &8» "
 actionbar:
-  attack: "&f{NICK} &7[&f{IP}&7] failed &8» {DETECTION} &8| &c{CPS}&7/&ccps"
+  attack: "&f{NICK} &7[&f{IP}&7] failed &8» &c{DETECTION} &8| &c{CPS}&7/&ccps"
   no-attack: "&7No Attack... {ANIM} &8| &a{CPS}&7/&acps"
 attack-title:
   # {MAX} - Number of blocked bots during last attack.

@@ -16,6 +16,6 @@ public class ServerListPingListener implements Listener {
             Logger.log("[" + cps_ping + "] ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress(), true);
             PreLoginListener.attack = true;
         }
-        PreLoginListener.rem(1);
+        PreLoginListener.remove(1);
     }
 }

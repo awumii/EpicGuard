@@ -4,7 +4,7 @@
   I used parts of his code, so users don't need to download any other depencies
  */
 
-package pl.polskistevek.guard.bukkit.utils;
+package pl.polskistevek.guard.bukkit.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

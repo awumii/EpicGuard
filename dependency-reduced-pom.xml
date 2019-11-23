@@ -151,20 +151,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>dev.jaqobb.bot_sentry_spigot.api</groupId>
-      <artifactId>bot_sentry_spigot</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/AntyBot.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>dev.jaqobb.bot_sentry_bungee.api</groupId>
-      <artifactId>bot_sentry_bungee</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/AntyBot-Bungee.jar</systemPath>
-    </dependency>
   </dependencies>
 </project>
 

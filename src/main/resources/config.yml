@@ -13,6 +13,7 @@
 ###############################
 ##    Main Options           ##
 ###############################
+main-permission: "epicguard.admin"
 updater: true
 
 ###############################
@@ -38,11 +39,13 @@ speed:
   # How many connections per seconds should me made, to block connections to the server.
   # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
   # If deny-join is triggered, Proxy/VPN checking is skipped.
-  deny-join: 3
+  connection: 3
   # How many pings per seconds should be made to block connections to the server.
   ping-speed: 10
+  # How many successful joins per second should me made to block connections to the server
+  join-speed: 5
   # Time before antibot will disable.
-  attack-timer-reset: 240
+  attack-timer-reset: 500
 
 auto-whitelist:
   # Enable automatic player whitelisting.
