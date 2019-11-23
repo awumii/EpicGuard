@@ -11,11 +11,11 @@ public class ProxyPingListener implements Listener {
     public void onProxyPing(ProxyPingEvent e) {
         PendingConnection c = e.getConnection();
         if (BungeeMain.ANTIBOT) {
-            PreLoginListener.cps_ping++;
-            if (PreLoginListener.cps_ping > BungeeMain.CPS_PING_ACTIVATE) {
-                PreLoginListener.attack = true;
+            ProxyPreLoginListener.cps_ping++;
+            if (ProxyPreLoginListener.cps_ping > BungeeMain.CPS_PING_ACTIVATE) {
+                ProxyPreLoginListener.attack = true;
             }
-            PreLoginListener.remove(1);
+            ProxyPreLoginListener.remove(1);
         }
     }
 }

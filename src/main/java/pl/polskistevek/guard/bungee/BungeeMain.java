@@ -4,14 +4,13 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import pl.polskistevek.guard.bungee.listener.PreLoginListener;
+import pl.polskistevek.guard.bungee.listener.ProxyPreLoginListener;
 import pl.polskistevek.guard.bungee.listener.ProxyPingListener;
 import pl.polskistevek.guard.bungee.task.AttackClearTask;
 import pl.polskistevek.guard.bungee.util.MessagesBungee;
 import pl.polskistevek.guard.bungee.util.Metrics;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.utils.Logger;
-import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.utils.ServerType;
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +56,7 @@ public class BungeeMain extends Plugin {
             e.printStackTrace();
         }
         Metrics metrics = new Metrics(this);
-        getProxy().getPluginManager().registerListener(this, new PreLoginListener());
+        getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
         getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
     }
 
