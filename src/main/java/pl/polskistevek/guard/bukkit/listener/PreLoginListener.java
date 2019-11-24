@@ -8,6 +8,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.closer.ConnectionCloser;
+import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.utils.KickReason;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
@@ -20,14 +21,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class PreLoginListener implements Listener {
-    public static int cps = 0;
     private static int blocked = 0;
-    public static boolean attack = false;
-
-    /*
-    This code is really messy.
-    I will need to remake it soon.
-     */
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent e) throws IOException, GeoIp2Exception {
@@ -43,7 +37,7 @@ public class PreLoginListener implements Listener {
                 if (BukkitMain.COUNTRIES.contains(country)){
                     Logger.log("# GEO Check - Passed", true);
                 } else {
-                    cps++;
+                    AttackManager.connectPerSecond++;
                     blocked++;
                     DataFileManager.blockedBots++;
                     title();
@@ -56,7 +50,7 @@ public class PreLoginListener implements Listener {
             }
             if (BukkitMain.COUNTRY_MODE.equals("BLACKLIST")){
                 if (!BukkitMain.COUNTRIES.contains(country)){
-                    cps++;
+                    AttackManager.connectPerSecond++;
                     blocked++;
                     DataFileManager.blockedBots++;
                     title();
@@ -73,9 +67,7 @@ public class PreLoginListener implements Listener {
         if (!BukkitMain.ANTIBOT){
             return;
         }
-        if (cps > BukkitMain.CPS_ACTIVATE){
-            attack = true;
-        }
+        AttackManager.check(AttackManager.AttackType.CONNECT);
         String url1 = BukkitMain.ANTIBOT_QUERY_1.replace("{IP}", adress);
         String url2 = BukkitMain.ANTIBOT_QUERY_2.replace("{IP}", adress);
         String url3 = BukkitMain.ANTIBOT_QUERY_3.replace("{IP}", adress);
@@ -86,7 +78,7 @@ public class PreLoginListener implements Listener {
         }
         if (BlacklistManager.check(adress)){
             blocked++;
-            cps++;
+            AttackManager.connectPerSecond++;
             DataFileManager.blockedBots++;
             title();
             Logger.log("# Blacklist Check - FAILED", true);
@@ -95,8 +87,8 @@ public class PreLoginListener implements Listener {
             remove(0);
             return;
         }
-        if (attack){
-            cps++;
+        if (AttackManager.attackMode){
+            AttackManager.connectPerSecond++;
             blocked++;
             DataFileManager.blockedBots++;
             title();
@@ -125,14 +117,14 @@ public class PreLoginListener implements Listener {
     }
 
     private static void failed(String reason, String p, String adress){
-        Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", p).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(cps)));
+        Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", p).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
     }
 
     private static void detected(String adress, String p){
         Logger.log("# Proxy Check - FAILED", true);
         BlacklistManager.add(adress);
         blocked++;
-        cps++;
+        AttackManager.connectPerSecond++;
         DataFileManager.blockedBots++;
         title();
         failed("Proxy Check", p, adress);
@@ -140,9 +132,7 @@ public class PreLoginListener implements Listener {
     }
 
     private static void title(){
-        if (cps > BukkitMain.CPS_MIN) {
-            Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(blocked)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(cps)));
-        }
+        Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(blocked)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
     }
 
     static void remove(int type){
@@ -150,15 +140,15 @@ public class PreLoginListener implements Listener {
             @Override
             public void run() {
                 if (type == 0) {
-                    cps--;
+                    AttackManager.connectPerSecond--;
                     return;
                 }
                 if (type == 1) {
-                    ServerListPingListener.cps_ping--;
+                    AttackManager.pingPerSecond++;
                     return;
                 }
                 if (type == 2) {
-                    PlayerJoinListener.jps--;
+                    AttackManager.joinPerSecond++;
                 }
             }
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);

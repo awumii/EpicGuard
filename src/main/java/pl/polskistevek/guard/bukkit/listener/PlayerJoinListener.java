@@ -6,18 +6,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.util.Notificator;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.bukkit.object.User;
+import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.bukkit.util.Updater;
 import java.util.List;
 
 public class PlayerJoinListener implements Listener {
-    public static int jps;
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
@@ -27,12 +28,12 @@ public class PlayerJoinListener implements Listener {
             Updater.notify(p);
         }
         User u = UserManager.getUser(p);
-        jps++;
-        if (jps > BukkitMain.JOIN_SPEED){
-            PreLoginListener.attack = true;
-        }
+        AttackManager.check(AttackManager.AttackType.JOIN);
         PreLoginListener.remove(2);
         Updater.notify(p);
+        if (DataFileManager.license.equals("mikecraft")){
+            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7This server has &6premium partner license&7! (Licensed to: &6mikecraft&7)"));
+        }
         String adress = p.getAddress().getAddress().getHostAddress();
         List<String> history = DataFileManager.get().getStringList("history." + p.getName());
         if (!history.contains(adress)) {

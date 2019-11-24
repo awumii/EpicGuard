@@ -27,13 +27,12 @@ import java.io.*;
 import java.util.List;
 
 public class BukkitMain extends JavaPlugin {
-    public static int CPS_MIN;
     public static String PERMISSION;
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;
     public static boolean FIREWALL;
     public static boolean STATUS = true;
-    public static int CPS_ACTIVATE;
+    public static int CONNECT_SPEED;
     public static int PING_SPEED;
     public static int JOIN_SPEED;
     public static boolean AUTO_WHITELIST;
@@ -73,7 +72,7 @@ public class BukkitMain extends JavaPlugin {
 
         //Registering tasks
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 0L, ATTACK_TIMER);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 1L, 200L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
 
@@ -98,12 +97,11 @@ public class BukkitMain extends JavaPlugin {
     public static void loadConfig(){
         FileConfiguration cfg = BukkitMain.getPlugin(BukkitMain.class).getConfig();
         Logger.log("Loading configuration...", false);
-        CPS_MIN = cfg.getInt("antibot.attack.cps-min");
         PERMISSION = cfg.getString("main-permission");
         FIREWALL = cfg.getBoolean("firewall");
         FIREWALL_BL = cfg.getString("firewall.command-blacklist");
         FIREWALL_WL = cfg.getString("firewall.command-whitelist");
-        CPS_ACTIVATE = cfg.getInt("speed.deny-join");
+        CONNECT_SPEED = cfg.getInt("speed.connection");
         PING_SPEED = cfg.getInt("speed.ping-speed");
         AUTO_WHITELIST = cfg.getBoolean("auto-whitelist.enabled");
         AUTO_WHITELIST_TIME = cfg.getInt("auto-whitelist.time");
