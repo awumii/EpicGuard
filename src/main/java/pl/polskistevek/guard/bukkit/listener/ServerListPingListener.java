@@ -3,18 +3,16 @@ package pl.polskistevek.guard.bukkit.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.utils.Logger;
 
 public class ServerListPingListener implements Listener {
-    public static int cps_ping = 0;
 
     @EventHandler
     public void onPing(ServerListPingEvent e){
-        cps_ping++;
-        if (cps_ping > BukkitMain.PING_SPEED){
-            Logger.log("[" + cps_ping + "] ATTACK_PING ACTIVATED: Catched ping: " + e.getAddress().getHostAddress(), true);
-            PreLoginListener.attack = true;
+        AttackManager.pingPerSecond++;
+        if (AttackManager.check(AttackManager.AttackType.PING)){
+            Logger.log("SERVER IS BEING ATTACKED! Catched Ping: " + e.getAddress().getHostAddress(), true);
         }
         PreLoginListener.remove(1);
     }
