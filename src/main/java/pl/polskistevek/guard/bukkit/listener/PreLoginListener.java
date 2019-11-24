@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import pl.polskistevek.guard.api.bukkit.event.PlayerDetectionEvent;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.closer.ConnectionCloser;
 import pl.polskistevek.guard.utils.KickReason;
@@ -47,7 +46,6 @@ public class PreLoginListener implements Listener {
                     cps++;
                     blocked++;
                     DataFileManager.blockedBots++;
-                    Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.GEO));
                     title();
                     Logger.log("# GEO Check - FAILED", true);
                     ConnectionCloser.close(e, KickReason.GEO);
@@ -61,7 +59,6 @@ public class PreLoginListener implements Listener {
                     cps++;
                     blocked++;
                     DataFileManager.blockedBots++;
-                    Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.GEO));
                     title();
                     Logger.log("# GEO Check - FAILED", true);
                     ConnectionCloser.close(e, KickReason.GEO);
@@ -91,7 +88,6 @@ public class PreLoginListener implements Listener {
             blocked++;
             cps++;
             DataFileManager.blockedBots++;
-            Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.BLACKLIST));
             title();
             Logger.log("# Blacklist Check - FAILED", true);
             ConnectionCloser.close(e, KickReason.BLACKLIST);
@@ -106,26 +102,22 @@ public class PreLoginListener implements Listener {
             title();
             Logger.log("# Attack Mode Check - FAILED", true);
             ConnectionCloser.close(e, KickReason.ATTACK);
-            Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.ATTACK));
             failed("Attack Mode", p, adress);
             remove(0);
             return;
         }
         if (checkUrl(url1)){
             ConnectionCloser.close(e, KickReason.PROXY);
-            Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.PROXY));
             detected(adress, p);
             return;
         }
         if (checkUrl(url2)){
             ConnectionCloser.close(e, KickReason.PROXY);
-            Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.PROXY));
             detected(adress, p);
             return;
         }
         if (checkUrl(url3)){
             ConnectionCloser.close(e, KickReason.PROXY);
-            Bukkit.getPluginManager().callEvent(new PlayerDetectionEvent(e.getName(), KickReason.PROXY));
             detected(adress, p);
             return;
         }
