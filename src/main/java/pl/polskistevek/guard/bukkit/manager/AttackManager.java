@@ -16,16 +16,25 @@ public class AttackManager {
 
     public static boolean check(AttackType type){
         if (type == AttackType.PING){
-            attackMode = true;
-            return pingPerSecond > BukkitMain.PING_SPEED;
+            if (pingPerSecond > BukkitMain.PING_SPEED) {
+                attackMode = true;
+                return true;
+            }
+            return false;
         }
         if (type == AttackType.CONNECT){
-            attackMode = true;
-            return connectPerSecond > BukkitMain.JOIN_SPEED;
+            if (pingPerSecond > BukkitMain.JOIN_SPEED) {
+                attackMode = true;
+                return true;
+            }
+            return false;
         }
         if (type == AttackType.JOIN){
-            attackMode = true;
-            return joinPerSecond > BukkitMain.CONNECT_SPEED;
+            if (pingPerSecond > BukkitMain.CONNECT_SPEED) {
+                attackMode = true;
+                return true;
+            }
+            return false;
         }
         return false;
     }

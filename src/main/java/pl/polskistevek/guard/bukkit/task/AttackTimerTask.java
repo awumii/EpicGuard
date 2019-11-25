@@ -6,6 +6,8 @@ public class AttackTimerTask implements Runnable {
 
     @Override
     public void run() {
-        AttackManager.attackMode = false;
+        if (!AttackManager.check(AttackManager.AttackType.CONNECT) && !AttackManager.check(AttackManager.AttackType.JOIN) && !AttackManager.check(AttackManager.AttackType.PING)) {
+            AttackManager.attackMode = false;
+        }
     }
 }

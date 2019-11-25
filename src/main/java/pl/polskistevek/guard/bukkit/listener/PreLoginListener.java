@@ -144,11 +144,11 @@ public class PreLoginListener implements Listener {
                     return;
                 }
                 if (type == 1) {
-                    AttackManager.pingPerSecond++;
+                    AttackManager.pingPerSecond--;
                     return;
                 }
                 if (type == 2) {
-                    AttackManager.joinPerSecond++;
+                    AttackManager.joinPerSecond--;
                 }
             }
         }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);
