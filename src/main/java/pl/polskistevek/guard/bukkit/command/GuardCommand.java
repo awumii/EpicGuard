@@ -9,31 +9,28 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
-import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
-import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.manager.AttackManager;
-import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
-import pl.polskistevek.guard.bungee.util.MessagesBungee;
-import pl.polskistevek.guard.utils.GEO;
-import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
-import pl.polskistevek.guard.utils.ChatUtil;
+import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.util.Updater;
+import pl.polskistevek.guard.utils.ChatUtil;
+import pl.polskistevek.guard.utils.GEO;
+
 import java.io.IOException;
 import java.util.Date;
 
 public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             System.out.println("[EpicGuard] You are running EpicGuard v" + BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion());
             System.out.println("[EpicGuard] Use this command in-game.");
             return false;
         }
         Player p = (Player) sender;
-        if (!p.hasPermission(BukkitMain.PERMISSION)){
+        if (!p.hasPermission(BukkitMain.PERMISSION)) {
             p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.NO_PERMISSION));
             return false;
         }
@@ -77,9 +74,9 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard blacklist <adress>"));
                     break;
                 case "player":
-                    if (args.length == 2){
+                    if (args.length == 2) {
                         Player player = Bukkit.getPlayerExact(args[1]);
-                        if (player == null){
+                        if (player == null) {
                             p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7The player &f" + args[1] + " &7is &coffline&7!"));
                             return false;
                         }
@@ -97,7 +94,7 @@ public class GuardCommand implements CommandExecutor {
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
                         p.sendMessage(ChatUtil.fix(""));
                         p.sendMessage(ChatUtil.fix("&6[IP History]"));
-                        for (String adress : UserManager.getUser(player).getAdresses()){
+                        for (String adress : UserManager.getUser(player).getAdresses()) {
                             p.sendMessage(ChatUtil.fix(" &8- &c" + adress));
                         }
                         p.sendMessage(ChatUtil.fix(""));
@@ -110,7 +107,7 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     p.sendMessage(ChatUtil.fix(""));
                     p.sendMessage(ChatUtil.fix("&6[Operator List]"));
-                    for (OfflinePlayer player : Bukkit.getOperators()){
+                    for (OfflinePlayer player : Bukkit.getOperators()) {
                         Date currentDate = new Date(player.getLastPlayed());
                         p.sendMessage(ChatUtil.fix("&8▪ &f" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8], &7Last Online: &f" + currentDate));
                     }

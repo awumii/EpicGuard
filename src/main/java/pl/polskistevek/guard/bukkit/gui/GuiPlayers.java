@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.GEO;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +19,9 @@ import java.util.List;
 public class GuiPlayers {
     public static Inventory inv;
 
-    public static void show(Player p){
+    public static void show(Player p) {
         int i = 0;
-        for (Player player : Bukkit.getOnlinePlayers()){
+        for (Player player : Bukkit.getOnlinePlayers()) {
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
             assert meta != null;
@@ -38,8 +39,8 @@ public class GuiPlayers {
             l.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYES" : "&cNO")));
             l.add("");
             l.add(ChatUtil.fix("&7IP History:"));
-            for (String adress : UserManager.getUser(player).getAdresses()){
-                if (player.getAddress().getAddress().getHostAddress().equals(adress)){
+            for (String adress : UserManager.getUser(player).getAdresses()) {
+                if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
                     l.add(ChatUtil.fix("&8- &c" + adress + " &8(&aCurrent&8)"));
                 } else {
                     l.add(ChatUtil.fix("&8- &c" + adress));

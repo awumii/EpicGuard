@@ -5,7 +5,7 @@ import java.util.List;
 public class User {
     private List<String> adresses;
 
-    public User(){
+    public User() {
     }
 
     public List<String> getAdresses() {

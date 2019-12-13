@@ -6,10 +6,10 @@ import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.KickReason;
 
 public class ConnectionCloser {
-    public static void close(AsyncPlayerPreLoginEvent e, KickReason reason){
+    public static void close(AsyncPlayerPreLoginEvent e, KickReason reason) {
         if (reason == KickReason.GEO) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_COUNTRY){
+            for (String s : MessagesBukkit.MESSAGE_KICK_COUNTRY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
@@ -17,7 +17,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.ATTACK) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_ATTACK){
+            for (String s : MessagesBukkit.MESSAGE_KICK_ATTACK) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
@@ -25,7 +25,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.BLACKLIST) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST){
+            for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
@@ -33,7 +33,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.PROXY) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_PROXY){
+            for (String s : MessagesBukkit.MESSAGE_KICK_PROXY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());

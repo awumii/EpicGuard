@@ -4,14 +4,15 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import pl.polskistevek.guard.bungee.listener.ProxyPreLoginListener;
 import pl.polskistevek.guard.bungee.listener.ProxyPingListener;
+import pl.polskistevek.guard.bungee.listener.ProxyPreLoginListener;
 import pl.polskistevek.guard.bungee.task.AttackClearTask;
 import pl.polskistevek.guard.bungee.util.MessagesBungee;
 import pl.polskistevek.guard.bungee.util.Metrics;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.utils.ServerType;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +34,7 @@ public class BungeeMain extends Plugin {
     public static String COUNTRY_MODE;
     public static boolean ANTIBOT;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         if (!getDataFolder().exists()) {
@@ -40,7 +42,7 @@ public class BungeeMain extends Plugin {
         }
         plugin = this;
         Logger.create(ServerType.BUNGEE);
-        Logger.log("Starting plugin...", false);
+        Logger.info("Starting plugin...", false);
         loadConfig();
         try {
             MessagesBungee.load();
@@ -49,10 +51,10 @@ public class BungeeMain extends Plugin {
         }
         AttackClearTask.start();
         try {
-            Logger.log("Loading GeoIP Database..", false);
+            Logger.info("Loading GeoIP Database..", false);
             GEO.registerDatabase(ServerType.BUNGEE);
         } catch (IOException e) {
-            Logger.log("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.", false);
+            Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.", false);
             e.printStackTrace();
         }
         Metrics metrics = new Metrics(this);
@@ -60,7 +62,7 @@ public class BungeeMain extends Plugin {
         getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
     }
 
-    private void loadConfig(){
+    private void loadConfig() {
         File file = new File(getDataFolder(), "config.yml");
         if (!file.exists()) {
             try (InputStream in = getResourceAsStream("config.yml")) {

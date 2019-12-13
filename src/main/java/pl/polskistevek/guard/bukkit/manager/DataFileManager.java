@@ -3,6 +3,7 @@ package pl.polskistevek.guard.bukkit.manager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import pl.polskistevek.guard.bukkit.BukkitMain;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -14,9 +15,10 @@ public class DataFileManager {
     public static int checkedConnections = 0;
     public static String license = "";
 
-    public static void load(){
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void load() {
         File data = new File(file);
-        if (!data.exists()){
+        if (!data.exists()) {
             try {
                 data.createNewFile();
             } catch (IOException e) {
@@ -24,7 +26,7 @@ public class DataFileManager {
             }
         }
         File customLicense = new File(file1);
-        if (customLicense.exists()){
+        if (customLicense.exists()) {
             YamlConfiguration customLicenseData = YamlConfiguration.loadConfiguration(customLicense);
             license = customLicenseData.getString("licensedTo");
         }
@@ -35,7 +37,7 @@ public class DataFileManager {
         blockedBots = configuration.getInt("checked-connections");
     }
 
-    public static FileConfiguration get(){
+    public static FileConfiguration get() {
         return configuration;
     }
 

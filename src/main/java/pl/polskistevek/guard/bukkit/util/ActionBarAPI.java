@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.utils.Logger;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -18,11 +19,11 @@ public class ActionBarAPI {
     public static String nmsver;
     public static boolean useOldMethods = false;
 
-    public static void register(){
+    public static void register() {
         nmsver = Bukkit.getServer().getClass().getPackage().getName();
         nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
         if (nmsver.equalsIgnoreCase("v1_8_R1") || nmsver.startsWith("v1_7_")) {
-            Logger.log("Using old NMS Methods for 1.7 (or old 1.8 version, you should update it)", false);
+            Logger.info("Using old NMS Methods for 1.7 (or old 1.8 version, you should update it)", false);
             useOldMethods = true;
         }
     }

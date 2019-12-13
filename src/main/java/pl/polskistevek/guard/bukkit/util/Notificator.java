@@ -6,7 +6,7 @@ import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.utils.ChatUtil;
 
 public class Notificator {
-    public static void title(String title, String subtitle){
+    public static void title(String title, String subtitle) {
         if (BukkitMain.STATUS) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(BukkitMain.PERMISSION)) {
@@ -16,8 +16,8 @@ public class Notificator {
         }
     }
 
-    public static void broadcast(String text){
-        if (BukkitMain.STATUS){
+    public static void broadcast(String text) {
+        if (BukkitMain.STATUS) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(BukkitMain.PERMISSION)) {
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
@@ -26,15 +26,15 @@ public class Notificator {
         }
     }
 
-    public static void send(Player p, String text){
-        if (BukkitMain.STATUS){
-            if (p.hasPermission(BukkitMain.PERMISSION)){
+    public static void send(Player p, String text) {
+        if (BukkitMain.STATUS) {
+            if (p.hasPermission(BukkitMain.PERMISSION)) {
                 p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
             }
         }
     }
 
-    public static void action(String text){
+    public static void action(String text) {
         if (BukkitMain.STATUS) {
             ActionBarAPI.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, BukkitMain.PERMISSION);
         }

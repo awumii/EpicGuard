@@ -9,10 +9,10 @@ import pl.polskistevek.guard.utils.Logger;
 public class ServerListPingListener implements Listener {
 
     @EventHandler
-    public void onPing(ServerListPingEvent e){
+    public void onPing(ServerListPingEvent e) {
         AttackManager.pingPerSecond++;
-        if (AttackManager.check(AttackManager.AttackType.PING)){
-            Logger.log("SERVER IS BEING ATTACKED! Catched Ping: " + e.getAddress().getHostAddress(), true);
+        if (AttackManager.check(AttackManager.AttackType.PING)) {
+            Logger.info("SERVER IS BEING ATTACKED! Catched Ping: " + e.getAddress().getHostAddress(), true);
         }
         PreLoginListener.remove(1);
     }

@@ -10,13 +10,13 @@ public class ServerUtils {
         return String.format("%.2f %sB", bytes / Math.pow(1024.0, exp), pre);
     }
 
-    public static String getMemoryUsage(){
+    public static String getMemoryUsage() {
         final long freeMemory = Runtime.getRuntime().freeMemory();
         final long totalMemory = Runtime.getRuntime().totalMemory();
         return format(totalMemory - freeMemory);
     }
 
-    public static String getTotalMemory(){
+    public static String getTotalMemory() {
         return format(Runtime.getRuntime().totalMemory());
     }
 }

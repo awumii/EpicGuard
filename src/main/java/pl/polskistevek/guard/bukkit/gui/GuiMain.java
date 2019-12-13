@@ -7,17 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import pl.polskistevek.guard.bukkit.BukkitMain;
-import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
-import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
-import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
-import pl.polskistevek.guard.utils.ChatUtil;
-import pl.polskistevek.guard.bukkit.util.ServerUtils;
 import pl.polskistevek.guard.bukkit.util.ExactTPS;
 import pl.polskistevek.guard.bukkit.util.ItemBuilder;
+import pl.polskistevek.guard.bukkit.util.ServerUtils;
 import pl.polskistevek.guard.bukkit.util.Updater;
+import pl.polskistevek.guard.utils.ChatUtil;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.List;
 public class GuiMain {
     public static Inventory i;
 
-    public static void show(Player p){
+    public static void show(Player p) {
         List<String> l1 = new ArrayList<>();
         l1.add("");
         l1.add(ChatUtil.fix("&7Basic plugin and server informaton."));
@@ -96,7 +94,7 @@ public class GuiMain {
 
         List<String> l7 = new ArrayList<>();
         l7.add("");
-        for (OfflinePlayer player : Bukkit.getOperators()){
+        for (OfflinePlayer player : Bukkit.getOperators()) {
             Date currentDate = new Date(player.getLastPlayed());
             l7.add(ChatUtil.fix("&8* &7" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8, &7" + currentDate + "&8]"));
         }
