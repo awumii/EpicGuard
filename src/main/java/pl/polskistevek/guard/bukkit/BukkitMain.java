@@ -8,12 +8,8 @@ import pl.polskistevek.guard.bukkit.command.GuardCommand;
 import pl.polskistevek.guard.bukkit.gui.GuiListener;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
-import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
+import pl.polskistevek.guard.bukkit.util.*;
 import pl.polskistevek.guard.bukkit.task.AttackTimerTask;
-import pl.polskistevek.guard.bukkit.util.ActionBarAPI;
-import pl.polskistevek.guard.bukkit.util.ExactTPS;
-import pl.polskistevek.guard.bukkit.util.Metrics;
-import pl.polskistevek.guard.bukkit.util.Updater;
 import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
 import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
@@ -51,6 +47,7 @@ public class BukkitMain extends JavaPlugin {
     public void onEnable() {
         long ms = System.currentTimeMillis();
         saveDefaultConfig();
+        new ConfigUpdater(this).checkUpdate(this.getConfig().getInt("config-version"));
         GEO.spigot = true;
         Logger.create(ServerType.SPIGOT);
         Logger.log("Starting plugin...", false);

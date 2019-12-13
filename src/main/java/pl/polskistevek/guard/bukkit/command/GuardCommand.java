@@ -39,6 +39,22 @@ public class GuardCommand implements CommandExecutor {
         }
         if (args.length > 0) {
             switch (args[0]) {
+                case "help":
+                    p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
+                    p.sendMessage(ChatUtil.fix(""));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7Version: &f" + Updater.currentVersion + (Updater.updateAvaible ? " &c&lOUTDATED &8(&7Latest: " + Updater.lastestVersion + "&8)" : " &a&lLATEST")));
+                    p.sendMessage(ChatUtil.fix(""));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard menu &8- &fmain plugin GUI."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard reload &8- &freload plugin config."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard antibot &8- &fsee antibot status."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard op &8- &flist of opped players."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard status &8- &ftoggle title and actionbar."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard player <nick> &8- &fcheck basic info about player."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard whitelist <adress> &8- &fadd adress to whitelist and remove from blacklist."));
+                    p.sendMessage(ChatUtil.fix("&8▪ &7/guard blacklist <adress> &8- &fadd adress to blacklist."));
+                    p.sendMessage(ChatUtil.fix(""));
+                    p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
+                    break;
                 case "menu":
                     GuiMain.show(p);
                     break;
@@ -101,10 +117,6 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix(""));
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     break;
-                case "restart":
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman unload epicguard");
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman load epicguard");
-                    break;
                 case "status":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (BukkitMain.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
                     BukkitMain.STATUS = !BukkitMain.STATUS;
@@ -136,24 +148,6 @@ public class GuardCommand implements CommandExecutor {
             }
             return false;
         }
-        p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
-        p.sendMessage(ChatUtil.fix(""));
-        p.sendMessage(ChatUtil.fix("&6[Basic Information]"));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Author: &fPolskiStevek"));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Version: &f" + Updater.currentVersion + (Updater.updateAvaible ? " &c&lOUTDATED &8(&7Latest: " + Updater.lastestVersion + "&8)" : " &a&lLATEST")));
-        p.sendMessage(ChatUtil.fix("&8▪ &7Bukkit Version: &f" + Bukkit.getServer().getBukkitVersion()));
-        p.sendMessage(ChatUtil.fix(""));
-        p.sendMessage(ChatUtil.fix("&6[Plugin Commands]"));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard menu &8- &fmain plugin GUI."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard reload &8- &freload plugin config."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard antibot &8- &fsee antibot status."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard op &8- &flist of opped players."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard status &8- &ftoggle title and actionbar."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard player <nick> &8- &fcheck basic info about player."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard whitelist <adress> &8- &fadd adress to whitelist and remove from blacklist."));
-        p.sendMessage(ChatUtil.fix("&8▪ &7/guard blacklist <adress> &8- &fadd adress to blacklist."));
-        p.sendMessage(ChatUtil.fix(""));
-        p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
         Updater.notify(p);
         return true;
     }
