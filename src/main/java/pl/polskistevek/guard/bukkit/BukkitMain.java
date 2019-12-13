@@ -45,6 +45,10 @@ public class BukkitMain extends JavaPlugin {
     public static boolean UPDATER;
     private static long ATTACK_TIMER;
 
+    public static String EXPLOIT_KICK_MESSAGE;
+    public static int EXPLOIT_MAX_PACKET;
+    public static boolean EXPLOIT_ENABLED;
+
     @Override
     public void onEnable() {
         try {
@@ -72,7 +76,7 @@ public class BukkitMain extends JavaPlugin {
 
             //Registering tasks
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
-            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 1L, 200L);
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 0L, ATTACK_TIMER);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
             Logger.info("Loading GeoIP database...", false);
@@ -112,6 +116,10 @@ public class BukkitMain extends JavaPlugin {
         UPDATER = cfg.getBoolean("updater");
         ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
         JOIN_SPEED = cfg.getInt("speed.join-speed");
+
+        EXPLOIT_ENABLED = cfg.getBoolean("anti-exploit.enabled");
+        EXPLOIT_KICK_MESSAGE = cfg.getString("anti-exploit.kick-message");
+        EXPLOIT_MAX_PACKET = cfg.getInt("anti-exploit.packet-limiter.global-limit");
     }
 
     @Override
