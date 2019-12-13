@@ -7,8 +7,8 @@ public class ExactTPS implements Runnable {
     private static final long[] TICKS= new long[600];
     private static final DecimalFormat df2 = new DecimalFormat("#.##");
 
-    private static double getTPS() {
-        return getTPS(100);
+    public static String getTPS() {
+        return df2.format(getTPS(100));
     }
 
     private static double getTPS(int ticks) {
@@ -18,10 +18,6 @@ public class ExactTPS implements Runnable {
         int target = (TICK_COUNT- 1 - ticks) % TICKS.length;
         long elapsed = System.currentTimeMillis() - TICKS[target];
         return ticks / (elapsed / 1000.0D);
-    }
-
-    public static String getTPS2(){
-        return df2.format(getTPS());
     }
 
     public void run() {

@@ -16,6 +16,9 @@
 main-permission: "epicguard.admin"
 updater: true
 
+# Yeah yeah, another "DO NOT TOUCH" option!
+config-version: 1
+
 ###############################
 ##           Countries       ##
 ###############################
@@ -29,7 +32,33 @@ countries:
   # List of country codes:
   # https://dev.maxmind.com/geoip/legacy/codes/iso3166/
   list:
-    - PL
+    - US
+    - GB
+    - DE
+
+###############################
+##           AntiBot         ##
+###############################
+
+antibot:
+  # You can fuly disable ALL antibot modules if you don't want it.
+  # Disabling antibot will not disable country checking (look above)
+  enabled: true
+  # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
+  # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
+  # "http://proxycheck.io/v2/{IP}?key=API_KEY&vpn=1"
+  checkers:
+    '1':
+      adress: "http://proxycheck.io/v2/{IP}&vpn=1"
+    '2':
+      adress: "http://www.stopforumspam.com/api?ip={IP}"
+    '3':
+      adress: "https://ip.teoh.io/{IP}"
+    # What should the return message of each page contain?
+    responses:
+      - "yes"
+      - "true"
+      - "Bad"
 
 ###############################
 ##           Advanced        ##
@@ -41,11 +70,11 @@ speed:
   # If deny-join is triggered, Proxy/VPN checking is skipped.
   connection: 10
   # How many pings per seconds should be made to block connections to the server.
-  ping-speed: 10
+  ping-speed: 15
   # How many successful joins per second should me made to block connections to the server
   join-speed: 5
-  # Time before antibot will disable.
-  attack-timer-reset: 400
+  # Time (in ticks) before antibot will disable.
+  attack-timer-reset: 800
 
 auto-whitelist:
   # Enable automatic player whitelisting.
@@ -68,27 +97,3 @@ firewall:
   command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
   # Executed in /guard whitelist <player>
   command-whitelist: "iptables -D INPUT -s {IP} -j DROP"
-
-###############################
-##           AntiBot         ##
-###############################
-
-antibot:
-  # You can fuly disable ALL antibot modules if you don't want it.
-  # Disabling antibot will not disable country checking (look above)
-  enabled: true
-  # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
-  # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
-  # "http://proxycheck.io/v2/%ip%?key=API_KEY&vpn=1"
-  checkers:
-    '1':
-      adress: "http://proxycheck.io/v2/{IP}&vpn=1"
-    '2':
-      adress: "http://www.stopforumspam.com/api?ip={IP}"
-    '3':
-      adress: "https://ip.teoh.io/{IP}"
-    # What should any of above sites return?
-    responses:
-      - "yes"
-      - "true"
-      - "Bad"

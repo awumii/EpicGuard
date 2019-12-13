@@ -35,7 +35,7 @@ public class GuiMain {
         l1.add(ChatUtil.fix("&7Server Build: &c" + Bukkit.getVersion()));
         l1.add(ChatUtil.fix("&7Bukkit Version: &c" + Bukkit.getServer().getBukkitVersion()));
         l1.add(ChatUtil.fix("&7RAM Usage: &6" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
-        l1.add(ChatUtil.fix("&7TPS: &a" + ExactTPS.getTPS2()));
+        l1.add(ChatUtil.fix("&7TPS: &a" + ExactTPS.getTPS()));
         l1.add("");
         ItemStack i1 = new ItemBuilder(Material.BOOK).setTitle("&aBasic Information").addLores(l1).build();
 
