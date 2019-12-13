@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class ConfigUpdater {
 
-    private int newVersion = 1; // The next version of the Config
+    private int newVersion = 2; // The next version of the Config
     private boolean instantDeprecated = false; // Just an option to depecrate the config if the version is different
     private JavaPlugin plugin;
 
