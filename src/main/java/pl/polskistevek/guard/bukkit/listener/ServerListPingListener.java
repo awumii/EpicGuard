@@ -10,10 +10,10 @@ public class ServerListPingListener implements Listener {
 
     @EventHandler
     public void onPing(ServerListPingEvent e) {
-        AttackManager.pingPerSecond++;
-        if (AttackManager.check(AttackManager.AttackType.PING)) {
-            Logger.info("SERVER IS BEING ATTACKED! Catched Ping: " + e.getAddress().getHostAddress(), true);
+        try {
+            AttackManager.handleAttack(AttackManager.AttackType.PING);
+        } catch (Exception ex) {
+            Logger.error(ex);
         }
-        PreLoginListener.remove(1);
     }
 }

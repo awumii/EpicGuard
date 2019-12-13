@@ -4,7 +4,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
-import pl.polskistevek.guard.utils.GEO;
+import pl.polskistevek.guard.utils.GeoAPI;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -23,12 +23,12 @@ public class EpicGuardAPI {
     }
 
     public static DatabaseReader getGeoDatabase() {
-        return GEO.dbReader;
+        return GeoAPI.dbReader;
     }
 
     public static String getCountryCode(InetAddress address) {
         try {
-            return GEO.dbReader.country(address).getCountry().getIsoCode();
+            return GeoAPI.dbReader.country(address).getCountry().getIsoCode();
         } catch (IOException | GeoIp2Exception e) {
             e.printStackTrace();
         }

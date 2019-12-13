@@ -5,27 +5,27 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
-import pl.polskistevek.guard.bukkit.gui.GuiListener;
+import pl.polskistevek.guard.bukkit.listener.InventoryClickListener;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
 import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
 import pl.polskistevek.guard.bukkit.listener.PlayerQuitListener;
-import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
+import pl.polskistevek.guard.bukkit.listener.PlayerPreLoginListener;
 import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.task.ActionBarTask;
 import pl.polskistevek.guard.bukkit.task.AttackTimerTask;
 import pl.polskistevek.guard.bukkit.task.SaveAndUpdaterTask;
 import pl.polskistevek.guard.bukkit.util.*;
-import pl.polskistevek.guard.utils.GEO;
+import pl.polskistevek.guard.utils.GeoAPI;
 import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.utils.ServerType;
 
-import java.io.IOException;
 import java.util.List;
 
 public class BukkitMain extends JavaPlugin {
-    public static String PERMISSION;
+    public static final String PERMISSION = "epicguard.admin";
+
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;
     public static boolean FIREWALL;
@@ -50,18 +50,18 @@ public class BukkitMain extends JavaPlugin {
         try {
             long ms = System.currentTimeMillis();
             this.saveDefaultConfig();
-            new ConfigUpdater(this).checkUpdate(this.getConfig().getInt("config-version"));
-            GEO.spigot = true;
             Logger.create(ServerType.SPIGOT);
             Logger.info("Starting plugin...", false);
+            new ConfigUpdater(this).checkUpdate(this.getConfig().getInt("config-version"));
+            GeoAPI.spigot = true;
             PluginManager pm = this.getServer().getPluginManager();
 
             //Registering Events
-            pm.registerEvents(new PreLoginListener(), this);
+            pm.registerEvents(new PlayerPreLoginListener(), this);
             pm.registerEvents(new ServerListPingListener(), this);
             pm.registerEvents(new PlayerJoinListener(), this);
             pm.registerEvents(new PlayerQuitListener(), this);
-            pm.registerEvents(new GuiListener(), this);
+            pm.registerEvents(new InventoryClickListener(), this);
 
             //Registering Commands
             this.getCommand("core").setExecutor(new GuardCommand());
@@ -76,18 +76,18 @@ public class BukkitMain extends JavaPlugin {
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
             Logger.info("Loading GeoIP database...", false);
-            GEO.registerDatabase(ServerType.SPIGOT);
+            GeoAPI.registerDatabase(ServerType.SPIGOT);
             Updater.checkForUpdates();
             Metrics metrics = new Metrics(this);
             DataFileManager.load();
             MessagesBukkit.load();
 
             //Creating GUI's
-            GuiMain.i = Bukkit.createInventory(null, 27, "EpicGuard Menu");
+            GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
 
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Logger.error(e);
         }
     }
@@ -95,7 +95,6 @@ public class BukkitMain extends JavaPlugin {
     public static void loadConfig() {
         FileConfiguration cfg = BukkitMain.getPlugin(BukkitMain.class).getConfig();
         Logger.info("Loading configuration...", false);
-        PERMISSION = cfg.getString("main-permission");
         FIREWALL = cfg.getBoolean("firewall");
         FIREWALL_BL = cfg.getString("firewall.command-blacklist");
         FIREWALL_WL = cfg.getString("firewall.command-whitelist");
