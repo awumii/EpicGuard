@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.utils.Downloader;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -21,10 +22,10 @@ public class MessagesBukkit {
     public static String NO_PERMISSION;
     public static String PREFIX;
 
-    public static void load(){
+    public static void load() {
         String file = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/messages.yml";
         File configFile = new File(file);
-        if (!configFile.exists()){
+        if (!configFile.exists()) {
             try {
                 Downloader.download("http://epicmc.cba.pl/cloud/uploads/messages.yml", file);
             } catch (IOException e) {

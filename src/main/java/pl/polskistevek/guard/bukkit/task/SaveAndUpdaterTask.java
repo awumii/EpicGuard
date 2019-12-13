@@ -10,6 +10,6 @@ public class SaveAndUpdaterTask implements Runnable {
     public void run() {
         DataFileManager.save();
         Updater.checkForUpdates();
-        Logger.log("Saved data and checked for updates!", false);
+        Logger.info("Saved data and checked for updates!", false);
     }
 }

@@ -8,18 +8,20 @@ import pl.polskistevek.guard.bukkit.command.GuardCommand;
 import pl.polskistevek.guard.bukkit.gui.GuiListener;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
-import pl.polskistevek.guard.bukkit.util.*;
-import pl.polskistevek.guard.bukkit.task.AttackTimerTask;
-import pl.polskistevek.guard.utils.GEO;
 import pl.polskistevek.guard.bukkit.listener.PlayerJoinListener;
-import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
-import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
 import pl.polskistevek.guard.bukkit.listener.PlayerQuitListener;
-import pl.polskistevek.guard.utils.*;
+import pl.polskistevek.guard.bukkit.listener.PreLoginListener;
+import pl.polskistevek.guard.bukkit.listener.ServerListPingListener;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.task.ActionBarTask;
+import pl.polskistevek.guard.bukkit.task.AttackTimerTask;
 import pl.polskistevek.guard.bukkit.task.SaveAndUpdaterTask;
-import java.io.*;
+import pl.polskistevek.guard.bukkit.util.*;
+import pl.polskistevek.guard.utils.GEO;
+import pl.polskistevek.guard.utils.Logger;
+import pl.polskistevek.guard.utils.ServerType;
+
+import java.io.IOException;
 import java.util.List;
 
 public class BukkitMain extends JavaPlugin {
@@ -45,55 +47,54 @@ public class BukkitMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        long ms = System.currentTimeMillis();
-        saveDefaultConfig();
-        new ConfigUpdater(this).checkUpdate(this.getConfig().getInt("config-version"));
-        GEO.spigot = true;
-        Logger.create(ServerType.SPIGOT);
-        Logger.log("Starting plugin...", false);
-        PluginManager pm = this.getServer().getPluginManager();
-
-        //Registering Events
-        pm.registerEvents(new PreLoginListener(), this);
-        pm.registerEvents(new ServerListPingListener(), this);
-        pm.registerEvents(new PlayerJoinListener(), this);
-        pm.registerEvents(new PlayerQuitListener(), this);
-        pm.registerEvents(new GuiListener(), this);
-
-        //Registering Commands
-        getCommand("core").setExecutor(new GuardCommand());
-
-        ActionBarAPI.register();
-        Logger.log("NMS Version: " + ActionBarAPI.nmsver, false);
-        loadConfig();
-
-        //Registering tasks
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 1L, 200L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
-
         try {
-            Logger.log("Loading GeoIP database...", false);
+            long ms = System.currentTimeMillis();
+            this.saveDefaultConfig();
+            new ConfigUpdater(this).checkUpdate(this.getConfig().getInt("config-version"));
+            GEO.spigot = true;
+            Logger.create(ServerType.SPIGOT);
+            Logger.info("Starting plugin...", false);
+            PluginManager pm = this.getServer().getPluginManager();
+
+            //Registering Events
+            pm.registerEvents(new PreLoginListener(), this);
+            pm.registerEvents(new ServerListPingListener(), this);
+            pm.registerEvents(new PlayerJoinListener(), this);
+            pm.registerEvents(new PlayerQuitListener(), this);
+            pm.registerEvents(new GuiListener(), this);
+
+            //Registering Commands
+            this.getCommand("core").setExecutor(new GuardCommand());
+
+            ActionBarAPI.register();
+            Logger.info("NMS Version: " + ActionBarAPI.nmsver, false);
+            loadConfig();
+
+            //Registering tasks
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 1L, 200L);
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
+            Logger.info("Loading GeoIP database...", false);
             GEO.registerDatabase(ServerType.SPIGOT);
+            Updater.checkForUpdates();
+            Metrics metrics = new Metrics(this);
+            DataFileManager.load();
+            MessagesBukkit.load();
+
+            //Creating GUI's
+            GuiMain.i = Bukkit.createInventory(null, 27, "EpicGuard Menu");
+            GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
+
+            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
-        Updater.checkForUpdates();
-        Metrics metrics = new Metrics(this);
-        DataFileManager.load();
-        MessagesBukkit.load();
-
-        //Creating GUI's
-        GuiMain.i = Bukkit.createInventory(null, 27, "EpicGuard Menu");
-        GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
-
-        Logger.log("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
     }
 
-    public static void loadConfig(){
+    public static void loadConfig() {
         FileConfiguration cfg = BukkitMain.getPlugin(BukkitMain.class).getConfig();
-        Logger.log("Loading configuration...", false);
+        Logger.info("Loading configuration...", false);
         PERMISSION = cfg.getString("main-permission");
         FIREWALL = cfg.getBoolean("firewall");
         FIREWALL_BL = cfg.getString("firewall.command-blacklist");
@@ -116,8 +117,8 @@ public class BukkitMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Logger.log("Saving data and disabling plugin.", false);
+        Logger.info("Saving data and disabling plugin.", false);
         DataFileManager.save();
-        Logger.log("Goodbye :)", false);
+        Logger.info("Goodbye :)", false);
     }
 }

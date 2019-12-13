@@ -4,5 +4,5 @@ public enum KickReason {
     GEO,
     PROXY,
     ATTACK,
-    BLACKLIST;
+    BLACKLIST
 }

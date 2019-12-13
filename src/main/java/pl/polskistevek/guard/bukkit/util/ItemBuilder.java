@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import pl.polskistevek.guard.utils.ChatUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +37,8 @@ public class ItemBuilder {
 
     public ItemBuilder(final Material mat, final int amount, final short data) {
         this.title = null;
-        this.lore = new ArrayList<String>();
-        this.enchants = new HashMap<Enchantment, Integer>();
+        this.lore = new ArrayList<>();
+        this.enchants = new HashMap<>();
         this.mat = mat;
         this.amount = amount;
         this.data = data;
@@ -75,7 +76,6 @@ public class ItemBuilder {
     public ItemStack build() {
         Material mat = this.mat;
         if (mat == null) {
-            mat = Material.AIR;
             Bukkit.getLogger().warning("... KOLOROWE POWIETRZE! ...");
         }
         final ItemStack item = new ItemStack(this.mat, this.amount, this.data);

@@ -14,22 +14,22 @@ public class AttackManager {
         JOIN
     }
 
-    public static boolean check(AttackType type){
-        if (type == AttackType.PING){
+    public static boolean check(AttackType type) {
+        if (type == AttackType.PING) {
             if (pingPerSecond > BukkitMain.PING_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
-        if (type == AttackType.CONNECT){
+        if (type == AttackType.CONNECT) {
             if (pingPerSecond > BukkitMain.JOIN_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
-        if (type == AttackType.JOIN){
+        if (type == AttackType.JOIN) {
             if (pingPerSecond > BukkitMain.CONNECT_SPEED) {
                 attackMode = true;
                 return true;

@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 
 public class PlayerQuitListener implements Listener {
-    public void onQuit(PlayerQuitEvent e){
+    public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         UserManager.removeUser(p);
     }

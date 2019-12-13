@@ -5,6 +5,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import pl.polskistevek.guard.bungee.BungeeMain;
 import pl.polskistevek.guard.utils.Downloader;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MessagesBungee {
     public static void load() throws IOException {
         String file = BungeeMain.plugin.getDataFolder() + "/messages.yml";
         File configFile = new File(file);
-        if (!configFile.exists()){
+        if (!configFile.exists()) {
             try {
                 Downloader.download("http://epicmc.cba.pl/cloud/uploads/messages.yml", file);
             } catch (IOException e) {

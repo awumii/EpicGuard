@@ -1,7 +1,9 @@
 package pl.polskistevek.guard.utils;
 
+import org.bukkit.Bukkit;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bungee.BungeeMain;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,6 +14,7 @@ import java.util.Calendar;
 public class Logger {
     private static File file;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void create(ServerType type) {
         if (type == ServerType.SPIGOT) {
             file = new File(BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/logs.txt");
@@ -28,16 +31,16 @@ public class Logger {
         }
     }
 
-    public static void log(String message, boolean hide) {
+    public static void info(String message, boolean hide) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
         String time = sdf.format(cal.getTime());
         String msg;
         if (!hide) {
-            msg = "[" + time + "] [EpicGuard/Logger] " + message;
+            msg = "[EpicGuard] " + message;
             System.out.println(msg);
         } else {
-            msg = "[" + time + "] [Connection Debugger] " + message;
+            msg = "[" + time + "] " + message;
         }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
@@ -47,5 +50,15 @@ public class Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void error(Exception exception) {
+        info("------  EPICGUARD ERROR ------", false);
+        info(" <> Error description: " + exception.getMessage(), false);
+        info(" <> Cause: " + exception.getCause().getMessage(), false);
+        info(" <> Server Version: " + Bukkit.getVersion() + " [" + Bukkit.getBukkitVersion() + "]", false);
+        info(" <> Stack Trace:", false);
+        exception.printStackTrace();
+        info("------  EPICGUARD ERROR ------", false);
     }
 }

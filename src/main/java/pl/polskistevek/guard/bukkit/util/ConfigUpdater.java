@@ -1,10 +1,13 @@
 package pl.polskistevek.guard.bukkit.util;
 
+import com.google.common.base.Charsets;
+import org.bukkit.plugin.java.JavaPlugin;
+import pl.polskistevek.guard.utils.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
@@ -12,9 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.bukkit.plugin.java.JavaPlugin;
-import com.google.common.base.Charsets;
-import pl.polskistevek.guard.utils.Logger;
 
 public class ConfigUpdater {
 
@@ -39,7 +39,7 @@ public class ConfigUpdater {
         }
 
         if (oldV == newVersion) {
-            Logger.log("The config is updated!", false);
+            Logger.info("The config is updated!", false);
             return;
         }
 
@@ -49,7 +49,7 @@ public class ConfigUpdater {
 
     public void updateConfig() {
 
-        Logger.log("Updating the config!", false);
+        Logger.info("Updating the config!", false);
 
         List<String> newLines = readInsideFile("/config.yml");
 
@@ -65,19 +65,20 @@ public class ConfigUpdater {
         String versionLine = "configVersion: ";
         newLines.set(getIndex(versionLine, newLines), versionLine + newVersion);
         writeFile(path, newLines);
-        Logger.log("Config is now updated!", false);
+        Logger.info("Config is now updated!", false);
         //Here we reload the config
     }
 
     private void deprecateConfig() {
-        Logger.log("Now your config is deprecated please check your folder for re-setting it!", false);
+        Logger.info("Now your config is deprecated please check your folder for re-setting it!", false);
         String depName = "deprecated_config_" + LocalDate.now();
         File old = new File(path.getParentFile(), depName + ".yml");
         try {
             Files.copy(path.toPath(), old.toPath(),
-                    new CopyOption[] { StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING });
+                    StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
             path.delete();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
 
         //Here we re-create the config.
     }
@@ -96,7 +97,8 @@ public class ConfigUpdater {
     public void writeFile(File file, List<String> toWrite) {
         try {
             Files.write(file.toPath(), toWrite, Charsets.ISO_8859_1);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public List<String> readFile(File file) {
@@ -109,7 +111,7 @@ public class ConfigUpdater {
 
     public List<String> readInsideFile(String path) {
         try (InputStream in = plugin.getClass().getResourceAsStream(path);
-             BufferedReader input = new BufferedReader(new InputStreamReader(in));) {
+             BufferedReader input = new BufferedReader(new InputStreamReader(in))) {
             return input.lines().collect(Collectors.toList());
         } catch (Exception e) {
             return new ArrayList<>();

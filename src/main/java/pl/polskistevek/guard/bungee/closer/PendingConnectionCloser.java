@@ -8,35 +8,35 @@ import pl.polskistevek.guard.utils.KickReason;
 import pl.polskistevek.guard.utils.Logger;
 
 public class PendingConnectionCloser {
-    public static void close(PendingConnection connection, KickReason reason){
-        Logger.log("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason, false);
-        if (reason == KickReason.GEO){
+    public static void close(PendingConnection connection, KickReason reason) {
+        Logger.info("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason, false);
+        if (reason == KickReason.GEO) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_COUNTRY){
+            for (String s : MessagesBungee.MESSAGE_KICK_COUNTRY) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
         }
 
-        if (reason == KickReason.ATTACK){
+        if (reason == KickReason.ATTACK) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_ATTACK){
+            for (String s : MessagesBungee.MESSAGE_KICK_ATTACK) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
         }
 
-        if (reason == KickReason.PROXY){
+        if (reason == KickReason.PROXY) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_PROXY){
+            for (String s : MessagesBungee.MESSAGE_KICK_PROXY) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
         }
 
-        if (reason == KickReason.BLACKLIST){
+        if (reason == KickReason.BLACKLIST) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_BLACKLIST){
+            for (String s : MessagesBungee.MESSAGE_KICK_BLACKLIST) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
