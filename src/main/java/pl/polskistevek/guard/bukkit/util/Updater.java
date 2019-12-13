@@ -25,7 +25,7 @@ public class Updater {
             if (Updater.updateAvaible) {
                 p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + Updater.currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&a" + Updater.lastestVersion + "&8)&7."));
                 p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features!"));
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/epicguard-antiproxy-vpn-country-filter-staff-protection-%EF%B8%8F%E2%9A%A1%EF%B8%8F.72369/"));
+                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/epicguard-antiproxy-vpn-country-filter-server-protection.72369/"));
             }
         }
     }

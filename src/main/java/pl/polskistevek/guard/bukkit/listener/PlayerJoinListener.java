@@ -23,40 +23,43 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        UserManager.addUser(p);
-        if (p.hasPermission(BukkitMain.PERMISSION)) {
+        try {
+            Player p = e.getPlayer();
+            UserManager.addUser(p);
             Updater.notify(p);
-        }
-        User u = UserManager.getUser(p);
-        AttackManager.check(AttackManager.AttackType.JOIN);
-        PreLoginListener.remove(2);
-        Updater.notify(p);
-        if (DataFileManager.license.equals("mikecraft")) {
-            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7This server has &6premium partner license&7! (Licensed to: &6mikecraft&7)"));
-        }
-        String adress = p.getAddress().getAddress().getHostAddress();
-        List<String> history = DataFileManager.get().getStringList("history." + p.getName());
-        if (!history.contains(adress)) {
-            if (!history.isEmpty()) {
-                Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
+            AttackManager.handleAttack(AttackManager.AttackType.JOIN);
+
+            // IP History manager
+            User u = UserManager.getUser(p);
+            String adress = p.getAddress().getAddress().getHostAddress();
+            List<String> history = DataFileManager.get().getStringList("history." + p.getName());
+
+            if (!history.contains(adress)) {
+                if (!history.isEmpty()) {
+                    Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
+                }
+                history.add(adress);
             }
-            history.add(adress);
-        }
-        DataFileManager.get().set("history." + p.getName(), history);
-        u.setAdresses(history);
-        if (BukkitMain.AUTO_WHITELIST) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (p.isOnline()) {
-                        if (!BlacklistManager.checkWhitelist(adress)) {
-                            Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
-                            BlacklistManager.addWhitelist(adress);
+
+            DataFileManager.get().set("history." + p.getName(), history);
+            u.setAdresses(history);
+
+            // Auto whitelisting
+            if (BukkitMain.AUTO_WHITELIST) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (p.isOnline()) {
+                            if (!BlacklistManager.checkWhitelist(adress)) {
+                                Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
+                                BlacklistManager.addWhitelist(adress);
+                            }
                         }
                     }
-                }
-            }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), BukkitMain.AUTO_WHITELIST_TIME);
+                }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), BukkitMain.AUTO_WHITELIST_TIME);
+            }
+        } catch (Exception ex) {
+            Logger.error(ex);
         }
     }
 }

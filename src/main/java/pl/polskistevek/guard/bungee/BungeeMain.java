@@ -9,7 +9,7 @@ import pl.polskistevek.guard.bungee.listener.ProxyPreLoginListener;
 import pl.polskistevek.guard.bungee.task.AttackClearTask;
 import pl.polskistevek.guard.bungee.util.MessagesBungee;
 import pl.polskistevek.guard.bungee.util.Metrics;
-import pl.polskistevek.guard.utils.GEO;
+import pl.polskistevek.guard.utils.GeoAPI;
 import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.utils.ServerType;
 
@@ -52,7 +52,7 @@ public class BungeeMain extends Plugin {
         AttackClearTask.start();
         try {
             Logger.info("Loading GeoIP Database..", false);
-            GEO.registerDatabase(ServerType.BUNGEE);
+            GeoAPI.registerDatabase(ServerType.BUNGEE);
         } catch (IOException e) {
             Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.", false);
             e.printStackTrace();

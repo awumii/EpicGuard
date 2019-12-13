@@ -1,6 +1,5 @@
 package pl.polskistevek.guard.utils;
 
-import org.bukkit.Bukkit;
 import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bungee.BungeeMain;
 
@@ -54,9 +53,8 @@ public class Logger {
 
     public static void error(Exception exception) {
         info("------  EPICGUARD ERROR ------", false);
-        info(" <> Error description: " + exception.getMessage(), false);
+        info(" <> Information: " + exception.getMessage(), false);
         info(" <> Cause: " + exception.getCause().getMessage(), false);
-        info(" <> Server Version: " + Bukkit.getVersion() + " [" + Bukkit.getBukkitVersion() + "]", false);
         info(" <> Stack Trace:", false);
         exception.printStackTrace();
         info("------  EPICGUARD ERROR ------", false);

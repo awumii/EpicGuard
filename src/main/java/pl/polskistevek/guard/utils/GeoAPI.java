@@ -7,7 +7,7 @@ import pl.polskistevek.guard.bungee.BungeeMain;
 import java.io.File;
 import java.io.IOException;
 
-public class GEO {
+public class GeoAPI {
     public static DatabaseReader dbReader;
     public static boolean spigot = false;
 
