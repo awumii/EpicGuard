@@ -170,7 +170,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             BLOCKED_COMMANDS_ENABLE = cfg.getBoolean("command-protecton.enabled");
             ALLOWED_COMMANDS_ENABLE = cfg.getBoolean("allowed-commands.enabled");
             OP_PROTECTION_ENABLE = cfg.getBoolean("op-protecton.enabled");
-            OP_PROTECTION_ENABLE = cfg.getBoolean("ip-history.enabled");
+            IP_HISTORY_ENABLE = cfg.getBoolean("ip-history.enabled");
         } catch (Exception e) {
             Logger.error(e);
         }
