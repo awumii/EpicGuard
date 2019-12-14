@@ -5,6 +5,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import pl.polskistevek.guard.bungee.GuardPluginBungee;
 import pl.polskistevek.guard.utils.Downloader;
+import pl.polskistevek.guard.utils.Mirrors;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class MessagesBungee {
         File configFile = new File(file);
         if (!configFile.exists()) {
             try {
-                Downloader.download("http://epicmc.cba.pl/cloud/uploads/messages.yml", file);
+                Downloader.download(Mirrors.MIRROR_MESSAGES, file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
