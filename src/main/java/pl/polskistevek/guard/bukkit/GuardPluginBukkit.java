@@ -119,7 +119,7 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             // Creating GUI's
             GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
-            GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
+            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
         } catch (Exception e) {
