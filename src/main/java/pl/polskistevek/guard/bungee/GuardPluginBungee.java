@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
-public class BungeeMain extends Plugin {
+public class GuardPluginBungee extends Plugin {
     public static Plugin plugin;
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;

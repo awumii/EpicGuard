@@ -1,14 +1,14 @@
 package pl.polskistevek.guard.bungee.util;
 
-import pl.polskistevek.guard.bungee.BungeeMain;
+import pl.polskistevek.guard.bungee.GuardPluginBungee;
 
 import java.io.IOException;
 
 public class FirewallManager {
     public static void blacklist(String adress) {
-        if (BungeeMain.FIREWALL) {
+        if (GuardPluginBungee.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(BungeeMain.FIREWALL_BL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(GuardPluginBungee.FIREWALL_BL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -16,9 +16,9 @@ public class FirewallManager {
     }
 
     public static void whitelist(String adress) {
-        if (BungeeMain.FIREWALL) {
+        if (GuardPluginBungee.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(BungeeMain.FIREWALL_WL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(GuardPluginBungee.FIREWALL_WL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

@@ -3,7 +3,7 @@ package pl.polskistevek.guard.bungee.util;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import pl.polskistevek.guard.bungee.BungeeMain;
+import pl.polskistevek.guard.bungee.GuardPluginBungee;
 import pl.polskistevek.guard.utils.Downloader;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class MessagesBungee {
     public static String PREFIX;
 
     public static void load() throws IOException {
-        String file = BungeeMain.plugin.getDataFolder() + "/messages.yml";
+        String file = GuardPluginBungee.plugin.getDataFolder() + "/messages.yml";
         File configFile = new File(file);
         if (!configFile.exists()) {
             try {

@@ -21,7 +21,7 @@ import pl.polskistevek.guard.utils.ServerType;
 
 import java.util.List;
 
-public class BukkitMain extends JavaPlugin {
+public class GuardPluginBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
 
     public static String FIREWALL_BL;
@@ -76,6 +76,7 @@ public class BukkitMain extends JavaPlugin {
             Logger.create(ServerType.SPIGOT);
             Logger.info("Starting plugin...", false);
             String oldVersion = this.getConfig().getString("configVersion");
+
             if (oldVersion != null) {
                 new ConfigUpdater(this, "config.yml").checkUpdate(oldVersion);
             } else {
@@ -138,7 +139,7 @@ public class BukkitMain extends JavaPlugin {
 
     public static void loadConfig() {
         try {
-            FileConfiguration cfg = BukkitMain.getPlugin(BukkitMain.class).getConfig();
+            FileConfiguration cfg = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getConfig();
             Logger.info("Loading configuration...", false);
             FIREWALL = cfg.getBoolean("firewall");
             FIREWALL_BL = cfg.getString("firewall.command-blacklist");

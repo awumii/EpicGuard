@@ -1,4 +1,4 @@
-package pl.polskistevek.guard.bungee.closer;
+package pl.polskistevek.guard.bungee.util;
 
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;

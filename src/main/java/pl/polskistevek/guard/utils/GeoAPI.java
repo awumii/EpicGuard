@@ -1,8 +1,8 @@
 package pl.polskistevek.guard.utils;
 
 import com.maxmind.geoip2.DatabaseReader;
-import pl.polskistevek.guard.bukkit.BukkitMain;
-import pl.polskistevek.guard.bungee.BungeeMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
+import pl.polskistevek.guard.bungee.GuardPluginBungee;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +15,10 @@ public class GeoAPI {
         File dataFolder = null;
         String dbLocation;
         if (type == ServerType.SPIGOT) {
-            dataFolder = BukkitMain.getPlugin(BukkitMain.class).getDataFolder();
+            dataFolder = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder();
         }
         if (type == ServerType.BUNGEE) {
-            dataFolder = BungeeMain.plugin.getDataFolder();
+            dataFolder = GuardPluginBungee.plugin.getDataFolder();
         }
         dbLocation = dataFolder + "/GeoLite2-Country.mmdb";
         if (!new File(dbLocation).exists()) {

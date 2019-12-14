@@ -7,9 +7,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
-import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
@@ -26,12 +25,12 @@ public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
-            Logger.info("You are running EpicGuard v" + BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion(), false);
+            Logger.info("You are running EpicGuard v" + GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDescription().getVersion(), false);
             Logger.info("Use this command in-game.", false);
             return false;
         }
         Player p = (Player) sender;
-        if (!p.hasPermission(BukkitMain.PERMISSION)) {
+        if (!p.hasPermission(GuardPluginBukkit.PERMISSION)) {
             p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.NO_PERMISSION));
             return false;
         }
@@ -112,12 +111,12 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     break;
                 case "status":
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (BukkitMain.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
-                    BukkitMain.STATUS = !BukkitMain.STATUS;
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (GuardPluginBukkit.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
+                    GuardPluginBukkit.STATUS = !GuardPluginBukkit.STATUS;
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                    BukkitMain.loadConfig();
+                    GuardPluginBukkit.loadConfig();
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;

@@ -6,8 +6,8 @@ import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import pl.polskistevek.guard.bungee.BungeeMain;
-import pl.polskistevek.guard.bungee.closer.PendingConnectionCloser;
+import pl.polskistevek.guard.bungee.GuardPluginBungee;
+import pl.polskistevek.guard.bungee.util.PendingConnectionCloser;
 import pl.polskistevek.guard.bungee.util.FirewallManager;
 import pl.polskistevek.guard.utils.GeoAPI;
 import pl.polskistevek.guard.utils.KickReason;
@@ -30,30 +30,30 @@ public class ProxyPreLoginListener implements Listener {
         PendingConnection c = e.getConnection();
         String adress = c.getAddress().getAddress().getHostAddress();
         String p = c.getName();
-        if (!BungeeMain.COUNTRY_MODE.equals("DISABLED")) {
+        if (!GuardPluginBungee.COUNTRY_MODE.equals("DISABLED")) {
             String country = null;
             try {
                 country = GeoAPI.dbReader.country(c.getAddress().getAddress()).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
                 ex.printStackTrace();
             }
-            if (BungeeMain.COUNTRY_MODE.equals("WHITELIST")) {
-                if (!BungeeMain.COUNTRIES.contains(country)) {
+            if (GuardPluginBungee.COUNTRY_MODE.equals("WHITELIST")) {
+                if (!GuardPluginBungee.COUNTRIES.contains(country)) {
                     cps++;
                     PendingConnectionCloser.close(c, KickReason.GEO);
                     remove(0);
                     return;
                 }
             }
-            if (BungeeMain.COUNTRY_MODE.equals("BLACKLIST")) {
-                if (!BungeeMain.COUNTRIES.contains(country)) {
+            if (GuardPluginBungee.COUNTRY_MODE.equals("BLACKLIST")) {
+                if (!GuardPluginBungee.COUNTRIES.contains(country)) {
                     cps++;
                     PendingConnectionCloser.close(c, KickReason.GEO);
                     remove(0);
                     return;
                 }
             }
-            if (!BungeeMain.ANTIBOT) {
+            if (!GuardPluginBungee.ANTIBOT) {
                 return;
             }
             if (attack) {
@@ -61,16 +61,16 @@ public class ProxyPreLoginListener implements Listener {
                 PendingConnectionCloser.close(c, KickReason.ATTACK);
                 remove(0);
             }
-            if (cps > BungeeMain.CPS_ACTIVATE) {
+            if (cps > GuardPluginBungee.CPS_ACTIVATE) {
                 cps++;
                 PendingConnectionCloser.close(c, KickReason.ATTACK);
                 remove(0);
                 return;
             }
 
-            String url1 = BungeeMain.ANTIBOT_QUERY_1.replace("{IP}", adress);
-            String url2 = BungeeMain.ANTIBOT_QUERY_2.replace("{IP}", adress);
-            String url3 = BungeeMain.ANTIBOT_QUERY_3.replace("{IP}", adress);
+            String url1 = GuardPluginBungee.ANTIBOT_QUERY_1.replace("{IP}", adress);
+            String url2 = GuardPluginBungee.ANTIBOT_QUERY_2.replace("{IP}", adress);
+            String url3 = GuardPluginBungee.ANTIBOT_QUERY_3.replace("{IP}", adress);
 
             if (checkUrl(url1)) {
                 PendingConnectionCloser.close(c, KickReason.PROXY);
@@ -90,7 +90,7 @@ public class ProxyPreLoginListener implements Listener {
     }
 
     public static void remove(int i) {
-        ProxyServer.getInstance().getScheduler().schedule(BungeeMain.plugin, () -> {
+        ProxyServer.getInstance().getScheduler().schedule(GuardPluginBungee.plugin, () -> {
             if (i == 0) {
                 cps--;
                 return;
@@ -104,7 +104,7 @@ public class ProxyPreLoginListener implements Listener {
             final Scanner s = new Scanner(new URL(url).openStream());
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
-                    if (BungeeMain.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                    if (GuardPluginBungee.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
                         return true;
                     }
                 }
