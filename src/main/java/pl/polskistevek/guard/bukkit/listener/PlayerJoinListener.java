@@ -1,5 +1,6 @@
 package pl.polskistevek.guard.bukkit.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,17 +47,14 @@ public class PlayerJoinListener implements Listener {
 
             // Auto whitelisting
             if (BukkitMain.AUTO_WHITELIST) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (p.isOnline()) {
-                            if (!BlacklistManager.checkWhitelist(adress)) {
-                                Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
-                                BlacklistManager.addWhitelist(adress);
-                            }
+                Bukkit.getScheduler().runTaskLater(BukkitMain.getPlugin(BukkitMain.class), () -> {
+                    if (p.isOnline()) {
+                        if (!BlacklistManager.checkWhitelist(adress)) {
+                            Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
+                            BlacklistManager.addWhitelist(adress);
                         }
                     }
-                }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), BukkitMain.AUTO_WHITELIST_TIME);
+                }, BukkitMain.AUTO_WHITELIST_TIME);
             }
         } catch (Exception ex) {
             Logger.error(ex);
