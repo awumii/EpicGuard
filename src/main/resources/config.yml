@@ -14,9 +14,7 @@
 ##    Main Options           ##
 ###############################
 updater: true
-
-# Yeah yeah, another "DO NOT TOUCH" option!
-config-version: 1
+configVersion: "2-1-0"
 
 ###############################
 ##           Countries       ##
@@ -60,6 +58,85 @@ antibot:
       - "Bad"
 
 ###############################
+##     Server Protection     ##
+###############################
+
+op-protection:
+  enabled: false
+  # Permission to see alert: epicguard.protection.notify
+  alert: "&cPlayer &6{PLAYER} &chas been banned for Force-OP."
+  command: "ban {PLAYER} Force-OP"
+  # List of players who can have OP
+  list:
+    - "Admin"
+
+# If someone tries to execute command listed here,
+# event will be cancelled, and player will see custom message
+# defined in messages.yml
+
+command-protection:
+  enabled: false
+  list:
+    - "/op"
+    - "/deop"
+
+# If someone tries to execute command not listed
+# in this module, and does not have bypass permission,
+# event will be cancelled, and custom message will be shown
+
+allowed-commands:
+  enabled: false
+  # Permission for bypass this module.
+  # Everyone with the permission below can use any command.
+  bypass: "epicguard.command.bypass"
+  # If someone execute command not listed below,
+  # without permission to bypass, will get custom message
+  # defined in messages.yml
+  list:
+    - /msg
+    - /r
+    - /reply
+    - /tp
+    - /tpa
+    - /v
+    - /vanish
+    - /plot
+    - /fly
+    - /chat
+    - /mute
+    - /warn
+    - /kick
+    - /ban
+    - /tempban
+    - /unwarn
+    - /god
+    - /heal
+    - /feed
+    - /helpop
+    - /ec
+    - /enderchest
+    - /home
+    - /back
+    - /sethome
+    - /warp
+    - /tpaccept
+    - /tpdeny
+    - /ignore
+    - /spawn
+    - /hub
+    - /lobby
+    - /report
+    - /pay
+    - /ping
+    - /mail
+    - /kit
+    - /bal
+    - /balance
+    - /money
+    - /afk
+    - /sell
+
+###############################
 ##       AntiExploit         ##
 ###############################
 
@@ -72,6 +149,7 @@ anti-exploit:
   modules:
     # Max amount of pages, player can send over 47k pages to lag the server.
     max-book-pages: 50
+
 
 ###############################
 ##           Advanced        ##
@@ -92,19 +170,20 @@ speed:
 auto-whitelist:
   # Enable automatic player whitelisting.
   # When player is whitelisted, all checks are skipped (like Proxy check).
-  # Whitelisted players can join even when ATTACK_MODE is activated. Bots can't join but players can.
+  # Whitelisted players can join even when ATTACK_MODE is activated.
   enabled: true
   # How much time (in ticks), player should be online to be added to whitelist.
   # 20 ticks = 1 second
   time: 2400
+
 
 ###############################
 ##           Firewall        ##
 ###############################
 
 firewall:
-  # Don't use on free / shared hosting! (It wont work, but it will spam your chat on attack)
-  # You need VPS / Dedicated with IPTables (or something else) installed on your machine.
+  # Don't use on free / shared hosting!
+  # You need private machine with IPTables (or something else) installed.
   enabled: false
   # Executed in /guard blacklist <player> OR while player was detected as a BOT
   command-blacklist: "iptables -A INPUT -s {IP} -j DROP"

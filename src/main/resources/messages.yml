@@ -1,3 +1,4 @@
+configVersion: "2-1-0"
 prefix: "&8[&bEpicGuard&8] "
 actionbar:
   attack: "&f{NICK} &7[&f{IP}&7] failed &8» &c{DETECTION} &8| &c{CPS}&7/&ccps"
@@ -10,6 +11,10 @@ attack-title:
 other:
   history-new: "&7Player &e{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
   no-permission: "&cYou don't have permission! If you think this is an issue, report this to administrators."
+  # This option is only one here
+  # without "prefix" added before it!
+  not-allowed-command: "&fUnknown command. Type /help for help."
+  blocked-command: "&cThis command is blocked!"
 kick-messages:
   proxy:
     - "&8▪ &cEpicGuard AntiBot &8▪"

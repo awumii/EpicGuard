@@ -18,28 +18,24 @@ import java.util.stream.Collectors;
 
 public class ConfigUpdater {
 
-    private int newVersion = 1; // The next version of the Config
-    private boolean instantDeprecated = false; // Just an option to depecrate the config if the version is different
+    private String newVersion = "2-1-0"; // The next version of the Config
     private JavaPlugin plugin;
 
     private File path;
     private List<String> lines;
 
-    public ConfigUpdater(JavaPlugin plugin) {
+    private String fileName;
+
+    public ConfigUpdater(JavaPlugin plugin, String fileName) {
         this.plugin = plugin;
+        this.fileName = fileName;
     }
 
-    public void checkUpdate(int oldV) {
-        path = new File(plugin.getDataFolder(), "config.yml");
+    public void checkUpdate(String oldV) {
+        path = new File(plugin.getDataFolder(), this.fileName);
 
-        if (oldV == 0 || instantDeprecated) {
-            if (oldV != newVersion)
-                deprecateConfig();
-            return;
-        }
-
-        if (oldV == newVersion) {
-            Logger.info("The config is updated!", false);
+        if (oldV.equals(newVersion)) {
+            Logger.info("This is not update, config values not changed.", false);
             return;
         }
 
@@ -49,9 +45,9 @@ public class ConfigUpdater {
 
     public void updateConfig() {
 
-        Logger.info("Updating the config!", false);
+        Logger.info("Looks like you have just installed an update, adding new config values.", false);
 
-        List<String> newLines = readInsideFile("/config.yml");
+        List<String> newLines = readInsideFile("/" + this.fileName);
 
         lines.removeIf(s -> s.trim().isEmpty() || s.trim().startsWith("#") || s.split(":").length == 1);
         lines.forEach(s -> {

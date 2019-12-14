@@ -26,14 +26,6 @@ public class Notificator {
         }
     }
 
-    public static void send(Player p, String text) {
-        if (BukkitMain.STATUS) {
-            if (p.hasPermission(BukkitMain.PERMISSION)) {
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
-            }
-        }
-    }
-
     public static void action(String text) {
         if (BukkitMain.STATUS) {
             ActionBarAPI.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, BukkitMain.PERMISSION);
