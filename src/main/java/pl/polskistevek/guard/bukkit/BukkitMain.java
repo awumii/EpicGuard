@@ -5,6 +5,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
+import pl.polskistevek.guard.bukkit.exploit.listener.BookEditExploit;
+import pl.polskistevek.guard.bukkit.exploit.listener.InventoryCickExploit;
 import pl.polskistevek.guard.bukkit.listener.InventoryClickListener;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
@@ -46,7 +48,8 @@ public class BukkitMain extends JavaPlugin {
     private static long ATTACK_TIMER;
 
     public static String EXPLOIT_KICK_MESSAGE;
-    public static int EXPLOIT_MAX_PACKET;
+    public static String EXPLOIT_STAFF_NOTIFICATION;
+    public static int EXPLOIT_MAX_BOOK;
     public static boolean EXPLOIT_ENABLED;
 
     @Override
@@ -60,25 +63,30 @@ public class BukkitMain extends JavaPlugin {
             GeoAPI.spigot = true;
             PluginManager pm = this.getServer().getPluginManager();
 
-            //Registering Events
+            // Registering Events
             pm.registerEvents(new PlayerPreLoginListener(), this);
             pm.registerEvents(new ServerListPingListener(), this);
             pm.registerEvents(new PlayerJoinListener(), this);
             pm.registerEvents(new PlayerQuitListener(), this);
             pm.registerEvents(new InventoryClickListener(), this);
 
-            //Registering Commands
+            pm.registerEvents(new BookEditExploit(), this);
+            pm.registerEvents(new InventoryCickExploit(), this);
+
+            // Registering Commands
             this.getCommand("core").setExecutor(new GuardCommand());
 
             ActionBarAPI.register();
             Logger.info("NMS Version: " + ActionBarAPI.nmsver, false);
             loadConfig();
 
-            //Registering tasks
+            // Registering tasks
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTimerTask(), 0L, ATTACK_TIMER);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveAndUpdaterTask(), 0L, 5000L);
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);
+
+            // Other stuff
             Logger.info("Loading GeoIP database...", false);
             GeoAPI.registerDatabase(ServerType.SPIGOT);
             Updater.checkForUpdates();
@@ -86,8 +94,8 @@ public class BukkitMain extends JavaPlugin {
             DataFileManager.load();
             MessagesBukkit.load();
 
-            //Creating GUI's
-            GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Menu");
+            // Creating GUI's
+            GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 45, "EpicGuard Player Manager");
 
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
@@ -119,7 +127,8 @@ public class BukkitMain extends JavaPlugin {
 
         EXPLOIT_ENABLED = cfg.getBoolean("anti-exploit.enabled");
         EXPLOIT_KICK_MESSAGE = cfg.getString("anti-exploit.kick-message");
-        EXPLOIT_MAX_PACKET = cfg.getInt("anti-exploit.packet-limiter.global-limit");
+        EXPLOIT_MAX_BOOK = cfg.getInt("anti-exploit.modules.max-book-pages");
+        EXPLOIT_STAFF_NOTIFICATION = cfg.getString("anti-exploit.staff-notification");
     }
 
     @Override

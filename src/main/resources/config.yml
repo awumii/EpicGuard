@@ -62,16 +62,16 @@ antibot:
 ###############################
 ##       AntiExploit         ##
 ###############################
-# AntiExploit REQUIRES ProtocolLib plugin!
-# If you don't have it, this section will not work!
 
 anti-exploit:
   # Set this to true to enable all features of this section.
   enable: false
+  # Prints all received packets to console!
   kick-message: "&cKicked for using exploit ({EXPLOIT})!"
-  packet-limiter:
-    # How many packets per second should player send to be kicked?
-    gobal-limit: 400
+  staff-notification: "&cPlayer {PLAYER} has been detected for using exploit ({EXPLOIT})!"
+  modules:
+    # Max amount of pages, player can send over 47k pages to lag the server.
+    max-book-pages: 50
 
 ###############################
 ##           Advanced        ##

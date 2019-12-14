@@ -15,7 +15,7 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (e.getView().getTitle().equals("EpicGuard Menu")) {
+        if (e.getView().getTitle().equals("EpicGuard Management Menu")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
                 return;

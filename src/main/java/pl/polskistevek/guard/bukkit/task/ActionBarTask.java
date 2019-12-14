@@ -13,7 +13,10 @@ public class ActionBarTask implements Runnable {
     @Override
     public void run() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getOpenInventory().getTitle().equals("EpicGuard Menu")) {
+            if (p.getOpenInventory().getTitle().equals("EpicGuard Management Menu")) {
+                GuiMain.show(p);
+            }
+            if (p.getOpenInventory().getTitle().equals("EpicGuard Player Manager")) {
                 GuiMain.show(p);
             }
         }
