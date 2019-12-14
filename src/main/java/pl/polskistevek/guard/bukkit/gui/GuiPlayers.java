@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.manager.UserManager;
 import pl.polskistevek.guard.bukkit.util.ItemBuilder;
 import pl.polskistevek.guard.utils.ChatUtil;
@@ -34,13 +35,15 @@ public class GuiPlayers {
                 Logger.error(e);
             }
             lore.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
-            lore.add("");
-            lore.add(ChatUtil.fix("&7IP History:"));
-            for (String adress : UserManager.getUser(player).getAdresses()) {
-                if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
-                    lore.add(ChatUtil.fix("&8-> &c" + adress + " &8(&aCurrent&8)"));
-                } else {
-                    lore.add(ChatUtil.fix("&8-> &c" + adress));
+            if (GuardPluginBukkit.IP_HISTORY_ENABLE) {
+                lore.add("");
+                lore.add(ChatUtil.fix("&7IP History:"));
+                for (String adress : UserManager.getUser(player).getAdresses()) {
+                    if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
+                        lore.add(ChatUtil.fix("&8-> &c" + adress + " &8(&aCurrent&8)"));
+                    } else {
+                        lore.add(ChatUtil.fix("&8-> &c" + adress));
+                    }
                 }
             }
             if (player.isOp()) {

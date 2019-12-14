@@ -88,10 +88,12 @@ public class GuardCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        p.sendMessage(ChatUtil.fix(""));
-                        p.sendMessage(ChatUtil.fix("&6[IP History]"));
-                        for (String adress : UserManager.getUser(player).getAdresses()) {
-                            p.sendMessage(ChatUtil.fix(" &8- &c" + adress));
+                        if (GuardPluginBukkit.IP_HISTORY_ENABLE) {
+                            p.sendMessage(ChatUtil.fix(""));
+                            p.sendMessage(ChatUtil.fix("&6[IP History]"));
+                            for (String adress : UserManager.getUser(player).getAdresses()) {
+                                p.sendMessage(ChatUtil.fix(" &8- &c" + adress));
+                            }
                         }
                         p.sendMessage(ChatUtil.fix(""));
                         p.sendMessage(ChatUtil.fix("&7------------------------------------------"));

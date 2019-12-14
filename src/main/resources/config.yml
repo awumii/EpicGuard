@@ -60,6 +60,9 @@ antibot:
 ##     Server Protection     ##
 ###############################
 
+ip-history:
+  enabled: true
+
 op-protection:
   enabled: false
   # Permission to see alert: epicguard.protection.notify
@@ -70,7 +73,7 @@ op-protection:
     - "Admin"
 
 # If someone tries to execute command listed here,
-# event will be cancelled, and player will see custom message
+# event will be canceled, and the player will see a custom message
 # defined in messages.yml
 
 command-protection:
@@ -79,9 +82,9 @@ command-protection:
     - "/op"
     - "/deop"
 
-# If someone tries to execute command not listed
+# If someone tries to execute a command not listed
 # in this module, and does not have bypass permission,
-# event will be cancelled, and custom message will be shown
+# event will be canceled, and custom message will be shown
 
 allowed-commands:
   enabled: false
@@ -146,7 +149,7 @@ anti-exploit:
   kick-message: "&cKicked for using exploit ({EXPLOIT})!"
   staff-notification: "&cPlayer {PLAYER} has been detected for using exploit ({EXPLOIT})!"
   modules:
-    # Max amount of pages, player can send over 47k pages to lag the server.
+    # Max amount of pages, a player can send over 47k pages to lag the server.
     max-book-pages: 50
 
 
@@ -155,23 +158,23 @@ anti-exploit:
 ###############################
 
 speed:
-  # How many connections per seconds should me made, to block connections to the server.
+  # How many connections per second should be made, to block connections to the server.
   # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
   # If deny-join is triggered, Proxy/VPN checking is skipped.
   connection: 10
-  # How many pings per seconds should be made to block connections to the server.
+  # How many pings per second should be made to block connections to the server.
   ping-speed: 15
   # How many successful joins per second should me made to block connections to the server
   join-speed: 5
-  # Time (in ticks) before antibot will disable.
+  # Time (in ticks) before the antibot will disable.
   attack-timer-reset: 800
 
 auto-whitelist:
   # Enable automatic player whitelisting.
-  # When player is whitelisted, all checks are skipped (like Proxy check).
+  # When a player is whitelisted, all checks are skipped (like a Proxy check).
   # Whitelisted players can join even when ATTACK_MODE is activated.
   enabled: true
-  # How much time (in ticks), player should be online to be added to whitelist.
+  # How much time (in ticks), the player should be online to be added to the whitelist.
   # 20 ticks = 1 second
   time: 2400
 
