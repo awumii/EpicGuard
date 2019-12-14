@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.utils.Downloader;
 import pl.polskistevek.guard.utils.Logger;
+import pl.polskistevek.guard.utils.Mirrors;
 
 import java.io.File;
 import java.util.List;
@@ -29,7 +30,7 @@ public class MessagesBukkit {
             String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages.yml";
             File configFile = new File(file);
             if (!configFile.exists()) {
-                Downloader.download("http://epicmc.cba.pl/epicguard/api/messages.yml", file);
+                Downloader.download(Mirrors.MIRROR_MESSAGES, file);
             }
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
 

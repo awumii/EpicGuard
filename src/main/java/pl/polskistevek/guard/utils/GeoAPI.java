@@ -26,7 +26,7 @@ public class GeoAPI {
                 Logger.info("GeoIP Database not found! Starting download...", false);
             }
             //I need to download it from external site (my cloud) because official site has only tar.zip packed version (plugin don't need to extract it)
-            Downloader.download("http://epicmc.cba.pl/cloud/uploads/GeoLite2-Country.mmdb", dbLocation);
+            Downloader.download(Mirrors.MIRROR_GEO, dbLocation);
         }
         File database;
         database = new File(dbLocation);
