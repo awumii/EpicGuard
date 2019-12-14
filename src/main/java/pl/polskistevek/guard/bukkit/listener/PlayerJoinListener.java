@@ -27,6 +27,7 @@ public class PlayerJoinListener implements Listener {
             String adress = p.getAddress().getAddress().getHostAddress();
             UserManager.addUser(p);
             Updater.notify(p);
+            AttackManager.checkAttackStatus(AttackManager.AttackType.JOIN);
             AttackManager.handleAttack(AttackManager.AttackType.JOIN);
 
             // IP History manager
