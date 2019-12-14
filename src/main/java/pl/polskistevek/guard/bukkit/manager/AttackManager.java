@@ -8,11 +8,15 @@ import pl.polskistevek.guard.bukkit.util.Notificator;
 import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.KickReason;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AttackManager {
     public static int joinPerSecond = 0;
     public static int connectPerSecond = 0;
     public static int pingPerSecond = 0;
     public static boolean attackMode = false;
+    public static List<String> rejoinData = new ArrayList<>();
 
     public enum AttackType {
         PING,
@@ -105,6 +109,14 @@ public class AttackManager {
         if (reason == KickReason.PROXY) {
             StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_PROXY) {
+                sb.append(ChatUtil.fix(s)).append("\n");
+            }
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+        }
+
+        if (reason == KickReason.VERIFY) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : MessagesBukkit.MESSAGE_KICK_VERIFY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());

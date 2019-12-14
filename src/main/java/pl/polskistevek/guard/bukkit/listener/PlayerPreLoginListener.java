@@ -80,6 +80,16 @@ public class PlayerPreLoginListener implements Listener {
                 return;
             }
 
+            if (GuardPluginBukkit.FORCE_REJOIN){
+                if (!AttackManager.rejoinData.contains(name)) {
+                    AttackManager.handleDetection("Force Rejoin", name, adress);
+                    Logger.info("# Force Rejoin - FAILED", true);
+                    AttackManager.closeConnection(e, KickReason.VERIFY);
+                    AttackManager.rejoinData.add(name);
+                    return;
+                }
+            }
+
             // Variables for proxy detection
             final String url1 = GuardPluginBukkit.ANTIBOT_QUERY_1.replace("{IP}", adress);
             final String url2 = GuardPluginBukkit.ANTIBOT_QUERY_2.replace("{IP}", adress);
@@ -118,12 +128,15 @@ public class PlayerPreLoginListener implements Listener {
     private static boolean checkUrl(String url) {
         try {
             final Scanner s = new Scanner(new URL(url).openStream());
+            Logger.info("# Checking proxy from URL: " + url, true);
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
                     if (GuardPluginBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                        Logger.info("# Detected Proxy, URL: " + url, true);
                         return true;
                     }
                 }
+                Logger.info("# Proxy is not detected from: " + url, true);
                 return false;
             }
         } catch (IOException e) {
