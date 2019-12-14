@@ -25,6 +25,7 @@ public class InventoryClickListener implements Listener {
                 GuiPlayers.show(p);
             }
             if (im.getDisplayName().contains("Reload Config")) {
+                p.chat("/guard reload");
                 p.getOpenInventory().close();
             }
         }

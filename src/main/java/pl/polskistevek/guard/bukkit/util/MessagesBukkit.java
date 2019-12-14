@@ -34,13 +34,6 @@ public class MessagesBukkit {
             }
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
 
-            String oldVersion = cfg.getString("configVersion");
-            if (oldVersion != null) {
-                new ConfigUpdater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), "messages.yml").checkUpdate(oldVersion);
-            } else {
-                new ConfigUpdater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), "messages.yml").checkUpdate("veryoldversionlol");
-            }
-
             PREFIX = cfg.getString("prefix");
             MESSAGE_KICK_PROXY = cfg.getStringList("kick-messages.proxy");
             MESSAGE_KICK_COUNTRY = cfg.getStringList("kick-messages.country");
