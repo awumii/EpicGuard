@@ -14,7 +14,6 @@
 ##    Main Options           ##
 ###############################
 updater: true
-configVersion: "2-1-0"
 
 ###############################
 ##           Countries       ##

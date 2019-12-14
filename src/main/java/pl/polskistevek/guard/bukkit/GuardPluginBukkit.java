@@ -75,13 +75,6 @@ public class GuardPluginBukkit extends JavaPlugin {
             this.saveDefaultConfig();
             Logger.create(ServerType.SPIGOT);
             Logger.info("Starting plugin...", false);
-            String oldVersion = this.getConfig().getString("configVersion");
-
-            if (oldVersion != null) {
-                new ConfigUpdater(this, "config.yml").checkUpdate(oldVersion);
-            } else {
-                new ConfigUpdater(this, "config.yml").checkUpdate("veryoldversionlol");
-            }
             GeoAPI.spigot = true;
             PluginManager pm = this.getServer().getPluginManager();
 
