@@ -9,7 +9,7 @@ package pl.polskistevek.guard.bukkit.util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.utils.Logger;
 
 import java.lang.reflect.Field;
@@ -84,7 +84,7 @@ public class ActionBarAPI {
                 public void run() {
                     sendActionBar(player, "");
                 }
-            }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), duration + 1);
+            }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), duration + 1);
         }
 
         // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
@@ -95,7 +95,7 @@ public class ActionBarAPI {
                 public void run() {
                     sendActionBar(player, message);
                 }
-            }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), duration);
+            }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), duration);
         }
     }
 

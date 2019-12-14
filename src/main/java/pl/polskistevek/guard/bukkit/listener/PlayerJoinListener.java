@@ -5,8 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
@@ -15,7 +14,6 @@ import pl.polskistevek.guard.bukkit.object.User;
 import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.util.Notificator;
 import pl.polskistevek.guard.bukkit.util.Updater;
-import pl.polskistevek.guard.utils.ChatUtil;
 import pl.polskistevek.guard.utils.Logger;
 
 import java.util.List;
@@ -46,15 +44,15 @@ public class PlayerJoinListener implements Listener {
             u.setAdresses(history);
 
             // Auto whitelisting
-            if (BukkitMain.AUTO_WHITELIST) {
-                Bukkit.getScheduler().runTaskLater(BukkitMain.getPlugin(BukkitMain.class), () -> {
+            if (GuardPluginBukkit.AUTO_WHITELIST) {
+                Bukkit.getScheduler().runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), () -> {
                     if (p.isOnline()) {
                         if (!BlacklistManager.checkWhitelist(adress)) {
                             Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
                             BlacklistManager.addWhitelist(adress);
                         }
                     }
-                }, BukkitMain.AUTO_WHITELIST_TIME);
+                }, GuardPluginBukkit.AUTO_WHITELIST_TIME);
             }
         } catch (Exception ex) {
             Logger.error(ex);

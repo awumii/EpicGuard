@@ -80,7 +80,7 @@ public class ConfigUpdater {
     }
 
     public String joinString(String[] text, String character) {
-        return Arrays.stream(text).collect(Collectors.joining(character));
+        return String.join(character, text);
     }
 
     public int getIndex(String line, List<String> list) {
@@ -92,14 +92,14 @@ public class ConfigUpdater {
 
     public void writeFile(File file, List<String> toWrite) {
         try {
-            Files.write(file.toPath(), toWrite, Charsets.ISO_8859_1);
+            Files.write(file.toPath(), toWrite, Charsets.UTF_8);
         } catch (Exception ignored) {
         }
     }
 
     public List<String> readFile(File file) {
         try {
-            return Files.readAllLines(file.toPath(), Charsets.ISO_8859_1);
+            return Files.readAllLines(file.toPath(), Charsets.UTF_8);
         } catch (Exception e) {
             return new ArrayList<>();
         }

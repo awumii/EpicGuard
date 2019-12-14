@@ -2,14 +2,14 @@ package pl.polskistevek.guard.bukkit.manager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 
 import java.io.File;
 import java.io.IOException;
 
 public class DataFileManager {
-    private static final String file = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/data.yml";
-    private static final String file1 = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/customLicense.yml";
+    private static final String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data.yml";
+    private static final String file1 = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/customLicense.yml";
     private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;

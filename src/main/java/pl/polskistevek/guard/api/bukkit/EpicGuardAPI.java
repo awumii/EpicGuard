@@ -2,7 +2,7 @@ package pl.polskistevek.guard.api.bukkit;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
 import pl.polskistevek.guard.utils.GeoAPI;
 
@@ -11,7 +11,7 @@ import java.net.InetAddress;
 
 public class EpicGuardAPI {
     public static String getVersion() {
-        return BukkitMain.getPlugin(BukkitMain.class).getDescription().getVersion();
+        return GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDescription().getVersion();
     }
 
     public static int getBlockedBots() {

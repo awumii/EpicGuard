@@ -1,7 +1,7 @@
 package pl.polskistevek.guard.utils;
 
-import pl.polskistevek.guard.bukkit.BukkitMain;
-import pl.polskistevek.guard.bungee.BungeeMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
+import pl.polskistevek.guard.bungee.GuardPluginBungee;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,10 +16,10 @@ public class Logger {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void create(ServerType type) {
         if (type == ServerType.SPIGOT) {
-            file = new File(BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/logs.txt");
+            file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/logs.txt");
         }
         if (type == ServerType.BUNGEE) {
-            file = new File(BungeeMain.plugin.getDataFolder() + "/logs.txt");
+            file = new File(GuardPluginBungee.plugin.getDataFolder() + "/logs.txt");
         }
         if (!file.exists()) {
             try {
@@ -36,8 +36,8 @@ public class Logger {
         String time = sdf.format(cal.getTime());
         String msg;
         if (!hide) {
-            msg = "[EpicGuard] " + message;
-            System.out.println(msg);
+            msg = "[" + time + "] " + message;
+            System.out.println("[EpicGuard] " + message);
         } else {
             msg = "[" + time + "] " + message;
         }
@@ -58,7 +58,7 @@ public class Logger {
         info("  <> Stack Trace:", false);
         info(" ", false);
         for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
-            info(stackTraceElement.toString(), false);
+            info("     " + stackTraceElement.toString(), false);
         }
         info(" ", false);
         info("  <> If you think this is a bug, report it on github.", false);

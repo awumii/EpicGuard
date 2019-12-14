@@ -2,12 +2,11 @@ package pl.polskistevek.guard.bukkit.util;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.utils.Downloader;
 import pl.polskistevek.guard.utils.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class MessagesBukkit {
@@ -27,23 +26,18 @@ public class MessagesBukkit {
 
     public static void load() {
         try {
-            String file = BukkitMain.getPlugin(BukkitMain.class).getDataFolder() + "/messages.yml";
+            String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages.yml";
             File configFile = new File(file);
             if (!configFile.exists()) {
-            /* try {
-                Downloader.download("http://epicmc.cba.pl/cloud/uploads/messages.yml", file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } */
-                configFile.createNewFile();
+                Downloader.download("http://epicmc.cba.pl/epicguard/api/messages.yml", file);
             }
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
 
             String oldVersion = cfg.getString("configVersion");
             if (oldVersion != null) {
-                new ConfigUpdater(BukkitMain.getPlugin(BukkitMain.class), "messages.yml").checkUpdate(oldVersion);
+                new ConfigUpdater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), "messages.yml").checkUpdate(oldVersion);
             } else {
-                new ConfigUpdater(BukkitMain.getPlugin(BukkitMain.class), "messages.yml").checkUpdate("veryoldversionlol");
+                new ConfigUpdater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), "messages.yml").checkUpdate("veryoldversionlol");
             }
 
             PREFIX = cfg.getString("prefix");

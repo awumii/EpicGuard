@@ -2,7 +2,7 @@ package pl.polskistevek.guard.bukkit.manager;
 
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.util.Notificator;
 import pl.polskistevek.guard.utils.ChatUtil;
@@ -22,21 +22,21 @@ public class AttackManager {
 
     public static boolean checkAttackStatus(AttackType type) {
         if (type == AttackType.PING) {
-            if (pingPerSecond > BukkitMain.PING_SPEED) {
+            if (pingPerSecond > GuardPluginBukkit.PING_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
         if (type == AttackType.CONNECT) {
-            if (pingPerSecond > BukkitMain.JOIN_SPEED) {
+            if (pingPerSecond > GuardPluginBukkit.JOIN_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
         if (type == AttackType.JOIN) {
-            if (pingPerSecond > BukkitMain.CONNECT_SPEED) {
+            if (pingPerSecond > GuardPluginBukkit.CONNECT_SPEED) {
                 attackMode = true;
                 return true;
             }
@@ -75,7 +75,7 @@ public class AttackManager {
                     AttackManager.joinPerSecond--;
                 }
             }
-        }.runTaskLater(BukkitMain.getPlugin(BukkitMain.class), 20);
+        }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), 20);
     }
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {

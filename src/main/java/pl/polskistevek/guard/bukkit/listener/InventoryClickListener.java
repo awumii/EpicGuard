@@ -5,11 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
-import pl.polskistevek.guard.bukkit.BukkitMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
-import pl.polskistevek.guard.bukkit.util.ActionBarAPI;
-import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
-import pl.polskistevek.guard.utils.ChatUtil;
 
 public class InventoryClickListener implements Listener {
     @EventHandler

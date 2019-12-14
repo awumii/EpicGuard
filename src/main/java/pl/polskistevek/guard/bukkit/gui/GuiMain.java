@@ -6,7 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import pl.polskistevek.guard.bukkit.BukkitMain;
+import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.manager.BlacklistManager;
 import pl.polskistevek.guard.bukkit.manager.DataFileManager;
@@ -17,7 +17,6 @@ import pl.polskistevek.guard.bukkit.util.Updater;
 import pl.polskistevek.guard.utils.ChatUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GuiMain {
@@ -83,8 +82,8 @@ public class GuiMain {
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&7Antibot modules&8: " + (BukkitMain.ANTIBOT ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&7Firewall&8: " + (BukkitMain.FIREWALL ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&7Antibot modules&8: " + (GuardPluginBukkit.ANTIBOT ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&7Firewall&8: " + (GuardPluginBukkit.FIREWALL ? "&aOn" : "&cOff")));
         l8.add(ChatUtil.fix("&7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&aAntibot Information").addLores(l8).build();
