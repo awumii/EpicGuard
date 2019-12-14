@@ -40,6 +40,7 @@ public class MessagesBukkit {
             MESSAGE_KICK_COUNTRY = cfg.getStringList("kick-messages.country");
             MESSAGE_KICK_ATTACK = cfg.getStringList("kick-messages.attack");
             MESSAGE_KICK_BLACKLIST = cfg.getStringList("kick-messages.blacklist");
+            MESSAGE_KICK_VERIFY = cfg.getStringList("kick-messages.verify");
             ACTIONBAR_ATTACK = cfg.getString("actionbar.attack");
             ACTIONBAR_NO_ATTACK = cfg.getString("actionbar.no-attack");
             ATTACK_TITLE = cfg.getString("attack-title.title");
