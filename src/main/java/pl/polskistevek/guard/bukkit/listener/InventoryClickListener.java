@@ -5,18 +5,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
+import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
 
 public class InventoryClickListener implements Listener {
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
-        if (e.getView().getTitle().equals("EpicGuard Management Menu")) {
-            e.setCancelled(true);
-            if (e.getCurrentItem() == null) {
+    public void onClick(InventoryClickEvent event) {
+        Player p = (Player) event.getWhoClicked();
+        if (event.getView().getTitle().equals("EpicGuard Management Menu")) {
+            event.setCancelled(true);
+            if (event.getCurrentItem() == null) {
                 return;
             }
-            ItemMeta im = e.getCurrentItem().getItemMeta();
+            ItemMeta im = event.getCurrentItem().getItemMeta();
             if (im == null) {
                 return;
             }
@@ -27,8 +28,17 @@ public class InventoryClickListener implements Listener {
                 p.getOpenInventory().close();
             }
         }
-        if (e.getView().getTitle().equals("EpicGuard Player Manager")) {
-            e.setCancelled(true);
+        if (event.getView().getTitle().equals("EpicGuard Player Manager")) {
+            if (event.getCurrentItem() == null) {
+                return;
+            }
+            if (event.getCurrentItem().getItemMeta() == null) {
+                return;
+            }
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Back to main menu")){
+                GuiMain.show(p);
+            }
+            event.setCancelled(true);
         }
     }
 }

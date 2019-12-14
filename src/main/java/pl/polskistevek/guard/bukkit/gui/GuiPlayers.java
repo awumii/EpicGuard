@@ -48,7 +48,9 @@ public class GuiPlayers {
             } else {
                 itemStack = new ItemBuilder(Material.IRON_HELMET).setTitle("&a" + player.getName()).addLores(lore).build();
             }
+            ItemStack back = new ItemBuilder(Material.ARROW).setTitle("&cBack to main menu").addLore("").addLore("&7Click to go back.").build();
             inv.setItem(i, itemStack);
+            inv.setItem(35, back);
             i++;
         }
         p.openInventory(inv);

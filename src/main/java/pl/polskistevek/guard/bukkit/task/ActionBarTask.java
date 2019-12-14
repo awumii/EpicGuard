@@ -3,6 +3,7 @@ package pl.polskistevek.guard.bukkit.task;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
+import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
 import pl.polskistevek.guard.bukkit.manager.AttackManager;
 import pl.polskistevek.guard.bukkit.util.MessagesBukkit;
 import pl.polskistevek.guard.bukkit.util.Notificator;
@@ -17,7 +18,7 @@ public class ActionBarTask implements Runnable {
                 GuiMain.show(p);
             }
             if (p.getOpenInventory().getTitle().equals("EpicGuard Player Manager")) {
-                GuiMain.show(p);
+                GuiPlayers.show(p);
             }
         }
         if (AttackManager.connectPerSecond == 0) {
