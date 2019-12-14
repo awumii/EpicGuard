@@ -11,6 +11,7 @@ public class ServerListPingListener implements Listener {
     @EventHandler
     public void onPing(ServerListPingEvent e) {
         try {
+            AttackManager.checkAttackStatus(AttackManager.AttackType.PING);
             AttackManager.handleAttack(AttackManager.AttackType.PING);
         } catch (Exception ex) {
             Logger.error(ex);

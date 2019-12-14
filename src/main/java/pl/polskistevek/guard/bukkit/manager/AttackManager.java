@@ -28,15 +28,15 @@ public class AttackManager {
             }
             return false;
         }
-        if (type == AttackType.CONNECT) {
-            if (pingPerSecond > GuardPluginBukkit.JOIN_SPEED) {
+        if (type == AttackType.JOIN) {
+            if (joinPerSecond > GuardPluginBukkit.JOIN_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
-        if (type == AttackType.JOIN) {
-            if (pingPerSecond > GuardPluginBukkit.CONNECT_SPEED) {
+        if (type == AttackType.CONNECT) {
+            if (connectPerSecond > GuardPluginBukkit.CONNECT_SPEED) {
                 attackMode = true;
                 return true;
             }
