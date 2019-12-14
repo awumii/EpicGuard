@@ -4,7 +4,7 @@ main: pl.polskistevek.guard.bukkit.BukkitMain
 softdepend: [ProtocolLib]
 author: PolskiStevek
 description: Increase your server security. Fast and effective, Block bots, griefers, Bungeecord Supported!
-api-version: 1.15
+api-version: 1.14
 
 commands:
   core:

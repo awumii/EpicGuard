@@ -42,21 +42,28 @@ public class Logger {
             msg = "[" + time + "] " + message;
         }
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            bw.append(msg);
-            bw.newLine();
-            bw.close();
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+            bufferedWriter.append(msg);
+            bufferedWriter.newLine();
+            bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void error(Exception exception) {
-        info("------  EPICGUARD ERROR ------", false);
-        info(" <> Information: " + exception.getMessage(), false);
-        info(" <> Cause: " + exception.getCause().getMessage(), false);
-        info(" <> Stack Trace:", false);
-        exception.printStackTrace();
-        info("------  EPICGUARD ERROR ------", false);
+        info("#######  EPICGUARD ERROR LOG #######", false);
+        info(" ", false);
+        info("  <> Information: " + exception.getMessage(), false);
+        info("  <> Stack Trace:", false);
+        info(" ", false);
+        for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
+            info(stackTraceElement.toString(), false);
+        }
+        info(" ", false);
+        info("  <> If you think this is a bug, report it on github.", false);
+        info("  <> https://github.com/PolskiStevek/EpicGuard/issues", false);
+        info(" ", false);
+        info("#######  EPICGUARD ERROR LOG #######", false);
     }
 }

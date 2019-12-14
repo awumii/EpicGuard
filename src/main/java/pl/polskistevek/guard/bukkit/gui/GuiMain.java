@@ -47,9 +47,6 @@ public class GuiMain {
         l3.add(ChatUtil.fix("&7You can see some basic information about them."));
         l3.add(ChatUtil.fix("&7GUI will show same information that can be found&7,"));
         l3.add(ChatUtil.fix("&7when you use command &6/guard player <nickname>&7."));
-        l3.add("");
-        l3.add(ChatUtil.fix("&cWARNING: If you have server with many players, server"));
-        l3.add(ChatUtil.fix("&ccan freeze for some seconds while loading a gui."));
         ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&aPlayer Information").addLores(l3).build();
 
         List<String> l4 = new ArrayList<>();
