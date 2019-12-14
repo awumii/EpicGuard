@@ -67,6 +67,7 @@ public class GuardPluginBukkit extends JavaPlugin {
     public static boolean BLOCKED_COMMANDS_ENABLE;
     public static boolean ALLOWED_COMMANDS_ENABLE;
     public static boolean OP_PROTECTION_ENABLE;
+    public static boolean IP_HISTORY_ENABLE;
 
     @Override
     public void onEnable() {
@@ -169,6 +170,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             BLOCKED_COMMANDS_ENABLE = cfg.getBoolean("command-protecton.enabled");
             ALLOWED_COMMANDS_ENABLE = cfg.getBoolean("allowed-commands.enabled");
             OP_PROTECTION_ENABLE = cfg.getBoolean("op-protecton.enabled");
+            OP_PROTECTION_ENABLE = cfg.getBoolean("ip-history.enabled");
         } catch (Exception e) {
             Logger.error(e);
         }
