@@ -24,9 +24,9 @@ countries:
   # List of country codes:
   # https://dev.maxmind.com/geoip/legacy/codes/iso3166/
   list:
-    - US
     - GB
     - DE
+    - PL
 
 ###############################
 ##           AntiBot         ##
@@ -154,14 +154,16 @@ anti-exploit:
 ###############################
 ##           Advanced        ##
 ###############################
+# You SHOULD configure it, to fit your server's player amount.
+# If you have small server, don't change it, or change it to smaller values
 
 speed:
   # How many connections per second should be made, to block connections to the server.
   # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
   # If deny-join is triggered, Proxy/VPN checking is skipped.
-  connection: 10
+  connection: 7
   # How many pings per second should be made to block connections to the server.
-  ping-speed: 15
+  ping-speed: 10
   # How many successful joins per second should be made to block connections to the server
   join-speed: 5
   # Time (in ticks) before the antibot will disable.
@@ -174,7 +176,7 @@ auto-whitelist:
   enabled: true
   # How much time (in ticks), the player should be online to be added to the whitelist.
   # 20 ticks = 1 second
-  time: 2400
+  time: 8400
 
 
 ###############################
