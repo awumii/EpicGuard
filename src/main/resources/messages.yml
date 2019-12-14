@@ -42,3 +42,7 @@ kick-messages:
     - "&7Your country is not allowed on this server."
     - " "
     - "&7If you think this is an issue, contact our staff."
+  rejoin:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Please join server again to verify yourself."

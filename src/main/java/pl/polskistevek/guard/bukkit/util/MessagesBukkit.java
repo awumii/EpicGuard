@@ -15,6 +15,7 @@ public class MessagesBukkit {
     public static List<String> MESSAGE_KICK_COUNTRY;
     public static List<String> MESSAGE_KICK_ATTACK;
     public static List<String> MESSAGE_KICK_BLACKLIST;
+    public static List<String> MESSAGE_KICK_VERIFY;
     public static String ACTIONBAR_ATTACK;
     public static String ACTIONBAR_NO_ATTACK;
     public static String ATTACK_TITLE;

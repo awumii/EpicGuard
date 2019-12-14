@@ -36,6 +36,8 @@ antibot:
   # You can fuly disable ALL antibot modules if you don't want it.
   # Disabling antibot will not disable country checking (look above)
   enabled: true
+  # New players will need to rejoin server to play!
+  force-rejoin: true
   # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
   # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
   # "http://proxycheck.io/v2/{IP}?key=API_KEY&vpn=1"

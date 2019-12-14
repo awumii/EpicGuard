@@ -9,11 +9,9 @@ import java.io.IOException;
 
 public class DataFileManager {
     private static final String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data.yml";
-    private static final String file1 = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/customLicense.yml";
     private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;
-    public static String license = "";
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void load() {
@@ -25,16 +23,12 @@ public class DataFileManager {
                 e.printStackTrace();
             }
         }
-        File customLicense = new File(file1);
-        if (customLicense.exists()) {
-            YamlConfiguration customLicenseData = YamlConfiguration.loadConfiguration(customLicense);
-            license = customLicenseData.getString("licensedTo");
-        }
         configuration = YamlConfiguration.loadConfiguration(data);
         BlacklistManager.IP_BL = configuration.getStringList("blacklist");
         BlacklistManager.IP_WL = configuration.getStringList("whitelist");
         blockedBots = configuration.getInt("blocked-bots");
         blockedBots = configuration.getInt("checked-connections");
+        AttackManager.rejoinData = configuration.getStringList("rejoin-data");
     }
 
     public static FileConfiguration get() {
@@ -45,6 +39,7 @@ public class DataFileManager {
         try {
             get().set("blocked-bots", blockedBots);
             get().set("checked-connections", checkedConnections);
+            get().set("rejoin-data", AttackManager.rejoinData);
             configuration.save(file);
         } catch (IOException e) {
             e.printStackTrace();

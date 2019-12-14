@@ -69,6 +69,8 @@ public class GuardPluginBukkit extends JavaPlugin {
     public static boolean OP_PROTECTION_ENABLE;
     public static boolean IP_HISTORY_ENABLE;
 
+    public static boolean FORCE_REJOIN;
+
     @Override
     public void onEnable() {
         try {
@@ -171,6 +173,8 @@ public class GuardPluginBukkit extends JavaPlugin {
             ALLOWED_COMMANDS_ENABLE = cfg.getBoolean("allowed-commands.enabled");
             OP_PROTECTION_ENABLE = cfg.getBoolean("op-protecton.enabled");
             IP_HISTORY_ENABLE = cfg.getBoolean("ip-history.enabled");
+
+            FORCE_REJOIN = cfg.getBoolean("antibot.force-rejoin");
         } catch (Exception e) {
             Logger.error(e);
         }
