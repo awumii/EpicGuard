@@ -1,9 +1,9 @@
 name: EpicGuard
-version: 2.1.0
+version: 3.0.0
 main: pl.polskistevek.guard.bukkit.GuardPluginBukkit
 softdepend: [ProtocolLib]
 author: PolskiStevek
-description: Increase your server security. Fast and effective, Block bots, griefers, Bungeecord Supported!
+description: Increase your server security. Fast and effective. Block bots, griefers. Block any ForceOP
 api-version: 1.14
 
 commands:

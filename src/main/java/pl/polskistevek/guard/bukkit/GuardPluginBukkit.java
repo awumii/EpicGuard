@@ -1,12 +1,15 @@
 package pl.polskistevek.guard.bukkit;
 
+import com.comphenix.protocol.ProtocolLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
+import pl.polskistevek.guard.bukkit.exploit.listener.BlockPlaceExploit;
 import pl.polskistevek.guard.bukkit.exploit.listener.BookEditExploit;
 import pl.polskistevek.guard.bukkit.exploit.listener.InventoryCickExploit;
+import pl.polskistevek.guard.bukkit.exploit.listener.TabCompletePacket;
 import pl.polskistevek.guard.bukkit.listener.*;
 import pl.polskistevek.guard.bukkit.gui.GuiMain;
 import pl.polskistevek.guard.bukkit.gui.GuiPlayers;
@@ -55,6 +58,9 @@ public class GuardPluginBukkit extends JavaPlugin {
     public static String EXPLOIT_STAFF_NOTIFICATION;
     public static int EXPLOIT_MAX_BOOK;
     public static boolean EXPLOIT_ENABLED;
+    public static boolean EXPLOIT_TAB_COMPLETE_BLOCK;
+    public static boolean EXPLOIT_WRONG_INVENTORY;
+    public static boolean EXPLOIT_BLOCK_PLACE;
 
     public static List<String> BLOCKED_COMMANDS;
     public static List<String> ALLOWED_COMMANDS;
@@ -80,6 +86,8 @@ public class GuardPluginBukkit extends JavaPlugin {
             long ms = System.currentTimeMillis();
             this.saveDefaultConfig();
 
+            File cfg = new File(this.getDataFolder() + "/config.yml");
+
             File dir1 = new File(this.getDataFolder() + "/logs");
             if (!dir1.exists()){
                 dir1.mkdir();
@@ -87,6 +95,7 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             File dir2 = new File(this.getDataFolder() + "/deprecated");
             if (!dir2.exists()){
+                cfg.renameTo(new File(dir2 + "/config.yml"));
                 dir2.mkdir();
             }
 
@@ -101,6 +110,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             Logger.info("Starting plugin...", false);
             Logger.info("", false);
             Logger.info("TIP: If you are missing config values, delete your old config (create file backup), and restart server, to generate new config with new values.", false);
+            Logger.info("WARN: If you updated plugin from v1/v2 -> v3 version, your old data files will be deprecated, you can see these files in 'deprecated' directory.", false);
             Logger.info("", false);
 
             // Registering Events
@@ -114,6 +124,7 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             pm.registerEvents(new BookEditExploit(), this);
             pm.registerEvents(new InventoryCickExploit(), this);
+            pm.registerEvents(new BlockPlaceExploit(), this);
 
             // Registering Commands
             this.getCommand("core").setExecutor(new GuardCommand());
@@ -134,6 +145,10 @@ public class GuardPluginBukkit extends JavaPlugin {
             new Metrics(this);
             DataFileManager.load();
             MessagesBukkit.load();
+
+            if (pm.isPluginEnabled("ProtocolLib")){
+                ProtocolLibrary.getProtocolManager().addPacketListener(new TabCompletePacket(this));
+            }
 
             // Creating GUI's
             GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
@@ -182,6 +197,9 @@ public class GuardPluginBukkit extends JavaPlugin {
             EXPLOIT_KICK_MESSAGE = cfg.getString("anti-exploit.kick-message");
             EXPLOIT_MAX_BOOK = cfg.getInt("anti-exploit.modules.max-book-pages");
             EXPLOIT_STAFF_NOTIFICATION = cfg.getString("anti-exploit.staff-notification");
+            EXPLOIT_BLOCK_PLACE = cfg.getBoolean("anti-exploit.modules.block-place");
+            EXPLOIT_WRONG_INVENTORY = cfg.getBoolean("anti-exploit.modules.wrong-inventory-slot");
+            EXPLOIT_TAB_COMPLETE_BLOCK = cfg.getBoolean("packet-options.fully-block-tab-complete");
 
             BLOCKED_COMMANDS = cfg.getStringList("command-protection.list");
             ALLOWED_COMMANDS = cfg.getStringList("allowed-commands.list");

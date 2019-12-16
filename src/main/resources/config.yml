@@ -10,7 +10,6 @@
 # SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
 # My Discord: PolskiStevek#2198
 updater: true
-config-version: "v2"
 
 ###############################
 ##           Countries       ##
@@ -153,6 +152,16 @@ anti-exploit:
   modules:
     # Max amount of pages, a player can send over 47k pages to lag the server.
     max-book-pages: 50
+    # Checking for wrong inventory slot.
+    wrong-inventory-slot: true
+    # Detecting wrong block-placing
+    block-place: true
+
+# Block tab-complete packet using ProtocolLib.
+# Useful when using multi-version server, because 1.13+ players
+# receive different packet than older version players.
+packet-options:
+  fully-block-tab-complete: false
 
 
 ###############################
