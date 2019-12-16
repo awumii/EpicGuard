@@ -33,7 +33,7 @@ public class ProxyPreLoginListener implements Listener {
         if (!GuardPluginBungee.COUNTRY_MODE.equals("DISABLED")) {
             String country = null;
             try {
-                country = GeoAPI.dbReader.country(c.getAddress().getAddress()).getCountry().getIsoCode();
+                country = GeoAPI.getDatabase().country(c.getAddress().getAddress()).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
                 ex.printStackTrace();
             }

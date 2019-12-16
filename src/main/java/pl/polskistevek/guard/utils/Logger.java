@@ -12,21 +12,29 @@ import java.util.Calendar;
 
 public class Logger {
     private static File file;
+    private ServerType serverType;
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void create(ServerType type) {
-        if (type == ServerType.SPIGOT) {
-            file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/logs.txt");
-        }
-        if (type == ServerType.BUNGEE) {
-            file = new File(GuardPluginBungee.plugin.getDataFolder() + "/logs.txt");
-        }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+    public Logger(ServerType type){
+        this.serverType = type;
+        this.create();
+    }
+
+    private void create() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+            String date = sdf.format(cal.getTime());
+            if (this.serverType == ServerType.SPIGOT) {
+                file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
+            if (this.serverType == ServerType.BUNGEE) {
+                file = new File(GuardPluginBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (Exception e) {
+            error(e);
         }
     }
 

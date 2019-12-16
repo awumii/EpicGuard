@@ -10,7 +10,7 @@ public class Notificator {
         if (GuardPluginBukkit.STATUS) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(GuardPluginBukkit.PERMISSION)) {
-                    TitleAPI.sendTitle(p, 3, 80, 3, title, subtitle);
+                    TitleAPI.sendTitle(p, 0, 20, 20, title, subtitle);
                 }
             }
         }

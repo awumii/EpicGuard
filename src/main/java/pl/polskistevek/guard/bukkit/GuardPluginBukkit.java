@@ -2,6 +2,7 @@ package pl.polskistevek.guard.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
@@ -19,6 +20,8 @@ import pl.polskistevek.guard.utils.GeoAPI;
 import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.utils.ServerType;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 public class GuardPluginBukkit extends JavaPlugin {
@@ -76,9 +79,9 @@ public class GuardPluginBukkit extends JavaPlugin {
         try {
             long ms = System.currentTimeMillis();
             this.saveDefaultConfig();
-            Logger.create(ServerType.SPIGOT);
+            this.matchConfig();
+            new Logger(ServerType.SPIGOT);
             Logger.info("Starting plugin...", false);
-            GeoAPI.spigot = true;
             PluginManager pm = this.getServer().getPluginManager();
 
             // Registering Events
@@ -107,9 +110,9 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             // Other stuff
             Logger.info("Loading GeoIP database...", false);
-            GeoAPI.registerDatabase(ServerType.SPIGOT);
+            new GeoAPI(ServerType.SPIGOT);
+            new Metrics(this);
             Updater.checkForUpdates();
-            Metrics metrics = new Metrics(this);
             DataFileManager.load();
             MessagesBukkit.load();
 
@@ -175,6 +178,22 @@ public class GuardPluginBukkit extends JavaPlugin {
             IP_HISTORY_ENABLE = cfg.getBoolean("ip-history.enabled");
 
             FORCE_REJOIN = cfg.getBoolean("antibot.force-rejoin");
+        } catch (Exception e) {
+            Logger.error(e);
+        }
+    }
+
+    private void matchConfig() {
+        try {
+            File config = new File(this.getDataFolder() + "config.yml");
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(config);
+            for (String key : defConfig.getConfigurationSection("").getKeys(false))
+                if (!getConfig().contains(key)) getConfig().set(key, defConfig.getConfigurationSection(key));
+
+            for (String key : getConfig().getConfigurationSection("").getKeys(false))
+                if (!defConfig.contains(key)) getConfig().set(key, null);
+
+            saveConfig();
         } catch (Exception e) {
             Logger.error(e);
         }

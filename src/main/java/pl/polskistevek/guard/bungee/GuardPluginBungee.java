@@ -37,29 +37,25 @@ public class GuardPluginBungee extends Plugin {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
-        if (!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
-        plugin = this;
-        Logger.create(ServerType.BUNGEE);
-        Logger.info("Starting plugin...", false);
-        loadConfig();
         try {
+            if (!getDataFolder().exists()) {
+                getDataFolder().mkdir();
+            }
+            plugin = this;
+            new Logger(ServerType.BUNGEE);
+            Logger.info("Starting plugin...", false);
+            loadConfig();
             MessagesBungee.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        AttackClearTask.start();
-        try {
+            AttackClearTask.start();
             Logger.info("Loading GeoIP Database..", false);
-            GeoAPI.registerDatabase(ServerType.BUNGEE);
-        } catch (IOException e) {
+            new GeoAPI(ServerType.BUNGEE);
             Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.", false);
-            e.printStackTrace();
+            new Metrics(this);
+            getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
+            getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
+        } catch (IOException e) {
+            Logger.error(e);
         }
-        Metrics metrics = new Metrics(this);
-        getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
-        getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
     }
 
     private void loadConfig() {
