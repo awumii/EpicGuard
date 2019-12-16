@@ -24,9 +24,16 @@ public class PlayerCommandListener implements Listener {
         // OP Protection module.
         if (GuardPluginBukkit.OP_PROTECTION_ENABLE){
             if (!GuardPluginBukkit.OP_PROTECTION_LIST.contains(player.getName())){
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardPluginBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
-                Bukkit.broadcast(ChatUtil.fix(GuardPluginBukkit.OP_PROTECTION_ALERT), "epicguard.protection.notify");
-                Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")", false);
+                if (player.isOp()) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardPluginBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(GuardPluginBukkit.OP_PROTECTION_ALERT), "epicguard.protection.notify");
+                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")", false);
+                }
+                if (player.hasPermission("experimentalpex.detection") && GuardPluginBukkit.PEX_PROTECTION) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardPluginBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(GuardPluginBukkit.OP_PROTECTION_ALERT), "epicguard.protection.notify");
+                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")", false);
+                }
             }
         }
 

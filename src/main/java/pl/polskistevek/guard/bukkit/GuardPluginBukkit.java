@@ -21,7 +21,6 @@ import pl.polskistevek.guard.utils.Logger;
 import pl.polskistevek.guard.utils.ServerType;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 
 public class GuardPluginBukkit extends JavaPlugin {
@@ -73,6 +72,7 @@ public class GuardPluginBukkit extends JavaPlugin {
     public static boolean IP_HISTORY_ENABLE;
 
     public static boolean FORCE_REJOIN;
+    public static boolean PEX_PROTECTION;
 
     @Override
     public void onEnable() {
@@ -178,6 +178,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             IP_HISTORY_ENABLE = cfg.getBoolean("ip-history.enabled");
 
             FORCE_REJOIN = cfg.getBoolean("antibot.force-rejoin");
+            PEX_PROTECTION = cfg.getBoolean("op-protection.pex-protection");
         } catch (Exception e) {
             Logger.error(e);
         }

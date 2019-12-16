@@ -63,6 +63,9 @@ ip-history:
 
 op-protection:
   enabled: false
+  # EXPERIMENTAL: Protection from backdoor using PermissionsEx "*" permission.
+  # Enable this if you are using PEX plugin and you want additional protection.
+  pex-protection: false
   # Permission to see alert: epicguard.protection.notify
   alert: "&cPlayer &6{PLAYER} &chas been banned for Force-OP."
   command: "ban {PLAYER} Force-OP"
