@@ -42,13 +42,13 @@ public class GuardPluginBungee extends Plugin {
                 getDataFolder().mkdir();
             }
             plugin = this;
-            new Logger(ServerType.BUNGEE);
+            Logger.create(ServerType.BUNGEE);
             Logger.info("Starting plugin...", false);
             loadConfig();
             MessagesBungee.load();
             AttackClearTask.start();
             Logger.info("Loading GeoIP Database..", false);
-            new GeoAPI(ServerType.BUNGEE);
+            GeoAPI.create(ServerType.BUNGEE);
             Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.", false);
             new Metrics(this);
             getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());

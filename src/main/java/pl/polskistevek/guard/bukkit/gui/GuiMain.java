@@ -88,6 +88,23 @@ public class GuiMain {
         l8.add(ChatUtil.fix("&7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&aAntibot Information").addLores(l8).build();
 
+        List<String> l9 = new ArrayList<>();
+        l9.add("");
+        l9.add(ChatUtil.fix("&7Antibot&8: &b" + GuardPluginBukkit.ANTIBOT));
+        l9.add(ChatUtil.fix("&7Notifications&8: &b" + GuardPluginBukkit.STATUS));
+        l9.add(ChatUtil.fix("&7Updater&8: &b" + GuardPluginBukkit.UPDATER));
+        l9.add(ChatUtil.fix("&7Anti-Exploit&8: &b" + GuardPluginBukkit.EXPLOIT_ENABLED));
+        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + GuardPluginBukkit.BLOCKED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + GuardPluginBukkit.ALLOWED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + GuardPluginBukkit.OP_PROTECTION_ENABLE));
+        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + GuardPluginBukkit.PEX_PROTECTION));
+        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + GuardPluginBukkit.AUTO_WHITELIST));
+        l9.add(ChatUtil.fix("&7Firewall&8: &b" + GuardPluginBukkit.FIREWALL));
+        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + GuardPluginBukkit.FORCE_REJOIN));
+        l9.add(ChatUtil.fix("&7IP History&8: &b" + GuardPluginBukkit.IP_HISTORY_ENABLE));
+        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + GuardPluginBukkit.COUNTRY_MODE));
+        ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
+
         i.setItem(10, i1);
         i.setItem(12, i2);
         i.setItem(14, i3);
@@ -96,6 +113,7 @@ public class GuiMain {
         i.setItem(30, i6);
         i.setItem(32, i7);
         i.setItem(34, i8);
+        i.setItem(40, i9);
         p.openInventory(i);
     }
 }

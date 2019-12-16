@@ -56,9 +56,13 @@ public class MessagesBukkit {
     }
 
     private static void deprecate(){
-        File file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "messages.yml");
+        File file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages.yml");
         if (file.exists()){
-            file.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "messages_DEPRECATED_DELETE_THIS.yml"));
+            file.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/deprecated/messages.yml"));
+        }
+        File file1 = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data.yml");
+        if (file1.exists()){
+            file1.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/deprecated/data.yml"));
         }
     }
 }
