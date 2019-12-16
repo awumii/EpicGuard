@@ -30,7 +30,7 @@ public class GuiPlayers {
             lore.add(ChatUtil.fix("&7UUID: &3" + player.getUniqueId()));
             lore.add(ChatUtil.fix("&7First Join: &6" + new Date(player.getFirstPlayed())));
             try {
-                lore.add(ChatUtil.fix("&7Country: &6" + GeoAPI.dbReader.country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                lore.add(ChatUtil.fix("&7Country: &6" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
             } catch (IOException | GeoIp2Exception e) {
                 Logger.error(e);
             }

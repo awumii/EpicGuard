@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class DataFileManager {
-    private static final String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data.yml";
+    private static final String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data/data.yml";
     private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;

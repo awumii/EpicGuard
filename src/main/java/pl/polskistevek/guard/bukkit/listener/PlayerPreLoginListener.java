@@ -11,31 +11,30 @@ import pl.polskistevek.guard.utils.GeoAPI;
 import pl.polskistevek.guard.utils.KickReason;
 import pl.polskistevek.guard.utils.Logger;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
 public class PlayerPreLoginListener implements Listener {
 
     @EventHandler
-    public void onPreLogin(AsyncPlayerPreLoginEvent e) {
+    public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         try {
-            String adress = e.getAddress().getHostAddress();
-            String name = e.getName();
+            String adress = event.getAddress().getHostAddress();
+            String name = event.getName();
             DataFileManager.checkedConnections++;
             Logger.info("###  CHECKING PLAYER " + name + " [" + adress + "]  ###", true);
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
 
             // Country detection
             if (!GuardPluginBukkit.COUNTRY_MODE.equals("DISABLED")) {
-                String country = GeoAPI.dbReader.country(e.getAddress()).getCountry().getIsoCode();
+                String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
                 if (GuardPluginBukkit.COUNTRY_MODE.equals("WHITELIST")) {
                     if (GuardPluginBukkit.COUNTRIES.contains(country)) {
                         Logger.info("# GEO Check - Passed", true);
                     } else {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
-                        AttackManager.closeConnection(e, KickReason.GEO);
+                        AttackManager.closeConnection(event, KickReason.GEO);
                         Logger.info("# GEO Check - FAILED", true);
                         return;
                     }
@@ -44,7 +43,7 @@ public class PlayerPreLoginListener implements Listener {
                     if (!GuardPluginBukkit.COUNTRIES.contains(country)) {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
-                        AttackManager.closeConnection(e, KickReason.GEO);
+                        AttackManager.closeConnection(event, KickReason.GEO);
                         Logger.info("# GEO Check - FAILED", true);
                         return;
                     } else {
@@ -60,7 +59,7 @@ public class PlayerPreLoginListener implements Listener {
 
             // Check attack speed.
             if (AttackManager.checkAttackStatus(AttackManager.AttackType.CONNECT)){
-                AttackManager.closeConnection(e, KickReason.ATTACK);
+                AttackManager.closeConnection(event, KickReason.ATTACK);
                 AttackManager.handleDetection("Speed Check", name, adress);
                 Logger.info("# ATTACK_SPEED Check - FAILED", true);
                 return;
@@ -76,7 +75,7 @@ public class PlayerPreLoginListener implements Listener {
             if (BlacklistManager.check(adress)) {
                 AttackManager.handleDetection("Blacklist Check", name, adress);
                 Logger.info("# Blacklist Check - FAILED", true);
-                AttackManager.closeConnection(e, KickReason.BLACKLIST);
+                AttackManager.closeConnection(event, KickReason.BLACKLIST);
                 return;
             }
 
@@ -84,7 +83,7 @@ public class PlayerPreLoginListener implements Listener {
                 if (!AttackManager.rejoinData.contains(name)) {
                     AttackManager.handleDetection("Force Rejoin", name, adress);
                     Logger.info("# Force Rejoin - FAILED", true);
-                    AttackManager.closeConnection(e, KickReason.VERIFY);
+                    AttackManager.closeConnection(event, KickReason.VERIFY);
                     AttackManager.rejoinData.add(name);
                     return;
                 }
@@ -97,21 +96,21 @@ public class PlayerPreLoginListener implements Listener {
 
             // Checking for Proxy/VPN
             if (checkUrl(url1)) {
-                AttackManager.closeConnection(e, KickReason.PROXY);
+                AttackManager.closeConnection(event, KickReason.PROXY);
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
                 Logger.info("# Proxy Check - FAILED", true);
                 return;
             }
             if (checkUrl(url2)) {
-                AttackManager.closeConnection(e, KickReason.PROXY);
+                AttackManager.closeConnection(event, KickReason.PROXY);
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
                 Logger.info("# Proxy Check - FAILED", true);
                 return;
             }
             if (checkUrl(url3)) {
-                AttackManager.closeConnection(e, KickReason.PROXY);
+                AttackManager.closeConnection(event, KickReason.PROXY);
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
                 Logger.info("# Proxy Check - FAILED", true);
@@ -120,8 +119,8 @@ public class PlayerPreLoginListener implements Listener {
 
             // If player has passed every check (event not detected by whitelist)
             Logger.info("###  PLAYER " + name + " [" + adress + "]  PASSED EVERY CHECK ###", true);
-        } catch (Exception ex) {
-            Logger.error(ex);
+        } catch (Exception e) {
+            Logger.error(e);
         }
     }
 
@@ -139,8 +138,9 @@ public class PlayerPreLoginListener implements Listener {
                 Logger.info("# Proxy is not detected from: " + url, true);
                 return false;
             }
-        } catch (IOException e) {
-            Logger.info("[RATE LIMIT] Website returned code 403, it may be down, or rate limited. URL: " + url, true);
+        } catch (Exception e) {
+            Logger.info("EXCEPTION WHILE CHECKING DATA FROM URL: " + url, false);
+            Logger.error(e);
             return false;
         }
         return false;

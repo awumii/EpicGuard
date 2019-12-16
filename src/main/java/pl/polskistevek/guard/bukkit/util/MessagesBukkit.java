@@ -28,7 +28,8 @@ public class MessagesBukkit {
 
     public static void load() {
         try {
-            String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages.yml";
+            deprecate();
+            String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages_en_US.yml";
             File configFile = new File(file);
             if (!configFile.exists()) {
                 Downloader.download(Mirrors.MIRROR_MESSAGES, file);
@@ -51,6 +52,13 @@ public class MessagesBukkit {
             BLOCKED_COMMAND = cfg.getString("other.blocked-command");
         } catch (Exception e) {
             Logger.error(e);
+        }
+    }
+
+    private static void deprecate(){
+        File file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "messages.yml");
+        if (file.exists()){
+            file.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "messages_DEPRECATED_DELETE_THIS.yml"));
         }
     }
 }

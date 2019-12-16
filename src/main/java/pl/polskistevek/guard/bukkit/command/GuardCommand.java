@@ -83,7 +83,7 @@ public class GuardCommand implements CommandExecutor {
                         p.sendMessage(ChatUtil.fix("&8▪ &7UUID: &f" + player.getUniqueId()));
                         p.sendMessage(ChatUtil.fix("&8▪ &7First Join: &f" + new Date(player.getFirstPlayed())));
                         try {
-                            p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GeoAPI.dbReader.country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                            p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
                         } catch (IOException | GeoIp2Exception e) {
                             e.printStackTrace();
                         }
