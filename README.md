@@ -1,4 +1,6 @@
-DOWNLOAD BUILDS HERE: https://www.spigotmc.org/resources/epicguard-antibot-anti-forceop-server-protection.72369/
+ ![Logo](http://epicmc.cba.pl/cloud/uploads/epicguard.png)
+# Download
+BUILDS: https://www.spigotmc.org/resources/epicguard-antibot-anti-forceop-server-protection.72369/
 # About Plugin
 
 > EpicGuard is a plugin, that can protect your server from bots, hackers or griefers!
@@ -53,19 +55,7 @@ Permissions:
     epicguard.exploit.notify - permission for anti-exploit notifications (when someone is kicked for exploit).
 
 
-# Configuration and Screenshots
-[SPOILER="Config File"][code=YAML]
-#
-#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
-#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
-#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
-#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
-#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
-#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
-#
-# Thank you for downloading my plugin!
-# SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
-# My Discord: PolskiStevek#2198
+# Configuration
 updater: true
 
 ###############################
@@ -244,10 +234,9 @@ firewall:
   command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
   # Executed in /guard whitelist <player>
   command-whitelist: "iptables -D INPUT -s {IP} -j DROP"
-[/code][/SPOILER]
 
-[SPOILER="Messages File"]
-[code=YAML]configVersion: "2-1-0"
+# Messages Configuration
+
 prefix: "&8[&bEpicGuard&8] "
 actionbar:
   attack: "&f{NICK} &7[&f{IP}&7] failed &8» &c{DETECTION} &8| &c{CPS}&7/&ccps"
@@ -291,10 +280,6 @@ kick-messages:
     - "&7Your country is not allowed on this server."
     - " "
     - "&7If you think this is an issue, contact our staff."[/code]
-[/SPOILER]
-
-[SPOILER="Screenshots"]
-[ATTACH=full]464898[/ATTACH] [ATTACH=full]469404[/ATTACH] [ATTACH=full]466135[/ATTACH] [ATTACH=full]466136[/ATTACH] [/SPOILER]
 
 # Other Information
 
