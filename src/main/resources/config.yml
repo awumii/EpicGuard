@@ -10,6 +10,7 @@
 # SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
 # My Discord: PolskiStevek#2198
 updater: true
+config-version: "v2"
 
 ###############################
 ##           Countries       ##

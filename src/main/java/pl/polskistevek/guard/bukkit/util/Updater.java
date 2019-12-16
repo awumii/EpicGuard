@@ -3,6 +3,7 @@ package pl.polskistevek.guard.bukkit.util;
 import org.bukkit.entity.Player;
 import pl.polskistevek.guard.bukkit.GuardPluginBukkit;
 import pl.polskistevek.guard.utils.ChatUtil;
+import pl.polskistevek.guard.utils.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,13 +18,14 @@ public class Updater {
         if (GuardPluginBukkit.UPDATER) {
             lastestVersion = lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
+            Logger.info("[IMPORTANT - UPDATE AVAILABLE!] Your version is outdated (" + currentVersion + " -> " + lastestVersion + ") - download new version here: https://www.spigotmc.org/resources/72369", false);
         }
     }
 
     public static void notify(Player p) {
         if (p.hasPermission(GuardPluginBukkit.PERMISSION)) {
             if (Updater.updateAvaible) {
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + Updater.currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
+                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
                 p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
                 p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
             }

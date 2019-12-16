@@ -2,7 +2,6 @@ package pl.polskistevek.guard.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.polskistevek.guard.bukkit.command.GuardCommand;
@@ -74,17 +73,38 @@ public class GuardPluginBukkit extends JavaPlugin {
     public static boolean FORCE_REJOIN;
     public static boolean PEX_PROTECTION;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         try {
             long ms = System.currentTimeMillis();
             this.saveDefaultConfig();
-            this.matchConfig();
-            new Logger(ServerType.SPIGOT);
+
+            File dir1 = new File(this.getDataFolder() + "/logs");
+            if (!dir1.exists()){
+                dir1.mkdir();
+            }
+
+            File dir2 = new File(this.getDataFolder() + "/deprecated");
+            if (!dir2.exists()){
+                dir2.mkdir();
+            }
+
+            File dir3 = new File(this.getDataFolder() + "/data");
+            if (!dir3.exists()){
+                dir3.mkdir();
+            }
+
+            Logger.create(ServerType.SPIGOT);
+            Logger.info("", false);
+            Logger.info("#######  STARTING EPICGUARD PLUGIN #######", false);
             Logger.info("Starting plugin...", false);
-            PluginManager pm = this.getServer().getPluginManager();
+            Logger.info("", false);
+            Logger.info("TIP: If you are missing config values, delete your old config (create file backup), and restart server, to generate new config with new values.", false);
+            Logger.info("", false);
 
             // Registering Events
+            PluginManager pm = this.getServer().getPluginManager();
             pm.registerEvents(new PlayerPreLoginListener(), this);
             pm.registerEvents(new ServerListPingListener(), this);
             pm.registerEvents(new PlayerJoinListener(), this);
@@ -110,9 +130,8 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             // Other stuff
             Logger.info("Loading GeoIP database...", false);
-            new GeoAPI(ServerType.SPIGOT);
+            GeoAPI.create(ServerType.SPIGOT);
             new Metrics(this);
-            Updater.checkForUpdates();
             DataFileManager.load();
             MessagesBukkit.load();
 
@@ -121,6 +140,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
+            Logger.info("#######  FINISHED LOADING EPICGUARD #######", false);
         } catch (Exception e) {
             Logger.error(e);
         }
@@ -172,29 +192,13 @@ public class GuardPluginBukkit extends JavaPlugin {
 
             ALLOWED_COMMANDS_BYPASS = cfg.getString("allowed-commands.bypass");
 
-            BLOCKED_COMMANDS_ENABLE = cfg.getBoolean("command-protecton.enabled");
+            BLOCKED_COMMANDS_ENABLE = cfg.getBoolean("command-protection.enabled");
             ALLOWED_COMMANDS_ENABLE = cfg.getBoolean("allowed-commands.enabled");
-            OP_PROTECTION_ENABLE = cfg.getBoolean("op-protecton.enabled");
+            OP_PROTECTION_ENABLE = cfg.getBoolean("op-protection.enabled");
             IP_HISTORY_ENABLE = cfg.getBoolean("ip-history.enabled");
 
             FORCE_REJOIN = cfg.getBoolean("antibot.force-rejoin");
             PEX_PROTECTION = cfg.getBoolean("op-protection.pex-protection");
-        } catch (Exception e) {
-            Logger.error(e);
-        }
-    }
-
-    private void matchConfig() {
-        try {
-            File config = new File(this.getDataFolder() + "config.yml");
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(config);
-            for (String key : defConfig.getConfigurationSection("").getKeys(false))
-                if (!getConfig().contains(key)) getConfig().set(key, defConfig.getConfigurationSection(key));
-
-            for (String key : getConfig().getConfigurationSection("").getKeys(false))
-                if (!defConfig.contains(key)) getConfig().set(key, null);
-
-            saveConfig();
         } catch (Exception e) {
             Logger.error(e);
         }

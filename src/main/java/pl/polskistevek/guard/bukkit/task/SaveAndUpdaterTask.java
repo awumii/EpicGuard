@@ -11,7 +11,6 @@ public class SaveAndUpdaterTask implements Runnable {
     public void run() {
         DataFileManager.save();
         Updater.checkForUpdates();
-        new Logger(ServerType.SPIGOT);
-        Logger.info("Saved data and checked for updates!", false);
+        Logger.create(ServerType.SPIGOT);
     }
 }
