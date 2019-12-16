@@ -1,5 +1,5 @@
 name: EpicGuard
 version: 2.0.0
-main: pl.polskistevek.guard.bungee.BungeeMain
+main: io.github.polskistevek.epicguard.bungee.GuardPluginBungee
 author: PolskiStevek
 description: Lightweight antibot for your server!
