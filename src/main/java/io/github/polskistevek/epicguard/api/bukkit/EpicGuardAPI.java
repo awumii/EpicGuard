@@ -24,7 +24,7 @@ public class EpicGuardAPI {
         return DataFileManager.checkedConnections;
     }
 
-    public static User getUser(Player player){
+    public static User getUser(Player player) {
         return UserManager.getUser(player);
     }
 

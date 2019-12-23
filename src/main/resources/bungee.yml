@@ -1,5 +1,5 @@
 name: '${project.name}'
 version: '${project.version}'
-main: io.github.polskistevek.epicguard.bungee.GuardPluginBungee
+main: io.github.polskistevek.epicguard.bungee.GuardBungee
 author: PolskiStevek
 description: Lightweight antibot for your server!
