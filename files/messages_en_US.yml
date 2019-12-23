@@ -1,0 +1,48 @@
+configVersion: "2-1-0"
+prefix: "&8[&bEpicGuard&8] "
+actionbar:
+  attack: "&f{NICK} &7[&f{IP}&7] failed &8» &c{DETECTION} &8| &c{CPS}&7/&ccps"
+  no-attack: "&7No Attack... {ANIM} &8| &a{CPS}&7/&acps"
+attack-title:
+  # {MAX} - Number of blocked bots during last attack.
+  # {CPS} - Connections Per Second.
+  title: "&6⚠ &cServer is attacked ({MAX})! &6⚠"
+  subtitle: "&7Attack speed: &a{CPS}&7/&asec&7!"
+other:
+  history-new: "&7Player &e{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
+  no-permission: "&cYou don't have permission! If you think this is an issue, report this to administrators."
+  # This option is only one here
+  # without "prefix" added before it!
+  not-allowed-command: "&fUnknown command. Type /help for help."
+  blocked-command: "&cThis command is blocked!"
+kick-messages:
+  proxy:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Our systems have detected, that you are using Proxy or VPN."
+    - "&7Please disable VPN programs, and join server."
+    - " "
+    - "&7If you think this is an issue, contact our staff."
+  blacklist:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Your IP has been blacklisted on this server."
+    - " "
+    - "&7If you think this is an issue, contact our staff."
+  attack:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Our server is being attacked."
+    - "&7Please wait some minutes before connecting."
+    - " "
+    - "&7If you think this is an issue, contact our staff."
+  country:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Your country is not allowed on this server."
+    - " "
+    - "&7If you think this is an issue, contact our staff."
+  rejoin:
+    - "&8▪ &cEpicGuard AntiBot &8▪"
+    - " "
+    - "&7Please join server again to verify yourself."
