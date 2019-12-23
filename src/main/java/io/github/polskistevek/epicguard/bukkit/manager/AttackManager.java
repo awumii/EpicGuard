@@ -83,7 +83,7 @@ public class AttackManager {
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {
         if (reason == KickReason.GEO) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_COUNTRY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
@@ -91,7 +91,7 @@ public class AttackManager {
         }
 
         if (reason == KickReason.ATTACK) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_ATTACK) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
@@ -99,7 +99,7 @@ public class AttackManager {
         }
 
         if (reason == KickReason.BLACKLIST) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
@@ -107,7 +107,7 @@ public class AttackManager {
         }
 
         if (reason == KickReason.PROXY) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_PROXY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
@@ -115,7 +115,7 @@ public class AttackManager {
         }
 
         if (reason == KickReason.VERIFY) {
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_VERIFY) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }

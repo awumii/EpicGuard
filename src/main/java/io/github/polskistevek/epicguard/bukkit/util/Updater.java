@@ -23,11 +23,13 @@ public class Updater {
     }
 
     public static void notify(Player p) {
-        if (p.hasPermission(GuardBukkit.PERMISSION)) {
-            if (Updater.updateAvaible) {
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
+        if (GuardBukkit.UPDATER) {
+            if (p.hasPermission(GuardBukkit.PERMISSION)) {
+                if (Updater.updateAvaible) {
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
+                }
             }
         }
     }
