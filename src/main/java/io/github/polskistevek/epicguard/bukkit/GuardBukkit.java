@@ -17,7 +17,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import io.github.polskistevek.epicguard.bukkit.listener.TabCompletePacket;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
