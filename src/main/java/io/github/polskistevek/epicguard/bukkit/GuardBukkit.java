@@ -116,7 +116,7 @@ public class GuardBukkit extends JavaPlugin {
             pm.registerEvents(new PlayerCommandListener(), this);
 
             // Registering Commands
-            this.getCommand("core").setExecutor(new GuardCommand());
+            this.getCommand("epicguard").setExecutor(new GuardCommand());
 
             ActionBarAPI.register();
             Logger.info("NMS Version: " + ActionBarAPI.nmsver, false);

@@ -3,10 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.polskistevek</groupId>
   <artifactId>EpicGuard</artifactId>
-  <version>3.0.0</version>
+  <version>3.0.1</version>
   <build>
     <resources>
       <resource>
+        <filtering>true</filtering>
         <directory>src/main/resources</directory>
       </resource>
     </resources>
@@ -39,6 +40,11 @@
             </goals>
             <configuration>
               <minimizeJar>true</minimizeJar>
+              <artifactSet>
+                <excludes>
+                  <exclude>com.comphenix.protocol</exclude>
+                </excludes>
+              </artifactSet>
             </configuration>
           </execution>
         </executions>
@@ -123,6 +129,12 @@
           <groupId>com.google.guava</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.comphenix.protocol</groupId>
+      <artifactId>ProtocolLib-API</artifactId>
+      <version>4.4.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <properties>

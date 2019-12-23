@@ -93,7 +93,7 @@ public class GuiMain {
         l9.add(ChatUtil.fix("&7Antibot&8: &b" + GuardBukkit.ANTIBOT));
         l9.add(ChatUtil.fix("&7Notifications&8: &b" + GuardBukkit.STATUS));
         l9.add(ChatUtil.fix("&7Updater&8: &b" + GuardBukkit.UPDATER));
-        l9.add(ChatUtil.fix("&7Anti-Exploit&8: &b" + GuardBukkit.EXPLOIT_ENABLED));
+        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + GuardBukkit.TAB_COMPLETE_BLOCK));
         l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + GuardBukkit.BLOCKED_COMMANDS_ENABLE));
         l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + GuardBukkit.ALLOWED_COMMANDS_ENABLE));
         l9.add(ChatUtil.fix("&7OP Protection&8: &b" + GuardBukkit.OP_PROTECTION_ENABLE));
