@@ -3,7 +3,7 @@ package io.github.polskistevek.epicguard.bukkit.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
 import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
@@ -26,10 +26,10 @@ public class PlayerPreLoginListener implements Listener {
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
 
             // Country detection
-            if (!GuardPluginBukkit.COUNTRY_MODE.equals("DISABLED")) {
+            if (!GuardBukkit.COUNTRY_MODE.equals("DISABLED")) {
                 String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
-                if (GuardPluginBukkit.COUNTRY_MODE.equals("WHITELIST")) {
-                    if (GuardPluginBukkit.COUNTRIES.contains(country)) {
+                if (GuardBukkit.COUNTRY_MODE.equals("WHITELIST")) {
+                    if (GuardBukkit.COUNTRIES.contains(country)) {
                         Logger.info("# GEO Check - Passed", true);
                     } else {
                         AttackManager.handleDetection("GEO Check", name, adress);
@@ -39,8 +39,8 @@ public class PlayerPreLoginListener implements Listener {
                         return;
                     }
                 }
-                if (GuardPluginBukkit.COUNTRY_MODE.equals("BLACKLIST")) {
-                    if (!GuardPluginBukkit.COUNTRIES.contains(country)) {
+                if (GuardBukkit.COUNTRY_MODE.equals("BLACKLIST")) {
+                    if (!GuardBukkit.COUNTRIES.contains(country)) {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
                         AttackManager.closeConnection(event, KickReason.GEO);
@@ -53,7 +53,7 @@ public class PlayerPreLoginListener implements Listener {
             }
 
             // Check if antibot is disabled
-            if (!GuardPluginBukkit.ANTIBOT) {
+            if (!GuardBukkit.ANTIBOT) {
                 return;
             }
 
@@ -79,7 +79,7 @@ public class PlayerPreLoginListener implements Listener {
                 return;
             }
 
-            if (GuardPluginBukkit.FORCE_REJOIN){
+            if (GuardBukkit.FORCE_REJOIN){
                 if (!AttackManager.rejoinData.contains(name)) {
                     AttackManager.handleDetection("Force Rejoin", name, adress);
                     Logger.info("# Force Rejoin - FAILED", true);
@@ -90,9 +90,9 @@ public class PlayerPreLoginListener implements Listener {
             }
 
             // Variables for proxy detection
-            final String url1 = GuardPluginBukkit.ANTIBOT_QUERY_1.replace("{IP}", adress);
-            final String url2 = GuardPluginBukkit.ANTIBOT_QUERY_2.replace("{IP}", adress);
-            final String url3 = GuardPluginBukkit.ANTIBOT_QUERY_3.replace("{IP}", adress);
+            final String url1 = GuardBukkit.ANTIBOT_QUERY_1.replace("{IP}", adress);
+            final String url2 = GuardBukkit.ANTIBOT_QUERY_2.replace("{IP}", adress);
+            final String url3 = GuardBukkit.ANTIBOT_QUERY_3.replace("{IP}", adress);
 
             // Checking for Proxy/VPN
             if (checkUrl(url1)) {
@@ -120,7 +120,7 @@ public class PlayerPreLoginListener implements Listener {
             // If player has passed every check (event not detected by whitelist)
             Logger.info("###  PLAYER " + name + " [" + adress + "]  PASSED EVERY CHECK ###", true);
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 
@@ -130,7 +130,7 @@ public class PlayerPreLoginListener implements Listener {
             Logger.info("# Checking proxy from URL: " + url, true);
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
-                    if (GuardPluginBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                    if (GuardBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
                         Logger.info("# Detected Proxy, URL: " + url, true);
                         return true;
                     }
@@ -140,7 +140,7 @@ public class PlayerPreLoginListener implements Listener {
             }
         } catch (Exception e) {
             Logger.info("EXCEPTION WHILE CHECKING DATA FROM URL: " + url, false);
-            Logger.error(e);
+            Logger.throwException(e);
             return false;
         }
         return false;

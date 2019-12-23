@@ -4,7 +4,7 @@ import io.github.polskistevek.epicguard.utils.Mirrors;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import io.github.polskistevek.epicguard.bungee.GuardPluginBungee;
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
 import io.github.polskistevek.epicguard.utils.Downloader;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class MessagesBungee {
     public static String PREFIX;
 
     public static void load() throws IOException {
-        String file = GuardPluginBungee.plugin.getDataFolder() + "/messages.yml";
+        String file = GuardBungee.plugin.getDataFolder() + "/messages.yml";
         File configFile = new File(file);
         if (!configFile.exists()) {
             try {

@@ -6,7 +6,7 @@ import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import io.github.polskistevek.epicguard.bungee.GuardPluginBungee;
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
 import io.github.polskistevek.epicguard.bungee.util.PendingConnectionCloser;
 import io.github.polskistevek.epicguard.bungee.util.FirewallManager;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
@@ -30,30 +30,30 @@ public class ProxyPreLoginListener implements Listener {
         PendingConnection c = e.getConnection();
         String adress = c.getAddress().getAddress().getHostAddress();
         String p = c.getName();
-        if (!GuardPluginBungee.COUNTRY_MODE.equals("DISABLED")) {
+        if (!GuardBungee.COUNTRY_MODE.equals("DISABLED")) {
             String country = null;
             try {
                 country = GeoAPI.getDatabase().country(c.getAddress().getAddress()).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
                 ex.printStackTrace();
             }
-            if (GuardPluginBungee.COUNTRY_MODE.equals("WHITELIST")) {
-                if (!GuardPluginBungee.COUNTRIES.contains(country)) {
+            if (GuardBungee.COUNTRY_MODE.equals("WHITELIST")) {
+                if (!GuardBungee.COUNTRIES.contains(country)) {
                     cps++;
                     PendingConnectionCloser.close(c, KickReason.GEO);
                     remove(0);
                     return;
                 }
             }
-            if (GuardPluginBungee.COUNTRY_MODE.equals("BLACKLIST")) {
-                if (!GuardPluginBungee.COUNTRIES.contains(country)) {
+            if (GuardBungee.COUNTRY_MODE.equals("BLACKLIST")) {
+                if (!GuardBungee.COUNTRIES.contains(country)) {
                     cps++;
                     PendingConnectionCloser.close(c, KickReason.GEO);
                     remove(0);
                     return;
                 }
             }
-            if (!GuardPluginBungee.ANTIBOT) {
+            if (!GuardBungee.ANTIBOT) {
                 return;
             }
             if (attack) {
@@ -61,16 +61,16 @@ public class ProxyPreLoginListener implements Listener {
                 PendingConnectionCloser.close(c, KickReason.ATTACK);
                 remove(0);
             }
-            if (cps > GuardPluginBungee.CPS_ACTIVATE) {
+            if (cps > GuardBungee.CPS_ACTIVATE) {
                 cps++;
                 PendingConnectionCloser.close(c, KickReason.ATTACK);
                 remove(0);
                 return;
             }
 
-            String url1 = GuardPluginBungee.ANTIBOT_QUERY_1.replace("{IP}", adress);
-            String url2 = GuardPluginBungee.ANTIBOT_QUERY_2.replace("{IP}", adress);
-            String url3 = GuardPluginBungee.ANTIBOT_QUERY_3.replace("{IP}", adress);
+            String url1 = GuardBungee.ANTIBOT_QUERY_1.replace("{IP}", adress);
+            String url2 = GuardBungee.ANTIBOT_QUERY_2.replace("{IP}", adress);
+            String url3 = GuardBungee.ANTIBOT_QUERY_3.replace("{IP}", adress);
 
             if (checkUrl(url1)) {
                 PendingConnectionCloser.close(c, KickReason.PROXY);
@@ -90,7 +90,7 @@ public class ProxyPreLoginListener implements Listener {
     }
 
     public static void remove(int i) {
-        ProxyServer.getInstance().getScheduler().schedule(GuardPluginBungee.plugin, () -> {
+        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.plugin, () -> {
             if (i == 0) {
                 cps--;
                 return;
@@ -104,7 +104,7 @@ public class ProxyPreLoginListener implements Listener {
             final Scanner s = new Scanner(new URL(url).openStream());
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
-                    if (GuardPluginBungee.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                    if (GuardBungee.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
                         return true;
                     }
                 }

@@ -2,7 +2,7 @@ package io.github.polskistevek.epicguard.bukkit.manager;
 
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
 import io.github.polskistevek.epicguard.bukkit.util.Notificator;
 import io.github.polskistevek.epicguard.utils.ChatUtil;
@@ -26,21 +26,21 @@ public class AttackManager {
 
     public static boolean checkAttackStatus(AttackType type) {
         if (type == AttackType.PING) {
-            if (pingPerSecond > GuardPluginBukkit.PING_SPEED) {
+            if (pingPerSecond > GuardBukkit.PING_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
         if (type == AttackType.JOIN) {
-            if (joinPerSecond > GuardPluginBukkit.JOIN_SPEED) {
+            if (joinPerSecond > GuardBukkit.JOIN_SPEED) {
                 attackMode = true;
                 return true;
             }
             return false;
         }
         if (type == AttackType.CONNECT) {
-            if (connectPerSecond > GuardPluginBukkit.CONNECT_SPEED) {
+            if (connectPerSecond > GuardBukkit.CONNECT_SPEED) {
                 attackMode = true;
                 return true;
             }
@@ -78,7 +78,7 @@ public class AttackManager {
                     AttackManager.joinPerSecond--;
                 }
             }
-        }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), 20);
+        }.runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), 20);
     }
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {

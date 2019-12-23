@@ -10,7 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
 import io.github.polskistevek.epicguard.bukkit.util.Updater;
@@ -25,12 +25,12 @@ public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
-            Logger.info("You are running EpicGuard v" + GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDescription().getVersion(), false);
+            Logger.info("You are running EpicGuard v" + GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion(), false);
             Logger.info("Use this command in-game.", false);
             return false;
         }
         Player p = (Player) sender;
-        if (!p.hasPermission(GuardPluginBukkit.PERMISSION)) {
+        if (!p.hasPermission(GuardBukkit.PERMISSION)) {
             p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.NO_PERMISSION));
             return false;
         }
@@ -88,7 +88,7 @@ public class GuardCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        if (GuardPluginBukkit.IP_HISTORY_ENABLE) {
+                        if (GuardBukkit.IP_HISTORY_ENABLE) {
                             p.sendMessage(ChatUtil.fix(""));
                             p.sendMessage(ChatUtil.fix("&6[IP History]"));
                             for (String adress : UserManager.getUser(player).getAdresses()) {
@@ -113,12 +113,12 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     break;
                 case "status":
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (GuardPluginBukkit.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
-                    GuardPluginBukkit.STATUS = !GuardPluginBukkit.STATUS;
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (GuardBukkit.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
+                    GuardBukkit.STATUS = !GuardBukkit.STATUS;
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                    GuardPluginBukkit.loadConfig();
+                    GuardBukkit.loadConfig();
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;

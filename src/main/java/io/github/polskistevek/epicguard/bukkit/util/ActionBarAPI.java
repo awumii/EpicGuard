@@ -9,7 +9,7 @@ package io.github.polskistevek.epicguard.bukkit.util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.utils.Logger;
 
 import java.lang.reflect.Field;
@@ -84,7 +84,7 @@ public class ActionBarAPI {
                 public void run() {
                     sendActionBar(player, "");
                 }
-            }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), duration + 1);
+            }.runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), duration + 1);
         }
 
         // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
@@ -95,7 +95,7 @@ public class ActionBarAPI {
                 public void run() {
                     sendActionBar(player, message);
                 }
-            }.runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), duration);
+            }.runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), duration);
         }
     }
 

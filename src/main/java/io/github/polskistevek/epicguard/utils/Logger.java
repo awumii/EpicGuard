@@ -1,7 +1,7 @@
 package io.github.polskistevek.epicguard.utils;
 
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
-import io.github.polskistevek.epicguard.bungee.GuardPluginBungee;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,16 +19,16 @@ public class Logger {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             String date = sdf.format(cal.getTime());
             if (serverType == ServerType.SPIGOT) {
-                file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+                file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (serverType == ServerType.BUNGEE) {
-                file = new File(GuardPluginBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+                file = new File(GuardBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (!file.exists()) {
                 file.createNewFile();
             }
         } catch (Exception e) {
-            error(e);
+            throwException(e);
         }
     }
 
@@ -53,7 +53,7 @@ public class Logger {
         }
     }
 
-    public static void error(Exception exception) {
+    public static void throwException(Exception exception) {
         info("#######  EPICGUARD ERROR LOG #######", false);
         info(" ", false);
         info(" <> Information: " + exception.getMessage(), false);

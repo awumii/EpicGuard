@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
-public class GuardPluginBungee extends Plugin {
+public class GuardBungee extends Plugin {
     public static Plugin plugin;
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;
@@ -65,7 +65,7 @@ public class GuardPluginBungee extends Plugin {
             getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
             getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
         } catch (IOException e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 

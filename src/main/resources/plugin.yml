@@ -1,11 +1,12 @@
-name: EpicGuard
-version: 3.0.0
+name: '${project.name}'
+version: '${project.version}'
 main: io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit
 softdepend: [ProtocolLib]
 author: PolskiStevek
-description: Increase your server security. Fast and effective. Block bots, griefers. Block any ForceOP
+description: Increase your server security. Fast and effective. Block bots, griefers. Block any ForceOP.
 api-version: 1.14
 
 commands:
-  core:
-    aliases: [ab, guard, eg, epicguard]
+  epicguard:
+    description: Main plugin command.
+    aliases: [ab, guard, eg]
