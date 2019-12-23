@@ -2,8 +2,6 @@ package io.github.polskistevek.epicguard.bukkit;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import io.github.polskistevek.epicguard.bukkit.command.GuardCommand;
-import io.github.polskistevek.epicguard.bukkit.exploit.listener.BookEditExploit;
-import io.github.polskistevek.epicguard.bukkit.exploit.listener.InventoryCickExploit;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
 import io.github.polskistevek.epicguard.bukkit.listener.*;
@@ -19,8 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import io.github.polskistevek.epicguard.bukkit.exploit.listener.BlockPlaceExploit;
-import io.github.polskistevek.epicguard.bukkit.exploit.listener.TabCompletePacket;
+import io.github.polskistevek.epicguard.bukkit.listener.TabCompletePacket;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
@@ -28,7 +25,7 @@ import io.github.polskistevek.epicguard.utils.ServerType;
 import java.io.File;
 import java.util.List;
 
-public class GuardPluginBukkit extends JavaPlugin {
+public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
 
     public static String FIREWALL_BL;
@@ -57,13 +54,7 @@ public class GuardPluginBukkit extends JavaPlugin {
 
     private static long ATTACK_TIMER;
 
-    public static String EXPLOIT_KICK_MESSAGE;
-    public static String EXPLOIT_STAFF_NOTIFICATION;
-    public static int EXPLOIT_MAX_BOOK;
-    public static boolean EXPLOIT_ENABLED;
-    public static boolean EXPLOIT_TAB_COMPLETE_BLOCK;
-    public static boolean EXPLOIT_WRONG_INVENTORY;
-    public static boolean EXPLOIT_BLOCK_PLACE;
+    public static boolean TAB_COMPLETE_BLOCK;
 
     public static List<String> BLOCKED_COMMANDS;
     public static List<String> ALLOWED_COMMANDS;
@@ -125,10 +116,6 @@ public class GuardPluginBukkit extends JavaPlugin {
             pm.registerEvents(new InventoryClickListener(), this);
             pm.registerEvents(new PlayerCommandListener(), this);
 
-            pm.registerEvents(new BookEditExploit(), this);
-            pm.registerEvents(new InventoryCickExploit(), this);
-            pm.registerEvents(new BlockPlaceExploit(), this);
-
             // Registering Commands
             this.getCommand("core").setExecutor(new GuardCommand());
 
@@ -160,7 +147,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
             Logger.info("#######  FINISHED LOADING EPICGUARD #######", false);
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 
@@ -170,13 +157,13 @@ public class GuardPluginBukkit extends JavaPlugin {
             Logger.info("Saving data and disabling plugin.", false);
             DataFileManager.save();
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 
     public static void loadConfig() {
         try {
-            FileConfiguration cfg = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getConfig();
+            FileConfiguration cfg = GuardBukkit.getPlugin(GuardBukkit.class).getConfig();
             Logger.info("Loading configuration...", false);
             FIREWALL = cfg.getBoolean("firewall");
             FIREWALL_BL = cfg.getString("firewall.command-blacklist");
@@ -196,13 +183,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
             JOIN_SPEED = cfg.getInt("speed.join-speed");
 
-            EXPLOIT_ENABLED = cfg.getBoolean("anti-exploit.enabled");
-            EXPLOIT_KICK_MESSAGE = cfg.getString("anti-exploit.kick-message");
-            EXPLOIT_MAX_BOOK = cfg.getInt("anti-exploit.modules.max-book-pages");
-            EXPLOIT_STAFF_NOTIFICATION = cfg.getString("anti-exploit.staff-notification");
-            EXPLOIT_BLOCK_PLACE = cfg.getBoolean("anti-exploit.modules.block-place");
-            EXPLOIT_WRONG_INVENTORY = cfg.getBoolean("anti-exploit.modules.wrong-inventory-slot");
-            EXPLOIT_TAB_COMPLETE_BLOCK = cfg.getBoolean("packet-options.fully-block-tab-complete");
+            TAB_COMPLETE_BLOCK = cfg.getBoolean("fully-block-tab-complete");
 
             BLOCKED_COMMANDS = cfg.getStringList("command-protection.list");
             ALLOWED_COMMANDS = cfg.getStringList("allowed-commands.list");
@@ -221,7 +202,7 @@ public class GuardPluginBukkit extends JavaPlugin {
             FORCE_REJOIN = cfg.getBoolean("antibot.force-rejoin");
             PEX_PROTECTION = cfg.getBoolean("op-protection.pex-protection");
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 }

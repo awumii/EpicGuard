@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.utils.ChatUtil;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
@@ -32,10 +32,10 @@ public class GuiPlayers {
             try {
                 lore.add(ChatUtil.fix("&7Country: &6" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
             } catch (IOException | GeoIp2Exception e) {
-                Logger.error(e);
+                Logger.throwException(e);
             }
             lore.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
-            if (GuardPluginBukkit.IP_HISTORY_ENABLE) {
+            if (GuardBukkit.IP_HISTORY_ENABLE) {
                 lore.add("");
                 lore.add(ChatUtil.fix("&7IP History:"));
                 for (String adress : UserManager.getUser(player).getAdresses()) {

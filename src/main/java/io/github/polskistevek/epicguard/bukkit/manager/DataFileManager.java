@@ -2,13 +2,13 @@ package io.github.polskistevek.epicguard.bukkit.manager;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 import java.io.File;
 import java.io.IOException;
 
 public class DataFileManager {
-    private static final String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data/data_flat.yml";
+    private static final String file = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/data/data_flat.yml";
     private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;

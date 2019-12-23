@@ -1,8 +1,8 @@
 package io.github.polskistevek.epicguard.utils;
 
 import com.maxmind.geoip2.DatabaseReader;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
-import io.github.polskistevek.epicguard.bungee.GuardPluginBungee;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +19,10 @@ public class GeoAPI {
             File dataFolder = null;
             String dbLocation;
             if (serverType == ServerType.SPIGOT) {
-                dataFolder = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder();
+                dataFolder = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder();
             }
             if (serverType == ServerType.BUNGEE) {
-                dataFolder = GuardPluginBungee.plugin.getDataFolder();
+                dataFolder = GuardBungee.plugin.getDataFolder();
             }
             dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
             if (!new File(dbLocation).exists()) {
@@ -35,7 +35,7 @@ public class GeoAPI {
             dbReader = new DatabaseReader.Builder(database).build();
             Logger.info("GeoIP Database succesfully loaded.", false);
         } catch (IOException e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 }

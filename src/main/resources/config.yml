@@ -140,31 +140,6 @@ allowed-commands:
     - /sell
 
 ###############################
-##       AntiExploit         ##
-###############################
-
-anti-exploit:
-  # Set this to true to enable all features of this section.
-  enable: false
-  # Prints all received packets to console!
-  kick-message: "&cKicked for using exploit ({EXPLOIT})!"
-  staff-notification: "&cPlayer {PLAYER} has been detected for using exploit ({EXPLOIT})!"
-  modules:
-    # Max amount of pages, a player can send over 47k pages to lag the server.
-    max-book-pages: 50
-    # Checking for wrong inventory slot.
-    wrong-inventory-slot: true
-    # Detecting wrong block-placing
-    block-place: true
-
-# Block tab-complete packet using ProtocolLib.
-# Useful when using multi-version server, because 1.13+ players
-# receive different packet than older version players.
-packet-options:
-  fully-block-tab-complete: false
-
-
-###############################
 ##           Advanced        ##
 ###############################
 # You SHOULD configure it, to fit your server's player amount.
@@ -181,6 +156,11 @@ speed:
   join-speed: 5
   # Time (in ticks) before the antibot will disable.
   attack-timer-reset: 800
+
+# Block tab-complete packet using ProtocolLib.
+# Useful when using multi-version server, because 1.13+ players
+# receive different packet than older version players.
+fully-block-tab-complete: false
 
 auto-whitelist:
   # Enable automatic player whitelisting.

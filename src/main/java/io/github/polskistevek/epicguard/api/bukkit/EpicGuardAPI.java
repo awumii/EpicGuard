@@ -1,7 +1,7 @@
 package io.github.polskistevek.epicguard.api.bukkit;
 
 import com.maxmind.geoip2.DatabaseReader;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
@@ -13,7 +13,7 @@ import java.net.InetAddress;
 
 public class EpicGuardAPI {
     public static String getVersion() {
-        return GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDescription().getVersion();
+        return GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion();
     }
 
     public static int getBlockedBots() {
@@ -36,7 +36,7 @@ public class EpicGuardAPI {
         try {
             return GeoAPI.getDatabase().country(address).getCountry().getIsoCode();
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
         return null;
     }

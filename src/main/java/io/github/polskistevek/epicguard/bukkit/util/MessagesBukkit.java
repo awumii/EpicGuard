@@ -3,7 +3,7 @@ package io.github.polskistevek.epicguard.bukkit.util;
 import io.github.polskistevek.epicguard.utils.Mirrors;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.utils.Downloader;
 import io.github.polskistevek.epicguard.utils.Logger;
 
@@ -29,7 +29,7 @@ public class MessagesBukkit {
     public static void load() {
         try {
             deprecate();
-            String file = GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages_en_US.yml";
+            String file = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/messages_en_US.yml";
             File configFile = new File(file);
             if (!configFile.exists()) {
                 Downloader.download(Mirrors.MIRROR_MESSAGES, file);
@@ -51,18 +51,18 @@ public class MessagesBukkit {
             NOT_ALLOWED_COMMAND = cfg.getString("other.not-allowed-command");
             BLOCKED_COMMAND = cfg.getString("other.blocked-command");
         } catch (Exception e) {
-            Logger.error(e);
+            Logger.throwException(e);
         }
     }
 
     private static void deprecate(){
-        File file = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/messages.yml");
+        File file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/messages.yml");
         if (file.exists()){
-            file.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/deprecated/messages.yml"));
+            file.renameTo(new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/deprecated/messages.yml"));
         }
-        File file1 = new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/data.yml");
+        File file1 = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/data.yml");
         if (file1.exists()){
-            file1.renameTo(new File(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class).getDataFolder() + "/deprecated/data.yml"));
+            file1.renameTo(new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/deprecated/data.yml"));
         }
     }
 }

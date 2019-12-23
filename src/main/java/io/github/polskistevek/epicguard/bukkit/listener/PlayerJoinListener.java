@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import io.github.polskistevek.epicguard.bukkit.GuardPluginBukkit;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
 import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
@@ -31,7 +31,7 @@ public class PlayerJoinListener implements Listener {
             AttackManager.handleAttack(AttackManager.AttackType.JOIN);
 
             // IP History manager
-            if (GuardPluginBukkit.IP_HISTORY_ENABLE) {
+            if (GuardBukkit.IP_HISTORY_ENABLE) {
                 User u = UserManager.getUser(p);
                 List<String> history = DataFileManager.get().getStringList("history." + p.getName());
 
@@ -47,18 +47,18 @@ public class PlayerJoinListener implements Listener {
             }
 
             // Auto whitelisting
-            if (GuardPluginBukkit.AUTO_WHITELIST) {
-                Bukkit.getScheduler().runTaskLater(GuardPluginBukkit.getPlugin(GuardPluginBukkit.class), () -> {
+            if (GuardBukkit.AUTO_WHITELIST) {
+                Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
                     if (p.isOnline()) {
                         if (!BlacklistManager.checkWhitelist(adress)) {
                             Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
                             BlacklistManager.addWhitelist(adress);
                         }
                     }
-                }, GuardPluginBukkit.AUTO_WHITELIST_TIME);
+                }, GuardBukkit.AUTO_WHITELIST_TIME);
             }
         } catch (Exception ex) {
-            Logger.error(ex);
+            Logger.throwException(ex);
         }
     }
 }
