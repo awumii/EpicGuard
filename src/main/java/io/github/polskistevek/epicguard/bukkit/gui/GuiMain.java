@@ -29,7 +29,7 @@ public class GuiMain {
         l1.add(ChatUtil.fix("&7Server&8: &a" + Bukkit.getServer().getBukkitVersion()));
         l1.add(ChatUtil.fix("&7RAM Usage&8: &6" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
         l1.add(ChatUtil.fix("&7TPS&8: &6" + ExactTPS.getTPS()));
-        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&aBasic Information").addLores(l1).build();
+        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8Basic Information").addLores(l1).build();
 
         List<String> l2 = new ArrayList<>();
         l2.add("");
@@ -38,7 +38,7 @@ public class GuiMain {
         l2.add(ChatUtil.fix("&7Login Per Second&8: &6" + AttackManager.connectPerSecond));
         l2.add(ChatUtil.fix("&7Ping Per Second&8: &6" + AttackManager.pingPerSecond));
         l2.add(ChatUtil.fix("&7Join Per Second&8: &6" + AttackManager.joinPerSecond));
-        ItemStack i2 = new ItemBuilder(Material.BOW).setTitle("&aServer Attack Status").addLores(l2).build();
+        ItemStack i2 = new ItemBuilder(Material.BOW).setTitle("&eServer Attack Status").addLores(l2).build();
 
         List<String> l3 = new ArrayList<>();
         l3.add("");
@@ -46,7 +46,7 @@ public class GuiMain {
         l3.add(ChatUtil.fix("&7You can see some basic information about them."));
         l3.add(ChatUtil.fix("&7GUI will show same information that can be found&7,"));
         l3.add(ChatUtil.fix("&7when you use command &6/guard player <nickname>&7."));
-        ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&aPlayer Information").addLores(l3).build();
+        ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&6Player Information").addLores(l3).build();
 
         List<String> l4 = new ArrayList<>();
         l4.add("");
@@ -65,20 +65,20 @@ public class GuiMain {
         l5.add(ChatUtil.fix("&7/guard player <nick> &8- &7Informations about player."));
         l5.add(ChatUtil.fix("&7/guard whitelist <adress> &8- &7Whitelist specified adress."));
         l5.add(ChatUtil.fix("&7/guard blacklist <adress> &8- &7Blacklist specified adress."));
-        ItemStack i5 = new ItemBuilder(Material.PAPER).setTitle("&aCommand List").addLores(l5).build();
+        ItemStack i5 = new ItemBuilder(Material.PAPER).setTitle("&9Command List").addLores(l5).build();
 
         List<String> l6 = new ArrayList<>();
         l6.add("");
         l6.add(ChatUtil.fix("&7Click to reload config."));
         l6.add(ChatUtil.fix("&7After click GUI will close."));
-        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&aReload Config").addLores(l6).build();
+        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&8Reload Config").addLores(l6).build();
 
         List<String> l7 = new ArrayList<>();
         l7.add("");
         for (OfflinePlayer player : Bukkit.getOperators()) {
             l7.add(ChatUtil.fix("&8-> &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&cOffline") + "&8]"));
         }
-        ItemStack i7 = new ItemBuilder(Material.DIAMOND_CHESTPLATE).setTitle("&3OP List").addLores(l7).build();
+        ItemStack i7 = new ItemBuilder(Material.DIAMOND_CHESTPLATE).setTitle("&cOP List").addLores(l7).build();
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
@@ -86,12 +86,11 @@ public class GuiMain {
         l8.add(ChatUtil.fix("&7Firewall&8: " + (GuardBukkit.FIREWALL ? "&aOn" : "&cOff")));
         l8.add(ChatUtil.fix("&7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
-        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&aAntibot Information").addLores(l8).build();
+        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&6Antibot Information").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
         l9.add(ChatUtil.fix("&7Antibot&8: &b" + GuardBukkit.ANTIBOT));
-        l9.add(ChatUtil.fix("&7Notifications&8: &b" + GuardBukkit.STATUS));
         l9.add(ChatUtil.fix("&7Updater&8: &b" + GuardBukkit.UPDATER));
         l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + GuardBukkit.TAB_COMPLETE_BLOCK));
         l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + GuardBukkit.BLOCKED_COMMANDS_ENABLE));
