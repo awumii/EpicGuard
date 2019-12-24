@@ -7,10 +7,11 @@ import com.comphenix.protocol.events.PacketEvent;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 public class TabCompletePacket extends PacketAdapter {
+    public static GuardBukkit inst;
 
     public TabCompletePacket(final GuardBukkit plugin) {
         super(plugin, PacketType.Play.Client.TAB_COMPLETE);
-        ProtocolLibrary.getProtocolManager().addPacketListener(new TabCompletePacket(plugin));
+        inst = plugin;
     }
 
     public void onPacketReceiving(final PacketEvent event) {

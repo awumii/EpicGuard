@@ -8,10 +8,7 @@ import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.task.ActionBarTask;
 import io.github.polskistevek.epicguard.bukkit.task.AttackTimerTask;
 import io.github.polskistevek.epicguard.bukkit.task.SaveAndUpdaterTask;
-import io.github.polskistevek.epicguard.bukkit.util.ActionBarAPI;
-import io.github.polskistevek.epicguard.bukkit.util.ExactTPS;
-import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
-import io.github.polskistevek.epicguard.bukkit.util.Metrics;
+import io.github.polskistevek.epicguard.bukkit.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -134,7 +131,7 @@ public class GuardBukkit extends JavaPlugin {
             MessagesBukkit.load();
 
             if (pm.isPluginEnabled("ProtocolLib")){
-                new TabCompletePacket(this);
+                MiscUtil.registerProtocolLib(this);
             }
 
             // Creating GUI's
