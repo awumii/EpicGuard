@@ -1,14 +1,16 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 public class TabCompletePacket extends PacketAdapter {
+
     public TabCompletePacket(final GuardBukkit plugin) {
         super(plugin, PacketType.Play.Client.TAB_COMPLETE);
-        this.plugin = plugin;
+        ProtocolLibrary.getProtocolManager().addPacketListener(new TabCompletePacket(plugin));
     }
 
     public void onPacketReceiving(final PacketEvent event) {
