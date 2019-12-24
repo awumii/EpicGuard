@@ -1,11 +1,9 @@
 package io.github.polskistevek.epicguard.bukkit;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import io.github.polskistevek.epicguard.bukkit.command.GuardCommand;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
 import io.github.polskistevek.epicguard.bukkit.listener.*;
-import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.task.ActionBarTask;
 import io.github.polskistevek.epicguard.bukkit.task.AttackTimerTask;
@@ -137,7 +135,7 @@ public class GuardBukkit extends JavaPlugin {
             MessagesBukkit.load();
 
             if (pm.isPluginEnabled("ProtocolLib")){
-                ProtocolLibrary.getProtocolManager().addPacketListener(new TabCompletePacket(this));
+                new TabCompletePacket(this);
             }
 
             // Creating GUI's

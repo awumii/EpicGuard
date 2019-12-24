@@ -18,14 +18,16 @@ public class Updater {
         if (GuardBukkit.UPDATER) {
             lastestVersion = lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
-            Logger.info("[IMPORTANT - UPDATE AVAILABLE!] Your version is outdated (" + currentVersion + " -> " + lastestVersion + ") - download new version here: https://www.spigotmc.org/resources/72369", false);
+            if (updateAvaible) {
+                Logger.info("[IMPORTANT - UPDATE AVAILABLE!] Your version is outdated (" + currentVersion + " -> " + lastestVersion + ") - download new version here: https://www.spigotmc.org/resources/72369", false);
+            }
         }
     }
 
     public static void notify(Player p) {
         if (GuardBukkit.UPDATER) {
             if (p.hasPermission(GuardBukkit.PERMISSION)) {
-                if (Updater.updateAvaible) {
+                if (updateAvaible) {
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
@@ -39,8 +41,8 @@ public class Updater {
         try {
             final Scanner scanner = new Scanner(new URL("https://api.spigotmc.org/legacy/update.php?resource=72369").openStream());
             line = scanner.next();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.throwException(e);
         }
         return line;
     }
