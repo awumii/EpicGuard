@@ -30,8 +30,6 @@ public class GuardBukkit extends JavaPlugin {
     public static String FIREWALL_WL;
     public static boolean FIREWALL;
 
-    public static boolean STATUS = true;
-
     public static int CONNECT_SPEED;
     public static int PING_SPEED;
     public static int JOIN_SPEED;
@@ -132,6 +130,7 @@ public class GuardBukkit extends JavaPlugin {
             GeoAPI.create(ServerType.SPIGOT);
             new Metrics(this);
             DataFileManager.load();
+            DataFileManager.save();
             MessagesBukkit.load();
 
             if (pm.isPluginEnabled("ProtocolLib")){

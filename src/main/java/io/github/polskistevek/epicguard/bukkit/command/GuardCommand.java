@@ -4,6 +4,7 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
+import io.github.polskistevek.epicguard.bukkit.object.User;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -35,6 +36,7 @@ public class GuardCommand implements CommandExecutor {
             return false;
         }
         if (args.length > 0) {
+            final User user = UserManager.getUser(p);
             switch (args[0]) {
                 case "help":
                     p.sendMessage(ChatUtil.fix(""));
@@ -113,8 +115,8 @@ public class GuardCommand implements CommandExecutor {
                     p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
                     break;
                 case "status":
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (GuardBukkit.STATUS ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
-                    GuardBukkit.STATUS = !GuardBukkit.STATUS;
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (user.isNotifications() ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
+                    user.setNotifications(!user.isNotifications());
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));

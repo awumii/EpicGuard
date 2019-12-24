@@ -1,17 +1,21 @@
 package io.github.polskistevek.epicguard.bukkit.manager;
 
+import io.github.polskistevek.epicguard.utils.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataFileManager {
     private static final String file = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/data/data_flat.yml";
     private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;
+    public static List<String> notificationUsers = new ArrayList<>();
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void load() {
@@ -19,8 +23,8 @@ public class DataFileManager {
         if (!data.exists()) {
             try {
                 data.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Logger.throwException(e);
             }
         }
         configuration = YamlConfiguration.loadConfiguration(data);
@@ -29,6 +33,7 @@ public class DataFileManager {
         blockedBots = configuration.getInt("blocked-bots");
         blockedBots = configuration.getInt("checked-connections");
         AttackManager.rejoinData = configuration.getStringList("rejoin-data");
+        notificationUsers = configuration.getStringList("notifications");
     }
 
     public static FileConfiguration get() {
@@ -40,9 +45,10 @@ public class DataFileManager {
             get().set("blocked-bots", blockedBots);
             get().set("checked-connections", checkedConnections);
             get().set("rejoin-data", AttackManager.rejoinData);
+            get().set("notifications", notificationUsers);
             configuration.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.throwException(e);
         }
     }
 }

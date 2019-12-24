@@ -6,6 +6,8 @@
 
 package io.github.polskistevek.epicguard.bukkit.util;
 
+import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
+import io.github.polskistevek.epicguard.bukkit.object.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -105,8 +107,11 @@ public class ActionBarAPI {
 
     public static void sendActionBarToAllPlayers(String message, int duration, String permission) {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(permission)) {
-                sendActionBar(p, message, duration);
+            final User u = UserManager.getUser(p);
+            if (u.isNotifications()) {
+                if (p.hasPermission(permission)) {
+                    sendActionBar(p, message, duration);
+                }
             }
         }
     }
