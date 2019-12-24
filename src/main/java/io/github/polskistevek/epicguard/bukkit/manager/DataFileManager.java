@@ -34,6 +34,7 @@ public class DataFileManager {
         blockedBots = configuration.getInt("checked-connections");
         AttackManager.rejoinData = configuration.getStringList("rejoin-data");
         notificationUsers = configuration.getStringList("notifications");
+        notificationUsers.add("debug_________do_not_touch");
     }
 
     public static FileConfiguration get() {
