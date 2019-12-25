@@ -1,7 +1,7 @@
 package io.github.polskistevek.epicguard.bukkit.manager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
 import io.github.polskistevek.epicguard.bukkit.util.Notificator;
@@ -24,29 +24,8 @@ public class AttackManager {
         JOIN
     }
 
-    public static boolean checkAttackStatus(AttackType type) {
-        if (type == AttackType.PING) {
-            if (pingPerSecond > GuardBukkit.PING_SPEED) {
-                attackMode = true;
-                return true;
-            }
-            return false;
-        }
-        if (type == AttackType.JOIN) {
-            if (joinPerSecond > GuardBukkit.JOIN_SPEED) {
-                attackMode = true;
-                return true;
-            }
-            return false;
-        }
-        if (type == AttackType.CONNECT) {
-            if (connectPerSecond > GuardBukkit.CONNECT_SPEED) {
-                attackMode = true;
-                return true;
-            }
-            return false;
-        }
-        return false;
+    public static boolean isUnderAttack(){
+        return attackMode;
     }
 
     public static void handleDetection(String reason, String nick, String adress) {
@@ -57,28 +36,34 @@ public class AttackManager {
 
     public static void handleAttack(AttackType type) {
         if (type == AttackType.CONNECT){
-            AttackManager.connectPerSecond++;
+            connectPerSecond++;
+            if (connectPerSecond > GuardBukkit.CONNECT_SPEED) {
+                attackMode = true;
+            }
         }
         if (type == AttackType.PING){
-            AttackManager.pingPerSecond++;
+            pingPerSecond++;
+            if (pingPerSecond > GuardBukkit.PING_SPEED) {
+                attackMode = true;
+            }
         }
         if (type == AttackType.JOIN){
-            AttackManager.joinPerSecond++;
-        }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (type == AttackType.CONNECT){
-                    AttackManager.connectPerSecond--;
-                }
-                if (type == AttackType.PING){
-                    AttackManager.pingPerSecond--;
-                }
-                if (type == AttackType.JOIN){
-                    AttackManager.joinPerSecond--;
-                }
+            joinPerSecond++;
+            if (joinPerSecond > GuardBukkit.JOIN_SPEED) {
+                attackMode = true;
             }
-        }.runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), 20);
+        }
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
+            if (type == AttackType.CONNECT){
+                connectPerSecond--;
+            }
+            if (type == AttackType.PING){
+                pingPerSecond--;
+            }
+            if (type == AttackType.JOIN){
+                joinPerSecond--;
+            }
+        }, 20L);
     }
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {

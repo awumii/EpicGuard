@@ -22,7 +22,7 @@ public class PlayerCommandListener implements Listener {
         final String cmd = event.getMessage();
         final String[] args = cmd.split(" ");
 
-        if (executeCooldown.contains(player)){
+        if (this.executeCooldown.contains(player)){
             return;
         }
         // OP Protection module.
@@ -33,14 +33,14 @@ public class PlayerCommandListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")", false);
-                    executeCooldown.add(player);
+                    this.executeCooldown.add(player);
                 }
                 if (player.hasPermission("experimentalpex.detection") && GuardBukkit.PEX_PROTECTION) {
                     event.setCancelled(true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")", false);
-                    executeCooldown.add(player);
+                    this.executeCooldown.add(player);
                 }
             }
         }

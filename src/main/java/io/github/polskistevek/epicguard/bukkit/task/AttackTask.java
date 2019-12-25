@@ -2,7 +2,7 @@ package io.github.polskistevek.epicguard.bukkit.task;
 
 import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
 
-public class AttackTimerTask implements Runnable {
+public class AttackTask implements Runnable {
 
     @Override
     public void run() {
