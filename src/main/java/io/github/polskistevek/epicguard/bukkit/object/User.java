@@ -8,9 +8,19 @@ import java.util.List;
 public class User {
     private List<String> adresses;
     private boolean notifications;
+    private String brand;
 
     public User(Player player) {
         this.notifications = DataFileManager.notificationUsers.contains(player.getName());
+        this.brand = "none";
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public void setNotifications(boolean notifications) {

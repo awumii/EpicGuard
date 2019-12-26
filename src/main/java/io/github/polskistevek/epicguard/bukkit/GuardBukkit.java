@@ -5,10 +5,14 @@ import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
 import io.github.polskistevek.epicguard.bukkit.listener.*;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
+import io.github.polskistevek.epicguard.bukkit.manager.FileManager;
+import io.github.polskistevek.epicguard.bukkit.object.CustomFile;
 import io.github.polskistevek.epicguard.bukkit.task.ActionBarTask;
 import io.github.polskistevek.epicguard.bukkit.task.AttackTask;
 import io.github.polskistevek.epicguard.bukkit.task.SaveTask;
 import io.github.polskistevek.epicguard.bukkit.util.*;
+import io.github.polskistevek.epicguard.bukkit.util.nms.ActionBarAPI;
+import io.github.polskistevek.epicguard.bukkit.util.nms.NMSUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -16,9 +20,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
+import org.bukkit.plugin.messaging.Messenger;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
@@ -54,38 +62,37 @@ public class GuardBukkit extends JavaPlugin {
     public static boolean FORCE_REJOIN;
     public static boolean PEX_PROTECTION;
 
+    public static File dataFolder;
+
     @Override
     public void onEnable() {
         try {
             final long ms = System.currentTimeMillis();
+            dataFolder = this.getDataFolder();
             this.saveDefaultConfig();
             this.createDirectories();
             Logger.create(ServerType.SPIGOT);
-            Logger.info("", false);
-            Logger.info("#######  STARTING EPICGUARD PLUGIN #######", false);
-            Logger.info("Starting plugin...", false);
-            Logger.info("", false);
-            Logger.info("WARN: If you updated plugin from v1/v2 -> v3 version, your old data files will be deprecated, you can see these files in 'deprecated' directory.", false);
-            Logger.info("", false);
+            this.drawLogo();
             this.registerListeners();
-            // Registering Commands
             this.getCommand("epicguard").setExecutor(new GuardCommand());
-            ActionBarAPI.register();
-            Logger.info("NMS Version: " + ActionBarAPI.nmsver, false);
-            loadConfig();
-            this.registerTasks();
+
             // Other stuff
-            Logger.info("Loading GeoIP database...", false);
             GeoAPI.create(ServerType.SPIGOT);
             new Metrics(this);
             DataFileManager.load();
             DataFileManager.save();
             MessagesBukkit.load();
+            new NMSUtil();
+            Logger.info("NMS Version: " + NMSUtil.getVersion(), false);
+            loadConfig();
+            this.registerTasks();
+
             // Creating GUI's
             GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
+
+            this.registerBrand();
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
-            Logger.info("#######  FINISHED LOADING EPICGUARD #######", false);
         } catch (Exception e) {
             Logger.throwException(e);
         }
@@ -135,6 +142,38 @@ public class GuardBukkit extends JavaPlugin {
         File dir3 = new File(this.getDataFolder() + "/data");
         if (!dir3.exists()){
             dir3.mkdir();
+        }
+    }
+
+    private void registerBrand() {
+        FileManager.createFile(this.getDataFolder() + "/brand.yml");
+        CustomFile brandConfig = FileManager.getFile(this.getDataFolder() + "/brand.yml");
+        if (!brandConfig.isExisting()){
+            List<String> blockedBrandDefault = new ArrayList<>();
+            blockedBrandDefault.add("forge");
+            brandConfig.getConfig().set("channel-verification.enabled", true);
+            brandConfig.getConfig().set("channel-verification.punish", "kick {PLAYER} &cException occurred in your connection, please rejoin!");
+            brandConfig.getConfig().set("blocked-brands.enabled", true);
+            brandConfig.getConfig().set("blocked-brands.punish", "kick {PLAYER} &cYour client is not allowed on this server!");
+            brandConfig.getConfig().set("blocked-brands.list", blockedBrandDefault);
+            brandConfig.save();
+        }
+
+        Messenger messenger = Bukkit.getMessenger();
+        messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
+        messenger.registerIncomingPluginChannel(this, "minecraft:brand", new BrandPluginMessageListener());
+    }
+
+    private void drawLogo() {
+        try {
+            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
+            while (scanner.hasNextLine()){
+                Logger.info(scanner.nextLine(), false);
+            }
+            scanner.close();
+            Logger.info("Created by iShift.", false);
+        } catch (Exception e) {
+            Logger.throwException(e);
         }
     }
 
