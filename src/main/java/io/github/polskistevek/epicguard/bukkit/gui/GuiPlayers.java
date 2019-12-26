@@ -2,6 +2,7 @@ package io.github.polskistevek.epicguard.bukkit.gui;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
+import io.github.polskistevek.epicguard.bukkit.object.User;
 import io.github.polskistevek.epicguard.bukkit.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,6 +25,7 @@ public class GuiPlayers {
     public static void show(Player p) {
         int i = 0;
         for (Player player : Bukkit.getOnlinePlayers()) {
+            User u = UserManager.getUser(player);
             ItemStack itemStack;
             List<String> lore = new ArrayList<>();
             lore.add("");
@@ -35,14 +37,15 @@ public class GuiPlayers {
                 Logger.throwException(e);
             }
             lore.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
+            lore.add(ChatUtil.fix("&7Client Brand: &c" + u.getBrand()));
             if (GuardBukkit.IP_HISTORY_ENABLE) {
                 lore.add("");
                 lore.add(ChatUtil.fix("&7IP History:"));
                 for (String adress : UserManager.getUser(player).getAdresses()) {
                     if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
-                        lore.add(ChatUtil.fix("&8-> &c" + adress + " &8(&aCurrent&8)"));
+                        lore.add(ChatUtil.fix("&8> &c" + adress + " &8(&aCurrent&8)"));
                     } else {
-                        lore.add(ChatUtil.fix("&8-> &c" + adress));
+                        lore.add(ChatUtil.fix("&8> &c" + adress));
                     }
                 }
             }

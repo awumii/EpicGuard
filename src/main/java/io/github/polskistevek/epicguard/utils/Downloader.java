@@ -12,5 +12,6 @@ public class Downloader {
         ReadableByteChannel rbc = Channels.newChannel(url.openStream());
         FileOutputStream fos = new FileOutputStream(to);
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        fos.close();
     }
 }
