@@ -26,14 +26,12 @@ public class GeoAPI {
             }
             dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
             if (!new File(dbLocation).exists()) {
-                Logger.info("GeoIP Database not found! Starting download...", false);
-                //I need to download it from external site (my cloud) because official site has only tar.zip packed version (plugin don't need to extract it)
+                Logger.info("GeoLite2-Country.mmdb not found! Starting download...", false);
                 Downloader.download(Mirrors.MIRROR_GEO, dbLocation);
             }
             File database;
             database = new File(dbLocation);
             dbReader = new DatabaseReader.Builder(database).build();
-            Logger.info("GeoIP Database succesfully loaded.", false);
         } catch (IOException e) {
             Logger.throwException(e);
         }
