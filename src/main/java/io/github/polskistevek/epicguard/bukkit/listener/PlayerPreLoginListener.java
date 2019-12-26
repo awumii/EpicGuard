@@ -58,7 +58,7 @@ public class PlayerPreLoginListener implements Listener {
             }
 
             // Check attack speed.
-            if (AttackManager.checkAttackStatus(AttackManager.AttackType.CONNECT)){
+            if (AttackManager.isUnderAttack()){
                 AttackManager.closeConnection(event, KickReason.ATTACK);
                 AttackManager.handleDetection("Speed Check", name, adress);
                 Logger.info("# ATTACK_SPEED Check - FAILED", true);
