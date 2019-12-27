@@ -22,27 +22,27 @@ public class PlayerPreLoginListener implements Listener {
             final String adress = event.getAddress().getHostAddress();
             final String name = event.getName();
             DataFileManager.checkedConnections++;
-            Logger.info("###### CONNECTION CHECKER - INFO LOG #####", true);
-            Logger.info("Player: " + name, true);
-            Logger.info("Adress: " + adress, true);
+            Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
+            Logger.debug("Player: " + name);
+            Logger.debug("Adress: " + adress);
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
 
             // Country detection
             if (!GuardBukkit.COUNTRY_MODE.equals("DISABLED")) {
                 final String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
-                Logger.info("Country: " + country, true);
-                Logger.info(" ", true);
-                Logger.info(" # DETECTION LOG:", true);
+                Logger.debug("Country: " + country);
+                Logger.debug(" ");
+                Logger.debug(" # DETECTION LOG:");
 
                 if (GuardBukkit.COUNTRY_MODE.equals("WHITELIST")) {
                     if (GuardBukkit.COUNTRIES.contains(country)) {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
                         AttackManager.closeConnection(event, KickReason.GEO);
-                        Logger.info("- GEO Check - FAILED", true);
+                        Logger.debug("- GEO Check - FAILED");
                         return;
                     }
-                    Logger.info("+ GEO Check - Passed", true);
+                    Logger.debug("+ GEO Check - Passed");
                 }
 
                 if (GuardBukkit.COUNTRY_MODE.equals("BLACKLIST")) {
@@ -50,10 +50,10 @@ public class PlayerPreLoginListener implements Listener {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
                         AttackManager.closeConnection(event, KickReason.GEO);
-                        Logger.info("- GEO Check - FAILED", true);
+                        Logger.debug("- GEO Check - FAILED");
                         return;
                     }
-                    Logger.info("+ GEO Check - Passed", true);
+                    Logger.debug("+ GEO Check - Passed");
                 }
 
             }
@@ -66,20 +66,20 @@ public class PlayerPreLoginListener implements Listener {
             if (AttackManager.isUnderAttack()){
                 AttackManager.closeConnection(event, KickReason.ATTACK);
                 AttackManager.handleDetection("Speed Check", name, adress);
-                Logger.info("- ATTACK_SPEED Check - FAILED", true);
+                Logger.debug("- ATTACK_SPEED Check - FAILED");
                 return;
             }
 
             // Check if player is on whitelist
             if (BlacklistManager.checkWhitelist(adress)) {
-                Logger.info("+ Whitelist Check - Passed", true);
+                Logger.debug("+ Whitelist Check - Passed");
                 return;
             }
 
             // Check if player is on blacklist
             if (BlacklistManager.check(adress)) {
                 AttackManager.handleDetection("Blacklist Check", name, adress);
-                Logger.info("- Blacklist Check - FAILED", true);
+                Logger.debug("- Blacklist Check - FAILED");
                 AttackManager.closeConnection(event, KickReason.BLACKLIST);
                 return;
             }
@@ -87,7 +87,7 @@ public class PlayerPreLoginListener implements Listener {
             if (GuardBukkit.FORCE_REJOIN){
                 if (!AttackManager.rejoinData.contains(name)) {
                     AttackManager.handleDetection("Force Rejoin", name, adress);
-                    Logger.info("- Force Rejoin - FAILED", true);
+                    Logger.debug("- Force Rejoin - FAILED");
                     AttackManager.closeConnection(event, KickReason.VERIFY);
                     AttackManager.rejoinData.add(name);
                     return;
@@ -104,7 +104,7 @@ public class PlayerPreLoginListener implements Listener {
                 AttackManager.closeConnection(event, KickReason.PROXY);
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
-                Logger.info("- Proxy Check - FAILED", true);
+                Logger.debug("- Proxy Check - FAILED");
             }
         } catch (Exception e) {
             Logger.throwException(e);
@@ -114,19 +114,19 @@ public class PlayerPreLoginListener implements Listener {
     private boolean checkUrl(String url) {
         try {
             final Scanner s = new Scanner(new URL(url).openStream());
-            Logger.info("# Checking proxy from URL: " + url, true);
+            Logger.info("# Checking proxy from URL: " + url);
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
                     if (GuardBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
-                        Logger.info("# Detected Proxy, URL: " + url, true);
+                        Logger.debug("# Detected Proxy, URL: " + url);
                         return true;
                     }
                 }
-                Logger.info("# Proxy is not detected from: " + url, true);
+                Logger.debug("# Proxy is not detected from: " + url);
                 return false;
             }
         } catch (Exception e) {
-            Logger.info("EXCEPTION WHILE CHECKING DATA FROM URL: " + url, false);
+            Logger.debug("EXCEPTION WHILE CHECKING DATA FROM URL: " + url);
             Logger.throwException(e);
             return false;
         }
