@@ -1,5 +1,6 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -21,21 +22,20 @@ public class PlayerPreLoginListener implements Listener {
         try {
             final String adress = event.getAddress().getHostAddress();
             final String name = event.getName();
+            final String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
             DataFileManager.checkedConnections++;
             Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
             Logger.debug("Player: " + name);
             Logger.debug("Adress: " + adress);
+            Logger.debug("Country: " + country);
+            Logger.debug(" ");
+            Logger.debug(" # DETECTION LOG:");
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
 
             // Country detection
             if (!GuardBukkit.COUNTRY_MODE.equals("DISABLED")) {
-                final String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
-                Logger.debug("Country: " + country);
-                Logger.debug(" ");
-                Logger.debug(" # DETECTION LOG:");
-
                 if (GuardBukkit.COUNTRY_MODE.equals("WHITELIST")) {
-                    if (GuardBukkit.COUNTRIES.contains(country)) {
+                    if (!GuardBukkit.COUNTRIES.contains(country)) {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
                         AttackManager.closeConnection(event, KickReason.GEO);
@@ -46,7 +46,7 @@ public class PlayerPreLoginListener implements Listener {
                 }
 
                 if (GuardBukkit.COUNTRY_MODE.equals("BLACKLIST")) {
-                    if (!GuardBukkit.COUNTRIES.contains(country)) {
+                    if (GuardBukkit.COUNTRIES.contains(country)) {
                         AttackManager.handleDetection("GEO Check", name, adress);
                         BlacklistManager.add(adress);
                         AttackManager.closeConnection(event, KickReason.GEO);

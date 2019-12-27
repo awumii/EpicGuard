@@ -15,7 +15,6 @@ public class ServerListPingListener implements Listener {
             if (AttackManager.isUnderAttack()) {
                 e.setMotd("");
                 e.setMaxPlayers(0);
-                e.setServerIcon(null);
             }
         } catch (Exception ex) {
             Logger.throwException(ex);
