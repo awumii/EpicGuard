@@ -28,28 +28,28 @@ public class GuiPlayers {
                 final List<String> lore = new ArrayList<>();
                 final User user = UserManager.getUser(player);
                 lore.add("");
-                lore.add(ChatUtil.fix("&7UUID: &3" + player.getUniqueId()));
-                lore.add(ChatUtil.fix("&7First Join: &6" + new Date(player.getFirstPlayed())));
-                lore.add(ChatUtil.fix("&7Country: &6" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
-                lore.add(ChatUtil.fix("&7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
-                lore.add(ChatUtil.fix("&7Client Brand: &c" + user.getBrand()));
+                lore.add(ChatUtil.fix("&8>> &7UUID: &a" + player.getUniqueId()));
+                lore.add(ChatUtil.fix("&8>> &7First Join: &a" + new Date(player.getFirstPlayed())));
+                lore.add(ChatUtil.fix("&8>> &7Country: &a" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
+                lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
                 if (GuardBukkit.IP_HISTORY_ENABLE) {
                     if (user.getAdresses() != null) {
                         lore.add("");
-                        lore.add(ChatUtil.fix("&7IP History:"));
+                        lore.add(ChatUtil.fix("&8>> &7IP History:"));
                         for (String adress : user.getAdresses()) {
                             if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
-                                lore.add(ChatUtil.fix("&8> &c" + adress + " &8(&aCurrent&8)"));
+                                lore.add(ChatUtil.fix("&8-> &2" + adress + " &8(&aCurrent&8)"));
                             } else {
-                                lore.add(ChatUtil.fix("&8> &c" + adress));
+                                lore.add(ChatUtil.fix("&8-> &2" + adress));
                             }
                         }
                     }
                 }
                 if (player.isOp()) {
-                    itemStack = new ItemBuilder(Material.DIAMOND_HELMET).setTitle("&c" + player.getName()).addLores(lore).build();
+                    itemStack = new ItemBuilder(Material.DIAMOND_HELMET).setTitle("&8>> &c" + player.getName()).addLores(lore).build();
                 } else {
-                    itemStack = new ItemBuilder(Material.IRON_HELMET).setTitle("&a" + player.getName()).addLores(lore).build();
+                    itemStack = new ItemBuilder(Material.IRON_HELMET).setTitle("&8>> &a" + player.getName()).addLores(lore).build();
                 }
                 ItemStack back = new ItemBuilder(Material.ARROW).setTitle("&cBack to main menu").addLore("").addLore("&7Click to go back.").build();
                 inv.setItem(i, itemStack);
