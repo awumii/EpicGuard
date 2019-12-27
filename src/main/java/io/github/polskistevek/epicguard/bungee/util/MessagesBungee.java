@@ -1,6 +1,5 @@
 package io.github.polskistevek.epicguard.bungee.util;
 
-import io.github.polskistevek.epicguard.utils.Mirrors;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -29,7 +28,7 @@ public class MessagesBungee {
         File configFile = new File(file);
         if (!configFile.exists()) {
             try {
-                Downloader.download(Mirrors.MIRROR_MESSAGES, file);
+                Downloader.download(Downloader.MIRROR_MESSAGES, file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
