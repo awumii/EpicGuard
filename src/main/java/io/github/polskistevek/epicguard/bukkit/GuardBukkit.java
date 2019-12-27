@@ -22,7 +22,6 @@ import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
 import org.bukkit.plugin.messaging.Messenger;
-import sun.rmi.runtime.Log;
 
 import java.io.File;
 import java.net.URL;
@@ -90,7 +89,7 @@ public class GuardBukkit extends JavaPlugin {
             this.registerTasks();
 
             // Creating GUI's
-            GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
+            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             this.registerBrand();
