@@ -26,8 +26,8 @@ public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
-            Logger.info("You are running EpicGuard v" + GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion(), false);
-            Logger.info("Use this command in-game.", false);
+            Logger.info("You are running EpicGuard v" + GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion());
+            Logger.info("Use this command in-game.");
             return false;
         }
         Player p = (Player) sender;

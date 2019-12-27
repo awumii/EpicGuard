@@ -52,7 +52,7 @@ public class PlayerJoinListener implements Listener {
                     if (p.isOnline()) {
                         if (u.getBrand().equals("none")) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
-                            Logger.info("Exception occurred in " + p.getName() + "'s connection!", false);
+                            Logger.info("Exception occurred in " + p.getName() + "'s connection!");
                         }
                         for (String string : customFile.getConfig().getStringList("blocked-brands")) {
                             if (u.getBrand().equalsIgnoreCase(string)) {
@@ -68,7 +68,7 @@ public class PlayerJoinListener implements Listener {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
                     if (p.isOnline()) {
                         if (!BlacklistManager.checkWhitelist(adress)) {
-                            Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.", false);
+                            Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
                             BlacklistManager.addWhitelist(adress);
                         }
                     }
