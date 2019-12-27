@@ -1,6 +1,5 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
-import com.maxmind.geoip2.exception.GeoIp2Exception;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -114,7 +113,7 @@ public class PlayerPreLoginListener implements Listener {
     private boolean checkUrl(String url) {
         try {
             final Scanner s = new Scanner(new URL(url).openStream());
-            Logger.info("# Checking proxy from URL: " + url);
+            Logger.debug("# Checking proxy from URL: " + url);
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
                     if (GuardBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
