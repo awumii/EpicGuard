@@ -26,7 +26,7 @@ public class GeoAPI {
             }
             dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
             if (!new File(dbLocation).exists()) {
-                Logger.info("GeoLite2-Country.mmdb not found! Starting download...", false);
+                Logger.info("GeoLite2-Country.mmdb not found! Starting download...");
                 Downloader.download(Mirrors.MIRROR_GEO, dbLocation);
             }
             File database;

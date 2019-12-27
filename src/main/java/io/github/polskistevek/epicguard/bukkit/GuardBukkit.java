@@ -22,6 +22,7 @@ import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
 import org.bukkit.plugin.messaging.Messenger;
+import sun.rmi.runtime.Log;
 
 import java.io.File;
 import java.net.URL;
@@ -72,7 +73,7 @@ public class GuardBukkit extends JavaPlugin {
             dataFolder = this.getDataFolder();
             this.saveDefaultConfig();
             this.createDirectories();
-            Logger.create(ServerType.SPIGOT);
+            new Logger(ServerType.SPIGOT);
             this.drawLogo();
             this.registerListeners();
             this.getCommand("epicguard").setExecutor(new GuardCommand());
@@ -84,7 +85,7 @@ public class GuardBukkit extends JavaPlugin {
             DataFileManager.save();
             MessagesBukkit.load();
             new NMSUtil();
-            Logger.info("NMS Version: " + NMSUtil.getVersion(), false);
+            Logger.info("NMS Version: " + NMSUtil.getVersion());
             loadConfig();
             this.registerTasks();
 
@@ -94,7 +95,7 @@ public class GuardBukkit extends JavaPlugin {
 
             this.registerBrand();
             this.fixVariables();
-            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
+            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
         } catch (Exception e) {
             Logger.throwException(e);
         }
@@ -103,7 +104,7 @@ public class GuardBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
-            Logger.info("Saving data and disabling plugin.", false);
+            Logger.info("Saving data and disabling plugin.");
             DataFileManager.save();
         } catch (Exception e) {
             Logger.throwException(e);
@@ -176,10 +177,10 @@ public class GuardBukkit extends JavaPlugin {
         try {
             final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
             while (scanner.hasNextLine()){
-                Logger.info(scanner.nextLine(), false);
+                Logger.info(scanner.nextLine());
             }
             scanner.close();
-            Logger.info("Created by iShift.", false);
+            Logger.info("Created by iShift.");
         } catch (Exception e) {
             Logger.throwException(e);
         }
@@ -188,7 +189,7 @@ public class GuardBukkit extends JavaPlugin {
     public static void loadConfig() {
         try {
             FileConfiguration cfg = GuardBukkit.getPlugin(GuardBukkit.class).getConfig();
-            Logger.info("Loading configuration...", false);
+            Logger.info("Loading configuration...");
             FIREWALL = cfg.getBoolean("firewall");
             FIREWALL_BL = cfg.getString("firewall.command-blacklist");
             FIREWALL_WL = cfg.getString("firewall.command-whitelist");

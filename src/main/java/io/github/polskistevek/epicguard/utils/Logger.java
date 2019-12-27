@@ -6,22 +6,27 @@ import io.github.polskistevek.epicguard.bungee.GuardBungee;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Logger {
     private static File file;
+    private ServerType type;
 
-    public static void create(ServerType serverType) {
+    public Logger(ServerType type) {
+        this.type = type;
+        this.create();
+    }
+
+    private void create() {
         try {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             String date = sdf.format(cal.getTime());
-            if (serverType == ServerType.SPIGOT) {
+            if (this.type == ServerType.SPIGOT) {
                 file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
-            if (serverType == ServerType.BUNGEE) {
+            if (this.type == ServerType.BUNGEE) {
                 file = new File(GuardBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (!file.exists()) {
@@ -32,7 +37,15 @@ public class Logger {
         }
     }
 
-    public static void info(String message, boolean hide) {
+    public static void debug(String message) {
+        log(message, true);
+    }
+
+    public static void info(String message) {
+        log(message, false);
+    }
+
+    public static void log(String message, boolean hide) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
         String time = sdf.format(cal.getTime());
@@ -48,24 +61,24 @@ public class Logger {
             bufferedWriter.append(msg);
             bufferedWriter.newLine();
             bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Logger.throwException(e);
         }
     }
 
     public static void throwException(Exception exception) {
-        info("#######  EPICGUARD ERROR LOG #######", false);
-        info(" ", false);
-        info("<> Information: " + exception.getMessage(), false);
-        info("<> Stack Trace:", false);
-        info(" ", false);
+        info("#######  EPICGUARD ERROR LOG #######");
+        info(" ");
+        info("<> Information: " + exception.getMessage());
+        info("<> Stack Trace:");
+        info(" ");
         for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
-            info(" " + stackTraceElement.toString(), false);
+            info(" " + stackTraceElement.toString());
         }
-        info(" ", false);
-        info("<> If you think this is a bug, report it on github.", false);
-        info("<> https://github.com/PolskiStevek/EpicGuard/issues", false);
-        info(" ", false);
-        info("#######  EPICGUARD ERROR LOG #######", false);
+        info(" ");
+        info("<> If you think this is a bug, report it on github.");
+        info("<> https://github.com/PolskiStevek/EpicGuard/issues");
+        info(" ");
+        info("#######  EPICGUARD ERROR LOG #######");
     }
 }
