@@ -6,15 +6,16 @@ import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
 import io.github.polskistevek.epicguard.bukkit.listener.*;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.manager.FileManager;
+import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.CustomFile;
 import io.github.polskistevek.epicguard.bukkit.task.ActionBarTask;
 import io.github.polskistevek.epicguard.bukkit.task.AttackTask;
 import io.github.polskistevek.epicguard.bukkit.task.SaveTask;
 import io.github.polskistevek.epicguard.bukkit.util.*;
-import io.github.polskistevek.epicguard.bukkit.util.nms.ActionBarAPI;
 import io.github.polskistevek.epicguard.bukkit.util.nms.NMSUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
@@ -92,6 +93,7 @@ public class GuardBukkit extends JavaPlugin {
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             this.registerBrand();
+            this.fixVariables();
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms", false);
         } catch (Exception e) {
             Logger.throwException(e);
@@ -142,6 +144,12 @@ public class GuardBukkit extends JavaPlugin {
         File dir3 = new File(this.getDataFolder() + "/data");
         if (!dir3.exists()){
             dir3.mkdir();
+        }
+    }
+
+    private void fixVariables() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            UserManager.addUser(player);
         }
     }
 
