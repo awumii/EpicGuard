@@ -1,6 +1,5 @@
 package io.github.polskistevek.epicguard.bukkit.util;
 
-import io.github.polskistevek.epicguard.utils.Mirrors;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
@@ -32,7 +31,7 @@ public class MessagesBukkit {
             String file = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/messages_en_US.yml";
             File configFile = new File(file);
             if (!configFile.exists()) {
-                Downloader.download(Mirrors.MIRROR_MESSAGES, file);
+                Downloader.download(Downloader.MIRROR_MESSAGES, file);
             }
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
 

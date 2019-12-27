@@ -6,11 +6,10 @@ import io.github.polskistevek.epicguard.utils.Logger;
 import io.github.polskistevek.epicguard.utils.ServerType;
 
 public class SaveTask implements Runnable {
-
     @Override
     public void run() {
         DataFileManager.save();
         Updater.checkForUpdates();
-        Logger.create(ServerType.SPIGOT);
+        new Logger(ServerType.SPIGOT);
     }
 }
