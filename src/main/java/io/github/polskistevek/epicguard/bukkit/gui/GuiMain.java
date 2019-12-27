@@ -82,11 +82,11 @@ public class GuiMain {
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&8>> &eAntibot modules&8: " + (GuardBukkit.ANTIBOT ? "&a&lON" : "&4&lOFF")));
-        l8.add(ChatUtil.fix("&8>> &eFirewall&8: " + (GuardBukkit.FIREWALL ? "&a&lON" : "&4&lOFF")));
-        l8.add(ChatUtil.fix("&8>> &eBlacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
-        l8.add(ChatUtil.fix("&8>> &eWhitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
-        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &cAntibot Information &8«").addLores(l8).build();
+        l8.add(ChatUtil.fix("&7Antibot modules&8: " + (GuardBukkit.ANTIBOT ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&7Firewall&8: " + (GuardBukkit.FIREWALL ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
+        l8.add(ChatUtil.fix("&7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
+        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&6Antibot Information").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
@@ -104,11 +104,6 @@ public class GuiMain {
         l9.add(ChatUtil.fix("&7GEO Option&8: &b" + GuardBukkit.COUNTRY_MODE));
         ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
 
-
-        List<String> l10 = new ArrayList<>();
-        l10.add(ChatUtil.fix("&8#"));
-        ItemStack i10 = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setTitle("").addLores(l10).build();
-
         eq.setItem(10, i1);
         eq.setItem(12, i2);
         eq.setItem(14, i3);
@@ -118,9 +113,6 @@ public class GuiMain {
         eq.setItem(32, i7);
         eq.setItem(34, i8);
         eq.setItem(40, i9);
-        for (int i = 0; i < 44; ++i) {
-            eq.setItem(i, i10);
-        }
         p.openInventory(eq);
     }
 }
