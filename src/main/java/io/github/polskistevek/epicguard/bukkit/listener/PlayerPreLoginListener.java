@@ -22,7 +22,7 @@ public class PlayerPreLoginListener implements Listener {
             final String adress = event.getAddress().getHostAddress();
             final String name = event.getName();
             DataFileManager.checkedConnections++;
-            Logger.info("-------------------------------", true);
+            Logger.info("###### CONNECTION CHECKER - INFO LOG #####", true);
             Logger.info("Player: " + name, true);
             Logger.info("Adress: " + adress, true);
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
@@ -105,13 +105,7 @@ public class PlayerPreLoginListener implements Listener {
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
                 Logger.info("- Proxy Check - FAILED", true);
-                return;
             }
-
-            // If player has passed every check (event not detected by whitelist)
-            Logger.info("", true);
-            Logger.info("Player has passed successfully, without any detections.", true);
-            Logger.info("-------------------", true);
         } catch (Exception e) {
             Logger.throwException(e);
         }

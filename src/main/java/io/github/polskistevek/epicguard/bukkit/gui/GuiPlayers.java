@@ -1,6 +1,5 @@
 package io.github.polskistevek.epicguard.bukkit.gui;
 
-import com.maxmind.geoip2.exception.GeoIp2Exception;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
 import io.github.polskistevek.epicguard.bukkit.util.ItemBuilder;
@@ -14,7 +13,6 @@ import io.github.polskistevek.epicguard.utils.ChatUtil;
 import io.github.polskistevek.epicguard.utils.GeoAPI;
 import io.github.polskistevek.epicguard.utils.Logger;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
