@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiMain {
-    public static Inventory i;
+    public static Inventory eq;
 
     public static void show(Player p) {
         List<String> l1 = new ArrayList<>();
@@ -29,24 +29,24 @@ public class GuiMain {
         l1.add(ChatUtil.fix("&8>> &cServer&8: &e" + Bukkit.getServer().getBukkitVersion()));
         l1.add(ChatUtil.fix("&8>> &cRAM Usage&8: &a" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
         l1.add(ChatUtil.fix("&8>> &cTPS&8: &a" + ExactTPS.getTPS()));
-        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8>> &6Basic Information").addLores(l1).build();
+        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8>> &6Basic Information &8«").addLores(l1).build();
 
         List<String> l2 = new ArrayList<>();
         l2.add("");
-        l2.add(ChatUtil.fix("&7Server is&8: " + (AttackManager.attackMode ? "&cUnder Attack" : "&aListening...")));
+        l2.add(ChatUtil.fix("&8>> &cServer is&8: " + (AttackManager.attackMode ? "&4&lUnder Attack" : "&a&lListening...")));
         l2.add("");
-        l2.add(ChatUtil.fix("&7Login Per Second&8: &6" + AttackManager.connectPerSecond));
-        l2.add(ChatUtil.fix("&7Ping Per Second&8: &6" + AttackManager.pingPerSecond));
-        l2.add(ChatUtil.fix("&7Join Per Second&8: &6" + AttackManager.joinPerSecond));
-        ItemStack i2 = new ItemBuilder(Material.BOW).setTitle("&eServer Attack Status").addLores(l2).build();
+        l2.add(ChatUtil.fix("&8>> &cLogin Per Second&8: &e" + AttackManager.connectPerSecond));
+        l2.add(ChatUtil.fix("&8>> &cPing Per Second&8: &e" + AttackManager.pingPerSecond));
+        l2.add(ChatUtil.fix("&8>> &cJoin Per Second&8: &e" + AttackManager.joinPerSecond));
+        ItemStack i2 = new ItemBuilder(Material.BOW).setTitle("&8>> &6Server Attack Status &8«").addLores(l2).build();
 
         List<String> l3 = new ArrayList<>();
         l3.add("");
-        l3.add(ChatUtil.fix("&7Show all online players in one GUI."));
-        l3.add(ChatUtil.fix("&7You can see some basic information about them."));
-        l3.add(ChatUtil.fix("&7GUI will show same information that can be found&7,"));
-        l3.add(ChatUtil.fix("&7when you use command &6/guard player <nickname>&7."));
-        ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&6Player Information").addLores(l3).build();
+        l3.add(ChatUtil.fix("&eShow all online players in one GUI."));
+        l3.add(ChatUtil.fix("&eYou can see some basic information about them."));
+        l3.add(ChatUtil.fix("&eGUI will show same information that can be found,"));
+        l3.add(ChatUtil.fix("&ewhen you use command &c/guard player <nickname>&e."));
+        ItemStack i3 = new ItemBuilder(Material.ARMOR_STAND).setTitle("&8>> &cPlayer Information &8<<").addLores(l3).build();
 
         List<String> l4 = new ArrayList<>();
         l4.add("");
@@ -69,9 +69,9 @@ public class GuiMain {
 
         List<String> l6 = new ArrayList<>();
         l6.add("");
-        l6.add(ChatUtil.fix("&7Click to reload config."));
-        l6.add(ChatUtil.fix("&7After click GUI will close."));
-        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&8Reload Config").addLores(l6).build();
+        l6.add(ChatUtil.fix("&8>> &eClick to reload config."));
+        l6.add(ChatUtil.fix("&8>> &eAfter click GUI will close."));
+        ItemStack i6 = new ItemBuilder(Material.ANVIL).setTitle("&8>> &cReload Config &8«").addLores(l6).build();
 
         List<String> l7 = new ArrayList<>();
         l7.add("");
@@ -104,15 +104,23 @@ public class GuiMain {
         l9.add(ChatUtil.fix("&7GEO Option&8: &b" + GuardBukkit.COUNTRY_MODE));
         ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
 
-        i.setItem(10, i1);
-        i.setItem(12, i2);
-        i.setItem(14, i3);
-        i.setItem(16, i4);
-        i.setItem(28, i5);
-        i.setItem(30, i6);
-        i.setItem(32, i7);
-        i.setItem(34, i8);
-        i.setItem(40, i9);
-        p.openInventory(i);
+
+        List<String> l10 = new ArrayList<>();
+        l10.add(ChatUtil.fix("&8#"));
+        ItemStack i10 = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setTitle("").addLores(l10).build();
+
+        eq.setItem(10, i1);
+        eq.setItem(12, i2);
+        eq.setItem(14, i3);
+        eq.setItem(16, i4);
+        eq.setItem(28, i5);
+        eq.setItem(30, i6);
+        eq.setItem(32, i7);
+        eq.setItem(34, i8);
+        eq.setItem(40, i9);
+        for (int i = 0; i < 44; ++i) {
+            eq.setItem(i, i10);
+        }
+        p.openInventory(eq);
     }
 }
