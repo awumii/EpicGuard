@@ -90,7 +90,7 @@ public class GuardBukkit extends JavaPlugin {
             this.registerTasks();
 
             // Creating GUI's
-            GuiMain.i = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
+            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             this.registerBrand();
