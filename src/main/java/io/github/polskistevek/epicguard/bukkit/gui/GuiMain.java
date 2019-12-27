@@ -25,11 +25,11 @@ public class GuiMain {
     public static void show(Player p) {
         List<String> l1 = new ArrayList<>();
         l1.add("");
-        l1.add(ChatUtil.fix("&7Plugin version&8: &a" + Updater.currentVersion + (Updater.updateAvaible ? " &c[Outdated!]" : "")));
-        l1.add(ChatUtil.fix("&7Server&8: &a" + Bukkit.getServer().getBukkitVersion()));
-        l1.add(ChatUtil.fix("&7RAM Usage&8: &6" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
-        l1.add(ChatUtil.fix("&7TPS&8: &6" + ExactTPS.getTPS()));
-        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8Basic Information").addLores(l1).build();
+        l1.add(ChatUtil.fix("&8>> &cPlugin version&8: &e" + Updater.currentVersion + (Updater.updateAvaible ? " &4&l[Outdated!]" : "")));
+        l1.add(ChatUtil.fix("&8>> &cServer&8: &e" + Bukkit.getServer().getBukkitVersion()));
+        l1.add(ChatUtil.fix("&8>> &cRAM Usage&8: &a" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
+        l1.add(ChatUtil.fix("&8>> &cTPS&8: &a" + ExactTPS.getTPS()));
+        ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8>> &6Basic Information").addLores(l1).build();
 
         List<String> l2 = new ArrayList<>();
         l2.add("");
