@@ -82,11 +82,11 @@ public class GuiMain {
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&7Antibot modules&8: " + (GuardBukkit.ANTIBOT ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&7Firewall&8: " + (GuardBukkit.FIREWALL ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
-        l8.add(ChatUtil.fix("&7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
-        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&6Antibot Information").addLores(l8).build();
+        l8.add(ChatUtil.fix("&8>> &eAntibot modules&8: " + (GuardBukkit.ANTIBOT ? "&a&lON" : "&4&lOFF")));
+        l8.add(ChatUtil.fix("&8>> &eFirewall&8: " + (GuardBukkit.FIREWALL ? "&a&lON" : "&4&lOFF")));
+        l8.add(ChatUtil.fix("&8>> &eBlacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
+        l8.add(ChatUtil.fix("&8>> &eWhitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
+        ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &cAntibot Information &8«").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
