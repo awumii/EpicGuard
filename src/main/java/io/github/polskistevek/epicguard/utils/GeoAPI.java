@@ -9,19 +9,25 @@ import java.io.IOException;
 
 public class GeoAPI {
     private static DatabaseReader dbReader;
+    private ServerType type;
 
     public static DatabaseReader getDatabase() {
         return dbReader;
     }
 
-    public static void create(ServerType serverType) {
+    public GeoAPI(ServerType type) {
+        this.type = type;
+        this.create();
+    }
+
+    private void create() {
         try {
             File dataFolder = null;
             String dbLocation;
-            if (serverType == ServerType.SPIGOT) {
+            if (type == ServerType.SPIGOT) {
                 dataFolder = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder();
             }
-            if (serverType == ServerType.BUNGEE) {
+            if (type == ServerType.BUNGEE) {
                 dataFolder = GuardBungee.plugin.getDataFolder();
             }
             dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";

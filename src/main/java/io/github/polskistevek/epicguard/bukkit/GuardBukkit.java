@@ -74,24 +74,20 @@ public class GuardBukkit extends JavaPlugin {
             this.createDirectories();
             new Logger(ServerType.SPIGOT);
             this.drawLogo();
-            this.registerListeners();
-            this.getCommand("epicguard").setExecutor(new GuardCommand());
-
-            // Other stuff
-            GeoAPI.create(ServerType.SPIGOT);
+            new GeoAPI(ServerType.SPIGOT);
             new Metrics(this);
+            new NMSUtil();
             DataFileManager.load();
             DataFileManager.save();
             MessagesBukkit.load();
-            new NMSUtil();
             Logger.info("NMS Version: " + NMSUtil.getVersion());
             loadConfig();
             this.registerTasks();
-
-            // Creating GUI's
+            this.registerListeners();
             GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
+            this.getCommand("epicguard").setExecutor(new GuardCommand());
             this.registerBrand();
             this.fixVariables();
             Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");

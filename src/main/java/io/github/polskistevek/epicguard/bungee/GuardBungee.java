@@ -59,7 +59,7 @@ public class GuardBungee extends Plugin {
             MessagesBungee.load();
             AttackClearTask.start();
             Logger.info("Loading GeoIP Database..");
-            GeoAPI.create(ServerType.BUNGEE);
+            new GeoAPI(ServerType.BUNGEE);
             Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.");
             new Metrics(this);
             getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
