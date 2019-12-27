@@ -32,14 +32,14 @@ public class PlayerCommandListener implements Listener {
                     event.setCancelled(true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")", false);
+                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                     this.executeCooldown.add(player);
                 }
                 if (player.hasPermission("experimentalpex.detection") && GuardBukkit.PEX_PROTECTION) {
                     event.setCancelled(true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")", false);
+                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
                     this.executeCooldown.add(player);
                 }
             }
@@ -51,7 +51,7 @@ public class PlayerCommandListener implements Listener {
                 if (!GuardBukkit.ALLOWED_COMMANDS.contains(args[0])) {
                     event.setCancelled(true);
                     player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
-                    Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!", false);
+                    Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
                 }
             }
         }
@@ -61,7 +61,7 @@ public class PlayerCommandListener implements Listener {
             if (GuardBukkit.BLOCKED_COMMANDS.contains(args[0])){
                 event.setCancelled(true);
                 player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
-                Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")", false);
+                Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
             }
         }
     }

@@ -19,7 +19,7 @@ public class Updater {
             lastestVersion = lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
             if (updateAvaible) {
-                Logger.info("[IMPORTANT - UPDATE AVAILABLE!] Your version is outdated (" + currentVersion + " -> " + lastestVersion + ") - download new version here: https://www.spigotmc.org/resources/72369", false);
+                Logger.info("[IMPORTANT - UPDATE AVAILABLE!] Your version is outdated (" + currentVersion + " -> " + lastestVersion + ") - download new version here: https://www.spigotmc.org/resources/72369");
             }
         }
     }

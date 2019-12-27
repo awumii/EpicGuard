@@ -94,11 +94,11 @@ public class Metrics {
             // Every server gets it's unique random id.
             config.addDefault("serverUuid", UUID.randomUUID().toString());
             // Should failed request be logged?
-            config.addDefault("logFailedRequests", false);
+            config.addDefault("logFailedRequests");
             // Should the sent data be logged?
-            config.addDefault("logSentData", false);
+            config.addDefault("logSentData");
             // Should the response text be logged?
-            config.addDefault("logResponseStatusText", false);
+            config.addDefault("logResponseStatusText");
 
             // Inform the server owners about bStats
             config.options().header(
@@ -116,9 +116,9 @@ public class Metrics {
         // Load the data
         enabled = config.getBoolean("enabled", true);
         serverUUID = config.getString("serverUuid");
-        logFailedRequests = config.getBoolean("logFailedRequests", false);
-        logSentData = config.getBoolean("logSentData", false);
-        logResponseStatusText = config.getBoolean("logResponseStatusText", false);
+        logFailedRequests = config.getBoolean("logFailedRequests");
+        logSentData = config.getBoolean("logSentData");
+        logResponseStatusText = config.getBoolean("logResponseStatusText");
 
         if (enabled) {
             boolean found = false;

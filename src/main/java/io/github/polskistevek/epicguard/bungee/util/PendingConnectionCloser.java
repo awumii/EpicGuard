@@ -8,7 +8,7 @@ import io.github.polskistevek.epicguard.utils.Logger;
 
 public class PendingConnectionCloser {
     public static void close(PendingConnection connection, KickReason reason) {
-        Logger.info("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason, false);
+        Logger.info("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason);
         if (reason == KickReason.GEO) {
             StringBuilder sb = new StringBuilder();
             for (String s : MessagesBungee.MESSAGE_KICK_COUNTRY) {
