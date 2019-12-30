@@ -11,11 +11,8 @@ public class NMSUtil {
         nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
     }
 
-    public static boolean isOldMaterialVersion() {
-        if (nmsver.startsWith("v1_13") || nmsver.startsWith("v1_14") || nmsver.startsWith("v1_15") || nmsver.startsWith("v1_16")) {
-            return false;
-        }
-        return true;
+    public static boolean isOldVersion() {
+        return !nmsver.startsWith("v1_13") && !nmsver.startsWith("v1_14") && !nmsver.startsWith("v1_15") && !nmsver.startsWith("v1_16");
     }
 
     public static String getVersion() {
