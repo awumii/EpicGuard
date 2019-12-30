@@ -1,21 +1,20 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
 import io.github.polskistevek.epicguard.bukkit.AttackManager_Spigot;
+import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
+import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
+import io.github.polskistevek.epicguard.universal.AttackManager;
 import io.github.polskistevek.epicguard.universal.AttackType;
 import io.github.polskistevek.epicguard.universal.ConfigProvider;
 import io.github.polskistevek.epicguard.universal.check.GeoCheck;
 import io.github.polskistevek.epicguard.universal.check.ProxyCheck;
 import io.github.polskistevek.epicguard.universal.check.RejoinCheck;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.universal.AttackManager;
-import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
-import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.universal.util.GeoDataase;
 import io.github.polskistevek.epicguard.universal.util.KickReason;
 import io.github.polskistevek.epicguard.universal.util.Logger;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class PlayerPreLoginListener implements Listener {
 
