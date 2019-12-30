@@ -1,13 +1,13 @@
 package io.github.polskistevek.epicguard.bukkit.util;
 
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
 import io.github.polskistevek.epicguard.bukkit.util.nms.ActionBarAPI;
 import io.github.polskistevek.epicguard.bukkit.util.nms.TitleAPI;
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
 
 public class Notificator {
     public static void title(String title, String subtitle) {

@@ -6,12 +6,12 @@
 
 package io.github.polskistevek.epicguard.bukkit.util.nms;
 
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

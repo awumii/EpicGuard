@@ -3,15 +3,15 @@ package io.github.polskistevek.epicguard.bukkit.gui;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
 import io.github.polskistevek.epicguard.bukkit.util.ItemBuilder;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
+import io.github.polskistevek.epicguard.universal.util.GeoDataase;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
-import io.github.polskistevek.epicguard.utils.GeoAPI;
-import io.github.polskistevek.epicguard.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,10 +30,10 @@ public class GuiPlayers {
                 lore.add("");
                 lore.add(ChatUtil.fix("&8>> &7UUID: &a" + player.getUniqueId()));
                 lore.add(ChatUtil.fix("&8>> &7First Join: &a" + new Date(player.getFirstPlayed())));
-                lore.add(ChatUtil.fix("&8>> &7Country: &a" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                lore.add(ChatUtil.fix("&8>> &7Country: &a" + GeoDataase.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
                 lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
-                if (GuardBukkit.IP_HISTORY_ENABLE) {
+                if (ConfigProvider.IP_HISTORY_ENABLE) {
                     if (user.getAdresses() != null) {
                         lore.add("");
                         lore.add(ChatUtil.fix("&8>> &7IP History:"));

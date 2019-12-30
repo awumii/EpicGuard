@@ -1,24 +1,26 @@
 package io.github.polskistevek.epicguard.bukkit.command;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
+import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
+import io.github.polskistevek.epicguard.bukkit.util.Updater;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
+import io.github.polskistevek.epicguard.universal.util.GeoDataase;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
-import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
-import io.github.polskistevek.epicguard.bukkit.util.Updater;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
-import io.github.polskistevek.epicguard.utils.GeoAPI;
-import io.github.polskistevek.epicguard.utils.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -85,12 +87,12 @@ public class GuardCommand implements CommandExecutor {
                         p.sendMessage(ChatUtil.fix("&8▪ &7UUID: &f" + player.getUniqueId()));
                         p.sendMessage(ChatUtil.fix("&8▪ &7First Join: &f" + new Date(player.getFirstPlayed())));
                         try {
-                            p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                            p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GeoDataase.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
                         } catch (IOException | GeoIp2Exception e) {
                             e.printStackTrace();
                         }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        if (GuardBukkit.IP_HISTORY_ENABLE) {
+                        if (ConfigProvider.IP_HISTORY_ENABLE) {
                             p.sendMessage(ChatUtil.fix(""));
                             p.sendMessage(ChatUtil.fix("&6[IP History]"));
                             for (String adress : UserManager.getUser(player).getAdresses()) {
@@ -120,7 +122,7 @@ public class GuardCommand implements CommandExecutor {
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                    GuardBukkit.loadConfig();
+                    new ConfigProvider(new File(GuardBukkit.dataFolder + "/config.yml"));
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;

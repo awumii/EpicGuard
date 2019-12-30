@@ -1,10 +1,10 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
 
 public class TabCompletePacket extends PacketAdapter {
     public static GuardBukkit inst;
@@ -15,7 +15,7 @@ public class TabCompletePacket extends PacketAdapter {
     }
 
     public void onPacketReceiving(final PacketEvent event) {
-        if (GuardBukkit.TAB_COMPLETE_BLOCK) {
+        if (ConfigProvider.TAB_COMPLETE_BLOCK) {
             event.setCancelled(true);
         }
     }

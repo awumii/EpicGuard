@@ -1,4 +1,4 @@
-package io.github.polskistevek.epicguard.utils;
+package io.github.polskistevek.epicguard.universal.util;
 
 import net.md_5.bungee.api.ChatColor;
 

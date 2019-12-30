@@ -1,4 +1,4 @@
-package io.github.polskistevek.epicguard.utils;
+package io.github.polskistevek.epicguard.universal.util;
 
 import com.maxmind.geoip2.DatabaseReader;
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
@@ -7,7 +7,7 @@ import io.github.polskistevek.epicguard.bungee.GuardBungee;
 import java.io.File;
 import java.io.IOException;
 
-public class GeoAPI {
+public class GeoDataase {
     private static DatabaseReader dbReader;
     private ServerType type;
 
@@ -15,7 +15,7 @@ public class GeoAPI {
         return dbReader;
     }
 
-    public GeoAPI(ServerType type) {
+    public GeoDataase(ServerType type) {
         this.type = type;
         this.create();
     }

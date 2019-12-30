@@ -1,14 +1,14 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
+import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
-import io.github.polskistevek.epicguard.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +26,19 @@ public class PlayerCommandListener implements Listener {
             return;
         }
         // OP Protection module.
-        if (GuardBukkit.OP_PROTECTION_ENABLE){
-            if (!GuardBukkit.OP_PROTECTION_LIST.contains(player.getName())){
+        if (ConfigProvider.OP_PROTECTION_ENABLE){
+            if (!ConfigProvider.OP_PROTECTION_LIST.contains(player.getName())){
                 if (player.isOp()) {
                     event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigProvider.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(ConfigProvider.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                     this.executeCooldown.add(player);
                 }
-                if (player.hasPermission("experimentalpex.detection") && GuardBukkit.PEX_PROTECTION) {
+                if (player.hasPermission("experimentalpex.detection") && ConfigProvider.PEX_PROTECTION) {
                     event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GuardBukkit.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(GuardBukkit.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigProvider.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(ConfigProvider.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
                     this.executeCooldown.add(player);
                 }
@@ -46,9 +46,9 @@ public class PlayerCommandListener implements Listener {
         }
 
         // Allowed Commands module.
-        if (GuardBukkit.ALLOWED_COMMANDS_ENABLE) {
-            if (!player.hasPermission(GuardBukkit.ALLOWED_COMMANDS_BYPASS)) {
-                if (!GuardBukkit.ALLOWED_COMMANDS.contains(args[0])) {
+        if (ConfigProvider.ALLOWED_COMMANDS_ENABLE) {
+            if (!player.hasPermission(ConfigProvider.ALLOWED_COMMANDS_BYPASS)) {
+                if (!ConfigProvider.ALLOWED_COMMANDS.contains(args[0])) {
                     event.setCancelled(true);
                     player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
                     Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
@@ -57,8 +57,8 @@ public class PlayerCommandListener implements Listener {
         }
 
         // Blocked Commands module.
-        if (GuardBukkit.BLOCKED_COMMANDS_ENABLE){
-            if (GuardBukkit.BLOCKED_COMMANDS.contains(args[0])){
+        if (ConfigProvider.BLOCKED_COMMANDS_ENABLE){
+            if (ConfigProvider.BLOCKED_COMMANDS.contains(args[0])){
                 event.setCancelled(true);
                 player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
                 Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");

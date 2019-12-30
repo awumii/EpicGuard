@@ -1,7 +1,7 @@
 package io.github.polskistevek.epicguard.bungee.task;
 
-import io.github.polskistevek.epicguard.bungee.listener.ProxyPreLoginListener;
 import io.github.polskistevek.epicguard.bungee.GuardBungee;
+import io.github.polskistevek.epicguard.bungee.listener.ProxyPreLoginListener;
 
 import java.util.concurrent.TimeUnit;
 

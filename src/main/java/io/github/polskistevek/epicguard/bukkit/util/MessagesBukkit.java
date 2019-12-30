@@ -1,10 +1,10 @@
 package io.github.polskistevek.epicguard.bukkit.util;
 
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.universal.util.Downloader;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.utils.Downloader;
-import io.github.polskistevek.epicguard.utils.Logger;
 
 import java.io.File;
 import java.util.List;

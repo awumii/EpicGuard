@@ -1,12 +1,12 @@
 package io.github.polskistevek.epicguard.bukkit.manager;
 
-import io.github.polskistevek.epicguard.utils.Logger;
+import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
+import io.github.polskistevek.epicguard.universal.AttackManager;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
