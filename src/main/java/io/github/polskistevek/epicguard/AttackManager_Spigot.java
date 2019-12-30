@@ -1,69 +1,20 @@
-package io.github.polskistevek.epicguard.universal;
+package io.github.polskistevek.epicguard;
 
-import io.github.polskistevek.epicguard.GuardBukkit;
-import org.bukkit.Bukkit;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import io.github.polskistevek.epicguard.manager.DataFileManager;
 import io.github.polskistevek.epicguard.util.MessagesBukkit;
 import io.github.polskistevek.epicguard.util.Notificator;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
-import io.github.polskistevek.epicguard.utils.KickReason;
+import io.github.polskistevek.epicguard.universal.AttackManager;
+import io.github.polskistevek.epicguard.universal.AttackType;
+import io.github.polskistevek.epicguard.util.ChatUtil;
+import io.github.polskistevek.epicguard.util.KickReason;
+import org.bukkit.Bukkit;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AttackManager {
-    public static int joinPerSecond = 0;
-    public static int connectPerSecond = 0;
-    public static int pingPerSecond = 0;
-    public static boolean attackMode = false;
-    public static List<String> rejoinData = new ArrayList<>();
-
-    public enum AttackType {
-        PING,
-        CONNECT,
-        JOIN
-    }
-
-    public static boolean isUnderAttack(){
-        return attackMode;
-    }
-
-    public static void handleDetection(String reason, String nick, String adress) {
+public class AttackManager_Spigot {
+    public static void handleDetection(String nick, String adress, String reason) {
         Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(DataFileManager.blockedBots)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         DataFileManager.blockedBots++;
-    }
-
-    public static void handleAttack(AttackType type) {
-        if (type == AttackType.CONNECT){
-            connectPerSecond++;
-            if (connectPerSecond > GuardBukkit.CONNECT_SPEED) {
-                attackMode = true;
-            }
-        }
-        if (type == AttackType.PING){
-            pingPerSecond++;
-            if (pingPerSecond > GuardBukkit.PING_SPEED) {
-                attackMode = true;
-            }
-        }
-        if (type == AttackType.JOIN){
-            joinPerSecond++;
-            if (joinPerSecond > GuardBukkit.JOIN_SPEED) {
-                attackMode = true;
-            }
-        }
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
-            if (type == AttackType.CONNECT){
-                connectPerSecond--;
-            }
-            if (type == AttackType.PING){
-                pingPerSecond--;
-            }
-            if (type == AttackType.JOIN){
-                joinPerSecond--;
-            }
-        }, 20L);
     }
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {
@@ -107,5 +58,18 @@ public class AttackManager {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
         }
     }
-}
+
+    public static void runTask(AttackType type) {
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
+            if (type == AttackType.CONNECT){
+                AttackManager.joinPerSecond--;
+            }
+            if (type == AttackType.PING){
+                AttackManager.pingPerSecond--;
+            }
+            if (type == AttackType.JOIN){
+                AttackManager.joinPerSecond--;
+            }
+        }, 20L);
+    }
 }
