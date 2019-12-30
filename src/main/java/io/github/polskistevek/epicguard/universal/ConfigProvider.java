@@ -1,6 +1,6 @@
 package io.github.polskistevek.epicguard.universal;
 
-import io.github.polskistevek.epicguard.universal.util.Logger;
+import io.github.polskistevek.epicguard.util.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
