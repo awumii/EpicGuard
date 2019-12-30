@@ -1,4 +1,4 @@
-package io.github.polskistevek.epicguard.utils;
+package io.github.polskistevek.epicguard.universal.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

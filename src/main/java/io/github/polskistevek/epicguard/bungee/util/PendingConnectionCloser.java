@@ -1,10 +1,10 @@
 package io.github.polskistevek.epicguard.bungee.util;
 
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
+import io.github.polskistevek.epicguard.universal.util.KickReason;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
-import io.github.polskistevek.epicguard.utils.KickReason;
-import io.github.polskistevek.epicguard.utils.Logger;
 
 public class PendingConnectionCloser {
     public static void close(PendingConnection connection, KickReason reason) {

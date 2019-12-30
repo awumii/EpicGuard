@@ -1,10 +1,10 @@
 package io.github.polskistevek.epicguard.bungee.util;
 
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
+import io.github.polskistevek.epicguard.universal.util.Downloader;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import io.github.polskistevek.epicguard.bungee.GuardBungee;
-import io.github.polskistevek.epicguard.utils.Downloader;
 
 import java.io.File;
 import java.io.IOException;

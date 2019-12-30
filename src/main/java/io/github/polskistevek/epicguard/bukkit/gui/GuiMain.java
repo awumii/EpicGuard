@@ -1,20 +1,20 @@
 package io.github.polskistevek.epicguard.bukkit.gui;
 
-import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
 import io.github.polskistevek.epicguard.bukkit.manager.BlacklistManager;
 import io.github.polskistevek.epicguard.bukkit.manager.DataFileManager;
 import io.github.polskistevek.epicguard.bukkit.util.ExactTPS;
 import io.github.polskistevek.epicguard.bukkit.util.ItemBuilder;
 import io.github.polskistevek.epicguard.bukkit.util.ServerUtils;
 import io.github.polskistevek.epicguard.bukkit.util.Updater;
+import io.github.polskistevek.epicguard.universal.AttackManager;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,26 +82,26 @@ public class GuiMain {
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (GuardBukkit.ANTIBOT ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (GuardBukkit.FIREWALL ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (ConfigProvider.ANTIBOT ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (ConfigProvider.FIREWALL ? "&aOn" : "&cOff")));
         l8.add(ChatUtil.fix("&8>> &7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&8>> &7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &6Antibot Information &8«").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
-        l9.add(ChatUtil.fix("&7Antibot&8: &b" + GuardBukkit.ANTIBOT));
-        l9.add(ChatUtil.fix("&7Updater&8: &b" + GuardBukkit.UPDATER));
-        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + GuardBukkit.TAB_COMPLETE_BLOCK));
-        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + GuardBukkit.BLOCKED_COMMANDS_ENABLE));
-        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + GuardBukkit.ALLOWED_COMMANDS_ENABLE));
-        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + GuardBukkit.OP_PROTECTION_ENABLE));
-        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + GuardBukkit.PEX_PROTECTION));
-        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + GuardBukkit.AUTO_WHITELIST));
-        l9.add(ChatUtil.fix("&7Firewall&8: &b" + GuardBukkit.FIREWALL));
-        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + GuardBukkit.FORCE_REJOIN));
-        l9.add(ChatUtil.fix("&7IP History&8: &b" + GuardBukkit.IP_HISTORY_ENABLE));
-        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + GuardBukkit.COUNTRY_MODE));
+        l9.add(ChatUtil.fix("&7Antibot&8: &b" + ConfigProvider.ANTIBOT));
+        l9.add(ChatUtil.fix("&7Updater&8: &b" + ConfigProvider.UPDATER));
+        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + ConfigProvider.TAB_COMPLETE_BLOCK));
+        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + ConfigProvider.BLOCKED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + ConfigProvider.ALLOWED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + ConfigProvider.OP_PROTECTION_ENABLE));
+        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + ConfigProvider.PEX_PROTECTION));
+        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + ConfigProvider.AUTO_WHITELIST));
+        l9.add(ChatUtil.fix("&7Firewall&8: &b" + ConfigProvider.FIREWALL));
+        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + ConfigProvider.FORCE_REJOIN));
+        l9.add(ChatUtil.fix("&7IP History&8: &b" + ConfigProvider.IP_HISTORY_ENABLE));
+        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + ConfigProvider.COUNTRY_MODE));
         ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
 
         eq.setItem(10, i1);

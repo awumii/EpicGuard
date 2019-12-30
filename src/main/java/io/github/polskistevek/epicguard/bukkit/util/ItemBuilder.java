@@ -1,5 +1,6 @@
 package io.github.polskistevek.epicguard.bukkit.util;
 
+import io.github.polskistevek.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -7,7 +8,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import io.github.polskistevek.epicguard.utils.ChatUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,13 +1,13 @@
 package io.github.polskistevek.epicguard.bukkit.listener;
 
+import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
-import io.github.polskistevek.epicguard.utils.Logger;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
-import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 
 public class InventoryClickListener implements Listener {
     @EventHandler

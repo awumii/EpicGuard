@@ -1,10 +1,10 @@
 package io.github.polskistevek.epicguard.bungee.listener;
 
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import io.github.polskistevek.epicguard.bungee.GuardBungee;
 
 public class ProxyPingListener implements Listener {
     @EventHandler

@@ -5,13 +5,13 @@ import io.github.polskistevek.epicguard.bungee.listener.ProxyPreLoginListener;
 import io.github.polskistevek.epicguard.bungee.task.AttackClearTask;
 import io.github.polskistevek.epicguard.bungee.util.MessagesBungee;
 import io.github.polskistevek.epicguard.bungee.util.Metrics;
+import io.github.polskistevek.epicguard.universal.util.GeoDataase;
+import io.github.polskistevek.epicguard.universal.util.Logger;
+import io.github.polskistevek.epicguard.universal.util.ServerType;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import io.github.polskistevek.epicguard.utils.GeoAPI;
-import io.github.polskistevek.epicguard.utils.Logger;
-import io.github.polskistevek.epicguard.utils.ServerType;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +59,7 @@ public class GuardBungee extends Plugin {
             MessagesBungee.load();
             AttackClearTask.start();
             Logger.info("Loading GeoIP Database..");
-            new GeoAPI(ServerType.BUNGEE);
+            new GeoDataase(ServerType.BUNGEE);
             Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.");
             new Metrics(this);
             getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());

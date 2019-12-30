@@ -1,13 +1,13 @@
 package io.github.polskistevek.epicguard.bukkit.task;
 
-import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
-import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
-import io.github.polskistevek.epicguard.bukkit.util.Notificator;
-import io.github.polskistevek.epicguard.utils.Logger;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiMain;
 import io.github.polskistevek.epicguard.bukkit.gui.GuiPlayers;
+import io.github.polskistevek.epicguard.bukkit.util.MessagesBukkit;
+import io.github.polskistevek.epicguard.bukkit.util.Notificator;
+import io.github.polskistevek.epicguard.universal.AttackManager;
+import io.github.polskistevek.epicguard.universal.util.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class ActionBarTask implements Runnable {
     private static int animation = 0;

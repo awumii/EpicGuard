@@ -2,7 +2,7 @@ package io.github.polskistevek.epicguard.bukkit.listener;
 
 import io.github.polskistevek.epicguard.bukkit.manager.UserManager;
 import io.github.polskistevek.epicguard.bukkit.object.User;
-import io.github.polskistevek.epicguard.utils.Logger;
+import io.github.polskistevek.epicguard.universal.util.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 

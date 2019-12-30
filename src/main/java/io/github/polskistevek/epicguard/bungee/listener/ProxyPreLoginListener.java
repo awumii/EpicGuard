@@ -1,16 +1,16 @@
 package io.github.polskistevek.epicguard.bungee.listener;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import io.github.polskistevek.epicguard.bungee.GuardBungee;
+import io.github.polskistevek.epicguard.bungee.util.FirewallManager;
+import io.github.polskistevek.epicguard.bungee.util.PendingConnectionCloser;
+import io.github.polskistevek.epicguard.universal.util.GeoDataase;
+import io.github.polskistevek.epicguard.universal.util.KickReason;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import io.github.polskistevek.epicguard.bungee.GuardBungee;
-import io.github.polskistevek.epicguard.bungee.util.PendingConnectionCloser;
-import io.github.polskistevek.epicguard.bungee.util.FirewallManager;
-import io.github.polskistevek.epicguard.utils.GeoAPI;
-import io.github.polskistevek.epicguard.utils.KickReason;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,7 +33,7 @@ public class ProxyPreLoginListener implements Listener {
         if (!GuardBungee.COUNTRY_MODE.equals("DISABLED")) {
             String country = null;
             try {
-                country = GeoAPI.getDatabase().country(c.getAddress().getAddress()).getCountry().getIsoCode();
+                country = GeoDataase.getDatabase().country(c.getAddress().getAddress()).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
                 ex.printStackTrace();
             }

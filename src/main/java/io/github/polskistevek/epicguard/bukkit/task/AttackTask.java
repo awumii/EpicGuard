@@ -1,13 +1,13 @@
 package io.github.polskistevek.epicguard.bukkit.task;
 
-import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
-import io.github.polskistevek.epicguard.bukkit.manager.AttackManager;
+import io.github.polskistevek.epicguard.universal.AttackManager;
+import io.github.polskistevek.epicguard.universal.ConfigProvider;
 
 public class AttackTask implements Runnable {
 
     @Override
     public void run() {
-        if (AttackManager.joinPerSecond < GuardBukkit.JOIN_SPEED && AttackManager.pingPerSecond < GuardBukkit.PING_SPEED && AttackManager.connectPerSecond < GuardBukkit.CONNECT_SPEED) {
+        if (AttackManager.joinPerSecond < ConfigProvider.JOIN_SPEED && AttackManager.pingPerSecond < ConfigProvider.PING_SPEED && AttackManager.connectPerSecond < ConfigProvider.CONNECT_SPEED) {
             AttackManager.attackMode = false;
         }
     }

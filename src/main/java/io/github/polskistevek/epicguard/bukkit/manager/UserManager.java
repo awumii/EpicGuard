@@ -1,7 +1,7 @@
 package io.github.polskistevek.epicguard.bukkit.manager;
 
-import org.bukkit.entity.Player;
 import io.github.polskistevek.epicguard.bukkit.object.User;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;

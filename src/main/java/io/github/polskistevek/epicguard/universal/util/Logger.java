@@ -1,4 +1,4 @@
-package io.github.polskistevek.epicguard.utils;
+package io.github.polskistevek.epicguard.universal.util;
 
 import io.github.polskistevek.epicguard.bukkit.GuardBukkit;
 import io.github.polskistevek.epicguard.bungee.GuardBungee;

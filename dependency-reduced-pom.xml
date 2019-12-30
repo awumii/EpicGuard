@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.polskistevek</groupId>
   <artifactId>EpicGuard</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1</version>
   <build>
     <resources>
       <resource>
