@@ -154,7 +154,7 @@ public class GuardBukkit extends JavaPlugin {
         CustomFile brandConfig = FileManager.getFile(this.getDataFolder() + "/brand.yml");
         if (!brandConfig.isExisting()){
             List<String> blockedBrandDefault = new ArrayList<>();
-            blockedBrandDefault.add("forge");
+            blockedBrandDefault.add("some_blocked_brand");
             brandConfig.getConfig().set("channel-verification.enabled", true);
             brandConfig.getConfig().set("channel-verification.punish", "kick {PLAYER} &cException occurred in your connection, please rejoin!");
             brandConfig.getConfig().set("blocked-brands.enabled", true);
