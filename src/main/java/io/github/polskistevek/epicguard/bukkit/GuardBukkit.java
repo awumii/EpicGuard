@@ -164,8 +164,11 @@ public class GuardBukkit extends JavaPlugin {
         }
 
         Messenger messenger = Bukkit.getMessenger();
-        messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
-        messenger.registerIncomingPluginChannel(this, "minecraft:brand", new BrandPluginMessageListener());
+        if (NMSUtil.isOldVersion()) {
+            messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
+        } else {
+            messenger.registerIncomingPluginChannel(this, "minecraft:brand", new BrandPluginMessageListener());
+        }
     }
 
     private void drawLogo() {

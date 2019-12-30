@@ -2,6 +2,7 @@ package io.github.polskistevek.epicguard.bukkit.listener;
 
 import io.github.polskistevek.epicguard.bukkit.manager.*;
 import io.github.polskistevek.epicguard.bukkit.object.CustomFile;
+import io.github.polskistevek.epicguard.bukkit.util.nms.NMSUtil;
 import io.github.polskistevek.epicguard.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,8 +24,11 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         try {
             Player p = e.getPlayer();
-            BrandPluginMessageListener.addChannel(p, "MC|BRAND");
-            BrandPluginMessageListener.addChannel(p, "MINECRAFT:BRAND");
+            if (NMSUtil.isOldVersion()) {
+                BrandPluginMessageListener.addChannel(p, "MC|BRAND");
+            } else {
+                BrandPluginMessageListener.addChannel(p, "MINECRAFT:BRAND");
+            }
 
             String adress = p.getAddress().getAddress().getHostAddress();
             UserManager.addUser(p);
@@ -60,7 +64,7 @@ public class PlayerJoinListener implements Listener {
                             }
                         }
                     }
-                }, 40L);
+                }, 20L);
             }
 
             // Auto whitelisting
