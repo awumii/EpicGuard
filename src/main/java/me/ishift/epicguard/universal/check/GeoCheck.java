@@ -1,24 +1,23 @@
 package me.ishift.epicguard.universal.check;
 
-import me.ishift.epicguard.bukkit.ConfigProvider;
+import me.ishift.epicguard.universal.Config;
 
 public class GeoCheck {
     /**
-     *
      * @param country country ISO Code (String).
      * @return false if not detected, true if detected.
      */
     public static boolean check(String country) {
-        if (ConfigProvider.COUNTRY_MODE.equals("DISABLED")) {
+        if (Config.COUNTRY_MODE.equals("DISABLED")) {
             return false;
         }
-        if (ConfigProvider.COUNTRY_MODE.equals("WHITELIST")) {
-            if (!ConfigProvider.COUNTRIES.contains(country)) {
+        if (Config.COUNTRY_MODE.equals("WHITELIST")) {
+            if (!Config.COUNTRIES.contains(country)) {
                 return true;
             }
         }
-        if (ConfigProvider.COUNTRY_MODE.equals("BLACKLIST")) {
-            return ConfigProvider.COUNTRIES.contains(country);
+        if (Config.COUNTRY_MODE.equals("BLACKLIST")) {
+            return Config.COUNTRIES.contains(country);
         }
         return false;
     }

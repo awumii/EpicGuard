@@ -11,13 +11,13 @@ public class GeoAPI {
     private static DatabaseReader dbReader;
     private ServerType type;
 
-    public static DatabaseReader getDatabase() {
-        return dbReader;
-    }
-
     public GeoAPI(ServerType type) {
         this.type = type;
         this.create();
+    }
+
+    public static DatabaseReader getDatabase() {
+        return dbReader;
     }
 
     private void create() {

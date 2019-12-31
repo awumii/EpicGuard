@@ -10,18 +10,18 @@ public class CustomFile {
     public File file;
     public FileConfiguration configuration;
 
-    public CustomFile(String file){
+    public CustomFile(String file) {
         this.file = new File(file);
         this.configuration = YamlConfiguration.loadConfiguration(this.file);
     }
 
-    public boolean isExisting(){
+    public boolean isExisting() {
         return file.exists();
     }
 
     public void create() {
         try {
-            if (!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
             }
         } catch (Exception e) {

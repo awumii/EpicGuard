@@ -43,12 +43,12 @@ public class GuardBungee extends Plugin {
             }
 
             File dir1 = new File(this.getDataFolder() + "/logs");
-            if (!dir1.exists()){
+            if (!dir1.exists()) {
                 dir1.mkdir();
             }
 
             File dir3 = new File(this.getDataFolder() + "/data");
-            if (!dir3.exists()){
+            if (!dir3.exists()) {
                 dir3.mkdir();
             }
 

@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.manager;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.KickReason;
 import org.bukkit.Bukkit;
@@ -18,49 +19,43 @@ public class AttackManager {
     public static boolean attackMode = false;
     public static List<String> rejoinData = new ArrayList<>();
 
-    public enum AttackType {
-        PING,
-        CONNECT,
-        JOIN
-    }
-
-    public static boolean isUnderAttack(){
+    public static boolean isUnderAttack() {
         return attackMode;
     }
 
-    public static void handleDetection(String reason, String nick, String adress) {
+    public static void handleDetection(String reason, String nick, String adress, KickReason kickReason, boolean blacklist) {
         Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(DataFileManager.blockedBots)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         DataFileManager.blockedBots++;
     }
 
     public static void handleAttack(AttackType type) {
-        if (type == AttackType.CONNECT){
+        if (type == AttackType.CONNECT) {
             connectPerSecond++;
-            if (connectPerSecond > GuardBukkit.CONNECT_SPEED) {
+            if (connectPerSecond > Config.CONNECT_SPEED) {
                 attackMode = true;
             }
         }
-        if (type == AttackType.PING){
+        if (type == AttackType.PING) {
             pingPerSecond++;
-            if (pingPerSecond > GuardBukkit.PING_SPEED) {
+            if (pingPerSecond > Config.PING_SPEED) {
                 attackMode = true;
             }
         }
-        if (type == AttackType.JOIN){
+        if (type == AttackType.JOIN) {
             joinPerSecond++;
-            if (joinPerSecond > GuardBukkit.JOIN_SPEED) {
+            if (joinPerSecond > Config.JOIN_SPEED) {
                 attackMode = true;
             }
         }
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
-            if (type == AttackType.CONNECT){
+            if (type == AttackType.CONNECT) {
                 connectPerSecond--;
             }
-            if (type == AttackType.PING){
+            if (type == AttackType.PING) {
                 pingPerSecond--;
             }
-            if (type == AttackType.JOIN){
+            if (type == AttackType.JOIN) {
                 joinPerSecond--;
             }
         }, 20L);
@@ -106,5 +101,11 @@ public class AttackManager {
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
         }
+    }
+
+    public enum AttackType {
+        PING,
+        CONNECT,
+        JOIN
     }
 }

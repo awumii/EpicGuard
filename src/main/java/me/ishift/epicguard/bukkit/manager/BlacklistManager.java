@@ -1,6 +1,6 @@
 package me.ishift.epicguard.bukkit.manager;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.universal.Config;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class BlacklistManager {
     public static void add(String adress) {
         IP_BL.add(adress);
         DataFileManager.get().set("blacklist", IP_BL);
-        if (GuardBukkit.FIREWALL) {
+        if (Config.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(GuardBukkit.FIREWALL_BL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -33,9 +33,9 @@ public class BlacklistManager {
     public static void addWhitelist(String adress) {
         IP_WL.add(adress);
         DataFileManager.get().set("whitelist", IP_WL);
-        if (GuardBukkit.FIREWALL) {
+        if (Config.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(GuardBukkit.FIREWALL_WL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

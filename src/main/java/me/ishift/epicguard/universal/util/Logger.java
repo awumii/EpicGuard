@@ -18,25 +18,6 @@ public class Logger {
         this.create();
     }
 
-    private void create() {
-        try {
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-            String date = sdf.format(cal.getTime());
-            if (this.type == ServerType.SPIGOT) {
-                file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
-            }
-            if (this.type == ServerType.BUNGEE) {
-                file = new File(GuardBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-        } catch (Exception e) {
-            throwException(e);
-        }
-    }
-
     public static void debug(String message) {
         log(message, true);
     }
@@ -80,5 +61,24 @@ public class Logger {
         info("<> https://github.com/PolskiStevek/EpicGuard/issues");
         info(" ");
         info("#######  EPICGUARD ERROR LOG #######");
+    }
+
+    private void create() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+            String date = sdf.format(cal.getTime());
+            if (this.type == ServerType.SPIGOT) {
+                file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+            }
+            if (this.type == ServerType.BUNGEE) {
+                file = new File(GuardBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (Exception e) {
+            throwException(e);
+        }
     }
 }

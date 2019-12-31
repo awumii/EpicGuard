@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.gui;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
@@ -82,26 +81,26 @@ public class GuiMain {
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (GuardBukkit.ANTIBOT ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (GuardBukkit.FIREWALL ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (Config.ANTIBOT ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (Config.FIREWALL ? "&aOn" : "&cOff")));
         l8.add(ChatUtil.fix("&8>> &7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&8>> &7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &6Antibot Information &8«").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
-        l9.add(ChatUtil.fix("&7Antibot&8: &b" + GuardBukkit.ANTIBOT));
-        l9.add(ChatUtil.fix("&7Updater&8: &b" + GuardBukkit.UPDATER));
-        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + GuardBukkit.TAB_COMPLETE_BLOCK));
-        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + GuardBukkit.BLOCKED_COMMANDS_ENABLE));
-        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + GuardBukkit.ALLOWED_COMMANDS_ENABLE));
-        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + GuardBukkit.OP_PROTECTION_ENABLE));
-        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + GuardBukkit.PEX_PROTECTION));
-        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + GuardBukkit.AUTO_WHITELIST));
-        l9.add(ChatUtil.fix("&7Firewall&8: &b" + GuardBukkit.FIREWALL));
-        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + GuardBukkit.FORCE_REJOIN));
-        l9.add(ChatUtil.fix("&7IP History&8: &b" + GuardBukkit.IP_HISTORY_ENABLE));
-        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + GuardBukkit.COUNTRY_MODE));
+        l9.add(ChatUtil.fix("&7Antibot&8: &b" + Config.ANTIBOT));
+        l9.add(ChatUtil.fix("&7Updater&8: &b" + Config.UPDATER));
+        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + Config.TAB_COMPLETE_BLOCK));
+        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + Config.BLOCKED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + Config.ALLOWED_COMMANDS_ENABLE));
+        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + Config.OP_PROTECTION_ENABLE));
+        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + Config.PEX_PROTECTION));
+        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + Config.AUTO_WHITELIST));
+        l9.add(ChatUtil.fix("&7Firewall&8: &b" + Config.FIREWALL));
+        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + Config.FORCE_REJOIN));
+        l9.add(ChatUtil.fix("&7IP History&8: &b" + Config.IP_HISTORY_ENABLE));
+        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + Config.COUNTRY_MODE));
         ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
 
         eq.setItem(10, i1);

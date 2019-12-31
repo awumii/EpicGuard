@@ -1,18 +1,17 @@
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
+import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.check.GeoCheck;
+import me.ishift.epicguard.universal.check.ProxyCheck;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-
-import java.net.URL;
-import java.util.Scanner;
 
 public class PlayerPreLoginListener implements Listener {
 
@@ -31,47 +30,27 @@ public class PlayerPreLoginListener implements Listener {
             Logger.debug(" # DETECTION LOG:");
             AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
 
-            // Country detection
-            if (!GuardBukkit.COUNTRY_MODE.equals("DISABLED")) {
-                if (GuardBukkit.COUNTRY_MODE.equals("WHITELIST")) {
-                    if (!GuardBukkit.COUNTRIES.contains(country)) {
-                        AttackManager.handleDetection("GEO Check", name, adress);
-                        BlacklistManager.add(adress);
-                        AttackManager.closeConnection(event, KickReason.GEO);
-                        Logger.debug("- GEO Check - FAILED");
-                        return;
-                    }
-                    Logger.debug("+ GEO Check - Passed");
-                }
-
-                if (GuardBukkit.COUNTRY_MODE.equals("BLACKLIST")) {
-                    if (GuardBukkit.COUNTRIES.contains(country)) {
-                        AttackManager.handleDetection("GEO Check", name, adress);
-                        BlacklistManager.add(adress);
-                        AttackManager.closeConnection(event, KickReason.GEO);
-                        Logger.debug("- GEO Check - FAILED");
-                        return;
-                    }
-                    Logger.debug("+ GEO Check - Passed");
-                }
-
+            if (BlacklistManager.checkWhitelist(adress)) {
+                Logger.debug("+ Whitelist Check - Passed");
+                return;
             }
 
-            if (!GuardBukkit.ANTIBOT) {
+            if (GeoCheck.check(country)) {
+                AttackManager.handleDetection("GEO Check", name, adress);
+                BlacklistManager.add(adress);
+                AttackManager.closeConnection(event, KickReason.GEO);
+                Logger.debug("- GEO Check - FAILED");
+            }
+
+            if (!Config.ANTIBOT) {
                 return;
             }
 
             // Check attack speed.
-            if (AttackManager.isUnderAttack()){
+            if (AttackManager.isUnderAttack()) {
                 AttackManager.closeConnection(event, KickReason.ATTACK);
                 AttackManager.handleDetection("Speed Check", name, adress);
                 Logger.debug("- ATTACK_SPEED Check - FAILED");
-                return;
-            }
-
-            // Check if player is on whitelist
-            if (BlacklistManager.checkWhitelist(adress)) {
-                Logger.debug("+ Whitelist Check - Passed");
                 return;
             }
 
@@ -83,7 +62,7 @@ public class PlayerPreLoginListener implements Listener {
                 return;
             }
 
-            if (GuardBukkit.FORCE_REJOIN){
+            if (Config.FORCE_REJOIN) {
                 if (!AttackManager.rejoinData.contains(name)) {
                     AttackManager.handleDetection("Force Rejoin", name, adress);
                     Logger.debug("- Force Rejoin - FAILED");
@@ -93,13 +72,7 @@ public class PlayerPreLoginListener implements Listener {
                 }
             }
 
-            // Variables for proxy detection
-            final String url1 = GuardBukkit.ANTIBOT_QUERY_1.replace("{IP}", adress);
-            final String url2 = GuardBukkit.ANTIBOT_QUERY_2.replace("{IP}", adress);
-            final String url3 = GuardBukkit.ANTIBOT_QUERY_3.replace("{IP}", adress);
-
-            // Checking for Proxy/VPN
-            if (this.checkUrl(url1) || this.checkUrl(url2) || this.checkUrl(url3)) {
+            if (ProxyCheck.check(adress)) {
                 AttackManager.closeConnection(event, KickReason.PROXY);
                 BlacklistManager.add(adress);
                 AttackManager.handleDetection("Proxy Check", name, adress);
@@ -108,27 +81,5 @@ public class PlayerPreLoginListener implements Listener {
         } catch (Exception e) {
             Logger.throwException(e);
         }
-    }
-
-    private boolean checkUrl(String url) {
-        try {
-            final Scanner s = new Scanner(new URL(url).openStream());
-            Logger.debug("# Checking proxy from URL: " + url);
-            if (s.hasNextLine()) {
-                while (s.hasNext()) {
-                    if (GuardBukkit.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
-                        Logger.debug("# Detected Proxy, URL: " + url);
-                        return true;
-                    }
-                }
-                Logger.debug("# Proxy is not detected from: " + url);
-                return false;
-            }
-        } catch (Exception e) {
-            Logger.debug("EXCEPTION WHILE CHECKING DATA FROM URL: " + url);
-            Logger.throwException(e);
-            return false;
-        }
-        return false;
     }
 }
