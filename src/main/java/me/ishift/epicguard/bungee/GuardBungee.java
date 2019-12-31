@@ -5,15 +5,12 @@ import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
 import me.ishift.epicguard.bungee.task.DisplayTask;
-import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.ServerType;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -29,6 +26,7 @@ public class GuardBungee extends Plugin {
     public static Plugin plugin;
     public static boolean display = false;
     public static boolean log = true;
+    public static boolean status = false;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -89,6 +87,7 @@ public class GuardBungee extends Plugin {
             Config.COUNTRY_MODE = cfg.getString("countries.mode");
             Config.ANTIBOT = cfg.getBoolean("antibot.enabled");
             Config.ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
+            Config.NAME_CONTAINS = cfg.getStringList("antibot.name-contains");
         } catch (Exception e) {
             Logger.throwException(e);
         }

@@ -16,6 +16,7 @@ public class Config {
     public static String ANTIBOT_QUERY_3;
     public static List<String> ANTIBOT_QUERY_CONTAINS;
     public static List<String> COUNTRIES;
+    public static List<String> NAME_CONTAINS;
     public static String COUNTRY_MODE;
     public static boolean ANTIBOT;
     public static boolean UPDATER;

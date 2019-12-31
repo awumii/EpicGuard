@@ -15,8 +15,8 @@ public class MessagesBukkit {
     public static List<String> MESSAGE_KICK_ATTACK;
     public static List<String> MESSAGE_KICK_BLACKLIST;
     public static List<String> MESSAGE_KICK_VERIFY;
+    public static List<String> MESSAGE_KICK_NAMECONTAINS;
     public static String ACTIONBAR_ATTACK;
-    public static String ACTIONBAR_NO_ATTACK;
     public static String ATTACK_TITLE;
     public static String ATTACK_SUBTITLE;
     public static String HISTORY_NEW;
@@ -41,8 +41,8 @@ public class MessagesBukkit {
             MESSAGE_KICK_ATTACK = cfg.getStringList("kick-messages.attack");
             MESSAGE_KICK_BLACKLIST = cfg.getStringList("kick-messages.blacklist");
             MESSAGE_KICK_VERIFY = cfg.getStringList("kick-messages.rejoin");
+            MESSAGE_KICK_NAMECONTAINS = cfg.getStringList("kick-messages.rejoin");
             ACTIONBAR_ATTACK = cfg.getString("actionbar.attack");
-            ACTIONBAR_NO_ATTACK = cfg.getString("actionbar.no-attack");
             ATTACK_TITLE = cfg.getString("attack-title.title");
             ATTACK_SUBTITLE = cfg.getString("attack-title.subtitle");
             HISTORY_NEW = cfg.getString("other.history-new");

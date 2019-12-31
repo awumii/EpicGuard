@@ -8,7 +8,7 @@ import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.FileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.CustomFile;
-import me.ishift.epicguard.bukkit.task.ActionBarTask;
+import me.ishift.epicguard.bukkit.task.GuiRefreshTask;
 import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.SaveTask;
 import me.ishift.epicguard.bukkit.util.ExactTPS;
@@ -37,6 +37,44 @@ public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
     public static File dataFolder;
     public static FileConfiguration config;
+
+    public static void loadConfig() {
+        try {
+            Config.FIREWALL = config.getBoolean("firewall");
+            Config.FIREWALL_BL = config.getString("firewall.command-blacklist");
+            Config.FIREWALL_WL = config.getString("firewall.command-whitelist");
+            Config.CONNECT_SPEED = config.getInt("speed.connection");
+            Config.PING_SPEED = config.getInt("speed.ping-speed");
+            Config.AUTO_WHITELIST = config.getBoolean("auto-whitelist.enabled");
+            Config.AUTO_WHITELIST_TIME = config.getInt("auto-whitelist.time");
+            Config.ANTIBOT_QUERY_1 = config.getString("antibot.checkers.1.adress");
+            Config.ANTIBOT_QUERY_2 = config.getString("antibot.checkers.2.adress");
+            Config.ANTIBOT_QUERY_3 = config.getString("antibot.checkers.3.adress");
+            Config.ANTIBOT_QUERY_CONTAINS = config.getStringList("antibot.checkers.responses");
+            Config.COUNTRIES = config.getStringList("countries.list");
+            Config.COUNTRY_MODE = config.getString("countries.mode");
+            Config.ANTIBOT = config.getBoolean("antibot.enabled");
+            Config.UPDATER = config.getBoolean("updater");
+            Config.ATTACK_TIMER = config.getLong("speed.attack-timer-reset");
+            Config.JOIN_SPEED = config.getInt("speed.join-speed");
+            Config.TAB_COMPLETE_BLOCK = config.getBoolean("fully-block-tab-complete");
+            Config.BLOCKED_COMMANDS = config.getStringList("command-protection.list");
+            Config.ALLOWED_COMMANDS = config.getStringList("allowed-commands.list");
+            Config.OP_PROTECTION_LIST = config.getStringList("op-protection.list");
+            Config.OP_PROTECTION_ALERT = config.getString("op-protection.alert");
+            Config.OP_PROTECTION_COMMAND = config.getString("op-protection.command");
+            Config.ALLOWED_COMMANDS_BYPASS = config.getString("allowed-commands.bypass");
+            Config.BLOCKED_COMMANDS_ENABLE = config.getBoolean("command-protection.enabled");
+            Config.ALLOWED_COMMANDS_ENABLE = config.getBoolean("allowed-commands.enabled");
+            Config.OP_PROTECTION_ENABLE = config.getBoolean("op-protection.enabled");
+            Config.IP_HISTORY_ENABLE = config.getBoolean("ip-history.enabled");
+            Config.FORCE_REJOIN = config.getBoolean("antibot.force-rejoin");
+            Config.PEX_PROTECTION = config.getBoolean("op-protection.pex-protection");
+            Config.NAME_CONTAINS = config.getStringList("antibot.name-contains");
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -80,43 +118,6 @@ public class GuardBukkit extends JavaPlugin {
         }
     }
 
-    public static void loadConfig() {
-        try {
-            Config.FIREWALL = config.getBoolean("firewall");
-            Config.FIREWALL_BL = config.getString("firewall.command-blacklist");
-            Config.FIREWALL_WL = config.getString("firewall.command-whitelist");
-            Config.CONNECT_SPEED = config.getInt("speed.connection");
-            Config.PING_SPEED = config.getInt("speed.ping-speed");
-            Config.AUTO_WHITELIST = config.getBoolean("auto-whitelist.enabled");
-            Config.AUTO_WHITELIST_TIME = config.getInt("auto-whitelist.time");
-            Config.ANTIBOT_QUERY_1 = config.getString("antibot.checkers.1.adress");
-            Config.ANTIBOT_QUERY_2 = config.getString("antibot.checkers.2.adress");
-            Config.ANTIBOT_QUERY_3 = config.getString("antibot.checkers.3.adress");
-            Config.ANTIBOT_QUERY_CONTAINS = config.getStringList("antibot.checkers.responses");
-            Config.COUNTRIES = config.getStringList("countries.list");
-            Config.COUNTRY_MODE = config.getString("countries.mode");
-            Config.ANTIBOT = config.getBoolean("antibot.enabled");
-            Config.UPDATER = config.getBoolean("updater");
-            Config.ATTACK_TIMER = config.getLong("speed.attack-timer-reset");
-            Config.JOIN_SPEED = config.getInt("speed.join-speed");
-            Config.TAB_COMPLETE_BLOCK = config.getBoolean("fully-block-tab-complete");
-            Config.BLOCKED_COMMANDS = config.getStringList("command-protection.list");
-            Config.ALLOWED_COMMANDS = config.getStringList("allowed-commands.list");
-            Config.OP_PROTECTION_LIST = config.getStringList("op-protection.list");
-            Config.OP_PROTECTION_ALERT = config.getString("op-protection.alert");
-            Config.OP_PROTECTION_COMMAND = config.getString("op-protection.command");
-            Config.ALLOWED_COMMANDS_BYPASS = config.getString("allowed-commands.bypass");
-            Config.BLOCKED_COMMANDS_ENABLE = config.getBoolean("command-protection.enabled");
-            Config.ALLOWED_COMMANDS_ENABLE = config.getBoolean("allowed-commands.enabled");
-            Config.OP_PROTECTION_ENABLE = config.getBoolean("op-protection.enabled");
-            Config.IP_HISTORY_ENABLE = config.getBoolean("ip-history.enabled");
-            Config.FORCE_REJOIN = config.getBoolean("antibot.force-rejoin");
-            Config.PEX_PROTECTION = config.getBoolean("op-protection.pex-protection");
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
     private void registerListeners() {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(), this);
@@ -131,7 +132,7 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ActionBarTask(), 0L, 20L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new GuiRefreshTask(), 0L, 40L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 0L, Config.ATTACK_TIMER);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 0L, 5000L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ExactTPS(), 100L, 1L);

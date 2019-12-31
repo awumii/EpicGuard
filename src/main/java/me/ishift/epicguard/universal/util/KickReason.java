@@ -5,5 +5,6 @@ public enum KickReason {
     PROXY,
     ATTACK,
     BLACKLIST,
-    VERIFY
+    VERIFY,
+    NAMECONTAINS,
 }
