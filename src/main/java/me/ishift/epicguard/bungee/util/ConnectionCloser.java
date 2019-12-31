@@ -6,7 +6,7 @@ import me.ishift.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 
-public class PendingConnectionCloser {
+public class ConnectionCloser {
     public static void close(PendingConnection connection, KickReason reason) {
         Logger.info("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason);
         if (reason == KickReason.GEO) {

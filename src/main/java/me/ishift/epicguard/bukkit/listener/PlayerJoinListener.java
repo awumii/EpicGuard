@@ -8,6 +8,7 @@ import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
+import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
@@ -34,19 +35,19 @@ public class PlayerJoinListener implements Listener {
             String adress = p.getAddress().getAddress().getHostAddress();
             UserManager.addUser(p);
             Updater.notify(p);
-            AttackManager.handleAttack(AttackManager.AttackType.JOIN);
+            AttackManager.handleAttack(AttackType.JOIN);
 
             User u = UserManager.getUser(p);
             // IP History manager
             if (Config.IP_HISTORY_ENABLE) {
-                List<String> history = DataFileManager.get().getStringList("history." + p.getName());
+                List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
                 if (!history.contains(adress)) {
                     if (!history.isEmpty()) {
                         Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
                     }
                     history.add(adress);
                 }
-                DataFileManager.get().set("history." + p.getName(), history);
+                DataFileManager.getDataFile().set("history." + p.getName(), history);
                 u.setAdresses(history);
             }
 

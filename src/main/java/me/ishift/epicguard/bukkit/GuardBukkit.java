@@ -19,6 +19,7 @@ import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.util.LogoPrinter;
 import me.ishift.epicguard.universal.util.ServerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,10 +30,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
@@ -44,16 +43,16 @@ public class GuardBukkit extends JavaPlugin {
         try {
             final long ms = System.currentTimeMillis();
             dataFolder = this.getDataFolder();
-            config = YamlConfiguration.loadConfiguration(new File(dataFolder + "/config.yml"));
             this.saveDefaultConfig();
+            config = YamlConfiguration.loadConfiguration(new File(dataFolder + "/config.yml"));
             this.createDirectories();
             loadConfig();
             new Logger(ServerType.SPIGOT);
-            this.drawLogo();
+            LogoPrinter.print();
             new GeoAPI(ServerType.SPIGOT);
             new Metrics(this);
             new NMSUtil();
-            DataFileManager.load();
+            new DataFileManager(dataFolder + "/data/data_flat.yml");
             DataFileManager.save();
             MessagesBukkit.load();
             Logger.info("NMS Version: " + NMSUtil.getVersion());
@@ -83,7 +82,6 @@ public class GuardBukkit extends JavaPlugin {
 
     public static void loadConfig() {
         try {
-            Logger.info("Loading configuration...");
             Config.FIREWALL = config.getBoolean("firewall");
             Config.FIREWALL_BL = config.getString("firewall.command-blacklist");
             Config.FIREWALL_WL = config.getString("firewall.command-whitelist");
@@ -181,19 +179,6 @@ public class GuardBukkit extends JavaPlugin {
             messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
         } else {
             messenger.registerIncomingPluginChannel(this, "minecraft:brand", new BrandPluginMessageListener());
-        }
-    }
-
-    private void drawLogo() {
-        try {
-            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
-            while (scanner.hasNextLine()) {
-                Logger.info(scanner.nextLine());
-            }
-            scanner.close();
-            Logger.info("Created by iShift.");
-        } catch (Exception e) {
-            Logger.throwException(e);
         }
     }
 }

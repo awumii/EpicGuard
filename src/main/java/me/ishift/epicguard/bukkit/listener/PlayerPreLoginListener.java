@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.listener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
+import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
@@ -28,7 +29,7 @@ public class PlayerPreLoginListener implements Listener {
             Logger.debug("Country: " + country);
             Logger.debug(" ");
             Logger.debug(" # DETECTION LOG:");
-            AttackManager.handleAttack(AttackManager.AttackType.CONNECT);
+            AttackManager.handleAttack(AttackType.CONNECT);
 
             if (BlacklistManager.checkWhitelist(adress)) {
                 Logger.debug("+ Whitelist Check - Passed");

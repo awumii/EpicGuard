@@ -1,0 +1,86 @@
+#
+#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
+#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
+#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
+#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
+#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
+#
+# Thank you for downloading my plugin!
+# SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
+# My Discord: PolskiStevek#2198
+# Use this plugin also on spigot servers, for more features!
+
+###############################
+##           Countries       ##
+###############################
+
+countries:
+  # This has three values:
+  # WHITELIST = countries listed below CAN join, every other can't.
+  # BLACKLIST = countries listed below CAN'T join, every other can.
+  # DISABLED = disable this module.
+  mode: WHITELIST
+  # List of country codes:
+  # https://dev.maxmind.com/geoip/legacy/codes/iso3166/
+  list:
+    - GB
+    - DE
+    - PL
+
+###############################
+##           AntiBot         ##
+###############################
+
+antibot:
+  # You can fuly disable ALL antibot modules if you don't want it.
+  # Disabling antibot will not disable country checking (look above)
+  enabled: true
+  # New players will need to rejoin server to play!
+  force-rejoin: true
+  # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
+  # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
+  # "http://proxycheck.io/v2/{IP}?key=API_KEY&vpn=1"
+  checkers:
+    '1':
+      adress: "http://proxycheck.io/v2/{IP}&vpn=1"
+    '2':
+      adress: "http://www.stopforumspam.com/api?ip={IP}"
+    '3':
+      adress: "https://ip.teoh.io/{IP}"
+    # What should the return message of each page contain?
+    responses:
+      - "yes"
+      - "true"
+      - "Bad"
+
+###############################
+##           Advanced        ##
+###############################
+# You SHOULD configure it, to fit your server's player amount.
+# If you have small server, don't change it, or change it to smaller values
+
+speed:
+  # How many connections per second should be made, to block connections to the server.
+  # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
+  # If deny-join is triggered, Proxy/VPN checking is skipped.
+  connection: 7
+  # How many pings per second should be made to block connections to the server.
+  ping-speed: 10
+  # How many successful joins per second should be made to block connections to the server
+  join-speed: 5
+  # Time (in ticks) before the antibot will disable.
+  attack-timer-reset: 800
+
+###############################
+##           Firewall        ##
+###############################
+
+firewall:
+  # Don't use on free / shared hosting!
+  # You need private machine with IPTables (or something else) installed.
+  enabled: false
+  # Executed in /guard blacklist <player> OR while player was detected as a BOT
+  command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
+  # Executed in /guard whitelist <player>
+  command-whitelist: "iptables -D INPUT -s {IP} -j DROP"

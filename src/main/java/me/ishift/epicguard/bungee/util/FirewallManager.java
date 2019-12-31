@@ -1,14 +1,19 @@
 package me.ishift.epicguard.bungee.util;
 
-import me.ishift.epicguard.bungee.GuardBungee;
-
+import me.ishift.epicguard.universal.Config;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirewallManager {
+    public static List<String> blackList = new ArrayList<>();
+    public static List<String> whiiteList = new ArrayList<>();
+
     public static void blacklist(String adress) {
-        if (GuardBungee.FIREWALL) {
+        blackList.add(adress);
+        if (Config.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(GuardBungee.FIREWALL_BL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -16,9 +21,10 @@ public class FirewallManager {
     }
 
     public static void whitelist(String adress) {
-        if (GuardBungee.FIREWALL) {
+        whiiteList.add(adress);
+        if (Config.FIREWALL) {
             try {
-                Runtime.getRuntime().exec(GuardBungee.FIREWALL_WL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

@@ -5,6 +5,7 @@ import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
 import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.bungee.util.Metrics;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.ServerType;
@@ -17,22 +18,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
     public static Plugin plugin;
-    public static String FIREWALL_BL;
-    public static String FIREWALL_WL;
-    public static boolean FIREWALL;
-    public static int CPS_ACTIVATE;
-    public static int CPS_PING_ACTIVATE;
-    public static String ANTIBOT_QUERY_1;
-    public static String ANTIBOT_QUERY_2;
-    public static String ANTIBOT_QUERY_3;
-    public static List<String> ANTIBOT_QUERY_CONTAINS;
-    public static List<String> COUNTRIES;
-    public static String COUNTRY_MODE;
-    public static boolean ANTIBOT;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -42,12 +31,12 @@ public class GuardBungee extends Plugin {
                 this.getDataFolder().mkdir();
             }
 
-            File dir1 = new File(this.getDataFolder() + "/logs");
+            final File dir1 = new File(this.getDataFolder() + "/logs");
             if (!dir1.exists()) {
                 dir1.mkdir();
             }
 
-            File dir3 = new File(this.getDataFolder() + "/data");
+            final File dir3 = new File(this.getDataFolder() + "/data");
             if (!dir3.exists()) {
                 dir3.mkdir();
             }
@@ -55,45 +44,45 @@ public class GuardBungee extends Plugin {
             plugin = this;
             new Logger(ServerType.BUNGEE);
             Logger.info("Starting plugin...");
-            loadConfig();
+            this.loadConfig();
             MessagesBungee.load();
             AttackClearTask.start();
-            Logger.info("Loading GeoIP Database..");
             new GeoAPI(ServerType.BUNGEE);
-            Logger.info("Error with GeoIP Database. Do not report this, this is not a bug. Download database at resource site.");
             new Metrics(this);
-            getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
-            getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
+            this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
+            this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
+            this.getProxy().getScheduler().schedule(this, new AttackClearTask(), Config.ATTACK_TIMER, TimeUnit.SECONDS);
         } catch (IOException e) {
             Logger.throwException(e);
         }
     }
 
     private void loadConfig() {
-        File file = new File(getDataFolder(), "config.yml");
-        if (!file.exists()) {
-            try (InputStream in = getResourceAsStream("config.yml")) {
-                Files.copy(in, file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         try {
-            Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
-            FIREWALL = cfg.getBoolean("firewall");
-            FIREWALL_BL = cfg.getString("firewall.command-blacklist");
-            FIREWALL_WL = cfg.getString("firewall.command-whitelist");
-            CPS_ACTIVATE = cfg.getInt("speed.connection");
-            CPS_PING_ACTIVATE = cfg.getInt("speed.ping-speed");
-            ANTIBOT_QUERY_1 = cfg.getString("antibot.checkers.1.adress");
-            ANTIBOT_QUERY_2 = cfg.getString("antibot.checkers.2.adress");
-            ANTIBOT_QUERY_3 = cfg.getString("antibot.checkers.3.adress");
-            ANTIBOT_QUERY_CONTAINS = cfg.getStringList("antibot.checkers.responses");
-            COUNTRIES = cfg.getStringList("countries.list");
-            COUNTRY_MODE = cfg.getString("countries.mode");
-            ANTIBOT = cfg.getBoolean("antibot.enabled");
-        } catch (IOException e) {
-            e.printStackTrace();
+            final File file = new File(getDataFolder(), "config_bungee.yml");
+            if (!file.exists()) {
+                try (InputStream in = getResourceAsStream("config_bungee.yml")) {
+                    Files.copy(in, file.toPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            final Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config_bungee.yml"));
+            Config.FIREWALL = cfg.getBoolean("firewall");
+            Config.FIREWALL_BL = cfg.getString("firewall.command-blacklist");
+            Config.FIREWALL_WL = cfg.getString("firewall.command-whitelist");
+            Config.CONNECT_SPEED = cfg.getInt("speed.connection");
+            Config.PING_SPEED = cfg.getInt("speed.ping-speed");
+            Config.ANTIBOT_QUERY_1 = cfg.getString("antibot.checkers.1.adress");
+            Config.ANTIBOT_QUERY_2 = cfg.getString("antibot.checkers.2.adress");
+            Config.ANTIBOT_QUERY_3 = cfg.getString("antibot.checkers.3.adress");
+            Config.ANTIBOT_QUERY_CONTAINS = cfg.getStringList("antibot.checkers.responses");
+            Config.COUNTRIES = cfg.getStringList("countries.list");
+            Config.COUNTRY_MODE = cfg.getString("countries.mode");
+            Config.ANTIBOT = cfg.getBoolean("antibot.enabled");
+            Config.ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
+        } catch (Exception e) {
+            Logger.throwException(e);
         }
     }
 }
