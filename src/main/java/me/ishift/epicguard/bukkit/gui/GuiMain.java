@@ -33,11 +33,11 @@ public class GuiMain {
 
         List<String> l2 = new ArrayList<>();
         l2.add("");
-        l2.add(ChatUtil.fix("&8>> &7Server is&8: " + (AttackManager.attackMode ? "&4&lUnder Attack" : "&a&lListening...")));
+        l2.add(ChatUtil.fix("&8>> &7Server is&8: " + (AttackManager.isUnderAttack() ? "&4&lUnder Attack" : "&a&lListening...")));
         l2.add("");
-        l2.add(ChatUtil.fix("&8>> &7Login Per Second&8: &c" + AttackManager.connectPerSecond));
-        l2.add(ChatUtil.fix("&8>> &7Ping Per Second&8: &c" + AttackManager.pingPerSecond));
-        l2.add(ChatUtil.fix("&8>> &7Join Per Second&8: &c" + AttackManager.joinPerSecond));
+        l2.add(ChatUtil.fix("&8>> &7Login Per Second&8: &c" + AttackManager.getConnectPerSecond()));
+        l2.add(ChatUtil.fix("&8>> &7Ping Per Second&8: &c" + AttackManager.getPingPerSecond()));
+        l2.add(ChatUtil.fix("&8>> &7Join Per Second&8: &c" + AttackManager.getJoinPerSecond()));
         ItemStack i2 = new ItemBuilder(Material.BOW).setTitle("&8>> &6Server Attack Status &8«").addLores(l2).build();
 
         List<String> l3 = new ArrayList<>();

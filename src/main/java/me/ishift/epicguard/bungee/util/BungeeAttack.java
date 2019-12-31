@@ -10,6 +10,7 @@ public class BungeeAttack {
     public static int connectionPerSecond = 0;
     public static boolean attack = false;
     public static int pingPerSecond = 0;
+    public static int blockedBots = 0;
 
     public static boolean isAttack() {
         return attack;

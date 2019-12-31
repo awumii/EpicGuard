@@ -1,5 +1,6 @@
 package me.ishift.epicguard.bungee.util;
 
+import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
@@ -8,7 +9,10 @@ import net.md_5.bungee.api.connection.PendingConnection;
 
 public class ConnectionCloser {
     public static void close(PendingConnection connection, KickReason reason) {
-        Logger.info("[ConnectionCloser] Closing connection " + connection.getAddress().getAddress().getHostAddress() + " (" + connection.getName() + "), reason: " + reason);
+        if (GuardBungee.log) {
+            Logger.info("Closing: " + connection.getAddress().getAddress().getHostAddress() + "(" + connection.getName() + "), (" + reason + ")]");
+        }
+        BungeeAttack.blockedBots++;
         if (reason == KickReason.GEO) {
             StringBuilder sb = new StringBuilder();
             for (String s : MessagesBungee.MESSAGE_KICK_COUNTRY) {

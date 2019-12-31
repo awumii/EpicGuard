@@ -64,13 +64,11 @@ speed:
   # How many connections per second should be made, to block connections to the server.
   # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
   # If deny-join is triggered, Proxy/VPN checking is skipped.
-  connection: 7
+  connection: 5
   # How many pings per second should be made to block connections to the server.
-  ping-speed: 10
+  ping-speed: 8
   # How many successful joins per second should be made to block connections to the server
   join-speed: 5
-  # Time (in ticks) before the antibot will disable.
-  attack-timer-reset: 800
 
 ###############################
 ##           Firewall        ##

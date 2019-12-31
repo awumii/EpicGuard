@@ -1,14 +1,19 @@
 package me.ishift.epicguard.bungee;
 
+import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
+import me.ishift.epicguard.bungee.task.DisplayTask;
+import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.ServerType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -22,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
     public static Plugin plugin;
+    public static boolean display = false;
+    public static boolean log = true;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -46,12 +53,13 @@ public class GuardBungee extends Plugin {
             Logger.info("Starting plugin...");
             this.loadConfig();
             MessagesBungee.load();
-            AttackClearTask.start();
             new GeoAPI(ServerType.BUNGEE);
             new Metrics(this);
             this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
-            this.getProxy().getScheduler().schedule(this, new AttackClearTask(), Config.ATTACK_TIMER, TimeUnit.SECONDS);
+            this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1, 30, TimeUnit.SECONDS);
+            this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1, 300, TimeUnit.MILLISECONDS);
+            this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
         } catch (IOException e) {
             Logger.throwException(e);
         }
