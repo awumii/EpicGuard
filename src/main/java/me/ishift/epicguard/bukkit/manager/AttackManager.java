@@ -6,6 +6,7 @@ import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.KickReason;
+import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
@@ -23,7 +24,12 @@ public class AttackManager {
         return attackMode;
     }
 
-    public static void handleDetection(String reason, String nick, String adress, KickReason kickReason, boolean blacklist) {
+    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
+        if (blacklist) {
+            BlacklistManager.add(adress);
+        }
+        closeConnection(event, kickReason);
+        Logger.debug("- " + reason + " - FAILED");
         Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(DataFileManager.blockedBots)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
         DataFileManager.blockedBots++;

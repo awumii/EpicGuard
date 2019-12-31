@@ -21,6 +21,8 @@ import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.ServerType;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,15 +37,17 @@ import java.util.Scanner;
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
     public static File dataFolder;
+    public static FileConfiguration config;
 
     @Override
     public void onEnable() {
         try {
             final long ms = System.currentTimeMillis();
             dataFolder = this.getDataFolder();
+            config = YamlConfiguration.loadConfiguration(new File(dataFolder + "/config.yml"));
             this.saveDefaultConfig();
             this.createDirectories();
-            this.loadConfig();
+            loadConfig();
             new Logger(ServerType.SPIGOT);
             this.drawLogo();
             new GeoAPI(ServerType.SPIGOT);
@@ -77,39 +81,39 @@ public class GuardBukkit extends JavaPlugin {
         }
     }
 
-    private void loadConfig() {
+    public static void loadConfig() {
         try {
             Logger.info("Loading configuration...");
-            Config.FIREWALL = this.getConfig().getBoolean("firewall");
-            Config.FIREWALL_BL = this.getConfig().getString("firewall.command-blacklist");
-            Config.FIREWALL_WL = this.getConfig().getString("firewall.command-whitelist");
-            Config.CONNECT_SPEED = this.getConfig().getInt("speed.connection");
-            Config.PING_SPEED = this.getConfig().getInt("speed.ping-speed");
-            Config.AUTO_WHITELIST = this.getConfig().getBoolean("auto-whitelist.enabled");
-            Config.AUTO_WHITELIST_TIME = this.getConfig().getInt("auto-whitelist.time");
-            Config.ANTIBOT_QUERY_1 = this.getConfig().getString("antibot.checkers.1.adress");
-            Config.ANTIBOT_QUERY_2 = this.getConfig().getString("antibot.checkers.2.adress");
-            Config.ANTIBOT_QUERY_3 = this.getConfig().getString("antibot.checkers.3.adress");
-            Config.ANTIBOT_QUERY_CONTAINS = this.getConfig().getStringList("antibot.checkers.responses");
-            Config.COUNTRIES = this.getConfig().getStringList("countries.list");
-            Config.COUNTRY_MODE = this.getConfig().getString("countries.mode");
-            Config.ANTIBOT = this.getConfig().getBoolean("antibot.enabled");
-            Config.UPDATER = this.getConfig().getBoolean("updater");
-            Config.ATTACK_TIMER = this.getConfig().getLong("speed.attack-timer-reset");
-            Config.JOIN_SPEED = this.getConfig().getInt("speed.join-speed");
-            Config.TAB_COMPLETE_BLOCK = this.getConfig().getBoolean("fully-block-tab-complete");
-            Config.BLOCKED_COMMANDS = this.getConfig().getStringList("command-protection.list");
-            Config.ALLOWED_COMMANDS = this.getConfig().getStringList("allowed-commands.list");
-            Config.OP_PROTECTION_LIST = this.getConfig().getStringList("op-protection.list");
-            Config.OP_PROTECTION_ALERT = this.getConfig().getString("op-protection.alert");
-            Config.OP_PROTECTION_COMMAND = this.getConfig().getString("op-protection.command");
-            Config.ALLOWED_COMMANDS_BYPASS = this.getConfig().getString("allowed-commands.bypass");
-            Config.BLOCKED_COMMANDS_ENABLE = this.getConfig().getBoolean("command-protection.enabled");
-            Config.ALLOWED_COMMANDS_ENABLE = this.getConfig().getBoolean("allowed-commands.enabled");
-            Config.OP_PROTECTION_ENABLE = this.getConfig().getBoolean("op-protection.enabled");
-            Config.IP_HISTORY_ENABLE = this.getConfig().getBoolean("ip-history.enabled");
-            Config.FORCE_REJOIN = this.getConfig().getBoolean("antibot.force-rejoin");
-            Config.PEX_PROTECTION = this.getConfig().getBoolean("op-protection.pex-protection");
+            Config.FIREWALL = config.getBoolean("firewall");
+            Config.FIREWALL_BL = config.getString("firewall.command-blacklist");
+            Config.FIREWALL_WL = config.getString("firewall.command-whitelist");
+            Config.CONNECT_SPEED = config.getInt("speed.connection");
+            Config.PING_SPEED = config.getInt("speed.ping-speed");
+            Config.AUTO_WHITELIST = config.getBoolean("auto-whitelist.enabled");
+            Config.AUTO_WHITELIST_TIME = config.getInt("auto-whitelist.time");
+            Config.ANTIBOT_QUERY_1 = config.getString("antibot.checkers.1.adress");
+            Config.ANTIBOT_QUERY_2 = config.getString("antibot.checkers.2.adress");
+            Config.ANTIBOT_QUERY_3 = config.getString("antibot.checkers.3.adress");
+            Config.ANTIBOT_QUERY_CONTAINS = config.getStringList("antibot.checkers.responses");
+            Config.COUNTRIES = config.getStringList("countries.list");
+            Config.COUNTRY_MODE = config.getString("countries.mode");
+            Config.ANTIBOT = config.getBoolean("antibot.enabled");
+            Config.UPDATER = config.getBoolean("updater");
+            Config.ATTACK_TIMER = config.getLong("speed.attack-timer-reset");
+            Config.JOIN_SPEED = config.getInt("speed.join-speed");
+            Config.TAB_COMPLETE_BLOCK = config.getBoolean("fully-block-tab-complete");
+            Config.BLOCKED_COMMANDS = config.getStringList("command-protection.list");
+            Config.ALLOWED_COMMANDS = config.getStringList("allowed-commands.list");
+            Config.OP_PROTECTION_LIST = config.getStringList("op-protection.list");
+            Config.OP_PROTECTION_ALERT = config.getString("op-protection.alert");
+            Config.OP_PROTECTION_COMMAND = config.getString("op-protection.command");
+            Config.ALLOWED_COMMANDS_BYPASS = config.getString("allowed-commands.bypass");
+            Config.BLOCKED_COMMANDS_ENABLE = config.getBoolean("command-protection.enabled");
+            Config.ALLOWED_COMMANDS_ENABLE = config.getBoolean("allowed-commands.enabled");
+            Config.OP_PROTECTION_ENABLE = config.getBoolean("op-protection.enabled");
+            Config.IP_HISTORY_ENABLE = config.getBoolean("ip-history.enabled");
+            Config.FORCE_REJOIN = config.getBoolean("antibot.force-rejoin");
+            Config.PEX_PROTECTION = config.getBoolean("op-protection.pex-protection");
         } catch (Exception e) {
             Logger.throwException(e);
         }

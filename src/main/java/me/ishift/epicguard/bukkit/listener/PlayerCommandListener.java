@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCommandListener implements Listener {
-    private List<Player> executeCooldown = new ArrayList<>();
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
@@ -22,9 +21,6 @@ public class PlayerCommandListener implements Listener {
         final String cmd = event.getMessage();
         final String[] args = cmd.split(" ");
 
-        if (this.executeCooldown.contains(player)) {
-            return;
-        }
         // OP Protection module.
         if (Config.OP_PROTECTION_ENABLE) {
             if (!Config.OP_PROTECTION_LIST.contains(player.getName())) {
@@ -33,14 +29,14 @@ public class PlayerCommandListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(Config.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
-                    this.executeCooldown.add(player);
+                    return;
                 }
                 if (player.hasPermission("experimentalpex.detection") && Config.PEX_PROTECTION) {
                     event.setCancelled(true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
                     Bukkit.broadcast(ChatUtil.fix(Config.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
-                    this.executeCooldown.add(player);
+                    return;
                 }
             }
         }
@@ -52,6 +48,7 @@ public class PlayerCommandListener implements Listener {
                     event.setCancelled(true);
                     player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
                     Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
+                    return;
                 }
             }
         }
