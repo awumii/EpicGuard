@@ -54,13 +54,13 @@ public class MessagesBukkit {
         }
     }
 
-    private static void deprecate(){
+    private static void deprecate() {
         File file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/messages.yml");
-        if (file.exists()){
+        if (file.exists()) {
             file.renameTo(new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/deprecated/messages.yml"));
         }
         File file1 = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/data.yml");
-        if (file1.exists()){
+        if (file1.exists()) {
             file1.renameTo(new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/deprecated/data.yml"));
         }
     }

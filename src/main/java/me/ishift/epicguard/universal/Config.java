@@ -1,8 +1,8 @@
-package me.ishift.epicguard.bukkit;
+package me.ishift.epicguard.universal;
 
 import java.util.List;
 
-public class ConfigProvider {
+public class Config {
     public static String FIREWALL_BL;
     public static String FIREWALL_WL;
     public static boolean FIREWALL;

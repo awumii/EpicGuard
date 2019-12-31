@@ -22,6 +22,33 @@ public class ProxyPreLoginListener implements Listener {
     public static boolean attack = false;
     public static int cps_ping = 0;
 
+    public static void remove(int i) {
+        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.plugin, () -> {
+            if (i == 0) {
+                cps--;
+                return;
+            }
+            cps_ping--;
+        }, 1, TimeUnit.SECONDS);
+    }
+
+    private static boolean checkUrl(String url) {
+        try {
+            final Scanner s = new Scanner(new URL(url).openStream());
+            if (s.hasNextLine()) {
+                while (s.hasNext()) {
+                    if (GuardBungee.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return false;
+    }
+
     @EventHandler
     public void onPreLogin(PreLoginEvent e) {
         if (e.isCancelled()) {
@@ -87,32 +114,5 @@ public class ProxyPreLoginListener implements Listener {
                 FirewallManager.blacklist(adress);
             }
         }
-    }
-
-    public static void remove(int i) {
-        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.plugin, () -> {
-            if (i == 0) {
-                cps--;
-                return;
-            }
-            cps_ping--;
-        }, 1, TimeUnit.SECONDS);
-    }
-
-    private static boolean checkUrl(String url) {
-        try {
-            final Scanner s = new Scanner(new URL(url).openStream());
-            if (s.hasNextLine()) {
-                while (s.hasNext()) {
-                    if (GuardBungee.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        } catch (IOException e) {
-            return false;
-        }
-        return false;
     }
 }

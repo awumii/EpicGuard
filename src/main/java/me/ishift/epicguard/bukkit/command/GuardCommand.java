@@ -90,7 +90,7 @@ public class GuardCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                        if (GuardBukkit.IP_HISTORY_ENABLE) {
+                        if (Config.IP_HISTORY_ENABLE) {
                             p.sendMessage(ChatUtil.fix(""));
                             p.sendMessage(ChatUtil.fix("&6[IP History]"));
                             for (String adress : UserManager.getUser(player).getAdresses()) {
@@ -120,7 +120,7 @@ public class GuardCommand implements CommandExecutor {
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                    GuardBukkit.loadConfig();
+                    Config.loadConfig();
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;

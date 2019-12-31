@@ -3,9 +3,9 @@ package me.ishift.epicguard.bukkit.util;
 import java.text.DecimalFormat;
 
 public class ExactTPS implements Runnable {
-    private static int TICK_COUNT = 0;
     private static final long[] TICKS = new long[600];
     private static final DecimalFormat df2 = new DecimalFormat("#.##");
+    private static int TICK_COUNT = 0;
 
     public static String getTPS() {
         return df2.format(getTPS(100));

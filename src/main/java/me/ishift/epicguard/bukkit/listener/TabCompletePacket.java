@@ -14,7 +14,7 @@ public class TabCompletePacket extends PacketAdapter {
     }
 
     public void onPacketReceiving(final PacketEvent event) {
-        if (GuardBukkit.TAB_COMPLETE_BLOCK) {
+        if (Config.TAB_COMPLETE_BLOCK) {
             event.setCancelled(true);
         }
     }

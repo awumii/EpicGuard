@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.gui;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
@@ -33,7 +32,7 @@ public class GuiPlayers {
                 lore.add(ChatUtil.fix("&8>> &7Country: &a" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
                 lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
-                if (GuardBukkit.IP_HISTORY_ENABLE) {
+                if (Config.IP_HISTORY_ENABLE) {
                     if (user.getAdresses() != null) {
                         lore.add("");
                         lore.add(ChatUtil.fix("&8>> &7IP History:"));

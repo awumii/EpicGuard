@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.listener;
 
-import io.github.polskistevek.epicguard.bukkit.manager.*;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.*;
 import me.ishift.epicguard.bukkit.object.CustomFile;
@@ -9,6 +8,7 @@ import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
@@ -38,7 +38,7 @@ public class PlayerJoinListener implements Listener {
 
             User u = UserManager.getUser(p);
             // IP History manager
-            if (GuardBukkit.IP_HISTORY_ENABLE) {
+            if (Config.IP_HISTORY_ENABLE) {
                 List<String> history = DataFileManager.get().getStringList("history." + p.getName());
                 if (!history.contains(adress)) {
                     if (!history.isEmpty()) {
@@ -69,7 +69,7 @@ public class PlayerJoinListener implements Listener {
             }
 
             // Auto whitelisting
-            if (GuardBukkit.AUTO_WHITELIST) {
+            if (Config.AUTO_WHITELIST) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
                     if (p.isOnline()) {
                         if (!BlacklistManager.checkWhitelist(adress)) {
@@ -77,7 +77,7 @@ public class PlayerJoinListener implements Listener {
                             BlacklistManager.addWhitelist(adress);
                         }
                     }
-                }, GuardBukkit.AUTO_WHITELIST_TIME);
+                }, Config.AUTO_WHITELIST_TIME);
             }
         } catch (Exception ex) {
             Logger.throwException(ex);

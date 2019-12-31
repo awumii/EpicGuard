@@ -11,10 +11,10 @@ import java.util.List;
 
 public class DataFileManager {
     private static final String file = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/data/data_flat.yml";
-    private static YamlConfiguration configuration;
     public static int blockedBots = 0;
     public static int checkedConnections = 0;
     public static List<String> notificationUsers = new ArrayList<>();
+    private static YamlConfiguration configuration;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void load() {

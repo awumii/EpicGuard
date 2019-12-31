@@ -14,7 +14,7 @@ public class Updater {
     public static boolean updateAvaible = false;
 
     public static void checkForUpdates() {
-        if (GuardBukkit.UPDATER) {
+        if (Config.UPDATER) {
             lastestVersion = lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
             if (updateAvaible) {
@@ -24,7 +24,7 @@ public class Updater {
     }
 
     public static void notify(Player p) {
-        if (GuardBukkit.UPDATER) {
+        if (Config.UPDATER) {
             if (p.hasPermission(GuardBukkit.PERMISSION)) {
                 if (updateAvaible) {
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));

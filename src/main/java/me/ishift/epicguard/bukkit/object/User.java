@@ -23,12 +23,12 @@ public class User {
         this.brand = brand;
     }
 
-    public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
-    }
-
     public boolean isNotifications() {
         return notifications;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
     }
 
     public List<String> getAdresses() {
