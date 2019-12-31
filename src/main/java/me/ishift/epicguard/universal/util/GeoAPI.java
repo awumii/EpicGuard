@@ -1,11 +1,14 @@
 package me.ishift.epicguard.universal.util;
 
 import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bungee.GuardBungee;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class GeoAPI {
     private static DatabaseReader dbReader;
@@ -18,6 +21,10 @@ public class GeoAPI {
 
     public static DatabaseReader getDatabase() {
         return dbReader;
+    }
+
+    public static String getCountryCode(InetSocketAddress address) throws Exception {
+        return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
     }
 
     private void create() {

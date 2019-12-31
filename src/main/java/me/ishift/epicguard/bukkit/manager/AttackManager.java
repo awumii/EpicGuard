@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.manager;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
+import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.KickReason;
@@ -14,14 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttackManager {
-    public static int joinPerSecond = 0;
-    public static int connectPerSecond = 0;
-    public static int pingPerSecond = 0;
-    public static boolean attackMode = false;
+    private static int joinPerSecond = 0;
+    private static int connectPerSecond = 0;
+    private static int pingPerSecond = 0;
+    private static boolean attackMode = false;
     public static List<String> rejoinData = new ArrayList<>();
 
     public static boolean isUnderAttack() {
         return attackMode;
+    }
+
+    public static int getPingPerSecond() {
+        return pingPerSecond;
+    }
+
+    public static int getConnectPerSecond() {
+        return connectPerSecond;
+    }
+
+    public static int getJoinPerSecond() {
+        return joinPerSecond;
+    }
+
+    public static void setAttackMode(boolean attackMode) {
+        AttackManager.attackMode = attackMode;
+    }
+
+    public static List<String> getRejoinData() {
+        return rejoinData;
+    }
+
+    public static void setRejoinData(List<String> rejoinData) {
+        AttackManager.rejoinData = rejoinData;
     }
 
     public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
@@ -107,11 +132,5 @@ public class AttackManager {
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
         }
-    }
-
-    public enum AttackType {
-        PING,
-        CONNECT,
-        JOIN
     }
 }
