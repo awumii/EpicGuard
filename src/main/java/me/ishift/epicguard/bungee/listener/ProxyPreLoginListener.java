@@ -1,19 +1,16 @@
 package me.ishift.epicguard.bungee.listener;
 
-import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeAttack;
-import me.ishift.epicguard.bungee.util.FirewallManager;
 import me.ishift.epicguard.bungee.util.ConnectionCloser;
-import me.ishift.epicguard.bungee.util.MessagesBungee;
+import me.ishift.epicguard.bungee.util.FirewallManager;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.GeoCheck;
+import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
-import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -34,6 +31,12 @@ public class ProxyPreLoginListener implements Listener {
 
             if (FirewallManager.blackList.contains(adress)) {
                 ConnectionCloser.close(connection, KickReason.BLACKLIST);
+                return;
+            }
+
+            if (NameContainsCheck.check(connection.getName())) {
+                ConnectionCloser.close(connection, KickReason.NAMECONTAINS);
+                FirewallManager.blacklist(adress);
                 return;
             }
 

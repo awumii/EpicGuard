@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttackManager {
+    public static List<String> rejoinData = new ArrayList<>();
     private static int joinPerSecond = 0;
     private static int connectPerSecond = 0;
     private static int pingPerSecond = 0;
     private static boolean attackMode = false;
-    public static List<String> rejoinData = new ArrayList<>();
 
     public static boolean isUnderAttack() {
         return attackMode;
@@ -55,8 +55,8 @@ public class AttackManager {
         }
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - FAILED");
-        Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{MAX}", String.valueOf(DataFileManager.blockedBots)), MessagesBukkit.ATTACK_SUBTITLE.replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
-        Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason).replace("{CPS}", String.valueOf(AttackManager.connectPerSecond)));
+        Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(DataFileManager.getBlockedBots())));
+        Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
     }
 
@@ -128,6 +128,14 @@ public class AttackManager {
         if (reason == KickReason.VERIFY) {
             final StringBuilder sb = new StringBuilder();
             for (String s : MessagesBukkit.MESSAGE_KICK_VERIFY) {
+                sb.append(ChatUtil.fix(s)).append("\n");
+            }
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+        }
+
+        if (reason == KickReason.NAMECONTAINS) {
+            final StringBuilder sb = new StringBuilder();
+            for (String s : MessagesBukkit.MESSAGE_KICK_NAMECONTAINS) {
                 sb.append(ChatUtil.fix(s)).append("\n");
             }
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());

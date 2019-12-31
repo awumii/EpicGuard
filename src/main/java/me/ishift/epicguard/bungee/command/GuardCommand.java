@@ -23,19 +23,20 @@ public class GuardCommand extends Command {
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cATTACK -> &6" + BungeeAttack.isAttack())));
             return;
         }
-        if (commandSender instanceof ProxiedPlayer) {
-            commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cOnly console!")));
+        if (commandSender instanceof ProxiedPlayer && !commandSender.getPermissions().contains("epicguard.admin")) {
+            commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cYou don't have permission to do this &8[&6use command /guard&8]")));
             return;
         }
         if (strings[0].equalsIgnoreCase("display")) {
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&aToggled Display")));
             GuardBungee.display = !GuardBungee.display;
-        }
-        else if (strings[0].equalsIgnoreCase("log")) {
+        } else if (strings[0].equalsIgnoreCase("log")) {
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&aToggled Log")));
             GuardBungee.log = !GuardBungee.log;
-        }
-        else {
+        } else if (strings[0].equalsIgnoreCase("notifications")) {
+            commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&aToggled title notifications")));
+            GuardBungee.status = !GuardBungee.status;
+        } else {
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cCommand not found!")));
         }
     }

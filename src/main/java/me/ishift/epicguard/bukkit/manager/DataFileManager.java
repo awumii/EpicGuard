@@ -16,30 +16,6 @@ public class DataFileManager {
     private static File file;
     private static FileConfiguration fileConfiguration;
 
-    public static int getBlockedBots() {
-        return blockedBots;
-    }
-
-    public static int getCheckedConnections() {
-        return checkedConnections;
-    }
-
-    public static List<String> getNotificationUsers() {
-        return notificationUsers;
-    }
-
-    public static void setBlockedBots(int blockedBots) {
-        DataFileManager.blockedBots = blockedBots;
-    }
-
-    public static void setCheckedConnections(int checkedConnections) {
-        DataFileManager.checkedConnections = checkedConnections;
-    }
-
-    public static void setNotificationUsers(List<String> notificationUsers) {
-        DataFileManager.notificationUsers = notificationUsers;
-    }
-
     public DataFileManager(String cfgFile) throws IOException {
         final File configurationFile = new File(cfgFile);
         if (!configurationFile.exists()) {
@@ -49,16 +25,28 @@ public class DataFileManager {
         fileConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
     }
 
-    public void load() {
-        BlacklistManager.IP_BL = getDataFile().getStringList("blacklist");
-        BlacklistManager.IP_WL = getDataFile().getStringList("whitelist");
-        setBlockedBots(getDataFile().getInt("blocked-bots"));
-        setCheckedConnections(getDataFile().getInt("checked-connections"));
-        AttackManager.setRejoinData(getDataFile().getStringList("rejoin-data"));
-        setNotificationUsers(getDataFile().getStringList("notifications"));
-        if (!getNotificationUsers().contains("do_not_touch__")) {
-            notificationUsers.add("do_not_touch__");
-        }
+    public static int getBlockedBots() {
+        return blockedBots;
+    }
+
+    public static void setBlockedBots(int blockedBots) {
+        DataFileManager.blockedBots = blockedBots;
+    }
+
+    public static int getCheckedConnections() {
+        return checkedConnections;
+    }
+
+    public static void setCheckedConnections(int checkedConnections) {
+        DataFileManager.checkedConnections = checkedConnections;
+    }
+
+    public static List<String> getNotificationUsers() {
+        return notificationUsers;
+    }
+
+    public static void setNotificationUsers(List<String> notificationUsers) {
+        DataFileManager.notificationUsers = notificationUsers;
     }
 
     public static FileConfiguration getDataFile() {
@@ -74,6 +62,18 @@ public class DataFileManager {
             getDataFile().save(file);
         } catch (Exception e) {
             Logger.throwException(e);
+        }
+    }
+
+    public void load() {
+        BlacklistManager.IP_BL = getDataFile().getStringList("blacklist");
+        BlacklistManager.IP_WL = getDataFile().getStringList("whitelist");
+        setBlockedBots(getDataFile().getInt("blocked-bots"));
+        setCheckedConnections(getDataFile().getInt("checked-connections"));
+        AttackManager.setRejoinData(getDataFile().getStringList("rejoin-data"));
+        setNotificationUsers(getDataFile().getStringList("notifications"));
+        if (!getNotificationUsers().contains("do_not_touch__")) {
+            notificationUsers.add("do_not_touch__");
         }
     }
 }

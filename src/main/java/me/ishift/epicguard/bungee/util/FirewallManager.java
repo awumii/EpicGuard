@@ -1,6 +1,7 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.universal.Config;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
