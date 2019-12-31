@@ -36,47 +36,34 @@ public class PlayerPreLoginListener implements Listener {
             }
 
             if (GeoCheck.check(country)) {
-                AttackManager.handleDetection("GEO Check", name, adress);
-                BlacklistManager.add(adress);
-                AttackManager.closeConnection(event, KickReason.GEO);
-                Logger.debug("- GEO Check - FAILED");
+                AttackManager.handleDetection("Geographical", name, adress, event, KickReason.GEO, true);
+                return;
             }
 
             if (!Config.ANTIBOT) {
                 return;
             }
 
-            // Check attack speed.
             if (AttackManager.isUnderAttack()) {
-                AttackManager.closeConnection(event, KickReason.ATTACK);
-                AttackManager.handleDetection("Speed Check", name, adress);
-                Logger.debug("- ATTACK_SPEED Check - FAILED");
+                AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
                 return;
             }
 
-            // Check if player is on blacklist
             if (BlacklistManager.check(adress)) {
-                AttackManager.handleDetection("Blacklist Check", name, adress);
-                Logger.debug("- Blacklist Check - FAILED");
-                AttackManager.closeConnection(event, KickReason.BLACKLIST);
+                AttackManager.handleDetection("Blacklist", name, adress, event, KickReason.BLACKLIST, false);
                 return;
             }
 
             if (Config.FORCE_REJOIN) {
                 if (!AttackManager.rejoinData.contains(name)) {
-                    AttackManager.handleDetection("Force Rejoin", name, adress);
-                    Logger.debug("- Force Rejoin - FAILED");
-                    AttackManager.closeConnection(event, KickReason.VERIFY);
+                    AttackManager.handleDetection("Force Rejoin", name, adress, event, KickReason.VERIFY, false);
                     AttackManager.rejoinData.add(name);
                     return;
                 }
             }
 
             if (ProxyCheck.check(adress)) {
-                AttackManager.closeConnection(event, KickReason.PROXY);
-                BlacklistManager.add(adress);
-                AttackManager.handleDetection("Proxy Check", name, adress);
-                Logger.debug("- Proxy Check - FAILED");
+                AttackManager.handleDetection("Proxy/VPN", name, adress, event, KickReason.PROXY, true);
             }
         } catch (Exception e) {
             Logger.throwException(e);

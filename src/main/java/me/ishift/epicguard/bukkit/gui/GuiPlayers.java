@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.gui;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
@@ -29,7 +30,7 @@ public class GuiPlayers {
                 lore.add("");
                 lore.add(ChatUtil.fix("&8>> &7UUID: &a" + player.getUniqueId()));
                 lore.add(ChatUtil.fix("&8>> &7First Join: &a" + new Date(player.getFirstPlayed())));
-                lore.add(ChatUtil.fix("&8>> &7Country: &a" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                lore.add(ChatUtil.fix("&8>> &7Country: &2" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
                 lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
                 if (Config.IP_HISTORY_ENABLE) {

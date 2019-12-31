@@ -7,6 +7,7 @@ import me.ishift.epicguard.bukkit.util.ExactTPS;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.ServerUtils;
 import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

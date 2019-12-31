@@ -9,6 +9,7 @@ import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
@@ -120,7 +121,7 @@ public class GuardCommand implements CommandExecutor {
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                    Config.loadConfig();
+                    GuardBukkit.loadConfig();
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
                     break;
