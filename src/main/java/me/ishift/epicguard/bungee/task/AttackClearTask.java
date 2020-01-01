@@ -9,6 +9,7 @@ public class AttackClearTask implements Runnable {
     public void run() {
         if (BungeeAttack.getConnectionPerSecond() < Config.CONNECT_SPEED || BungeeAttack.getPingPerSecond() < Config.PING_SPEED) {
             BungeeAttack.setAttack(false);
+            BungeeAttack.blockedBots = 0;
         }
     }
 }

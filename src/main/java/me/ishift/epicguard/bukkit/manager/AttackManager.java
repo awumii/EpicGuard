@@ -55,7 +55,9 @@ public class AttackManager {
         }
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - FAILED");
-        Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(DataFileManager.getBlockedBots())));
+        if (getConnectPerSecond() > 5) {
+            Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(DataFileManager.getBlockedBots())));
+        }
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
     }
