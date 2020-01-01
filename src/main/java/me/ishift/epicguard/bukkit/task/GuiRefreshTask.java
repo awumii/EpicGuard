@@ -2,9 +2,6 @@ package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
