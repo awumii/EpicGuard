@@ -19,7 +19,12 @@ public class AttackManager {
     private static int joinPerSecond = 0;
     private static int connectPerSecond = 0;
     private static int pingPerSecond = 0;
+    private static int totalBots = 0;
     private static boolean attackMode = false;
+
+    public static int getTotalBots() {
+        return totalBots;
+    }
 
     public static boolean isUnderAttack() {
         return attackMode;
@@ -56,10 +61,11 @@ public class AttackManager {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - FAILED");
         if (getConnectPerSecond() > 5) {
-            Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(DataFileManager.getBlockedBots())));
+            Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(getTotalBots())));
         }
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
+        totalBots++;
     }
 
     public static void handleAttack(AttackType type) {
