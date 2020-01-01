@@ -15,21 +15,23 @@ public class ConnectionCloser {
             Logger.info("Closing: " + connection.getAddress().getAddress().getHostAddress() + "(" + connection.getName() + "), (" + reason + ")]");
         }
         if (GuardBungee.status) {
-            GuardBungee.plugin.getProxy().getPlayers().forEach(proxiedPlayer -> {
-                if (proxiedPlayer.getPermissions().contains("epicguard.admin")) {
-                    final Title title = GuardBungee.plugin.getProxy().createTitle()
-                            .title(new TextComponent(ChatUtil.fix(MessagesBungee.ATTACK_TITLE).replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond()))))
-                            .subTitle(new TextComponent(ChatUtil.fix(MessagesBungee.ATTACK_SUBTITLE).replace("{MAX}", String.valueOf(BungeeAttack.blockedBots))))
-                            .fadeIn(0)
-                            .fadeOut(10)
-                            .stay(10);
-                    proxiedPlayer.sendTitle(title);
-                    proxiedPlayer.sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtil.fix(MessagesBungee.ACTIONBAR_ATTACK)
-                            .replace("{NICK}", connection.getName())
-                            .replace("{IP}", connection.getAddress().getAddress().getHostAddress())
-                            .replace("{DETECTION}", String.valueOf(reason))));
-                }
-            });
+            if (BungeeAttack.getConnectionPerSecond() > 5) {
+                GuardBungee.plugin.getProxy().getPlayers().forEach(proxiedPlayer -> {
+                    if (proxiedPlayer.getPermissions().contains("epicguard.admin")) {
+                        final Title title = GuardBungee.plugin.getProxy().createTitle()
+                                .title(new TextComponent(ChatUtil.fix(MessagesBungee.ATTACK_TITLE).replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond()))))
+                                .subTitle(new TextComponent(ChatUtil.fix(MessagesBungee.ATTACK_SUBTITLE).replace("{MAX}", String.valueOf(BungeeAttack.blockedBots))))
+                                .fadeIn(0)
+                                .fadeOut(10)
+                                .stay(10);
+                        proxiedPlayer.sendTitle(title);
+                        proxiedPlayer.sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtil.fix(MessagesBungee.ACTIONBAR_ATTACK)
+                                .replace("{NICK}", connection.getName())
+                                .replace("{IP}", connection.getAddress().getAddress().getHostAddress())
+                                .replace("{DETECTION}", String.valueOf(reason))));
+                    }
+                });
+            }
         }
         BungeeAttack.blockedBots++;
         if (reason == KickReason.GEO) {
