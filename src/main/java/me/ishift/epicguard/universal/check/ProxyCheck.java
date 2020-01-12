@@ -31,8 +31,7 @@ public class ProxyCheck {
                 return false;
             }
         } catch (Exception e) {
-            Logger.debug("EXCEPTION WHILE CHECKING DATA FROM URL: " + url);
-            Logger.throwException(e);
+            Logger.info("EXCEPTION WHILE CHECKING DATA FROM URL: " + url);
             return false;
         }
         return false;

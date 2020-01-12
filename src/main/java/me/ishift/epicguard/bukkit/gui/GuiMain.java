@@ -3,7 +3,6 @@ package me.ishift.epicguard.bukkit.gui;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.util.ExactTPS;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.ServerUtils;
 import me.ishift.epicguard.bukkit.util.Updater;
@@ -28,7 +27,6 @@ public class GuiMain {
         l1.add(ChatUtil.fix("&8>> &7Plugin version&8: &a" + Updater.currentVersion + (Updater.updateAvaible ? " &4&l[Outdated!]" : "")));
         l1.add(ChatUtil.fix("&8>> &7Server&8: &f" + Bukkit.getServer().getBukkitVersion()));
         l1.add(ChatUtil.fix("&8>> &7RAM Usage&8: &a" + ServerUtils.getMemoryUsage() + "&8/&6" + ServerUtils.getTotalMemory()));
-        l1.add(ChatUtil.fix("&8>> &7TPS&8: &a" + ExactTPS.getTPS()));
         ItemStack i1 = new ItemBuilder(Material.BEDROCK).setTitle("&8>> &aBasic Information &8«").addLores(l1).build();
 
         List<String> l2 = new ArrayList<>();

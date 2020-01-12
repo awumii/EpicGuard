@@ -25,19 +25,20 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         try {
-            Player p = e.getPlayer();
+            final Player p = e.getPlayer();
+
             if (NMSUtil.isOldVersion()) {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
             } else {
                 BrandPluginMessageListener.addChannel(p, "MINECRAFT:BRAND");
             }
 
-            String adress = p.getAddress().getAddress().getHostAddress();
+            final String adress = p.getAddress().getAddress().getHostAddress();
             UserManager.addUser(p);
             Updater.notify(p);
             AttackManager.handleAttack(AttackType.JOIN);
 
-            User u = UserManager.getUser(p);
+            final User u = UserManager.getUser(p);
             // IP History manager
             if (Config.IP_HISTORY_ENABLE) {
                 List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
@@ -52,7 +53,7 @@ public class PlayerJoinListener implements Listener {
             }
 
             // Brand Verification
-            CustomFile customFile = FileManager.getFile(GuardBukkit.dataFolder + "/brand.yml");
+            final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
             if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
                     if (p.isOnline()) {
@@ -66,7 +67,7 @@ public class PlayerJoinListener implements Listener {
                             }
                         }
                     }
-                }, 20L);
+                }, 30L);
             }
 
             // Auto whitelisting
