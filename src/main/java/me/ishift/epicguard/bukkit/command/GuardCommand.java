@@ -121,6 +121,7 @@ public class GuardCommand implements CommandExecutor {
                     break;
                 case "reload":
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
+                    GuardBukkit.getInstance().reloadConfig();
                     GuardBukkit.loadConfig();
                     MessagesBukkit.load();
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));

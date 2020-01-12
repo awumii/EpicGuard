@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 public class NMSUtil {
     private static String nmsver;
 
-    public NMSUtil() {
+    public static void init() {
         nmsver = Bukkit.getServer().getClass().getPackage().getName();
         nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
     }

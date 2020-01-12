@@ -47,11 +47,6 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>com.comphenix.protocol</exclude>
-                                </excludes>
-                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
@@ -77,8 +72,7 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.14-SNAPSHOT</version>
-            <type>jar</type>
+            <version>1.15-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -92,6 +86,7 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib-API</artifactId>
             <version>4.4.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

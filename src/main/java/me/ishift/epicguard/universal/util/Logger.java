@@ -49,17 +49,17 @@ public class Logger {
 
     public static void throwException(Exception exception) {
         info("#######  EPICGUARD ERROR LOG #######");
-        info(" ");
         info("<> Information: " + exception.getMessage());
         info("<> Stack Trace:");
         info(" ");
         for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
-            info(" " + stackTraceElement.toString());
+            if (stackTraceElement.toString().contains("me.ishift.epicguard")) {
+                info(" " + stackTraceElement.toString());
+            }
         }
         info(" ");
         info("<> If you think this is a bug, report it on github.");
         info("<> https://github.com/PolskiStevek/EpicGuard/issues");
-        info(" ");
         info("#######  EPICGUARD ERROR LOG #######");
     }
 

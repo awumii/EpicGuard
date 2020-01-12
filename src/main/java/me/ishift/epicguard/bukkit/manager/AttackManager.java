@@ -55,11 +55,12 @@ public class AttackManager {
     }
 
     public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
+        closeConnection(event, kickReason);
+        Logger.debug("- " + reason + " - DETECTED & BLOCKED");
         if (blacklist) {
             BlacklistManager.add(adress);
+            Logger.debug("- This IP has been blacklisted.");
         }
-        closeConnection(event, kickReason);
-        Logger.debug("- " + reason + " - FAILED");
         if (getConnectPerSecond() > 5) {
             Notificator.title(MessagesBukkit.ATTACK_TITLE.replace("{CPS}", String.valueOf(getConnectPerSecond())), MessagesBukkit.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(getTotalBots())));
         }

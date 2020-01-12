@@ -28,9 +28,11 @@ public class Updater {
         if (Config.UPDATER) {
             if (p.hasPermission(GuardBukkit.PERMISSION)) {
                 if (updateAvaible) {
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
+                    p.sendMessage(ChatUtil.fix("&7&m----------------------------------------------"));
+                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your EpicGuard version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
+                    p.sendMessage(ChatUtil.fix("&7&m----------------------------------------------"));
                 }
             }
         }

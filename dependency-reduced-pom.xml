@@ -40,11 +40,6 @@
             </goals>
             <configuration>
               <minimizeJar>true</minimizeJar>
-              <artifactSet>
-                <excludes>
-                  <exclude>com.comphenix.protocol</exclude>
-                </excludes>
-              </artifactSet>
             </configuration>
           </execution>
         </executions>
@@ -105,7 +100,7 @@
     <dependency>
       <groupId>net.md-5</groupId>
       <artifactId>bungeecord-api</artifactId>
-      <version>1.14-SNAPSHOT</version>
+      <version>1.15-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -134,7 +129,17 @@
       <groupId>com.comphenix.protocol</groupId>
       <artifactId>ProtocolLib-API</artifactId>
       <version>4.4.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>cglib-nodep</artifactId>
+          <groupId>cglib</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>BukkitExecutors</artifactId>
+          <groupId>com.comphenix.executors</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <properties>
