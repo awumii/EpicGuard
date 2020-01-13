@@ -8,10 +8,7 @@ import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.FileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.CustomFile;
-import me.ishift.epicguard.bukkit.task.AttackTask;
-import me.ishift.epicguard.bukkit.task.HeuristicsTask;
-import me.ishift.epicguard.bukkit.task.InventoryTask;
-import me.ishift.epicguard.bukkit.task.SaveTask;
+import me.ishift.epicguard.bukkit.task.*;
 import me.ishift.epicguard.bukkit.util.LogFilter;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Metrics;
@@ -99,13 +96,13 @@ public class GuardBukkit extends JavaPlugin {
 
     public static void loadConfig() {
         final FileConfiguration config = getInstance().getConfig();
-        Config.FIREWALL = config.getBoolean("firewall");
-        Config.FIREWALL_BL = config.getString("firewall.command-blacklist");
-        Config.FIREWALL_WL = config.getString("firewall.command-whitelist");
-        Config.CONNECT_SPEED = config.getInt("speed.connection");
-        Config.PING_SPEED = config.getInt("speed.ping-speed");
-        Config.AUTO_WHITELIST = config.getBoolean("auto-whitelist.enabled");
-        Config.AUTO_WHITELIST_TIME = config.getInt("auto-whitelist.time");
+        Config.firewallEnabled = config.getBoolean("firewall");
+        Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+        Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+        Config.connectSpeed = config.getInt("speed.connection");
+        Config.pingSpeed = config.getInt("speed.ping-speed");
+        Config.autoWhitelist = config.getBoolean("auto-whitelist.enabled");
+        Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
         Config.ANTIBOT_QUERY_1 = config.getString("antibot.checkers.1.adress");
         Config.ANTIBOT_QUERY_2 = config.getString("antibot.checkers.2.adress");
         Config.ANTIBOT_QUERY_3 = config.getString("antibot.checkers.3.adress");
@@ -115,7 +112,7 @@ public class GuardBukkit extends JavaPlugin {
         Config.ANTIBOT = config.getBoolean("antibot.enabled");
         Config.UPDATER = config.getBoolean("updater");
         Config.ATTACK_TIMER = config.getLong("speed.attack-timer-reset");
-        Config.JOIN_SPEED = config.getInt("speed.join-speed");
+        Config.joinSpeed = config.getInt("speed.join-speed");
         Config.TAB_COMPLETE_BLOCK = config.getBoolean("fully-block-tab-complete");
         Config.BLOCKED_COMMANDS = config.getStringList("command-protection.list");
         Config.ALLOWED_COMMANDS = config.getStringList("allowed-commands.list");
@@ -130,12 +127,30 @@ public class GuardBukkit extends JavaPlugin {
         Config.FORCE_REJOIN = config.getBoolean("antibot.force-rejoin");
         Config.PEX_PROTECTION = config.getBoolean("op-protection.pex-protection");
         Config.NAME_CONTAINS = config.getStringList("antibot.name-contains");
+
+        final String path = getInstance().getDataFolder() + "/cloud.yml";
+        FileManager.createFile(path);
+        final CustomFile cloudFile = FileManager.getFile(path);
+        if (!cloudFile.isExisting()) {
+            cloudFile.create();
+            cloudFile.getConfig().set("cloud.enabled", true);
+            cloudFile.getConfig().set("cloud.sync-every-seconds", 1800);
+            cloudFile.getConfig().set("cloud.features.blacklist", true);
+            cloudFile.save();
+        }
+
+        Config.CLOUD_ENABLED = cloudFile.getConfig().getBoolean("cloud.enabled");
+        Config.CLOUD_BLACKLIST = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
+        Config.CLOUD_TIME = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
+        System.out.println(Config.CLOUD_TIME);
+        System.out.println(Config.CLOUD_ENABLED);
     }
 
     private void registerTasks() {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventoryTask(), 1L, 40L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.ATTACK_TIMER);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new CloudTask(), 40L, Config.CLOUD_TIME * 20);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 1L, 5000L);
     }
 

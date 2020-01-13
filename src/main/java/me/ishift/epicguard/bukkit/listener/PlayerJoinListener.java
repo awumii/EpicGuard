@@ -39,13 +39,13 @@ public class PlayerJoinListener implements Listener {
             Updater.notify(p);
             AttackManager.handleAttack(AttackType.JOIN);
 
-            if (Config.AUTO_WHITELIST) {
+            if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (p.isOnline() && !BlacklistManager.checkWhitelist(adress)) {
                         Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
                         BlacklistManager.addWhitelist(adress);
                     }
-                }, Config.AUTO_WHITELIST_TIME);
+                }, Config.autoWhitelistTime);
             }
 
             // IP History manager

@@ -3,14 +3,14 @@ package me.ishift.epicguard.universal;
 import java.util.List;
 
 public class Config {
-    public static String FIREWALL_BL;
-    public static String FIREWALL_WL;
-    public static boolean FIREWALL;
-    public static int CONNECT_SPEED;
-    public static int PING_SPEED;
-    public static int JOIN_SPEED;
-    public static boolean AUTO_WHITELIST;
-    public static int AUTO_WHITELIST_TIME;
+    public static String firewallBlacklistCommand;
+    public static String firewallWhitelistCommand;
+    public static boolean firewallEnabled;
+    public static int connectSpeed;
+    public static int pingSpeed;
+    public static int joinSpeed;
+    public static boolean autoWhitelist;
+    public static int autoWhitelistTime;
     public static String ANTIBOT_QUERY_1;
     public static String ANTIBOT_QUERY_2;
     public static String ANTIBOT_QUERY_3;
@@ -34,4 +34,7 @@ public class Config {
     public static boolean IP_HISTORY_ENABLE;
     public static boolean FORCE_REJOIN;
     public static boolean PEX_PROTECTION;
+    public static boolean CLOUD_ENABLED;
+    public static boolean CLOUD_BLACKLIST;
+    public static long CLOUD_TIME;
 }

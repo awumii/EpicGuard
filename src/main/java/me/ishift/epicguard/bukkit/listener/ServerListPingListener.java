@@ -14,7 +14,7 @@ public class ServerListPingListener implements Listener {
     public void onPing(ServerListPingEvent e) {
         try {
             AttackManager.handleAttack(AttackType.PING);
-            if (AttackManager.getPingPerSecond() > Config.PING_SPEED) {
+            if (AttackManager.getPingPerSecond() > Config.pingSpeed) {
                 e.setMotd("");
                 e.setMaxPlayers(0);
             }

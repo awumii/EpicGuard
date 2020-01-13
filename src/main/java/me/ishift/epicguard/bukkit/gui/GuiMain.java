@@ -81,7 +81,7 @@ public class GuiMain {
         List<String> l8 = new ArrayList<>();
         l8.add("");
         l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (Config.ANTIBOT ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (Config.FIREWALL ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (Config.firewallEnabled ? "&aOn" : "&cOff")));
         l8.add(ChatUtil.fix("&8>> &7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&8>> &7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &6Antibot Information &8«").addLores(l8).build();
@@ -95,8 +95,8 @@ public class GuiMain {
         l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + Config.ALLOWED_COMMANDS_ENABLE));
         l9.add(ChatUtil.fix("&7OP Protection&8: &b" + Config.OP_PROTECTION_ENABLE));
         l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + Config.PEX_PROTECTION));
-        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + Config.AUTO_WHITELIST));
-        l9.add(ChatUtil.fix("&7Firewall&8: &b" + Config.FIREWALL));
+        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + Config.autoWhitelist));
+        l9.add(ChatUtil.fix("&7Firewall&8: &b" + Config.firewallEnabled));
         l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + Config.FORCE_REJOIN));
         l9.add(ChatUtil.fix("&7IP History&8: &b" + Config.IP_HISTORY_ENABLE));
         l9.add(ChatUtil.fix("&7GEO Option&8: &b" + Config.COUNTRY_MODE));
