@@ -29,8 +29,6 @@ public class PlayerJoinListener implements Listener {
 
             if (NMSUtil.isOldVersion()) {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
-            } else {
-                BrandPluginMessageListener.addChannel(p, "MINECRAFT:BRAND");
             }
 
             final String adress = p.getAddress().getAddress().getHostAddress();

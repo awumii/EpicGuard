@@ -7,8 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class GuiRefreshTask implements Runnable {
-    private static int animation = 0;
-
     @Override
     public void run() {
         try {

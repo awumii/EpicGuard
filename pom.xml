@@ -6,7 +6,7 @@
 
     <groupId>me.ishift</groupId>
     <artifactId>EpicGuard</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0-b2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15-R0.1-SNAPSHOT</version>
+            <version>1.15.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
