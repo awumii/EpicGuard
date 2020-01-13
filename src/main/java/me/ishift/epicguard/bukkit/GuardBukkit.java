@@ -38,52 +38,6 @@ public class GuardBukkit extends JavaPlugin {
         return JavaPlugin.getPlugin(GuardBukkit.class);
     }
 
-    @Override
-    public void onEnable() {
-        try {
-            final long ms = System.currentTimeMillis();
-            this.saveDefaultConfig();
-
-            this.createDirectories();
-            loadConfig();
-
-            new Logger(ServerType.SPIGOT);
-            LogoPrinter.print();
-
-            new GeoAPI(ServerType.SPIGOT);
-            new Metrics(this);
-
-            NMSUtil.init();
-            new DataFileManager(this.getDataFolder() + "/data/data_flat.yml");
-            DataFileManager.save();
-            MessagesBukkit.load();
-            Logger.info("NMS Version: " + NMSUtil.getVersion());
-
-            this.registerTasks();
-            this.registerListeners();
-
-            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
-            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
-
-            this.getCommand("epicguard").setExecutor(new GuardCommand());
-            this.registerBrand();
-            this.fixVariables();
-            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        try {
-            Logger.info("Saving data and disabling plugin.");
-            DataFileManager.save();
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
     public static void loadConfig() {
         final FileConfiguration config = getInstance().getConfig();
         Config.FIREWALL = config.getBoolean("firewall");
@@ -119,6 +73,48 @@ public class GuardBukkit extends JavaPlugin {
         Config.NAME_CONTAINS = config.getStringList("antibot.name-contains");
     }
 
+    @Override
+    public void onEnable() {
+        try {
+            final long ms = System.currentTimeMillis();
+            this.saveDefaultConfig();
+            this.createDirectories();
+            new Logger(ServerType.SPIGOT);
+            loadConfig();
+            LogoPrinter.print();
+            new GeoAPI(ServerType.SPIGOT);
+            new Metrics(this);
+
+            NMSUtil.init();
+            new DataFileManager(this.getDataFolder() + "/data/data_flat.yml");
+            DataFileManager.save();
+            MessagesBukkit.load();
+
+            this.registerListeners();
+            this.registerTasks();
+
+            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
+            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
+
+            this.getCommand("epicguard").setExecutor(new GuardCommand());
+            this.registerBrand();
+            this.fixVariables();
+            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            Logger.info("Saving data and disabling plugin.");
+            DataFileManager.save();
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
     private void registerListeners() {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PreLoginListener(), this);
@@ -133,9 +129,9 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new GuiRefreshTask(), 0L, 40L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 0L, Config.ATTACK_TIMER);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 0L, 5000L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new GuiRefreshTask(), 1L, 40L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.ATTACK_TIMER);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 1L, 5000L);
     }
 
     private void createDirectories() {
@@ -175,11 +171,9 @@ public class GuardBukkit extends JavaPlugin {
             brandConfig.save();
         }
 
-        Messenger messenger = Bukkit.getMessenger();
         if (NMSUtil.isOldVersion()) {
+            final Messenger messenger = Bukkit.getMessenger();
             messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
-        } else {
-            messenger.registerIncomingPluginChannel(this, "minecraft:brand", new BrandPluginMessageListener());
         }
     }
 }

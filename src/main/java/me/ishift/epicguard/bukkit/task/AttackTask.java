@@ -9,7 +9,7 @@ public class AttackTask implements Runnable {
     @Override
     public void run() {
         if (AttackManager.getJoinPerSecond() < Config.JOIN_SPEED && AttackManager.getPingPerSecond() < Config.PING_SPEED && AttackManager.getConnectPerSecond() < Config.CONNECT_SPEED) {
-            AttackManager.setAttackMode(true);
+            AttackManager.setAttackMode(false);
             DataFileManager.setBlockedBots(0);
         }
     }

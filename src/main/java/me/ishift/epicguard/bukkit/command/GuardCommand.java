@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.command;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
+import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
@@ -28,6 +29,10 @@ public class GuardCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) {
             Logger.info("You are running EpicGuard v" + GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion());
+            Logger.info("Attack mode: " + AttackManager.isUnderAttack());
+            Logger.info("CPS: " + AttackManager.getConnectPerSecond());
+            Logger.info("JPS: " + AttackManager.getJoinPerSecond());
+            Logger.info("PPS: " + AttackManager.getPingPerSecond());
             Logger.info("Use this command in-game.");
             return false;
         }

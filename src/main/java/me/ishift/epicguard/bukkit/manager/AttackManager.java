@@ -42,8 +42,8 @@ public class AttackManager {
         return joinPerSecond;
     }
 
-    public static void setAttackMode(boolean attackMode) {
-        AttackManager.attackMode = attackMode;
+    public static void setAttackMode(boolean bol) {
+        attackMode = bol;
     }
 
     public static List<String> getRejoinData() {
@@ -88,7 +88,7 @@ public class AttackManager {
                 attackMode = true;
             }
         }
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
             if (type == AttackType.CONNECT) {
                 connectPerSecond--;
             }

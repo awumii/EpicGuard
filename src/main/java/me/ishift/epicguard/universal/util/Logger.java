@@ -57,9 +57,6 @@ public class Logger {
                 info(" " + stackTraceElement.toString());
             }
         }
-        info(" ");
-        info("<> If you think this is a bug, report it on github.");
-        info("<> https://github.com/PolskiStevek/EpicGuard/issues");
         info("#######  EPICGUARD ERROR LOG #######");
     }
 
