@@ -1,5 +1,4 @@
-# Download
-BUILDS: https://www.spigotmc.org/resources/epicguard-antibot-anti-forceop-server-protection.72369/
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/PolskiStevek/EpicGuard)
 # About Plugin
 
 * EpicGuard is a plugin, that can protect your server from bots, hackers or griefers!
