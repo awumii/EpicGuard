@@ -30,19 +30,19 @@ public class GuiPlayers {
                 lore.add("");
                 lore.add(ChatUtil.fix("&8>> &7UUID: &a" + player.getUniqueId()));
                 lore.add(ChatUtil.fix("&8>> &7First Join: &a" + new Date(player.getFirstPlayed())));
-                lore.add(ChatUtil.fix("&8>> &7Country: &2" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                if (!player.getAddress().getAddress().equals("127.0.0.1")) {
+                    lore.add(ChatUtil.fix("&8>> &7Country: &2" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
+                }
                 lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
-                if (Config.IP_HISTORY_ENABLE) {
-                    if (user.getAdresses() != null) {
-                        lore.add("");
-                        lore.add(ChatUtil.fix("&8>> &7IP History:"));
-                        for (String adress : user.getAdresses()) {
-                            if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
-                                lore.add(ChatUtil.fix("&8-> &2" + adress + " &8(&aCurrent&8)"));
-                            } else {
-                                lore.add(ChatUtil.fix("&8-> &2" + adress));
-                            }
+                if (Config.IP_HISTORY_ENABLE && user.getAdresses() != null) {
+                    lore.add("");
+                    lore.add(ChatUtil.fix("&8>> &7IP History:"));
+                    for (String adress : user.getAdresses()) {
+                        if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
+                            lore.add(ChatUtil.fix("&8-> &2" + adress + " &8(&aCurrent&8)"));
+                        } else {
+                            lore.add(ChatUtil.fix("&8-> &2" + adress));
                         }
                     }
                 }

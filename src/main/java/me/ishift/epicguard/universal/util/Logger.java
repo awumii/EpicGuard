@@ -66,7 +66,7 @@ public class Logger {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             String date = sdf.format(cal.getTime());
             if (this.type == ServerType.SPIGOT) {
-                file = new File(GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+                file = new File(GuardBukkit.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (this.type == ServerType.BUNGEE) {
                 file = new File(GuardBungee.plugin.getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");

@@ -1,0 +1,7 @@
+console-filter:
+  enabled: true
+  messages:
+    - Disconnecting
+    - lost connection
+    - authlib
+    - GameProfile

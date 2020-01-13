@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.object;
 
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -9,10 +8,21 @@ public class User {
     private List<String> adresses;
     private boolean notifications;
     private String brand;
+    private String ip;
+    private Player player;
 
     public User(Player player) {
-        this.notifications = DataFileManager.notificationUsers.contains(player.getName());
+        this.player = player;
+        this.notifications = false;
         this.brand = "none";
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getIp() {
+        return ip;
     }
 
     public String getBrand() {
