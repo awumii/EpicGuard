@@ -12,9 +12,9 @@ public class FirewallManager {
 
     public static void blacklist(String adress) {
         blackList.add(adress);
-        if (Config.FIREWALL) {
+        if (Config.firewallEnabled) {
             try {
-                Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.firewallBlacklistCommand.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -23,9 +23,9 @@ public class FirewallManager {
 
     public static void whitelist(String adress) {
         whiiteList.add(adress);
-        if (Config.FIREWALL) {
+        if (Config.firewallEnabled) {
             try {
-                Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
+                Runtime.getRuntime().exec(Config.firewallWhitelistCommand.replace("{IP}", adress));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

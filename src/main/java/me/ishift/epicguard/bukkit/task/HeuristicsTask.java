@@ -6,24 +6,38 @@ import me.ishift.epicguard.universal.Config;
 
 public class HeuristicsTask implements Runnable {
     private static int record = 0;
+    private static int time = 0;
 
     @Override
     public void run() {
         Notificator.action("&8--=[ &7Listening for attack... &8]=--");
+        if (AttackManager.isUnderAttack()) {
+            time++;
+        }
         final int diff = AttackManager.getConnectPerSecond() - record;
 
         if (AttackManager.getConnectPerSecond() > 0) {
             final int percent = record * 100 / AttackManager.getConnectPerSecond();
 
-            if (AttackManager.getConnectPerSecond() > record && diff > Config.CONNECT_SPEED) {
-                Notificator.broadcast("&7DETECTED: &e" + record + " &7-> &e" + AttackManager.getConnectPerSecond() + " &7(&a" + percent + "%&7) bots per second!");
+            if (AttackManager.getConnectPerSecond() > record && diff > Config.connectSpeed) {
+                Notificator.broadcast("&7DETECTED: &e" + record + " &7-> &e" + AttackManager.getConnectPerSecond() + " &7(&a" + percent + "%&7) per second (&b" + time + "sec&7)");
                 record = AttackManager.getConnectPerSecond();
-                AttackManager.setAttackMode(true);
+                if (!AttackManager.isUnderAttack()) {
+                    AttackManager.setAttackMode(true);
+                }
             }
         }
     }
 
     public static void setRecord(int i) {
         record = i;
+    }
+
+    public static int getTime() {
+        return time;
+    }
+
+    public static void setTime(int time) {
+        HeuristicsTask.time = time;
     }
 }

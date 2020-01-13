@@ -11,11 +11,13 @@ public class AttackTask implements Runnable {
         if (AttackManager.getConnectPerSecond() < 0) {
             AttackManager.setConnectPerSecond(0);
         }
-        if (AttackManager.getJoinPerSecond() < Config.JOIN_SPEED && AttackManager.getPingPerSecond() < Config.PING_SPEED && AttackManager.getConnectPerSecond() < Config.CONNECT_SPEED) {
+        if (AttackManager.getJoinPerSecond() < Config.joinSpeed && AttackManager.getPingPerSecond() < Config.pingSpeed && AttackManager.getConnectPerSecond() < Config.connectSpeed) {
             if (AttackManager.isUnderAttack()) {
                 AttackManager.setAttackMode(false);
                 Notificator.title("&cATTACK HAS BEEN FINISHED", "&7Bots blocked during last attack: &4" + AttackManager.getTotalBots());
+                Notificator.broadcast("&7DONE: Blocked &e" + AttackManager.getTotalBots() + " &7bots during last &e" + HeuristicsTask.getTime() + " seconds&7.");
                 HeuristicsTask.setRecord(0);
+                HeuristicsTask.setTime(0);
                 AttackManager.setTotalBots(0);
             }
         }

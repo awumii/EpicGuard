@@ -43,6 +43,7 @@ public class AttackManager {
     }
 
     public static void setAttackMode(boolean bol) {
+        Logger.info("Attack mode changed to: " + bol);
         attackMode = bol;
     }
 
@@ -80,19 +81,19 @@ public class AttackManager {
     public static void handleAttack(AttackType type) {
         if (type == AttackType.CONNECT) {
             connectPerSecond++;
-            if (connectPerSecond > Config.CONNECT_SPEED) {
+            if (connectPerSecond > Config.connectSpeed) {
                 attackMode = true;
             }
         }
         if (type == AttackType.PING) {
             pingPerSecond++;
-            if (pingPerSecond > Config.PING_SPEED) {
+            if (pingPerSecond > Config.pingSpeed) {
                 attackMode = true;
             }
         }
         if (type == AttackType.JOIN) {
             joinPerSecond++;
-            if (joinPerSecond > Config.JOIN_SPEED) {
+            if (joinPerSecond > Config.joinSpeed) {
                 attackMode = true;
             }
         }

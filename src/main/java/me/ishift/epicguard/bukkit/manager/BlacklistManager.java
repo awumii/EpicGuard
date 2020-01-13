@@ -22,9 +22,9 @@ public class BlacklistManager {
         if (!IP_BL.contains(adress)) {
             IP_BL.add(adress);
             DataFileManager.getDataFile().set("blacklist", IP_BL);
-            if (Config.FIREWALL) {
+            if (Config.firewallEnabled) {
                 try {
-                    Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
+                    Runtime.getRuntime().exec(Config.firewallBlacklistCommand.replace("{IP}", adress));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -36,9 +36,9 @@ public class BlacklistManager {
         if (!IP_WL.contains(adress)) {
             IP_WL.add(adress);
             DataFileManager.getDataFile().set("whitelist", IP_WL);
-            if (Config.FIREWALL) {
+            if (Config.firewallEnabled) {
                 try {
-                    Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
+                    Runtime.getRuntime().exec(Config.firewallWhitelistCommand.replace("{IP}", adress));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

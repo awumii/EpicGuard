@@ -1,9 +1,12 @@
 package me.ishift.epicguard.bungee;
 
 import me.ishift.epicguard.bungee.command.GuardCommand;
+import me.ishift.epicguard.bungee.file.CustomFile;
+import me.ishift.epicguard.bungee.file.FileManager;
 import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
+import me.ishift.epicguard.bungee.task.CloudTask;
 import me.ishift.epicguard.bungee.task.DisplayTask;
 import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.bungee.util.Metrics;
@@ -24,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
     public static Plugin plugin;
-    public static boolean display = false;
     public static boolean log = true;
     public static boolean status = false;
 
@@ -32,6 +34,7 @@ public class GuardBungee extends Plugin {
     @Override
     public void onEnable() {
         try {
+
             if (!this.getDataFolder().exists()) {
                 this.getDataFolder().mkdir();
             }
@@ -55,8 +58,10 @@ public class GuardBungee extends Plugin {
             new Metrics(this);
             this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
-            this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1, 30, TimeUnit.SECONDS);
-            this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1, 300, TimeUnit.MILLISECONDS);
+
+            this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 30L, TimeUnit.SECONDS);
+            this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1L, 300L, TimeUnit.MILLISECONDS);
+            this.getProxy().getScheduler().schedule(this, new CloudTask(), 1L, Config.CLOUD_TIME, TimeUnit.SECONDS);
             this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
         } catch (IOException e) {
             Logger.throwException(e);
@@ -74,11 +79,11 @@ public class GuardBungee extends Plugin {
                 }
             }
             final Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config_bungee.yml"));
-            Config.FIREWALL = cfg.getBoolean("firewall");
-            Config.FIREWALL_BL = cfg.getString("firewall.command-blacklist");
-            Config.FIREWALL_WL = cfg.getString("firewall.command-whitelist");
-            Config.CONNECT_SPEED = cfg.getInt("speed.connection");
-            Config.PING_SPEED = cfg.getInt("speed.ping-speed");
+            Config.firewallEnabled = cfg.getBoolean("firewall");
+            Config.firewallBlacklistCommand = cfg.getString("firewall.command-blacklist");
+            Config.firewallWhitelistCommand = cfg.getString("firewall.command-whitelist");
+            Config.connectSpeed = cfg.getInt("speed.connection");
+            Config.pingSpeed = cfg.getInt("speed.ping-speed");
             Config.ANTIBOT_QUERY_1 = cfg.getString("antibot.checkers.1.adress");
             Config.ANTIBOT_QUERY_2 = cfg.getString("antibot.checkers.2.adress");
             Config.ANTIBOT_QUERY_3 = cfg.getString("antibot.checkers.3.adress");
@@ -88,6 +93,22 @@ public class GuardBungee extends Plugin {
             Config.ANTIBOT = cfg.getBoolean("antibot.enabled");
             Config.ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
             Config.NAME_CONTAINS = cfg.getStringList("antibot.name-contains");
+
+            final String path = this.getDataFolder() + "/cloud.yml";
+            FileManager.createFile(path);
+            final CustomFile cloudFile = FileManager.getFile(path);
+            if (!cloudFile.exist()) {
+                cloudFile.create();
+                cloudFile.getConfig().set("cloud.enabled", true);
+                cloudFile.getConfig().set("cloud.sync-every-seconds", 1800);
+                cloudFile.getConfig().set("cloud.features.blacklist", true);
+                cloudFile.save();
+            }
+
+            Config.CLOUD_ENABLED = cloudFile.getConfig().getBoolean("cloud.enabled");
+            Config.CLOUD_BLACKLIST = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
+            Config.CLOUD_TIME = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
+
         } catch (Exception e) {
             Logger.throwException(e);
         }
