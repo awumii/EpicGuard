@@ -15,7 +15,7 @@ public class Notificator {
             final User u = UserManager.getUser(p);
             if (u.isNotifications()) {
                 if (p.hasPermission(GuardBukkit.PERMISSION)) {
-                    TitleAPI.sendTitle(p, 0, 20, 20, title, subtitle);
+                    TitleAPI.sendTitle(p, 0, 20, 40, title, subtitle);
                 }
             }
         }

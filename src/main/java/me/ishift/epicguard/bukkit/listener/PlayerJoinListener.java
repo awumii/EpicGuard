@@ -26,20 +26,31 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         try {
             final Player p = e.getPlayer();
+            UserManager.addUser(p);
+            final User u = UserManager.getUser(p);
 
             if (NMSUtil.isOldVersion()) {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
             }
 
             final String adress = p.getAddress().getAddress().getHostAddress();
-            UserManager.addUser(p);
+            u.setIp(adress);
+
             Updater.notify(p);
             AttackManager.handleAttack(AttackType.JOIN);
 
-            final User u = UserManager.getUser(p);
+            if (Config.AUTO_WHITELIST) {
+                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+                    if (p.isOnline() && !BlacklistManager.checkWhitelist(adress)) {
+                        Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
+                        BlacklistManager.addWhitelist(adress);
+                    }
+                }, Config.AUTO_WHITELIST_TIME);
+            }
+
             // IP History manager
             if (Config.IP_HISTORY_ENABLE) {
-                List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
+                final List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
                 if (!history.contains(adress)) {
                     if (!history.isEmpty()) {
                         Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
@@ -53,11 +64,12 @@ public class PlayerJoinListener implements Listener {
             // Brand Verification
             final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
             if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
-                Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
+                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (p.isOnline()) {
                         if (u.getBrand().equals("none")) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
                             Logger.info("Exception occurred in " + p.getName() + "'s connection!");
+                            return;
                         }
                         for (String string : customFile.getConfig().getStringList("blocked-brands")) {
                             if (u.getBrand().equalsIgnoreCase(string)) {
@@ -66,18 +78,6 @@ public class PlayerJoinListener implements Listener {
                         }
                     }
                 }, 30L);
-            }
-
-            // Auto whitelisting
-            if (Config.AUTO_WHITELIST) {
-                Bukkit.getScheduler().runTaskLater(GuardBukkit.getPlugin(GuardBukkit.class), () -> {
-                    if (p.isOnline()) {
-                        if (!BlacklistManager.checkWhitelist(adress)) {
-                            Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
-                            BlacklistManager.addWhitelist(adress);
-                        }
-                    }
-                }, Config.AUTO_WHITELIST_TIME);
             }
         } catch (Exception ex) {
             Logger.throwException(ex);

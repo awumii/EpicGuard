@@ -2,6 +2,7 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.AttackType;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public class ServerListPingListener implements Listener {
     public void onPing(ServerListPingEvent e) {
         try {
             AttackManager.handleAttack(AttackType.PING);
-            if (AttackManager.isUnderAttack()) {
+            if (AttackManager.getPingPerSecond() > Config.PING_SPEED) {
                 e.setMotd("");
                 e.setMaxPlayers(0);
             }

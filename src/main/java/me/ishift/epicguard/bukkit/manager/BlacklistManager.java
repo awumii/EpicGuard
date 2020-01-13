@@ -19,25 +19,29 @@ public class BlacklistManager {
     }
 
     public static void add(String adress) {
-        IP_BL.add(adress);
-        DataFileManager.getDataFile().set("blacklist", IP_BL);
-        if (Config.FIREWALL) {
-            try {
-                Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        if (!IP_BL.contains(adress)) {
+            IP_BL.add(adress);
+            DataFileManager.getDataFile().set("blacklist", IP_BL);
+            if (Config.FIREWALL) {
+                try {
+                    Runtime.getRuntime().exec(Config.FIREWALL_BL.replace("{IP}", adress));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
 
     public static void addWhitelist(String adress) {
-        IP_WL.add(adress);
-        DataFileManager.getDataFile().set("whitelist", IP_WL);
-        if (Config.FIREWALL) {
-            try {
-                Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        if (!IP_WL.contains(adress)) {
+            IP_WL.add(adress);
+            DataFileManager.getDataFile().set("whitelist", IP_WL);
+            if (Config.FIREWALL) {
+                try {
+                    Runtime.getRuntime().exec(Config.FIREWALL_WL.replace("{IP}", adress));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         IP_BL.remove(adress);

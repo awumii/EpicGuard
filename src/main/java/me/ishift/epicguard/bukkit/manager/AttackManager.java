@@ -46,6 +46,14 @@ public class AttackManager {
         attackMode = bol;
     }
 
+    public static void setConnectPerSecond(int connectPerSecond) {
+        AttackManager.connectPerSecond = connectPerSecond;
+    }
+
+    public static void setTotalBots(int totalBots) {
+        AttackManager.totalBots = totalBots;
+    }
+
     public static List<String> getRejoinData() {
         return rejoinData;
     }

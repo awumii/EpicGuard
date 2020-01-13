@@ -12,7 +12,6 @@ import java.util.List;
 public class DataFileManager {
     public static int blockedBots = 0;
     public static int checkedConnections = 0;
-    public static List<String> notificationUsers = new ArrayList<>();
     private static File file;
     private static FileConfiguration fileConfiguration;
 
@@ -41,14 +40,6 @@ public class DataFileManager {
         DataFileManager.checkedConnections = checkedConnections;
     }
 
-    public static List<String> getNotificationUsers() {
-        return notificationUsers;
-    }
-
-    public static void setNotificationUsers(List<String> notificationUsers) {
-        DataFileManager.notificationUsers = notificationUsers;
-    }
-
     public static FileConfiguration getDataFile() {
         return fileConfiguration;
     }
@@ -58,7 +49,6 @@ public class DataFileManager {
             getDataFile().set("blocked-bots", getBlockedBots());
             getDataFile().set("checked-connections", getCheckedConnections());
             getDataFile().set("rejoin-data", AttackManager.getRejoinData());
-            getDataFile().set("notifications", getNotificationUsers());
             getDataFile().save(file);
         } catch (Exception e) {
             Logger.throwException(e);
@@ -71,9 +61,5 @@ public class DataFileManager {
         setBlockedBots(getDataFile().getInt("blocked-bots"));
         setCheckedConnections(getDataFile().getInt("checked-connections"));
         AttackManager.setRejoinData(getDataFile().getStringList("rejoin-data"));
-        setNotificationUsers(getDataFile().getStringList("notifications"));
-        if (!getNotificationUsers().contains("do_not_touch__")) {
-            notificationUsers.add("do_not_touch__");
-        }
     }
 }
