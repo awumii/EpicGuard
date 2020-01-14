@@ -74,33 +74,33 @@ public class GuiMain {
         List<String> l7 = new ArrayList<>();
         l7.add("");
         for (OfflinePlayer player : Bukkit.getOperators()) {
-            l7.add(ChatUtil.fix("&8>> &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&cOffline") + "&8]"));
+            l7.add(ChatUtil.fix("&8>> &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]"));
         }
         ItemStack i7 = new ItemBuilder(Material.DIAMOND_CHESTPLATE).setTitle("&8>> &cOP List &8«").addLores(l7).build();
 
         List<String> l8 = new ArrayList<>();
         l8.add("");
-        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (Config.antibot ? "&aOn" : "&cOff")));
-        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (Config.firewallEnabled ? "&aOn" : "&cOff")));
+        l8.add(ChatUtil.fix("&8>> &7Antibot modules&8: " + (Config.antibot ? "&aOn" : "&4Off")));
+        l8.add(ChatUtil.fix("&8>> &7Firewall&8: " + (Config.firewallEnabled ? "&aOn" : "&4Off")));
         l8.add(ChatUtil.fix("&8>> &7Blacklisted IPs&8: &c" + BlacklistManager.IP_BL.size()));
         l8.add(ChatUtil.fix("&8>> &7Whitelisted IPs&8: &a" + BlacklistManager.IP_WL.size()));
         ItemStack i8 = new ItemBuilder(Material.LEATHER_CHESTPLATE).setTitle("&8>> &6Antibot Information &8«").addLores(l8).build();
 
         List<String> l9 = new ArrayList<>();
         l9.add("");
-        l9.add(ChatUtil.fix("&7Antibot&8: &b" + Config.antibot));
-        l9.add(ChatUtil.fix("&7Updater&8: &b" + Config.updater));
-        l9.add(ChatUtil.fix("&7Anti-TAB&8: &b" + Config.tabCompleteBlock));
-        l9.add(ChatUtil.fix("&7Blocked Commands&8: &b" + Config.blockedCommandsEnable));
-        l9.add(ChatUtil.fix("&7Allowed Commands&8: &b" + Config.allowedCommandsEnable));
-        l9.add(ChatUtil.fix("&7OP Protection&8: &b" + Config.opProtectionEnable));
-        l9.add(ChatUtil.fix("&7PEX Protection&8: &b" + Config.pexProtection));
-        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &b" + Config.autoWhitelist));
-        l9.add(ChatUtil.fix("&7Firewall&8: &b" + Config.firewallEnabled));
-        l9.add(ChatUtil.fix("&7Force Rejoin&8: &b" + Config.forceRejoin));
-        l9.add(ChatUtil.fix("&7IP History&8: &b" + Config.ipHistoryEnable));
-        l9.add(ChatUtil.fix("&7GEO Option&8: &b" + Config.countryMode));
-        ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&cToggled Modules").addLores(l9).build();
+        l9.add(ChatUtil.fix("&aAntibot&8: &6" + Config.antibot));
+        l9.add(ChatUtil.fix("&7Updater&8: &6" + Config.updater));
+        l9.add(ChatUtil.fix("&7Anti-TAB&8: &6" + Config.tabCompleteBlock));
+        l9.add(ChatUtil.fix("&7Blocked Commands&8: &6" + Config.blockedCommandsEnable));
+        l9.add(ChatUtil.fix("&7Allowed Commands&8: &6" + Config.allowedCommandsEnable));
+        l9.add(ChatUtil.fix("&7OP Protection&8: &6" + Config.opProtectionEnable));
+        l9.add(ChatUtil.fix("&7PEX Protection&8: &6" + Config.pexProtection));
+        l9.add(ChatUtil.fix("&7Auto Whitelist&8: &6" + Config.autoWhitelist));
+        l9.add(ChatUtil.fix("&7Firewall&8: &6" + Config.firewallEnabled));
+        l9.add(ChatUtil.fix("&7Force Rejoin&8: &6" + Config.forceRejoin));
+        l9.add(ChatUtil.fix("&7IP History&8: &6" + Config.ipHistoryEnable));
+        l9.add(ChatUtil.fix("&7GEO Option&8: &6" + Config.countryMode));
+        ItemStack i9 = new ItemBuilder(Material.REDSTONE).setTitle("&8>> &aToggled Modules &8«").addLores(l9).build();
 
         eq.setItem(10, i1);
         eq.setItem(12, i2);

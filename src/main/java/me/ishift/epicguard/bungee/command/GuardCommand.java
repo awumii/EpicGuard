@@ -17,7 +17,7 @@ public class GuardCommand extends Command {
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
         if (strings.length < 1) {
-            commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&aYou are running EPICGUARD vBungee! (By iShift)")));
+            commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&aYou are running EPICGUARD vBungee! (By iShift and ruzekh)")));
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cCONNECTION/s -> &6" + BungeeAttack.getConnectionPerSecond())));
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cPING/s -> &6" + BungeeAttack.getPingPerSecond())));
             commandSender.sendMessage(new TextComponent(ChatUtil.fix(MessagesBungee.PREFIX + "&cATTACK -> &6" + BungeeAttack.isAttack())));
