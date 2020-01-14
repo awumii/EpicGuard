@@ -71,7 +71,7 @@ public class PlayerJoinListener implements Listener {
                 if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
                     if (u.getBrand().equals("none")) {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
-                        Logger.info("Exception occurred in " + p.getName() + "'s connection!");
+                        Logger.info("Exception occurred in " + p.getName() + "'s connection! If you think this is an issue go to /plugins/EpicGuard/brand.yml file, and replace every 'true' with false. Do NOT report this! This is not a bug!");
                         return;
                     }
                 }
