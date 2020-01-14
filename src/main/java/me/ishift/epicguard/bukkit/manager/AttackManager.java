@@ -1,6 +1,7 @@
 package me.ishift.epicguard.bukkit.manager;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.universal.AttackType;
@@ -68,6 +69,7 @@ public class AttackManager {
         Logger.debug("- " + reason + " - DETECTED & BLOCKED");
         if (blacklist) {
             BlacklistManager.add(adress);
+            HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }
         if (getConnectPerSecond() > 5) {

@@ -10,6 +10,7 @@ import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
@@ -26,6 +27,28 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         try {
             final Player p = e.getPlayer();
+            final String adress = p.getAddress().getAddress().getHostAddress();
+
+            if (Config.antibot) {
+                if (NameContainsCheck.check(p.getName())) {
+                    e.setJoinMessage("");
+                    final StringBuilder sb = new StringBuilder();
+                    for (String s : MessagesBukkit.MESSAGE_KICK_NAMECONTAINS) {
+                        sb.append(ChatUtil.fix(s)).append("\n");
+                    }
+                    p.kickPlayer(sb.toString());
+                }
+
+                if (BlacklistManager.check(adress)) {
+                    e.setJoinMessage("");
+                    final StringBuilder sb = new StringBuilder();
+                    for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
+                        sb.append(ChatUtil.fix(s)).append("\n");
+                    }
+                    p.kickPlayer(sb.toString());
+                }
+            }
+
             UserManager.addUser(p);
             final User u = UserManager.getUser(p);
 
@@ -33,7 +56,6 @@ public class PlayerJoinListener implements Listener {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
             }
 
-            final String adress = p.getAddress().getAddress().getHostAddress();
             u.setIp(adress);
 
             Updater.notify(p);
@@ -41,7 +63,7 @@ public class PlayerJoinListener implements Listener {
 
             if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (p.isOnline() && !BlacklistManager.checkWhitelist(adress)) {
+                    if (p.isOnline()) {
                         Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
                         BlacklistManager.addWhitelist(adress);
                     }

@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class Updater {
-    public static final String currentVersion = GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion();
+    public static final String currentVersion = GuardBukkit.getInstance().getDescription().getVersion();
     public static String lastestVersion;
     public static boolean updateAvaible = false;
 
@@ -28,11 +28,11 @@ public class Updater {
         if (Config.updater) {
             if (p.hasPermission(GuardBukkit.PERMISSION)) {
                 if (updateAvaible) {
-                    p.sendMessage(ChatUtil.fix("&7&m----------------------------------------------"));
+                    p.sendMessage(ChatUtil.fix("&8&m----------------------------------------------"));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your EpicGuard version &8(&c" + currentVersion + "&8) &7is outdated! New version is avaible on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features:"));
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&6https://www.spigotmc.org/resources/72369"));
-                    p.sendMessage(ChatUtil.fix("&7&m----------------------------------------------"));
+                    p.sendMessage(ChatUtil.fix("&8&m----------------------------------------------"));
                 }
             }
         }
