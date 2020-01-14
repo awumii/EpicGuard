@@ -49,7 +49,7 @@ public class GuardBukkit extends JavaPlugin {
             new Metrics(this);
 
             NMSUtil.init();
-            new DataFileManager(this.getDataFolder() + "/data/data_flat.yml").load();
+            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
             DataFileManager.save();
             MessagesBukkit.load();
 

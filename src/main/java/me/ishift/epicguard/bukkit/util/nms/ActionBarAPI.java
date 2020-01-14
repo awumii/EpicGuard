@@ -88,13 +88,13 @@ public class ActionBarAPI {
     }
 
     public static void sendActionBarToAllPlayers(String message, int duration, String permission) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().forEach(p -> {
             final User u = UserManager.getUser(p);
-            if (u.isNotifications()) {
+            if (u != null && u.isNotifications()) {
                 if (p.hasPermission(permission)) {
                     sendActionBar(p, message, duration);
                 }
             }
-        }
+        });
     }
 }

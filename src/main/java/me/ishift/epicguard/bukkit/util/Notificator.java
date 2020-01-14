@@ -11,25 +11,25 @@ import org.bukkit.entity.Player;
 
 public class Notificator {
     public static void title(String title, String subtitle) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().forEach(p -> {
             final User u = UserManager.getUser(p);
-            if (u.isNotifications()) {
+            if (u != null && u.isNotifications()) {
                 if (p.hasPermission(GuardBukkit.PERMISSION)) {
                     TitleAPI.sendTitle(p, 0, 20, 40, title, subtitle);
                 }
             }
-        }
+        });
     }
 
     public static void broadcast(String text) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        Bukkit.getOnlinePlayers().forEach(p -> {
             final User u = UserManager.getUser(p);
-            if (u.isNotifications()) {
+            if (u != null && u.isNotifications()) {
                 if (p.hasPermission(GuardBukkit.PERMISSION)) {
                     p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
                 }
             }
-        }
+        });
     }
 
     public static void action(String text) {

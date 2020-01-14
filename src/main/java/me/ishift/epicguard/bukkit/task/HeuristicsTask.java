@@ -7,6 +7,7 @@ import me.ishift.epicguard.universal.Config;
 public class HeuristicsTask implements Runnable {
     private static int record = 0;
     private static int time = 0;
+    private static int blacklistInc = 0;
 
     @Override
     public void run() {
@@ -42,5 +43,13 @@ public class HeuristicsTask implements Runnable {
 
     public static void setTime(int time) {
         HeuristicsTask.time = time;
+    }
+
+    public static int getBlacklistInc() {
+        return blacklistInc;
+    }
+
+    public static void setBlacklistInc(int blacklistInc) {
+        HeuristicsTask.blacklistInc = blacklistInc;
     }
 }

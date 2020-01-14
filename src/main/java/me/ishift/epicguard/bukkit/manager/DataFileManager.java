@@ -6,8 +6,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DataFileManager {
     public static int blockedBots = 0;
@@ -15,13 +13,14 @@ public class DataFileManager {
     private static File file;
     private static FileConfiguration fileConfiguration;
 
-    public DataFileManager(String cfgFile) throws IOException {
+    public static void init(String cfgFile) throws IOException {
         final File configurationFile = new File(cfgFile);
         if (!configurationFile.exists()) {
             configurationFile.createNewFile();
         }
         file = configurationFile;
         fileConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
+        load();
     }
 
     public static int getBlockedBots() {
@@ -55,7 +54,7 @@ public class DataFileManager {
         }
     }
 
-    public void load() {
+    public static void load() {
         BlacklistManager.IP_BL = getDataFile().getStringList("blacklist");
         BlacklistManager.IP_WL = getDataFile().getStringList("whitelist");
         setBlockedBots(getDataFile().getInt("blocked-bots"));
