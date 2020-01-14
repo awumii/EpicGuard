@@ -61,7 +61,7 @@ public class GuardBungee extends Plugin {
 
             this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 30L, TimeUnit.SECONDS);
             this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1L, 300L, TimeUnit.MILLISECONDS);
-            this.getProxy().getScheduler().schedule(this, new CloudTask(), 1L, Config.CLOUD_TIME, TimeUnit.SECONDS);
+            this.getProxy().getScheduler().schedule(this, new CloudTask(), 1L, Config.cloudTime, TimeUnit.SECONDS);
             this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
         } catch (IOException e) {
             Logger.throwException(e);
@@ -84,15 +84,15 @@ public class GuardBungee extends Plugin {
             Config.firewallWhitelistCommand = cfg.getString("firewall.command-whitelist");
             Config.connectSpeed = cfg.getInt("speed.connection");
             Config.pingSpeed = cfg.getInt("speed.ping-speed");
-            Config.ANTIBOT_QUERY_1 = cfg.getString("antibot.checkers.1.adress");
-            Config.ANTIBOT_QUERY_2 = cfg.getString("antibot.checkers.2.adress");
-            Config.ANTIBOT_QUERY_3 = cfg.getString("antibot.checkers.3.adress");
-            Config.ANTIBOT_QUERY_CONTAINS = cfg.getStringList("antibot.checkers.responses");
-            Config.COUNTRIES = cfg.getStringList("countries.list");
-            Config.COUNTRY_MODE = cfg.getString("countries.mode");
-            Config.ANTIBOT = cfg.getBoolean("antibot.enabled");
-            Config.ATTACK_TIMER = cfg.getLong("speed.attack-timer-reset");
-            Config.NAME_CONTAINS = cfg.getStringList("antibot.name-contains");
+            Config.antibotQuery1 = cfg.getString("antibot.checkers.1.adress");
+            Config.antibotQuery2 = cfg.getString("antibot.checkers.2.adress");
+            Config.antibotQuery3 = cfg.getString("antibot.checkers.3.adress");
+            Config.antibotQueryContains = cfg.getStringList("antibot.checkers.responses");
+            Config.countryList = cfg.getStringList("countries.list");
+            Config.countryMode = cfg.getString("countries.mode");
+            Config.antibot = cfg.getBoolean("antibot.enabled");
+            Config.attackResetTimer = cfg.getLong("speed.attack-timer-reset");
+            Config.blockedNames = cfg.getStringList("antibot.name-contains");
 
             final String path = this.getDataFolder() + "/cloud.yml";
             FileManager.createFile(path);
@@ -105,9 +105,9 @@ public class GuardBungee extends Plugin {
                 cloudFile.save();
             }
 
-            Config.CLOUD_ENABLED = cloudFile.getConfig().getBoolean("cloud.enabled");
-            Config.CLOUD_BLACKLIST = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
-            Config.CLOUD_TIME = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
+            Config.cloudEnabled = cloudFile.getConfig().getBoolean("cloud.enabled");
+            Config.cloudBlacklist = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
+            Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
 
         } catch (Exception e) {
             Logger.throwException(e);

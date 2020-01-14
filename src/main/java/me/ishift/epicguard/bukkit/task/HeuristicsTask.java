@@ -10,16 +10,19 @@ public class HeuristicsTask implements Runnable {
 
     @Override
     public void run() {
-        Notificator.action("&8--=[ &7Listening for attack... &8]=--");
+        Notificator.action("&8--=[ &7Listening... &8]=--");
         if (AttackManager.isUnderAttack()) {
             time++;
         }
-        final int diff = AttackManager.getConnectPerSecond() - record;
 
+        if (!Config.heuristicsEnabled) {
+            return;
+        }
+
+        final int diff = AttackManager.getConnectPerSecond() - record;
         if (AttackManager.getConnectPerSecond() > 0) {
             final int percent = record * 100 / AttackManager.getConnectPerSecond();
-
-            if (AttackManager.getConnectPerSecond() > record && diff > Config.connectSpeed) {
+            if (AttackManager.getConnectPerSecond() > record && diff > Config.heuristicsDiff) {
                 Notificator.broadcast("&7DETECTED: &e" + record + " &7-> &e" + AttackManager.getConnectPerSecond() + " &7(&a" + percent + "%&7) per second (&b" + time + "sec&7)");
                 record = AttackManager.getConnectPerSecond();
                 if (!AttackManager.isUnderAttack()) {

@@ -4,7 +4,7 @@ import me.ishift.epicguard.universal.Config;
 
 public class NameContainsCheck {
     public static boolean check(String name) {
-        for (String string : Config.NAME_CONTAINS) {
+        for (String string : Config.blockedNames) {
             if (name.toLowerCase().contains(string.toLowerCase())) {
                 return true;
             }

@@ -5,7 +5,6 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
@@ -93,7 +92,7 @@ public class GuardCommand implements CommandExecutor {
                                 e.printStackTrace();
                             }
                             p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                            if (Config.IP_HISTORY_ENABLE) {
+                            if (Config.ipHistoryEnable) {
                                 p.sendMessage(ChatUtil.fix(""));
                                 p.sendMessage(ChatUtil.fix("&6[IP History]"));
                                 for (String adress : UserManager.getUser(player).getAdresses()) {

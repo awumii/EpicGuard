@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.ishift</groupId>
   <artifactId>EpicGuard</artifactId>
-  <version>3.3.0-b2</version>
+  <version>3.4.0-b1</version>
   <build>
     <resources>
       <resource>

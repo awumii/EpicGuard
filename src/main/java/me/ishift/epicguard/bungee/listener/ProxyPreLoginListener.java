@@ -46,7 +46,7 @@ public class ProxyPreLoginListener implements Listener {
                 return;
             }
 
-            if (!Config.ANTIBOT) {
+            if (!Config.antibot) {
                 return;
             }
 
