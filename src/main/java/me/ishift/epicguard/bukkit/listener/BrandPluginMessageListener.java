@@ -13,7 +13,7 @@ public class BrandPluginMessageListener implements PluginMessageListener {
         try {
             p.getClass().getMethod("addChannel", String.class).invoke(p, channel);
         } catch (Exception e) {
-            Logger.debug("Exception in class: " + e.getClass().getName());
+            Logger.info("DISABLE 'channel-verification' in brand.yml fil! Exception in class: " + e.getClass().getName());
         }
     }
 
@@ -24,7 +24,7 @@ public class BrandPluginMessageListener implements PluginMessageListener {
             User u = UserManager.getUser(player);
             u.setBrand(brand);
         } catch (Exception e) {
-            Logger.debug("Exception in class: " + e.getClass().getName());
+            Logger.info("DISABLE 'channel-verification' in brand.yml fil! Exception in class: " + e.getClass().getName());
         }
     }
 }
