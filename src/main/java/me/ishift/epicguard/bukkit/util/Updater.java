@@ -15,7 +15,7 @@ public class Updater {
     public static boolean updateAvaible = false;
 
     public static void checkForUpdates() {
-        if (Config.UPDATER) {
+        if (Config.updater) {
             lastestVersion = lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
             if (updateAvaible) {
@@ -25,7 +25,7 @@ public class Updater {
     }
 
     public static void notify(Player p) {
-        if (Config.UPDATER) {
+        if (Config.updater) {
             if (p.hasPermission(GuardBukkit.PERMISSION)) {
                 if (updateAvaible) {
                     p.sendMessage(ChatUtil.fix("&7&m----------------------------------------------"));

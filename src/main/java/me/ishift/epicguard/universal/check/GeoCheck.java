@@ -8,16 +8,16 @@ public class GeoCheck {
      * @return false if not detected, true if detected.
      */
     public static boolean check(String country) {
-        if (Config.COUNTRY_MODE.equals("DISABLED")) {
+        if (Config.countryMode.equals("DISABLED")) {
             return false;
         }
-        if (Config.COUNTRY_MODE.equals("WHITELIST")) {
-            if (!Config.COUNTRIES.contains(country)) {
+        if (Config.countryMode.equals("WHITELIST")) {
+            if (!Config.countryList.contains(country)) {
                 return true;
             }
         }
-        if (Config.COUNTRY_MODE.equals("BLACKLIST")) {
-            return Config.COUNTRIES.contains(country);
+        if (Config.countryMode.equals("BLACKLIST")) {
+            return Config.countryList.contains(country);
         }
         return false;
     }

@@ -53,7 +53,7 @@ public class PreLoginListener implements Listener {
                 return;
             }
 
-            if (!Config.ANTIBOT) {
+            if (!Config.antibot) {
                 return;
             }
 
@@ -67,7 +67,7 @@ public class PreLoginListener implements Listener {
                 return;
             }
 
-            if (Config.FORCE_REJOIN) {
+            if (Config.forceRejoin) {
                 if (!AttackManager.rejoinData.contains(name)) {
                     AttackManager.handleDetection("Force Rejoin", name, adress, event, KickReason.VERIFY, false);
                     AttackManager.rejoinData.add(name);

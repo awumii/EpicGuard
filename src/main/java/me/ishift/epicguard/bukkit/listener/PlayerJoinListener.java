@@ -49,7 +49,7 @@ public class PlayerJoinListener implements Listener {
             }
 
             // IP History manager
-            if (Config.IP_HISTORY_ENABLE) {
+            if (Config.ipHistoryEnable) {
                 final List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
                 if (!history.contains(adress)) {
                     if (!history.isEmpty()) {
@@ -63,22 +63,26 @@ public class PlayerJoinListener implements Listener {
 
             // Brand Verification
             final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
-            if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
-                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (p.isOnline()) {
-                        if (u.getBrand().equals("none")) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
-                            Logger.info("Exception occurred in " + p.getName() + "'s connection!");
-                            return;
-                        }
-                        for (String string : customFile.getConfig().getStringList("blocked-brands")) {
-                            if (u.getBrand().equalsIgnoreCase(string)) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("blocked-brands.punish")).replace("{PLAYER}", p.getName()));
-                            }
+            Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+                if (!p.isOnline()) {
+                    return;
+                }
+
+                if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
+                    if (u.getBrand().equals("none")) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
+                        Logger.info("Exception occurred in " + p.getName() + "'s connection!");
+                        return;
+                    }
+                }
+                if (customFile.getConfig().getBoolean("blocked-brands.enabled")) {
+                    for (String string : customFile.getConfig().getStringList("blocked-brands")) {
+                        if (u.getBrand().equalsIgnoreCase(string)) {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("blocked-brands.punish")).replace("{PLAYER}", p.getName()));
                         }
                     }
-                }, 30L);
-            }
+                }
+            }, 50L);
         } catch (Exception ex) {
             Logger.throwException(ex);
         }

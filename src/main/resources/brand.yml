@@ -1,0 +1,8 @@
+channel-verification:
+  enabled: true
+  punish: kick {PLAYER} &cException occurred in your connection, please rejoin!
+blocked-brands:
+  enabled: true
+  punish: kick {PLAYER} &cYour client is not allowed on this server!
+  list:
+    - some_blocked_brand

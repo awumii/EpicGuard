@@ -103,30 +103,30 @@ public class GuardBukkit extends JavaPlugin {
         Config.pingSpeed = config.getInt("speed.ping-speed");
         Config.autoWhitelist = config.getBoolean("auto-whitelist.enabled");
         Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
-        Config.ANTIBOT_QUERY_1 = config.getString("antibot.checkers.1.adress");
-        Config.ANTIBOT_QUERY_2 = config.getString("antibot.checkers.2.adress");
-        Config.ANTIBOT_QUERY_3 = config.getString("antibot.checkers.3.adress");
-        Config.ANTIBOT_QUERY_CONTAINS = config.getStringList("antibot.checkers.responses");
-        Config.COUNTRIES = config.getStringList("countries.list");
-        Config.COUNTRY_MODE = config.getString("countries.mode");
-        Config.ANTIBOT = config.getBoolean("antibot.enabled");
-        Config.UPDATER = config.getBoolean("updater");
-        Config.ATTACK_TIMER = config.getLong("speed.attack-timer-reset");
+        Config.antibotQuery1 = config.getString("antibot.checkers.1.adress");
+        Config.antibotQuery2 = config.getString("antibot.checkers.2.adress");
+        Config.antibotQuery3 = config.getString("antibot.checkers.3.adress");
+        Config.antibotQueryContains = config.getStringList("antibot.checkers.responses");
+        Config.countryList = config.getStringList("countries.list");
+        Config.countryMode = config.getString("countries.mode");
+        Config.antibot = config.getBoolean("antibot.enabled");
+        Config.updater = config.getBoolean("updater");
+        Config.attackResetTimer = config.getLong("speed.attack-timer-reset");
         Config.joinSpeed = config.getInt("speed.join-speed");
-        Config.TAB_COMPLETE_BLOCK = config.getBoolean("fully-block-tab-complete");
-        Config.BLOCKED_COMMANDS = config.getStringList("command-protection.list");
-        Config.ALLOWED_COMMANDS = config.getStringList("allowed-commands.list");
-        Config.OP_PROTECTION_LIST = config.getStringList("op-protection.list");
-        Config.OP_PROTECTION_ALERT = config.getString("op-protection.alert");
-        Config.OP_PROTECTION_COMMAND = config.getString("op-protection.command");
-        Config.ALLOWED_COMMANDS_BYPASS = config.getString("allowed-commands.bypass");
-        Config.BLOCKED_COMMANDS_ENABLE = config.getBoolean("command-protection.enabled");
-        Config.ALLOWED_COMMANDS_ENABLE = config.getBoolean("allowed-commands.enabled");
-        Config.OP_PROTECTION_ENABLE = config.getBoolean("op-protection.enabled");
-        Config.IP_HISTORY_ENABLE = config.getBoolean("ip-history.enabled");
-        Config.FORCE_REJOIN = config.getBoolean("antibot.force-rejoin");
-        Config.PEX_PROTECTION = config.getBoolean("op-protection.pex-protection");
-        Config.NAME_CONTAINS = config.getStringList("antibot.name-contains");
+        Config.tabCompleteBlock = config.getBoolean("fully-block-tab-complete");
+        Config.blockedCommands = config.getStringList("command-protection.list");
+        Config.allowedCommands = config.getStringList("allowed-commands.list");
+        Config.opProtectionList = config.getStringList("op-protection.list");
+        Config.opProtectionAlert = config.getString("op-protection.alert");
+        Config.opProtectionCommand = config.getString("op-protection.command");
+        Config.allowedCommandsBypass = config.getString("allowed-commands.bypass");
+        Config.blockedCommandsEnable = config.getBoolean("command-protection.enabled");
+        Config.allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
+        Config.opProtectionEnable = config.getBoolean("op-protection.enabled");
+        Config.ipHistoryEnable = config.getBoolean("ip-history.enabled");
+        Config.forceRejoin = config.getBoolean("antibot.force-rejoin");
+        Config.pexProtection = config.getBoolean("op-protection.pex-protection");
+        Config.blockedNames = config.getStringList("antibot.name-contains");
 
         final String path = getInstance().getDataFolder() + "/cloud.yml";
         FileManager.createFile(path);
@@ -136,21 +136,23 @@ public class GuardBukkit extends JavaPlugin {
             cloudFile.getConfig().set("cloud.enabled", true);
             cloudFile.getConfig().set("cloud.sync-every-seconds", 1800);
             cloudFile.getConfig().set("cloud.features.blacklist", true);
+            cloudFile.getConfig().set("heuristics.enabled", true);
+            cloudFile.getConfig().set("heuristics.min-difference", 7);
             cloudFile.save();
         }
 
-        Config.CLOUD_ENABLED = cloudFile.getConfig().getBoolean("cloud.enabled");
-        Config.CLOUD_BLACKLIST = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
-        Config.CLOUD_TIME = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
-        System.out.println(Config.CLOUD_TIME);
-        System.out.println(Config.CLOUD_ENABLED);
+        Config.cloudEnabled = cloudFile.getConfig().getBoolean("cloud.enabled");
+        Config.cloudBlacklist = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
+        Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
+        Config.heuristicsEnabled = cloudFile.getConfig().getBoolean("heuristics.enabled");
+        Config.heuristicsDiff = cloudFile.getConfig().getInt("heuristics.min-difference");
     }
 
     private void registerTasks() {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventoryTask(), 1L, 40L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.ATTACK_TIMER);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new CloudTask(), 40L, Config.CLOUD_TIME * 20);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new CloudTask(), 40L, Config.cloudTime * 20);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(), 1L, 5000L);
     }
 

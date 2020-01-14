@@ -1,4 +1,4 @@
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.universal.cloud;
 
 import me.ishift.epicguard.universal.util.Logger;
 

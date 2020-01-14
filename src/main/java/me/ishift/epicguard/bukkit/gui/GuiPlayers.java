@@ -35,7 +35,7 @@ public class GuiPlayers {
                 }
                 lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
-                if (Config.IP_HISTORY_ENABLE && user.getAdresses() != null) {
+                if (Config.ipHistoryEnable && user.getAdresses() != null) {
                     lore.add("");
                     lore.add(ChatUtil.fix("&8>> &7IP History:"));
                     for (String adress : user.getAdresses()) {

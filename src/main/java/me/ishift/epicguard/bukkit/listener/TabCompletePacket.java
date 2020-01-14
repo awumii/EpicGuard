@@ -12,7 +12,7 @@ public class TabCompletePacket extends PacketAdapter {
     }
 
     public void onPacketReceiving(final PacketEvent event) {
-        if (Config.TAB_COMPLETE_BLOCK) {
+        if (Config.tabCompleteBlock) {
             event.setCancelled(true);
         }
     }

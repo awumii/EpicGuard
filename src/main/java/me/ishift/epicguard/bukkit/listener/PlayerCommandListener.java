@@ -19,19 +19,19 @@ public class PlayerCommandListener implements Listener {
         final String[] args = cmd.split(" ");
 
         // OP Protection module.
-        if (Config.OP_PROTECTION_ENABLE) {
-            if (!Config.OP_PROTECTION_LIST.contains(player.getName())) {
+        if (Config.opProtectionEnable) {
+            if (!Config.opProtectionList.contains(player.getName())) {
                 if (player.isOp()) {
                     event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(Config.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                     return;
                 }
-                if (player.hasPermission("experimentalpex.detection") && Config.PEX_PROTECTION) {
+                if (player.hasPermission("experimentalpex.detection") && Config.pexProtection) {
                     event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.OP_PROTECTION_COMMAND.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(Config.OP_PROTECTION_ALERT.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
+                    Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
                     return;
                 }
@@ -39,9 +39,9 @@ public class PlayerCommandListener implements Listener {
         }
 
         // Allowed Commands module.
-        if (Config.ALLOWED_COMMANDS_ENABLE) {
-            if (!player.hasPermission(Config.ALLOWED_COMMANDS_BYPASS)) {
-                if (!Config.ALLOWED_COMMANDS.contains(args[0])) {
+        if (Config.allowedCommandsEnable) {
+            if (!player.hasPermission(Config.allowedCommandsBypass)) {
+                if (!Config.allowedCommands.contains(args[0])) {
                     event.setCancelled(true);
                     player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
                     Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
@@ -51,8 +51,8 @@ public class PlayerCommandListener implements Listener {
         }
 
         // Blocked Commands module.
-        if (Config.BLOCKED_COMMANDS_ENABLE) {
-            if (Config.BLOCKED_COMMANDS.contains(args[0])) {
+        if (Config.blockedCommandsEnable) {
+            if (Config.blockedCommands.contains(args[0])) {
                 event.setCancelled(true);
                 player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
                 Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");

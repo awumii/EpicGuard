@@ -9,9 +9,9 @@ import java.util.Scanner;
 public class ProxyCheck {
 
     public static boolean check(String adress) {
-        final String url1 = Config.ANTIBOT_QUERY_1.replace("{IP}", adress);
-        final String url2 = Config.ANTIBOT_QUERY_2.replace("{IP}", adress);
-        final String url3 = Config.ANTIBOT_QUERY_3.replace("{IP}", adress);
+        final String url1 = Config.antibotQuery1.replace("{IP}", adress);
+        final String url2 = Config.antibotQuery2.replace("{IP}", adress);
+        final String url3 = Config.antibotQuery3.replace("{IP}", adress);
 
         return checkUrl(url1) || checkUrl(url2) || checkUrl(url3);
     }
@@ -22,7 +22,7 @@ public class ProxyCheck {
             Logger.debug("# Checking proxy from URL: " + url);
             if (s.hasNextLine()) {
                 while (s.hasNext()) {
-                    if (Config.ANTIBOT_QUERY_CONTAINS.contains(s.next())) {
+                    if (Config.antibotQueryContains.contains(s.next())) {
                         Logger.debug("# Detected Proxy, URL: " + url);
                         return true;
                     }

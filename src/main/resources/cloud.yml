@@ -1,0 +1,8 @@
+cloud:
+  enabled: true
+  sync-every-seconds: 1800
+  features:
+    blacklist: true
+heuristics:
+  enabled: true
+  min-difference: 7
