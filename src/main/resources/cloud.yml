@@ -1,8 +1,17 @@
+# Configuration of EpicCloud - synchronizing and calculating
+# between plugin local data, and plugin's cloud, to increase performance.
 cloud:
+  # Should plugin enable this feature
   enabled: true
+  # Time in seconds before next sync
   sync-every-seconds: 1800
   features:
+    # Enable synchronizing blacklist (recommended)
     blacklist: true
+# Heurisitcs check, allows you to detect bots even faster and decrease bypasses,
 heuristics:
   enabled: true
+  # Minimal difference between current attack speed and fastest attack speed detected
+  # during current bot-attack. Default value is equal to speed.connection in 'config.yml'.
+  # You can experiment with this value, and see what value is best for detecting attacks.
   min-difference: 7
