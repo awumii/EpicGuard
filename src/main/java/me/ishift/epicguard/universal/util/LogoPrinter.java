@@ -6,12 +6,12 @@ import java.util.Scanner;
 public class LogoPrinter {
     public static void print() {
         try {
-            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
+            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/aBnR1d4Q").openStream());
             while (scanner.hasNextLine()) {
                 Logger.info(scanner.nextLine());
             }
             scanner.close();
-            Logger.info("Created by iShift.");
+            Logger.info("Created by iShift and ruzekh");
         } catch (Exception e) {
             Logger.throwException(e);
         }
