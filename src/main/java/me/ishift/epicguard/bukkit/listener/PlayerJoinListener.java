@@ -37,6 +37,7 @@ public class PlayerJoinListener implements Listener {
                         sb.append(ChatUtil.fix(s)).append("\n");
                     }
                     p.kickPlayer(sb.toString());
+                    return;
                 }
 
                 if (BlacklistManager.check(adress)) {
@@ -46,6 +47,7 @@ public class PlayerJoinListener implements Listener {
                         sb.append(ChatUtil.fix(s)).append("\n");
                     }
                     p.kickPlayer(sb.toString());
+                    return;
                 }
             }
 
