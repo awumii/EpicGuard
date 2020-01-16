@@ -6,7 +6,7 @@ attack-title:
   # {MAX} - Number of blocked bots during last attack.
   # {CPS} - Connections Per Second.
   title: "&cSERVER IS BEING ATTACKED &8[&6{CPS}/s&8]"
-  subtitle: "&7Working... &b{MAX} bots &7already blocked..."
+  subtitle: "&7Working... &b{MAX} bots &7blocked during last &e{TIME} seconds..."
 other:
   history-new: "&7Player &e{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
   no-permission: "&cYou don't have permission! If you think this is an issue, report this to administrators."
