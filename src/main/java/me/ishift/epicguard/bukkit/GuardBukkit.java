@@ -1,6 +1,7 @@
 package me.ishift.epicguard.bukkit;
 
 import me.ishift.epicguard.bukkit.command.GuardCommand;
+import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.listener.*;
@@ -34,64 +35,6 @@ public class GuardBukkit extends JavaPlugin {
 
     public static GuardBukkit getInstance() {
         return JavaPlugin.getPlugin(GuardBukkit.class);
-    }
-
-    @Override
-    public void onEnable() {
-        try {
-            final long ms = System.currentTimeMillis();
-            this.saveDefaultConfig();
-            this.createDirectories();
-            new Logger(ServerType.SPIGOT);
-            loadConfig();
-            LogoPrinter.print();
-            new GeoAPI(ServerType.SPIGOT);
-            new Metrics(this);
-
-            NMSUtil.init();
-            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
-            DataFileManager.save();
-            MessagesBukkit.load();
-
-            this.registerListeners();
-            this.registerTasks();
-
-            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
-            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
-
-            this.getCommand("epicguard").setExecutor(new GuardCommand());
-            this.registerBrand();
-
-            new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
-
-            Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
-            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        try {
-            Logger.info("Saving data and disabling plugin.");
-            DataFileManager.save();
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
-    private void registerListeners() {
-        PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvents(new PreLoginListener(), this);
-        pm.registerEvents(new ServerListPingListener(), this);
-        pm.registerEvents(new PlayerJoinListener(), this);
-        pm.registerEvents(new PlayerQuitListener(), this);
-        pm.registerEvents(new InventoryClickListener(), this);
-        pm.registerEvents(new PlayerCommandListener(), this);
-        if (pm.isPluginEnabled("ProtocolLib")) {
-            MiscUtil.registerProtocolLib(this);
-        }
     }
 
     public static void loadConfig() {
@@ -146,6 +89,65 @@ public class GuardBukkit extends JavaPlugin {
         Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
         Config.heuristicsEnabled = cloudFile.getConfig().getBoolean("heuristics.enabled");
         Config.heuristicsDiff = cloudFile.getConfig().getInt("heuristics.min-difference");
+    }
+
+    @Override
+    public void onEnable() {
+        try {
+            final long ms = System.currentTimeMillis();
+            this.saveDefaultConfig();
+            this.createDirectories();
+            new Logger(ServerType.SPIGOT);
+            loadConfig();
+            LogoPrinter.print();
+            new GeoAPI(ServerType.SPIGOT);
+            new Metrics(this);
+
+            NMSUtil.init();
+            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
+            DataFileManager.save();
+            MessagesBukkit.load();
+
+            this.registerListeners();
+            this.registerTasks();
+
+            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
+            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
+
+            this.getCommand("epicguard").setExecutor(new GuardCommand());
+            this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
+            this.registerBrand();
+
+            new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
+
+            Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
+            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            Logger.info("Saving data and disabling plugin.");
+            DataFileManager.save();
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
+    private void registerListeners() {
+        PluginManager pm = this.getServer().getPluginManager();
+        pm.registerEvents(new PreLoginListener(), this);
+        pm.registerEvents(new ServerListPingListener(), this);
+        pm.registerEvents(new PlayerJoinListener(), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
+        pm.registerEvents(new InventoryClickListener(), this);
+        pm.registerEvents(new PlayerCommandListener(), this);
+        if (pm.isPluginEnabled("ProtocolLib")) {
+            MiscUtil.registerProtocolLib(this);
+        }
     }
 
     private void registerTasks() {

@@ -9,6 +9,26 @@ public class HeuristicsTask implements Runnable {
     private static int time = 0;
     private static int blacklistInc = 0;
 
+    public static void setRecord(int i) {
+        record = i;
+    }
+
+    public static int getTime() {
+        return time;
+    }
+
+    public static void setTime(int time) {
+        HeuristicsTask.time = time;
+    }
+
+    public static int getBlacklistInc() {
+        return blacklistInc;
+    }
+
+    public static void setBlacklistInc(int blacklistInc) {
+        HeuristicsTask.blacklistInc = blacklistInc;
+    }
+
     @Override
     public void run() {
         Notificator.action("&8--=[ &7Listening... &8]=--");
@@ -31,25 +51,5 @@ public class HeuristicsTask implements Runnable {
                 }
             }
         }
-    }
-
-    public static void setRecord(int i) {
-        record = i;
-    }
-
-    public static int getTime() {
-        return time;
-    }
-
-    public static void setTime(int time) {
-        HeuristicsTask.time = time;
-    }
-
-    public static int getBlacklistInc() {
-        return blacklistInc;
-    }
-
-    public static void setBlacklistInc(int blacklistInc) {
-        HeuristicsTask.blacklistInc = blacklistInc;
     }
 }

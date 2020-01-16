@@ -27,6 +27,10 @@ public class AttackManager {
         return totalBots;
     }
 
+    public static void setTotalBots(int totalBots) {
+        AttackManager.totalBots = totalBots;
+    }
+
     public static boolean isUnderAttack() {
         return attackMode;
     }
@@ -39,6 +43,10 @@ public class AttackManager {
         return connectPerSecond;
     }
 
+    public static void setConnectPerSecond(int connectPerSecond) {
+        AttackManager.connectPerSecond = connectPerSecond;
+    }
+
     public static int getJoinPerSecond() {
         return joinPerSecond;
     }
@@ -46,14 +54,6 @@ public class AttackManager {
     public static void setAttackMode(boolean bol) {
         Logger.info("Attack mode changed to: " + bol);
         attackMode = bol;
-    }
-
-    public static void setConnectPerSecond(int connectPerSecond) {
-        AttackManager.connectPerSecond = connectPerSecond;
-    }
-
-    public static void setTotalBots(int totalBots) {
-        AttackManager.totalBots = totalBots;
     }
 
     public static List<String> getRejoinData() {

@@ -21,8 +21,13 @@ public class GeoAPI {
         return dbReader;
     }
 
-    public static String getCountryCode(InetSocketAddress address) throws Exception {
-        return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
+    public static String getCountryCode(InetSocketAddress address) {
+        try {
+            return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+        return "Unknown?";
     }
 
     private void create() {

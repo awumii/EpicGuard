@@ -7,7 +7,6 @@ import me.ishift.epicguard.bukkit.util.nms.ActionBarAPI;
 import me.ishift.epicguard.bukkit.util.nms.TitleAPI;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class Notificator {
     public static void title(String title, String subtitle) {

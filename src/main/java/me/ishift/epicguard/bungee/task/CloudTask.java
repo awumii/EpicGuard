@@ -1,9 +1,9 @@
 package me.ishift.epicguard.bungee.task;
 
 import me.ishift.epicguard.bungee.util.FirewallManager;
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.cloud.CloudGet;
 import me.ishift.epicguard.universal.cloud.CloudManager;
-import me.ishift.epicguard.universal.Config;
 
 public class CloudTask implements Runnable {
     @Override

@@ -4,8 +4,6 @@ import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 
