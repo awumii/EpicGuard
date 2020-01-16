@@ -16,6 +16,7 @@ import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class PlayerJoinListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
         try {
             final Player p = e.getPlayer();
@@ -40,6 +41,7 @@ public class PlayerJoinListener implements Listener {
                     for (String s : MessagesBukkit.MESSAGE_KICK_NAMECONTAINS) {
                         sb.append(ChatUtil.fix(s)).append("\n");
                     }
+                    PlayerQuitListener.hiddenNames.add(p.getName());
                     p.kickPlayer(sb.toString());
                     return;
                 }
@@ -50,6 +52,7 @@ public class PlayerJoinListener implements Listener {
                     for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
                         sb.append(ChatUtil.fix(s)).append("\n");
                     }
+                    PlayerQuitListener.hiddenNames.add(p.getName());
                     p.kickPlayer(sb.toString());
                     return;
                 }

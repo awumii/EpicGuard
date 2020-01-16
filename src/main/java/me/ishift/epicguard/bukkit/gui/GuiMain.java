@@ -54,16 +54,8 @@ public class GuiMain {
         ItemStack i4 = new ItemBuilder(Material.BOOK).setTitle("&8>> &aGlobal Statistics &8«").addLores(l4).build();
 
         List<String> l5 = new ArrayList<>();
-        l5.add("");
-        l5.add(ChatUtil.fix("&8>> &7/guard menu &8- &7Opens this GUI."));
-        l5.add(ChatUtil.fix("&8>> &7/guard reload &8- &7Reload config."));
-        l5.add(ChatUtil.fix("&8>> &7/guard antibot &8- &7Antibot information."));
-        l5.add(ChatUtil.fix("&8>> &7/guard op &8- &7See opped players."));
-        l5.add(ChatUtil.fix("&8>> &7/guard status &8- &7Toggle notifications."));
-        l5.add(ChatUtil.fix("&8>> &7/guard player <nick> &8- &7Informations about player."));
-        l5.add(ChatUtil.fix("&8>> &7/guard whitelist <adress> &8- &7Whitelist specified adress."));
-        l5.add(ChatUtil.fix("&8>> &7/guard blacklist <adress> &8- &7Blacklist specified adress."));
-        ItemStack i5 = new ItemBuilder(Material.PAPER).setTitle("&8>> &9Command List &8«").addLores(l5).build();
+        l5.add("&7GUI will be redesigned in the next update, stay tuned!");
+        ItemStack i5 = new ItemBuilder(Material.GOLD_BLOCK).setTitle("&8>> &6Coming soon &8«").addLores(l5).build();
 
         List<String> l6 = new ArrayList<>();
         l6.add("");

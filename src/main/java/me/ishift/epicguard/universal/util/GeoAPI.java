@@ -22,10 +22,12 @@ public class GeoAPI {
     }
 
     public static String getCountryCode(InetSocketAddress address) {
-        try {
-            return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
-        } catch (Exception e) {
-            Logger.throwException(e);
+        if (!address.getAddress().getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+            try {
+                return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
+            } catch (Exception e) {
+                Logger.throwException(e);
+            }
         }
         return "Unknown?";
     }

@@ -11,7 +11,6 @@ import java.util.List;
 public class GuardTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        Bukkit.broadcastMessage(String.valueOf(strings.length));
         if (strings.length == 1) {
             return Arrays.asList("menu", "reload", "whitelist", "blacklist", "player", "op", "status");
         }

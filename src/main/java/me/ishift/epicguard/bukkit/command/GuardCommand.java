@@ -99,7 +99,7 @@ public class GuardCommand implements CommandExecutor {
             BlacklistManager.add(args[1]);
             send(sender, "&7Blacklisted IP: " + args[1]);
         } else {
-            send(sender, "&cCommand not found!");
+            send(sender, "&cCommand not found! Use &6/" + s);
         }
         return true;
     }
