@@ -48,16 +48,14 @@ public class Logger {
     }
 
     public static void throwException(Exception exception) {
-        info("#######  EPICGUARD ERROR LOG #######");
-        info("<> Information: " + exception.getMessage());
-        info("<> Stack Trace:");
-        info(" ");
+        info("");
+        info("<> EpicGuard Error (" + exception.getMessage() + ")");
         for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
             if (stackTraceElement.toString().contains("me.ishift.epicguard")) {
-                info(" " + stackTraceElement.toString());
+                info("<> " + stackTraceElement.toString());
             }
         }
-        info("#######  EPICGUARD ERROR LOG #######");
+        info("");
     }
 
     private void create() {
