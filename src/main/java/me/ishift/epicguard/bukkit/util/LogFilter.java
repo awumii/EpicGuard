@@ -17,7 +17,7 @@ public class LogFilter extends AbstractFilter {
     private String path;
 
     public LogFilter(String path) {
-       this.path = path;
+        this.path = path;
         FileManager.createFile(path);
         final CustomFile file = FileManager.getFile(path);
         if (!file.isExisting()) {

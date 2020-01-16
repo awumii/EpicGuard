@@ -1,143 +1,106 @@
 package me.ishift.epicguard.bukkit.command;
 
-import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
 import java.util.Date;
 
 public class GuardCommand implements CommandExecutor {
+    public static void send(CommandSender sender, String message) {
+        sender.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + message));
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
-        try {
-            if (!(sender instanceof Player)) {
-                Logger.info("You are running EpicGuard v" + GuardBukkit.getPlugin(GuardBukkit.class).getDescription().getVersion());
-                Logger.info("Attack mode: " + AttackManager.isUnderAttack());
-                Logger.info("CPS: " + AttackManager.getConnectPerSecond());
-                Logger.info("JPS: " + AttackManager.getJoinPerSecond());
-                Logger.info("PPS: " + AttackManager.getPingPerSecond());
-                Logger.info("Use this command in-game.");
-                return false;
+        if (args.length == 0) {
+            send(sender, "&7You are running &6EpicGuard v" + GuardBukkit.getInstance().getDescription().getVersion() + " &7by &ciShift & ruzekh&7.");
+            if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
+                send(sender, MessagesBukkit.NO_PERMISSION);
+                return true;
             }
-            Player p = (Player) sender;
-            if (!p.hasPermission(GuardBukkit.PERMISSION)) {
-                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.NO_PERMISSION));
-                return false;
-            }
-            if (args.length > 0) {
-                final User user = UserManager.getUser(p);
-                switch (args[0]) {
-                    case "help":
-                        p.sendMessage(ChatUtil.fix(""));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard menu &8- &7main plugin GUI."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard reload &8- &7reload plugin config."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard save &8- &7save data (history, blacklist etc)."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard op &8- &7list of opped players."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard status &8- &7toggle title and actionbar."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard player <nick> &8- &7check basic info about player."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard whitelist <adress> &8- &7add adress to whitelist and remove from blacklist."));
-                        p.sendMessage(ChatUtil.fix("&8▪ &c/guard blacklist <adress> &8- &7add adress to blacklist."));
-                        p.sendMessage(ChatUtil.fix(""));
-                        break;
-                    case "menu":
-                        GuiMain.show(p);
-                        break;
-                    case "whitelist":
-                        if (args.length == 2) {
-                            BlacklistManager.addWhitelist(args[1]);
-                            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Succesfully whitelisted IP: &a" + args[1]));
-                        }
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard whitelist <adress>"));
-                        break;
-                    case "blacklist":
-                        if (args.length == 2) {
-                            BlacklistManager.add(args[1]);
-                            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Succesfully blacklisted IP: &c" + args[1]));
-                        }
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard blacklist <adress>"));
-                        break;
-                    case "player":
-                        if (args.length == 2) {
-                            Player player = Bukkit.getPlayerExact(args[1]);
-                            if (player == null) {
-                                p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7The player &f" + args[1] + " &7is &coffline&7!"));
-                                return false;
-                            }
-                            p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
-                            p.sendMessage(ChatUtil.fix(""));
-                            p.sendMessage(ChatUtil.fix("&6[Basic Information]"));
-                            p.sendMessage(ChatUtil.fix("&8▪ &7Name: &f" + player.getName()));
-                            p.sendMessage(ChatUtil.fix("&8▪ &7UUID: &f" + player.getUniqueId()));
-                            p.sendMessage(ChatUtil.fix("&8▪ &7First Join: &f" + new Date(player.getFirstPlayed())));
-                            try {
-                                p.sendMessage(ChatUtil.fix("&8▪ &7Country: &f" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
-                            } catch (IOException | GeoIp2Exception e) {
-                                e.printStackTrace();
-                            }
-                            p.sendMessage(ChatUtil.fix("&8▪ &7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO")));
-                            if (Config.ipHistoryEnable) {
-                                p.sendMessage(ChatUtil.fix(""));
-                                p.sendMessage(ChatUtil.fix("&6[IP History]"));
-                                for (String adress : UserManager.getUser(player).getAdresses()) {
-                                    p.sendMessage(ChatUtil.fix(" &8- &c" + adress));
-                                }
-                            }
-                            p.sendMessage(ChatUtil.fix(""));
-                            p.sendMessage(ChatUtil.fix("&7------------------------------------------"));
-                            return false;
-                        }
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Correct usage: &f/guard player <nick>"));
-                        break;
-                    case "op":
-                        p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
-                        p.sendMessage(ChatUtil.fix(""));
-                        p.sendMessage(ChatUtil.fix("&6[Operator List]"));
-                        for (OfflinePlayer player : Bukkit.getOperators()) {
-                            Date currentDate = new Date(player.getLastPlayed());
-                            p.sendMessage(ChatUtil.fix("&8▪ &f" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&cOFFLINE") + "&8], &7Last Online: &f" + currentDate));
-                        }
-                        p.sendMessage(ChatUtil.fix(""));
-                        p.sendMessage(ChatUtil.fix("&7-----------------------------------------------"));
-                        break;
-                    case "status":
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + (user.isNotifications() ? "&cToggled off" : "&aToggled on") + " &7bot notification status!"));
-                        user.setNotifications(!user.isNotifications());
-                        break;
-                    case "reload":
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Reloading config..."));
-                        GuardBukkit.getInstance().reloadConfig();
-                        GuardBukkit.loadConfig();
-                        MessagesBukkit.load();
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&aSuccesfully &7reloaded config!"));
-                        break;
-                    default:
-                        p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Unknown command! &7Use &f/guard&7."));
-                }
-                return false;
-            }
-            GuiMain.show(p);
-            Updater.notify(p);
+            send(sender, "&6/" + s + " menu &8- &7Open main plugin GUI.");
+            send(sender, "&6/" + s + " status &8- &7Toggle antibot notifications (titles).");
+            send(sender, "&6/" + s + " reload &8- &7Reload configuration and messages.");
+            send(sender, "&6/" + s + " oplist &8- &7See opped players list.");
+            send(sender, "&6/" + s + " player <player> &8- &7See information about specific player.");
+            send(sender, "&6/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist.");
+            send(sender, "&6/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist.");
             return true;
-        } catch (Exception e) {
-            Logger.throwException(e);
         }
-        return false;
+
+        if (args[0].equalsIgnoreCase("menu")) {
+            if (!(sender instanceof Player)) {
+                send(sender, "&cThis command is player only.");
+                return true;
+            }
+            GuiMain.show((Player) sender);
+        } else if (args[0].equalsIgnoreCase("status")) {
+            if (!(sender instanceof Player)) {
+                send(sender, "&cThis command is player only.");
+                return true;
+            }
+            final User user = UserManager.getUser((Player) sender);
+            send(sender, (user.isNotifications() ? "&cToggled off" : "&aToggled on") + " &7bot notification status!");
+            user.setNotifications(!user.isNotifications());
+        } else if (args[0].equalsIgnoreCase("reload")) {
+            send(sender, "&7Reloading config...");
+            GuardBukkit.getInstance().reloadConfig();
+            GuardBukkit.loadConfig();
+            MessagesBukkit.load();
+            send(sender, "&7Reloaded config &asuccesfully&7!");
+        } else if (args[0].equalsIgnoreCase("oplist")) {
+            Bukkit.getOperators().forEach(player -> {
+                Date currentDate = new Date(player.getLastPlayed());
+                send(sender, "&7" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&4OFFLINE") + "&8], &7Last Online: " + currentDate);
+            });
+        } else if (args[0].equalsIgnoreCase("player")) {
+            if (args.length != 2) {
+                send(sender, "&7Correct usage: &f/" + s + " player <player>");
+                return true;
+            }
+            final Player player = Bukkit.getPlayer(args[1]);
+            if (player == null) {
+                send(sender, "&7Player &c" + args[1] + " &7not found!");
+                return true;
+            }
+            send(sender, "&7Name: &f" + player.getName());
+            send(sender, "&7UUID: &f" + player.getUniqueId());
+            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress()));
+            send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
+            send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
+            if (Config.ipHistoryEnable) {
+                send(sender, "&6[IP History]");
+                UserManager.getUser(player).getAdresses().forEach(adress -> send(sender, " &7- &f" + adress));
+            }
+        } else if (args[0].equalsIgnoreCase("whitelist")) {
+            if (args.length != 2) {
+                send(sender, "&7Correct usage: &f/" + s + " whitelist <adress>");
+                return true;
+            }
+            BlacklistManager.addWhitelist(args[1]);
+            send(sender, "&7Whitelisted IP: " + args[1]);
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
+            if (args.length != 2) {
+                send(sender, "&7Correct usage: &f/" + s + " blacklist <adress>");
+                return true;
+            }
+            BlacklistManager.add(args[1]);
+            send(sender, "&7Blacklisted IP: " + args[1]);
+        } else {
+            send(sender, "&cCommand not found!");
+        }
+        return true;
     }
 }

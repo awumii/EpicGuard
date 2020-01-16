@@ -29,6 +29,10 @@ public class PlayerJoinListener implements Listener {
             final Player p = e.getPlayer();
             final String adress = p.getAddress().getAddress().getHostAddress();
 
+            if (NMSUtil.isOldVersion()) {
+                BrandPluginMessageListener.addChannel(p, "MC|BRAND");
+            }
+
             if (Config.antibot) {
                 if (NameContainsCheck.check(p.getName())) {
                     e.setJoinMessage("");
@@ -53,13 +57,7 @@ public class PlayerJoinListener implements Listener {
 
             UserManager.addUser(p);
             final User u = UserManager.getUser(p);
-
-            if (NMSUtil.isOldVersion()) {
-                BrandPluginMessageListener.addChannel(p, "MC|BRAND");
-            }
-
             u.setIp(adress);
-
             Updater.notify(p);
             AttackManager.handleAttack(AttackType.JOIN);
 
@@ -86,27 +84,29 @@ public class PlayerJoinListener implements Listener {
             }
 
             // Brand Verification
-            final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
-            Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                if (!p.isOnline()) {
-                    return;
-                }
-
-                if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
-                    if (u.getBrand().equals("none")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
-                        Logger.info("Exception occurred in " + p.getName() + "'s connection! If you think this is an issue go to /plugins/EpicGuard/brand.yml file, and replace every 'true' with false. Do NOT report this! This is not a bug!");
+            if (NMSUtil.isOldVersion()) {
+                final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
+                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+                    if (!p.isOnline()) {
                         return;
                     }
-                }
-                if (customFile.getConfig().getBoolean("blocked-brands.enabled")) {
-                    for (String string : customFile.getConfig().getStringList("blocked-brands")) {
-                        if (u.getBrand().equalsIgnoreCase(string)) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("blocked-brands.punish")).replace("{PLAYER}", p.getName()));
+
+                    if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
+                        if (u.getBrand().equals("none")) {
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
+                            Logger.info("Exception occurred in " + p.getName() + "'s connection! If you think this is an issue go to /plugins/EpicGuard/brand.yml file, and replace every 'true' with false. Do NOT report this! This is not a bug!");
+                            return;
                         }
                     }
-                }
-            }, 50L);
+                    if (customFile.getConfig().getBoolean("blocked-brands.enabled")) {
+                        for (String string : customFile.getConfig().getStringList("blocked-brands")) {
+                            if (u.getBrand().equalsIgnoreCase(string)) {
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("blocked-brands.punish")).replace("{PLAYER}", p.getName()));
+                            }
+                        }
+                    }
+                }, 50L);
+            }
         } catch (Exception ex) {
             Logger.throwException(ex);
         }
