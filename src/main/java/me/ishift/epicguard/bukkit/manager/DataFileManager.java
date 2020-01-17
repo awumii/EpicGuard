@@ -55,8 +55,8 @@ public class DataFileManager {
     }
 
     public static void load() {
-        BlacklistManager.IP_BL = getDataFile().getStringList("blacklist");
-        BlacklistManager.IP_WL = getDataFile().getStringList("whitelist");
+        BlacklistManager.blacklist = getDataFile().getStringList("blacklist");
+        BlacklistManager.whitelist = getDataFile().getStringList("whitelist");
         setBlockedBots(getDataFile().getInt("blocked-bots"));
         setCheckedConnections(getDataFile().getInt("checked-connections"));
         AttackManager.setRejoinData(getDataFile().getStringList("rejoin-data"));

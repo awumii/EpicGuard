@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class CloudManager {
     private static final String CLOUD_BL_URL = "https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/cloud/blacklist.txt";
     private static List<String> CLOUD_BL = new ArrayList<>();
+    private static boolean online = false;
 
     public static void connect(CloudGet cloudGet) {
         if (cloudGet == CloudGet.BLACKLIST) {
@@ -28,16 +29,22 @@ public class CloudManager {
                 }
             }
             s.close();
+            online = true;
             Logger.info("[CLOUD] Operation succesfully completed.");
             return list;
         } catch (Exception e) {
             Logger.info("[CLOUD] Error occurred in cloud connecton!");
             Logger.info("[CLOUD] " + e.getMessage());
+            online = false;
         }
         return new ArrayList<>();
     }
 
     public static List<String> getCloudBlacklist() {
         return CLOUD_BL;
+    }
+
+    public static boolean isOnline() {
+        return online;
     }
 }

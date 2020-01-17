@@ -4,6 +4,7 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
+import me.ishift.epicguard.bukkit.gui.MaterialUtil;
 import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.FileManager;
@@ -111,7 +112,8 @@ public class GuardBukkit extends JavaPlugin {
             this.registerListeners();
             this.registerTasks();
 
-            GuiMain.eq = Bukkit.createInventory(null, 45, "EpicGuard Management Menu");
+            MaterialUtil.init();
+            GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
             GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
             this.getCommand("epicguard").setExecutor(new GuardCommand());
@@ -151,7 +153,7 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventoryTask(), 1L, 40L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventoryTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);

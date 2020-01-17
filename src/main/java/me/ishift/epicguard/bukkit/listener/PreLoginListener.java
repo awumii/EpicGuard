@@ -16,6 +16,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class PreLoginListener implements Listener {
+    private static String lastPlayer = "None";
+    private static String lastAdress = "None";
+    private static String lastCountry = "None";
+    private static String lastDetection = "None";
+    private static boolean blacklisted = false;
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
@@ -77,5 +82,45 @@ public class PreLoginListener implements Listener {
         } catch (Exception e) {
             Logger.throwException(e);
         }
+    }
+
+    public static String getLastPlayer() {
+        return lastPlayer;
+    }
+
+    public static void setLastPlayer(String lastPlayer) {
+        PreLoginListener.lastPlayer = lastPlayer;
+    }
+
+    public static String getLastAdress() {
+        return lastAdress;
+    }
+
+    public static void setLastAdress(String lastAdress) {
+        PreLoginListener.lastAdress = lastAdress;
+    }
+
+    public static String getLastCountry() {
+        return lastCountry;
+    }
+
+    public static void setLastCountry(String lastCountry) {
+        PreLoginListener.lastCountry = lastCountry;
+    }
+
+    public static String getLastDetection() {
+        return lastDetection;
+    }
+
+    public static void setLastDetection(String lastDetection) {
+        PreLoginListener.lastDetection = lastDetection;
+    }
+
+    public static boolean isBlacklisted() {
+        return blacklisted;
+    }
+
+    public static void setBlacklisted(boolean blacklisted) {
+        PreLoginListener.blacklisted = blacklisted;
     }
 }

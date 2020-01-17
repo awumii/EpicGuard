@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlacklistManager {
-    public static List<String> IP_BL = new ArrayList<>();
-    public static List<String> IP_WL = new ArrayList<>();
+    public static List<String> blacklist = new ArrayList<>();
+    public static List<String> whitelist = new ArrayList<>();
 
     public static boolean check(String adress) {
-        return IP_BL.contains(adress);
+        return blacklist.contains(adress);
     }
 
     public static boolean checkWhitelist(String adress) {
-        return IP_WL.contains(adress);
+        return whitelist.contains(adress);
     }
 
     public static void add(String adress) {
-        if (!IP_BL.contains(adress)) {
-            IP_BL.add(adress);
-            DataFileManager.getDataFile().set("blacklist", IP_BL);
+        if (!blacklist.contains(adress)) {
+            blacklist.add(adress);
+            DataFileManager.getDataFile().set("blacklist", blacklist);
             if (Config.firewallEnabled) {
                 try {
                     Runtime.getRuntime().exec(Config.firewallBlacklistCommand.replace("{IP}", adress));
@@ -33,9 +33,9 @@ public class BlacklistManager {
     }
 
     public static void addWhitelist(String adress) {
-        if (!IP_WL.contains(adress)) {
-            IP_WL.add(adress);
-            DataFileManager.getDataFile().set("whitelist", IP_WL);
+        if (!whitelist.contains(adress)) {
+            whitelist.add(adress);
+            DataFileManager.getDataFile().set("whitelist", whitelist);
             if (Config.firewallEnabled) {
                 try {
                     Runtime.getRuntime().exec(Config.firewallWhitelistCommand.replace("{IP}", adress));
@@ -44,6 +44,6 @@ public class BlacklistManager {
                 }
             }
         }
-        IP_BL.remove(adress);
+        blacklist.remove(adress);
     }
 }

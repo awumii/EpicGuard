@@ -1,17 +1,21 @@
 package me.ishift.epicguard.bukkit.manager;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.bukkit.listener.PreLoginListener;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +68,7 @@ public class AttackManager {
         AttackManager.rejoinData = rejoinData;
     }
 
-    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
+    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) throws UnknownHostException {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - DETECTED & BLOCKED");
         if (blacklist) {
@@ -72,6 +76,11 @@ public class AttackManager {
             HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }
+        PreLoginListener.setLastPlayer(nick);
+        PreLoginListener.setLastAdress(adress);
+        PreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
+        PreLoginListener.setLastDetection(reason);
+        PreLoginListener.setBlacklisted(blacklist);
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
         totalBots++;
