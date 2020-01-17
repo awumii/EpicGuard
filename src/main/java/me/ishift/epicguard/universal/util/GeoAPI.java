@@ -17,7 +17,7 @@ public class GeoAPI {
         this.create();
     }
 
-    public static DatabaseReader getDatabase() {
+    private static DatabaseReader getDatabase() {
         return dbReader;
     }
 

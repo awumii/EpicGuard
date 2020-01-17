@@ -22,7 +22,7 @@ public class ProxyPreLoginListener implements Listener {
         try {
             final PendingConnection connection = event.getConnection();
             final String adress = connection.getAddress().getAddress().getHostAddress();
-            final String country = GeoAPI.getDatabase().country(connection.getAddress().getAddress()).getCountry().getIsoCode();
+            final String country = GeoAPI.getCountryCode(event.getConnection().getAddress().getAddress());
             BungeeAttack.handle(AttackType.CONNECT);
 
             if (FirewallManager.whiiteList.contains(adress)) {
