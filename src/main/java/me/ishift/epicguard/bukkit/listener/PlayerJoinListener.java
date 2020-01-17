@@ -34,7 +34,7 @@ public class PlayerJoinListener implements Listener {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
             }
 
-            if (Config.antibot) {
+            if (Config.antibot && !BlacklistManager.checkWhitelist(adress)) {
                 if (NameContainsCheck.check(p.getName())) {
                     e.setJoinMessage("");
                     final StringBuilder sb = new StringBuilder();
