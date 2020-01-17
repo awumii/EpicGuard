@@ -26,10 +26,6 @@ public class InventoryClickListener implements Listener {
                 if (im.getDisplayName().contains("Player Information")) {
                     GuiPlayers.show(p);
                 }
-                if (im.getDisplayName().contains("Reload Config")) {
-                    p.chat("/guard reload");
-                    p.getOpenInventory().close();
-                }
             }
             if (event.getView().getTitle().equals("EpicGuard Player Manager")) {
                 if (event.getCurrentItem() == null) {

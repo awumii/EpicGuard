@@ -28,28 +28,26 @@ public class GuiPlayers {
                 final List<String> lore = new ArrayList<>();
                 final User user = UserManager.getUser(player);
                 lore.add("");
-                lore.add(ChatUtil.fix("&8>> &7UUID: &a" + player.getUniqueId()));
-                lore.add(ChatUtil.fix("&8>> &7First Join: &a" + new Date(player.getFirstPlayed())));
-                if (!player.getAddress().getAddress().equals("127.0.0.1")) {
-                    lore.add(ChatUtil.fix("&8>> &7Country: &2" + GeoAPI.getDatabase().country(player.getAddress().getAddress()).getCountry().getIsoCode()));
-                }
-                lore.add(ChatUtil.fix("&8>> &7OP: " + (player.isOp() ? "&aYes" : "&cNo")));
-                lore.add(ChatUtil.fix("&8>> &7Client Brand: &f" + user.getBrand()));
+                lore.add(ChatUtil.fix("&7Name&8: &f" + player.getName()));
+                lore.add(ChatUtil.fix("&7UUID&8: &f" + player.getUniqueId()));
+                lore.add(ChatUtil.fix("&7Country&8: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress())));
+                lore.add(ChatUtil.fix("&7OP&8: " + (player.isOp() ? "&aYes" : "&cNo")));
+                lore.add(ChatUtil.fix("&7Client Brand&8: &f" + user.getBrand()));
                 if (Config.ipHistoryEnable && user.getAdresses() != null) {
                     lore.add("");
-                    lore.add(ChatUtil.fix("&8>> &7IP History:"));
-                    for (String adress : user.getAdresses()) {
+                    lore.add(ChatUtil.fix("&6[IP History]"));
+                    user.getAdresses().forEach(adress -> {
                         if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
-                            lore.add(ChatUtil.fix("&8-> &2" + adress + " &8(&aCurrent&8)"));
+                            lore.add(ChatUtil.fix(" &7- &f" + adress + " &8(&aCurrent&8)"));
                         } else {
-                            lore.add(ChatUtil.fix("&8-> &2" + adress));
+                            lore.add(ChatUtil.fix(" &7- &f" + adress));
                         }
-                    }
+                    });
                 }
                 if (player.isOp()) {
-                    itemStack = new ItemBuilder(Material.DIAMOND_HELMET).setTitle("&8>> &c" + player.getName()).addLores(lore).build();
+                    itemStack = new ItemBuilder(Material.DIAMOND_HELMET).setTitle("&c[OP] " + player.getName()).addLores(lore).build();
                 } else {
-                    itemStack = new ItemBuilder(Material.IRON_HELMET).setTitle("&8>> &a" + player.getName()).addLores(lore).build();
+                    itemStack = new ItemBuilder(Material.IRON_HELMET).setTitle("&a" + player.getName()).addLores(lore).build();
                 }
                 ItemStack back = new ItemBuilder(Material.ARROW).setTitle("&cBack to main menu").addLore("").addLore("&7Click to go back.").build();
                 inv.setItem(i, itemStack);
