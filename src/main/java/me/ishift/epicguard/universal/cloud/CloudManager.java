@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CloudManager {
-    private static final String CLOUD_BL_URL = "https://pastebin.com/raw/jwyPuHE3";
+    private static final String CLOUD_BL_URL = "https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/cloud/blacklist.txt";
     private static List<String> CLOUD_BL = new ArrayList<>();
 
     public static void connect(CloudGet cloudGet) {

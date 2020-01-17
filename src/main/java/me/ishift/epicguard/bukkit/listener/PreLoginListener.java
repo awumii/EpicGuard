@@ -23,10 +23,6 @@ public class PreLoginListener implements Listener {
             final String adress = event.getAddress().getHostAddress();
             final String name = event.getName();
 
-            if (adress.equals("127.0.0.1")) {
-                return;
-            }
-
             final String country = GeoAPI.getCountryCode(event.getAddress());
             DataFileManager.checkedConnections++;
             Logger.debug(" ");
@@ -57,13 +53,13 @@ public class PreLoginListener implements Listener {
                 return;
             }
 
-            if (AttackManager.isUnderAttack()) {
-                AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
+            if (NameContainsCheck.check(name)) {
+                AttackManager.handleDetection("Name Contains", name, adress, event, KickReason.BLACKLIST, true);
                 return;
             }
 
-            if (NameContainsCheck.check(name)) {
-                AttackManager.handleDetection("Name Contains", name, adress, event, KickReason.BLACKLIST, true);
+            if (AttackManager.isUnderAttack()) {
+                AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
                 return;
             }
 

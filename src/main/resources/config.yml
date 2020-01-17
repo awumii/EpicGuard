@@ -37,7 +37,7 @@ antibot:
   # Disabling antibot will not disable country checking (look above)
   enabled: true
   # New players will need to rejoin server to play!
-  force-rejoin: true
+  force-rejoin: false
   # If a player/bot's nickname contains one of the values below, he will be blocked.
   # This SHOULD be lower-case
   name-contains:

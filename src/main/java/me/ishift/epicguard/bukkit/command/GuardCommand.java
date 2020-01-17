@@ -77,7 +77,7 @@ public class GuardCommand implements CommandExecutor {
             }
             send(sender, "&7Name: &f" + player.getName());
             send(sender, "&7UUID: &f" + player.getUniqueId());
-            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress()));
+            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
             if (Config.ipHistoryEnable) {
