@@ -67,7 +67,6 @@ public class PlayerJoinListener implements Listener {
             if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (p.isOnline()) {
-                        Logger.info("Player " + p.getName() + " (" + adress + ") has been whitelisted.");
                         BlacklistManager.addWhitelist(adress);
                     }
                 }, Config.autoWhitelistTime);
