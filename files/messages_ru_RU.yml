@@ -1,5 +1,5 @@
 # SpigotMC Ссылка: https://www.spigotmc.org/resources/72369/
-prefix: "&8[&6EpicGuard&8] "
+prefix: "&8[&2EpicGuard&8] "
 actionbar:
   attack: "&8(&c&lОБНАРУЖЕНИЕ БОТА&8) &6{NICK} &8[&c{IP}&8] &8| &7Обнаружен для: &b{DETECTION}"
 attack-title:
