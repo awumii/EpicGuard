@@ -19,7 +19,7 @@ public class CloudManager {
 
     private static List<String> getList(String url) {
         try {
-            Logger.info("[CLOUD/GET] Checking data from the cloud...");
+            Logger.info("[CLOUD] Checking data from the cloud...");
             final Scanner s = new Scanner(new URL(url).openStream());
             final List<String> list = new ArrayList<>();
             if (s.hasNext()) {
@@ -28,10 +28,11 @@ public class CloudManager {
                 }
             }
             s.close();
-            Logger.info("[CLOUD/GET] Operation succesfully completed.");
+            Logger.info("[CLOUD] Operation succesfully completed.");
             return list;
         } catch (Exception e) {
-            Logger.info("[CLOUD/GET] Error ocurred in cloud connecton!");
+            Logger.info("[CLOUD] Error occurred in cloud connecton!");
+            Logger.info("[CLOUD] " + e.getMessage());
         }
         return new ArrayList<>();
     }

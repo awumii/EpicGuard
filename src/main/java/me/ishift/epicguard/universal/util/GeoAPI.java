@@ -6,7 +6,7 @@ import me.ishift.epicguard.bungee.GuardBungee;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.net.InetAddress;
 
 public class GeoAPI {
     private static DatabaseReader dbReader;
@@ -21,23 +21,24 @@ public class GeoAPI {
         return dbReader;
     }
 
-    public static String getCountryCode(InetSocketAddress address) {
-        if (!address.getAddress().getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+    public static String getCountryCode(InetAddress address) {
+        if (!address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
             try {
-                return getDatabase().country(address.getAddress()).getCountry().getIsoCode();
+                return getDatabase().country(address).getCountry().getIsoCode();
             } catch (Exception e) {
-                Logger.throwException(e);
+                Logger.debug("Country for IP: " + address.getHostAddress() + " has been not found!");
+                return "Unknown?";
             }
         }
         return "Unknown?";
     }
 
-    private void create() {
+    protected void create() {
         try {
             File dataFolder = null;
             String dbLocation;
             if (type == ServerType.SPIGOT) {
-                dataFolder = GuardBukkit.getPlugin(GuardBukkit.class).getDataFolder();
+                dataFolder = GuardBukkit.getInstance().getDataFolder();
             }
             if (type == ServerType.BUNGEE) {
                 dataFolder = GuardBungee.plugin.getDataFolder();
@@ -47,8 +48,7 @@ public class GeoAPI {
                 Logger.info("GeoLite2-Country.mmdb not found! Starting download...");
                 Downloader.download(Downloader.MIRROR_GEO, dbLocation);
             }
-            File database;
-            database = new File(dbLocation);
+            final File database = new File(dbLocation);
             dbReader = new DatabaseReader.Builder(database).build();
         } catch (IOException e) {
             Logger.throwException(e);

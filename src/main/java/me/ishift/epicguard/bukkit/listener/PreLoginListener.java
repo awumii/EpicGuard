@@ -27,7 +27,7 @@ public class PreLoginListener implements Listener {
                 return;
             }
 
-            final String country = GeoAPI.getDatabase().country(event.getAddress()).getCountry().getIsoCode();
+            final String country = GeoAPI.getCountryCode(event.getAddress());
             DataFileManager.checkedConnections++;
             Logger.debug(" ");
             Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
