@@ -39,25 +39,22 @@ public class PlayerJoinListener implements Listener {
             if (Config.antibot && !BlacklistManager.checkWhitelist(adress)) {
                 if (NameContainsCheck.check(p.getName())) {
                     e.setJoinMessage("");
-                    kickreason = MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
                     PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(sb);
+                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
 
                 if (BlacklistManager.check(adress)) {
                     e.setJoinMessage("");
-                    kickreason = MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
                     PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(sb);
+                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
 
                 if (GeoCheck.check(adress)) {
                     e.setJoinMessage("");
-                    kickreason = MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
                     PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(sb);
+                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
             }

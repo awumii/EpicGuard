@@ -99,6 +99,8 @@ public class GuardBukkit extends JavaPlugin {
             this.saveDefaultConfig();
             this.createDirectories();
             new Logger(ServerType.SPIGOT);
+            Logger.info("Version: " + this.getDescription().getVersion());
+            Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
             loadConfig();
             LogoPrinter.print();
             new GeoAPI(ServerType.SPIGOT);
