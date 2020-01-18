@@ -2,7 +2,7 @@ package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.KickReason;
+import me.ishift.epicguard.universal.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
