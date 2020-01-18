@@ -32,10 +32,10 @@ public class Logger {
         String time = sdf.format(cal.getTime());
         String msg;
         if (!hide) {
-            msg = "[" + time + "] " + message;
-            System.out.println("[EpicGuard] " + message);
+            msg = "[" + time + "] > " + message;
+            System.out.println("[EpicGuard] > " + message);
         } else {
-            msg = "[" + time + "] " + message;
+            msg = "[" + time + "] > " + message;
         }
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));

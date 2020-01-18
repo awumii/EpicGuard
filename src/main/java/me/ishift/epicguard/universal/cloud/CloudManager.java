@@ -20,7 +20,7 @@ public class CloudManager {
 
     private static List<String> getList(String url) {
         try {
-            Logger.info("[CLOUD] Checking data from the cloud...");
+            Logger.debug("[CLOUD] Checking data from the cloud...");
             final Scanner s = new Scanner(new URL(url).openStream());
             final List<String> list = new ArrayList<>();
             if (s.hasNext()) {
@@ -30,7 +30,7 @@ public class CloudManager {
             }
             s.close();
             online = true;
-            Logger.info("[CLOUD] Operation succesfully completed.");
+            Logger.debug("[CLOUD] Operation succesfully completed.");
             return list;
         } catch (Exception e) {
             Logger.info("[CLOUD] Error occurred in cloud connecton!");
