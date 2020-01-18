@@ -9,7 +9,7 @@ import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.util.KickReason;
+import me.ishift.epicguard.universal.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;

@@ -9,7 +9,7 @@ import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.util.KickReason;
+import me.ishift.epicguard.universal.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -18,6 +18,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AttackManager {
     public static List<String> rejoinData = new ArrayList<>();
@@ -119,52 +120,30 @@ public class AttackManager {
     }
 
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {
+        String kickReason = "";
         if (reason == KickReason.GEO) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_COUNTRY) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.ATTACK) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_ATTACK) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_ATTACK.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.BLACKLIST) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.PROXY) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_PROXY) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_PROXY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.VERIFY) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_VERIFY) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_VERIFY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.NAMECONTAINS) {
-            final StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBukkit.MESSAGE_KICK_NAMECONTAINS) {
-                sb.append(ChatUtil.fix(s)).append("\n");
-            }
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, sb.toString());
+            kickReason = MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
+        e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, kickReason);
     }
 }

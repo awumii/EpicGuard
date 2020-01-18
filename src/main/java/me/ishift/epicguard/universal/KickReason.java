@@ -1,4 +1,4 @@
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.universal;
 
 public enum KickReason {
     GEO,

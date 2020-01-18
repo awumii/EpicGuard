@@ -10,6 +10,7 @@ import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
@@ -21,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerJoinListener implements Listener {
 
@@ -37,23 +39,25 @@ public class PlayerJoinListener implements Listener {
             if (Config.antibot && !BlacklistManager.checkWhitelist(adress)) {
                 if (NameContainsCheck.check(p.getName())) {
                     e.setJoinMessage("");
-                    final StringBuilder sb = new StringBuilder();
-                    for (String s : MessagesBukkit.MESSAGE_KICK_NAMECONTAINS) {
-                        sb.append(ChatUtil.fix(s)).append("\n");
-                    }
+                    kickreason = MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
                     PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(sb.toString());
+                    p.kickPlayer(sb);
                     return;
                 }
 
                 if (BlacklistManager.check(adress)) {
                     e.setJoinMessage("");
-                    final StringBuilder sb = new StringBuilder();
-                    for (String s : MessagesBukkit.MESSAGE_KICK_BLACKLIST) {
-                        sb.append(ChatUtil.fix(s)).append("\n");
-                    }
+                    kickreason = MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
                     PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(sb.toString());
+                    p.kickPlayer(sb);
+                    return;
+                }
+
+                if (GeoCheck.check(adress)) {
+                    e.setJoinMessage("");
+                    kickreason = MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+                    PlayerQuitListener.hiddenNames.add(p.getName());
+                    p.kickPlayer(sb);
                     return;
                 }
             }
