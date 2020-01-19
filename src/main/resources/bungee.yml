@@ -1,5 +1,5 @@
 name: '${project.name}'
 version: '${project.version}'
 main: me.ishift.epicguard.bungee.GuardBungee
-author: PolskiStevek
-description: Lightweight antibot for your server!
+authors: [iShift, ruzekh]
+description: Advanced Server Protection.

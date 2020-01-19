@@ -2,8 +2,8 @@ name: '${project.name}'
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.GuardBukkit
 softdepend: [ProtocolLib]
-author: PolskiStevek
-description: Increase your server security. Fast and effective. Block bots, griefers. Block any ForceOP.
+authors: [iShift, ruzekh]
+description: Advanced Server Protection.
 api-version: 1.13
 
 commands:
