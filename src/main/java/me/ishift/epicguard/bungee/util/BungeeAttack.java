@@ -36,7 +36,7 @@ public class BungeeAttack {
             pingPerSecond++;
         }
 
-        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.plugin, () -> {
+        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> {
             if (type == AttackType.CONNECT) {
                 connectionPerSecond--;
             }

@@ -11,13 +11,16 @@ public class ProxyCheck {
     public static boolean check(String adress) {
         final String url1 = Config.antibotQuery1.replace("{IP}", adress);
         final String url2 = Config.antibotQuery2.replace("{IP}", adress);
-        final String url3 = Config.antibotQuery3.replace("{IP}", adress);
 
-        return checkUrl(url1) || checkUrl(url2) || checkUrl(url3);
+        return checkUrl(url1) || checkUrl(url2);
     }
 
     private static boolean checkUrl(String url) {
         try {
+            // Not working site.
+            if (url.contains("ip.teoh.io")) {
+                return false;
+            }
             final Scanner s = new Scanner(new URL(url).openStream());
             Logger.debug("# Checking proxy from URL: " + url);
             if (s.hasNextLine()) {

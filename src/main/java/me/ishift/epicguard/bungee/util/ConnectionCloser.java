@@ -14,7 +14,7 @@ public class ConnectionCloser {
         }
         if (GuardBungee.status) {
             if (BungeeAttack.getConnectionPerSecond() > 5) {
-                GuardBungee.plugin.getProxy().getPlayers().forEach(player -> {
+                GuardBungee.getInstance().getProxy().getPlayers().forEach(player -> {
                     if (player.getPermissions().contains("epicguard.admin")) {
                         BungeeUtil.sendTitle(player, MessagesBungee.ATTACK_TITLE.replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond())), MessagesBungee.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(BungeeAttack.blockedBots)));
                         BungeeUtil.sendActionBar(player, MessagesBungee.ACTIONBAR_ATTACK.replace("{NICK}", connection.getName()).replace("{IP}", connection.getAddress().getAddress().getHostAddress()).replace("{DETECTION}", String.valueOf(reason)));

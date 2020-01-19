@@ -68,6 +68,7 @@ public class GuiMain {
                 .addLore("")
                 .addLore("&7Status&8: " + (CloudManager.isOnline() ? "&aConnected" : "&cDisconnected"))
                 .addLore("&7Blacklist size&8: &c" + CloudManager.getCloudBlacklist().size())
+                .addLore("&7Last sync&8: &c" + CloudManager.getLastCheck())
                 .addLore("&7Sync time&8: &c" + Config.cloudTime + "sec")
                 .build();
 

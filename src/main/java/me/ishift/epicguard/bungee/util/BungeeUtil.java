@@ -9,7 +9,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class BungeeUtil {
     public static void sendTitle(ProxiedPlayer player, String title, String subtitle) {
-        final Title titleBuilder = GuardBungee.plugin.getProxy().createTitle()
+        final Title titleBuilder = GuardBungee.getInstance().getProxy().createTitle()
                 .title(new TextComponent(ChatUtil.fix(title)))
                 .subTitle(new TextComponent(ChatUtil.fix(subtitle)))
                 .fadeIn(0)

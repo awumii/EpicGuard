@@ -3,7 +3,9 @@ package me.ishift.epicguard.universal.cloud;
 import me.ishift.epicguard.universal.util.Logger;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +13,7 @@ public class CloudManager {
     private static final String CLOUD_BL_URL = "https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/cloud/blacklist.txt";
     private static List<String> CLOUD_BL = new ArrayList<>();
     private static boolean online = false;
+    private static String lastCheck;
 
     public static void connect(CloudGet cloudGet) {
         if (cloudGet == CloudGet.BLACKLIST) {
@@ -30,6 +33,7 @@ public class CloudManager {
             }
             s.close();
             online = true;
+            lastCheck = new SimpleDateFormat("HH:mm").format(new Date());
             Logger.debug("[CLOUD] Operation succesfully completed.");
             return list;
         } catch (Exception e) {
@@ -46,5 +50,9 @@ public class CloudManager {
 
     public static boolean isOnline() {
         return online;
+    }
+
+    public static String getLastCheck() {
+        return lastCheck;
     }
 }

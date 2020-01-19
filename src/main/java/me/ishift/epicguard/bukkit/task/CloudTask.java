@@ -7,7 +7,7 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.cloud.CloudGet;
 import me.ishift.epicguard.universal.cloud.CloudManager;
 import me.ishift.epicguard.universal.util.Logger;
-import me.ishift.epicguard.universal.util.ServerType;
+import me.ishift.epicguard.universal.ServerType;
 
 public class CloudTask implements Runnable {
     @Override

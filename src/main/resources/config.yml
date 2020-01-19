@@ -53,8 +53,6 @@ antibot:
       adress: "http://proxycheck.io/v2/{IP}&vpn=1"
     '2':
       adress: "http://www.stopforumspam.com/api?ip={IP}"
-    '3':
-      adress: "https://ip.teoh.io/{IP}"
     # What should the return message of each page contain?
     responses:
       - "yes"

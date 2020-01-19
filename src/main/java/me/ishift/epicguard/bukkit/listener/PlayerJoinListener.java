@@ -13,6 +13,7 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class PlayerJoinListener implements Listener {
                     return;
                 }
 
-                if (GeoCheck.check(adress)) {
+                if (GeoCheck.check(GeoAPI.getCountryCode(p.getAddress().getAddress()))) {
                     e.setJoinMessage("");
                     PlayerQuitListener.hiddenNames.add(p.getName());
                     p.kickPlayer(MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
