@@ -13,7 +13,8 @@ import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
-import me.ishift.epicguard.universal.util.ServerType;
+import me.ishift.epicguard.universal.ServerType;
+import me.ishift.epicguard.universal.util.LogoPrinter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -26,9 +27,13 @@ import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
-    public static Plugin plugin;
     public static boolean log = true;
     public static boolean status = false;
+    private static GuardBungee instance;
+
+    public static GuardBungee getInstance() {
+        return instance;
+    }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -49,8 +54,9 @@ public class GuardBungee extends Plugin {
                 dir3.mkdir();
             }
 
-            plugin = this;
+            instance = this;
             new Logger(ServerType.BUNGEE);
+            LogoPrinter.print();
             Logger.info("Starting plugin...");
             this.loadConfig();
             MessagesBungee.load();
@@ -86,7 +92,6 @@ public class GuardBungee extends Plugin {
             Config.pingSpeed = cfg.getInt("speed.ping-speed");
             Config.antibotQuery1 = cfg.getString("antibot.checkers.1.adress");
             Config.antibotQuery2 = cfg.getString("antibot.checkers.2.adress");
-            Config.antibotQuery3 = cfg.getString("antibot.checkers.3.adress");
             Config.antibotQueryContains = cfg.getStringList("antibot.checkers.responses");
             Config.countryList = cfg.getStringList("countries.list");
             Config.countryMode = cfg.getString("countries.mode");

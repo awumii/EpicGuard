@@ -13,7 +13,6 @@ public class Config {
     public static int autoWhitelistTime;
     public static String antibotQuery1;
     public static String antibotQuery2;
-    public static String antibotQuery3;
     public static List<String> antibotQueryContains;
     public static List<String> countryList;
     public static List<String> blockedNames;

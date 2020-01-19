@@ -24,7 +24,7 @@ public class MessagesBungee {
     public static String PREFIX;
 
     public static void load() throws IOException {
-        String file = GuardBungee.plugin.getDataFolder() + "/messages.yml";
+        String file = GuardBungee.getInstance().getDataFolder() + "/messages.yml";
         File configFile = new File(file);
         if (!configFile.exists()) {
             try {

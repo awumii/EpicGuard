@@ -20,7 +20,7 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.LogoPrinter;
-import me.ishift.epicguard.universal.util.ServerType;
+import me.ishift.epicguard.universal.ServerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -38,6 +38,54 @@ public class GuardBukkit extends JavaPlugin {
         return JavaPlugin.getPlugin(GuardBukkit.class);
     }
 
+    @Override
+    public void onEnable() {
+        try {
+            final long ms = System.currentTimeMillis();
+            this.saveDefaultConfig();
+            this.createDirectories();
+            new Logger(ServerType.SPIGOT);
+            loadConfig();
+            LogoPrinter.print();
+            Logger.info("Version: " + this.getDescription().getVersion());
+            new GeoAPI(ServerType.SPIGOT);
+            new Metrics(this);
+
+            NMSUtil.init();
+            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
+            DataFileManager.save();
+            MessagesBukkit.load();
+
+            this.registerListeners();
+            this.registerTasks();
+
+            MaterialUtil.init();
+            GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
+            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
+
+            this.getCommand("epicguard").setExecutor(new GuardCommand());
+            this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
+            this.registerBrand();
+
+            new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
+
+            Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
+            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            Logger.info("Saving data and disabling plugin.");
+            DataFileManager.save();
+        } catch (Exception e) {
+            Logger.throwException(e);
+        }
+    }
+
     public static void loadConfig() {
         final FileConfiguration config = getInstance().getConfig();
         Config.firewallEnabled = config.getBoolean("firewall");
@@ -49,7 +97,6 @@ public class GuardBukkit extends JavaPlugin {
         Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
         Config.antibotQuery1 = config.getString("antibot.checkers.1.adress");
         Config.antibotQuery2 = config.getString("antibot.checkers.2.adress");
-        Config.antibotQuery3 = config.getString("antibot.checkers.3.adress");
         Config.antibotQueryContains = config.getStringList("antibot.checkers.responses");
         Config.countryList = config.getStringList("countries.list");
         Config.countryMode = config.getString("countries.mode");
@@ -90,55 +137,6 @@ public class GuardBukkit extends JavaPlugin {
         Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
         Config.heuristicsEnabled = cloudFile.getConfig().getBoolean("heuristics.enabled");
         Config.heuristicsDiff = cloudFile.getConfig().getInt("heuristics.min-difference");
-    }
-
-    @Override
-    public void onEnable() {
-        try {
-            final long ms = System.currentTimeMillis();
-            this.saveDefaultConfig();
-            this.createDirectories();
-            new Logger(ServerType.SPIGOT);
-            Logger.info("Version: " + this.getDescription().getVersion());
-            Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
-            loadConfig();
-            LogoPrinter.print();
-            new GeoAPI(ServerType.SPIGOT);
-            new Metrics(this);
-
-            NMSUtil.init();
-            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
-            DataFileManager.save();
-            MessagesBukkit.load();
-
-            this.registerListeners();
-            this.registerTasks();
-
-            MaterialUtil.init();
-            GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
-            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
-
-            this.getCommand("epicguard").setExecutor(new GuardCommand());
-            this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
-            this.registerBrand();
-
-            new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
-
-            Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
-            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        try {
-            Logger.info("Saving data and disabling plugin.");
-            DataFileManager.save();
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
     }
 
     private void registerListeners() {

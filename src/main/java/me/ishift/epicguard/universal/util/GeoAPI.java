@@ -3,10 +3,12 @@ package me.ishift.epicguard.universal.util;
 import com.maxmind.geoip2.DatabaseReader;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.universal.ServerType;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class GeoAPI {
     private static DatabaseReader dbReader;
@@ -35,23 +37,39 @@ public class GeoAPI {
 
     protected void create() {
         try {
+            Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
+            Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
             File dataFolder = null;
-            String dbLocation;
-            if (type == ServerType.SPIGOT) {
+            if (this.type == ServerType.SPIGOT) {
                 dataFolder = GuardBukkit.getInstance().getDataFolder();
             }
-            if (type == ServerType.BUNGEE) {
-                dataFolder = GuardBungee.plugin.getDataFolder();
+            if (this.type == ServerType.BUNGEE) {
+                dataFolder = GuardBungee.getInstance().getDataFolder();
             }
-            dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
-            if (!new File(dbLocation).exists()) {
-                Logger.info("GeoLite2-Country.mmdb not found! Starting download...");
+            final String dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
+            final File dateFile = new File(dataFolder + "/data/" + "last_db_download.txt");
+
+            if (!new File(dbLocation).exists() || this.isOutdated(dateFile)) {
+                Logger.info("Databse is outdated or not found, update is required");
+                Logger.info("Downloading GEO Database... This may take some time.");
                 Downloader.download(Downloader.MIRROR_GEO, dbLocation);
+                Logger.writeToFile(dateFile, String.valueOf(System.currentTimeMillis()));
             }
             final File database = new File(dbLocation);
             dbReader = new DatabaseReader.Builder(database).build();
         } catch (IOException e) {
             Logger.throwException(e);
         }
+    }
+
+    private boolean isOutdated(File dateFile) throws IOException {
+        if (!dateFile.exists()) {
+            dateFile.createNewFile();
+            return true;
+        }
+        final Scanner scanner = new Scanner(dateFile);
+        final long timeOld = Long.parseLong(scanner.next());
+        // 604 800 000 = 1 week
+        return (System.currentTimeMillis() - timeOld) > 604800000;
     }
 }
