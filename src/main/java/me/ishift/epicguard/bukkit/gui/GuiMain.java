@@ -1,5 +1,7 @@
 package me.ishift.epicguard.bukkit.gui;
 
+import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
+import me.ishift.epicguard.bukkit.gui.material.UniversalMaterial;
 import me.ishift.epicguard.bukkit.listener.PreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;

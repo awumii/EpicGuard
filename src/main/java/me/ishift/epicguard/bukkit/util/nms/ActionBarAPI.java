@@ -22,7 +22,7 @@ public class ActionBarAPI {
         if (!player.isOnline()) {
             return;
         }
-        final String nmsver = new NMSUtil().getVersion();
+        final String nmsver = new Reflection().getVersion();
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit." + nmsver + ".entity.CraftPlayer");
             Object craftPlayer = craftPlayerClass.cast(player);

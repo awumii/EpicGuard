@@ -3,7 +3,7 @@ package me.ishift.epicguard.bukkit.util.nms;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class NMSUtil {
+public class Reflection {
     private static String nmsver;
 
     public static void init() {

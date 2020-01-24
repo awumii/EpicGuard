@@ -1,7 +1,7 @@
-package me.ishift.epicguard.bukkit.gui;
+package me.ishift.epicguard.bukkit.gui.material;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
+import me.ishift.epicguard.bukkit.util.nms.Reflection;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,7 +13,7 @@ public class MaterialUtil {
     private static FileConfiguration configuration;
 
     public static Material get(UniversalMaterial material) {
-        if (NMSUtil.isOldVersion()) {
+        if (Reflection.isOldVersion()) {
             return Material.getMaterial(getString("old." + material.getAlias()));
         }
         return Material.getMaterial(getString("new." + material.getAlias()));
