@@ -4,7 +4,7 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.bukkit.gui.MaterialUtil;
+import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
 import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.FileManager;
@@ -15,7 +15,7 @@ import me.ishift.epicguard.bukkit.util.LogFilter;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.bukkit.util.MiscUtil;
-import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
+import me.ishift.epicguard.bukkit.util.nms.Reflection;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
@@ -51,7 +51,7 @@ public class GuardBukkit extends JavaPlugin {
             new GeoAPI(ServerType.SPIGOT);
             new Metrics(this);
 
-            NMSUtil.init();
+            Reflection.init();
             DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
             DataFileManager.save();
             MessagesBukkit.load();
@@ -191,7 +191,7 @@ public class GuardBukkit extends JavaPlugin {
             brandConfig.save();
         }
 
-        if (NMSUtil.isOldVersion()) {
+        if (Reflection.isOldVersion()) {
             final Messenger messenger = Bukkit.getMessenger();
             messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
         }

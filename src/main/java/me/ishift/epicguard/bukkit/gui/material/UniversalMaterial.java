@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.gui;
+package me.ishift.epicguard.bukkit.gui.material;
 
 public enum UniversalMaterial {
     CLOCK("clock"),

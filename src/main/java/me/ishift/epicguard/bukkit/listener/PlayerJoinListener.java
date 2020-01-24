@@ -7,7 +7,7 @@ import me.ishift.epicguard.bukkit.object.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.bukkit.util.nms.NMSUtil;
+import me.ishift.epicguard.bukkit.util.nms.Reflection;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.GeoCheck;
@@ -33,7 +33,7 @@ public class PlayerJoinListener implements Listener {
             final Player p = e.getPlayer();
             final String adress = p.getAddress().getAddress().getHostAddress();
 
-            if (NMSUtil.isOldVersion()) {
+            if (Reflection.isOldVersion()) {
                 BrandPluginMessageListener.addChannel(p, "MC|BRAND");
             }
 
@@ -88,7 +88,7 @@ public class PlayerJoinListener implements Listener {
             }
 
             // Brand Verification
-            if (NMSUtil.isOldVersion()) {
+            if (Reflection.isOldVersion()) {
                 final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (!p.isOnline()) {
