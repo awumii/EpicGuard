@@ -8,16 +8,11 @@ public class GeoCheck {
      * @return false if not detected, true if detected.
      */
     public static boolean check(String country) {
-        if (country == null || country.equalsIgnoreCase("Unknown?")) {
-            return false;
-        }
-        if (Config.countryMode.equals("DISABLED")) {
+        if (country == null || country.equalsIgnoreCase("Unknown?") || Config.countryMode.equals("DISABLED")) {
             return false;
         }
         if (Config.countryMode.equals("WHITELIST")) {
-            if (!Config.countryList.contains(country)) {
-                return true;
-            }
+            return !Config.countryList.contains(country);
         }
         if (Config.countryMode.equals("BLACKLIST")) {
             return Config.countryList.contains(country);

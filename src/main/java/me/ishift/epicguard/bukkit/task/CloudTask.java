@@ -20,6 +20,6 @@ public class CloudTask implements Runnable {
         }
         DataFileManager.save();
         Updater.checkForUpdates();
-        new Logger(ServerType.SPIGOT);
+        Logger.create(ServerType.SPIGOT);
     }
 }

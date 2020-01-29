@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CustomFile {
     public File file;
@@ -21,11 +22,11 @@ public class CustomFile {
 
     public void create() {
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (this.file.createNewFile()) {
+                Logger.debug("Created new file: " + file.getName());
             }
-        } catch (Exception e) {
-            Logger.throwException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -37,7 +38,7 @@ public class CustomFile {
         try {
             configuration.save(file);
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

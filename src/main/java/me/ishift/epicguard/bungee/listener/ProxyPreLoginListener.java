@@ -19,54 +19,50 @@ import net.md_5.bungee.event.EventHandler;
 public class ProxyPreLoginListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
-        try {
-            final PendingConnection connection = event.getConnection();
-            final String adress = connection.getAddress().getAddress().getHostAddress();
-            final String country = GeoAPI.getCountryCode(event.getConnection().getAddress().getAddress());
-            BungeeAttack.handle(AttackType.CONNECT);
+        final PendingConnection connection = event.getConnection();
+        final String adress = connection.getAddress().getAddress().getHostAddress();
+        final String country = GeoAPI.getCountryCode(event.getConnection().getAddress().getAddress());
+        BungeeAttack.handle(AttackType.CONNECT);
 
-            if (FirewallManager.whiiteList.contains(adress)) {
-                return;
-            }
+        if (FirewallManager.whiiteList.contains(adress)) {
+            return;
+        }
 
-            if (FirewallManager.blackList.contains(adress)) {
-                ConnectionCloser.close(connection, KickReason.BLACKLIST);
-                return;
-            }
+        if (FirewallManager.blackList.contains(adress)) {
+            ConnectionCloser.close(connection, KickReason.BLACKLIST);
+            return;
+        }
 
-            if (NameContainsCheck.check(connection.getName())) {
-                ConnectionCloser.close(connection, KickReason.NAMECONTAINS);
-                FirewallManager.blacklist(adress);
-                return;
-            }
+        if (NameContainsCheck.check(connection.getName())) {
+            ConnectionCloser.close(connection, KickReason.NAMECONTAINS);
+            FirewallManager.blacklist(adress);
+            return;
+        }
 
-            if (GeoCheck.check(country)) {
-                ConnectionCloser.close(connection, KickReason.GEO);
-                FirewallManager.blacklist(adress);
-                return;
-            }
+        if (GeoCheck.check(country)) {
+            ConnectionCloser.close(connection, KickReason.GEO);
+            FirewallManager.blacklist(adress);
+            return;
+        }
 
-            if (!Config.antibot) {
-                return;
-            }
+        if (!Config.antibot) {
+            return;
+        }
 
-            if (BungeeAttack.isAttack()) {
-                ConnectionCloser.close(connection, KickReason.ATTACK);
-                return;
-            }
+        if (BungeeAttack.isAttack()) {
+            ConnectionCloser.close(connection, KickReason.ATTACK);
+            return;
+        }
 
-            if (BungeeAttack.getConnectionPerSecond() > Config.connectSpeed) {
-                BungeeAttack.setAttack(true);
-                ConnectionCloser.close(connection, KickReason.ATTACK);
-                return;
-            }
+        if (BungeeAttack.getConnectionPerSecond() > Config.connectSpeed) {
+            BungeeAttack.setAttack(true);
+            ConnectionCloser.close(connection, KickReason.ATTACK);
+            return;
+        }
 
-            if (ProxyCheck.check(adress)) {
-                ConnectionCloser.close(connection, KickReason.PROXY);
-                FirewallManager.blacklist(adress);
-            }
-        } catch (Exception ex) {
-            Logger.throwException(ex);
+        if (ProxyCheck.check(adress)) {
+            ConnectionCloser.close(connection, KickReason.PROXY);
+            FirewallManager.blacklist(adress);
         }
     }
 }

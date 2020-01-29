@@ -40,7 +40,7 @@ public class MaterialUtil {
             configuration.set("new.crafting", "CRAFTING_TABLE");
             configuration.save(file);
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

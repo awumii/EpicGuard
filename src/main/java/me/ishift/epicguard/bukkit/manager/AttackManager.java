@@ -69,7 +69,7 @@ public class AttackManager {
         AttackManager.rejoinData = rejoinData;
     }
 
-    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) throws UnknownHostException {
+    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - DETECTED & BLOCKED");
         if (blacklist) {
@@ -79,7 +79,10 @@ public class AttackManager {
         }
         PreLoginListener.setLastPlayer(nick);
         PreLoginListener.setLastAdress(adress);
-        PreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
+        try {
+            PreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
+        } catch (UnknownHostException ignored) {
+        }
         PreLoginListener.setLastDetection(reason);
         PreLoginListener.setBlacklisted(blacklist);
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));

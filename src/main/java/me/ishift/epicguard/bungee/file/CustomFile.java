@@ -16,33 +16,33 @@ public class CustomFile {
         try {
             this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.file);
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 
     public boolean exist() {
-        return file.exists();
+        return this.file.exists();
     }
 
     public void create() {
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (this.file.createNewFile()) {
+                Logger.debug("Created new file: " + this.file.getName());
             }
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 
     public Configuration getConfig() {
-        return configuration;
+        return this.configuration;
     }
 
     public void save() {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.configuration, this.file);
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

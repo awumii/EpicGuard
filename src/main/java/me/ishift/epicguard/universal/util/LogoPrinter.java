@@ -14,7 +14,7 @@ public class LogoPrinter {
             Logger.info("");
             Logger.info("Created by iShift and ruzekh");
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

@@ -11,6 +11,7 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <finalName>EpicGuard</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -23,11 +24,6 @@
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.2.0</version>
-        <configuration>
-          <archive>
-            <addMavenDescriptor>false</addMavenDescriptor>
-          </archive>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>

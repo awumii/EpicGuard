@@ -24,63 +24,59 @@ public class PreLoginListener implements Listener {
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        try {
-            final String adress = event.getAddress().getHostAddress();
-            final String name = event.getName();
+        final String adress = event.getAddress().getHostAddress();
+        final String name = event.getName();
 
-            final String country = GeoAPI.getCountryCode(event.getAddress());
-            DataFileManager.checkedConnections++;
-            Logger.debug(" ");
-            Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
-            Logger.debug("Player: " + name);
-            Logger.debug("Adress: " + adress);
-            Logger.debug("Country: " + country);
-            Logger.debug(" ");
-            Logger.debug("# DETECTION LOG:");
-            AttackManager.handleAttack(AttackType.CONNECT);
+        final String country = GeoAPI.getCountryCode(event.getAddress());
+        DataFileManager.checkedConnections++;
+        Logger.debug(" ");
+        Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
+        Logger.debug("Player: " + name);
+        Logger.debug("Adress: " + adress);
+        Logger.debug("Country: " + country);
+        Logger.debug(" ");
+        Logger.debug("# DETECTION LOG:");
+        AttackManager.handleAttack(AttackType.CONNECT);
 
-            if (BlacklistManager.checkWhitelist(adress)) {
-                Logger.debug("+ Whitelist Check - Passed");
+        if (BlacklistManager.checkWhitelist(adress)) {
+            Logger.debug("+ Whitelist Check - Passed");
+            return;
+        }
+
+        if (BlacklistManager.check(adress)) {
+            AttackManager.handleDetection("Blacklist", name, adress, event, KickReason.BLACKLIST, false);
+            return;
+        }
+
+        if (GeoCheck.check(country)) {
+            AttackManager.handleDetection("Geographical", name, adress, event, KickReason.GEO, true);
+            return;
+        }
+
+        if (!Config.antibot) {
+            return;
+        }
+
+        if (NameContainsCheck.check(name)) {
+            AttackManager.handleDetection("Name Contains", name, adress, event, KickReason.BLACKLIST, true);
+            return;
+        }
+
+        if (AttackManager.isUnderAttack()) {
+            AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
+            return;
+        }
+
+        if (Config.forceRejoin) {
+            if (!AttackManager.rejoinData.contains(name)) {
+                AttackManager.handleDetection("Force Rejoin", name, adress, event, KickReason.VERIFY, false);
+                AttackManager.rejoinData.add(name);
                 return;
             }
+        }
 
-            if (BlacklistManager.check(adress)) {
-                AttackManager.handleDetection("Blacklist", name, adress, event, KickReason.BLACKLIST, false);
-                return;
-            }
-
-            if (GeoCheck.check(country)) {
-                AttackManager.handleDetection("Geographical", name, adress, event, KickReason.GEO, true);
-                return;
-            }
-
-            if (!Config.antibot) {
-                return;
-            }
-
-            if (NameContainsCheck.check(name)) {
-                AttackManager.handleDetection("Name Contains", name, adress, event, KickReason.BLACKLIST, true);
-                return;
-            }
-
-            if (AttackManager.isUnderAttack()) {
-                AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
-                return;
-            }
-
-            if (Config.forceRejoin) {
-                if (!AttackManager.rejoinData.contains(name)) {
-                    AttackManager.handleDetection("Force Rejoin", name, adress, event, KickReason.VERIFY, false);
-                    AttackManager.rejoinData.add(name);
-                    return;
-                }
-            }
-
-            if (ProxyCheck.check(adress)) {
-                AttackManager.handleDetection("Proxy/VPN", name, adress, event, KickReason.PROXY, true);
-            }
-        } catch (Exception e) {
-            Logger.throwException(e);
+        if (ProxyCheck.check(adress)) {
+            AttackManager.handleDetection("Proxy/VPN", name, adress, event, KickReason.PROXY, true);
         }
     }
 

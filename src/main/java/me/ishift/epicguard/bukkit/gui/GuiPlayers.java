@@ -56,7 +56,7 @@ public class GuiPlayers {
             }
             p.openInventory(inv);
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

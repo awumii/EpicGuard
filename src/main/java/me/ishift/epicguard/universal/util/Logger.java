@@ -12,12 +12,6 @@ import java.util.Calendar;
 
 public class Logger {
     private static File file;
-    private ServerType type;
-
-    public Logger(ServerType type) {
-        this.type = type;
-        this.create();
-    }
 
     public static void debug(String message) {
         log(message, true);
@@ -41,33 +35,23 @@ public class Logger {
         writeToFile(file, msg);
     }
 
-    public static void throwException(Exception exception) {
-        info("");
-        info("<> EpicGuard Error (" + exception.getMessage() + ")");
-        for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
-            if (stackTraceElement.toString().contains("me.ishift.epicguard")) {
-                info("<> " + stackTraceElement.toString());
-            }
-        }
-        info("");
-    }
-
-    private void create() {
+    public static void create(ServerType serverType) {
         try {
             final Calendar cal = Calendar.getInstance();
             final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             final String date = sdf.format(cal.getTime());
-            if (this.type == ServerType.SPIGOT) {
+
+            if (serverType == ServerType.SPIGOT) {
                 file = new File(GuardBukkit.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
-            if (this.type == ServerType.BUNGEE) {
+            if (serverType == ServerType.BUNGEE) {
                 file = new File(GuardBungee.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
-            if (!file.exists()) {
-                file.createNewFile();
+            if (file.createNewFile()) {
+                debug("Generated new log file.");
             }
         } catch (Exception e) {
-            throwException(e);
+            e.printStackTrace();
         }
     }
 
@@ -78,7 +62,7 @@ public class Logger {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }

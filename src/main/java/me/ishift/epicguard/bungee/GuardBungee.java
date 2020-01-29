@@ -35,7 +35,6 @@ public class GuardBungee extends Plugin {
         return instance;
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         try {
@@ -55,12 +54,11 @@ public class GuardBungee extends Plugin {
             }
 
             instance = this;
-            new Logger(ServerType.BUNGEE);
+            Logger.create(ServerType.BUNGEE);
             LogoPrinter.print();
-            Logger.info("Starting plugin...");
             this.loadConfig();
             MessagesBungee.load();
-            new GeoAPI(ServerType.BUNGEE);
+            GeoAPI.create(ServerType.BUNGEE);
             new Metrics(this);
             this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
@@ -70,7 +68,7 @@ public class GuardBungee extends Plugin {
             this.getProxy().getScheduler().schedule(this, new CloudTask(), 1L, Config.cloudTime, TimeUnit.SECONDS);
             this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
         } catch (IOException e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 
@@ -100,6 +98,7 @@ public class GuardBungee extends Plugin {
             Config.blockedNames = cfg.getStringList("antibot.name-contains");
 
             final String path = this.getDataFolder() + "/cloud.yml";
+            new File(path).createNewFile();
             FileManager.createFile(path);
             final CustomFile cloudFile = FileManager.getFile(path);
             if (!cloudFile.exist()) {
@@ -115,7 +114,7 @@ public class GuardBungee extends Plugin {
             Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
 
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 }
