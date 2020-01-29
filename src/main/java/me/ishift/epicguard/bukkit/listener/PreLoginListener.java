@@ -5,11 +5,11 @@ import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.KickReason;
 import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.KickReason;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +21,46 @@ public class PreLoginListener implements Listener {
     private static String lastCountry = "None";
     private static String lastDetection = "None";
     private static boolean blacklisted = false;
+
+    public static String getLastPlayer() {
+        return lastPlayer;
+    }
+
+    public static void setLastPlayer(String lastPlayer) {
+        PreLoginListener.lastPlayer = lastPlayer;
+    }
+
+    public static String getLastAdress() {
+        return lastAdress;
+    }
+
+    public static void setLastAdress(String lastAdress) {
+        PreLoginListener.lastAdress = lastAdress;
+    }
+
+    public static String getLastCountry() {
+        return lastCountry;
+    }
+
+    public static void setLastCountry(String lastCountry) {
+        PreLoginListener.lastCountry = lastCountry;
+    }
+
+    public static String getLastDetection() {
+        return lastDetection;
+    }
+
+    public static void setLastDetection(String lastDetection) {
+        PreLoginListener.lastDetection = lastDetection;
+    }
+
+    public static boolean isBlacklisted() {
+        return blacklisted;
+    }
+
+    public static void setBlacklisted(boolean blacklisted) {
+        PreLoginListener.blacklisted = blacklisted;
+    }
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
@@ -78,45 +118,5 @@ public class PreLoginListener implements Listener {
         if (ProxyCheck.check(adress)) {
             AttackManager.handleDetection("Proxy/VPN", name, adress, event, KickReason.PROXY, true);
         }
-    }
-
-    public static String getLastPlayer() {
-        return lastPlayer;
-    }
-
-    public static void setLastPlayer(String lastPlayer) {
-        PreLoginListener.lastPlayer = lastPlayer;
-    }
-
-    public static String getLastAdress() {
-        return lastAdress;
-    }
-
-    public static void setLastAdress(String lastAdress) {
-        PreLoginListener.lastAdress = lastAdress;
-    }
-
-    public static String getLastCountry() {
-        return lastCountry;
-    }
-
-    public static void setLastCountry(String lastCountry) {
-        PreLoginListener.lastCountry = lastCountry;
-    }
-
-    public static String getLastDetection() {
-        return lastDetection;
-    }
-
-    public static void setLastDetection(String lastDetection) {
-        PreLoginListener.lastDetection = lastDetection;
-    }
-
-    public static boolean isBlacklisted() {
-        return blacklisted;
-    }
-
-    public static void setBlacklisted(boolean blacklisted) {
-        PreLoginListener.blacklisted = blacklisted;
     }
 }

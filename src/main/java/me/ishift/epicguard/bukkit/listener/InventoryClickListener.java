@@ -2,7 +2,6 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

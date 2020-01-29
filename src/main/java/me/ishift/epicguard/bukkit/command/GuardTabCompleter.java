@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.command;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

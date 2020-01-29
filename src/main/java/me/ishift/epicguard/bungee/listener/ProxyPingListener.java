@@ -3,7 +3,6 @@ package me.ishift.epicguard.bungee.listener;
 import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
