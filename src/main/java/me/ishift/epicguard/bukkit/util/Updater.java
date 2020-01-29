@@ -38,7 +38,7 @@ public class Updater {
             final Scanner scanner = new Scanner(new URL("https://api.spigotmc.org/legacy/update.php?resource=72369").openStream());
             line = scanner.next();
         } catch (Exception e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
         return line;
     }

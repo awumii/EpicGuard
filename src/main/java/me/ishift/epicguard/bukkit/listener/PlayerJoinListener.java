@@ -112,7 +112,7 @@ public class PlayerJoinListener implements Listener {
                 }, 50L);
             }
         } catch (Exception ex) {
-            Logger.throwException(ex);
+            ex.printStackTrace();
         }
     }
 }

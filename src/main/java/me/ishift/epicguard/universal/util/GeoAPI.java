@@ -12,12 +12,6 @@ import java.util.Scanner;
 
 public class GeoAPI {
     private static DatabaseReader dbReader;
-    private ServerType type;
-
-    public GeoAPI(ServerType type) {
-        this.type = type;
-        this.create();
-    }
 
     private static DatabaseReader getDatabase() {
         return dbReader;
@@ -35,21 +29,21 @@ public class GeoAPI {
         return "Unknown?";
     }
 
-    protected void create() {
+    public static void create(ServerType type) {
         try {
             Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
             Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
             File dataFolder = null;
-            if (this.type == ServerType.SPIGOT) {
+            if (type == ServerType.SPIGOT) {
                 dataFolder = GuardBukkit.getInstance().getDataFolder();
             }
-            if (this.type == ServerType.BUNGEE) {
+            if (type == ServerType.BUNGEE) {
                 dataFolder = GuardBungee.getInstance().getDataFolder();
             }
             final String dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
             final File dateFile = new File(dataFolder + "/data/" + "last_db_download.txt");
 
-            if (!new File(dbLocation).exists() || this.isOutdated(dateFile)) {
+            if (!new File(dbLocation).exists() || isOutdated(dateFile)) {
                 Logger.info("Databse is outdated or not found, update is required");
                 Logger.info("Downloading GEO Database... This may take some time.");
                 Downloader.download(Downloader.MIRROR_GEO, dbLocation);
@@ -58,13 +52,12 @@ public class GeoAPI {
             final File database = new File(dbLocation);
             dbReader = new DatabaseReader.Builder(database).build();
         } catch (IOException e) {
-            Logger.throwException(e);
+            e.printStackTrace();
         }
     }
 
-    private boolean isOutdated(File dateFile) throws IOException {
-        if (!dateFile.exists()) {
-            dateFile.createNewFile();
+    private static boolean isOutdated(File dateFile) throws IOException {
+        if (dateFile.createNewFile()) {
             return true;
         }
         final Scanner scanner = new Scanner(dateFile);

@@ -13,18 +13,14 @@ import net.md_5.bungee.event.EventHandler;
 public class ProxyPingListener implements Listener {
     @EventHandler
     public void onProxyPing(ProxyPingEvent event) {
-        try {
-            if (Config.antibot) {
-                BungeeAttack.handle(AttackType.PING);
-                if (BungeeAttack.getPingPerSecond() > Config.pingSpeed) {
-                    BungeeAttack.setAttack(true);
-                    final ServerPing response = event.getResponse();
-                    response.setDescriptionComponent(new TextComponent(""));
-                    event.setResponse(response);
-                }
+        if (Config.antibot) {
+            BungeeAttack.handle(AttackType.PING);
+            if (BungeeAttack.getPingPerSecond() > Config.pingSpeed) {
+                BungeeAttack.setAttack(true);
+                final ServerPing response = event.getResponse();
+                response.setDescriptionComponent(new TextComponent(""));
+                event.setResponse(response);
             }
-        } catch (Exception ex) {
-            Logger.throwException(ex);
         }
     }
 }

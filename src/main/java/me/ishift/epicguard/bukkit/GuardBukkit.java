@@ -40,50 +40,42 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        try {
-            final long ms = System.currentTimeMillis();
-            this.saveDefaultConfig();
-            this.createDirectories();
-            new Logger(ServerType.SPIGOT);
-            loadConfig();
-            LogoPrinter.print();
-            Logger.info("Version: " + this.getDescription().getVersion());
-            new GeoAPI(ServerType.SPIGOT);
-            new Metrics(this);
+        final long ms = System.currentTimeMillis();
+        this.saveDefaultConfig();
+        this.createDirectories();
+        Logger.create(ServerType.SPIGOT);
+        loadConfig();
+        LogoPrinter.print();
+        Logger.info("Version: " + this.getDescription().getVersion());
+        GeoAPI.create(ServerType.SPIGOT);
+        new Metrics(this);
 
-            Reflection.init();
-            DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
-            DataFileManager.save();
-            MessagesBukkit.load();
+        Reflection.init();
+        DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
+        DataFileManager.save();
+        MessagesBukkit.load();
 
-            this.registerListeners();
-            this.registerTasks();
+        this.registerListeners();
+        this.registerTasks();
 
-            MaterialUtil.init();
-            GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
-            GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
+        MaterialUtil.init();
+        GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
+        GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
-            this.getCommand("epicguard").setExecutor(new GuardCommand());
-            this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
-            this.registerBrand();
+        this.getCommand("epicguard").setExecutor(new GuardCommand());
+        this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
+        this.registerBrand();
 
-            new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
+        new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
 
-            Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
-            Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
+        Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
+        Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
 
     @Override
     public void onDisable() {
-        try {
-            Logger.info("Saving data and disabling plugin.");
-            DataFileManager.save();
-        } catch (Exception e) {
-            Logger.throwException(e);
-        }
+        Logger.info("Saving data and disabling plugin.");
+        DataFileManager.save();
     }
 
     public static void loadConfig() {

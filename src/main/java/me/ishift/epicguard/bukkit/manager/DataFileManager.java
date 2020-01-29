@@ -13,10 +13,14 @@ public class DataFileManager {
     private static File file;
     private static FileConfiguration fileConfiguration;
 
-    public static void init(String cfgFile) throws IOException {
+    public static void init(String cfgFile) {
         final File configurationFile = new File(cfgFile);
-        if (!configurationFile.exists()) {
-            configurationFile.createNewFile();
+        try {
+            if (configurationFile.createNewFile()) {
+                Logger.debug("Created data file.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         file = configurationFile;
         fileConfiguration = YamlConfiguration.loadConfiguration(configurationFile);
@@ -44,13 +48,13 @@ public class DataFileManager {
     }
 
     public static void save() {
+        getDataFile().set("blocked-bots", getBlockedBots());
+        getDataFile().set("checked-connections", getCheckedConnections());
+        getDataFile().set("rejoin-data", AttackManager.getRejoinData());
         try {
-            getDataFile().set("blocked-bots", getBlockedBots());
-            getDataFile().set("checked-connections", getCheckedConnections());
-            getDataFile().set("rejoin-data", AttackManager.getRejoinData());
             getDataFile().save(file);
-        } catch (Exception e) {
-            Logger.throwException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
