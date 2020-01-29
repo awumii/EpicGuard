@@ -2,7 +2,6 @@ package me.ishift.epicguard.bukkit.util;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.universal.util.Downloader;
-import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
