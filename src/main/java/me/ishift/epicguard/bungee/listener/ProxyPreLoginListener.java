@@ -53,12 +53,6 @@ public class ProxyPreLoginListener implements Listener {
             return;
         }
 
-        if (BungeeAttack.getConnectionPerSecond() > Config.connectSpeed) {
-            BungeeAttack.setAttack(true);
-            ConnectionCloser.close(connection, KickReason.ATTACK);
-            return;
-        }
-
         if (ProxyCheck.check(adress)) {
             ConnectionCloser.close(connection, KickReason.PROXY);
             FirewallManager.blacklist(adress);

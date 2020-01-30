@@ -10,11 +10,13 @@ import org.bukkit.event.server.ServerListPingEvent;
 public class ServerListPingListener implements Listener {
 
     @EventHandler
-    public void onPing(ServerListPingEvent e) {
+    public void onPing(ServerListPingEvent event) {
         AttackManager.handleAttack(AttackType.PING);
         if (AttackManager.getPingPerSecond() > Config.pingSpeed) {
-            e.setMotd("");
-            e.setMaxPlayers(0);
+            if (Config.bandwidthOptimizer) {
+                event.setMotd("");
+                event.setMaxPlayers(0);
+            }
         }
     }
 }

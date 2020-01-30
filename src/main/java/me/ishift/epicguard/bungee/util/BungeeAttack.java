@@ -2,6 +2,7 @@ package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.AttackType;
+import me.ishift.epicguard.universal.Config;
 import net.md_5.bungee.api.ProxyServer;
 
 import java.util.concurrent.TimeUnit;
@@ -31,9 +32,15 @@ public class BungeeAttack {
     public static void handle(AttackType type) {
         if (type == AttackType.CONNECT) {
             connectionPerSecond++;
+            if (connectionPerSecond > Config.connectSpeed) {
+                attack = true;
+            }
         }
         if (type == AttackType.PING) {
             pingPerSecond++;
+            if (pingPerSecond > Config.pingSpeed) {
+                attack = true;
+            }
         }
 
         ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> {

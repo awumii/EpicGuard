@@ -74,15 +74,17 @@ public class GuardBukkit extends JavaPlugin {
         Config.heuristicsDiff = config.getInt("heuristics.min-difference");
         Config.filterEnabled = config.getBoolean("console-filter.enabled");
         Config.filterValues = config.getStringList("console-filter.messages");
+        Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
     }
 
     @Override
     public void onEnable() {
         final long ms = System.currentTimeMillis();
+        this.saveDefaultConfig();
         this.createDirectories();
         this.saveDefaultConfig();
-        Logger.create(ServerType.SPIGOT);
         loadConfig();
+        Logger.create(ServerType.SPIGOT);
         LogoPrinter.print();
         Logger.info("Version: " + this.getDescription().getVersion());
         GeoAPI.create(ServerType.SPIGOT);
@@ -152,7 +154,7 @@ public class GuardBukkit extends JavaPlugin {
         final File cfg3 = new File(this.getDataFolder() + "/brand.yml");
 
         final File dir1 = new File(this.getDataFolder() + "/logs");
-        if (!dir1.mkdir()) {
+        if (dir1.mkdir()) {
             this.getLogger().info("Created logs directory");
         }
 

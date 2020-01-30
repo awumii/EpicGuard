@@ -97,6 +97,7 @@ public class GuardBungee extends Plugin {
             Config.cloudTime = config.getLong("cloud.sync-every-seconds");
             Config.filterEnabled = config.getBoolean("console-filter.enabled");
             Config.filterValues = config.getStringList("console-filter.messages");
+            Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
 
         } catch (Exception e) {
             e.printStackTrace();
