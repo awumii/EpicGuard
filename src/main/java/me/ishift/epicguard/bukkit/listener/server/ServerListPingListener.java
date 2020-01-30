@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.server;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.AttackType;

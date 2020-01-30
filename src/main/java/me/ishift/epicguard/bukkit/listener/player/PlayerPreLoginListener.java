@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-public class PreLoginListener implements Listener {
+public class PlayerPreLoginListener implements Listener {
     private static String lastPlayer = "None";
     private static String lastAdress = "None";
     private static String lastCountry = "None";
@@ -27,7 +27,7 @@ public class PreLoginListener implements Listener {
     }
 
     public static void setLastPlayer(String lastPlayer) {
-        PreLoginListener.lastPlayer = lastPlayer;
+        PlayerPreLoginListener.lastPlayer = lastPlayer;
     }
 
     public static String getLastAdress() {
@@ -35,7 +35,7 @@ public class PreLoginListener implements Listener {
     }
 
     public static void setLastAdress(String lastAdress) {
-        PreLoginListener.lastAdress = lastAdress;
+        PlayerPreLoginListener.lastAdress = lastAdress;
     }
 
     public static String getLastCountry() {
@@ -43,7 +43,7 @@ public class PreLoginListener implements Listener {
     }
 
     public static void setLastCountry(String lastCountry) {
-        PreLoginListener.lastCountry = lastCountry;
+        PlayerPreLoginListener.lastCountry = lastCountry;
     }
 
     public static String getLastDetection() {
@@ -51,7 +51,7 @@ public class PreLoginListener implements Listener {
     }
 
     public static void setLastDetection(String lastDetection) {
-        PreLoginListener.lastDetection = lastDetection;
+        PlayerPreLoginListener.lastDetection = lastDetection;
     }
 
     public static boolean isBlacklisted() {
@@ -59,7 +59,7 @@ public class PreLoginListener implements Listener {
     }
 
     public static void setBlacklisted(boolean blacklisted) {
-        PreLoginListener.blacklisted = blacklisted;
+        PlayerPreLoginListener.blacklisted = blacklisted;
     }
 
     @EventHandler

@@ -2,10 +2,10 @@ package me.ishift.epicguard.bukkit.util;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.listener.TabCompletePacket;
+import me.ishift.epicguard.bukkit.listener.player.PlayerTabCompletePacket;
 
-public class MiscUtil {
+public class Hooks {
     public static void registerProtocolLib(GuardBukkit plugin) {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new TabCompletePacket(plugin));
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PlayerTabCompletePacket(plugin));
     }
 }

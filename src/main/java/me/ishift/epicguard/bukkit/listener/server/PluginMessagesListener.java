@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.server;
 
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.manager.User;
@@ -8,7 +8,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.nio.charset.StandardCharsets;
 
-public class BrandPluginMessageListener implements PluginMessageListener {
+public class PluginMessagesListener implements PluginMessageListener {
     public static void addChannel(Player p, String channel) {
         try {
             p.getClass().getMethod("addChannel", String.class).invoke(p, channel);

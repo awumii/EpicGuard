@@ -2,7 +2,7 @@ package me.ishift.epicguard.bukkit.gui;
 
 import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
 import me.ishift.epicguard.bukkit.gui.material.UniversalMaterial;
-import me.ishift.epicguard.bukkit.listener.PreLoginListener;
+import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
@@ -58,11 +58,11 @@ public class GuiMain {
         final ItemStack i5 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.BOOK_AND_QUILL))
                 .setTitle("&aDetection Log (Latest)")
                 .addLore("")
-                .addLore("&7Player&8: &c" + PreLoginListener.getLastPlayer())
-                .addLore("&7Adress&8: &c" + PreLoginListener.getLastAdress())
-                .addLore("&7Country&8: &c" + PreLoginListener.getLastCountry())
-                .addLore("&7Detection&8: &c" + PreLoginListener.getLastDetection())
-                .addLore("&7Blacklisted&8: &c" + PreLoginListener.isBlacklisted())
+                .addLore("&7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
+                .addLore("&7Adress&8: &c" + PlayerPreLoginListener.getLastAdress())
+                .addLore("&7Country&8: &c" + PlayerPreLoginListener.getLastCountry())
+                .addLore("&7Detection&8: &c" + PlayerPreLoginListener.getLastDetection())
+                .addLore("&7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())
                 .build();
 
         final ItemStack i6 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.CRAFTING))

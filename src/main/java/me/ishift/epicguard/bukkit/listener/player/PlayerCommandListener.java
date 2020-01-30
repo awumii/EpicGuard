@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.universal.Config;
@@ -28,6 +28,7 @@ public class PlayerCommandListener implements Listener {
                     Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                     return;
                 }
+                // "*" Permission probably can't be detected, so i added checking random permission, if player is not OP.
                 if (player.hasPermission("experimentalpex.detection") && Config.pexProtection) {
                     event.setCancelled(true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));

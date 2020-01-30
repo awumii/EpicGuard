@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.manager;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.listener.PreLoginListener;
+import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
@@ -77,14 +77,14 @@ public class AttackManager {
             HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }
-        PreLoginListener.setLastPlayer(nick);
-        PreLoginListener.setLastAdress(adress);
+        PlayerPreLoginListener.setLastPlayer(nick);
+        PlayerPreLoginListener.setLastAdress(adress);
         try {
-            PreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
+            PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
         } catch (UnknownHostException ignored) {
         }
-        PreLoginListener.setLastDetection(reason);
-        PreLoginListener.setBlacklisted(blacklist);
+        PlayerPreLoginListener.setLastDetection(reason);
+        PlayerPreLoginListener.setBlacklisted(blacklist);
         Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
         totalBots++;
