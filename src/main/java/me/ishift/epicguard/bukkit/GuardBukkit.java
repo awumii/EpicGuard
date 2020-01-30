@@ -11,6 +11,7 @@ import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.task.*;
+import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
@@ -78,8 +79,8 @@ public class GuardBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         final long ms = System.currentTimeMillis();
-        this.saveDefaultConfig();
         this.createDirectories();
+        this.saveDefaultConfig();
         Logger.create(ServerType.SPIGOT);
         loadConfig();
         LogoPrinter.print();
@@ -110,6 +111,7 @@ public class GuardBukkit extends JavaPlugin {
 
         new LogFilter().registerFilter();
 
+        Updater.checkForUpdates();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
         Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
@@ -153,9 +155,11 @@ public class GuardBukkit extends JavaPlugin {
         if (!dir1.mkdir()) {
             this.getLogger().info("Created logs directory");
         }
+
         final File dir2 = new File(this.getDataFolder() + "/deprecated0");
-        if (!dir2.mkdir()) {
-            if (cfg.renameTo(new File(dir2 + "/config.yml")) || cfg1.renameTo(new File(dir2 + "/cloud.yml")) || cfg2.renameTo(new File(dir2 + "/filter.yml")) || cfg3.renameTo(new File(dir2 + "/brand.yml"))) {
+        if (dir2.mkdir()) {
+            this.getLogger().info("Created deprecated directory.");
+            if (cfg.renameTo(new File(dir2 + "/config.yml")) && cfg1.renameTo(new File(dir2 + "/cloud.yml")) && cfg2.renameTo(new File(dir2 + "/filter.yml")) && cfg3.renameTo(new File(dir2 + "/brand.yml"))) {
                 this.getLogger().info("Deprecated old configurations.");
             }
         }

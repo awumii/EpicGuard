@@ -13,8 +13,8 @@ public class Downloader {
 
     public static void download(String from, String to) throws IOException {
         final File file = new File(to);
-        if (file.exists()) {
-            file.delete();
+        if (file.delete()) {
+            Logger.debug("Deleted file " + file.getName());
         }
         final URL url = new URL(from);
         final ReadableByteChannel rbc = Channels.newChannel(url.openStream());
