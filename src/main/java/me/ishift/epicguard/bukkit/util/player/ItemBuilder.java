@@ -1,6 +1,5 @@
-package me.ishift.epicguard.bukkit.util;
+package me.ishift.epicguard.bukkit.util.player;
 
-import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ItemBuilder {
     private final short data;
@@ -67,16 +65,16 @@ public class ItemBuilder {
 
     public ItemBuilder setColor(final Color color) {
         if (!this.mat.name().contains("LEATHER_")) {
-            throw new IllegalArgumentException("CO TY KURWA FARBUJESZ IDIOTO!");
+            throw new IllegalArgumentException("Can't set color for NON-LEATHER material.");
         }
         this.color = color;
         return this;
     }
 
     public ItemStack build() {
-        Material mat = this.mat;
+        final Material mat = this.mat;
         if (mat == null) {
-            Bukkit.getLogger().warning("... KOLOROWE POWIETRZE! ...");
+            Bukkit.getLogger().warning("Material is null.");
         }
         final ItemStack item = new ItemStack(this.mat, this.amount, this.data);
         final ItemMeta meta = item.getItemMeta();
@@ -92,18 +90,5 @@ public class ItemBuilder {
         item.setItemMeta(meta);
         item.addUnsafeEnchantments(this.enchants);
         return item;
-    }
-
-    public ItemBuilder clone() {
-        final ItemBuilder newBuilder = new ItemBuilder(this.mat);
-        newBuilder.setTitle(this.title);
-        for (final String lore : this.lore) {
-            newBuilder.addLore(lore);
-        }
-        for (final Map.Entry<Enchantment, Integer> entry : this.enchants.entrySet()) {
-            newBuilder.addEnchantment(entry.getKey(), entry.getValue());
-        }
-        newBuilder.setColor(this.color);
-        return newBuilder;
     }
 }

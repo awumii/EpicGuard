@@ -6,10 +6,6 @@
 #    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
 #    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
 #
-# Thank you for downloading my plugin!
-# SpigotMC Link: https://www.spigotmc.org/resources/%E2%9C%A9-epicguard-1-8-1-14-antibot-antivpn-proxy-spigot-bungeecord-staff-protection-tools-%E2%9C%A9.72369/
-# My Discord: PolskiStevek#2198
-updater: true
 
 ###############################
 ##           Countries       ##
@@ -33,7 +29,7 @@ countries:
 ###############################
 
 antibot:
-  # You can fuly disable ALL antibot modules if you don't want it.
+  # You can fuly disable ALL antibot modules if you don't want them.
   # Disabling antibot will not disable country checking (look above)
   enabled: true
   # New players will need to rejoin server to play!
@@ -46,104 +42,62 @@ antibot:
     - bot
     - proxy
   # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
-  # Then replace the URL "http://proxycheck.io/v2/{IP}&vpn=1" to this:
-  # "http://proxycheck.io/v2/{IP}?key=API_KEY&vpn=1"
-  checkers:
-    '1':
-      adress: "http://proxycheck.io/v2/{IP}&vpn=1"
-    '2':
-      adress: "http://www.stopforumspam.com/api?ip={IP}"
-    # What should the return message of each page contain?
-    responses:
-      - "yes"
-      - "true"
-      - "Bad"
+  # You can leave it empty, but your protection will be limited.
+  # With key - 1000 requests/24h
+  # Without key - 100 requests/24h
+  api-key: "YOUR_KEY"
 
 ###############################
-##     Server Protection     ##
+##        Settings           ##
 ###############################
 
-ip-history:
+# Configuration of EpicCloud - synchronizing and calculating
+# between plugin local data, and plugin's cloud, to increase performance.
+cloud:
+  # Should plugin enable this feature
   enabled: true
+  # Time in seconds before next sync
+  sync-every-seconds: 58800
+  features:
+    # Enable synchronizing blacklist (recommended)
+    blacklist: true
+    # Protection Requests.
+    protection-req: true
 
-op-protection:
-  enabled: false
-  # EXPERIMENTAL: Protection from backdoor using PermissionsEx "*" permission.
-  # Enable this if you are using PEX plugin and you want additional protection.
-  pex-protection: false
-  # Permission to see alert: epicguard.protection.notify
-  alert: "&cPlayer &6{PLAYER} &chas been banned for Force-OP."
-  command: "ban {PLAYER} Force-OP"
-  # List of players who can have OP
+# Heurisitcs check, allows you to detect bots even faster and decrease bypasses,
+heuristics:
+  enabled: true
+  # Minimal difference between current attack speed and fastest attack speed detected
+  # during current bot-attack. Default value is equal to speed.connection in 'config.yml'.
+  # You can experiment with this value, and see what value is best for detecting attacks.
+  min-difference: 7
+
+# If console log contains text listed below, it
+# will be hidden. This will decrease CPU usage.
+console-filter:
+  enabled: true
+  messages:
+    - Disconnecting
+    - lost connection
+    - authlib
+    - GameProfile
+
+# If a player doesn't send MC|Brand packet within time provied below (delay) after join,
+# he will be kicked. Normal clients send this packet after join, but bots doesen't.
+# WARN: Disable this if you have issues! (eg. when using ViaVersion or ProtocolSupport).
+channel-verification:
+  delay: 40
+  enabled: true
+  punish: "kick {PLAYER} &cException occurred in your connection, please rejoin!"
+# If a player sends MC|Brand packet with a value listed below, he will be kicked.
+# Normal (Vanilla) clients use 'vanilla'
+blocked-brands:
+  enabled: true
+  punish: "kick {PLAYER} &cYour client is not allowed on this server!"
   list:
-    - "Admin"
+    - some_blocked_brand
 
-# If someone tries to execute command listed here,
-# event will be canceled, and the player will see a custom message
-# defined in messages.yml
-
-command-protection:
-  enabled: false
-  list:
-    - "/op"
-    - "/deop"
-
-# If someone tries to execute a command not listed
-# in this module, and does not have bypass permission,
-# event will be canceled, and custom message will be shown
-
-allowed-commands:
-  enabled: false
-  # Permission for bypass this module.
-  # Everyone with the permission below can use any command.
-  bypass: "epicguard.command.bypass"
-  # If someone execute command not listed below,
-  # without permission to bypass, will get custom message
-  # defined in messages.yml
-  list:
-    - /msg
-    - /r
-    - /reply
-    - /tp
-    - /tpa
-    - /v
-    - /vanish
-    - /plot
-    - /fly
-    - /chat
-    - /mute
-    - /warn
-    - /kick
-    - /ban
-    - /tempban
-    - /unwarn
-    - /god
-    - /heal
-    - /feed
-    - /helpop
-    - /ec
-    - /enderchest
-    - /home
-    - /back
-    - /sethome
-    - /warp
-    - /tpaccept
-    - /tpdeny
-    - /ignore
-    - /spawn
-    - /hub
-    - /lobby
-    - /report
-    - /pay
-    - /ping
-    - /mail
-    - /kit
-    - /bal
-    - /balance
-    - /money
-    - /afk
-    - /sell
-
+updater: true
 ###############################
 ##           Advanced        ##
 ###############################
@@ -176,6 +130,50 @@ auto-whitelist:
   # 20 ticks = 1 second
   time: 8400
 
+###############################
+##     Server Protection     ##
+###############################
+
+ip-history:
+  enabled: true
+
+op-protection:
+  enabled: false
+  # EXPERIMENTAL: Protection from backdoor using PermissionsEx "*" permission.
+  # Enable this if you are using PEX plugin and you want additional protection.
+  pex-protection: false
+  # Permission to see alert: epicguard.protection.notify
+  alert: "&cPlayer &6{PLAYER} &chas been banned for Force-OP."
+  command: "ban {PLAYER} Force-OP"
+  # List of players who can have OP
+  list:
+    - "Admin"
+
+# If someone tries to execute command listed here,
+# event will be canceled, and the player will see a custom message
+# defined in messages.yml
+
+command-protection:
+  enabled: false
+  list:
+    - /op
+    - /stop
+
+# If someone tries to execute a command not listed
+# in this module, and does not have bypass permission,
+# event will be canceled, and custom message will be shown
+
+allowed-commands:
+  enabled: false
+  # Permission for bypass this module.
+  # Everyone with the permission below can use any command.
+  bypass: "epicguard.command.bypass"
+  # If someone execute command not listed below,
+  # without permission to bypass, will get custom message
+  # defined in messages.yml
+  list:
+    - /msg
+    - /home
 
 ###############################
 ##           Firewall        ##

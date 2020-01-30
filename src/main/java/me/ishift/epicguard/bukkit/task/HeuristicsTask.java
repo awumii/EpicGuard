@@ -31,7 +31,7 @@ public class HeuristicsTask implements Runnable {
 
     @Override
     public void run() {
-        Notificator.action("&8--=[ &7Listening... &8]=--");
+        Notificator.action("&a0&7/&acps &8| &7No attack.");
         if (AttackManager.isUnderAttack()) {
             time++;
         }

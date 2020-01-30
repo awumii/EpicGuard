@@ -16,8 +16,8 @@ public class ConnectionCloser {
             if (BungeeAttack.getConnectionPerSecond() > 5) {
                 GuardBungee.getInstance().getProxy().getPlayers().forEach(player -> {
                     if (player.getPermissions().contains("epicguard.admin")) {
-                        BungeeUtil.sendTitle(player, MessagesBungee.ATTACK_TITLE.replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond())), MessagesBungee.ATTACK_SUBTITLE.replace("{MAX}", String.valueOf(BungeeAttack.blockedBots)));
-                        BungeeUtil.sendActionBar(player, MessagesBungee.ACTIONBAR_ATTACK.replace("{NICK}", connection.getName()).replace("{IP}", connection.getAddress().getAddress().getHostAddress()).replace("{DETECTION}", String.valueOf(reason)));
+                        BungeeUtil.sendTitle(player, MessagesBungee.attackTitle.replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond())), MessagesBungee.attackSubtitle.replace("{MAX}", String.valueOf(BungeeAttack.blockedBots)));
+                        BungeeUtil.sendActionBar(player, MessagesBungee.attackActionBar.replace("{NICK}", connection.getName()).replace("{IP}", connection.getAddress().getAddress().getHostAddress()).replace("{DETECTION}", String.valueOf(reason)));
                     }
                 });
             }
@@ -25,7 +25,7 @@ public class ConnectionCloser {
         BungeeAttack.blockedBots++;
         if (reason == KickReason.GEO) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_COUNTRY) {
+            for (String s : MessagesBungee.messageKickCountry) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
@@ -33,7 +33,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.ATTACK) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_ATTACK) {
+            for (String s : MessagesBungee.messageKickAttack) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
@@ -41,7 +41,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.PROXY) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_PROXY) {
+            for (String s : MessagesBungee.messageKickProxy) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
@@ -49,7 +49,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.BLACKLIST) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_BLACKLIST) {
+            for (String s : MessagesBungee.messageKickBlacklist) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));
@@ -57,7 +57,7 @@ public class ConnectionCloser {
 
         if (reason == KickReason.NAMECONTAINS) {
             StringBuilder sb = new StringBuilder();
-            for (String s : MessagesBungee.MESSAGE_KICK_NAMECONTAINS) {
+            for (String s : MessagesBungee.messageKickNamecontains) {
                 sb.append(s).append("\n");
             }
             connection.disconnect(new TextComponent(ChatUtil.fix(sb.toString())));

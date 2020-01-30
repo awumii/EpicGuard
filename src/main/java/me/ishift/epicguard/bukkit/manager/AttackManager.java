@@ -73,7 +73,7 @@ public class AttackManager {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - DETECTED & BLOCKED");
         if (blacklist) {
-            BlacklistManager.add(adress);
+            BlacklistManager.blacklist(adress);
             HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }

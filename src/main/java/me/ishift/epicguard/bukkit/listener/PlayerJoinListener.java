@@ -2,12 +2,11 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.*;
-import me.ishift.epicguard.bukkit.object.CustomFile;
-import me.ishift.epicguard.bukkit.object.User;
+import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.bukkit.util.nms.Reflection;
+import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.GeoCheck;
@@ -28,88 +27,88 @@ import java.util.stream.Collectors;
 public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onJoin(PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent event) {
         try {
-            final Player p = e.getPlayer();
-            final String adress = p.getAddress().getAddress().getHostAddress();
+            final Player player = event.getPlayer();
+            final String address = player.getAddress().getAddress().getHostAddress();
 
             if (Reflection.isOldVersion()) {
-                BrandPluginMessageListener.addChannel(p, "MC|BRAND");
+                BrandPluginMessageListener.addChannel(player, "MC|BRAND");
             }
 
-            if (Config.antibot && !BlacklistManager.checkWhitelist(adress)) {
-                if (NameContainsCheck.check(p.getName())) {
-                    e.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
+            if (Config.antibot && !BlacklistManager.isWhitelisted(address)) {
+                if (NameContainsCheck.check(player.getName())) {
+                    event.setJoinMessage("");
+                    PlayerQuitListener.hiddenNames.add(player.getName());
+                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
 
-                if (BlacklistManager.check(adress)) {
-                    e.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
+                if (BlacklistManager.isBlacklisted(address)) {
+                    event.setJoinMessage("");
+                    PlayerQuitListener.hiddenNames.add(player.getName());
+                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
 
-                if (GeoCheck.check(GeoAPI.getCountryCode(p.getAddress().getAddress()))) {
-                    e.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(p.getName());
-                    p.kickPlayer(MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
+                if (GeoCheck.check(GeoAPI.getCountryCode(player.getAddress().getAddress()))) {
+                    event.setJoinMessage("");
+                    PlayerQuitListener.hiddenNames.add(player.getName());
+                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                     return;
                 }
             }
 
-            UserManager.addUser(p);
-            final User u = UserManager.getUser(p);
-            u.setIp(adress);
-            Updater.notify(p);
+            UserManager.addUser(player);
+            final User u = UserManager.getUser(player);
+            u.setIp(address);
+            Updater.notify(player);
             AttackManager.handleAttack(AttackType.JOIN);
 
             if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (p.isOnline()) {
-                        BlacklistManager.addWhitelist(adress);
+                    if (player.isOnline()) {
+                        BlacklistManager.whitelist(address);
                     }
                 }, Config.autoWhitelistTime);
             }
 
             // IP History manager
             if (Config.ipHistoryEnable) {
-                final List<String> history = DataFileManager.getDataFile().getStringList("history." + p.getName());
-                if (!history.contains(adress)) {
+                final List<String> history = DataFileManager.getDataFile().getStringList("history." + player.getName());
+                if (!history.contains(address)) {
                     if (!history.isEmpty()) {
-                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", p.getName()).replace("{IP}", adress));
+                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", address));
                     }
-                    history.add(adress);
+                    history.add(address);
                 }
-                DataFileManager.getDataFile().set("history." + p.getName(), history);
+                DataFileManager.getDataFile().set("history." + player.getName(), history);
                 u.setAdresses(history);
             }
 
             // Brand Verification
             if (Reflection.isOldVersion()) {
-                final CustomFile customFile = FileManager.getFile(GuardBukkit.getInstance().getDataFolder() + "/brand.yml");
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (!p.isOnline()) {
+                    if (!player.isOnline()) {
                         return;
                     }
 
-                    if (customFile.getConfig().getBoolean("channel-verification.enabled")) {
+                    if (Config.channelVerification) {
                         if (u.getBrand().equals("none")) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("channel-verification.punish")).replace("{PLAYER}", p.getName()));
-                            Logger.info("Exception occurred in " + p.getName() + "'s connection! If you think this is an issue go to /plugins/EpicGuard/brand.yml file, and replace every 'true' with false. Do NOT report this! This is not a bug!");
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.channelPunish).replace("{PLAYER}", player.getName()));
+                            Logger.info(player.getName() + "has been connection! If you think this is an issue, disable 'channel-verification'. Do NOT report this! This is not a bug!");
                             return;
                         }
+                        return;
                     }
-                    if (customFile.getConfig().getBoolean("blocked-brands.enabled")) {
-                        for (String string : customFile.getConfig().getStringList("blocked-brands")) {
+                    if (Config.blockedBrands) {
+                        for (String string : Config.blockedBrandsValues) {
                             if (u.getBrand().equalsIgnoreCase(string)) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), customFile.getConfig().getString(ChatUtil.fix("blocked-brands.punish")).replace("{PLAYER}", p.getName()));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.blockedBrandsPunish).replace("{PLAYER}", player.getName()));
                             }
                         }
                     }
-                }, 50L);
+                }, Config.channelDelay);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

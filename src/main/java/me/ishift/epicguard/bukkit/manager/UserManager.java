@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit.manager;
 
-import me.ishift.epicguard.bukkit.object.User;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -14,7 +13,7 @@ public class UserManager {
     }
 
     public static void addUser(Player p) {
-        User user = new User(p);
+        User user = new User();
         userMap.put(p, user);
     }
 

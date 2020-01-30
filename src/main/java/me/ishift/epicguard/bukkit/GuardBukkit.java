@@ -7,15 +7,13 @@ import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
 import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.manager.FileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.object.CustomFile;
 import me.ishift.epicguard.bukkit.task.*;
-import me.ishift.epicguard.bukkit.util.LogFilter;
+import me.ishift.epicguard.bukkit.util.misc.Metrics;
+import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.bukkit.util.MiscUtil;
-import me.ishift.epicguard.bukkit.util.nms.Reflection;
+import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.ServerType;
 import me.ishift.epicguard.universal.util.GeoAPI;
@@ -28,8 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
@@ -47,9 +43,7 @@ public class GuardBukkit extends JavaPlugin {
         Config.pingSpeed = config.getInt("speed.ping-speed");
         Config.autoWhitelist = config.getBoolean("auto-whitelist.enabled");
         Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
-        Config.antibotQuery1 = config.getString("antibot.checkers.1.adress");
-        Config.antibotQuery2 = config.getString("antibot.checkers.2.adress");
-        Config.antibotQueryContains = config.getStringList("antibot.checkers.responses");
+        Config.apiKey = config.getString("antibot.api-key");
         Config.countryList = config.getStringList("countries.list");
         Config.countryMode = config.getString("countries.mode");
         Config.antibot = config.getBoolean("antibot.enabled");
@@ -70,25 +64,13 @@ public class GuardBukkit extends JavaPlugin {
         Config.forceRejoin = config.getBoolean("antibot.force-rejoin");
         Config.pexProtection = config.getBoolean("op-protection.pex-protection");
         Config.blockedNames = config.getStringList("antibot.name-contains");
-
-        final String path = getInstance().getDataFolder() + "/cloud.yml";
-        FileManager.createFile(path);
-        final CustomFile cloudFile = FileManager.getFile(path);
-        if (!cloudFile.isExisting()) {
-            cloudFile.create();
-            cloudFile.getConfig().set("cloud.enabled", true);
-            cloudFile.getConfig().set("cloud.sync-every-seconds", 1800);
-            cloudFile.getConfig().set("cloud.features.blacklist", true);
-            cloudFile.getConfig().set("heuristics.enabled", true);
-            cloudFile.getConfig().set("heuristics.min-difference", 7);
-            cloudFile.save();
-        }
-
-        Config.cloudEnabled = cloudFile.getConfig().getBoolean("cloud.enabled");
-        Config.cloudBlacklist = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
-        Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
-        Config.heuristicsEnabled = cloudFile.getConfig().getBoolean("heuristics.enabled");
-        Config.heuristicsDiff = cloudFile.getConfig().getInt("heuristics.min-difference");
+        Config.cloudEnabled = config.getBoolean("cloud.enabled");
+        Config.cloudBlacklist = config.getBoolean("cloud.features.blacklist");
+        Config.cloudTime = config.getLong("cloud.sync-every-seconds");
+        Config.heuristicsEnabled = config.getBoolean("heuristics.enabled");
+        Config.heuristicsDiff = config.getInt("heuristics.min-difference");
+        Config.filterEnabled = config.getBoolean("console-filter.enabled");
+        Config.filterValues = config.getStringList("console-filter.messages");
     }
 
     @Override
@@ -101,7 +83,7 @@ public class GuardBukkit extends JavaPlugin {
         LogoPrinter.print();
         Logger.info("Version: " + this.getDescription().getVersion());
         GeoAPI.create(ServerType.SPIGOT);
-        new Metrics(this);
+        new Metrics(this, 5845);
 
         Reflection.init();
         DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
@@ -117,9 +99,14 @@ public class GuardBukkit extends JavaPlugin {
 
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
-        this.registerBrand();
 
-        new LogFilter(this.getDataFolder() + "/filter.yml").registerFilter();
+        if (!Reflection.isOldVersion()) {
+            return;
+        }
+        final Messenger messenger = Bukkit.getMessenger();
+        messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
+
+        new LogFilter().registerFilter();
 
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
         Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
@@ -139,6 +126,7 @@ public class GuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new InventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
+
         if (pm.isPluginEnabled("ProtocolLib")) {
             MiscUtil.registerProtocolLib(this);
         }
@@ -153,39 +141,20 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void createDirectories() {
-        File cfg = new File(this.getDataFolder() + "/config.yml");
-        File dir1 = new File(this.getDataFolder() + "/logs");
-        if (!dir1.exists()) {
-            dir1.mkdir();
+        final File cfg = new File(this.getDataFolder() + "/config.yml");
+        final File dir1 = new File(this.getDataFolder() + "/logs");
+        if (!dir1.mkdir()) {
+            Logger.debug("Created logs directory");
         }
-        File dir2 = new File(this.getDataFolder() + "/deprecated");
-        if (!dir2.exists()) {
-            cfg.renameTo(new File(dir2 + "/config.yml"));
-            dir2.mkdir();
+        final File dir2 = new File(this.getDataFolder() + "/oldconfig");
+        if (!dir2.mkdir()) {
+            if (cfg.renameTo(new File(dir2 + "/config.yml"))) {
+                Logger.debug("Deprecated old configurations.");
+            }
         }
-        File dir3 = new File(this.getDataFolder() + "/data");
-        if (!dir3.exists()) {
-            dir3.mkdir();
-        }
-    }
-
-    private void registerBrand() {
-        FileManager.createFile(this.getDataFolder() + "/brand.yml");
-        final CustomFile brandConfig = FileManager.getFile(this.getDataFolder() + "/brand.yml");
-        if (!brandConfig.isExisting()) {
-            List<String> blockedBrandDefault = new ArrayList<>();
-            blockedBrandDefault.add("some_blocked_brand");
-            brandConfig.getConfig().set("channel-verification.enabled", true);
-            brandConfig.getConfig().set("channel-verification.punish", "kick {PLAYER} &cException occurred in your connection, please rejoin!");
-            brandConfig.getConfig().set("blocked-brands.enabled", true);
-            brandConfig.getConfig().set("blocked-brands.punish", "kick {PLAYER} &cYour client is not allowed on this server!");
-            brandConfig.getConfig().set("blocked-brands.list", blockedBrandDefault);
-            brandConfig.save();
-        }
-
-        if (Reflection.isOldVersion()) {
-            final Messenger messenger = Bukkit.getMessenger();
-            messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
+        final File dir3 = new File(this.getDataFolder() + "/data");
+        if (dir3.mkdir()) {
+            Logger.debug("Created data directory.");
         }
     }
 }

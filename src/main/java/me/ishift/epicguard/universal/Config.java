@@ -11,9 +11,7 @@ public class Config {
     public static int joinSpeed;
     public static boolean autoWhitelist;
     public static int autoWhitelistTime;
-    public static String antibotQuery1;
-    public static String antibotQuery2;
-    public static List<String> antibotQueryContains;
+    public static String apiKey;
     public static List<String> countryList;
     public static List<String> blockedNames;
     public static String countryMode;
@@ -21,6 +19,7 @@ public class Config {
     public static boolean updater;
     public static long attackResetTimer;
     public static boolean tabCompleteBlock;
+
     public static List<String> blockedCommands;
     public static List<String> allowedCommands;
     public static List<String> opProtectionList;
@@ -33,9 +32,20 @@ public class Config {
     public static boolean ipHistoryEnable;
     public static boolean forceRejoin;
     public static boolean pexProtection;
+
     public static boolean cloudEnabled;
     public static boolean cloudBlacklist;
     public static long cloudTime;
     public static boolean heuristicsEnabled;
     public static int heuristicsDiff;
+
+    public static boolean filterEnabled;
+    public static List<String> filterValues;
+
+    public static boolean channelVerification;
+    public static long channelDelay;
+    public static String channelPunish;
+    public static boolean blockedBrands;
+    public static String blockedBrandsPunish;
+    public static List<String> blockedBrandsValues;
 }

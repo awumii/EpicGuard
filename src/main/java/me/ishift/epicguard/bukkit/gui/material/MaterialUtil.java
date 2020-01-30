@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.gui.material;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.util.nms.Reflection;
+import me.ishift.epicguard.bukkit.util.server.Reflection;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

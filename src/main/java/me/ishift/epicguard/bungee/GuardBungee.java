@@ -1,8 +1,6 @@
 package me.ishift.epicguard.bungee;
 
 import me.ishift.epicguard.bungee.command.GuardCommand;
-import me.ishift.epicguard.bungee.file.CustomFile;
-import me.ishift.epicguard.bungee.file.FileManager;
 import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
@@ -38,7 +36,6 @@ public class GuardBungee extends Plugin {
     @Override
     public void onEnable() {
         try {
-
             if (!this.getDataFolder().exists()) {
                 this.getDataFolder().mkdir();
             }
@@ -59,7 +56,7 @@ public class GuardBungee extends Plugin {
             this.loadConfig();
             MessagesBungee.load();
             GeoAPI.create(ServerType.BUNGEE);
-            new Metrics(this);
+            new Metrics(this, 5956);
             this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
             this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
 
@@ -82,36 +79,24 @@ public class GuardBungee extends Plugin {
                     e.printStackTrace();
                 }
             }
-            final Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config_bungee.yml"));
-            Config.firewallEnabled = cfg.getBoolean("firewall");
-            Config.firewallBlacklistCommand = cfg.getString("firewall.command-blacklist");
-            Config.firewallWhitelistCommand = cfg.getString("firewall.command-whitelist");
-            Config.connectSpeed = cfg.getInt("speed.connection");
-            Config.pingSpeed = cfg.getInt("speed.ping-speed");
-            Config.antibotQuery1 = cfg.getString("antibot.checkers.1.adress");
-            Config.antibotQuery2 = cfg.getString("antibot.checkers.2.adress");
-            Config.antibotQueryContains = cfg.getStringList("antibot.checkers.responses");
-            Config.countryList = cfg.getStringList("countries.list");
-            Config.countryMode = cfg.getString("countries.mode");
-            Config.antibot = cfg.getBoolean("antibot.enabled");
-            Config.attackResetTimer = cfg.getLong("speed.attack-timer-reset");
-            Config.blockedNames = cfg.getStringList("antibot.name-contains");
 
-            final String path = this.getDataFolder() + "/cloud.yml";
-            new File(path).createNewFile();
-            FileManager.createFile(path);
-            final CustomFile cloudFile = FileManager.getFile(path);
-            if (!cloudFile.exist()) {
-                cloudFile.create();
-                cloudFile.getConfig().set("cloud.enabled", true);
-                cloudFile.getConfig().set("cloud.sync-every-seconds", 1800);
-                cloudFile.getConfig().set("cloud.features.blacklist", true);
-                cloudFile.save();
-            }
-
-            Config.cloudEnabled = cloudFile.getConfig().getBoolean("cloud.enabled");
-            Config.cloudBlacklist = cloudFile.getConfig().getBoolean("cloud.features.blacklist");
-            Config.cloudTime = cloudFile.getConfig().getLong("cloud.sync-every-seconds");
+            final Configuration config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config_bungee.yml"));
+            Config.firewallEnabled = config.getBoolean("firewall");
+            Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+            Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+            Config.connectSpeed = config.getInt("speed.connection");
+            Config.pingSpeed = config.getInt("speed.ping-speed");
+            Config.apiKey = config.getString("antibot.api-key");
+            Config.countryList = config.getStringList("countries.list");
+            Config.countryMode = config.getString("countries.mode");
+            Config.antibot = config.getBoolean("antibot.enabled");
+            Config.attackResetTimer = config.getLong("speed.attack-timer-reset");
+            Config.blockedNames = config.getStringList("antibot.name-contains");
+            Config.cloudEnabled = config.getBoolean("cloud.enabled");
+            Config.cloudBlacklist = config.getBoolean("cloud.features.blacklist");
+            Config.cloudTime = config.getLong("cloud.sync-every-seconds");
+            Config.filterEnabled = config.getBoolean("console-filter.enabled");
+            Config.filterValues = config.getStringList("console-filter.messages");
 
         } catch (Exception e) {
             e.printStackTrace();
