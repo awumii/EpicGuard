@@ -15,10 +15,11 @@ public class ProxyPingListener implements Listener {
         if (Config.antibot) {
             BungeeAttack.handle(AttackType.PING);
             if (BungeeAttack.getPingPerSecond() > Config.pingSpeed) {
-                BungeeAttack.setAttack(true);
-                final ServerPing response = event.getResponse();
-                response.setDescriptionComponent(new TextComponent(""));
-                event.setResponse(response);
+                if (Config.bandwidthOptimizer) {
+                    final ServerPing response = event.getResponse();
+                    response.setDescriptionComponent(new TextComponent(""));
+                    event.setResponse(response);
+                }
             }
         }
     }

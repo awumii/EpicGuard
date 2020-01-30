@@ -121,6 +121,10 @@ speed:
 # receive different packet than older version players.
 fully-block-tab-complete: false
 
+# When server is attacked with PING method, server
+# motd and player slots, won't be displayed to optimize bandwidth
+bandwidth-optimizer: true
+
 auto-whitelist:
   # Enable automatic player whitelisting.
   # When a player is whitelisted, all checks are skipped (like a Proxy check).

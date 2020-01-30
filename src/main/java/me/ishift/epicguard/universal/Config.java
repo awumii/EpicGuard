@@ -19,6 +19,7 @@ public class Config {
     public static boolean updater;
     public static long attackResetTimer;
     public static boolean tabCompleteBlock;
+    public static boolean bandwidthOptimizer;
 
     public static List<String> blockedCommands;
     public static List<String> allowedCommands;

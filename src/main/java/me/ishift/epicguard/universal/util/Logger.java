@@ -47,8 +47,10 @@ public class Logger {
             if (serverType == ServerType.BUNGEE) {
                 file = new File(GuardBungee.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
-            if (file.createNewFile()) {
-                System.out.println();
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    System.out.println("[EpicGuard] Created new log file.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
