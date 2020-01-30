@@ -1,0 +1,63 @@
+# SpigotMC Link: https://www.spigotmc.org/resources/72369/
+prefix: "&8[&2EpicGuard&8] "
+actionbar:
+  attack: "&8(&c&lWYKRYCIE BOTA&8) &6{NICK} &8[&c{IP}&8] &8| &7Wykryto: &b{DETECTION}"
+attack-title:
+  # {MAX} - Number of blocked bots during last attack.
+  # {CPS} - Connections Per Second.
+  title: "&cSerwer jest Atakowany! &8[&6{CPS}/s&8]"
+  subtitle: "&7Wykrywanie... &b{MAX} botów &7zablokowano w ciagu &e{TIME} sekund..."
+other:
+  history-new: "&7Gracz &e{NICK} &7zalogowal sie z &fNOWEGO&7 IP &8(&6{IP}&8)&7!"
+  no-permission: "&cNie posiadasz uprawnien do tej komendy."
+  # This option is only one here
+  # without "prefix" added before it!
+  not-allowed-command: "&fUnknown command. Type /help for help."
+  blocked-command: "&cTa komenda jest niedozwolona!"
+kick-messages:
+  proxy:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Nasz system wykryl u ciebie VPN lub Proxy."
+    - "&7Prosimy o wylaczenie programów VPN i dołączenie."
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
+  blacklist:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Zostales wykryty z powodem:"
+    - " &8-> &cTwoje IP zostało zablokowane."
+    - " &8-> &cBLACKLIST_DETECTION"
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
+  attack:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Nasz serwer jest atakowany."
+    - "&7Poczekaj kilka minut przed dołączeniem."
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
+  country:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Zostales wykryty z powodem:"
+    - " &8-> &cTwój kraj jest niedozwolony na tym serwerze."
+    - " &8-> &cCOUNTRY_DETECTION"
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
+  namecontains:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Zostales wykryty z powodem:"
+    - " &8-> &cJestes prawdopodobnie botem, zmien nick."
+    - " &8-> &cNAME_CONTAINS"
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
+  rejoin:
+    - "&8(&c&lANTYBOT&8)"
+    - " "
+    - "&7Zostales wykryty z powodem:"
+    - " &8-> &cDolacz ponownie na serwer."
+    - " &8-> &cVERIFY"
+    - " "
+    - "&7Jeśli uważasz to za błąd, skontaktuj się z administracją."
