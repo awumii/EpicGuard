@@ -36,7 +36,7 @@ public class Notificator {
             final User u = UserManager.getUser(player);
             if (u != null && u.isNotifications()) {
                 if (player.hasPermission(GuardBukkit.PERMISSION)) {
-                    ActionBar.sendActionbar(player, text);
+                    ActionBar.sendActionBar(player, text);
                 }
             }
         });
