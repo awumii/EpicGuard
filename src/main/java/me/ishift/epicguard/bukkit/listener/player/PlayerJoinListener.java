@@ -1,6 +1,8 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.bukkit.listener.player.PlayerQuitListener;
+import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.manager.*;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
@@ -33,7 +35,7 @@ public class PlayerJoinListener implements Listener {
             final String address = player.getAddress().getAddress().getHostAddress();
 
             if (Reflection.isOldVersion()) {
-                BrandPluginMessageListener.addChannel(player, "MC|BRAND");
+                PluginMessagesListener.addChannel(player, "MC|BRAND");
             }
 
             if (Config.antibot && !BlacklistManager.isWhitelisted(address)) {

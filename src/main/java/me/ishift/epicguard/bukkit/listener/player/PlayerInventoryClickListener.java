@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener;
+package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class InventoryClickListener implements Listener {
+public class PlayerInventoryClickListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         final Player p = (Player) event.getWhoClicked();

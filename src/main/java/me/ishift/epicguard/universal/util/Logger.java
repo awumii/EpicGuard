@@ -21,7 +21,7 @@ public class Logger {
         log(message, false);
     }
 
-    public static void log(String message, boolean hide) {
+    private static void log(String message, boolean hide) {
         final Calendar cal = Calendar.getInstance();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
         final String time = sdf.format(cal.getTime());
@@ -48,7 +48,7 @@ public class Logger {
                 file = new File(GuardBungee.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (file.createNewFile()) {
-                debug("Generated new log file.");
+                System.out.println();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class Logger {
 
     public static void writeToFile(File file, String message) {
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+            final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();
             bufferedWriter.close();

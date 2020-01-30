@@ -5,14 +5,16 @@ import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
-import me.ishift.epicguard.bukkit.listener.*;
+import me.ishift.epicguard.bukkit.listener.player.*;
+import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
+import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.task.*;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.MiscUtil;
+import me.ishift.epicguard.bukkit.util.Hooks;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.ServerType;
@@ -104,7 +106,7 @@ public class GuardBukkit extends JavaPlugin {
             return;
         }
         final Messenger messenger = Bukkit.getMessenger();
-        messenger.registerIncomingPluginChannel(this, "MC|Brand", new BrandPluginMessageListener());
+        messenger.registerIncomingPluginChannel(this, "MC|Brand", new PluginMessagesListener());
 
         new LogFilter().registerFilter();
 
@@ -120,15 +122,15 @@ public class GuardBukkit extends JavaPlugin {
 
     private void registerListeners() {
         PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvents(new PreLoginListener(), this);
+        pm.registerEvents(new PlayerPreLoginListener(), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerJoinListener(), this);
         pm.registerEvents(new PlayerQuitListener(), this);
-        pm.registerEvents(new InventoryClickListener(), this);
+        pm.registerEvents(new PlayerInventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
-            MiscUtil.registerProtocolLib(this);
+            Hooks.registerProtocolLib(this);
         }
     }
 
@@ -141,20 +143,25 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void createDirectories() {
+        // I don't even know.
         final File cfg = new File(this.getDataFolder() + "/config.yml");
+        final File cfg1 = new File(this.getDataFolder() + "/cloud.yml");
+        final File cfg2 = new File(this.getDataFolder() + "/filter.yml");
+        final File cfg3 = new File(this.getDataFolder() + "/brand.yml");
+
         final File dir1 = new File(this.getDataFolder() + "/logs");
         if (!dir1.mkdir()) {
-            Logger.debug("Created logs directory");
+            this.getLogger().info("Created logs directory");
         }
-        final File dir2 = new File(this.getDataFolder() + "/oldconfig");
+        final File dir2 = new File(this.getDataFolder() + "/deprecated0");
         if (!dir2.mkdir()) {
-            if (cfg.renameTo(new File(dir2 + "/config.yml"))) {
-                Logger.debug("Deprecated old configurations.");
+            if (cfg.renameTo(new File(dir2 + "/config.yml")) || cfg1.renameTo(new File(dir2 + "/cloud.yml")) || cfg2.renameTo(new File(dir2 + "/filter.yml")) || cfg3.renameTo(new File(dir2 + "/brand.yml"))) {
+                this.getLogger().info("Deprecated old configurations.");
             }
         }
         final File dir3 = new File(this.getDataFolder() + "/data");
         if (dir3.mkdir()) {
-            Logger.debug("Created data directory.");
+            this.getLogger().info("Created data directory");
         }
     }
 }
