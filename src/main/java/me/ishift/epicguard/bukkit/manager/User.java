@@ -1,6 +1,4 @@
-package me.ishift.epicguard.bukkit.object;
-
-import org.bukkit.entity.Player;
+package me.ishift.epicguard.bukkit.manager;
 
 import java.util.List;
 
@@ -9,10 +7,8 @@ public class User {
     private boolean notifications;
     private String brand;
     private String ip;
-    private Player player;
 
-    public User(Player player) {
-        this.player = player;
+    public User() {
         this.notifications = false;
         this.brand = "none";
     }

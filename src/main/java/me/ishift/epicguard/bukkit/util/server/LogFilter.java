@@ -1,7 +1,6 @@
-package me.ishift.epicguard.bukkit.util;
+package me.ishift.epicguard.bukkit.util.server;
 
-import me.ishift.epicguard.bukkit.manager.FileManager;
-import me.ishift.epicguard.bukkit.object.CustomFile;
+import me.ishift.epicguard.universal.Config;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -10,27 +9,8 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LogFilter extends AbstractFilter {
-    private String path;
-
-    public LogFilter(String path) {
-        this.path = path;
-        FileManager.createFile(path);
-        final CustomFile file = FileManager.getFile(path);
-        if (!file.isExisting()) {
-            file.create();
-            final List<String> list = new ArrayList<>();
-            list.add("Disconnecting");
-            list.add("lost connection");
-            list.add("authlib");
-            list.add("GameProfile");
-            file.getConfig().set("console-filter.enabled", true);
-            file.getConfig().set("console-filter.messages", list);
-            file.save();
-        }
+    public LogFilter() {
     }
 
     public void registerFilter() {
@@ -60,9 +40,8 @@ public class LogFilter extends AbstractFilter {
 
     private Result isLoggable(String msg) {
         if (msg != null) {
-            final CustomFile file = FileManager.getFile(path);
-            if (file.getConfig().getBoolean("console-filter.enabled")) {
-                for (String string : file.getConfig().getStringList("console-filter.messages")) {
+            if (Config.filterEnabled) {
+                for (String string : Config.filterValues) {
                     if (msg.contains(string)) {
                         return Result.DENY;
                     }

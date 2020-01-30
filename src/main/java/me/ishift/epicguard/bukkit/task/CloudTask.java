@@ -1,8 +1,6 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.ServerType;
 import me.ishift.epicguard.universal.cloud.CloudGet;
@@ -15,11 +13,9 @@ public class CloudTask implements Runnable {
         if (Config.cloudEnabled) {
             if (Config.cloudBlacklist) {
                 CloudManager.connect(CloudGet.BLACKLIST);
-                CloudManager.getCloudBlacklist().forEach(BlacklistManager::add);
+                CloudManager.getCloudBlacklist().forEach(BlacklistManager::blacklist);
             }
         }
-        DataFileManager.save();
-        Updater.checkForUpdates();
         Logger.create(ServerType.SPIGOT);
     }
 }

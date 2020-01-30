@@ -1,8 +1,8 @@
 package me.ishift.epicguard.bukkit.gui;
 
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.object.User;
-import me.ishift.epicguard.bukkit.util.ItemBuilder;
+import me.ishift.epicguard.bukkit.manager.User;
+import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;

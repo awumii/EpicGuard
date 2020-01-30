@@ -11,17 +11,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class MessagesBungee {
-    public static List<String> MESSAGE_KICK_PROXY;
-    public static List<String> MESSAGE_KICK_COUNTRY;
-    public static List<String> MESSAGE_KICK_ATTACK;
-    public static List<String> MESSAGE_KICK_BLACKLIST;
-    public static List<String> MESSAGE_KICK_NAMECONTAINS;
-    public static String ACTIONBAR_ATTACK;
-    public static String ATTACK_TITLE;
-    public static String ATTACK_SUBTITLE;
-    public static String HISTORY_NEW;
-    public static String NO_PERMISSION;
-    public static String PREFIX;
+    public static List<String> messageKickProxy;
+    public static List<String> messageKickCountry;
+    public static List<String> messageKickAttack;
+    public static List<String> messageKickBlacklist;
+    public static List<String> messageKickNamecontains;
+    public static String attackActionBar;
+    public static String attackTitle;
+    public static String attackSubtitle;
+    public static String historyNew;
+    public static String noPermission;
+    public static String prefix;
 
     public static void load() throws IOException {
         String file = GuardBungee.getInstance().getDataFolder() + "/messages.yml";
@@ -33,17 +33,18 @@ public class MessagesBungee {
                 e.printStackTrace();
             }
         }
+
         Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(file));
-        MESSAGE_KICK_PROXY = cfg.getStringList("kick-messages.proxy");
-        MESSAGE_KICK_COUNTRY = cfg.getStringList("kick-messages.country");
-        MESSAGE_KICK_ATTACK = cfg.getStringList("kick-messages.attack");
-        MESSAGE_KICK_BLACKLIST = cfg.getStringList("kick-messages.blacklist");
-        MESSAGE_KICK_NAMECONTAINS = cfg.getStringList("kick-messages.namecontains");
-        ACTIONBAR_ATTACK = cfg.getString("actionbar.attack");
-        ATTACK_TITLE = cfg.getString("attack-title.title");
-        ATTACK_SUBTITLE = cfg.getString("attack-title.subtitle");
-        HISTORY_NEW = cfg.getString("other.history-new");
-        NO_PERMISSION = cfg.getString("other.no-permission");
-        PREFIX = cfg.getString("prefix");
+        messageKickProxy = cfg.getStringList("kick-messages.proxy");
+        messageKickCountry = cfg.getStringList("kick-messages.country");
+        messageKickAttack = cfg.getStringList("kick-messages.attack");
+        messageKickBlacklist = cfg.getStringList("kick-messages.blacklist");
+        messageKickNamecontains = cfg.getStringList("kick-messages.namecontains");
+        attackActionBar = cfg.getString("actionbar.attack");
+        attackTitle = cfg.getString("attack-title.title");
+        attackSubtitle = cfg.getString("attack-title.subtitle");
+        historyNew = cfg.getString("other.history-new");
+        noPermission = cfg.getString("other.no-permission");
+        prefix = cfg.getString("prefix");
     }
 }

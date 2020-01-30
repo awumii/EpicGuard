@@ -7,8 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FirewallManager {
-    public static List<String> blackList = new ArrayList<>();
-    public static List<String> whiiteList = new ArrayList<>();
+    private static List<String> blackList = new ArrayList<>();
+    private static List<String> whiiteList = new ArrayList<>();
+
+    public static List<String> getBlackList() {
+        return blackList;
+    }
+
+    public static List<String> getWhiiteList() {
+        return whiiteList;
+    }
 
     public static void blacklist(String adress) {
         blackList.add(adress);

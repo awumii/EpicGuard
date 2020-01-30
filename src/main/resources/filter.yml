@@ -1,9 +1,0 @@
-# If console log contains text listed below, it
-# will be hidden
-console-filter:
-  enabled: true
-  messages:
-    - Disconnecting
-    - lost connection
-    - authlib
-    - GameProfile

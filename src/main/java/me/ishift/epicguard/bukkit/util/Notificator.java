@@ -2,36 +2,43 @@ package me.ishift.epicguard.bukkit.util;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.object.User;
-import me.ishift.epicguard.bukkit.util.nms.ActionBarAPI;
-import me.ishift.epicguard.bukkit.util.nms.TitleAPI;
+import me.ishift.epicguard.bukkit.manager.User;
+import me.ishift.epicguard.bukkit.util.player.ActionBar;
+import me.ishift.epicguard.bukkit.util.player.Title;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 
 public class Notificator {
     public static void title(String title, String subtitle) {
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            final User u = UserManager.getUser(p);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            final User u = UserManager.getUser(player);
             if (u != null && u.isNotifications()) {
-                if (p.hasPermission(GuardBukkit.PERMISSION)) {
-                    TitleAPI.sendTitle(p, 20, 40, 20, title, subtitle);
+                if (player.hasPermission(GuardBukkit.PERMISSION)) {
+                    Title.send(player, title, subtitle, 20, 40, 20);
                 }
             }
         });
     }
 
     public static void broadcast(String text) {
-        Bukkit.getOnlinePlayers().forEach(p -> {
-            final User u = UserManager.getUser(p);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            final User u = UserManager.getUser(player);
             if (u != null && u.isNotifications()) {
-                if (p.hasPermission(GuardBukkit.PERMISSION)) {
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
+                if (player.hasPermission(GuardBukkit.PERMISSION)) {
+                    player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
                 }
             }
         });
     }
 
     public static void action(String text) {
-        ActionBarAPI.sendActionBarToAllPlayers(ChatUtil.fix(text), -1, GuardBukkit.PERMISSION);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            final User u = UserManager.getUser(player);
+            if (u != null && u.isNotifications()) {
+                if (player.hasPermission(GuardBukkit.PERMISSION)) {
+                    ActionBar.sendActionbar(player, text);
+                }
+            }
+        });
     }
 }

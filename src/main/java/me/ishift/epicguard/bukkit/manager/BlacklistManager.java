@@ -7,18 +7,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlacklistManager {
-    public static List<String> blacklist = new ArrayList<>();
-    public static List<String> whitelist = new ArrayList<>();
+    private static List<String> blacklist = new ArrayList<>();
+    private static List<String> whitelist = new ArrayList<>();
 
-    public static boolean check(String adress) {
+    public static boolean isBlacklisted(String adress) {
         return blacklist.contains(adress);
     }
 
-    public static boolean checkWhitelist(String adress) {
+    public static boolean isWhitelisted(String adress) {
         return whitelist.contains(adress);
     }
 
-    public static void add(String adress) {
+    public static List<String> getBlacklist() {
+        return blacklist;
+    }
+
+    public static List<String> getWhitelist() {
+        return whitelist;
+    }
+
+    public static void setBlacklist(List<String> blacklist) {
+        BlacklistManager.blacklist = blacklist;
+    }
+
+    public static void setWhitelist(List<String> whitelist) {
+        BlacklistManager.whitelist = whitelist;
+    }
+
+    public static void blacklist(String adress) {
         if (!blacklist.contains(adress)) {
             blacklist.add(adress);
             DataFileManager.getDataFile().set("blacklist", blacklist);
@@ -32,7 +48,7 @@ public class BlacklistManager {
         }
     }
 
-    public static void addWhitelist(String adress) {
+    public static void whitelist(String adress) {
         if (!whitelist.contains(adress)) {
             whitelist.add(adress);
             DataFileManager.getDataFile().set("whitelist", whitelist);

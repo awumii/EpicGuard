@@ -78,12 +78,12 @@ public class PreLoginListener implements Listener {
         Logger.debug("# DETECTION LOG:");
         AttackManager.handleAttack(AttackType.CONNECT);
 
-        if (BlacklistManager.checkWhitelist(adress)) {
+        if (BlacklistManager.isWhitelisted(adress)) {
             Logger.debug("+ Whitelist Check - Passed");
             return;
         }
 
-        if (BlacklistManager.check(adress)) {
+        if (BlacklistManager.isBlacklisted(adress)) {
             AttackManager.handleDetection("Blacklist", name, adress, event, KickReason.BLACKLIST, false);
             return;
         }

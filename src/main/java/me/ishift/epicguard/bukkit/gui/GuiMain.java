@@ -6,8 +6,8 @@ import me.ishift.epicguard.bukkit.listener.PreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.cloud.CloudManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -45,8 +45,8 @@ public class GuiMain {
                 .addLore("")
                 .addLore("&7Checked connections&8: &c" + DataFileManager.checkedConnections)
                 .addLore("&7Blocked bots&8: &c" + DataFileManager.blockedBots)
-                .addLore("&7Blacklisted IPs&8: &c" + BlacklistManager.blacklist.size())
-                .addLore("&7Whitelisted IPs&8: &c" + BlacklistManager.whitelist.size())
+                .addLore("&7Blacklisted IPs&8: &c" + BlacklistManager.getBlacklist().size())
+                .addLore("&7Whitelisted IPs&8: &c" + BlacklistManager.getWhitelist().size())
                 .build();
 
         final ItemStack i4 = new ItemBuilder(Material.DIAMOND_BLOCK)

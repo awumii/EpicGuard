@@ -23,11 +23,11 @@ public class ProxyPreLoginListener implements Listener {
         final String country = GeoAPI.getCountryCode(event.getConnection().getAddress().getAddress());
         BungeeAttack.handle(AttackType.CONNECT);
 
-        if (FirewallManager.whiiteList.contains(adress)) {
+        if (FirewallManager.getWhiiteList().contains(adress)) {
             return;
         }
 
-        if (FirewallManager.blackList.contains(adress)) {
+        if (FirewallManager.getBlackList().contains(adress)) {
             ConnectionCloser.close(connection, KickReason.BLACKLIST);
             return;
         }
