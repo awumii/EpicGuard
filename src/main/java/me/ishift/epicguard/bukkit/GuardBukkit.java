@@ -143,7 +143,7 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new CloudTask(), 40L, Config.cloudTime * 20);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CloudTask(), 40L, Config.cloudTime);
     }
 
     private void createDirectories() {
