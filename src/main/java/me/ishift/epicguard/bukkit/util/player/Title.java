@@ -9,7 +9,7 @@ public class Title {
     public static void send(Player player, String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
         try {
             final Object chatTitle = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class)
-                    .invoke(null, "{\"text\": \"" + title + "\"}");
+                    .invoke(null, "{\"text\": \"" + ChatUtil.fix(title) + "\"}");
             final Constructor<?> titleConstructor = Reflection.getNMSClass("PacketPlayOutTitle").getConstructor(
                     Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], Reflection.getNMSClass("IChatBaseComponent"),
                     int.class, int.class, int.class);
@@ -18,7 +18,7 @@ public class Title {
                     fadeInTime, showTime, fadeOutTime);
 
             final Object chatsTitle = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class)
-                    .invoke(null, "{\"text\": \"" + subtitle + "\"}");
+                    .invoke(null, "{\"text\": \"" + ChatUtil.fix(subtitle) + "\"}");
             final Constructor<?> timingTitleConstructor = Reflection.getNMSClass("PacketPlayOutTitle").getConstructor(
                     Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], Reflection.getNMSClass("IChatBaseComponent"),
                     int.class, int.class, int.class);
