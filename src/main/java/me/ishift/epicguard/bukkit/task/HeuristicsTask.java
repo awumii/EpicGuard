@@ -42,9 +42,7 @@ public class HeuristicsTask implements Runnable {
 
         final int diff = AttackManager.getConnectPerSecond() - record;
         if (AttackManager.getConnectPerSecond() > 0) {
-            final int percent = record * 100 / AttackManager.getConnectPerSecond();
             if (AttackManager.getConnectPerSecond() > record && diff > Config.heuristicsDiff) {
-                Notificator.broadcast("&7DETECTED: &e" + record + " &7-> &e" + AttackManager.getConnectPerSecond() + " &7(&a" + percent + "%&7) per second (&b" + time + "sec&7)");
                 record = AttackManager.getConnectPerSecond();
                 if (!AttackManager.isUnderAttack()) {
                     AttackManager.setAttackMode(true);

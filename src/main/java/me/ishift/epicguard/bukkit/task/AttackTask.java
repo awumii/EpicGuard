@@ -16,8 +16,6 @@ public class AttackTask implements Runnable {
             if (AttackManager.isUnderAttack()) {
                 AttackManager.setAttackMode(false);
                 Notificator.title("&cATTACK HAS BEEN FINISHED", "&7Bots blocked during last attack: &4" + AttackManager.getTotalBots());
-                Notificator.broadcast("&7DONE: Blocked &e" + AttackManager.getTotalBots() + " &7bots during last &e" + HeuristicsTask.getTime() + " seconds&7.");
-                Notificator.broadcast("&8(&4Blacklist&8) &7Changed: &6" + (BlacklistManager.getBlacklist().size() - HeuristicsTask.getBlacklistInc()) + " &8-> &6" + BlacklistManager.getBlacklist().size() + " &8(&c+" + HeuristicsTask.getBlacklistInc() + "&8).");
                 HeuristicsTask.setRecord(0);
                 HeuristicsTask.setTime(0);
                 HeuristicsTask.setBlacklistInc(0);

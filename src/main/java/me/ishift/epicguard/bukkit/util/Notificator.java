@@ -23,10 +23,8 @@ public class Notificator {
     public static void broadcast(String text) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
-            if (u != null && u.isNotifications()) {
-                if (player.hasPermission(GuardBukkit.PERMISSION)) {
-                    player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
-                }
+            if (u != null && player.hasPermission(GuardBukkit.PERMISSION)) {
+                player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
             }
         });
     }
