@@ -49,4 +49,7 @@ public class Config {
     public static boolean blockedBrands;
     public static String blockedBrandsPunish;
     public static List<String> blockedBrandsValues;
+
+    public static boolean customTabComplete;
+    public static List<String> customTabCompleteList;
 }
