@@ -1,6 +1,6 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
-import me.ishift.epicguard.bukkit.util.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
