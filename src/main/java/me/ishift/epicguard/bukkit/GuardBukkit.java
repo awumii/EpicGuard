@@ -10,6 +10,7 @@ import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.task.*;
+import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
@@ -84,6 +85,7 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         this.createDirectories();
         this.saveDefaultConfig();
+        ConfigUpdater.update();
         loadConfig();
         Logger.create(Platform.SPIGOT);
         LogoPrinter.print();
