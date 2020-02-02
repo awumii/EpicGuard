@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.listener.server;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.universal.AttackType;
+import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

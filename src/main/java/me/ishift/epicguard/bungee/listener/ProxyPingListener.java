@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.util.BungeeAttack;
-import me.ishift.epicguard.universal.AttackType;
+import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.Config;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;

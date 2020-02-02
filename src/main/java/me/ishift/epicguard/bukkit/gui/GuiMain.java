@@ -5,6 +5,8 @@ import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
+import me.ishift.epicguard.bukkit.util.server.Memory;
+import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.universal.Config;
@@ -23,63 +25,104 @@ public class GuiMain {
 
     public static void show(Player p) {
         final ItemStack i1 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CLOCK))
-                .setTitle("&aServer Real-Time Status")
+                .setTitle("&cServer real-time status")
+                .addLore("&7See status of your server, in real time.")
                 .addLore("")
-                .addLore("&7Server is&8: " + (AttackManager.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
-                .addLore("&7Connect Per Second&8: &c" + AttackManager.getConnectPerSecond())
-                .addLore("&7Ping Per Second&8: &c" + AttackManager.getPingPerSecond())
-                .addLore("&7Join Per Second&8: &c" + AttackManager.getJoinPerSecond())
+                .addLore("&6AntiBot Mode:")
+                .addLore("  &7Server is&8: " + (AttackManager.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
+                .addLore("")
+                .addLore("&6Current Connections:")
+                .addLore("  &7Connect Per Second&8: &c" + AttackManager.getConnectPerSecond())
+                .addLore("  &7Ping Per Second&8: &c" + AttackManager.getPingPerSecond())
+                .addLore("  &7Join Per Second&8: &c" + AttackManager.getJoinPerSecond())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(Material.COMPASS)
-                .setTitle("&aOnline Player Information")
+                .setTitle("&cPlayer Manager Menu")
+                .addLore("&7Get to know about your players.")
                 .addLore("")
-                .addLore("&7Show all online players in one GUI.")
-                .addLore("&7GUI will show information you can get")
-                .addLore("&7by command &6/guard player <nickname>&e.")
+                .addLore("&6Players:")
+                .addLore("  &7Online players: &a" + Bukkit.getOnlinePlayers().size())
+                .addLore("")
+                .addLore("&6Description:")
+                .addLore("  &7Click to show all online players in one GUI.")
+                .addLore("  &7GUI will show information you can get")
+                .addLore("  &7by command &6/guard player <nickname>&e.")
                 .build();
 
         final ItemStack i3 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.EXP_BOTTLE))
-                .setTitle("&aGlobal Statistics")
+                .setTitle("&cAntibot Statistics")
+                .addLore("&7See statistics about collected data.")
                 .addLore("")
-                .addLore("&7Checked connections&8: &c" + DataFileManager.checkedConnections)
-                .addLore("&7Blocked bots&8: &c" + DataFileManager.blockedBots)
-                .addLore("&7Blacklisted IPs&8: &c" + BlacklistManager.getBlacklist().size())
-                .addLore("&7Whitelisted IPs&8: &c" + BlacklistManager.getWhitelist().size())
+                .addLore("&6Connections:")
+                .addLore("  &7Checked connections&8: &e" + DataFileManager.checkedConnections)
+                .addLore("  &7Blocked bots&8: &c" + DataFileManager.blockedBots)
+                .addLore("")
+                .addLore("&6IP Manager:")
+                .addLore("  &7Blacklisted IPs&8: &c" + BlacklistManager.getBlacklist().size())
+                .addLore("  &7Whitelisted IPs&8: &a" + BlacklistManager.getWhitelist().size())
                 .build();
 
         final ItemStack i4 = new ItemBuilder(Material.DIAMOND_BLOCK)
-                .setTitle("&aOpped Players")
+                .setTitle("&cOpped Players")
+                .addLore("&7See who have operator permission.")
                 .addLore("")
-                .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("&7Player&8: &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
+                .addLore("&6Operators:")
+                .addLore("  &7Amount: &c" + Bukkit.getOperators().size())
+                .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("  &8- &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
         final ItemStack i5 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.BOOK_AND_QUILL))
-                .setTitle("&aDetection Log (Latest)")
+                .setTitle("&cDetection Log (Latest)")
+                .addLore("&7See information about latest detection.")
                 .addLore("")
-                .addLore("&7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
-                .addLore("&7Adress&8: &c" + PlayerPreLoginListener.getLastAdress())
-                .addLore("&7Country&8: &c" + PlayerPreLoginListener.getLastCountry())
-                .addLore("&7Detection&8: &c" + PlayerPreLoginListener.getLastDetection())
-                .addLore("&7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())
+                .addLore("&6Information:")
+                .addLore("  &7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
+                .addLore("  &7Adress&8: &c" + PlayerPreLoginListener.getLastAdress())
+                .addLore("  &7Country&8: &c" + PlayerPreLoginListener.getLastCountry())
+                .addLore("  &7Detection&8: &c" + PlayerPreLoginListener.getLastDetection())
+                .addLore("  &7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())
                 .build();
 
         final ItemStack i6 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CRAFTING))
-                .setTitle("&aCloud Status")
+                .setTitle("&cCloud Status")
+                .addLore("&7Status of EpicCloud system.")
                 .addLore("")
-                .addLore("&7Status&8: " + (CloudManager.isOnline() ? "&aConnected" : "&cDisconnected"))
-                .addLore("&7Blacklist size&8: &c" + CloudManager.getCloudBlacklist().size())
-                .addLore("&7Last sync&8: &c" + CloudManager.getLastCheck())
-                .addLore("&7Sync time&8: &c" + Config.cloudTime + "sec")
+                .addLore("&6Information:")
+                .addLore("  &7Status&8: " + (CloudManager.isOnline() ? "&aConnected" : "&cDisconnected"))
+                .addLore("  &7Blacklist size&8: &e" + CloudManager.getCloudBlacklist().size())
+                .addLore("")
+                .addLore("&6Time:")
+                .addLore("  &7Last sync&8: &c" + CloudManager.getLastCheck())
+                .addLore("  &7Sync time&8: &c" + Config.cloudTime + "sec")
                 .build();
 
         final ItemStack i7 = new ItemBuilder(Material.GOLD_NUGGET)
-                .setTitle("&aPlugin Information")
+                .setTitle("&cPlugin Information")
+                .addLore("&7Plugin author, version etc.")
                 .addLore("")
-                .addLore("&7Name&8: &cEpicGuard")
-                .addLore("&7Version&8: &c" + Updater.getCurrentVersion())
-                .addLore("&7Authors&8: &ciShift, ruzekh")
-                .addLore("&7Discord&8: &ciShift#0001")
+                .addLore("&6Plugin:")
+                .addLore("  &7Name&8: &aEpicGuard")
+                .addLore("  &7Version&8: &e" + Updater.getCurrentVersion())
+                .addLore("  &7Authors&8: &eiShift, ruzekh")
+                .addLore("")
+                .addLore("&6Support:")
+                .addLore("  &7Dev's Discord&8: &ciShift#0001")
+                .addLore("  &7Support Server&8: &cdiscord.gg/VkfhFCv")
+                .build();
+
+        final ItemStack i8 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.NETHER_BRICK))
+                .setTitle("&cServer Information")
+                .addLore("&7Some information about your server.")
+                .addLore("")
+                .addLore("&6Performance:")
+                .addLore("  &7TPS&8: &a" + ServerTPS.getTPS())
+                .addLore("  &7RAM&8: &e" + Memory.getUsage() + "MB&7/&c" + Memory.getTotal() + "MB &7(&6" + Memory.getFree() + "MB &7free)")
+                .addLore("  &7CPU&8: &c" + Runtime.getRuntime().availableProcessors() + " processors.")
+                .addLore("")
+                .addLore("&6Server:")
+                .addLore("  &7Online&8: &a" + Bukkit.getOnlinePlayers().size() + "&7/&a" + Bukkit.getMaxPlayers())
+                .addLore("  &7Version&8: &6" + Bukkit.getBukkitVersion())
                 .build();
 
         eq.setItem(10, i1);
@@ -89,6 +132,7 @@ public class GuiMain {
         eq.setItem(22, i5);
         eq.setItem(24, i6);
         eq.setItem(20, i7);
+        eq.setItem(4, i8);
         p.openInventory(eq);
     }
 }

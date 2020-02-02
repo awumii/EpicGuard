@@ -7,7 +7,9 @@ public enum UniversalMaterial {
     CLOCK("WATCH", "CLOCK"),
     EXP_BOTTLE("EXP_BOTTLE", "EXPERIENCE_BOTTLE"),
     BOOK_AND_QUILL("BOOK_AND_QUILL", "WRITABLE_BOOK"),
-    CRAFTING("CRAFTING_TABLE", "WORKBENCH");
+    CRAFTING("WORKBENCH", "CRAFTING_TABLE"),
+    NETHER_BRICK("NETHER_BRICK_ITEM", "NETHER_BRICK"),
+    FENCE_GATE("FENCE_GATE", "OAK_FENCE_GATE");
 
     private String legacy;
     private String current;

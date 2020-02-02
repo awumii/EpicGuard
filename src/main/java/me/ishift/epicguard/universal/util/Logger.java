@@ -2,7 +2,7 @@ package me.ishift.epicguard.universal.util;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.ServerType;
+import me.ishift.epicguard.universal.types.Platform;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,16 +35,16 @@ public class Logger {
         writeToFile(file, msg);
     }
 
-    public static void create(ServerType serverType) {
+    public static void create(Platform platform) {
         try {
             final Calendar cal = Calendar.getInstance();
             final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             final String date = sdf.format(cal.getTime());
 
-            if (serverType == ServerType.SPIGOT) {
+            if (platform == Platform.SPIGOT) {
                 file = new File(GuardBukkit.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
-            if (serverType == ServerType.BUNGEE) {
+            if (platform == Platform.BUNGEE) {
                 file = new File(GuardBungee.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
             }
             if (!file.exists()) {

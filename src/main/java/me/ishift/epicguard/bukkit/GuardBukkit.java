@@ -17,7 +17,7 @@ import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.server.Hooks;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.ServerType;
+import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.LogoPrinter;
@@ -85,10 +85,10 @@ public class GuardBukkit extends JavaPlugin {
         this.createDirectories();
         this.saveDefaultConfig();
         loadConfig();
-        Logger.create(ServerType.SPIGOT);
+        Logger.create(Platform.SPIGOT);
         LogoPrinter.print();
         Logger.info("Version: " + this.getDescription().getVersion());
-        GeoAPI.create(ServerType.SPIGOT);
+        GeoAPI.create(Platform.SPIGOT);
         new Metrics(this, 5845);
 
         Reflection.init();
@@ -138,7 +138,6 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new InventoryTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
