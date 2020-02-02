@@ -5,40 +5,39 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
 public class Updater {
-    public static final String currentVersion = GuardBukkit.getInstance().getDescription().getVersion();
-    public static String lastestVersion;
-    public static boolean updateAvaible = false;
+    private static final String currentVersion = GuardBukkit.getInstance().getDescription().getVersion();
+    private static String lastestVersion;
+    private static boolean updateAvaible = false;
+
+    public static String getCurrentVersion() {
+        return currentVersion;
+    }
 
     public static void checkForUpdates() {
         if (Config.updater) {
-            lastestVersion = lookup();
+            lookup();
             updateAvaible = !lastestVersion.equals(currentVersion);
         }
     }
 
     public static void notify(Player p) {
-        if (Config.updater) {
-            if (p.hasPermission(GuardBukkit.PERMISSION)) {
-                if (updateAvaible) {
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your EpicGuard version &8(&c" + currentVersion + "&8) &7is outdated! New version is available on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
-                    p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features: &6https://www.spigotmc.org/resources/72369"));
-                }
-            }
+        if (Config.updater && p.hasPermission(GuardBukkit.PERMISSION) && updateAvaible) {
+            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Your EpicGuard version &8(&c" + currentVersion + "&8) &7is outdated! New version is available on SpigotMC &8(&6" + Updater.lastestVersion + "&8)&7."));
+            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&7Download latest version, to enjoy new features: &6https://www.spigotmc.org/resources/72369"));
         }
     }
 
-    private static String lookup() {
-        String line = null;
+    private static void lookup() {
         try {
-            final Scanner scanner = new Scanner(new URL("https://api.spigotmc.org/legacy/update.php?resource=72369").openStream());
-            line = scanner.next();
-        } catch (Exception e) {
+            final Scanner scanner = new Scanner(new URL("https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/version.info").openStream());
+            lastestVersion = scanner.next();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return line;
     }
 }

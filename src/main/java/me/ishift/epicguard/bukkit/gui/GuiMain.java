@@ -78,7 +78,7 @@ public class GuiMain {
                 .setTitle("&aPlugin Information")
                 .addLore("")
                 .addLore("&7Name&8: &cEpicGuard")
-                .addLore("&7Version&8: &c" + Updater.currentVersion)
+                .addLore("&7Version&8: &c" + Updater.getCurrentVersion())
                 .addLore("&7Authors&8: &ciShift, ruzekh")
                 .addLore("&7Discord&8: &ciShift#0001")
                 .build();
