@@ -75,6 +75,8 @@ public class GuardBukkit extends JavaPlugin {
         Config.filterEnabled = config.getBoolean("console-filter.enabled");
         Config.filterValues = config.getStringList("console-filter.messages");
         Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
+        Config.customTabComplete = config.getBoolean("custom-tab-complete.enabled");
+        Config.customTabCompleteList = config.getStringList("custom-tab-complete.list");
     }
 
     @Override
