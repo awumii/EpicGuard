@@ -34,31 +34,11 @@ public class PlayerJoinListener implements Listener {
             final Player player = event.getPlayer();
             final String address = player.getAddress().getAddress().getHostAddress();
 
-            if (Reflection.isOldVersion()) {
-                PluginMessagesListener.addChannel(player, "MC|BRAND");
-            }
-
-            if (Config.antibot && !BlacklistManager.isWhitelisted(address)) {
-                if (NameContainsCheck.check(player.getName())) {
-                    event.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(player.getName());
-                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
-                    return;
-                }
-
-                if (BlacklistManager.isBlacklisted(address)) {
-                    event.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(player.getName());
-                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
-                    return;
-                }
-
-                if (GeoCheck.check(GeoAPI.getCountryCode(player.getAddress().getAddress()))) {
-                    event.setJoinMessage("");
-                    PlayerQuitListener.hiddenNames.add(player.getName());
-                    player.kickPlayer(MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
-                    return;
-                }
+            // AntiBypass V2
+            if (Config.antibot && BlacklistManager.isBlacklisted(address)) {
+                event.setJoinMessage("");
+                player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
+                return;
             }
 
             UserManager.addUser(player);
@@ -90,6 +70,7 @@ public class PlayerJoinListener implements Listener {
 
             // Brand Verification
             if (Reflection.isOldVersion()) {
+                PluginMessagesListener.addChannel(player, "MC|BRAND");
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (!player.isOnline()) {
                         return;
