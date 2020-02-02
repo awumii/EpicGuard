@@ -179,6 +179,15 @@ allowed-commands:
     - /msg
     - /home
 
+# Replaces default tab completion in /<tab>,
+# with your custom list, provided below.
+# WARN: You NEED ProtocolLib!
+custom-tab-complete:
+  enabled: false
+  list:
+    - /msg
+    - /home
+
 ###############################
 ##           Firewall        ##
 ###############################
