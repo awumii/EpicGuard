@@ -107,11 +107,10 @@ public class GuardBukkit extends JavaPlugin {
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
 
-        if (!Reflection.isOldVersion()) {
-            return;
+        if (Reflection.isOldVersion()) {
+            final Messenger messenger = Bukkit.getMessenger();
+            messenger.registerIncomingPluginChannel(this, "MC|Brand", new PluginMessagesListener());
         }
-        final Messenger messenger = Bukkit.getMessenger();
-        messenger.registerIncomingPluginChannel(this, "MC|Brand", new PluginMessagesListener());
 
         new LogFilter().registerFilter();
 
