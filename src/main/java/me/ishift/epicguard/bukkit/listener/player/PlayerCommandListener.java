@@ -19,45 +19,37 @@ public class PlayerCommandListener implements Listener {
         final String[] args = cmd.split(" ");
 
         // OP Protection module.
-        if (Config.opProtectionEnable) {
-            if (!Config.opProtectionList.contains(player.getName())) {
-                if (player.isOp()) {
-                    event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
-                    return;
-                }
-                // "*" Permission probably can't be detected, so i added checking random permission, if player is not OP.
-                if (player.hasPermission("experimentalpex.detection") && Config.pexProtection) {
-                    event.setCancelled(true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
-                    Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                    Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
-                    return;
-                }
+        if (Config.opProtectionEnable && !Config.opProtectionList.contains(player.getName())) {
+            if (player.isOp()) {
+                event.setCancelled(true);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
+                Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
+                return;
+            }
+            // "*" Permission probably can't be detected, so i added checking random permission, if player is not OP.
+            if (player.hasPermission("experimentalpex.detection") && Config.pexProtection) {
+                event.setCancelled(true);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
+                Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+                Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
+                return;
             }
         }
 
         // Allowed Commands module.
-        if (Config.allowedCommandsEnable) {
-            if (!player.hasPermission(Config.allowedCommandsBypass)) {
-                if (!Config.allowedCommands.contains(args[0])) {
-                    event.setCancelled(true);
-                    player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
-                    Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
-                    return;
-                }
-            }
+        if (Config.allowedCommandsEnable && !player.hasPermission(Config.allowedCommandsBypass) && !Config.allowedCommands.contains(args[0])) {
+            event.setCancelled(true);
+            player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
+            Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
+            return;
         }
 
         // Blocked Commands module.
-        if (Config.blockedCommandsEnable) {
-            if (Config.blockedCommands.contains(args[0])) {
-                event.setCancelled(true);
-                player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
-                Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
-            }
+        if (Config.blockedCommandsEnable && Config.blockedCommands.contains(args[0])) {
+            event.setCancelled(true);
+            player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
+            Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
         }
     }
 }
