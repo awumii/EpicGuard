@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener.player;
+package me.ishift.epicguard.bukkit.listener.packet;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
