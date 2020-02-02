@@ -21,7 +21,7 @@ public class PlayerInventoryClickListener implements Listener {
             if (im == null) {
                 return;
             }
-            if (im.getDisplayName().contains("Player Information")) {
+            if (im.getDisplayName().contains("Player Manager Menu")) {
                 GuiPlayers.show(p);
             }
         }

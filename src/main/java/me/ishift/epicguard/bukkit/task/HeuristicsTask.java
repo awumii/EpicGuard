@@ -1,8 +1,11 @@
 package me.ishift.epicguard.bukkit.task;
 
+import me.ishift.epicguard.bukkit.gui.GuiMain;
+import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
+import org.bukkit.Bukkit;
 
 public class HeuristicsTask implements Runnable {
     private static int record = 0;
@@ -31,6 +34,16 @@ public class HeuristicsTask implements Runnable {
 
     @Override
     public void run() {
+        // Inventory Refreshing
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            if (player.getOpenInventory().getTitle().equals("EpicGuard Management Menu")) {
+                GuiMain.show(player);
+            }
+            if (player.getOpenInventory().getTitle().equals("EpicGuard Player Manager")) {
+                GuiPlayers.show(player);
+            }
+        });
+
         Notificator.action("&a0&7/&acps &8| &7No attack.");
         if (AttackManager.isUnderAttack()) {
             time++;
