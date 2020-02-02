@@ -1,20 +1,16 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.listener.player.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.manager.*;
 import me.ishift.epicguard.bukkit.manager.User;
-import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Notificator;
-import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.misc.Notificator;
+import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.AttackType;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.check.GeoCheck;
-import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

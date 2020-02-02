@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.util.Notificator;
+import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
 
 public class HeuristicsTask implements Runnable {

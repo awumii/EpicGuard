@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.util;
+package me.ishift.epicguard.bukkit.util.misc;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.universal.util.Downloader;

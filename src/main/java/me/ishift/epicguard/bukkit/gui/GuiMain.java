@@ -1,12 +1,11 @@
 package me.ishift.epicguard.bukkit.gui;
 
-import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
-import me.ishift.epicguard.bukkit.gui.material.UniversalMaterial;
+import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.cloud.CloudManager;
@@ -23,7 +22,7 @@ public class GuiMain {
     public static Inventory eq;
 
     public static void show(Player p) {
-        final ItemStack i1 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.CLOCK))
+        final ItemStack i1 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CLOCK))
                 .setTitle("&aServer Real-Time Status")
                 .addLore("")
                 .addLore("&7Server is&8: " + (AttackManager.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
@@ -40,7 +39,7 @@ public class GuiMain {
                 .addLore("&7by command &6/guard player <nickname>&e.")
                 .build();
 
-        final ItemStack i3 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.EXP_BOTTLE))
+        final ItemStack i3 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.EXP_BOTTLE))
                 .setTitle("&aGlobal Statistics")
                 .addLore("")
                 .addLore("&7Checked connections&8: &c" + DataFileManager.checkedConnections)
@@ -55,7 +54,7 @@ public class GuiMain {
                 .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("&7Player&8: &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
-        final ItemStack i5 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.BOOK_AND_QUILL))
+        final ItemStack i5 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.BOOK_AND_QUILL))
                 .setTitle("&aDetection Log (Latest)")
                 .addLore("")
                 .addLore("&7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
@@ -65,7 +64,7 @@ public class GuiMain {
                 .addLore("&7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())
                 .build();
 
-        final ItemStack i6 = new ItemBuilder(MaterialUtil.get(UniversalMaterial.CRAFTING))
+        final ItemStack i6 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CRAFTING))
                 .setTitle("&aCloud Status")
                 .addLore("")
                 .addLore("&7Status&8: " + (CloudManager.isOnline() ? "&aConnected" : "&cDisconnected"))

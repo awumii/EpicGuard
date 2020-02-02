@@ -4,18 +4,17 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.bukkit.gui.material.MaterialUtil;
 import me.ishift.epicguard.bukkit.listener.player.*;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.task.*;
-import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
-import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Hooks;
+import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.server.Hooks;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.ServerType;
@@ -100,7 +99,6 @@ public class GuardBukkit extends JavaPlugin {
         this.registerListeners();
         this.registerTasks();
 
-        MaterialUtil.init();
         GuiMain.eq = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
         GuiPlayers.inv = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 

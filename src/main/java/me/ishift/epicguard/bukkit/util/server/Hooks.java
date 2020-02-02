@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.util;
+package me.ishift.epicguard.bukkit.util.server;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import me.ishift.epicguard.bukkit.GuardBukkit;

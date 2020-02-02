@@ -1,8 +1,8 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.util.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.Notificator;
+import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.misc.Notificator;
 
 public class AttackTitleTask implements Runnable {
     @Override
