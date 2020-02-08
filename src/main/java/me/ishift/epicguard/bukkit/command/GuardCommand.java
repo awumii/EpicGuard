@@ -82,7 +82,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
             if (Config.ipHistoryEnable) {
                 send(sender, "&6[IP History]");
-                UserManager.getUser(player).getAdresses().forEach(adress -> send(sender, " &7- &f" + adress));
+                UserManager.getUser(player).getAddresses().forEach(adress -> send(sender, " &7- &f" + adress));
             }
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {

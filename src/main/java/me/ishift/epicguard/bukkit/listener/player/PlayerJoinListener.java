@@ -60,7 +60,7 @@ public class PlayerJoinListener implements Listener {
                     history.add(address);
                 }
                 DataFileManager.getDataFile().set("history." + player.getName(), history);
-                u.setAdresses(history);
+                u.setAddresses(history);
             }
 
             // Brand Verification
