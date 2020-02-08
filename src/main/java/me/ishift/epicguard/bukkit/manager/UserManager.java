@@ -13,7 +13,7 @@ public class UserManager {
     }
 
     public static void addUser(Player p) {
-        User user = new User();
+        User user = new User(p);
         userMap.put(p, user);
     }
 
