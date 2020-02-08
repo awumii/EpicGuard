@@ -5,8 +5,10 @@ import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.types.Platform;
 
 import java.io.*;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Scanner;
 
 public class Logger {
     private static File file;
@@ -50,6 +52,20 @@ public class Logger {
                     System.out.println("[EpicGuard] Created new log file.");
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void printLogo() {
+        try {
+            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
+            while (scanner.hasNextLine()) {
+                Logger.info(scanner.nextLine());
+            }
+            scanner.close();
+            Logger.info("");
+            Logger.info("Created by iShift and ruzekh");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -29,6 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
 import java.io.File;
+import java.io.IOException;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
