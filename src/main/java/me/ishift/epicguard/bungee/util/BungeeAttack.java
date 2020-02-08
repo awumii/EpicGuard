@@ -1,8 +1,8 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.types.AttackType;
 import net.md_5.bungee.api.ProxyServer;
 
 import java.util.concurrent.TimeUnit;

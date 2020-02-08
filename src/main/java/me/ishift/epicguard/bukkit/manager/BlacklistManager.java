@@ -22,12 +22,12 @@ public class BlacklistManager {
         return blacklist;
     }
 
-    public static List<String> getWhitelist() {
-        return whitelist;
-    }
-
     public static void setBlacklist(List<String> blacklist) {
         BlacklistManager.blacklist = blacklist;
+    }
+
+    public static List<String> getWhitelist() {
+        return whitelist;
     }
 
     public static void setWhitelist(List<String> whitelist) {

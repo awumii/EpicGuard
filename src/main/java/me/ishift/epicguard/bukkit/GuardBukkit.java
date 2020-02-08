@@ -9,14 +9,17 @@ import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.task.*;
+import me.ishift.epicguard.bukkit.task.AttackTask;
+import me.ishift.epicguard.bukkit.task.AttackTitleTask;
+import me.ishift.epicguard.bukkit.task.CloudTask;
+import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
-import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.bukkit.util.misc.Metrics;
-import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.Hooks;
+import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
+import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
@@ -29,7 +32,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
 import java.io.File;
-import java.io.IOException;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
