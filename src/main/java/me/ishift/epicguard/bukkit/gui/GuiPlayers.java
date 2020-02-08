@@ -33,10 +33,10 @@ public class GuiPlayers {
                 lore.add(ChatUtil.fix("  &7OP&8: " + (player.isOp() ? "&aYes" : "&cNo")));
                 lore.add(ChatUtil.fix("  &7Country&8: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress())));
                 lore.add(ChatUtil.fix("  &7Client Brand&8: &f" + user.getBrand()));
-                if (Config.ipHistoryEnable && user.getAdresses() != null) {
+                if (Config.ipHistoryEnable && user.getAddresses() != null) {
                     lore.add("");
                     lore.add(ChatUtil.fix("&6IP History:"));
-                    user.getAdresses().forEach(adress -> {
+                    user.getAddresses().forEach(adress -> {
                         if (player.getAddress().getAddress().getHostAddress().equals(adress)) {
                             lore.add(ChatUtil.fix("  &7- &f" + adress + " &8(&aCurrent&8)"));
                         } else {

@@ -37,11 +37,11 @@ public class User {
         this.notifications = notifications;
     }
 
-    public List<String> getAdresses() {
+    public List<String> getAddresses() {
         return adresses;
     }
 
-    public void setAdresses(List<String> adresses) {
-        this.adresses = adresses;
+    public void setAddresses(List<String> addresses) {
+        this.adresses = addresses;
     }
 }
