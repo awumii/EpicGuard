@@ -28,16 +28,14 @@ public class PlayerJoinListener implements Listener {
         try {
             final Player player = event.getPlayer();
             UserManager.addUser(player);
-            final User u = UserManager.getUser(player);
+            final User user = UserManager.getUser(player);
 
             // AntiBypass V2
-            if (Config.antibot && BlacklistManager.isBlacklisted(address)) {
+            if (Config.antibot && BlacklistManager.isBlacklisted(user.getAddress())) {
                 event.setJoinMessage("");
                 player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                 return;
             }
-
-            final User u = UserManager.getUser(player);
 
             Updater.notify(player);
             AttackManager.handleAttack(AttackType.JOIN);
@@ -45,7 +43,7 @@ public class PlayerJoinListener implements Listener {
             if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                     if (player.isOnline()) {
-                        BlacklistManager.whitelist(address);
+                        BlacklistManager.whitelist(user.getAddress());
                     }
                 }, Config.autoWhitelistTime);
             }
@@ -53,14 +51,14 @@ public class PlayerJoinListener implements Listener {
             // IP History manager
             if (Config.ipHistoryEnable) {
                 final List<String> history = DataFileManager.getDataFile().getStringList("history." + player.getName());
-                if (!history.contains(address)) {
+                if (!history.contains(user.getAddress())) {
                     if (!history.isEmpty()) {
-                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", address));
+                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", user.getAddress()));
                     }
-                    history.add(address);
+                    history.add(user.getAddress());
                 }
                 DataFileManager.getDataFile().set("history." + player.getName(), history);
-                u.setAddressList(history);
+                user.setAddressList(history);
             }
 
             // Brand Verification
@@ -72,7 +70,7 @@ public class PlayerJoinListener implements Listener {
                     }
 
                     if (Config.channelVerification) {
-                        if (u.getBrand().equals("none")) {
+                        if (user.getBrand().equals("none")) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.channelPunish).replace("{PLAYER}", player.getName()));
                             Logger.info(player.getName() + "has been connection! If you think this is an issue, disable 'channel-verification'. Do NOT report this! This is not a bug!");
                             return;
@@ -81,7 +79,7 @@ public class PlayerJoinListener implements Listener {
                     }
                     if (Config.blockedBrands) {
                         for (String string : Config.blockedBrandsValues) {
-                            if (u.getBrand().equalsIgnoreCase(string)) {
+                            if (user.getBrand().equalsIgnoreCase(string)) {
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.blockedBrandsPunish).replace("{PLAYER}", player.getName()));
                             }
                         }
