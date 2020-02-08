@@ -1,24 +1,23 @@
 package me.ishift.epicguard.bukkit.manager;
 
+import org.bukkit.entity.Player;
+
 import java.util.List;
 
 public class User {
-    private List<String> adresses;
+    private List<String> addressList;
     private boolean notifications;
     private String brand;
-    private String ip;
+    private String address;
 
-    public User() {
+    public User(Player player) {
         this.notifications = false;
         this.brand = "none";
+        this.address = player.getAddress().getAddress().getHostAddress();
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
+    public String getAddress() {
+        return address;
     }
 
     public String getBrand() {
@@ -38,10 +37,10 @@ public class User {
     }
 
     public List<String> getAddresses() {
-        return adresses;
+        return addressList;
     }
 
-    public void setAddresses(List<String> addresses) {
-        this.adresses = addresses;
+    public void setAddressList(List<String> addressList) {
+        this.addressList = addressList;
     }
 }

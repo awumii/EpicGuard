@@ -27,7 +27,8 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         try {
             final Player player = event.getPlayer();
-            final String address = player.getAddress().getAddress().getHostAddress();
+            UserManager.addUser(player);
+            final User u = UserManager.getUser(player);
 
             // AntiBypass V2
             if (Config.antibot && BlacklistManager.isBlacklisted(address)) {
@@ -36,9 +37,8 @@ public class PlayerJoinListener implements Listener {
                 return;
             }
 
-            UserManager.addUser(player);
             final User u = UserManager.getUser(player);
-            u.setIp(address);
+
             Updater.notify(player);
             AttackManager.handleAttack(AttackType.JOIN);
 
@@ -60,7 +60,7 @@ public class PlayerJoinListener implements Listener {
                     history.add(address);
                 }
                 DataFileManager.getDataFile().set("history." + player.getName(), history);
-                u.setAddresses(history);
+                u.setAddressList(history);
             }
 
             // Brand Verification
