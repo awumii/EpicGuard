@@ -39,8 +39,7 @@ public class ConfigUpdater {
                 list.add("    - /msg");
                 list.add("    - /home");
 
-                PrintWriter pw = new PrintWriter(configFile);
-                pw.close();
+                Logger.eraseFile(configFile);
                 list.forEach(s -> {
                     if (s.equals("version: 3.6.1")) {
                         s = "version: " + GuardBukkit.getInstance().getDescription().getVersion();

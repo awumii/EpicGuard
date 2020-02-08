@@ -47,6 +47,7 @@ public class GeoAPI {
                 Logger.info("Databse is outdated or not found, update is required");
                 Logger.info("Downloading GEO Database... This may take some time.");
                 Downloader.download(Downloader.MIRROR_GEO, dbLocation);
+                Logger.eraseFile(dateFile);
                 Logger.writeToFile(dateFile, String.valueOf(System.currentTimeMillis()));
             }
             final File database = new File(dbLocation);
