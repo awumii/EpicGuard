@@ -4,9 +4,7 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.types.Platform;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -64,6 +62,18 @@ public class Logger {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void eraseFile(File file) {
+        if (!file.exists()) {
+            return;
+        }
+        try {
+            final PrintWriter pw = new PrintWriter(file);
+            pw.close();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
