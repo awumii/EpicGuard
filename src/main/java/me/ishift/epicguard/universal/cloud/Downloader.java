@@ -1,4 +1,6 @@
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.universal.cloud;
+
+import me.ishift.epicguard.universal.util.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;

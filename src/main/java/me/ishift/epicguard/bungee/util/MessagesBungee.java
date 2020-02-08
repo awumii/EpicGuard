@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.util.Downloader;
+import me.ishift.epicguard.universal.cloud.Downloader;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;

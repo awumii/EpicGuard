@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.util.misc;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.universal.util.Downloader;
+import me.ishift.epicguard.universal.cloud.Downloader;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

@@ -3,6 +3,7 @@ package me.ishift.epicguard.universal.util;
 import com.maxmind.geoip2.DatabaseReader;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.universal.cloud.Downloader;
 import me.ishift.epicguard.universal.types.Platform;
 
 import java.io.File;
