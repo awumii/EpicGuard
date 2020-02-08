@@ -78,7 +78,7 @@ public class AttackManager {
             Logger.debug("- This IP has been blacklisted.");
         }
         PlayerPreLoginListener.setLastPlayer(nick);
-        PlayerPreLoginListener.setLastAdress(adress);
+        PlayerPreLoginListener.setLastAddress(adress);
         try {
             PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
         } catch (UnknownHostException ignored) {

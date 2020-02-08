@@ -78,7 +78,7 @@ public class GuiMain {
                 .addLore("")
                 .addLore("&6Information:")
                 .addLore("  &7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
-                .addLore("  &7Adress&8: &c" + PlayerPreLoginListener.getLastAdress())
+                .addLore("  &7Adress&8: &c" + PlayerPreLoginListener.getLastAddress())
                 .addLore("  &7Country&8: &c" + PlayerPreLoginListener.getLastCountry())
                 .addLore("  &7Detection&8: &c" + PlayerPreLoginListener.getLastDetection())
                 .addLore("  &7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())

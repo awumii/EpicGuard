@@ -12,6 +12,7 @@ import me.ishift.epicguard.universal.types.KickReason;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
@@ -30,12 +31,12 @@ public class PlayerPreLoginListener implements Listener {
         PlayerPreLoginListener.lastPlayer = lastPlayer;
     }
 
-    public static String getLastAdress() {
+    public static String getLastAddress() {
         return lastAdress;
     }
 
-    public static void setLastAdress(String lastAdress) {
-        PlayerPreLoginListener.lastAdress = lastAdress;
+    public static void setLastAddress(String lastAddress) {
+        PlayerPreLoginListener.lastAdress = lastAddress;
     }
 
     public static String getLastCountry() {
@@ -62,9 +63,9 @@ public class PlayerPreLoginListener implements Listener {
         PlayerPreLoginListener.blacklisted = blacklisted;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        final String adress = event.getAddress().getHostAddress();
+        final String address = event.getAddress().getHostAddress();
         final String name = event.getName();
 
         final String country = GeoAPI.getCountryCode(event.getAddress());
@@ -72,24 +73,24 @@ public class PlayerPreLoginListener implements Listener {
         Logger.debug(" ");
         Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
         Logger.debug("Player: " + name);
-        Logger.debug("Adress: " + adress);
+        Logger.debug("Address: " + address);
         Logger.debug("Country: " + country);
         Logger.debug(" ");
         Logger.debug("# DETECTION LOG:");
         AttackManager.handleAttack(AttackType.CONNECT);
 
-        if (BlacklistManager.isWhitelisted(adress)) {
+        if (BlacklistManager.isWhitelisted(address)) {
             Logger.debug("+ Whitelist Check - Passed");
             return;
         }
 
-        if (BlacklistManager.isBlacklisted(adress)) {
-            AttackManager.handleDetection("Blacklist", name, adress, event, KickReason.BLACKLIST, false);
+        if (BlacklistManager.isBlacklisted(address)) {
+            AttackManager.handleDetection("Blacklist", name, address, event, KickReason.BLACKLIST, false);
             return;
         }
 
         if (GeoCheck.check(country)) {
-            AttackManager.handleDetection("Geographical", name, adress, event, KickReason.GEO, true);
+            AttackManager.handleDetection("Geographical", name, address, event, KickReason.GEO, true);
             return;
         }
 
@@ -98,25 +99,25 @@ public class PlayerPreLoginListener implements Listener {
         }
 
         if (NameContainsCheck.check(name)) {
-            AttackManager.handleDetection("Name Contains", name, adress, event, KickReason.BLACKLIST, true);
+            AttackManager.handleDetection("Name Contains", name, address, event, KickReason.BLACKLIST, true);
             return;
         }
 
         if (AttackManager.isUnderAttack()) {
-            AttackManager.handleDetection("Attack Speed", name, adress, event, KickReason.ATTACK, false);
+            AttackManager.handleDetection("Attack Speed", name, address, event, KickReason.ATTACK, false);
             return;
         }
 
         if (Config.forceRejoin) {
             if (!AttackManager.rejoinData.contains(name)) {
-                AttackManager.handleDetection("Force Rejoin", name, adress, event, KickReason.VERIFY, false);
+                AttackManager.handleDetection("Force Rejoin", name, address, event, KickReason.VERIFY, false);
                 AttackManager.rejoinData.add(name);
                 return;
             }
         }
 
-        if (ProxyCheck.check(adress)) {
-            AttackManager.handleDetection("Proxy/VPN", name, adress, event, KickReason.PROXY, true);
+        if (ProxyCheck.check(address)) {
+            AttackManager.handleDetection("Proxy/VPN", name, address, event, KickReason.PROXY, true);
         }
     }
 }
