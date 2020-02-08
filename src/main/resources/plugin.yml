@@ -1,12 +1,17 @@
+# Important plugin section.
 name: '${project.name}'
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.GuardBukkit
 softdepend: [ProtocolLib]
-authors: [iShift, ruzekh]
-description: Advanced Server Protection.
-api-version: 1.13
 
+# Other information about plugin section.
+authors: [iShift, ruzekh]
+website: https://www.spigotmc.org/resources/72369/
+description: Spigot & Bungee - Advanced server protection package!
+api-version: '1.13'
+
+# Plugin commands section.
 commands:
   epicguard:
     description: Main plugin command.
-    aliases: [ab, guard, eg]
+    aliases: [ab, guard, eg, antibot]
