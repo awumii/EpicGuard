@@ -19,18 +19,18 @@ public enum UniversalMaterial {
         this.current = current;
     }
 
+    public static Material get(UniversalMaterial material) {
+        if (Reflection.isOldVersion()) {
+            return Material.getMaterial(material.getLegacy());
+        }
+        return Material.getMaterial(material.getCurrent());
+    }
+
     public String getCurrent() {
         return this.current;
     }
 
     public String getLegacy() {
         return this.legacy;
-    }
-
-    public static Material get(UniversalMaterial material) {
-        if (Reflection.isOldVersion()) {
-            return Material.getMaterial(material.getLegacy());
-        }
-        return Material.getMaterial(material.getCurrent());
     }
 }
