@@ -1,5 +1,5 @@
 # SpigotMC Link: https://www.spigotmc.org/resources/72369/
-prefix: "&8[&2EpicGuard&8] "
+prefix: "&c&lGUARD &8●&7 "
 actionbar:
   attack: "&8(&c&lBOT DETECTION&8) &6{NICK} &8[&c{IP}&8] &8| &7Detected for: &b{DETECTION}"
 attack-title:
