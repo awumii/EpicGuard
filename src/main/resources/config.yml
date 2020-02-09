@@ -97,8 +97,8 @@ blocked-brands:
   list:
     - some_blocked_brand
 
-# Enabling beta-layout will hide title and change design of actionbar on attack.
-# New layout is better than old one, because it does not contain bot names, just statistics.
+# Enabling beta-layout will hide the title and change the design of the action bar on the attack.
+# New layout is better than the old one because it does not contain bot names, just statistics.
 # Screenshot: https://cdn.discordapp.com/attachments/659146286972403766/675713594276446219/unknown.png
 beta-layout: false
 
