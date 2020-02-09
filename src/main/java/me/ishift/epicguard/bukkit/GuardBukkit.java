@@ -8,7 +8,7 @@ import me.ishift.epicguard.bukkit.listener.player.*;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
 import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.manager.user.UserManager;
 import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.AttackTitleTask;
 import me.ishift.epicguard.bukkit.task.CloudTask;
@@ -21,6 +21,8 @@ import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.bukkit.manager.beta.BetaMode;
+import me.ishift.epicguard.bukkit.manager.beta.BetaTask;
 import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
@@ -147,6 +149,7 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CloudTask(), 40L, Config.cloudTime);
+        if (BetaMode.isBetaMode()) Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BetaTask(), 1L, 5L);
     }
 
     private void createDirectories() {

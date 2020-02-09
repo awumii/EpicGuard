@@ -6,6 +6,7 @@ import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.bukkit.manager.beta.BetaMode;
 import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.types.KickReason;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -85,7 +86,7 @@ public class AttackManager {
         }
         PlayerPreLoginListener.setLastDetection(reason);
         PlayerPreLoginListener.setBlacklisted(blacklist);
-        Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
+        if (!BetaMode.isBetaMode()) Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         DataFileManager.blockedBots++;
         totalBots++;
     }

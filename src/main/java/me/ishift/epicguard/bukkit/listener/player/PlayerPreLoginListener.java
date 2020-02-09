@@ -18,7 +18,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class PlayerPreLoginListener implements Listener {
     private static String lastPlayer = "None";
-    private static String lastAdress = "None";
+    private static String lastAddress = "None";
     private static String lastCountry = "None";
     private static String lastDetection = "None";
     private static boolean blacklisted = false;
@@ -32,11 +32,11 @@ public class PlayerPreLoginListener implements Listener {
     }
 
     public static String getLastAddress() {
-        return lastAdress;
+        return lastAddress;
     }
 
     public static void setLastAddress(String lastAddress) {
-        PlayerPreLoginListener.lastAdress = lastAddress;
+        PlayerPreLoginListener.lastAddress = lastAddress;
     }
 
     public static String getLastCountry() {

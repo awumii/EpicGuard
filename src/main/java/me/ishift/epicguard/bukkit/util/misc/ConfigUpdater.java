@@ -15,7 +15,10 @@ public class ConfigUpdater {
         final FileConfiguration config = GuardBukkit.getInstance().getConfig();
         final String version = config.getString("version");
 
-        if (version != null && version.equals("3.6.1")) {
+        if (version == null) {
+            return;
+        }
+        if (version.equals("3.6.1")) {
             try {
                 final File configFile = new File(GuardBukkit.getInstance().getDataFolder() + "/config.yml");
                 final Scanner scanner = new Scanner(configFile);
@@ -41,7 +44,37 @@ public class ConfigUpdater {
                 Logger.eraseFile(configFile);
                 list.forEach(s -> {
                     if (s.equals("version: 3.6.1")) {
-                        s = "version: " + GuardBukkit.getInstance().getDescription().getVersion();
+                        s = "version: 3.7.0";
+                    }
+                    Logger.writeToFile(configFile, s);
+                });
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (version.equals("3.7.0")) {
+            try {
+                final File configFile = new File(GuardBukkit.getInstance().getDataFolder() + "/config.yml");
+                final Scanner scanner = new Scanner(configFile);
+                final List<String> list = new ArrayList<>();
+
+                if (scanner.hasNext()) {
+                    while (scanner.hasNextLine()) {
+                        list.add(scanner.nextLine());
+                    }
+                }
+
+                scanner.close();
+                list.add("");
+                list.add("# Enabling beta-layout will change design");
+                list.add("# of actionbar & title on attack.");
+                list.add("beta-layout: false");
+
+                Logger.eraseFile(configFile);
+                list.forEach(s -> {
+                    if (s.equals("version: 3.7.0")) {
+                        s = "version: 3.7.1";
                     }
                     Logger.writeToFile(configFile, s);
                 });
