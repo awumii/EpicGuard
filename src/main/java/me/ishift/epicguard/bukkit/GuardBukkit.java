@@ -21,7 +21,7 @@ import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.bukkit.manager.beta.BetaTask;
+import me.ishift.epicguard.bukkit.task.BetaTask;
 import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
