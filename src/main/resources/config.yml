@@ -97,6 +97,11 @@ blocked-brands:
   list:
     - some_blocked_brand
 
+# Enabling beta-layout will hide title and change design of actionbar on attack.
+# New layout is better than old one, because it does not contain bot names, just statistics.
+# Screenshot: https://cdn.discordapp.com/attachments/659146286972403766/675713594276446219/unknown.png
+beta-layout: false
+
 updater: true
 ###############################
 ##           Advanced        ##
@@ -169,9 +174,6 @@ command-protection:
 
 allowed-commands:
   enabled: false
-  # Permission for bypass this module.
-  # Everyone with the permission below can use any command.
-  bypass: "epicguard.command.bypass"
   # If someone execute command not listed below,
   # without permission to bypass, will get custom message
   # defined in messages.yml
@@ -188,6 +190,13 @@ custom-tab-complete:
     - /msg
     - /home
 
+# Toggle ability to bypass specific modules
+# if player has permission for it.
+bypass:
+  # Permission: epicguard.bypass.allowed-commands
+  allowed-commands: true
+  # Permission: epicguard.bypass.custom-tab-complete
+  custom-tab-complete: false
 ###############################
 ##           Firewall        ##
 ###############################

@@ -21,7 +21,6 @@ import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.bukkit.manager.beta.BetaMode;
 import me.ishift.epicguard.bukkit.manager.beta.BetaTask;
 import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
@@ -64,7 +63,6 @@ public class GuardBukkit extends JavaPlugin {
         Config.opProtectionList = config.getStringList("op-protection.list");
         Config.opProtectionAlert = config.getString("op-protection.alert");
         Config.opProtectionCommand = config.getString("op-protection.command");
-        Config.allowedCommandsBypass = config.getString("allowed-commands.bypass");
         Config.blockedCommandsEnable = config.getBoolean("command-protection.enabled");
         Config.allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
         Config.opProtectionEnable = config.getBoolean("op-protection.enabled");
@@ -82,6 +80,9 @@ public class GuardBukkit extends JavaPlugin {
         Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
         Config.customTabComplete = config.getBoolean("custom-tab-complete.enabled");
         Config.customTabCompleteList = config.getStringList("custom-tab-complete.list");
+        Config.betaLayout = config.getBoolean("beta-layout");
+        Config.allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
+        Config.customTabCompleteBypass = config.getBoolean("bypass.custom-tab-complete");
     }
 
     @Override
@@ -149,7 +150,7 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CloudTask(), 40L, Config.cloudTime);
-        if (BetaMode.isBetaMode()) Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new BetaTask(), 1L, 5L);
+        if (Config.betaLayout) Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new BetaTask(), 1L, 1L);
     }
 
     private void createDirectories() {

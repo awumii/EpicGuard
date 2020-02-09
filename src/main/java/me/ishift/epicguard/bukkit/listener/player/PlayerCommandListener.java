@@ -38,7 +38,10 @@ public class PlayerCommandListener implements Listener {
         }
 
         // Allowed Commands module.
-        if (Config.allowedCommandsEnable && !player.hasPermission(Config.allowedCommandsBypass) && !Config.allowedCommands.contains(args[0])) {
+        if (Config.allowedCommandsEnable && !Config.allowedCommands.contains(args[0])) {
+            if (Config.allowedCommandsBypass && player.hasPermission("epicguard.bypass.allowed-commands")) {
+                return;
+            }
             event.setCancelled(true);
             player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
             Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");

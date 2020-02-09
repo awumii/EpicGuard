@@ -70,11 +70,28 @@ public class ConfigUpdater {
                 list.add("# Enabling beta-layout will change design");
                 list.add("# of actionbar & title on attack.");
                 list.add("beta-layout: false");
+                list.add("");
+                list.add("# Toggle ability to bypass specific modules");
+                list.add("# if player has permission for it.");
+                list.add("bypass:");
+                list.add("  # Permission: epicguard.bypass.allowed-commands");
+                list.add("  allowed-commands: true");
+                list.add("  # Permission: epicguard.bypass.custom-tab-complete");
+                list.add("  custom-tab-complete: false");
 
                 Logger.eraseFile(configFile);
                 list.forEach(s -> {
                     if (s.equals("version: 3.7.0")) {
                         s = "version: 3.7.1";
+                    }
+                    if (s.equals("# Permission for bypass this module.")) {
+                        return;
+                    }
+                    if (s.contains("epicguard.command.bypass")) {
+                        return;
+                    }
+                    if (s.equals("# Everyone with the permission below can use any command.")) {
+                        return;
                     }
                     Logger.writeToFile(configFile, s);
                 });
