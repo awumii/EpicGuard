@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.gui;
 
-import me.ishift.epicguard.bukkit.manager.User;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.manager.user.User;
+import me.ishift.epicguard.bukkit.manager.user.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.universal.Config;

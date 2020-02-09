@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.manager.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
