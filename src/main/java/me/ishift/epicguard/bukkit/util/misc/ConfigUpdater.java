@@ -82,16 +82,16 @@ public class ConfigUpdater {
                 Logger.eraseFile(configFile);
                 list.forEach(s -> {
                     if (s.equals("version: 3.7.0")) {
-                        s = "version: 3.7.1";
+                        s = "version: 3.8.0";
                     }
                     if (s.equals("# Permission for bypass this module.")) {
-                        return;
+                        s = "";
                     }
                     if (s.contains("epicguard.command.bypass")) {
-                        return;
+                        s = "";
                     }
                     if (s.equals("# Everyone with the permission below can use any command.")) {
-                        return;
+                        s = "";
                     }
                     Logger.writeToFile(configFile, s);
                 });

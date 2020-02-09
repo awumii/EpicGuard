@@ -44,6 +44,10 @@ public class AttackManager {
         return pingPerSecond;
     }
 
+    public static void setPingPerSecond(int pingPerSecond) {
+        AttackManager.pingPerSecond = pingPerSecond;
+    }
+
     public static int getConnectPerSecond() {
         return connectPerSecond;
     }

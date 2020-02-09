@@ -11,6 +11,9 @@ public class AttackTask implements Runnable {
         if (AttackManager.getConnectPerSecond() < 0) {
             AttackManager.setConnectPerSecond(0);
         }
+        if (AttackManager.getPingPerSecond() < 0) {
+            AttackManager.setPingPerSecond(0);
+        }
         if (AttackManager.getJoinPerSecond() < Config.joinSpeed && AttackManager.getPingPerSecond() < Config.pingSpeed && AttackManager.getConnectPerSecond() < Config.connectSpeed) {
             if (AttackManager.isUnderAttack()) {
                 AttackManager.setAttackMode(false);
