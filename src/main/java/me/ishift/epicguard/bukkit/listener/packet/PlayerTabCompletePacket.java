@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.universal.Config;
+import org.bukkit.entity.Player;
 
 public class PlayerTabCompletePacket extends PacketAdapter {
     public PlayerTabCompletePacket(final GuardBukkit plugin) {
@@ -22,6 +23,9 @@ public class PlayerTabCompletePacket extends PacketAdapter {
         // Custom TabComplete.
         final PacketContainer packetContainer = event.getPacket();
         final String message = packetContainer.getStrings().read(0);
+        final Player player = event.getPlayer();
+
+        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete"))
         if (message.startsWith("/") && Config.customTabComplete) {
             final String command = message.split(" ")[0].substring(1).toLowerCase();
 

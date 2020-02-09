@@ -26,7 +26,7 @@ public class Config {
     public static List<String> opProtectionList;
     public static String opProtectionAlert;
     public static String opProtectionCommand;
-    public static String allowedCommandsBypass;
+    public static boolean allowedCommandsBypass;
     public static boolean blockedCommandsEnable;
     public static boolean allowedCommandsEnable;
     public static boolean opProtectionEnable;
@@ -52,4 +52,7 @@ public class Config {
 
     public static boolean customTabComplete;
     public static List<String> customTabCompleteList;
+    public static boolean customTabCompleteBypass;
+
+    public static boolean betaLayout;
 }
