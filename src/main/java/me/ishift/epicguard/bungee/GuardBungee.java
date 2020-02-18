@@ -25,7 +25,7 @@ import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
-    public static boolean log = true;
+    public static boolean log = false;
     public static boolean status = false;
     private static GuardBungee instance;
 
