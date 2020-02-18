@@ -18,6 +18,7 @@ public class PlayerTabCompletePacket extends PacketAdapter {
         // Blocking TabComplete
         if (Config.tabCompleteBlock) {
             event.setCancelled(true);
+            return;
         }
 
         // Custom TabComplete.
@@ -25,7 +26,8 @@ public class PlayerTabCompletePacket extends PacketAdapter {
         final String message = packetContainer.getStrings().read(0);
         final Player player = event.getPlayer();
 
-        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete"))
+        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) return;
+
         if (message.startsWith("/") && Config.customTabComplete) {
             final String command = message.split(" ")[0].substring(1).toLowerCase();
 
