@@ -19,8 +19,8 @@ public class ProxyPreLoginListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
         final PendingConnection connection = event.getConnection();
-        final String adress = connection.getAddress().getAddress().getHostAddress();
-        final String country = GeoAPI.getCountryCode(event.getConnection().getAddress().getAddress());
+        final String adress = connection.getVirtualHost().getAddress().getHostAddress();
+        final String country = GeoAPI.getCountryCode(connection.getVirtualHost().getAddress());
         BungeeAttack.handle(AttackType.CONNECT);
 
         if (FirewallManager.getWhiiteList().contains(adress)) {
