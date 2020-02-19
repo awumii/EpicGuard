@@ -30,6 +30,9 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, MessagesBukkit.NO_PERMISSION);
                 return true;
             }
+            sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
+            sender.sendMessage(ChatUtil.fix(""));
+            sender.sendMessage(ChatUtil.fix(""));
             send(sender, "&6/" + s + " menu &8- &7Open main plugin GUI.");
             send(sender, "&6/" + s + " status &8- &7Toggle antibot notifications (titles).");
             send(sender, "&6/" + s + " reload &8- &7Reload configuration and messages.");
@@ -37,6 +40,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&6/" + s + " player <player> &8- &7See information about specific player.");
             send(sender, "&6/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist.");
             send(sender, "&6/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist.");
+            sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
             return true;
         }
 
