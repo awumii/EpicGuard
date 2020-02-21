@@ -24,8 +24,8 @@ public class MessagesBungee {
     public static String prefix;
 
     public static void load() throws IOException {
-        String file = GuardBungee.getInstance().getDataFolder() + "/messages.yml";
-        File configFile = new File(file);
+        final String file = GuardBungee.getInstance().getDataFolder() + "/messages.yml";
+        final File configFile = new File(file);
         if (!configFile.exists()) {
             try {
                 Downloader.download(Downloader.MIRROR_MESSAGES, file);
@@ -34,7 +34,7 @@ public class MessagesBungee {
             }
         }
 
-        Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(file));
+        final Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(file));
         messageKickProxy = cfg.getStringList("kick-messages.proxy");
         messageKickCountry = cfg.getStringList("kick-messages.country");
         messageKickAttack = cfg.getStringList("kick-messages.attack");

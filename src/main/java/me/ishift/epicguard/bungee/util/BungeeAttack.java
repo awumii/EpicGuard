@@ -8,10 +8,10 @@ import net.md_5.bungee.api.ProxyServer;
 import java.util.concurrent.TimeUnit;
 
 public class BungeeAttack {
-    public static int connectionPerSecond = 0;
-    public static boolean attack = false;
-    public static int pingPerSecond = 0;
-    public static int blockedBots = 0;
+    private static int connectionPerSecond = 0;
+    private static boolean attack = false;
+    private static int pingPerSecond = 0;
+    private static int blockedBots = 0;
 
     public static boolean isAttack() {
         return attack;
@@ -27,6 +27,14 @@ public class BungeeAttack {
 
     public static int getPingPerSecond() {
         return pingPerSecond;
+    }
+
+    public static int getBlockedBots() {
+        return blockedBots;
+    }
+
+    public static void setBlockedBots(int blockedBots) {
+        BungeeAttack.blockedBots = blockedBots;
     }
 
     public static void handle(AttackType type) {

@@ -56,8 +56,6 @@ public class Config {
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;
 
-    public static boolean betaLayout;
-
     public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
     public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
 
@@ -100,7 +98,6 @@ public class Config {
         Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
         Config.customTabComplete = config.getBoolean("custom-tab-complete.enabled");
         Config.customTabCompleteList = config.getStringList("custom-tab-complete.list");
-        Config.betaLayout = config.getBoolean("beta-layout");
         Config.allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
         Config.customTabCompleteBypass = config.getBoolean("bypass.custom-tab-complete");
     }

@@ -35,12 +35,8 @@ public class GuardBungee extends Plugin {
     public void onEnable() {
         try {
             this.getDataFolder().mkdir();
-
-            final File dir1 = new File(this.getDataFolder() + "/logs");
-            dir1.mkdir();
-
-            final File dir3 = new File(this.getDataFolder() + "/data");
-            dir3.mkdir();
+            new File(this.getDataFolder() + "/logs").mkdir();
+            new File(this.getDataFolder() + "/data").mkdir();
 
             instance = this;
             Logger.create(Platform.BUNGEE);
@@ -64,6 +60,11 @@ public class GuardBungee extends Plugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDisable() {
+        StorageManager.save();
     }
 
     private void loadConfig() {

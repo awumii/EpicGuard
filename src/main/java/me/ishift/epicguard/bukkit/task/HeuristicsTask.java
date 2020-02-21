@@ -44,7 +44,6 @@ public class HeuristicsTask implements Runnable {
             }
         });
 
-        if (!Config.betaLayout) Notificator.action("&a0&7/&acps &8| &7No attack.");
         if (AttackManager.isUnderAttack()) {
             time++;
         }

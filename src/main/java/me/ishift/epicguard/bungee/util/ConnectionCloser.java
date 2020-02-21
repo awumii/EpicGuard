@@ -17,18 +17,7 @@ public class ConnectionCloser {
             Logger.info("Closing: " + connection.getVirtualHost().getAddress().getHostAddress() + "(" + connection.getName() + "), (" + reason + ")]");
         }
 
-        if (GuardBungee.status) {
-            if (BungeeAttack.getConnectionPerSecond() > 5) {
-                GuardBungee.getInstance().getProxy().getPlayers().forEach(player -> {
-                    if (player.getPermissions().contains("epicguard.admin")) {
-                        BungeeUtil.sendTitle(player, MessagesBungee.attackTitle.replace("{CPS}", String.valueOf(BungeeAttack.getConnectionPerSecond())), MessagesBungee.attackSubtitle.replace("{MAX}", String.valueOf(BungeeAttack.blockedBots)));
-                        BungeeUtil.sendActionBar(player, MessagesBungee.attackActionBar.replace("{NICK}", connection.getName()).replace("{IP}", connection.getVirtualHost().getAddress().getHostAddress()).replace("{DETECTION}", String.valueOf(reason)));
-                    }
-                });
-            }
-        }
-
-        BungeeAttack.blockedBots++;
+        BungeeAttack.setBlockedBots(BungeeAttack.getBlockedBots() + 1);
         if (reason == KickReason.GEO) {
             connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickCountry.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
