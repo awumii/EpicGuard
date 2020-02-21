@@ -1,5 +1,7 @@
 package me.ishift.epicguard.universal;
 
+import de.leonhard.storage.Yaml;
+
 import java.util.List;
 
 public class Config {
@@ -55,4 +57,72 @@ public class Config {
     public static boolean customTabCompleteBypass;
 
     public static boolean betaLayout;
+
+    public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
+    public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
+
+    public static void loadBukkit() {
+        final Yaml config = BUKKIT;
+        Config.firewallEnabled = config.getBoolean("firewall");
+        Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+        Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+        Config.connectSpeed = config.getInt("speed.connection");
+        Config.pingSpeed = config.getInt("speed.ping-speed");
+        Config.autoWhitelist = config.getBoolean("auto-whitelist.enabled");
+        Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
+        Config.apiKey = config.getString("antibot.api-key");
+        Config.countryList = config.getStringList("countries.list");
+        Config.countryMode = config.getString("countries.mode");
+        Config.antibot = config.getBoolean("antibot.enabled");
+        Config.updater = config.getBoolean("updater");
+        Config.attackResetTimer = config.getLong("speed.attack-timer-reset");
+        Config.joinSpeed = config.getInt("speed.join-speed");
+        Config.tabCompleteBlock = config.getBoolean("fully-block-tab-complete");
+        Config.blockedCommands = config.getStringList("command-protection.list");
+        Config.allowedCommands = config.getStringList("allowed-commands.list");
+        Config.opProtectionList = config.getStringList("op-protection.list");
+        Config.opProtectionAlert = config.getString("op-protection.alert");
+        Config.opProtectionCommand = config.getString("op-protection.command");
+        Config.blockedCommandsEnable = config.getBoolean("command-protection.enabled");
+        Config.allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
+        Config.opProtectionEnable = config.getBoolean("op-protection.enabled");
+        Config.ipHistoryEnable = config.getBoolean("ip-history.enabled");
+        Config.forceRejoin = config.getBoolean("antibot.force-rejoin");
+        Config.pexProtection = config.getBoolean("op-protection.pex-protection");
+        Config.blockedNames = config.getStringList("antibot.name-contains");
+        Config.cloudEnabled = config.getBoolean("cloud.enabled");
+        Config.cloudBlacklist = config.getBoolean("cloud.features.blacklist");
+        Config.cloudTime = config.getLong("cloud.sync-every-seconds");
+        Config.heuristicsEnabled = config.getBoolean("heuristics.enabled");
+        Config.heuristicsDiff = config.getInt("heuristics.min-difference");
+        Config.filterEnabled = config.getBoolean("console-filter.enabled");
+        Config.filterValues = config.getStringList("console-filter.messages");
+        Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
+        Config.customTabComplete = config.getBoolean("custom-tab-complete.enabled");
+        Config.customTabCompleteList = config.getStringList("custom-tab-complete.list");
+        Config.betaLayout = config.getBoolean("beta-layout");
+        Config.allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
+        Config.customTabCompleteBypass = config.getBoolean("bypass.custom-tab-complete");
+    }
+
+    public static void loadBungee() {
+        final Yaml config = BUNGEE;
+        Config.firewallEnabled = config.getBoolean("firewall");
+        Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+        Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+        Config.connectSpeed = config.getInt("speed.connection");
+        Config.pingSpeed = config.getInt("speed.ping-speed");
+        Config.apiKey = config.getString("antibot.api-key");
+        Config.countryList = config.getStringList("countries.list");
+        Config.countryMode = config.getString("countries.mode");
+        Config.antibot = config.getBoolean("antibot.enabled");
+        Config.attackResetTimer = config.getLong("speed.attack-timer-reset");
+        Config.blockedNames = config.getStringList("antibot.name-contains");
+        Config.cloudEnabled = config.getBoolean("cloud.enabled");
+        Config.cloudBlacklist = config.getBoolean("cloud.features.blacklist");
+        Config.cloudTime = config.getLong("cloud.sync-every-seconds");
+        Config.filterEnabled = config.getBoolean("console-filter.enabled");
+        Config.filterValues = config.getStringList("console-filter.messages");
+        Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
+    }
 }

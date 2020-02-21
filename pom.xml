@@ -42,11 +42,17 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <minimizeJar>true</minimizeJar>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <relocations>
+                        <relocation>
+                            <pattern>de.leonhard</pattern>
+                            <shadedPattern>me.ishift.epicguard</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
             </plugin>
         </plugins>
 
@@ -85,6 +91,12 @@
             <version>4.5.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/files/ProtocolLib.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.JavaFactoryDev</groupId>
+            <artifactId>LightningStorage</artifactId>
+            <version>3.0.6</version>
         </dependency>
 
         <dependency>

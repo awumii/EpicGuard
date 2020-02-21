@@ -2,14 +2,13 @@ package me.ishift.epicguard.bukkit.gui;
 
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.cloud.CloudManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -55,12 +54,12 @@ public class GuiMain {
                 .addLore("&7See statistics about collected data.")
                 .addLore("")
                 .addLore("&6Connections:")
-                .addLore("  &7Checked connections&8: &e" + DataFileManager.checkedConnections)
-                .addLore("  &7Blocked bots&8: &c" + DataFileManager.blockedBots)
+                .addLore("  &7Checked connections&8: &e" + StorageManager.getCheckedConnections())
+                .addLore("  &7Blocked bots&8: &c" + StorageManager.getBlockedBots())
                 .addLore("")
                 .addLore("&6IP Manager:")
-                .addLore("  &7Blacklisted IPs&8: &c" + BlacklistManager.getBlacklist().size())
-                .addLore("  &7Whitelisted IPs&8: &a" + BlacklistManager.getWhitelist().size())
+                .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getBlacklist().size())
+                .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getWhitelist().size())
                 .build();
 
         final ItemStack i4 = new ItemBuilder(Material.DIAMOND_BLOCK)
