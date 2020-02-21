@@ -83,7 +83,6 @@ public class AttackManager {
 
         PlayerPreLoginListener.setLastDetection(reason);
         PlayerPreLoginListener.setBlacklisted(blacklist);
-        if (!Config.betaLayout) Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
         StorageManager.increaseBlockedBots();
         totalBots++;
     }

@@ -3,6 +3,7 @@ package me.ishift.epicguard.bungee.util;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -20,5 +21,10 @@ public class BungeeUtil {
 
     public static void sendActionBar(ProxiedPlayer player, String message) {
         player.sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtil.fix(message)));
+    }
+
+    public static void sendMessage(CommandSender sender, String message) {
+        final TextComponent component = new TextComponent(ChatUtil.fix(message));
+        sender.sendMessage(component);
     }
 }

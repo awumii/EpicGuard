@@ -2,8 +2,8 @@ package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.bungee.util.ConnectionCloser;
-import me.ishift.epicguard.bungee.util.FirewallManager;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
@@ -19,28 +19,28 @@ public class ProxyPreLoginListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
         final PendingConnection connection = event.getConnection();
-        final String adress = connection.getVirtualHost().getAddress().getHostAddress();
-        final String country = GeoAPI.getCountryCode(connection.getVirtualHost().getAddress());
+        final String adress = connection.getAddress().getAddress().getHostAddress();
+        final String country = GeoAPI.getCountryCode(connection.getAddress().getAddress());
         BungeeAttack.handle(AttackType.CONNECT);
 
-        if (FirewallManager.getWhiiteList().contains(adress)) {
+        if (StorageManager.isWhitelisted(adress)) {
             return;
         }
 
-        if (FirewallManager.getBlackList().contains(adress)) {
+        if (StorageManager.isBlacklisted(adress)) {
             ConnectionCloser.close(connection, KickReason.BLACKLIST);
             return;
         }
 
         if (NameContainsCheck.check(connection.getName())) {
             ConnectionCloser.close(connection, KickReason.NAMECONTAINS);
-            FirewallManager.blacklist(adress);
+            StorageManager.blacklist(adress);
             return;
         }
 
         if (GeoCheck.check(country)) {
             ConnectionCloser.close(connection, KickReason.GEO);
-            FirewallManager.blacklist(adress);
+            StorageManager.blacklist(adress);
             return;
         }
 
@@ -55,7 +55,7 @@ public class ProxyPreLoginListener implements Listener {
 
         if (ProxyCheck.check(adress)) {
             ConnectionCloser.close(connection, KickReason.PROXY);
-            FirewallManager.blacklist(adress);
+            StorageManager.blacklist(adress);
         }
     }
 }
