@@ -6,6 +6,7 @@ import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.types.KickReason;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AttackManager {
-    public static List<String> rejoinData = new ArrayList<>();
     private static int joinPerSecond = 0;
     private static int connectPerSecond = 0;
     private static int pingPerSecond = 0;
@@ -65,32 +65,26 @@ public class AttackManager {
         attackMode = bol;
     }
 
-    public static List<String> getRejoinData() {
-        return rejoinData;
-    }
-
-    public static void setRejoinData(List<String> rejoinData) {
-        AttackManager.rejoinData = rejoinData;
-    }
-
     public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - DETECTED & BLOCKED");
+
         if (blacklist) {
-            BlacklistManager.blacklist(adress);
+            StorageManager.blacklist(adress);
             HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }
         PlayerPreLoginListener.setLastPlayer(nick);
         PlayerPreLoginListener.setLastAddress(adress);
+
         try {
             PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
-        } catch (UnknownHostException ignored) {
-        }
+        } catch (UnknownHostException ignored) { }
+
         PlayerPreLoginListener.setLastDetection(reason);
         PlayerPreLoginListener.setBlacklisted(blacklist);
         if (!Config.betaLayout) Notificator.action(MessagesBukkit.ACTIONBAR_ATTACK.replace("{NICK}", nick).replace("{IP}", adress).replace("{DETECTION}", reason));
-        DataFileManager.blockedBots++;
+        StorageManager.increaseBlockedBots();
         totalBots++;
     }
 

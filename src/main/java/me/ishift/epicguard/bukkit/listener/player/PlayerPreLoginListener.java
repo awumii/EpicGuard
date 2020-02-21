@@ -1,9 +1,8 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.GeoCheck;
 import me.ishift.epicguard.universal.check.NameContainsCheck;
 import me.ishift.epicguard.universal.check.ProxyCheck;
@@ -69,7 +68,7 @@ public class PlayerPreLoginListener implements Listener {
         final String name = event.getName();
 
         final String country = GeoAPI.getCountryCode(event.getAddress());
-        DataFileManager.checkedConnections++;
+        StorageManager.increaseCheckedConnections();
         Logger.debug(" ");
         Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
         Logger.debug("Player: " + name);
@@ -79,12 +78,12 @@ public class PlayerPreLoginListener implements Listener {
         Logger.debug("# DETECTION LOG:");
         AttackManager.handleAttack(AttackType.CONNECT);
 
-        if (BlacklistManager.isWhitelisted(address)) {
+        if (StorageManager.isWhitelisted(address)) {
             Logger.debug("+ Whitelist Check - Passed");
             return;
         }
 
-        if (BlacklistManager.isBlacklisted(address)) {
+        if (StorageManager.isBlacklisted(address)) {
             AttackManager.handleDetection("Blacklist", name, address, event, KickReason.BLACKLIST, false);
             return;
         }
@@ -109,9 +108,9 @@ public class PlayerPreLoginListener implements Listener {
         }
 
         if (Config.forceRejoin) {
-            if (!AttackManager.rejoinData.contains(name)) {
+            if (!StorageManager.hasRejoined(name)) {
                 AttackManager.handleDetection("Force Rejoin", name, address, event, KickReason.VERIFY, false);
-                AttackManager.rejoinData.add(name);
+                StorageManager.addRejoined(name);
                 return;
             }
         }

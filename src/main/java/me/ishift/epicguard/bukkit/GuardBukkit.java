@@ -7,8 +7,7 @@ import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.listener.player.*;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
-import me.ishift.epicguard.bukkit.manager.DataFileManager;
-import me.ishift.epicguard.bukkit.manager.user.UserManager;
+import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.task.*;
 import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
@@ -18,6 +17,7 @@ import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
@@ -37,50 +37,6 @@ public class GuardBukkit extends JavaPlugin {
         return JavaPlugin.getPlugin(GuardBukkit.class);
     }
 
-    public static void loadConfig() {
-        final FileConfiguration config = getInstance().getConfig();
-        Config.firewallEnabled = config.getBoolean("firewall");
-        Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
-        Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");
-        Config.connectSpeed = config.getInt("speed.connection");
-        Config.pingSpeed = config.getInt("speed.ping-speed");
-        Config.autoWhitelist = config.getBoolean("auto-whitelist.enabled");
-        Config.autoWhitelistTime = config.getInt("auto-whitelist.time");
-        Config.apiKey = config.getString("antibot.api-key");
-        Config.countryList = config.getStringList("countries.list");
-        Config.countryMode = config.getString("countries.mode");
-        Config.antibot = config.getBoolean("antibot.enabled");
-        Config.updater = config.getBoolean("updater");
-        Config.attackResetTimer = config.getLong("speed.attack-timer-reset");
-        Config.joinSpeed = config.getInt("speed.join-speed");
-        Config.tabCompleteBlock = config.getBoolean("fully-block-tab-complete");
-        Config.blockedCommands = config.getStringList("command-protection.list");
-        Config.allowedCommands = config.getStringList("allowed-commands.list");
-        Config.opProtectionList = config.getStringList("op-protection.list");
-        Config.opProtectionAlert = config.getString("op-protection.alert");
-        Config.opProtectionCommand = config.getString("op-protection.command");
-        Config.blockedCommandsEnable = config.getBoolean("command-protection.enabled");
-        Config.allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
-        Config.opProtectionEnable = config.getBoolean("op-protection.enabled");
-        Config.ipHistoryEnable = config.getBoolean("ip-history.enabled");
-        Config.forceRejoin = config.getBoolean("antibot.force-rejoin");
-        Config.pexProtection = config.getBoolean("op-protection.pex-protection");
-        Config.blockedNames = config.getStringList("antibot.name-contains");
-        Config.cloudEnabled = config.getBoolean("cloud.enabled");
-        Config.cloudBlacklist = config.getBoolean("cloud.features.blacklist");
-        Config.cloudTime = config.getLong("cloud.sync-every-seconds");
-        Config.heuristicsEnabled = config.getBoolean("heuristics.enabled");
-        Config.heuristicsDiff = config.getInt("heuristics.min-difference");
-        Config.filterEnabled = config.getBoolean("console-filter.enabled");
-        Config.filterValues = config.getStringList("console-filter.messages");
-        Config.bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
-        Config.customTabComplete = config.getBoolean("custom-tab-complete.enabled");
-        Config.customTabCompleteList = config.getStringList("custom-tab-complete.list");
-        Config.betaLayout = config.getBoolean("beta-layout");
-        Config.allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
-        Config.customTabCompleteBypass = config.getBoolean("bypass.custom-tab-complete");
-    }
-
     @Override
     public void onEnable() {
         final long ms = System.currentTimeMillis();
@@ -88,7 +44,7 @@ public class GuardBukkit extends JavaPlugin {
         this.createDirectories();
         this.saveDefaultConfig();
         ConfigUpdater.update();
-        loadConfig();
+        Config.loadBukkit();
         Logger.create(Platform.SPIGOT);
         LogoPrinter.print();
         Logger.info("Version: " + this.getDescription().getVersion());
@@ -96,8 +52,7 @@ public class GuardBukkit extends JavaPlugin {
         new Metrics(this, 5845);
 
         Reflection.init();
-        DataFileManager.init(this.getDataFolder() + "/data/data_flat.yml");
-        DataFileManager.save();
+        StorageManager.load();
         MessagesBukkit.load();
 
         this.registerListeners();
@@ -124,7 +79,7 @@ public class GuardBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         Logger.info("Saving data and disabling plugin.");
-        DataFileManager.save();
+        StorageManager.save();
     }
 
     private void registerListeners() {
@@ -143,10 +98,9 @@ public class GuardBukkit extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeuristicsTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTitleTask(), 1L, 220L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CloudTask(), 40L, Config.cloudTime);
-        if (Config.betaLayout) Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new BetaTask(), 1L, 1L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 1L, 1L);
     }
 
     private void createDirectories() {

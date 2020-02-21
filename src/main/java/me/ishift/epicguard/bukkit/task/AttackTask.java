@@ -17,7 +17,6 @@ public class AttackTask implements Runnable {
         if (AttackManager.getJoinPerSecond() < Config.joinSpeed && AttackManager.getPingPerSecond() < Config.pingSpeed && AttackManager.getConnectPerSecond() < Config.connectSpeed) {
             if (AttackManager.isUnderAttack()) {
                 AttackManager.setAttackMode(false);
-                Notificator.title("&cATTACK HAS BEEN FINISHED", "&7Bots blocked during last attack: &4" + AttackManager.getTotalBots());
                 HeuristicsTask.setRecord(0);
                 HeuristicsTask.setTime(0);
                 HeuristicsTask.setBlacklistInc(0);

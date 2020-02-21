@@ -2,11 +2,11 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
-import me.ishift.epicguard.bukkit.manager.BlacklistManager;
-import me.ishift.epicguard.bukkit.manager.user.User;
-import me.ishift.epicguard.bukkit.manager.user.UserManager;
+import me.ishift.epicguard.bukkit.manager.User;
+import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import org.bukkit.Bukkit;
@@ -93,14 +93,14 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, "&7Correct usage: &f/" + s + " whitelist <adress>");
                 return true;
             }
-            BlacklistManager.whitelist(args[1]);
+            StorageManager.whitelist(args[1]);
             send(sender, "&7Whitelisted IP: " + args[1]);
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
                 send(sender, "&7Correct usage: &f/" + s + " blacklist <adress>");
                 return true;
             }
-            BlacklistManager.blacklist(args[1]);
+            StorageManager.blacklist(args[1]);
             send(sender, "&7Blacklisted IP: " + args[1]);
         } else {
             send(sender, "&cCommand not found! Use &6/" + s);

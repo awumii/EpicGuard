@@ -3,13 +3,14 @@ package me.ishift.epicguard.bukkit.listener.player;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.manager.*;
-import me.ishift.epicguard.bukkit.manager.user.User;
-import me.ishift.epicguard.bukkit.manager.user.UserManager;
+import me.ishift.epicguard.bukkit.manager.User;
+import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
@@ -31,35 +32,34 @@ public class PlayerJoinListener implements Listener {
             final Player player = event.getPlayer();
             UserManager.addUser(player);
             final User user = UserManager.getUser(player);
+            final String address = user.getAddress();
 
-            // AntiBypass V2
-            if (Config.antibot && BlacklistManager.isBlacklisted(user.getAddress())) {
+            AttackManager.handleAttack(AttackType.JOIN);
+            // AntiBypass
+            if (Config.antibot && StorageManager.isBlacklisted(address)) {
                 event.setJoinMessage("");
                 player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                 return;
             }
 
             Updater.notify(player);
-            AttackManager.handleAttack(AttackType.JOIN);
 
             if (Config.autoWhitelist) {
                 Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (player.isOnline()) {
-                        BlacklistManager.whitelist(user.getAddress());
-                    }
+                    if (player.isOnline()) StorageManager.whitelist(address);
                 }, Config.autoWhitelistTime);
             }
 
             // IP History manager
             if (Config.ipHistoryEnable) {
-                final List<String> history = DataFileManager.getDataFile().getStringList("history." + player.getName());
-                if (!history.contains(user.getAddress())) {
+                final List<String> history = StorageManager.getFile().getStringList("address-history." + player.getName());
+                if (!history.contains(address)) {
                     if (!history.isEmpty()) {
-                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", user.getAddress()));
+                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", address));
                     }
-                    history.add(user.getAddress());
+                    history.add(address);
                 }
-                DataFileManager.getDataFile().set("history." + player.getName(), history);
+                StorageManager.getFile().set("address-history." + player.getName(), history);
                 user.setAddressList(history);
             }
 
