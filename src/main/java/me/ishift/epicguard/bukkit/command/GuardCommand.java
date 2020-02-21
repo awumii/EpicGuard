@@ -5,6 +5,7 @@ import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -25,21 +26,23 @@ public class GuardCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
         if (args.length == 0) {
-            send(sender, "&7You are running &6EpicGuard v" + GuardBukkit.getInstance().getDescription().getVersion() + " &7by &ciShift & ruzekh&7.");
             if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
+                send(sender, "&7This server uses &6EpicGuard v" + Updater.getCurrentVersion() + " &7by &ciShift&7.");
                 send(sender, MessagesBukkit.NO_PERMISSION);
                 return true;
             }
             sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
+            sender.sendMessage(ChatUtil.fix("   &6&lEPICGUARD &fv" + Updater.getCurrentVersion()));
+            sender.sendMessage(ChatUtil.fix("   &7&oList of available commands"));
             sender.sendMessage(ChatUtil.fix(""));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " menu &8- &7Open main plugin GUI."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " status &8- &7Toggle antibot notifications (titles)."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " reload &8- &7Reload configuration and messages."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " oplist &8- &7See opped players list."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " player <player> &8- &7See information about specific player."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist."));
+            sender.sendMessage(ChatUtil.fix("&6/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist."));
             sender.sendMessage(ChatUtil.fix(""));
-            send(sender, "&6/" + s + " menu &8- &7Open main plugin GUI.");
-            send(sender, "&6/" + s + " status &8- &7Toggle antibot notifications (titles).");
-            send(sender, "&6/" + s + " reload &8- &7Reload configuration and messages.");
-            send(sender, "&6/" + s + " oplist &8- &7See opped players list.");
-            send(sender, "&6/" + s + " player <player> &8- &7See information about specific player.");
-            send(sender, "&6/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist.");
-            send(sender, "&6/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist.");
             sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
             return true;
         }
@@ -61,7 +64,7 @@ public class GuardCommand implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("reload")) {
             send(sender, "&7Reloading config...");
             GuardBukkit.getInstance().reloadConfig();
-            GuardBukkit.loadConfig();
+            Config.loadBukkit();
             MessagesBukkit.load();
             send(sender, "&7Reloaded config &asuccesfully&7!");
         } else if (args[0].equalsIgnoreCase("oplist")) {
@@ -86,7 +89,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
             if (Config.ipHistoryEnable) {
                 send(sender, "&6[IP History]");
-                UserManager.getUser(player).getAddresses().forEach(adress -> send(sender, " &7- &f" + adress));
+                UserManager.getUser(player).getAddresses().forEach(address -> send(sender, " &7- &f" + address));
             }
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
