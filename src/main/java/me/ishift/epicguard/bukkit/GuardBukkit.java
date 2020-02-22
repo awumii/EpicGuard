@@ -23,7 +23,6 @@ import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.LogoPrinter;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
@@ -47,7 +46,6 @@ public class GuardBukkit extends JavaPlugin {
         Config.loadBukkit();
         Logger.create(Platform.SPIGOT);
         LogoPrinter.print();
-        Logger.info("Version: " + this.getDescription().getVersion());
         GeoAPI.create(Platform.SPIGOT);
         new Metrics(this, 5845);
 
