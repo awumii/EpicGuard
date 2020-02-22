@@ -38,8 +38,6 @@ public class GuardBungee extends Plugin {
 
             instance = this;
             Logger.create();
-            LogoPrinter.print();
-
             this.loadConfig();
             StorageManager.load();
             MessagesBungee.load();
