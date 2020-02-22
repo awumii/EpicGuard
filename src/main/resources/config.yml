@@ -5,8 +5,9 @@
 #    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
 #    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
 #    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
-#
-
+# Thank you for downloading my plugin!
+# SpigotMC Link: https://www.spigotmc.org/resources/epicguard-advanced-server-protection-antibot-more.72369/
+# My Discord: iShift#0524
 ###############################
 ##           Countries       ##
 ###############################
@@ -96,11 +97,6 @@ blocked-brands:
   punish: "kick {PLAYER} &cYour client is not allowed on this server!"
   list:
     - some_blocked_brand
-
-# Enabling beta-layout will hide the title and change the design of the action bar on the attack.
-# New layout is better than the old one because it does not contain bot names, just statistics.
-# Screenshot: https://cdn.discordapp.com/attachments/659146286972403766/675713594276446219/unknown.png
-beta-layout: false
 
 updater: true
 ###############################
