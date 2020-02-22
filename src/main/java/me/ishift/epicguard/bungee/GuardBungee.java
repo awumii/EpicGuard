@@ -10,7 +10,6 @@ import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.LogoPrinter;
@@ -39,14 +38,14 @@ public class GuardBungee extends Plugin {
             new File(this.getDataFolder() + "/data").mkdir();
 
             instance = this;
-            Logger.create(Platform.BUNGEE);
+            Logger.create();
             LogoPrinter.print();
 
             this.loadConfig();
             StorageManager.load();
             MessagesBungee.load();
 
-            GeoAPI.create(Platform.BUNGEE);
+            GeoAPI.create();
             new Metrics(this, 5956);
 
             this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());

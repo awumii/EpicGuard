@@ -1,10 +1,7 @@
 package me.ishift.epicguard.universal.util;
 
 import com.maxmind.geoip2.DatabaseReader;
-import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.cloud.Downloader;
-import me.ishift.epicguard.universal.types.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,17 +27,11 @@ public class GeoAPI {
         return "Unknown?";
     }
 
-    public static void create(Platform type) {
+    public static void create() {
         try {
             Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
             Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
-            File dataFolder = null;
-            if (type == Platform.SPIGOT) {
-                dataFolder = GuardBukkit.getInstance().getDataFolder();
-            }
-            if (type == Platform.BUNGEE) {
-                dataFolder = GuardBungee.getInstance().getDataFolder();
-            }
+            final String dataFolder = "plugins/EpicGuard";
             final String dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
             final File dateFile = new File(dataFolder + "/data/" + "last_db_download.txt");
 

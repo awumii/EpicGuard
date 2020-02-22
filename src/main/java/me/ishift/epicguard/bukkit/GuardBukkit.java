@@ -18,7 +18,6 @@ import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.types.Platform;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
 import me.ishift.epicguard.universal.util.LogoPrinter;
@@ -44,9 +43,9 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         ConfigUpdater.update();
         Config.loadBukkit();
-        Logger.create(Platform.SPIGOT);
+        Logger.create();
         LogoPrinter.print();
-        GeoAPI.create(Platform.SPIGOT);
+        GeoAPI.create();
         new Metrics(this, 5845);
 
         Reflection.init();
