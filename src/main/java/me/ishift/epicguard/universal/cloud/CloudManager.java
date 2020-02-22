@@ -17,7 +17,6 @@ public class CloudManager {
 
     public static void connect() {
         try {
-            Logger.debug("[CLOUD] Checking data from the cloud...");
             final Scanner s = new Scanner(new URL(CLOUD_URL).openStream());
             final List<String> list = new ArrayList<>();
             if (s.hasNext()) {
@@ -25,6 +24,10 @@ public class CloudManager {
                     list.add(s.nextLine());
                 }
             }
+            // Do not update blacklist if there is no change in cloud.
+            if (cloudBlacklist.size() == list.size()) return;
+
+            Logger.debug("[CLOUD] Checking data from the cloud...");
             s.close();
             online = true;
             lastCheck = new SimpleDateFormat("HH:mm").format(new Date());

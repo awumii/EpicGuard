@@ -5,15 +5,20 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.universal.Config;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class PlayerTabCompletePacket extends PacketAdapter {
-    public PlayerTabCompletePacket(final GuardBukkit plugin) {
+    public PlayerTabCompletePacket(final Plugin plugin) {
         super(plugin, PacketType.Play.Client.TAB_COMPLETE);
     }
 
+    public static void register(Plugin plugin) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PlayerTabCompletePacket(plugin));
+    }
+
+    @Override
     public void onPacketReceiving(final PacketEvent event) {
         // Blocking TabComplete
         if (Config.tabCompleteBlock) {
