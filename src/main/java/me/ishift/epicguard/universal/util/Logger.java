@@ -1,14 +1,10 @@
 package me.ishift.epicguard.universal.util;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.types.Platform;
+import me.ishift.epicguard.bukkit.manager.AttackManager;
 
 import java.io.*;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Scanner;
 
 public class Logger {
     private static File file;
@@ -25,47 +21,23 @@ public class Logger {
         final Calendar cal = Calendar.getInstance();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
         final String time = sdf.format(cal.getTime());
-        String msg;
+        final String msg = "(" + time + ") " + message;
         if (!hide) {
-            msg = "[" + time + "] > " + message;
-            System.out.println("[EpicGuard] > " + message);
-        } else {
-            msg = "[" + time + "] > " + message;
+            System.out.println("[EpicGuard] " + message);
         }
         writeToFile(file, msg);
     }
 
-    public static void create(Platform platform) {
+    public static void create() {
         try {
             final Calendar cal = Calendar.getInstance();
             final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
             final String date = sdf.format(cal.getTime());
 
-            if (platform == Platform.SPIGOT) {
-                file = new File(GuardBukkit.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
+            file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + date + ".txt");
+            if (file.createNewFile()) {
+                System.out.println("[EpicGuard] Created new log file.");
             }
-            if (platform == Platform.BUNGEE) {
-                file = new File(GuardBungee.getInstance().getDataFolder() + "/logs/EpicGuardLogs-" + date + ".txt");
-            }
-            if (!file.exists()) {
-                if (file.createNewFile()) {
-                    System.out.println("[EpicGuard] Created new log file.");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void printLogo() {
-        try {
-            final Scanner scanner = new Scanner(new URL("https://pastebin.com/raw/YwUWQ8WC").openStream());
-            while (scanner.hasNextLine()) {
-                Logger.info(scanner.nextLine());
-            }
-            scanner.close();
-            Logger.info("");
-            Logger.info("Created by iShift and ruzekh");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,6 +45,7 @@ public class Logger {
 
     public static void writeToFile(File file, String message) {
         try {
+            if (AttackManager.getConnectPerSecond() > 50) return;
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();
@@ -83,9 +56,6 @@ public class Logger {
     }
 
     public static void eraseFile(File file) {
-        if (!file.exists()) {
-            return;
-        }
         try {
             final PrintWriter pw = new PrintWriter(file);
             pw.close();
