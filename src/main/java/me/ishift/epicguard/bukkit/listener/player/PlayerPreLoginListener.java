@@ -70,12 +70,10 @@ public class PlayerPreLoginListener implements Listener {
         final String country = GeoAPI.getCountryCode(event.getAddress());
         StorageManager.increaseCheckedConnections();
         Logger.debug(" ");
-        Logger.debug("###### CONNECTION CHECKER - INFO LOG #####");
         Logger.debug("Player: " + name);
         Logger.debug("Address: " + address);
         Logger.debug("Country: " + country);
         Logger.debug(" ");
-        Logger.debug("# DETECTION LOG:");
         AttackManager.handleAttack(AttackType.CONNECT);
 
         if (StorageManager.isWhitelisted(address)) {

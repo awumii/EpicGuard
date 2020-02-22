@@ -67,7 +67,7 @@ public class AttackManager {
 
     public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
         closeConnection(event, kickReason);
-        Logger.debug("- " + reason + " - DETECTED & BLOCKED");
+        Logger.debug("- " + reason + " - DETECTED");
 
         if (blacklist) {
             StorageManager.blacklist(adress);
@@ -88,24 +88,19 @@ public class AttackManager {
     }
 
     public static void handleAttack(AttackType type) {
+        if (connectPerSecond > Config.connectSpeed || pingPerSecond > Config.pingSpeed || joinPerSecond > Config.joinSpeed) {
+            attackMode = true;
+        }
         if (type == AttackType.CONNECT) {
             connectPerSecond++;
-            if (connectPerSecond > Config.connectSpeed) {
-                attackMode = true;
-            }
         }
         if (type == AttackType.PING) {
             pingPerSecond++;
-            if (pingPerSecond > Config.pingSpeed) {
-                attackMode = true;
-            }
         }
         if (type == AttackType.JOIN) {
             joinPerSecond++;
-            if (joinPerSecond > Config.joinSpeed) {
-                attackMode = true;
-            }
         }
+
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
             if (type == AttackType.CONNECT) {
                 connectPerSecond--;
