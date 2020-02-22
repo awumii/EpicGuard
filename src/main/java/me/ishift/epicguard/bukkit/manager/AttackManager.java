@@ -61,24 +61,23 @@ public class AttackManager {
     }
 
     public static void setAttackMode(boolean bol) {
-        Logger.info("Attack mode changed to: " + bol);
         attackMode = bol;
     }
 
-    public static void handleDetection(String reason, String nick, String adress, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
+    public static void handleDetection(String reason, String nick, String address, AsyncPlayerPreLoginEvent event, KickReason kickReason, boolean blacklist) {
         closeConnection(event, kickReason);
         Logger.debug("- " + reason + " - DETECTED");
 
         if (blacklist) {
-            StorageManager.blacklist(adress);
+            StorageManager.blacklist(address);
             HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
             Logger.debug("- This IP has been blacklisted.");
         }
         PlayerPreLoginListener.setLastPlayer(nick);
-        PlayerPreLoginListener.setLastAddress(adress);
+        PlayerPreLoginListener.setLastAddress(address);
 
         try {
-            PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(adress)));
+            PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(address)));
         } catch (UnknownHostException ignored) { }
 
         PlayerPreLoginListener.setLastDetection(reason);

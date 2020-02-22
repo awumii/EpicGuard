@@ -4,6 +4,7 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
+import me.ishift.epicguard.bukkit.listener.packet.PlayerTabCompletePacket;
 import me.ishift.epicguard.bukkit.listener.player.*;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.listener.server.ServerListPingListener;
@@ -12,7 +13,6 @@ import me.ishift.epicguard.bukkit.task.*;
 import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
-import me.ishift.epicguard.bukkit.util.server.Hooks;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
@@ -20,7 +20,6 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.util.Logger;
-import me.ishift.epicguard.universal.util.LogoPrinter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,7 +43,6 @@ public class GuardBukkit extends JavaPlugin {
         ConfigUpdater.update();
         Config.loadBukkit();
         Logger.create();
-        LogoPrinter.print();
         GeoAPI.create();
         new Metrics(this, 5845);
 
@@ -89,7 +87,7 @@ public class GuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerCommandListener(), this);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
-            Hooks.registerProtocolLib(this);
+            PlayerTabCompletePacket.register(this);
         }
     }
 
@@ -101,24 +99,6 @@ public class GuardBukkit extends JavaPlugin {
     }
 
     private void createDirectories() {
-        // I don't even know.
-        final File cfg = new File(this.getDataFolder() + "/config.yml");
-        final File cfg1 = new File(this.getDataFolder() + "/cloud.yml");
-        final File cfg2 = new File(this.getDataFolder() + "/filter.yml");
-        final File cfg3 = new File(this.getDataFolder() + "/brand.yml");
-
-        final File dir1 = new File(this.getDataFolder() + "/logs");
-        if (dir1.mkdir()) {
-            this.getLogger().info("Created logs directory");
-        }
-
-        final File dir2 = new File(this.getDataFolder() + "/deprecated0");
-        if (dir2.mkdir()) {
-            this.getLogger().info("Created deprecated directory.");
-            if (cfg.renameTo(new File(dir2 + "/config.yml")) && cfg1.renameTo(new File(dir2 + "/cloud.yml")) && cfg2.renameTo(new File(dir2 + "/filter.yml")) && cfg3.renameTo(new File(dir2 + "/brand.yml"))) {
-                this.getLogger().info("Deprecated old configurations.");
-            }
-        }
         final File dir3 = new File(this.getDataFolder() + "/data");
         if (dir3.mkdir()) {
             this.getLogger().info("Created data directory");

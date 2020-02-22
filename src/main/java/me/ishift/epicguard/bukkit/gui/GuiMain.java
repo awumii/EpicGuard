@@ -106,7 +106,7 @@ public class GuiMain {
                 .addLore("  &7Authors&8: &eiShift, ruzekh")
                 .addLore("")
                 .addLore("&6Support:")
-                .addLore("  &7Dev's Discord&8: &ciShift#0001")
+                .addLore("  &7Dev's Discord&8: &ciShift#0524")
                 .addLore("  &7Support Server&8: &cdiscord.gg/VkfhFCv")
                 .build();
 
@@ -116,12 +116,12 @@ public class GuiMain {
                 .addLore("")
                 .addLore("&6Performance:")
                 .addLore("  &7TPS&8: &a" + ServerTPS.getTPS())
-                .addLore("  &7RAM&8: &e" + Memory.getUsage() + "MB&7/&c" + Memory.getTotal() + "MB &7(&6" + Memory.getFree() + "MB &7free)")
+                .addLore("  &7RAM&8: &c" + Memory.getUsage() + "MB&7/&c" + Memory.getTotal() + "MB &7(&c" + Memory.getFree() + "MB &7free)")
                 .addLore("  &7CPU&8: &c" + Runtime.getRuntime().availableProcessors() + " processors.")
                 .addLore("")
                 .addLore("&6Server:")
                 .addLore("  &7Online&8: &a" + Bukkit.getOnlinePlayers().size() + "&7/&a" + Bukkit.getMaxPlayers())
-                .addLore("  &7Version&8: &6" + Bukkit.getBukkitVersion())
+                .addLore("  &7Version&8: &c" + Bukkit.getBukkitVersion())
                 .build();
 
         eq.setItem(10, i1);
