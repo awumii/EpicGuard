@@ -2,7 +2,7 @@ package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
-import me.ishift.epicguard.bukkit.manager.*;
+import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;

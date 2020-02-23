@@ -5,6 +5,8 @@ import de.leonhard.storage.Yaml;
 import java.util.List;
 
 public class Config {
+    public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
+    public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
     public static String firewallBlacklistCommand;
     public static String firewallWhitelistCommand;
     public static boolean firewallEnabled;
@@ -22,7 +24,6 @@ public class Config {
     public static long attackResetTimer;
     public static boolean tabCompleteBlock;
     public static boolean bandwidthOptimizer;
-
     public static List<String> blockedCommands;
     public static List<String> allowedCommands;
     public static List<String> opProtectionList;
@@ -35,29 +36,22 @@ public class Config {
     public static boolean ipHistoryEnable;
     public static boolean forceRejoin;
     public static boolean pexProtection;
-
     public static boolean cloudEnabled;
     public static boolean cloudBlacklist;
     public static long cloudTime;
     public static boolean heuristicsEnabled;
     public static int heuristicsDiff;
-
     public static boolean filterEnabled;
     public static List<String> filterValues;
-
     public static boolean channelVerification;
     public static long channelDelay;
     public static String channelPunish;
     public static boolean blockedBrands;
     public static String blockedBrandsPunish;
     public static List<String> blockedBrandsValues;
-
     public static boolean customTabComplete;
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;
-
-    public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
-    public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
 
     public static void loadBukkit() {
         final Yaml config = BUKKIT;

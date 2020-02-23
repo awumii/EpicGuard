@@ -3,7 +3,6 @@ package me.ishift.epicguard.bukkit.task;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
 import org.bukkit.Bukkit;
 

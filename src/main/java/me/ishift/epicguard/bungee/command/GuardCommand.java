@@ -43,37 +43,27 @@ public class GuardCommand extends Command {
         if (args[0].equalsIgnoreCase("log")) {
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&aToggled console logging");
             GuardBungee.log = !GuardBungee.log;
-        }
-
-        else if (args[0].equalsIgnoreCase("status")) {
+        } else if (args[0].equalsIgnoreCase("status")) {
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Toggled actionbar");
             GuardBungee.status = !GuardBungee.status;
-        }
-
-        else if (args[0].equalsIgnoreCase("reload")) {
+        } else if (args[0].equalsIgnoreCase("reload")) {
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&aReloaded configuration.");
             Config.loadBungee();
-        }
-
-        else if (args[0].equalsIgnoreCase("whitelist")) {
+        } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
                 BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Correct usage: &f/guard whitelist <adress>");
                 return;
             }
             StorageManager.whitelist(args[1]);
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Whitelisted IP: " + args[1]);
-        }
-
-        else if (args[0].equalsIgnoreCase("blacklist")) {
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
                 BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Correct usage: &f/guard blacklist <adress>");
                 return;
             }
             StorageManager.blacklist(args[1]);
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Blacklisted IP: " + args[1]);
-        }
-
-        else {
+        } else {
             BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&cCommand not found!");
         }
     }

@@ -4,7 +4,6 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
-import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.AttackType;
@@ -17,8 +16,6 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class AttackManager {
@@ -78,7 +75,8 @@ public class AttackManager {
 
         try {
             PlayerPreLoginListener.setLastCountry(GeoAPI.getCountryCode(InetAddress.getByName(address)));
-        } catch (UnknownHostException ignored) { }
+        } catch (UnknownHostException ignored) {
+        }
 
         PlayerPreLoginListener.setLastDetection(reason);
         PlayerPreLoginListener.setBlacklisted(blacklist);
