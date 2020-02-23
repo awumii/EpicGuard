@@ -45,6 +45,7 @@ public class Logger {
 
     public static void writeToFile(File file, String message) {
         try {
+            if (file.createNewFile()) return;
             if (AttackManager.getConnectPerSecond() > 50) return;
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
