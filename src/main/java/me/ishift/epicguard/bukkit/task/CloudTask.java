@@ -12,6 +12,6 @@ public class CloudTask implements Runnable {
             CloudManager.connect();
             CloudManager.getCloudBlacklist().forEach(StorageManager::blacklist);
         }
-        Logger.create();
+        Logger.init();
     }
 }

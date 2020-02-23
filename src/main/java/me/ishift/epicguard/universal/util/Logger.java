@@ -3,8 +3,6 @@ package me.ishift.epicguard.universal.util;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class Logger {
     private static File file;
@@ -18,29 +16,15 @@ public class Logger {
     }
 
     private static void log(String message, boolean hide) {
-        final Calendar cal = Calendar.getInstance();
-        final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy/HH:mm:ss");
-        final String time = sdf.format(cal.getTime());
-        final String msg = "(" + time + ") " + message;
+        final String msg = "(" + DateUtil.getTime() + ") " + message;
         if (!hide) {
             System.out.println("[EpicGuard] " + message);
         }
         writeToFile(file, msg);
     }
 
-    public static void create() {
-        try {
-            final Calendar cal = Calendar.getInstance();
-            final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-            final String date = sdf.format(cal.getTime());
-
-            file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + date + ".txt");
-            if (file.createNewFile()) {
-                System.out.println("[EpicGuard] Created new log file.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void init() {
+        file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + DateUtil.getDate() + ".txt");
     }
 
     public static void writeToFile(File file, String message) {

@@ -42,7 +42,7 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         ConfigUpdater.update();
         Config.loadBukkit();
-        Logger.create();
+        Logger.init();
         GeoAPI.create();
         new Metrics(this, 5845);
 

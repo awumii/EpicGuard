@@ -37,7 +37,7 @@ public class GuardBungee extends Plugin {
             new File(this.getDataFolder() + "/data").mkdir();
 
             instance = this;
-            Logger.create();
+            Logger.init();
             this.loadConfig();
             StorageManager.load();
             MessagesBungee.load();
