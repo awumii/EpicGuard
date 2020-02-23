@@ -8,9 +8,9 @@ import java.util.List;
 
 public class StorageManager {
     private static final Json FILE = new Json("storage", "plugins/EpicGuard/data");
+    public static List<String> rejoinData = new ArrayList<>();
     private static List<String> blacklist = new ArrayList<>();
     private static List<String> whitelist = new ArrayList<>();
-    public static List<String> rejoinData = new ArrayList<>();
     private static int blockedBots = 0;
     private static int checkedConnections = 0;
 

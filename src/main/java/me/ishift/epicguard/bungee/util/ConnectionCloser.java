@@ -5,9 +5,7 @@ import me.ishift.epicguard.universal.types.KickReason;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.connection.PendingConnection;
-import net.md_5.bungee.api.event.PreLoginEvent;
 
 import java.util.stream.Collectors;
 
