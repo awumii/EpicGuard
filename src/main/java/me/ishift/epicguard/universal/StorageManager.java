@@ -15,11 +15,11 @@ public class StorageManager {
     private static int checkedConnections = 0;
 
     public static void load() {
-        blacklist = FILE.getStringList("addresses.blacklist");
-        whitelist = FILE.getStringList("addresses.whitelist");
-        rejoinData = FILE.getStringList("addresses.rejoin-data");
-        blockedBots = FILE.getInt("stats.blocked-bots");
-        checkedConnections = FILE.getInt("stats.checked-connections");
+        blacklist = FILE.getOrSetDefault("addresses.blacklist", new ArrayList<>());
+        whitelist = FILE.getOrSetDefault("addresses.whitelist", new ArrayList<>());
+        rejoinData = FILE.getOrSetDefault("addresses.rejoin-data", new ArrayList<>());
+        blockedBots = FILE.getOrSetDefault("stats.blocked-bots", 0);
+        checkedConnections = FILE.getOrSetDefault("stats.checked-connections", 0);
     }
 
     public static void save() {
