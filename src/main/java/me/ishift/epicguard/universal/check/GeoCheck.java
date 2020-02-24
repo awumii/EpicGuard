@@ -8,7 +8,7 @@ public class GeoCheck {
      * @return false if not detected, true if detected.
      */
     public static boolean check(String country) {
-        if (country == null || country.equalsIgnoreCase("Unknown?") || Config.countryMode.equals("DISABLED")) {
+        if (country == null || country.equals("Unknown?") || Config.countryMode.equals("DISABLED")) {
             return false;
         }
         if (Config.countryMode.equals("WHITELIST")) {
