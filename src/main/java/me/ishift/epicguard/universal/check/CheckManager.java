@@ -20,7 +20,7 @@ public class CheckManager {
         list.add(new VerifyCheck());
 
         Config.checks.forEach(name -> list.stream().filter(check -> check.getName().equalsIgnoreCase(name)).forEach(CHECKS::add));
-        Logger.info("Currently active checks: " + CHECKS.toString());
+        Logger.info("Currently active checks: " + CHECKS.size());
     }
 
     public static List<Check> getChecks() {

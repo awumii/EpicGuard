@@ -13,7 +13,6 @@ import me.ishift.epicguard.bukkit.task.ActionBarTask;
 import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.CloudTask;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
-import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
@@ -41,7 +40,6 @@ public class GuardBukkit extends JavaPlugin {
         final long ms = System.currentTimeMillis();
         this.saveDefaultConfig();
         StorageManager.load();
-        ConfigUpdater.update();
         Config.loadBukkit();
         Logger.init();
         GeoAPI.create();
