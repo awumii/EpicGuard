@@ -42,12 +42,12 @@ public class StorageManager {
         rejoinData.add(name);
     }
 
-    public static boolean isBlacklisted(String adress) {
-        return blacklist.contains(adress);
+    public static boolean isBlacklisted(String address) {
+        return blacklist.contains(address);
     }
 
-    public static boolean isWhitelisted(String adress) {
-        return whitelist.contains(adress);
+    public static boolean isWhitelisted(String address) {
+        return whitelist.contains(address);
     }
 
     public static List<String> getBlacklist() {
