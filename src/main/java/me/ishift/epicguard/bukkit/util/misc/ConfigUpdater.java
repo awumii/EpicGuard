@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.util.misc;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;

@@ -22,13 +22,11 @@ import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
-
-import java.io.File;
 
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
@@ -40,8 +38,6 @@ public class GuardBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         final long ms = System.currentTimeMillis();
-        this.saveDefaultConfig();
-        this.createDirectories();
         this.saveDefaultConfig();
         ConfigUpdater.update();
         Config.loadBukkit();
@@ -99,12 +95,5 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CloudTask(), 40L, Config.cloudTime);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 1L, 1L);
-    }
-
-    private void createDirectories() {
-        final File dir3 = new File(this.getDataFolder() + "/data");
-        if (dir3.mkdir()) {
-            this.getLogger().info("Created data directory");
-        }
     }
 }

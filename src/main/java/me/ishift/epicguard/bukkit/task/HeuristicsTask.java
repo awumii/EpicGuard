@@ -2,8 +2,8 @@ package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import org.bukkit.Bukkit;
 
 public class HeuristicsTask implements Runnable {
@@ -43,7 +43,7 @@ public class HeuristicsTask implements Runnable {
             }
         });
 
-        if (AttackManager.isUnderAttack()) {
+        if (SpeedCheck.isUnderAttack()) {
             time++;
         }
 
@@ -51,12 +51,12 @@ public class HeuristicsTask implements Runnable {
             return;
         }
 
-        final int diff = AttackManager.getConnectPerSecond() - record;
-        if (AttackManager.getConnectPerSecond() > 0) {
-            if (AttackManager.getConnectPerSecond() > record && diff > Config.heuristicsDiff) {
-                record = AttackManager.getConnectPerSecond();
-                if (!AttackManager.isUnderAttack()) {
-                    AttackManager.setAttackMode(true);
+        final int diff = SpeedCheck.getConnectPerSecond() - record;
+        if (SpeedCheck.getConnectPerSecond() > 0) {
+            if (SpeedCheck.getConnectPerSecond() > record && diff > Config.heuristicsDiff) {
+                record = SpeedCheck.getConnectPerSecond();
+                if (!SpeedCheck.isUnderAttack()) {
+                    SpeedCheck.setAttackMode(true);
                 }
             }
         }

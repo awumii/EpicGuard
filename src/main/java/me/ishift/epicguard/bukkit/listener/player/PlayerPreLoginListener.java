@@ -3,13 +3,14 @@ package me.ishift.epicguard.bukkit.listener.player;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.check.GeoCheck;
-import me.ishift.epicguard.universal.check.NameContainsCheck;
-import me.ishift.epicguard.universal.check.ProxyCheck;
+import me.ishift.epicguard.universal.check.detection.GeoCheck;
+import me.ishift.epicguard.universal.check.detection.NameContainsCheck;
+import me.ishift.epicguard.universal.check.detection.ProxyCheck;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.types.KickReason;
+import me.ishift.epicguard.universal.types.Reason;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.Logger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -82,39 +83,35 @@ public class PlayerPreLoginListener implements Listener {
         }
 
         if (StorageManager.isBlacklisted(address)) {
-            AttackManager.handleDetection("Blacklist", name, address, event, KickReason.BLACKLIST, false);
+            AttackManager.handleDetection(name, address, event, Reason.BLACKLIST, false);
             return;
         }
 
         if (GeoCheck.check(country)) {
-            AttackManager.handleDetection("Geographical", name, address, event, KickReason.GEO, true);
-            return;
-        }
-
-        if (!Config.antibot) {
+            AttackManager.handleDetection(name, address, event, Reason.GEO, true);
             return;
         }
 
         if (NameContainsCheck.check(name)) {
-            AttackManager.handleDetection("Name Contains", name, address, event, KickReason.BLACKLIST, true);
+            AttackManager.handleDetection(name, address, event, Reason.BLACKLIST, true);
             return;
         }
 
-        if (AttackManager.isUnderAttack()) {
-            AttackManager.handleDetection("Attack Speed", name, address, event, KickReason.ATTACK, false);
+        if (SpeedCheck.isUnderAttack()) {
+            AttackManager.handleDetection(name, address, event, Reason.ATTACK, false);
             return;
         }
 
         if (Config.forceRejoin) {
             if (!StorageManager.hasRejoined(name)) {
-                AttackManager.handleDetection("Force Rejoin", name, address, event, KickReason.VERIFY, false);
+                AttackManager.handleDetection(name, address, event, Reason.VERIFY, false);
                 StorageManager.addRejoined(name);
                 return;
             }
         }
 
         if (ProxyCheck.check(address)) {
-            AttackManager.handleDetection("Proxy/VPN", name, address, event, KickReason.PROXY, true);
+            AttackManager.handleDetection(name, address, event, Reason.PROXY, true);
         }
     }
 }

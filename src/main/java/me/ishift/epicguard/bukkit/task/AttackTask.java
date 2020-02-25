@@ -1,25 +1,19 @@
 package me.ishift.epicguard.bukkit.task;
 
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 
 public class AttackTask implements Runnable {
 
     @Override
     public void run() {
-        if (AttackManager.getConnectPerSecond() < 0) {
-            AttackManager.setConnectPerSecond(0);
-        }
-        if (AttackManager.getPingPerSecond() < 0) {
-            AttackManager.setPingPerSecond(0);
-        }
-        if (AttackManager.getJoinPerSecond() < Config.joinSpeed && AttackManager.getPingPerSecond() < Config.pingSpeed && AttackManager.getConnectPerSecond() < Config.connectSpeed) {
-            if (AttackManager.isUnderAttack()) {
-                AttackManager.setAttackMode(false);
+        if (SpeedCheck.getPingPerSecond() < Config.pingSpeed && SpeedCheck.getConnectPerSecond() < Config.connectSpeed) {
+            if (SpeedCheck.isUnderAttack()) {
+                SpeedCheck.setAttackMode(false);
                 HeuristicsTask.setRecord(0);
                 HeuristicsTask.setTime(0);
                 HeuristicsTask.setBlacklistInc(0);
-                AttackManager.setTotalBots(0);
+                SpeedCheck.setTotalBots(0);
             }
         }
     }

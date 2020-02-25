@@ -13,7 +13,7 @@ import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
