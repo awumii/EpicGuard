@@ -100,7 +100,7 @@ public class Config {
 
     public static void loadBungee() {
         BUNGEE.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
-        checks = BUKKIT.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
+        checks = BUNGEE.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
         Config.firewallEnabled= BUNGEE.getBoolean("firewall");
         Config.firewallBlacklistCommand= BUNGEE.getString("firewall.command-blacklist");
         Config.firewallWhitelistCommand= BUNGEE.getString("firewall.command-whitelist");
