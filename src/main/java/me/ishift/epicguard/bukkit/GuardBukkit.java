@@ -40,6 +40,7 @@ public class GuardBukkit extends JavaPlugin {
     public void onEnable() {
         final long ms = System.currentTimeMillis();
         this.saveDefaultConfig();
+        StorageManager.load();
         ConfigUpdater.update();
         Config.loadBukkit();
         Logger.init();
@@ -47,7 +48,6 @@ public class GuardBukkit extends JavaPlugin {
         new Metrics(this, 5845);
 
         Reflection.init();
-        StorageManager.load();
         Messages.load();
 
         this.registerListeners();

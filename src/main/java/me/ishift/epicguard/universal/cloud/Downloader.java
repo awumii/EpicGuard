@@ -14,6 +14,9 @@ public class Downloader {
 
     public static void download(String from, String to) throws IOException {
         final File file = new File(to);
+        if (file.createNewFile()) {
+            Logger.debug("Created file " + file.getName());
+        }
         if (file.delete()) {
             Logger.debug("Deleted file " + file.getName());
         }
