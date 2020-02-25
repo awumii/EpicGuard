@@ -66,7 +66,7 @@ public class Config {
         Config.autoWhitelist = BUKKIT.getBoolean("auto-whitelist.enabled");
         Config.autoWhitelistTime = BUKKIT.getInt("auto-whitelist.time");
         Config.apiKey = BUKKIT.getString("antibot.api-key");
-        checks = BUKKIT.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Verify", "Proxy"));
+        checks = BUKKIT.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
         Config.countryList = BUKKIT.getStringList("countries.list");
         Config.countryMode = BUKKIT.getString("countries.mode");
         Config.updater = BUKKIT.getBoolean("updater");
