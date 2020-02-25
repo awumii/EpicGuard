@@ -1,6 +1,7 @@
 package me.ishift.epicguard.universal.util;
 
 import com.maxmind.geoip2.DatabaseReader;
+import me.ishift.epicguard.universal.Logger;
 import me.ishift.epicguard.universal.cloud.Downloader;
 
 import java.io.File;

@@ -3,7 +3,7 @@ package me.ishift.epicguard.bukkit.task;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.cloud.CloudManager;
-import me.ishift.epicguard.universal.util.Logger;
+import me.ishift.epicguard.universal.Logger;
 
 public class CloudTask implements Runnable {
     @Override

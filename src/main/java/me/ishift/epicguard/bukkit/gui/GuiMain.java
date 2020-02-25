@@ -1,7 +1,6 @@
 package me.ishift.epicguard.bukkit.gui;
 
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.server.Memory;
@@ -9,6 +8,7 @@ import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.cloud.CloudManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -28,12 +28,12 @@ public class GuiMain {
                 .addLore("&7See status of your server, in real time.")
                 .addLore("")
                 .addLore("&6AntiBot Mode:")
-                .addLore("  &7Server is&8: " + (AttackManager.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
+                .addLore("  &7Server is&8: " + (SpeedCheck.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
                 .addLore("")
                 .addLore("&6Current Connections:")
-                .addLore("  &7Connect Per Second&8: &c" + AttackManager.getConnectPerSecond())
-                .addLore("  &7Ping Per Second&8: &c" + AttackManager.getPingPerSecond())
-                .addLore("  &7Join Per Second&8: &c" + AttackManager.getJoinPerSecond())
+                .addLore("  &7Connect Per Second&8: &c" + SpeedCheck.getConnectPerSecond())
+                .addLore("  &7Ping Per Second&8: &c" + SpeedCheck.getPingPerSecond())
+                .addLore("  &7Join Per Second&8: &c" + SpeedCheck.getJoinPerSecond())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(Material.COMPASS)

@@ -1,6 +1,7 @@
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.universal;
 
-import me.ishift.epicguard.bukkit.manager.AttackManager;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
+import me.ishift.epicguard.universal.util.DateUtil;
 
 import java.io.*;
 
@@ -24,13 +25,18 @@ public class Logger {
     }
 
     public static void init() {
-        file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + DateUtil.getDate() + ".txt");
+        try {
+            new File("plugins/EpicGuard/logs").mkdir();
+            file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + DateUtil.getDate() + ".txt");
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void writeToFile(File file, String message) {
         try {
-            if (file.createNewFile()) return;
-            if (AttackManager.getConnectPerSecond() > 50) return;
+            if (SpeedCheck.getConnectPerSecond() > 40) return;
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();

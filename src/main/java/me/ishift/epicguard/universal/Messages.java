@@ -21,7 +21,7 @@ public class Messages {
     public static final Yaml FILE = new Yaml("messages_en_US", "plugins/EpicGuard");
 
     public static void load() {
-        prefix = FILE.getOrSetDefault("prefix", "&c&lGUARD &8●&7 ");
+        prefix = FILE.getOrSetDefault("prefix", "&8[&6EpicGuard&8]&7 ");
 
         messageKickProxy = FILE.getOrSetDefault("kick-messages.proxy", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN."));
         messageKickCountry = FILE.getOrSetDefault("kick-messages.country", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Country GeoDetection."));
