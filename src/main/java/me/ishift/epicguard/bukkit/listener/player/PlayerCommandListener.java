@@ -1,6 +1,6 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
@@ -43,7 +43,7 @@ public class PlayerCommandListener implements Listener {
                 return;
             }
             event.setCancelled(true);
-            player.sendMessage(ChatUtil.fix(MessagesBukkit.NOT_ALLOWED_COMMAND));
+            player.sendMessage(ChatUtil.fix(Messages.notAllowedCommand));
             Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
             return;
         }
@@ -51,7 +51,7 @@ public class PlayerCommandListener implements Listener {
         // Blocked Commands module.
         if (Config.blockedCommandsEnable && Config.blockedCommands.contains(args[0])) {
             event.setCancelled(true);
-            player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + MessagesBukkit.BLOCKED_COMMAND));
+            player.sendMessage(ChatUtil.fix(Messages.prefix + Messages.blockedCommand));
             Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
         }
     }

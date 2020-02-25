@@ -1,6 +1,7 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.types.KickReason;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.Logger;
@@ -17,23 +18,23 @@ public class ConnectionCloser {
 
         BungeeAttack.setBlockedBots(BungeeAttack.getBlockedBots() + 1);
         if (reason == KickReason.GEO) {
-            connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickCountry.stream().map(s -> s + "\n").collect(Collectors.joining()))));
+            connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickCountry.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
 
         if (reason == KickReason.ATTACK) {
-            connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickAttack.stream().map(s -> s + "\n").collect(Collectors.joining()))));
+            connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickAttack.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
 
         if (reason == KickReason.PROXY) {
-            connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickProxy.stream().map(s -> s + "\n").collect(Collectors.joining()))));
+            connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickProxy.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
 
         if (reason == KickReason.BLACKLIST) {
-            connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickBlacklist.stream().map(s -> s + "\n").collect(Collectors.joining()))));
+            connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickBlacklist.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
 
         if (reason == KickReason.NAMECONTAINS) {
-            connection.disconnect(new TextComponent(ChatUtil.fix(MessagesBungee.messageKickNamecontains.stream().map(s -> s + "\n").collect(Collectors.joining()))));
+            connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickNamecontains.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
     }
 }

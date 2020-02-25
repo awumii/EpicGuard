@@ -3,7 +3,7 @@ package me.ishift.epicguard.bukkit.manager;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.types.AttackType;
@@ -114,27 +114,27 @@ public class AttackManager {
     public static void closeConnection(AsyncPlayerPreLoginEvent e, KickReason reason) {
         String kickReason = "";
         if (reason == KickReason.GEO) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_COUNTRY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickCountry.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.ATTACK) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_ATTACK.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickAttack.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.BLACKLIST) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickBlacklist.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.PROXY) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_PROXY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickProxy.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.VERIFY) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_VERIFY.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickVerify.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
 
         if (reason == KickReason.NAMECONTAINS) {
-            kickReason = MessagesBukkit.MESSAGE_KICK_NAMECONTAINS.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+            kickReason = Messages.messageKickNamecontains.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
         }
         e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, kickReason);
     }

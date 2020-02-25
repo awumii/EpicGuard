@@ -4,7 +4,7 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class GuardCommand implements CommandExecutor {
     public static void send(CommandSender sender, String message) {
-        sender.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + message));
+        sender.sendMessage(ChatUtil.fix(Messages.prefix + message));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class GuardCommand implements CommandExecutor {
         if (args.length == 0) {
             if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
                 send(sender, "&7This server uses &6EpicGuard v" + Updater.getCurrentVersion() + " &7by &ciShift&7.");
-                send(sender, MessagesBukkit.NO_PERMISSION);
+                send(sender, Messages.noPermission);
                 return true;
             }
             sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
@@ -65,7 +65,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&7Reloading config...");
             GuardBukkit.getInstance().reloadConfig();
             Config.loadBukkit();
-            MessagesBukkit.load();
+            Messages.load();
             send(sender, "&7Reloaded config &asuccesfully&7!");
         } else if (args[0].equalsIgnoreCase("oplist")) {
             Bukkit.getOperators().forEach(player -> {

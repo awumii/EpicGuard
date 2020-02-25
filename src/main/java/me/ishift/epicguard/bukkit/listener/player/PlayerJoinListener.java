@@ -5,7 +5,7 @@ import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
@@ -38,7 +38,7 @@ public class PlayerJoinListener implements Listener {
             // AntiBypass
             if (Config.antibot && StorageManager.isBlacklisted(address)) {
                 event.setJoinMessage("");
-                player.kickPlayer(MessagesBukkit.MESSAGE_KICK_BLACKLIST.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
+                player.kickPlayer(Messages.messageKickBlacklist.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                 return;
             }
 
@@ -55,7 +55,7 @@ public class PlayerJoinListener implements Listener {
                 final List<String> history = StorageManager.getFile().getStringList("address-history." + player.getName());
                 if (!history.contains(address)) {
                     if (!history.isEmpty()) {
-                        Notificator.broadcast(MessagesBukkit.HISTORY_NEW.replace("{NICK}", player.getName()).replace("{IP}", address));
+                        Notificator.broadcast(Messages.historyNew.replace("{NICK}", player.getName()).replace("{IP}", address));
                     }
                     history.add(address);
                 }
