@@ -25,12 +25,13 @@ public class GuardCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
+        if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
+            send(sender, "&7This server uses &6EpicGuard v" + Updater.getCurrentVersion() + " &7by &ciShift&7.");
+            send(sender, Messages.noPermission);
+            return true;
+        }
+
         if (args.length == 0) {
-            if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
-                send(sender, "&7This server uses &6EpicGuard v" + Updater.getCurrentVersion() + " &7by &ciShift&7.");
-                send(sender, Messages.noPermission);
-                return true;
-            }
             sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
             sender.sendMessage(ChatUtil.fix("   &6&lEPICGUARD &fv" + Updater.getCurrentVersion()));
             sender.sendMessage(ChatUtil.fix("   &7&oList of available commands"));
