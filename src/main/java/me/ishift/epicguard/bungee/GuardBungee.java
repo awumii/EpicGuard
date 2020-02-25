@@ -34,6 +34,7 @@ public class GuardBungee extends Plugin {
     public void onEnable() {
         instance = this;
 
+        new File("plugins/EpicGuard").mkdir();
         final File file = new File(getDataFolder(), "config_bungee.yml");
         if (!file.exists()) {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {
