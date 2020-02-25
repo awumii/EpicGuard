@@ -1,63 +1,20 @@
-# SpigotMC Link: https://www.spigotmc.org/resources/72369/
-prefix: "&c&lGUARD &8●&7 "
-actionbar:
-  attack: "&8(&c&lBOT DETECTION&8) &6{NICK} &8[&c{IP}&8] &8| &7Detected for: &b{DETECTION}"
-attack-title:
-  # {MAX} - Number of blocked bots during last attack.
-  # {CPS} - Connections Per Second.
-  title: "&cSERVER IS BEING ATTACKED &8[&6{CPS}/s&8]"
-  subtitle: "&7Working... &b{MAX} bots &7blocked during last &e{TIME} seconds..."
-other:
-  history-new: "&7Player &e{NICK} &7connected with &fNEW&7 IP Adress &8(&6{IP}&8)&7!"
-  no-permission: "&cYou don't have permission! If you think this is an issue, report this to administrators."
-  # This option is only one here
-  # without "prefix" added before it!
-  not-allowed-command: "&fUnknown command. Type /help for help."
-  blocked-command: "&cThis command is blocked!"
+prefix: '&8[&6EpicGuard&8]&7 '
 kick-messages:
   proxy:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7Our systems have detected, that you are using Proxy or VPN."
-    - "&7Please disable VPN programs, and join server."
-    - " "
-    - "&7If you think this is an issue, contact our staff."
-  blacklist:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7You have been detected, with following reason:"
-    - " &8-> &cYour IP has been blacklisted on this server."
-    - " &8-> &cBLACKLIST_DETECTION"
-    - " "
-    - "&7If you think this is an issue, contact our staff."
-  attack:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7Our server is being attacked."
-    - "&7Please wait some minutes before connecting."
-    - " "
-    - "&7If you think this is an issue, contact our staff."
+    - '&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN.'
   country:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7You have been detected, with following reason:"
-    - " &8-> &cYour country is not allowed on our server."
-    - " &8-> &cCOUNTRY_DETECTION"
-    - " "
-    - "&7If you think this is an issue, contact our staff."
-  namecontains:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7You have been detected, with following reason:"
-    - " &8-> &cYou are probably a bot, change your nickname."
-    - " &8-> &cNAME_CONTAINS"
-    - " "
-    - "&7If you think this is an issue, contact our staff."
+    - '&8[&6EpicGuard&8] &cYou have been detected for: &6Country GeoDetection.'
+  blacklist:
+    - '&8[&6EpicGuard&8] &cYou have been detected for: &6IP Blacklist.'
   rejoin:
-    - "&8(&c&lANTIBOT DETECTION&8)"
-    - " "
-    - "&7You have been detected, with following reason:"
-    - " &8-> &cPlease join server again to verify your connection."
-    - " &8-> &cVERIFY"
-    - " "
-    - "&7If you think this is an issue, contact our staff."
+    - '&8[&6EpicGuard&8] &cPlease join our server &6again &cto verify that you are not a bot.'
+  namecontains:
+    - '&8[&6EpicGuard&8] &cYou have been detected for: &6NameContains (Change nickname or contact server
+      admin)'
+  attack:
+    - '&8[&6EpicGuard&8] &cOur server is &6under attack&c, please wait some minutes before joining.'
+other:
+  not-allowed-command: '&fUnknown command. Type ''/help'' for help.'
+  blocked-command: '&cThis command is not allowed!'
+  history-new: '&cPlayer &6{NICK} &cconnected with new address &8(&6{IP}&8)&c.'
+  no-permission: '&cYou don''t have permission to access this command!'
