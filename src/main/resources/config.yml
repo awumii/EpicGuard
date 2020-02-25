@@ -8,6 +8,7 @@
 # Thank you for downloading my plugin!
 # SpigotMC Link: https://www.spigotmc.org/resources/epicguard-advanced-server-protection-antibot-more.72369/
 # My Discord: iShift#0524
+
 ###############################
 ##           Countries       ##
 ###############################
@@ -30,11 +31,6 @@ countries:
 ###############################
 
 antibot:
-  # You can fully disable ALL antibot modules if you don't want them.
-  # Disabling antibot will not disable country checking (look above)
-  enabled: true
-  # New players will need to rejoin the server to play!
-  force-rejoin: false
   # If a player/bot's nickname contains one of the values below, he will be blocked.
   # This SHOULD be lower-case
   name-contains:
@@ -47,6 +43,17 @@ antibot:
   # With key - 1000 requests/24h
   # Without key - 100 requests/24h
   api-key: "YOUR_KEY"
+
+# You can change the priority of checks, by
+# changing their order in the list below, or even
+# disable it fully by deleting it from the list.
+# Verify (check) - Forcing player to rejoin server to play
+checks:
+  - Blacklist
+  - Attack
+  - NameContains
+  - Verify
+  - Proxy
 
 ###############################
 ##        Settings           ##
@@ -62,8 +69,6 @@ cloud:
   features:
     # Enable synchronizing blacklist (recommended)
     blacklist: true
-    # Protection Requests.
-    protection-req: true
 
 # Heurisitcs check, allows you to detect bots even faster and decrease bypasses,
 heuristics:
@@ -112,8 +117,6 @@ speed:
   connection: 7
   # How many pings per second should be made to block connections to the server.
   ping-speed: 10
-  # How many successful joins per second should be made to block connections to the server
-  join-speed: 5
   # Time (in ticks) before the antibot will disable.
   attack-timer-reset: 800
 
