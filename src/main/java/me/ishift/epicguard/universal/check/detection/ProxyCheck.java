@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ProxyCheck extends Check {
     public ProxyCheck() {
-        super(Reason.PROXY);
+        super(Reason.PROXY, true);
     }
 
     @Override

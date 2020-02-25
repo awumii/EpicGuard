@@ -33,7 +33,6 @@ public class GuiMain {
                 .addLore("&6Current Connections:")
                 .addLore("  &7Connect Per Second&8: &c" + SpeedCheck.getConnectPerSecond())
                 .addLore("  &7Ping Per Second&8: &c" + SpeedCheck.getPingPerSecond())
-                .addLore("  &7Join Per Second&8: &c" + SpeedCheck.getJoinPerSecond())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(Material.COMPASS)

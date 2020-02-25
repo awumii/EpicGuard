@@ -3,6 +3,8 @@ package me.ishift.epicguard.bukkit.listener.player;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.Check;
+import me.ishift.epicguard.universal.check.CheckManager;
 import me.ishift.epicguard.universal.check.detection.GeoCheck;
 import me.ishift.epicguard.universal.check.detection.NameContainsCheck;
 import me.ishift.epicguard.universal.check.detection.ProxyCheck;
@@ -82,36 +84,6 @@ public class PlayerPreLoginListener implements Listener {
             return;
         }
 
-        if (StorageManager.isBlacklisted(address)) {
-            AttackManager.handleDetection(name, address, event, Reason.BLACKLIST, false);
-            return;
-        }
-
-        if (GeoCheck.check(country)) {
-            AttackManager.handleDetection(name, address, event, Reason.GEO, true);
-            return;
-        }
-
-        if (NameContainsCheck.check(name)) {
-            AttackManager.handleDetection(name, address, event, Reason.BLACKLIST, true);
-            return;
-        }
-
-        if (SpeedCheck.isUnderAttack()) {
-            AttackManager.handleDetection(name, address, event, Reason.ATTACK, false);
-            return;
-        }
-
-        if (Config.forceRejoin) {
-            if (!StorageManager.hasRejoined(name)) {
-                AttackManager.handleDetection(name, address, event, Reason.VERIFY, false);
-                StorageManager.addRejoined(name);
-                return;
-            }
-        }
-
-        if (ProxyCheck.check(address)) {
-            AttackManager.handleDetection(name, address, event, Reason.PROXY, true);
-        }
+        CheckManager.getChecks().stream().filter(check -> check.perform(address, name)).forEach(check -> AttackManager.handleDetection(name, address, event, check.getReason(), check.shouldBlacklist()));
     }
 }

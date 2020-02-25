@@ -10,6 +10,7 @@ import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.CheckManager;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -34,6 +35,7 @@ public class GuardBungee extends Plugin {
         Logger.init();
 
         GeoAPI.create();
+        CheckManager.init();
         new Metrics(this, 5956);
 
         this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());

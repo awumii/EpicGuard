@@ -10,7 +10,7 @@ public class SpeedCheck extends Check {
     private static boolean attackMode = false;
 
     public SpeedCheck() {
-        super(Reason.ATTACK);
+        super(Reason.ATTACK, false);
     }
 
     @Override
