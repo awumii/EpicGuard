@@ -2,11 +2,15 @@ package me.ishift.epicguard.universal;
 
 import de.leonhard.storage.Yaml;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Config {
     public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
     public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
+
+    public static List<String> checks;
+
     public static String firewallBlacklistCommand;
     public static String firewallWhitelistCommand;
     public static boolean firewallEnabled;
@@ -55,6 +59,9 @@ public class Config {
 
     public static void loadBukkit() {
         final Yaml config = BUKKIT;
+
+        checks = BUKKIT.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Verify", "Proxy"));
+
         Config.firewallEnabled = config.getBoolean("firewall");
         Config.firewallBlacklistCommand = config.getString("firewall.command-blacklist");
         Config.firewallWhitelistCommand = config.getString("firewall.command-whitelist");

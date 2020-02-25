@@ -6,7 +6,7 @@ import me.ishift.epicguard.universal.types.Reason;
 
 public class NameContainsCheck extends Check {
     public NameContainsCheck() {
-        super(Reason.NAMECONTAINS);
+        super(Reason.NAMECONTAINS, true);
     }
 
     public static boolean check(String name) {

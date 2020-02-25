@@ -21,6 +21,7 @@ import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.CheckManager;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.Logger;
 import org.bukkit.Bukkit;
@@ -66,6 +67,7 @@ public class GuardBukkit extends JavaPlugin {
         new LogFilter().registerFilter();
 
         Updater.checkForUpdates();
+        CheckManager.init();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
         Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }

@@ -7,7 +7,7 @@ import me.ishift.epicguard.universal.types.Reason;
 
 public class VerifyCheck extends Check {
     public VerifyCheck() {
-        super(Reason.VERIFY);
+        super(Reason.VERIFY, false);
     }
 
     @Override

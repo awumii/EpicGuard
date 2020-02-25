@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class GeoCheck extends Check {
     public GeoCheck() {
-        super(Reason.GEO);
+        super(Reason.GEO, true);
     }
 
     @Override

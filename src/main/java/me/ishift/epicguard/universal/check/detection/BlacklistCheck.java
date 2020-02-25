@@ -5,8 +5,8 @@ import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.types.Reason;
 
 public class BlacklistCheck extends Check {
-    public BlacklistCheck(Reason reason) {
-        super(Reason.BLACKLIST);
+    public BlacklistCheck() {
+        super(Reason.BLACKLIST, false);
     }
 
     @Override
