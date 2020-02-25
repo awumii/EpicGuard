@@ -5,6 +5,7 @@ import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.player.ActionBar;
 import me.ishift.epicguard.bukkit.util.player.Title;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 
@@ -24,7 +25,7 @@ public class Notificator {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
             if (u != null && player.hasPermission(GuardBukkit.PERMISSION)) {
-                player.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + text));
+                player.sendMessage(ChatUtil.fix(Messages.prefix + text));
             }
         });
     }

@@ -3,8 +3,8 @@ package me.ishift.epicguard.bungee.command;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
-import me.ishift.epicguard.bungee.util.MessagesBungee;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -36,35 +36,35 @@ public class GuardCommand extends Command {
         }
 
         if (sender instanceof ProxiedPlayer && !sender.getPermissions().contains("epicguard.admin")) {
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&cYou don't have permission to do this &8[&6use command /guard&8]");
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&cYou don't have permission to do this &8[&6use command /guard&8]");
             return;
         }
 
         if (args[0].equalsIgnoreCase("log")) {
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&aToggled console logging");
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&aToggled console logging");
             GuardBungee.log = !GuardBungee.log;
         } else if (args[0].equalsIgnoreCase("status")) {
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Toggled actionbar");
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Toggled actionbar");
             GuardBungee.status = !GuardBungee.status;
         } else if (args[0].equalsIgnoreCase("reload")) {
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&aReloaded configuration.");
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&aReloaded configuration.");
             Config.loadBungee();
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Correct usage: &f/guard whitelist <adress>");
+                BungeeUtil.sendMessage(sender, Messages.prefix + "&7Correct usage: &f/guard whitelist <adress>");
                 return;
             }
             StorageManager.whitelist(args[1]);
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Whitelisted IP: " + args[1]);
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Whitelisted IP: " + args[1]);
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Correct usage: &f/guard blacklist <adress>");
+                BungeeUtil.sendMessage(sender, Messages.prefix + "&7Correct usage: &f/guard blacklist <adress>");
                 return;
             }
             StorageManager.blacklist(args[1]);
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&7Blacklisted IP: " + args[1]);
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Blacklisted IP: " + args[1]);
         } else {
-            BungeeUtil.sendMessage(sender, MessagesBungee.prefix + "&cCommand not found!");
+            BungeeUtil.sendMessage(sender, Messages.prefix + "&cCommand not found!");
         }
     }
 }

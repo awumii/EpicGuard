@@ -14,7 +14,7 @@ import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.CloudTask;
 import me.ishift.epicguard.bukkit.task.HeuristicsTask;
 import me.ishift.epicguard.bukkit.util.misc.ConfigUpdater;
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
@@ -51,7 +51,7 @@ public class GuardBukkit extends JavaPlugin {
 
         Reflection.init();
         StorageManager.load();
-        MessagesBukkit.load();
+        Messages.load();
 
         this.registerListeners();
         this.registerTasks();

@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.util.server;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.util.misc.MessagesBukkit;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.URLUtil;
@@ -32,8 +32,8 @@ public class Updater {
 
     public static void notify(Player p) {
         if (Config.updater && p.hasPermission(GuardBukkit.PERMISSION) && updateAvailable) {
-            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&cOutdated version &8(&6" + CURRENT_VERSION + "&8)&c! New version is available &8(&6" + Updater.latestVersion + "&8)"));
-            p.sendMessage(ChatUtil.fix(MessagesBukkit.PREFIX + "&cPlease download update here: &6https://www.spigotmc.org/resources/72369"));
+            p.sendMessage(ChatUtil.fix(Messages.prefix + "&cOutdated version &8(&6" + CURRENT_VERSION + "&8)&c! New version is available &8(&6" + Updater.latestVersion + "&8)"));
+            p.sendMessage(ChatUtil.fix(Messages.prefix + "&cPlease download update here: &6https://www.spigotmc.org/resources/72369"));
         }
     }
 }
