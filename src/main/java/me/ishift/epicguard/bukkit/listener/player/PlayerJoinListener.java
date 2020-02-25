@@ -36,7 +36,7 @@ public class PlayerJoinListener implements Listener {
 
             AttackManager.handleAttack(AttackType.JOIN);
             // AntiBypass
-            if (Config.antibot && StorageManager.isBlacklisted(address)) {
+            if (StorageManager.isBlacklisted(address)) {
                 event.setJoinMessage("");
                 player.kickPlayer(Messages.messageKickBlacklist.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
                 return;
