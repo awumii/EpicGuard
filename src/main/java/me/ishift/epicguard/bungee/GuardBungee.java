@@ -15,6 +15,10 @@ import me.ishift.epicguard.universal.util.GeoAPI;
 import me.ishift.epicguard.universal.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
@@ -29,6 +33,16 @@ public class GuardBungee extends Plugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        final File file = new File(getDataFolder(), "config_bungee.yml");
+        if (!file.exists()) {
+            try (InputStream in = getResourceAsStream("config_bungee.yml")) {
+                Files.copy(in, file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         Config.loadBungee();
         StorageManager.load();
         Messages.load();
