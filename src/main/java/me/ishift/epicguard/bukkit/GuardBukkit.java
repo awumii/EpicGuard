@@ -28,6 +28,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
+import java.util.concurrent.Callable;
+
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
 
@@ -43,7 +45,6 @@ public class GuardBukkit extends JavaPlugin {
         Config.loadBukkit();
         Logger.init();
         GeoAPI.create();
-        new Metrics(this, 5845);
 
         Reflection.init();
         Messages.load();
@@ -67,6 +68,11 @@ public class GuardBukkit extends JavaPlugin {
         Updater.checkForUpdates();
         CheckManager.init();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
+
+        final Metrics metrics = new Metrics(this, 5845);
+        metrics.addCustomChart(new Metrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
+        metrics.addCustomChart(new Metrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
+
         Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
 
@@ -86,7 +92,7 @@ public class GuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerCommandListener(), this);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
-            PlayerTabCompletePacket.register(this);
+            new PlayerTabCompletePacket(this);
         }
     }
 

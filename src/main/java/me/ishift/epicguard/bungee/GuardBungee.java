@@ -6,7 +6,7 @@ import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.task.AttackClearTask;
 import me.ishift.epicguard.bungee.task.CloudTask;
 import me.ishift.epicguard.bungee.task.DisplayTask;
-import me.ishift.epicguard.bungee.util.Metrics;
+import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
@@ -51,7 +51,6 @@ public class GuardBungee extends Plugin {
 
         GeoAPI.create();
         CheckManager.init();
-        new Metrics(this, 5956);
 
         this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
@@ -61,6 +60,10 @@ public class GuardBungee extends Plugin {
         this.getProxy().getScheduler().schedule(this, new CloudTask(), 1L, Config.cloudTime, TimeUnit.SECONDS);
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
+
+        final BungeeMetrics metrics = new BungeeMetrics(this, 5956);
+        metrics.addCustomChart(new BungeeMetrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
+        metrics.addCustomChart(new BungeeMetrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
     }
 
     @Override
