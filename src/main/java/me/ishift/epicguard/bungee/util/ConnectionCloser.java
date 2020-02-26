@@ -2,6 +2,7 @@ package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.Messages;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.types.Reason;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.Logger;
@@ -16,7 +17,7 @@ public class ConnectionCloser {
             Logger.info("Closing: " + connection.getVirtualHost().getAddress().getHostAddress() + "(" + connection.getName() + "), (" + reason + ")]");
         }
 
-        BungeeAttack.setBlockedBots(BungeeAttack.getBlockedBots() + 1);
+        SpeedCheck.setTotalBots(SpeedCheck.getTotalBots() + 1);
         if (reason == Reason.GEO) {
             connection.disconnect(new TextComponent(ChatUtil.fix(Messages.messageKickCountry.stream().map(s -> s + "\n").collect(Collectors.joining()))));
         }
