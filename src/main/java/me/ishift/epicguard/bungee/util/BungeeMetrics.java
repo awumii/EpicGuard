@@ -29,7 +29,7 @@ import java.util.zip.GZIPOutputStream;
  * Check out https://bStats.org/ to learn more about bStats!
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class Metrics {
+public class BungeeMetrics {
 
     // The version of this bStats class
     public static final int B_STATS_VERSION = 1;
@@ -50,7 +50,7 @@ public class Metrics {
                     new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's', '.', 'b', 'u', 'n', 'g', 'e', 'e', 'c', 'o', 'r', 'd'});
             final String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
             // We want to make sure nobody just copy & pastes the example and use the wrong package names
-            if (Metrics.class.getPackage().getName().equals(defaultPackage) || Metrics.class.getPackage().getName().equals(examplePackage)) {
+            if (BungeeMetrics.class.getPackage().getName().equals(defaultPackage) || BungeeMetrics.class.getPackage().getName().equals(examplePackage)) {
                 throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
             }
         }
@@ -76,7 +76,7 @@ public class Metrics {
      * @param pluginId The id of the plugin.
      *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(Plugin plugin, int pluginId) {
+    public BungeeMetrics(Plugin plugin, int pluginId) {
         this.plugin = plugin;
         this.pluginId = pluginId;
 

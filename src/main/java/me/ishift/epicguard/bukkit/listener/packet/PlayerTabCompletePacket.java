@@ -12,10 +12,7 @@ import org.bukkit.plugin.Plugin;
 public class PlayerTabCompletePacket extends PacketAdapter {
     public PlayerTabCompletePacket(final Plugin plugin) {
         super(plugin, PacketType.Play.Client.TAB_COMPLETE);
-    }
-
-    public static void register(Plugin plugin) {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PlayerTabCompletePacket(plugin));
+        ProtocolLibrary.getProtocolManager().addPacketListener(this);
     }
 
     @Override
