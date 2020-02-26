@@ -1,5 +1,6 @@
 package me.ishift.epicguard.universal.check.detection;
 
+import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.types.Reason;
 
@@ -15,6 +16,10 @@ public class SpeedCheck extends Check {
 
     @Override
     public boolean perform(String address, String nickname) {
+        if (SpeedCheck.getConnectPerSecond() > Config.connectSpeed || SpeedCheck.getPingPerSecond() > Config.pingSpeed) {
+            SpeedCheck.setAttackMode(true);
+        }
+
         return isUnderAttack();
     }
 

@@ -41,9 +41,6 @@ public class AttackManager {
     }
 
     public static void handleAttack(AttackType type) {
-        if (SpeedCheck.getConnectPerSecond() > Config.connectSpeed || SpeedCheck.getPingPerSecond() > Config.pingSpeed) {
-            SpeedCheck.setAttackMode(true);
-        }
         if (type == AttackType.CONNECT) {
             SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() + 1);
         }

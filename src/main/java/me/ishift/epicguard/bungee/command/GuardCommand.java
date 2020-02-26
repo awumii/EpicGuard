@@ -6,6 +6,7 @@ import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -22,8 +23,8 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, "   &6&lEPICGUARD &fv" + GuardBungee.getInstance().getDescription().getVersion());
             BungeeUtil.sendMessage(sender, "   &7&oMain management command");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, " &7Current CPS: &c" + BungeeAttack.getConnectionPerSecond());
-            BungeeUtil.sendMessage(sender, " &7Current PPS: &c" + BungeeAttack.getPingPerSecond());
+            BungeeUtil.sendMessage(sender, " &7Current CPS: &c" + SpeedCheck.getConnectPerSecond());
+            BungeeUtil.sendMessage(sender, " &7Current PPS: &c" + SpeedCheck.getPingPerSecond());
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, " &6/guard status &8- &7Toggle antibot actionbar.");
             BungeeUtil.sendMessage(sender, " &6/guard log &8- &7Toggle advanced console logging.");
