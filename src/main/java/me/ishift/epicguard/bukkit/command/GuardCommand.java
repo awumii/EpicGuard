@@ -32,19 +32,19 @@ public class GuardCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
-            sender.sendMessage(ChatUtil.fix("   &6&lEPICGUARD &fv" + Updater.getCurrentVersion()));
-            sender.sendMessage(ChatUtil.fix("   &7&oList of available commands"));
+            sender.sendMessage(ChatUtil.fix("&8*---------------------------------------------------*"));
+            sender.sendMessage(ChatUtil.fix("   &6&lEpicGuard"));
             sender.sendMessage(ChatUtil.fix(""));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " menu &8- &7Open main plugin GUI."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " status &8- &7Toggle antibot notifications (titles)."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " reload &8- &7Reload configuration and messages."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " oplist &8- &7See opped players list."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " player <player> &8- &7See information about specific player."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist."));
-            sender.sendMessage(ChatUtil.fix(" &6/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist."));
+            sender.sendMessage(ChatUtil.fix("   &7Running version &f" + Updater.getCurrentVersion()));
+            sender.sendMessage(ChatUtil.fix("   &7Created by &fiShift"));
             sender.sendMessage(ChatUtil.fix(""));
-            sender.sendMessage(ChatUtil.fix("&8&m-----------------------------------------------------"));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " menu &8- &7Open main plugin GUI."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " status &8- &7Toggle antibot notifications (titles)."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " reload &8- &7Reload configuration and messages."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " player <player> &8- &7See information about specific player."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist."));
+            sender.sendMessage(ChatUtil.fix("&8*---------------------------------------------------*"));
             return true;
         }
 
@@ -68,11 +68,6 @@ public class GuardCommand implements CommandExecutor {
             Config.loadBukkit();
             Messages.load();
             send(sender, "&7Reloaded config &asuccesfully&7!");
-        } else if (args[0].equalsIgnoreCase("oplist")) {
-            Bukkit.getOperators().forEach(player -> {
-                Date currentDate = new Date(player.getLastPlayed());
-                send(sender, "&7" + player.getName() + " &8[" + (player.isOnline() ? "&aONLINE" : "&4OFFLINE") + "&8], &7Last Online: " + currentDate);
-            });
         } else if (args[0].equalsIgnoreCase("player")) {
             if (args.length != 2) {
                 send(sender, "&7Correct usage: &f/" + s + " player <player>");
