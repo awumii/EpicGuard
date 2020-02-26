@@ -73,16 +73,14 @@ public class PlayerPreLoginListener implements Listener {
         final String country = GeoAPI.getCountryCode(event.getAddress());
         StorageManager.increaseCheckedConnections();
         Logger.debug(" ");
+        Logger.debug("~-~-~-~-~-~-~-~-~-~-~-~-");
         Logger.debug("Player: " + name);
         Logger.debug("Address: " + address);
         Logger.debug("Country: " + country);
         Logger.debug(" ");
         AttackManager.handleAttack(AttackType.CONNECT);
 
-        if (StorageManager.isWhitelisted(address)) {
-            Logger.debug("+ Whitelist Check - Passed");
-            return;
-        }
+        if (StorageManager.isWhitelisted(address)) return;
 
         CheckManager.getChecks().stream().filter(check -> check.perform(address, name)).forEach(check -> AttackManager.handleDetection(name, address, event, check.getReason(), check.shouldBlacklist()));
     }
