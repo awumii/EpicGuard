@@ -2,8 +2,7 @@ package me.ishift.epicguard.bukkit.manager;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
-import me.ishift.epicguard.bukkit.task.HeuristicsTask;
-import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.bukkit.task.SecondTask;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.types.AttackType;
@@ -19,13 +18,8 @@ import java.net.UnknownHostException;
 public class AttackManager {
     public static void handleDetection(String nick, String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getReason());
-        Logger.debug("- " + reason.name() + " - DETECTED");
 
-        if (blacklist) {
-            StorageManager.blacklist(address);
-            HeuristicsTask.setBlacklistInc(HeuristicsTask.getBlacklistInc() + 1);
-            Logger.debug("- This IP has been blacklisted.");
-        }
+        if (blacklist) StorageManager.blacklist(address);
         PlayerPreLoginListener.setLastPlayer(nick);
         PlayerPreLoginListener.setLastAddress(address);
 
@@ -49,6 +43,7 @@ public class AttackManager {
         }
 
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+            if (SpeedCheck.getConnectPerSecond() < 0 || SpeedCheck.getPingPerSecond() < 0) return;
             if (type == AttackType.CONNECT) {
                 SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
             }
