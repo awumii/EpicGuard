@@ -9,12 +9,8 @@ public class NameContainsCheck extends Check {
         super(Reason.NAMECONTAINS, true);
     }
 
-    public static boolean check(String name) {
-        return Config.blockedNames.stream().anyMatch(string -> name.toLowerCase().contains(string.toLowerCase()));
-    }
-
     @Override
     public boolean perform(String address, String nickname) {
-        return false;
+        return Config.blockedNames.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
     }
 }
