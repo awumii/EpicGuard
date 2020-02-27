@@ -10,9 +10,7 @@ public class AttackTask implements Runnable {
         if (SpeedCheck.getPingPerSecond() < Config.pingSpeed && SpeedCheck.getConnectPerSecond() < Config.connectSpeed) {
             if (SpeedCheck.isUnderAttack()) {
                 SpeedCheck.setAttackMode(false);
-                HeuristicsTask.setRecord(0);
-                HeuristicsTask.setTime(0);
-                HeuristicsTask.setBlacklistInc(0);
+                SecondTask.setTime(0);
                 SpeedCheck.setTotalBots(0);
             }
         }
