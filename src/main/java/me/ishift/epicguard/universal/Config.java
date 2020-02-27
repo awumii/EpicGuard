@@ -41,8 +41,6 @@ public class Config {
     public static boolean cloudEnabled;
     public static boolean cloudBlacklist;
     public static long cloudTime;
-    public static boolean heuristicsEnabled;
-    public static int heuristicsDiff;
     public static boolean filterEnabled;
     public static List<String> filterValues;
     public static boolean channelVerification;
@@ -87,8 +85,6 @@ public class Config {
         Config.cloudEnabled = BUKKIT.getBoolean("cloud.enabled");
         Config.cloudBlacklist = BUKKIT.getBoolean("cloud.features.blacklist");
         Config.cloudTime = BUKKIT.getLong("cloud.sync-every-seconds");
-        Config.heuristicsEnabled = BUKKIT.getBoolean("heuristics.enabled");
-        Config.heuristicsDiff = BUKKIT.getInt("heuristics.min-difference");
         Config.filterEnabled = BUKKIT.getBoolean("console-filter.enabled");
         Config.filterValues = BUKKIT.getStringList("console-filter.messages");
         Config.bandwidthOptimizer = BUKKIT.getBoolean("bandwidth-optimizer");
