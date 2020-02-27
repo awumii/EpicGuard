@@ -19,12 +19,11 @@ public class GuardCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
-            BungeeUtil.sendMessage(sender, "&8&m-----------------------------------------------------");
-            BungeeUtil.sendMessage(sender, "   &6&lEPICGUARD &fv" + GuardBungee.getInstance().getDescription().getVersion());
-            BungeeUtil.sendMessage(sender, "   &7&oMain management command");
+            BungeeUtil.sendMessage(sender, "&8*---------------------------------------------------*");
+            BungeeUtil.sendMessage(sender, "   &6&lEpicGuard");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, " &7Current CPS: &c" + SpeedCheck.getConnectPerSecond());
-            BungeeUtil.sendMessage(sender, " &7Current PPS: &c" + SpeedCheck.getPingPerSecond());
+            BungeeUtil.sendMessage(sender, "   &7Running version &f" + GuardBungee.getInstance().getDescription().getVersion());
+            BungeeUtil.sendMessage(sender, "   &7Created by &fiShift");
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, " &6/guard status &8- &7Toggle antibot actionbar.");
             BungeeUtil.sendMessage(sender, " &6/guard log &8- &7Toggle advanced console logging.");
@@ -32,7 +31,7 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, " &6/guard whitelist <adress> &8- &7Add specific adress to the whitelist.");
             BungeeUtil.sendMessage(sender, " &6/guard blacklist <adress> &8- &7Add specific adress to the blacklist.");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, "&8&m-----------------------------------------------------");
+            BungeeUtil.sendMessage(sender, "&8*---------------------------------------------------*");
             return;
         }
 
