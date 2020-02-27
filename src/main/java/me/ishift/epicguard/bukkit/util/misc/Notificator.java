@@ -4,23 +4,11 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.bukkit.util.player.ActionBar;
-import me.ishift.epicguard.bukkit.util.player.Title;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 
 public class Notificator {
-    public static void title(String title, String subtitle) {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            final User u = UserManager.getUser(player);
-            if (u != null && u.isNotifications()) {
-                if (player.hasPermission(GuardBukkit.PERMISSION)) {
-                    Title.send(player, title, subtitle, 20, 40, 20);
-                }
-            }
-        });
-    }
-
     public static void broadcast(String text) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
