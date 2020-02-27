@@ -82,6 +82,6 @@ public class PlayerPreLoginListener implements Listener {
 
         if (StorageManager.isWhitelisted(address)) return;
 
-        CheckManager.getChecks().stream().filter(check -> check.perform(address, name)).forEach(check -> AttackManager.handleDetection(name, address, event, check.getReason(), check.shouldBlacklist()));
+        CheckManager.getChecks().stream().filter(check -> check.perform(address, name)).findFirst().ifPresent(check -> AttackManager.handleDetection(name, address, event, check.getReason(), check.shouldBlacklist()));
     }
 }
