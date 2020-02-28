@@ -1,5 +1,6 @@
 package me.ishift.epicguard.universal.check.detection;
 
+import me.ishift.epicguard.bukkit.task.SecondTask;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.types.Reason;
@@ -21,6 +22,12 @@ public class SpeedCheck extends Check {
         }
 
         return isUnderAttack();
+    }
+
+    public static void reset() {
+        setAttackMode(false);
+        SecondTask.setTime(0);
+        setTotalBots(0);
     }
 
     public static int getTotalBots() {

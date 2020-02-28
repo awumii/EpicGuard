@@ -8,11 +8,7 @@ public class AttackTask implements Runnable {
     @Override
     public void run() {
         if (SpeedCheck.getPingPerSecond() < Config.pingSpeed && SpeedCheck.getConnectPerSecond() < Config.connectSpeed) {
-            if (SpeedCheck.isUnderAttack()) {
-                SpeedCheck.setAttackMode(false);
-                SecondTask.setTime(0);
-                SpeedCheck.setTotalBots(0);
-            }
+            if (SpeedCheck.isUnderAttack()) SpeedCheck.reset();
         }
     }
 }

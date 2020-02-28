@@ -2,12 +2,14 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
+import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.GeoAPI;
 import org.bukkit.Bukkit;
@@ -41,6 +43,7 @@ public class GuardCommand implements CommandExecutor {
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " menu &8- &7Open main plugin GUI."));
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " status &8- &7Toggle antibot notifications (titles)."));
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " reload &8- &7Reload configuration and messages."));
+            sender.sendMessage(ChatUtil.fix(" &f/" + s + " reset &8- &7Disabling attack mode and resetting counters."));
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " player <player> &8- &7See information about specific player."));
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist."));
             sender.sendMessage(ChatUtil.fix(" &f/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist."));
@@ -101,6 +104,11 @@ public class GuardCommand implements CommandExecutor {
             }
             StorageManager.blacklist(args[1]);
             send(sender, "&7Blacklisted IP: " + args[1]);
+        } else if (args[0].equalsIgnoreCase("reset")) {
+            SpeedCheck.reset();
+            SpeedCheck.setConnectPerSecond(0);
+            SpeedCheck.setPingPerSecond(0);
+            send(sender, "&7Attack counters has been &ccleared&7.");
         } else {
             send(sender, "&cCommand not found! Use &6/" + s);
         }

@@ -18,6 +18,7 @@ public class BungeeAttack {
         }
 
         ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> {
+            if (SpeedCheck.getConnectPerSecond() == 0 || SpeedCheck.getPingPerSecond() == 0) return;
             if (type == AttackType.CONNECT) {
                 SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
             }

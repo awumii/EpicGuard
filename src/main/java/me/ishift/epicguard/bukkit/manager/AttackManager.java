@@ -43,7 +43,7 @@ public class AttackManager {
         }
 
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-            if (SpeedCheck.getConnectPerSecond() < 0 || SpeedCheck.getPingPerSecond() < 0) return;
+            if (SpeedCheck.getConnectPerSecond() == 0 || SpeedCheck.getPingPerSecond() == 0) return;
             if (type == AttackType.CONNECT) {
                 SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
             }
