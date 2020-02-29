@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.listener.server;
 
-import me.ishift.epicguard.bukkit.manager.User;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.bukkit.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
