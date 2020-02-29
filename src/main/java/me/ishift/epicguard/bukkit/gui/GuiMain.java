@@ -70,18 +70,6 @@ public class GuiMain {
                 .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("  &8- &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
-        final ItemStack i5 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.BOOK_AND_QUILL))
-                .setTitle("&cDetection Log (Latest)")
-                .addLore("&7See information about latest detection.")
-                .addLore("")
-                .addLore("&6Information:")
-                .addLore("  &7Player&8: &c" + PlayerPreLoginListener.getLastPlayer())
-                .addLore("  &7Adress&8: &c" + PlayerPreLoginListener.getLastAddress())
-                .addLore("  &7Country&8: &c" + PlayerPreLoginListener.getLastCountry())
-                .addLore("  &7Detection&8: &c" + PlayerPreLoginListener.getLastDetection())
-                .addLore("  &7Blacklisted&8: &c" + PlayerPreLoginListener.isBlacklisted())
-                .build();
-
         final ItemStack i6 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CRAFTING))
                 .setTitle("&cCloud Status")
                 .addLore("&7Status of EpicCloud system.")
@@ -127,10 +115,9 @@ public class GuiMain {
         eq.setItem(12, i2);
         eq.setItem(14, i3);
         eq.setItem(16, i4);
-        eq.setItem(22, i5);
         eq.setItem(24, i6);
         eq.setItem(20, i7);
-        eq.setItem(4, i8);
+        //eq.setItem(4, i8);
         p.openInventory(eq);
     }
 }
