@@ -1,9 +1,16 @@
+#
+#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
+#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
+#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
+#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
+#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
+# Created by RushMC Team (iShift & ruzekh).
 # Important plugin section.
-name: '${project.name}'
+name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.GuardBukkit
-softdepend: [ProtocolLib]
-loadbefore: [EssentialsGeoIP]
+softdepend: [ProtocolLib, EssentialsGeoIP]
 
 # Other information about plugin section.
 authors: [iShift, ruzekh]
