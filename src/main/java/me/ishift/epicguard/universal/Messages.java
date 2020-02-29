@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Messages {
+    public static final Yaml FILE = new Yaml("messages_en_US", "plugins/EpicGuard");
     public static List<String> messageKickProxy;
     public static List<String> messageKickCountry;
     public static List<String> messageKickAttack;
@@ -17,8 +18,6 @@ public class Messages {
     public static String prefix;
     public static String notAllowedCommand;
     public static String blockedCommand;
-
-    public static final Yaml FILE = new Yaml("messages_en_US", "plugins/EpicGuard");
 
     public static void load() {
         prefix = FILE.getOrSetDefault("prefix", "&6EpicGuard &8//&7 ");

@@ -1,8 +1,8 @@
 package me.ishift.epicguard.bukkit.util.server;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.util.URLUtil;
 import org.bukkit.entity.Player;

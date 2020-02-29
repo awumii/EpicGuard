@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.task;
 
-import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 
 public class ActionBarTask implements Runnable {

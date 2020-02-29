@@ -97,21 +97,21 @@ public class Config {
     public static void loadBungee() {
         BUNGEE.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
         checks = BUNGEE.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
-        Config.firewallEnabled= BUNGEE.getBoolean("firewall");
-        Config.firewallBlacklistCommand= BUNGEE.getString("firewall.command-blacklist");
-        Config.firewallWhitelistCommand= BUNGEE.getString("firewall.command-whitelist");
-        Config.connectSpeed= BUNGEE.getInt("speed.connection");
-        Config.pingSpeed= BUNGEE.getInt("speed.ping-speed");
-        Config.apiKey= BUNGEE.getString("antibot.api-key");
-        Config.countryList= BUNGEE.getStringList("countries.list");
-        Config.countryMode= BUNGEE.getString("countries.mode");
-        Config.attackResetTimer= BUNGEE.getLong("speed.attack-timer-reset");
-        Config.blockedNames= BUNGEE.getStringList("antibot.name-contains");
-        Config.cloudEnabled= BUNGEE.getBoolean("cloud.enabled");
-        Config.cloudBlacklist= BUNGEE.getBoolean("cloud.features.blacklist");
-        Config.cloudTime= BUNGEE.getLong("cloud.sync-every-seconds");
-        Config.filterEnabled= BUNGEE.getBoolean("console-filter.enabled");
-        Config.filterValues= BUNGEE.getStringList("console-filter.messages");
-        Config.bandwidthOptimizer= BUNGEE.getBoolean("bandwidth-optimizer");
+        Config.firewallEnabled = BUNGEE.getBoolean("firewall");
+        Config.firewallBlacklistCommand = BUNGEE.getString("firewall.command-blacklist");
+        Config.firewallWhitelistCommand = BUNGEE.getString("firewall.command-whitelist");
+        Config.connectSpeed = BUNGEE.getInt("speed.connection");
+        Config.pingSpeed = BUNGEE.getInt("speed.ping-speed");
+        Config.apiKey = BUNGEE.getString("antibot.api-key");
+        Config.countryList = BUNGEE.getStringList("countries.list");
+        Config.countryMode = BUNGEE.getString("countries.mode");
+        Config.attackResetTimer = BUNGEE.getLong("speed.attack-timer-reset");
+        Config.blockedNames = BUNGEE.getStringList("antibot.name-contains");
+        Config.cloudEnabled = BUNGEE.getBoolean("cloud.enabled");
+        Config.cloudBlacklist = BUNGEE.getBoolean("cloud.features.blacklist");
+        Config.cloudTime = BUNGEE.getLong("cloud.sync-every-seconds");
+        Config.filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
+        Config.filterValues = BUNGEE.getStringList("console-filter.messages");
+        Config.bandwidthOptimizer = BUNGEE.getBoolean("bandwidth-optimizer");
     }
 }

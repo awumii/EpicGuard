@@ -1,18 +1,14 @@
 package me.ishift.epicguard.bukkit.listener.player;
 
+import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.manager.AttackManager;
-import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.Logger;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.check.CheckManager;
-import me.ishift.epicguard.universal.check.detection.GeoCheck;
-import me.ishift.epicguard.universal.check.detection.NameContainsCheck;
-import me.ishift.epicguard.universal.check.detection.ProxyCheck;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.types.Reason;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -78,7 +74,9 @@ public class PlayerPreLoginListener implements Listener {
         Logger.debug("Address: " + address);
         Logger.debug("Country: " + country);
         Logger.debug(" ");
-        AttackManager.handleAttack(AttackType.CONNECT);
+
+        SpeedCheck.increase(AttackType.CONNECT);
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> SpeedCheck.decrease(AttackType.CONNECT), 20L);
 
         if (StorageManager.isWhitelisted(address)) return;
 

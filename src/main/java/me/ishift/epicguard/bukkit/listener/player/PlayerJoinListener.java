@@ -2,18 +2,16 @@ package me.ishift.epicguard.bukkit.listener.player;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.Logger;
+import me.ishift.epicguard.universal.Messages;
+import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +32,6 @@ public class PlayerJoinListener implements Listener {
             final User user = UserManager.getUser(player);
             final String address = user.getAddress();
 
-            AttackManager.handleAttack(AttackType.JOIN);
             // AntiBypass
             if (StorageManager.isBlacklisted(address)) {
                 event.setJoinMessage("");
