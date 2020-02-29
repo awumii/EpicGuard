@@ -2,12 +2,11 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
-import me.ishift.epicguard.bukkit.manager.AttackManager;
 import me.ishift.epicguard.bukkit.manager.User;
 import me.ishift.epicguard.bukkit.manager.UserManager;
-import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -17,8 +16,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Date;
 
 public class GuardCommand implements CommandExecutor {
     public static void send(CommandSender sender, String message) {

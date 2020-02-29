@@ -7,6 +7,7 @@ import me.ishift.epicguard.universal.cloud.Downloader;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class GeoAPI {
@@ -14,6 +15,15 @@ public class GeoAPI {
 
     private static DatabaseReader getDatabase() {
         return dbReader;
+    }
+
+    public static InetAddress getAddress(String hostname) {
+        try {
+            return InetAddress.getByName(hostname);
+        } catch (UnknownHostException e) {
+            Logger.info("[UnknownHostException] Can't resolve InetAddress from hostname: " + hostname);
+        }
+        return null;
     }
 
     public static String getCountryCode(InetAddress address) {

@@ -8,11 +8,11 @@ import me.ishift.epicguard.bungee.task.CloudTask;
 import me.ishift.epicguard.bungee.task.DisplayTask;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.Logger;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.CheckManager;
 import me.ishift.epicguard.universal.util.GeoAPI;
-import me.ishift.epicguard.universal.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;

@@ -16,11 +16,11 @@ public enum Reason {
 
     private List<String> reason;
 
-    public String getReason() {
-        return this.reason.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
-    }
-
     Reason(List<String> reason) {
         this.reason = reason;
+    }
+
+    public String getReason() {
+        return this.reason.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
     }
 }

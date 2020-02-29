@@ -1,9 +1,9 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.universal.Logger;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.types.Reason;
-import me.ishift.epicguard.universal.Logger;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 

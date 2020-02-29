@@ -5,7 +5,7 @@ main: me.ishift.epicguard.bukkit.GuardBukkit
 softdepend: [ProtocolLib]
 loadbefore: [EssentialsGeoIP]
 
-  # Other information about plugin section.
+# Other information about plugin section.
 authors: [iShift, ruzekh]
 website: https://www.spigotmc.org/resources/72369/
 description: Spigot & Bungee - Advanced server protection package!
