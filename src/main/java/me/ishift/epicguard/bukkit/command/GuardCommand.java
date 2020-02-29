@@ -2,15 +2,15 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.gui.GuiMain;
-import me.ishift.epicguard.bukkit.manager.User;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.GeoAPI;
+import me.ishift.epicguard.universal.GeoAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -80,7 +80,7 @@ public class GuardCommand implements CommandExecutor {
             }
             send(sender, "&7Name: &f" + player.getName());
             send(sender, "&7UUID: &f" + player.getUniqueId());
-            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress()));
+            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress().getHostAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
             if (Config.ipHistoryEnable) {

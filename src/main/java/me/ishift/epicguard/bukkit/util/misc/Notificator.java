@@ -1,8 +1,8 @@
 package me.ishift.epicguard.bukkit.util.misc;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.manager.User;
-import me.ishift.epicguard.bukkit.manager.UserManager;
+import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.player.ActionBar;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.util.ChatUtil;

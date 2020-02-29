@@ -200,5 +200,3 @@ firewall:
   command-blacklist: "iptables -A INPUT -s {IP} -j DROP"
   # Executed in /guard whitelist <player>
   command-whitelist: "iptables -D INPUT -s {IP} -j DROP"
-
-version: ${project.version}
