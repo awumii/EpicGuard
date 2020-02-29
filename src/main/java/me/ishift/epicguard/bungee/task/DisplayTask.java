@@ -1,7 +1,6 @@
 package me.ishift.epicguard.bungee.task;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.bungee.util.BungeeAttack;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;

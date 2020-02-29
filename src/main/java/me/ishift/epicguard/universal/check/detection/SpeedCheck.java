@@ -3,6 +3,7 @@ package me.ishift.epicguard.universal.check.detection;
 import me.ishift.epicguard.bukkit.task.SecondTask;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.check.Check;
+import me.ishift.epicguard.universal.types.AttackType;
 import me.ishift.epicguard.universal.types.Reason;
 
 public class SpeedCheck extends Check {
@@ -28,6 +29,24 @@ public class SpeedCheck extends Check {
         setAttackMode(false);
         SecondTask.setTime(0);
         setTotalBots(0);
+    }
+
+    public static void increase(AttackType type) {
+        if (type == AttackType.CONNECT) {
+            SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() + 1);
+        }
+        if (type == AttackType.PING) {
+            SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() + 1);
+        }
+    }
+
+    public static void decrease(AttackType type) {
+        if (type == AttackType.CONNECT && SpeedCheck.getConnectPerSecond() != 0) {
+            SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
+        }
+        if (type == AttackType.PING && SpeedCheck.getPingPerSecond() != 0) {
+            SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() - 1);
+        }
     }
 
     public static int getTotalBots() {
