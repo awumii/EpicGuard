@@ -35,21 +35,7 @@ public class AttackManager {
     }
 
     public static void handleAttack(AttackType type) {
-        if (type == AttackType.CONNECT) {
-            SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() + 1);
-        }
-        if (type == AttackType.PING) {
-            SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() + 1);
-        }
-
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-            if (SpeedCheck.getConnectPerSecond() == 0 || SpeedCheck.getPingPerSecond() == 0) return;
-            if (type == AttackType.CONNECT) {
-                SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
-            }
-            if (type == AttackType.PING) {
-                SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() - 1);
-            }
-        }, 20L);
+        SpeedCheck.increase(type);
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> SpeedCheck.decrease(type), 20L);
     }
 }
