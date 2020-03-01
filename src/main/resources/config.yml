@@ -43,17 +43,9 @@ antibot:
   # With key - 1000 requests/24h
   # Without key - 100 requests/24h
   api-key: "YOUR_KEY"
-
-# You can change the priority of checks, by
-# changing their order in the list below, or even
-# disable it fully by deleting it from the list.
-# Verify (check) - Forcing player to rejoin server to play
-checks:
-  - Blacklist
-  - Attack
-  - NameContains
-  - Verify
-  - Proxy
+  # This two checks will only perform when there is an active attack!
+  rejoin-check: true
+  server-list-check: true
 
 ###############################
 ##        Settings           ##
@@ -92,14 +84,10 @@ updater: true
 # If you have small server, don't change it, or change it to smaller values
 
 speed:
-  # How many connections per second should be made, to block connections to the server.
-  # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
-  # If deny-join is triggered, Proxy/VPN checking is skipped.
+  # How many connections per second should be made to activate additional checks.
   connection: 7
-  # How many pings per second should be made to block connections to the server.
+  # How many pings per second should be made to activate additional checks.
   ping-speed: 10
-  # Time (in ticks) before the antibot will disable.
-  attack-timer-reset: 800
 
 # Block tab-complete packet using ProtocolLib.
 # Useful when using a multi-version server, because 1.13+ players

@@ -26,7 +26,6 @@ public class Config {
 
     public static List<String> blockedNames;
     public static boolean updater;
-    public static long attackResetTimer;
     public static boolean tabCompleteBlock;
     public static boolean bandwidthOptimizer;
 
@@ -76,7 +75,6 @@ public class Config {
         countryList = BUKKIT.getStringList("countries.list");
         countryMode = BUKKIT.getString("countries.mode");
         updater = BUKKIT.getBoolean("updater");
-        attackResetTimer = BUKKIT.getLong("speed.attack-timer-reset");
         tabCompleteBlock = BUKKIT.getBoolean("fully-block-tab-complete");
         blockedCommands = BUKKIT.getStringList("command-protection.list");
         allowedCommands = BUKKIT.getStringList("allowed-commands.list");
@@ -111,7 +109,6 @@ public class Config {
         apiKey = BUNGEE.getString("antibot.api-key");
         countryList = BUNGEE.getStringList("countries.list");
         countryMode = BUNGEE.getString("countries.mode");
-        attackResetTimer = BUNGEE.getLong("speed.attack-timer-reset");
         blockedNames = BUNGEE.getStringList("antibot.name-contains");
         filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
         filterValues = BUNGEE.getStringList("console-filter.messages");
