@@ -39,14 +39,6 @@ public class GeoAPI {
     }
 
     public static void init() {
-        if (Config.countryMode.equalsIgnoreCase("DISABLED")) {
-            Logger.info("IMPORTANT MESSAGE!");
-            Logger.info("Geolocation is DISABLED in the config!");
-            Logger.info("Properly configuring Geolocation, can really increase bot detection.");
-            Logger.info("GeoIP2 database is not initializing...");
-            return;
-        }
-
         Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
         Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
         final String dataFolder = "plugins/EpicGuard";
