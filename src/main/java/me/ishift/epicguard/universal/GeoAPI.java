@@ -66,7 +66,7 @@ public class GeoAPI {
             dbReader = new DatabaseReader.Builder(database).withCache(new CHMCache()).build();
         } catch (IOException e) {
             Logger.info("[ERROR] Error ocurred while initalizing GeoIP2 Database!");
-            Logger.formatStackTrace(e);
+            e.printStackTrace();
         }
     }
 
