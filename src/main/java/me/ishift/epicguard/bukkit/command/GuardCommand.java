@@ -50,32 +50,37 @@ public class GuardCommand implements CommandExecutor {
 
         if (args[0].equalsIgnoreCase("menu")) {
             if (!(sender instanceof Player)) {
-                send(sender, "&cThis command is player only.");
+                send(sender, Messages.playerOnly);
                 return true;
             }
             GuiMain.show((Player) sender);
-        } else if (args[0].equalsIgnoreCase("status")) {
+        }
+
+        else if (args[0].equalsIgnoreCase("status")) {
             if (!(sender instanceof Player)) {
-                send(sender, "&cThis command is player only.");
+                send(sender, Messages.playerOnly);
                 return true;
             }
             final User user = UserManager.getUser((Player) sender);
-            send(sender, (user.isNotifications() ? "&cToggled off" : "&aToggled on") + " &7bot notification status!");
+            send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
             user.setNotifications(!user.isNotifications());
-        } else if (args[0].equalsIgnoreCase("reload")) {
-            send(sender, "&7Reloading config...");
+        }
+
+        else if (args[0].equalsIgnoreCase("reload")) {
             GuardBukkit.getInstance().reloadConfig();
             Config.loadBukkit();
             Messages.load();
-            send(sender, "&7Reloaded config &asuccesfully&7!");
-        } else if (args[0].equalsIgnoreCase("player")) {
+            send(sender, Messages.configReload);
+        }
+
+        else if (args[0].equalsIgnoreCase("player")) {
             if (args.length != 2) {
-                send(sender, "&7Correct usage: &f/" + s + " player <player>");
+                send(sender, Messages.usage.replace("{USAGE}", s + "player <player>"));
                 return true;
             }
             final Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                send(sender, "&7Player &c" + args[1] + " &7not found!");
+                send(sender, Messages.playerNotFound);
                 return true;
             }
             send(sender, "&7Name: &f" + player.getName());
@@ -87,27 +92,35 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, "&6[IP History]");
                 UserManager.getUser(player).getAddresses().forEach(address -> send(sender, " &7- &f" + address));
             }
-        } else if (args[0].equalsIgnoreCase("whitelist")) {
+        }
+
+        else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
-                send(sender, "&7Correct usage: &f/" + s + " whitelist <adress>");
+                send(sender, Messages.usage.replace("{USAGE}", s + "whitelist <address>"));
                 return true;
             }
-            StorageManager.whitelist(args[1]);
-            send(sender, "&7Whitelisted IP: " + args[1]);
-        } else if (args[0].equalsIgnoreCase("blacklist")) {
+            final String address = args[1];
+            StorageManager.whitelist(address);
+            send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
+        }
+
+        else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
-                send(sender, "&7Correct usage: &f/" + s + " blacklist <adress>");
+                send(sender, Messages.usage.replace("{USAGE}", s + "blacklist <address>"));
                 return true;
             }
-            StorageManager.blacklist(args[1]);
-            send(sender, "&7Blacklisted IP: " + args[1]);
-        } else if (args[0].equalsIgnoreCase("reset")) {
+            final String address = args[1];
+            StorageManager.blacklist(address);
+            send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
+        }
+
+        else if (args[0].equalsIgnoreCase("reset")) {
             SpeedCheck.reset();
             SpeedCheck.setConnectPerSecond(0);
             SpeedCheck.setPingPerSecond(0);
-            send(sender, "&7Attack counters has been &ccleared&7.");
+            send(sender, Messages.reset);
         } else {
-            send(sender, "&cCommand not found! Use &6/" + s);
+            send(sender, Messages.unknownCommand);
         }
         return true;
     }

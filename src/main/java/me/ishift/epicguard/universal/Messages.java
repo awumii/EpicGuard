@@ -18,6 +18,16 @@ public class Messages {
     public static String prefix;
     public static String notAllowedCommand;
     public static String blockedCommand;
+    public static String playerOnly;
+    public static String configReload;
+    public static String usage;
+    public static String playerNotFound;
+    public static String blacklisted;
+    public static String whitelisted;
+    public static String unknownCommand;
+    public static String reset;
+    public static String statusOn;
+    public static String statusOff;
 
     public static void load() {
         prefix = FILE.getOrSetDefault("prefix", "&6EpicGuard &8//&7 ");
@@ -33,5 +43,15 @@ public class Messages {
         noPermission = FILE.getOrSetDefault("other.no-permission", "&cYou don't have permission to access this command!");
         notAllowedCommand = FILE.getOrSetDefault("other.not-allowed-command", "&fUnknown command. Type '/help' for help.");
         blockedCommand = FILE.getOrSetDefault("other.blocked-command", "&cThis command is not allowed!");
+        playerOnly = FILE.getOrSetDefault("other.player-only", "&cThis command is player-only!");
+        configReload = FILE.getOrSetDefault("other.config-reload", "&7Configuration has been &asuccesfully &7reloaded.");
+        usage = FILE.getOrSetDefault("other.usage", "&7Correct usage: &f/{USAGE}&7.");
+        playerNotFound = FILE.getOrSetDefault("other.player-not-found", "&cPlayer not found!");
+        blacklisted = FILE.getOrSetDefault("other.address-blacklisted", "&7Succesfully &cblacklisted &7address: &c{ADDRESS}");
+        whitelisted = FILE.getOrSetDefault("other.address-whitelisted", "&7Succesfully &awhitelisted &7address: &a{ADDRESS}");
+        unknownCommand = FILE.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
+        reset = FILE.getOrSetDefault("other.reset", "&7Attack data and counters has been &ccleared&7.");
+        statusOn = FILE.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
+        statusOff = FILE.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
     }
 }
