@@ -5,7 +5,7 @@ import me.ishift.epicguard.bukkit.gui.GuiPlayers;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import org.bukkit.Bukkit;
 
-public class SecondTask implements Runnable {
+public class RefreshTask implements Runnable {
     private static int time = 0;
 
     public static int getTime() {
@@ -13,7 +13,7 @@ public class SecondTask implements Runnable {
     }
 
     public static void setTime(int time) {
-        SecondTask.time = time;
+        RefreshTask.time = time;
     }
 
     @Override

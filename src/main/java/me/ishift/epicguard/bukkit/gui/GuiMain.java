@@ -1,15 +1,12 @@
 package me.ishift.epicguard.bukkit.gui;
 
-import me.ishift.epicguard.bukkit.listener.player.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.check.detection.SpeedCheck;
-import me.ishift.epicguard.universal.cloud.CloudManager;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -70,19 +67,6 @@ public class GuiMain {
                 .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("  &8- &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
-        final ItemStack i6 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CRAFTING))
-                .setTitle("&cCloud Status")
-                .addLore("&7Status of EpicCloud system.")
-                .addLore("")
-                .addLore("&6Information:")
-                .addLore("  &7Status&8: " + (CloudManager.isOnline() ? "&aConnected" : "&cDisconnected"))
-                .addLore("  &7Blacklist size&8: &e" + CloudManager.getCloudBlacklist().size())
-                .addLore("")
-                .addLore("&6Time:")
-                .addLore("  &7Last sync&8: &c" + CloudManager.getLastCheck())
-                .addLore("  &7Sync time&8: &c" + Config.cloudTime + "sec")
-                .build();
-
         final ItemStack i7 = new ItemBuilder(Material.GOLD_NUGGET)
                 .setTitle("&cPlugin Information")
                 .addLore("&7Plugin author, version etc.")
@@ -115,7 +99,6 @@ public class GuiMain {
         eq.setItem(12, i2);
         eq.setItem(14, i3);
         eq.setItem(16, i4);
-        eq.setItem(24, i6);
         eq.setItem(20, i7);
         //eq.setItem(4, i8);
         p.openInventory(eq);

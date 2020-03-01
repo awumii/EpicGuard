@@ -49,23 +49,6 @@ antibot:
   # Without key - 100 requests/24h
   api-key: "YOUR_KEY"
 
-###############################
-##        Settings           ##
-###############################
-
-# Configuration of EpicCloud - synchronizing and calculating
-# between plugin local data, and plugin's cloud, to increase performance.
-cloud:
-  # Should plugin enable this feature
-  enabled: true
-  # Time in seconds before next sync
-  sync-every-seconds: 58800
-  features:
-    # Enable synchronizing blacklist (recommended)
-    blacklist: true
-    # Protection Requests.
-    protection-req: true
-
 # If console log contains text listed below, it
 # will be hidden. This will decrease CPU usage.
 console-filter:
@@ -75,6 +58,7 @@ console-filter:
     - lost connection
     - authlib
     - GameProfile
+
 ###############################
 ##           Advanced        ##
 ###############################
