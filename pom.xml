@@ -6,7 +6,7 @@
 
     <groupId>me.ishift</groupId>
     <artifactId>EpicGuard</artifactId>
-    <version>3.9.3</version>
+    <version>3.9.4</version>
 
     <dependencies>
         <dependency>

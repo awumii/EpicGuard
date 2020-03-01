@@ -10,8 +10,8 @@ public class ServerListCheck {
     private static List<String> pingList = new ArrayList<>();
 
     public static boolean perform(String address) {
-        if (Config.serverListCheck || AttackSpeed.isUnderAttack()) {
-            return pingList.contains(address);
+        if (Config.serverListCheck && AttackSpeed.isUnderAttack()) {
+            return !pingList.contains(address);
         }
         return false;
     }
