@@ -34,35 +34,47 @@ public class GuardCommand extends Command {
         }
 
         if (sender instanceof ProxiedPlayer && !sender.getPermissions().contains("epicguard.admin")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&cYou don't have permission to do this &8[&6use command /guard&8]");
+            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.noPermission);
             return;
         }
 
         if (args[0].equalsIgnoreCase("log")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + "&aToggled console logging");
             GuardBungee.log = !GuardBungee.log;
-        } else if (args[0].equalsIgnoreCase("status")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Toggled actionbar");
+        }
+
+        else if (args[0].equalsIgnoreCase("status")) {
+            BungeeUtil.sendMessage(sender, Messages.prefix + (GuardBungee.status ? Messages.statusOff : Messages.statusOn));
             GuardBungee.status = !GuardBungee.status;
-        } else if (args[0].equalsIgnoreCase("reload")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&aReloaded configuration.");
+        }
+
+        else if (args[0].equalsIgnoreCase("reload")) {
+            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
             Config.loadBungee();
-        } else if (args[0].equalsIgnoreCase("whitelist")) {
+        }
+
+        else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + "&7Correct usage: &f/guard whitelist <adress>");
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", "guard whitelist <adress>"));
                 return;
             }
-            StorageManager.whitelist(args[1]);
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Whitelisted IP: " + args[1]);
-        } else if (args[0].equalsIgnoreCase("blacklist")) {
+            final String address = args[1];
+            StorageManager.whitelist(address);
+            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
+        }
+
+        else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + "&7Correct usage: &f/guard blacklist <adress>");
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", "guard blacklist <adress>"));
                 return;
             }
-            StorageManager.blacklist(args[1]);
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&7Blacklisted IP: " + args[1]);
-        } else {
-            BungeeUtil.sendMessage(sender, Messages.prefix + "&cCommand not found!");
+            final String address = args[1];
+            StorageManager.blacklist(address);
+            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address));
+        }
+
+        else {
+            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.unknownCommand);
         }
     }
 }
