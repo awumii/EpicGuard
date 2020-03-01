@@ -1,4 +1,4 @@
-prefix: '&8[&6EpicGuard&8]&7 '
+prefix: '&6EpicGuard &8//&7 '
 kick-messages:
   proxy:
     - '&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN.'
@@ -14,7 +14,17 @@ kick-messages:
   attack:
     - '&8[&6EpicGuard&8] &cOur server is &6under attack&c, please wait some minutes before joining.'
 other:
-  not-allowed-command: '&fUnknown command. Type ''/help'' for help.'
-  blocked-command: '&cThis command is not allowed!'
+  status-on: '&7Attack status has been &aenabled.'
+  status-off: '&7Attack status has been &cdisabled.'
+  config-reload: '&7Configuration has been &asuccesfully &7reloaded.'
+  usage: '&7Correct usage: &f/{USAGE}&7.'
+  player-only: '&cThis command is player-only!'
+  address-whitelisted: '&7Succesfully &awhitelisted &7address: &a{ADDRESS}'
   history-new: '&cPlayer &6{NICK} &cconnected with new address &8(&6{IP}&8)&c.'
+  blocked-command: '&cThis command is not allowed!'
+  address-blacklisted: '&7Succesfully &cblacklisted &7address: &c{ADDRESS}'
+  player-not-found: '&cPlayer not found!'
+  unknown-command: '&cCommand not found! Use &6/guard'
   no-permission: '&cYou don''t have permission to access this command!'
+  not-allowed-command: '&fUnknown command. Type ''/help'' for help.'
+  reset: '&7Attack data and counters has been &ccleared&7.'
