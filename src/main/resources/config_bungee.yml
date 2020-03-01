@@ -31,11 +31,6 @@ countries:
 ###############################
 
 antibot:
-  # You can fuly disable ALL antibot modules if you don't want it.
-  # Disabling antibot will not disable country checking (look above)
-  enabled: true
-  # New players will need to rejoin server to play!
-  force-rejoin: false
   # If a player/bot's nickname contains one of the values below, he will be blocked.
   # This SHOULD be lower-case
   name-contains:
@@ -48,6 +43,9 @@ antibot:
   # With key - 1000 requests/24h
   # Without key - 100 requests/24h
   api-key: "YOUR_KEY"
+  # This two checks will only perform when there is an active attack!
+  rejoin-check: true
+  server-list-check: true
 
 # If console log contains text listed below, it
 # will be hidden. This will decrease CPU usage.
@@ -66,12 +64,10 @@ console-filter:
 # If you have small server, don't change it, or change it to smaller values
 
 speed:
-  # How many connections per second should be made, to block connections to the server.
-  # Whitelisted players still can join, if CPS is below this value, connection blocking will be disabled.
-  # If deny-join is triggered, Proxy/VPN checking is skipped.
-  connection: 5
-  # How many pings per second should be made to block connections to the server.
-  ping-speed: 15
+  # How many connections per second should be made to activate additional checks.
+  connection: 7
+  # How many pings per second should be made to activate additional checks.
+  ping-speed: 10
 
 ###############################
 ##           Firewall        ##

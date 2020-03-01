@@ -52,7 +52,7 @@ public class GuardBungee extends Plugin {
         this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
 
-        this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 30L, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 20L, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1L, 300L, TimeUnit.MILLISECONDS);
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));

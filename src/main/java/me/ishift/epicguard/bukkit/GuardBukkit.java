@@ -55,11 +55,6 @@ public class GuardBukkit extends JavaPlugin {
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
 
-        if (Reflection.isOldVersion()) {
-            final Messenger messenger = Bukkit.getMessenger();
-            messenger.registerIncomingPluginChannel(this, "MC|Brand", new PluginMessagesListener());
-        }
-
         new LogFilter().registerFilter();
 
         Updater.checkForUpdates();
@@ -94,7 +89,8 @@ public class GuardBukkit extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, Config.attackResetTimer);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
+
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 1800L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 20L, 5L);
     }

@@ -1,7 +1,10 @@
 package me.ishift.epicguard.bukkit.util.server;
 
+import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.messaging.Messenger;
 
 public class Reflection {
     private static String version;
@@ -9,10 +12,18 @@ public class Reflection {
     public static void init() {
         version = Bukkit.getServer().getClass().getPackage().getName();
         version = version.substring(version.lastIndexOf(".") + 1);
+        registerMessenger();
     }
 
     public static boolean isOldVersion() {
         return !version.startsWith("v1_13") && !version.startsWith("v1_14") && !version.startsWith("v1_15") && !version.startsWith("v1_16");
+    }
+
+    public static void registerMessenger() {
+        if (isOldVersion()) {
+            final Messenger messenger = Bukkit.getMessenger();
+            messenger.registerIncomingPluginChannel(GuardBukkit.getInstance(), "MC|Brand", new PluginMessagesListener());
+        }
     }
 
     public static String getVersion() {
