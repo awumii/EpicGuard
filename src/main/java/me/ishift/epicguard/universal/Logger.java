@@ -1,6 +1,5 @@
 package me.ishift.epicguard.universal;
 
-import me.ishift.epicguard.universal.check.detection.SpeedCheck;
 import me.ishift.epicguard.universal.util.DateUtil;
 
 import java.io.*;
@@ -36,7 +35,7 @@ public class Logger {
 
     public static void writeToFile(File file, String message) {
         try {
-            if (SpeedCheck.getConnectPerSecond() > 40) return;
+            if (AttackSpeed.getConnectPerSecond() > 40) return;
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();

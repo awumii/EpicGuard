@@ -6,7 +6,7 @@ import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.check.detection.SpeedCheck;
+import me.ishift.epicguard.universal.AttackSpeed;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,11 +25,11 @@ public class GuiMain {
                 .addLore("&7See status of your server, in real time.")
                 .addLore("")
                 .addLore("&6AntiBot Mode:")
-                .addLore("  &7Server is&8: " + (SpeedCheck.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
+                .addLore("  &7Server is&8: " + (AttackSpeed.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
                 .addLore("")
                 .addLore("&6Current Connections:")
-                .addLore("  &7Connect Per Second&8: &c" + SpeedCheck.getConnectPerSecond())
-                .addLore("  &7Ping Per Second&8: &c" + SpeedCheck.getPingPerSecond())
+                .addLore("  &7Connect Per Second&8: &c" + AttackSpeed.getConnectPerSecond())
+                .addLore("  &7Ping Per Second&8: &c" + AttackSpeed.getPingPerSecond())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(Material.COMPASS)

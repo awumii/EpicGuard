@@ -8,7 +8,7 @@ import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.check.detection.SpeedCheck;
+import me.ishift.epicguard.universal.AttackSpeed;
 import me.ishift.epicguard.universal.util.ChatUtil;
 import me.ishift.epicguard.universal.GeoAPI;
 import org.bukkit.Bukkit;
@@ -115,9 +115,9 @@ public class GuardCommand implements CommandExecutor {
         }
 
         else if (args[0].equalsIgnoreCase("reset")) {
-            SpeedCheck.reset();
-            SpeedCheck.setConnectPerSecond(0);
-            SpeedCheck.setPingPerSecond(0);
+            AttackSpeed.reset();
+            AttackSpeed.setConnectPerSecond(0);
+            AttackSpeed.setPingPerSecond(0);
             send(sender, Messages.reset);
 
         } else {

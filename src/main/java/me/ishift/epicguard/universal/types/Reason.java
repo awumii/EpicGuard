@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public enum Reason {
     GEO(Messages.messageKickCountry),
     PROXY(Messages.messageKickProxy),
-    ATTACK(Messages.messageKickAttack),
+    SERVERLIST(Messages.messagesKickServerList),
     BLACKLIST(Messages.messageKickBlacklist),
     VERIFY(Messages.messageKickVerify),
     NAMECONTAINS(Messages.messageKickNamecontains);

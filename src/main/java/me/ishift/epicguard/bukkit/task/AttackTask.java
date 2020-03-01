@@ -1,14 +1,14 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.check.detection.SpeedCheck;
+import me.ishift.epicguard.universal.AttackSpeed;
 
 public class AttackTask implements Runnable {
 
     @Override
     public void run() {
-        if (SpeedCheck.getPingPerSecond() < Config.pingSpeed && SpeedCheck.getConnectPerSecond() < Config.connectSpeed) {
-            if (SpeedCheck.isUnderAttack()) SpeedCheck.reset();
+        if (AttackSpeed.getPingPerSecond() < Config.pingSpeed && AttackSpeed.getConnectPerSecond() < Config.connectSpeed) {
+            if (AttackSpeed.isUnderAttack()) AttackSpeed.reset();
         }
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 public class StorageManager {
     private static final Json FILE = new Json("storage", "plugins/EpicGuard/data");
-    public static List<String> rejoinData = new ArrayList<>();
     private static List<String> blacklist = new ArrayList<>();
     private static List<String> whitelist = new ArrayList<>();
     private static int blockedBots = 0;
@@ -17,7 +16,6 @@ public class StorageManager {
     public static void load() {
         blacklist = FILE.getOrSetDefault("addresses.blacklist", new ArrayList<>());
         whitelist = FILE.getOrSetDefault("addresses.whitelist", new ArrayList<>());
-        rejoinData = FILE.getOrSetDefault("addresses.rejoin-data", new ArrayList<>());
         blockedBots = FILE.getOrSetDefault("stats.blocked-bots", 0);
         checkedConnections = FILE.getOrSetDefault("stats.checked-connections", 0);
     }
@@ -27,19 +25,10 @@ public class StorageManager {
         FILE.set("addresses.whitelist", whitelist);
         FILE.set("stats.blocked-bots", blockedBots);
         FILE.set("stats.checked-connections", checkedConnections);
-        FILE.set("addresses.rejoin-data", rejoinData);
     }
 
     public static Json getFile() {
         return FILE;
-    }
-
-    public static boolean hasRejoined(String name) {
-        return rejoinData.contains(name);
-    }
-
-    public static void addRejoined(String name) {
-        rejoinData.add(name);
     }
 
     public static boolean isBlacklisted(String address) {
