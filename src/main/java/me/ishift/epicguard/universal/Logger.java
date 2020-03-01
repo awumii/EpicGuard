@@ -30,8 +30,23 @@ public class Logger {
             file = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + DateUtil.getDate() + ".txt");
             file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            formatStackTrace(e);
         }
+    }
+
+    public static void formatStackTrace(Exception exception) {
+        Logger.info("▬▬▬▬▬▬▬▬▬๑۩۞۩๑▬▬▬▬▬▬▬▬▬");
+        Logger.info("     EPICGUARD ERROR");
+        Logger.info(" ");
+        Logger.info(" > Stacktrace:");
+        for (StackTraceElement element : exception.getStackTrace()) {
+            final String text = element.toString();
+            if (text.contains("epicguard")) {
+                Logger.info("  " + text);
+            }
+        }
+        Logger.info(" ");
+        Logger.info("▬▬▬▬▬▬▬▬▬๑۩۞۩๑▬▬▬▬▬▬▬▬▬");
     }
 
     public static void writeToFile(File file, String message) {
@@ -42,7 +57,7 @@ public class Logger {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            formatStackTrace(e);
         }
     }
 
@@ -51,7 +66,7 @@ public class Logger {
             final PrintWriter pw = new PrintWriter(file);
             pw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            formatStackTrace(e);
         }
     }
 }

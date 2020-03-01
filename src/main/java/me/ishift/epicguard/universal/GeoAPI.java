@@ -39,13 +39,21 @@ public class GeoAPI {
     }
 
     public static void init() {
-        try {
-            Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
-            Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
-            final String dataFolder = "plugins/EpicGuard";
-            final String dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
-            final File dateFile = new File(dataFolder + "/data/" + "last_db_download.txt");
+        if (Config.countryMode.equalsIgnoreCase("DISABLED")) {
+            Logger.info("IMPORTANT MESSAGE!");
+            Logger.info("Geolocation is DISABLED in the config!");
+            Logger.info("Properly configuring Geolocation, can really increase bot detection.");
+            Logger.info("GeoIP2 database is not initializing...");
+            return;
+        }
 
+        Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
+        Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
+        final String dataFolder = "plugins/EpicGuard";
+        final String dbLocation = dataFolder + "/data/GeoLite2-Country.mmdb";
+        final File dateFile = new File(dataFolder + "/data/" + "last_db_download.txt");
+
+        try {
             if (!new File(dbLocation).exists() || isOutdated(dateFile)) {
                 Logger.info("Databse is outdated or not found, update is required");
                 Logger.info("Downloading GEO Database... This may take some time.");
@@ -57,7 +65,8 @@ public class GeoAPI {
             final File database = new File(dbLocation);
             dbReader = new DatabaseReader.Builder(database).withCache(new CHMCache()).build();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.info("[ERROR] Error ocurred while initalizing GeoIP2 Database!");
+            Logger.formatStackTrace(e);
         }
     }
 
