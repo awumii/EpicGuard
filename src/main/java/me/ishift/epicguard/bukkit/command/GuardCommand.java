@@ -119,6 +119,7 @@ public class GuardCommand implements CommandExecutor {
             SpeedCheck.setConnectPerSecond(0);
             SpeedCheck.setPingPerSecond(0);
             send(sender, Messages.reset);
+
         } else {
             send(sender, Messages.unknownCommand);
         }
