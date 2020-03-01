@@ -38,9 +38,7 @@ public class Config {
     public static boolean ipHistoryEnable;
     public static boolean forceRejoin;
     public static boolean pexProtection;
-    public static boolean cloudEnabled;
-    public static boolean cloudBlacklist;
-    public static long cloudTime;
+
     public static boolean filterEnabled;
     public static List<String> filterValues;
     public static boolean channelVerification;
@@ -82,9 +80,6 @@ public class Config {
         Config.forceRejoin = BUKKIT.getBoolean("antibot.force-rejoin");
         Config.pexProtection = BUKKIT.getBoolean("op-protection.pex-protection");
         Config.blockedNames = BUKKIT.getStringList("antibot.name-contains");
-        Config.cloudEnabled = BUKKIT.getBoolean("cloud.enabled");
-        Config.cloudBlacklist = BUKKIT.getBoolean("cloud.features.blacklist");
-        Config.cloudTime = BUKKIT.getLong("cloud.sync-every-seconds");
         Config.filterEnabled = BUKKIT.getBoolean("console-filter.enabled");
         Config.filterValues = BUKKIT.getStringList("console-filter.messages");
         Config.bandwidthOptimizer = BUKKIT.getBoolean("bandwidth-optimizer");
@@ -107,9 +102,6 @@ public class Config {
         Config.countryMode = BUNGEE.getString("countries.mode");
         Config.attackResetTimer = BUNGEE.getLong("speed.attack-timer-reset");
         Config.blockedNames = BUNGEE.getStringList("antibot.name-contains");
-        Config.cloudEnabled = BUNGEE.getBoolean("cloud.enabled");
-        Config.cloudBlacklist = BUNGEE.getBoolean("cloud.features.blacklist");
-        Config.cloudTime = BUNGEE.getLong("cloud.sync-every-seconds");
         Config.filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
         Config.filterValues = BUNGEE.getStringList("console-filter.messages");
         Config.bandwidthOptimizer = BUNGEE.getBoolean("bandwidth-optimizer");
