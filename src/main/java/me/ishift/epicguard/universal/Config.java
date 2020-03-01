@@ -10,7 +10,6 @@ public class Config {
     public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
     public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
 
-    public static List<String> checks;
     public static String firewallBlacklistCommand;
     public static String firewallWhitelistCommand;
     public static boolean firewallEnabled;
@@ -38,6 +37,7 @@ public class Config {
     public static boolean ipHistoryEnable;
     public static boolean forceRejoin;
     public static boolean pexProtection;
+    public static boolean serverListCheck;
 
     public static boolean filterEnabled;
     public static List<String> filterValues;
@@ -62,7 +62,6 @@ public class Config {
         Config.autoWhitelist = BUKKIT.getBoolean("auto-whitelist.enabled");
         Config.autoWhitelistTime = BUKKIT.getInt("auto-whitelist.time");
         Config.apiKey = BUKKIT.getString("antibot.api-key");
-        checks = BUKKIT.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
         Config.countryList = BUKKIT.getStringList("countries.list");
         Config.countryMode = BUKKIT.getString("countries.mode");
         Config.updater = BUKKIT.getBoolean("updater");
@@ -87,11 +86,12 @@ public class Config {
         Config.customTabCompleteList = BUKKIT.getStringList("custom-tab-complete.list");
         Config.allowedCommandsBypass = BUKKIT.getBoolean("bypass.allowed-commands");
         Config.customTabCompleteBypass = BUKKIT.getBoolean("bypass.custom-tab-complete");
+
+        serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
     }
 
     public static void loadBungee() {
         BUNGEE.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
-        checks = BUNGEE.getOrSetDefault("checks", Arrays.asList("Blacklist", "Attack", "NameContains", "Geo", "Verify", "Proxy"));
         Config.firewallEnabled = BUNGEE.getBoolean("firewall");
         Config.firewallBlacklistCommand = BUNGEE.getString("firewall.command-blacklist");
         Config.firewallWhitelistCommand = BUNGEE.getString("firewall.command-whitelist");
@@ -105,5 +105,7 @@ public class Config {
         Config.filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
         Config.filterValues = BUNGEE.getStringList("console-filter.messages");
         Config.bandwidthOptimizer = BUNGEE.getBoolean("bandwidth-optimizer");
+
+        serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
     }
 }

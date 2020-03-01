@@ -1,29 +1,13 @@
-package me.ishift.epicguard.universal.check.detection;
+package me.ishift.epicguard.universal;
 
 import me.ishift.epicguard.bukkit.task.RefreshTask;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.types.Reason;
 
-public class SpeedCheck extends Check {
+public class AttackSpeed {
     private static int connectPerSecond = 0;
     private static int pingPerSecond = 0;
     private static int totalBots = 0;
     private static boolean attackMode = false;
-
-    public SpeedCheck() {
-        super(Reason.ATTACK, false);
-    }
-
-    @Override
-    public boolean perform(String address, String nickname) {
-        if (SpeedCheck.getConnectPerSecond() > Config.connectSpeed || SpeedCheck.getPingPerSecond() > Config.pingSpeed) {
-            SpeedCheck.setAttackMode(true);
-        }
-
-        return isUnderAttack();
-    }
 
     public static void reset() {
         setAttackMode(false);
@@ -33,19 +17,19 @@ public class SpeedCheck extends Check {
 
     public static void increase(AttackType type) {
         if (type == AttackType.CONNECT) {
-            SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() + 1);
+            AttackSpeed.setConnectPerSecond(AttackSpeed.getConnectPerSecond() + 1);
         }
         if (type == AttackType.PING) {
-            SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() + 1);
+            AttackSpeed.setPingPerSecond(AttackSpeed.getPingPerSecond() + 1);
         }
     }
 
     public static void decrease(AttackType type) {
-        if (type == AttackType.CONNECT && SpeedCheck.getConnectPerSecond() != 0) {
-            SpeedCheck.setConnectPerSecond(SpeedCheck.getConnectPerSecond() - 1);
+        if (type == AttackType.CONNECT && AttackSpeed.getConnectPerSecond() != 0) {
+            AttackSpeed.setConnectPerSecond(AttackSpeed.getConnectPerSecond() - 1);
         }
-        if (type == AttackType.PING && SpeedCheck.getPingPerSecond() != 0) {
-            SpeedCheck.setPingPerSecond(SpeedCheck.getPingPerSecond() - 1);
+        if (type == AttackType.PING && AttackSpeed.getPingPerSecond() != 0) {
+            AttackSpeed.setPingPerSecond(AttackSpeed.getPingPerSecond() - 1);
         }
     }
 

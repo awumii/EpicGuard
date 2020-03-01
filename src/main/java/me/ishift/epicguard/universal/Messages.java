@@ -9,7 +9,7 @@ public class Messages {
     public static final Yaml FILE = new Yaml("messages_en_US", "plugins/EpicGuard");
     public static List<String> messageKickProxy;
     public static List<String> messageKickCountry;
-    public static List<String> messageKickAttack;
+    public static List<String> messagesKickServerList;
     public static List<String> messageKickBlacklist;
     public static List<String> messageKickVerify;
     public static List<String> messageKickNamecontains;
@@ -34,7 +34,7 @@ public class Messages {
 
         messageKickProxy = FILE.getOrSetDefault("kick-messages.proxy", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN."));
         messageKickCountry = FILE.getOrSetDefault("kick-messages.country", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Country GeoDetection."));
-        messageKickAttack = FILE.getOrSetDefault("kick-messages.attack", Collections.singletonList("&8[&6EpicGuard&8] &cOur server is &6under attack&c, please wait some minutes before joining."));
+        messagesKickServerList = FILE.getOrSetDefault("kick-messages.server-list", Collections.singletonList("&8[&6EpicGuard&8] &cAdd our server to your &6server list&c, and then join again."));
         messageKickBlacklist = FILE.getOrSetDefault("kick-messages.blacklist", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6IP Blacklist."));
         messageKickVerify = FILE.getOrSetDefault("kick-messages.rejoin", Collections.singletonList("&8[&6EpicGuard&8] &cPlease join our server &6again &cto verify that you are not a bot."));
         messageKickNamecontains = FILE.getOrSetDefault("kick-messages.namecontains", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6NameContains (Change nickname or contact server admin)"));

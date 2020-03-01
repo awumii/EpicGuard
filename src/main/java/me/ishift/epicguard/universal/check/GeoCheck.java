@@ -1,20 +1,11 @@
-package me.ishift.epicguard.universal.check.detection;
+package me.ishift.epicguard.universal.check;
 
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.check.Check;
 import me.ishift.epicguard.universal.types.Reason;
 import me.ishift.epicguard.universal.GeoAPI;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-public class GeoCheck extends Check {
-    public GeoCheck() {
-        super(Reason.GEO, true);
-    }
-
-    @Override
-    public boolean perform(String address, String nickname) {
+public class GeoCheck {
+    public static boolean perform(String address) {
         final String country = GeoAPI.getCountryCode(address);
 
         if (country == null || country.equals("Unknown?") || Config.countryMode.equals("DISABLED")) {

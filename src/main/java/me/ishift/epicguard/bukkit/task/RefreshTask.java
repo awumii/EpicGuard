@@ -2,7 +2,7 @@ package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.gui.GuiPlayers;
-import me.ishift.epicguard.universal.check.detection.SpeedCheck;
+import me.ishift.epicguard.universal.AttackSpeed;
 import org.bukkit.Bukkit;
 
 public class RefreshTask implements Runnable {
@@ -18,7 +18,7 @@ public class RefreshTask implements Runnable {
 
     @Override
     public void run() {
-        if (SpeedCheck.isUnderAttack()) {
+        if (AttackSpeed.isUnderAttack()) {
             time++;
         }
 
