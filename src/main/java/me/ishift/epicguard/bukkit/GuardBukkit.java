@@ -4,7 +4,6 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.task.ActionBarTask;
 import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.UpdaterTask;
 import me.ishift.epicguard.bukkit.task.RefreshTask;
@@ -12,11 +11,7 @@ import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.GeoAPI;
+import me.ishift.epicguard.universal.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -83,6 +78,6 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
 
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 1800L);
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new ActionBarTask(), 20L, 5L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 5L);
     }
 }
