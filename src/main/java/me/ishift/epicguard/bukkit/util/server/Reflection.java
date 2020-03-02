@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit.util.server;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.listener.server.PluginMessagesListener;
+import me.ishift.epicguard.bukkit.listener.PluginMessagesListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.Messenger;

@@ -1,7 +1,8 @@
-package me.ishift.epicguard.bukkit.listener.player;
+package me.ishift.epicguard.bukkit.listener;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
@@ -10,13 +11,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class PlayerTabCompletePacket extends PacketAdapter {
-    public PlayerTabCompletePacket(final Plugin plugin) {
-        super(plugin, PacketType.Play.Client.TAB_COMPLETE);
+    public PlayerTabCompletePacket(Plugin plugin) {
+        super(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.TAB_COMPLETE);
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
     }
 
     @Override
-    public void onPacketReceiving(final PacketEvent event) {
+    public void onPacketReceiving(PacketEvent event) {
         // Blocking TabComplete
         if (Config.tabCompleteBlock) {
             event.setCancelled(true);
@@ -24,11 +25,11 @@ public class PlayerTabCompletePacket extends PacketAdapter {
         }
 
         // Custom TabComplete.
+        final Player player = event.getPlayer();
+        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) return;
+
         final PacketContainer packetContainer = event.getPacket();
         final String message = packetContainer.getStrings().read(0);
-        final Player player = event.getPlayer();
-
-        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) return;
 
         if (message.startsWith("/") && Config.customTabComplete) {
             final String command = message.split(" ")[0].substring(1).toLowerCase();

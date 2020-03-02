@@ -16,6 +16,6 @@ public class ActionBarTask implements Runnable {
         if (AttackSpeed.getPingPerSecond() < 80) color2 = "&a";
         if (AttackSpeed.getPingPerSecond() > 80) color2 = "&e";
         if (AttackSpeed.getPingPerSecond() > 500) color2 = "&c";
-        Notificator.action(Messages.prefix + color1 + AttackSpeed.getConnectPerSecond() + "&7/" + color1 + "cps &8| " + color2 + AttackSpeed.getPingPerSecond() + "&7/" + color2 + "pps &8| &7Blocked: " + color1 + AttackSpeed.getTotalBots() + " &8| &7Duration: &e" + RefreshTask.getTime() + "sec &8| " + (AttackSpeed.isUnderAttack() ? "&cAttack Detected" : "&aNo Attack"));
+        Notificator.action(Messages.prefix + color1 + AttackSpeed.getConnectPerSecond() + "&7/" + color1 + "cps &8| " + color2 + AttackSpeed.getPingPerSecond() + "&7/" + color2 + "pps &8| &7Blocked: " + color1 + AttackSpeed.getTotalBots() + " &8| " + (AttackSpeed.isUnderAttack() ? "&cAttack Detected" : "&aNo Attack"));
     }
 }
