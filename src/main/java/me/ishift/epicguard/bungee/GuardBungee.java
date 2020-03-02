@@ -3,14 +3,8 @@ package me.ishift.epicguard.bungee;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
-import me.ishift.epicguard.bungee.task.AttackClearTask;
-import me.ishift.epicguard.bungee.task.DisplayTask;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.GeoAPI;
+import me.ishift.epicguard.universal.*;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -53,7 +47,7 @@ public class GuardBungee extends Plugin {
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
 
         this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 20L, TimeUnit.SECONDS);
-        this.getProxy().getScheduler().schedule(this, new DisplayTask(), 1L, 300L, TimeUnit.MILLISECONDS);
+        this.getProxy().getScheduler().schedule(this, new NotificationTask(NotificationTask.Server.BUNGEE), 1L, 300L, TimeUnit.MILLISECONDS);
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
 

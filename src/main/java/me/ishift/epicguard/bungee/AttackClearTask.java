@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bungee.task;
+package me.ishift.epicguard.bungee;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.universal.Config;
