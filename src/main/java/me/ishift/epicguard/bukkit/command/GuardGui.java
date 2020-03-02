@@ -1,10 +1,14 @@
-package me.ishift.epicguard.bukkit.gui;
+package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
 import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
+import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.universal.GeoAPI;
 import me.ishift.epicguard.universal.StorageManager;
 import me.ishift.epicguard.universal.AttackSpeed;
 import me.ishift.epicguard.universal.util.ChatUtil;
@@ -14,12 +18,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class GuiMain {
-    public static Inventory eq;
+public class GuardGui {
+    public static final Inventory INVENTORY_MANAGEMENT = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
+    public static final Inventory INVENTORY_PLAYER = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
-    public static void show(Player p) {
+    public static void showMain(Player p) {
         final ItemStack i1 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CLOCK))
                 .setTitle("&cServer real-time status")
                 .addLore("&7See status of your server, in real time.")
@@ -95,12 +102,45 @@ public class GuiMain {
                 .addLore("  &7Version&8: &c" + Bukkit.getBukkitVersion())
                 .build();
 
-        eq.setItem(10, i1);
-        eq.setItem(12, i2);
-        eq.setItem(14, i3);
-        eq.setItem(16, i4);
-        eq.setItem(20, i7);
+        INVENTORY_MANAGEMENT.setItem(10, i1);
+        INVENTORY_MANAGEMENT.setItem(12, i2);
+        INVENTORY_MANAGEMENT.setItem(14, i3);
+        INVENTORY_MANAGEMENT.setItem(16, i4);
+        //inventory.setItem(20, i7);
         //eq.setItem(4, i8);
-        p.openInventory(eq);
+        p.openInventory(INVENTORY_MANAGEMENT);
+    }
+
+    public static void showPlayers(Player p) {
+        int i = 0;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            final List<String> lore = new ArrayList<>();
+            final User user = UserManager.getUser(player);
+
+            lore.add("");
+            lore.add(ChatUtil.fix("&6Basic Information:"));
+            lore.add(ChatUtil.fix("  &7Name&8: &f" + player.getName()));
+            lore.add(ChatUtil.fix("  &7UUID&8: &f" + player.getUniqueId()));
+            lore.add(ChatUtil.fix("  &7OP&8: " + (player.isOp() ? "&aYes" : "&cNo")));
+            lore.add(ChatUtil.fix("  &7Country&8: &f" + GeoAPI.getCountryCode(user.getAddress())));
+            lore.add(ChatUtil.fix("  &7Client Brand&8: &f" + user.getBrand()));
+
+            if (Config.ipHistoryEnable && user.getAddresses() != null) {
+                lore.add("");
+                lore.add(ChatUtil.fix("&6IP History:"));
+                user.getAddresses().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
+            }
+
+            final ItemStack itemStack = new ItemBuilder(Material.CHAINMAIL_CHESTPLATE)
+                    .setTitle((player.isOp() ? "&c[OP] " + player.getName() : "&a") + player.getName())
+                    .addLores(lore)
+                    .build();
+
+            INVENTORY_PLAYER.setItem(i, itemStack);
+            i++;
+        }
+        final ItemStack back = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.FENCE_GATE)).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
+        INVENTORY_PLAYER.setItem(35, back);
+        p.openInventory(INVENTORY_PLAYER);
     }
 }

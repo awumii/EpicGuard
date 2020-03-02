@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit.listener.player;
+package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.universal.StorageManager;

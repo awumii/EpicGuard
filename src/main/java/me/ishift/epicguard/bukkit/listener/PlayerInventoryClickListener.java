@@ -1,7 +1,6 @@
-package me.ishift.epicguard.bukkit.listener.player;
+package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.gui.GuiMain;
-import me.ishift.epicguard.bukkit.gui.GuiPlayers;
+import me.ishift.epicguard.bukkit.command.GuardGui;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +21,7 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
             if (im.getDisplayName().contains("Player Manager Menu")) {
-                GuiPlayers.show(p);
+                GuardGui.showPlayers(p);
             }
         }
         if (event.getView().getTitle().equals("EpicGuard Player Manager")) {
@@ -33,7 +32,7 @@ public class PlayerInventoryClickListener implements Listener {
                 return;
             }
             if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Back to main menu")) {
-                GuiMain.show(p);
+                GuardGui.showMain(p);
             }
             event.setCancelled(true);
         }

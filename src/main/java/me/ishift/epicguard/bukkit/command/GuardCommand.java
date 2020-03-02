@@ -1,7 +1,6 @@
 package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.gui.GuiMain;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.server.Updater;
@@ -53,7 +52,7 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, Messages.playerOnly);
                 return true;
             }
-            GuiMain.show((Player) sender);
+            GuardGui.showMain((Player) sender);
         }
 
         else if (args[0].equalsIgnoreCase("status")) {

@@ -1,6 +1,5 @@
 package me.ishift.epicguard.universal;
 
-import me.ishift.epicguard.bukkit.task.RefreshTask;
 import me.ishift.epicguard.universal.types.AttackType;
 
 public class AttackSpeed {
@@ -11,7 +10,6 @@ public class AttackSpeed {
 
     public static void reset() {
         setAttackMode(false);
-        RefreshTask.setTime(0);
         setTotalBots(0);
     }
 
