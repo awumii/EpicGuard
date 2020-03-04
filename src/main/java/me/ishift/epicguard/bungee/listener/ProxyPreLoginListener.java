@@ -68,5 +68,7 @@ public class ProxyPreLoginListener implements Listener {
 
         if (blacklist) StorageManager.blacklist(address);
         AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
+        AttackSpeed.setLastReason(reason);
+        AttackSpeed.setLastBot(connection.getName());
     }
 }

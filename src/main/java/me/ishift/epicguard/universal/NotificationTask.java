@@ -13,8 +13,7 @@ public class NotificationTask implements Runnable {
 
     @Override
     public void run() {
-        final String prefix = AttackSpeed.isUnderAttack() ? "&c&lUnder Attack" : "&a&lListening";
-        final String message = prefix + " &8> &a" + AttackSpeed.getConnectPerSecond() + "&7/&acps &8| &a" + AttackSpeed.getPingPerSecond() + "&7/&apps &8| &7Blocked: &c" + AttackSpeed.getTotalBots();
+        final String message = "&a" + AttackSpeed.getConnectPerSecond() + "&7/&acps &8| &c" + AttackSpeed.getTotalBots() + " &7blocked &8» &f" + AttackSpeed.getLastBot() + " &8[&c" +  AttackSpeed.getLastReason().name() + "&8]";
 
         if (this.server == Server.SPIGOT) {
             Notificator.action(message);
