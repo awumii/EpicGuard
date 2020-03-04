@@ -77,5 +77,7 @@ public class PlayerPreLoginListener implements Listener {
 
         StorageManager.increaseBlockedBots();
         AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
+        AttackSpeed.setLastReason(reason);
+        AttackSpeed.setLastBot(event.getName());
     }
 }

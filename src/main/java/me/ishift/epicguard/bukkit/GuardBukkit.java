@@ -27,13 +27,12 @@ public class GuardBukkit extends JavaPlugin {
     public void onEnable() {
         final long ms = System.currentTimeMillis();
         this.saveDefaultConfig();
-        StorageManager.load();
         Config.loadBukkit();
+        Messages.load();
+        StorageManager.load();
         Logger.init();
         GeoAPI.init();
-
         Reflection.init();
-        Messages.load();
 
         this.registerListeners();
         this.registerTasks();
@@ -78,6 +77,6 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
 
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 1800L);
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 5L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
     }
 }
