@@ -1,18 +1,18 @@
 package me.ishift.epicguard.universal.check;
 
 import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.types.Reason;
-import me.ishift.epicguard.universal.util.URLUtil;
+import me.ishift.epicguard.universal.util.URLHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ProxyCheck {
     public static boolean perform(String address) {
         final String url = "http://proxycheck.io/v2/" + address + "?key=" + Config.apiKey;
-        try {
-            return URLUtil.readLines(url).contains("yes");
-        } catch (IOException e) {
-            e.printStackTrace();
+        final List<String> response = URLHelper.readLines(url);
+
+        if (response != null) {
+            return response.contains("yes");
         }
         return false;
     }

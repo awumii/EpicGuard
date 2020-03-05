@@ -4,7 +4,7 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.universal.Config;
 import me.ishift.epicguard.universal.Messages;
 import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.URLUtil;
+import me.ishift.epicguard.universal.util.URLHelper;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Updater {
     public static void checkForUpdates() {
         if (Config.updater) {
             try {
-                latestVersion = URLUtil.readString(UPDATE_URL);
+                latestVersion = URLHelper.readString(UPDATE_URL);
             } catch (IOException e) {
                 e.printStackTrace();
             }
