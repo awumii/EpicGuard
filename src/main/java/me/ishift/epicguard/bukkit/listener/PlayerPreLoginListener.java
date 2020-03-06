@@ -23,7 +23,6 @@ import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.check.*;
 import me.ishift.epicguard.common.types.CounterType;
-import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.common.types.Reason;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

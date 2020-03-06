@@ -25,6 +25,7 @@ countries:
     - GB
     - DE
     - PL
+  enable-cities: false
 
 ###############################
 ##           AntiBot         ##
@@ -38,6 +39,7 @@ antibot:
     - mcspam
     - bot
     - proxy
+    - mcdrop
   # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
   # You can leave it empty, but your protection will be limited.
   # With key - 1000 requests/24h
@@ -60,21 +62,6 @@ console-filter:
     - lost connection
     - authlib
     - GameProfile
-
-# If a player doesn't send MC|Brand packet within the time provided below (delay) after joining,
-# he will be kicked. Normal clients send this packet after join, but bots don't.
-# WARN: Disable this if you have issues! (eg. when using ViaVersion or ProtocolSupport).
-channel-verification:
-  delay: 40
-  enabled: true
-  punish: "kick {PLAYER} &cException occurred in your connection, please rejoin!"
-# If a player sends MC|Brand packet with a value listed below, he will be kicked.
-# Normal (Vanilla) clients use 'vanilla'
-blocked-brands:
-  enabled: true
-  punish: "kick {PLAYER} &cYour client is not allowed on this server!"
-  list:
-    - some_blocked_brand
 
 updater: true
 ###############################
