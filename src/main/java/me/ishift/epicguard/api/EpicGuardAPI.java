@@ -15,8 +15,19 @@
 
 package me.ishift.epicguard.api;
 
+import me.ishift.epicguard.bukkit.util.server.ServerTPS;
+
 public class EpicGuardAPI {
     private static GeoAPI geoApi;
+
+    /**
+     * This method does work on every Bukkit-based server.
+     *
+     * @return Server's recent TPS (from 1 minute).
+     */
+    public static String getBukkitTps() {
+        return ServerTPS.getTPS();
+    }
 
     /**
      * @return GeoAPI instance

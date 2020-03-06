@@ -114,7 +114,9 @@ public class Config {
         serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
         geoCity = BUKKIT.getOrSetDefault("countries.enable-cities", false);
-        countryMode = GeoMode.valueOf(BUKKIT.getString("countries.mode"));
+
+        final String countryModeString = BUKKIT.getOrSetDefault("countries.mode", "DISABLED");
+        countryMode = GeoMode.valueOf(countryModeString);
     }
 
     public static void loadBungee() {
@@ -133,6 +135,8 @@ public class Config {
 
         serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
-        countryMode = GeoMode.valueOf(BUKKIT.getString("countries.mode"));
+
+        final String countryModeString = BUNGEE.getOrSetDefault("countries.mode", "DISABLED");
+        countryMode = GeoMode.valueOf(countryModeString);
     }
 }
