@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.common;
 
 import de.leonhard.storage.Yaml;
 

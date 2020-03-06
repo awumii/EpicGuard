@@ -13,13 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.check;
+package me.ishift.epicguard.common.check;
 
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.types.Reason;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.util.URLHelper;
 
-public class NameContainsCheck {
-    public static boolean perform(String nickname) {
-        return Config.blockedNames.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
+import java.util.List;
+
+public class ProxyCheck {
+    public static boolean perform(String address) {
+        final String url = "http://proxycheck.io/v2/" + address + "?key=" + Config.apiKey;
+        final List<String> response = URLHelper.readLines(url);
+
+        if (response != null) {
+            return response.contains("yes");
+        }
+        return false;
     }
 }

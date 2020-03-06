@@ -15,10 +15,9 @@
 
 package me.ishift.epicguard.bungee;
 
-import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.AttackSpeed;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.AttackSpeed;
 
 public class AttackClearTask implements Runnable {
 

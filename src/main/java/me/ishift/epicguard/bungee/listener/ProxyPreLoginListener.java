@@ -16,12 +16,12 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.AttackSpeed;
-import me.ishift.epicguard.universal.check.*;
-import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.types.Reason;
+import me.ishift.epicguard.common.Logger;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.check.*;
+import me.ishift.epicguard.common.types.CounterType;
+import me.ishift.epicguard.common.types.Reason;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -38,8 +38,8 @@ public class ProxyPreLoginListener implements Listener {
         final String address = connection.getAddress().getAddress().getHostAddress();
         final String name = connection.getName();
 
-        AttackSpeed.increase(AttackType.CONNECT);
-        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> AttackSpeed.decrease(AttackType.CONNECT), 1, TimeUnit.SECONDS);
+        AttackSpeed.increase(CounterType.CONNECT);
+        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 1, TimeUnit.SECONDS);
 
         if (StorageManager.isWhitelisted(address)) {
             return;

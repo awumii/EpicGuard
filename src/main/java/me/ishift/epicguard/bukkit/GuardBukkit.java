@@ -15,6 +15,8 @@
 
 package me.ishift.epicguard.bukkit;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.*;
@@ -26,7 +28,7 @@ import me.ishift.epicguard.bukkit.util.misc.Metrics;
 import me.ishift.epicguard.bukkit.util.server.LogFilter;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.*;
+import me.ishift.epicguard.common.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,6 +36,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class GuardBukkit extends JavaPlugin {
     public static final String PERMISSION = "epicguard.admin";
 
+    /**
+     * @return Instance of GuardBukkit.
+     */
     public static GuardBukkit getInstance() {
         return JavaPlugin.getPlugin(GuardBukkit.class);
     }
@@ -46,7 +51,6 @@ public class GuardBukkit extends JavaPlugin {
         Messages.load();
         StorageManager.load();
         Logger.init();
-        GeoAPI.init();
         Reflection.init();
 
         this.registerListeners();
@@ -64,6 +68,7 @@ public class GuardBukkit extends JavaPlugin {
         metrics.addCustomChart(new Metrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
         metrics.addCustomChart(new Metrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
 
+        EpicGuardAPI.setGeoApi(new GeoAPI());
         Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
     }
 

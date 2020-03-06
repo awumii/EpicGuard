@@ -13,24 +13,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.check;
+package me.ishift.epicguard.common.util;
 
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.AttackSpeed;
+import net.md_5.bungee.api.ChatColor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class VerifyCheck {
-    private static List<String> rejoined = new ArrayList<>();
-
-    public static boolean perform(String nickname) {
-        if (Config.rejoinCheck && AttackSpeed.isUnderAttack()) {
-            if (!rejoined.contains(nickname)) {
-                rejoined.add(nickname);
-                return true;
-            }
-        }
-        return false;
+public class ChatUtil {
+    public static String fix(String text) {
+        return ChatColor.translateAlternateColorCodes('&', text.replace(">>", "»"));
     }
 }

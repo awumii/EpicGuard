@@ -13,10 +13,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.check;
+package me.ishift.epicguard.common.check;
 
-import me.ishift.epicguard.universal.AttackSpeed;
-import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.Config;
 
 import java.util.ArrayList;
 import java.util.List;

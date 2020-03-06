@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bungee.util;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.util.ChatUtil;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.Title;

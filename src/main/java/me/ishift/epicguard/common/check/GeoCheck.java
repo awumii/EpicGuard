@@ -13,23 +13,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.check;
+package me.ishift.epicguard.common.check;
 
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.types.Reason;
-import me.ishift.epicguard.universal.GeoAPI;
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.types.GeoMode;
 
 public class GeoCheck {
     public static boolean perform(String address) {
-        final String country = GeoAPI.getCountryCode(address);
+        final String country = EpicGuardAPI.getGeoApi().getCountryCode(address);
 
-        if (country == null || country.equals("Unknown?") || Config.countryMode.equals("DISABLED")) {
+        if (country == null || country.equals("Unknown?") || Config.countryMode == GeoMode.DISABLED) {
             return false;
         }
-        if (Config.countryMode.equals("WHITELIST")) {
+        if (Config.countryMode == GeoMode.WHITELIST) {
             return !Config.countryList.contains(country);
         }
-        if (Config.countryMode.equals("BLACKLIST")) {
+        if (Config.countryMode == GeoMode.BLACKLIST) {
             return Config.countryList.contains(country);
         }
         return false;

@@ -17,9 +17,9 @@ package me.ishift.epicguard.bungee.command;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.StorageManager;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.StorageManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;

@@ -13,10 +13,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.types;
+package me.ishift.epicguard.common.types;
 
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.util.ChatUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;

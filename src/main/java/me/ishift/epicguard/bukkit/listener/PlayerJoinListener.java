@@ -16,17 +16,16 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.bukkit.listener.PluginMessagesListener;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Logger;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

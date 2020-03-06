@@ -13,23 +13,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.common.check;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import me.ishift.epicguard.common.StorageManager;
 
-public class DateUtil {
-    public static String getTime() {
-        return format("HH:mm:ss");
-    }
-
-    public static String getDate() {
-        return format("dd-M-yyyy");
-    }
-
-    public static String format(String sdfValue) {
-        final Calendar cal = Calendar.getInstance();
-        final SimpleDateFormat sdf = new SimpleDateFormat(sdfValue);
-        return sdf.format(cal.getTime());
+public class BlacklistCheck {
+    public static boolean perform(String address) {
+        return StorageManager.isBlacklisted(address);
     }
 }

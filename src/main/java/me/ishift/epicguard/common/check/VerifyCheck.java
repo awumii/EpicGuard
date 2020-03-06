@@ -13,17 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.task;
+package me.ishift.epicguard.common.check;
 
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.AttackSpeed;
 
-public class AttackTask implements Runnable {
+import java.util.ArrayList;
+import java.util.List;
 
-    @Override
-    public void run() {
-        if (AttackSpeed.getPingPerSecond() < Config.pingSpeed && AttackSpeed.getConnectPerSecond() < Config.connectSpeed) {
-            if (AttackSpeed.isUnderAttack()) AttackSpeed.reset();
+public class VerifyCheck {
+    private static List<String> rejoined = new ArrayList<>();
+
+    public static boolean perform(String nickname) {
+        if (Config.rejoinCheck && AttackSpeed.isUnderAttack()) {
+            if (!rejoined.contains(nickname)) {
+                rejoined.add(nickname);
+                return true;
+            }
         }
+        return false;
     }
 }

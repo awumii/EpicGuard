@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.common.util;
 
 import java.io.IOException;
 import java.net.URL;

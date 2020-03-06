@@ -21,7 +21,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.common.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

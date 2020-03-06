@@ -13,9 +13,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.types;
+package me.ishift.epicguard.common.types;
 
-public enum AttackType {
-    PING,
-    CONNECT
+public enum GeoMode {
+    DISABLED,
+    WHITELIST,
+    BLACKLIST
 }

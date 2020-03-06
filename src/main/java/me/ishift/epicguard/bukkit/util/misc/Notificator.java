@@ -19,8 +19,8 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.player.ActionBar;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.util.ChatUtil;
 import org.bukkit.Bukkit;
 
 public class Notificator {

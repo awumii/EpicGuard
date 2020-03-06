@@ -16,10 +16,10 @@
 package me.ishift.epicguard.bukkit.util.server;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.util.URLHelper;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.common.util.URLHelper;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;

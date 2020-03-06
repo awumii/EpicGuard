@@ -15,10 +15,10 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Logger;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

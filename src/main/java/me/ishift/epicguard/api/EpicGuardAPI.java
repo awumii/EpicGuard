@@ -13,17 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.task;
+package me.ishift.epicguard.api;
 
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.AttackSpeed;
+public class EpicGuardAPI {
+    private static GeoAPI geoApi;
 
-public class AttackTask implements Runnable {
+    /**
+     * @return GeoAPI instance
+     */
+    public static GeoAPI getGeoApi() {
+        return geoApi;
+    }
 
-    @Override
-    public void run() {
-        if (AttackSpeed.getPingPerSecond() < Config.pingSpeed && AttackSpeed.getConnectPerSecond() < Config.connectSpeed) {
-            if (AttackSpeed.isUnderAttack()) AttackSpeed.reset();
-        }
+    /**
+     * Should be used only when plugin is loading.
+     *
+     * @param geoApi new GeoAPI object.
+     */
+    public static void setGeoApi(GeoAPI geoApi) {
+        EpicGuardAPI.geoApi = geoApi;
     }
 }

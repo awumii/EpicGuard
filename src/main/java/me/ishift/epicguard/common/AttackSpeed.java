@@ -13,10 +13,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.common;
 
-import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.types.Reason;
+import me.ishift.epicguard.common.types.CounterType;
+import me.ishift.epicguard.common.types.Reason;
 
 public class AttackSpeed {
     private static int connectPerSecond = 0;
@@ -31,20 +31,20 @@ public class AttackSpeed {
         setTotalBots(0);
     }
 
-    public static void increase(AttackType type) {
-        if (type == AttackType.CONNECT) {
+    public static void increase(CounterType type) {
+        if (type == CounterType.CONNECT) {
             AttackSpeed.setConnectPerSecond(AttackSpeed.getConnectPerSecond() + 1);
         }
-        if (type == AttackType.PING) {
+        if (type == CounterType.PING) {
             AttackSpeed.setPingPerSecond(AttackSpeed.getPingPerSecond() + 1);
         }
     }
 
-    public static void decrease(AttackType type) {
-        if (type == AttackType.CONNECT && AttackSpeed.getConnectPerSecond() != 0) {
+    public static void decrease(CounterType type) {
+        if (type == CounterType.CONNECT && AttackSpeed.getConnectPerSecond() != 0) {
             AttackSpeed.setConnectPerSecond(AttackSpeed.getConnectPerSecond() - 1);
         }
-        if (type == AttackType.PING && AttackSpeed.getPingPerSecond() != 0) {
+        if (type == CounterType.PING && AttackSpeed.getPingPerSecond() != 0) {
             AttackSpeed.setPingPerSecond(AttackSpeed.getPingPerSecond() - 1);
         }
     }
