@@ -22,9 +22,6 @@ import me.ishift.epicguard.common.types.GeoMode;
 import java.util.List;
 
 public class Config {
-    public static final Yaml BUKKIT = new Yaml("config.yml", "plugins/EpicGuard");
-    public static final Yaml BUNGEE = new Yaml("config_bungee.yml", "plugins/EpicGuard");
-
     public static String firewallBlacklistCommand;
     public static String firewallWhitelistCommand;
     public static boolean firewallEnabled;
@@ -79,64 +76,67 @@ public class Config {
     public static boolean customTabCompleteBypass;
 
     public static void loadBukkit() {
-        BUKKIT.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
+        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
+        config.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
 
-        firewallEnabled = BUKKIT.getBoolean("firewall");
-        firewallBlacklistCommand = BUKKIT.getString("firewall.command-blacklist");
-        firewallWhitelistCommand = BUKKIT.getString("firewall.command-whitelist");
-        connectSpeed = BUKKIT.getInt("speed.connection");
-        pingSpeed = BUKKIT.getInt("speed.ping-speed");
-        autoWhitelist = BUKKIT.getBoolean("auto-whitelist.enabled");
-        autoWhitelistTime = BUKKIT.getInt("auto-whitelist.time");
-        apiKey = BUKKIT.getString("antibot.api-key");
-        countryList = BUKKIT.getStringList("countries.list");
-        updater = BUKKIT.getBoolean("updater");
-        tabCompleteBlock = BUKKIT.getBoolean("fully-block-tab-complete");
-        blockedCommands = BUKKIT.getStringList("command-protection.list");
-        allowedCommands = BUKKIT.getStringList("allowed-commands.list");
-        opProtectionList = BUKKIT.getStringList("op-protection.list");
-        opProtectionAlert = BUKKIT.getString("op-protection.alert");
-        opProtectionCommand = BUKKIT.getString("op-protection.command");
-        blockedCommandsEnable = BUKKIT.getBoolean("command-protection.enabled");
-        allowedCommandsEnable = BUKKIT.getBoolean("allowed-commands.enabled");
-        opProtectionEnable = BUKKIT.getBoolean("op-protection.enabled");
-        ipHistoryEnable = BUKKIT.getBoolean("ip-history.enabled");
-        pexProtection = BUKKIT.getBoolean("op-protection.pex-protection");
-        blockedNames = BUKKIT.getStringList("antibot.name-contains");
-        filterEnabled = BUKKIT.getBoolean("console-filter.enabled");
-        filterValues = BUKKIT.getStringList("console-filter.messages");
-        bandwidthOptimizer = BUKKIT.getBoolean("bandwidth-optimizer");
-        customTabComplete = BUKKIT.getBoolean("custom-tab-complete.enabled");
-        customTabCompleteList = BUKKIT.getStringList("custom-tab-complete.list");
-        allowedCommandsBypass = BUKKIT.getBoolean("bypass.allowed-commands");
-        customTabCompleteBypass = BUKKIT.getBoolean("bypass.custom-tab-complete");
+        firewallEnabled = config.getBoolean("firewall");
+        firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+        firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+        connectSpeed = config.getInt("speed.connection");
+        pingSpeed = config.getInt("speed.ping-speed");
+        autoWhitelist = config.getBoolean("auto-whitelist.enabled");
+        autoWhitelistTime = config.getInt("auto-whitelist.time");
+        apiKey = config.getString("antibot.api-key");
+        countryList = config.getStringList("countries.list");
+        updater = config.getBoolean("updater");
+        tabCompleteBlock = config.getBoolean("fully-block-tab-complete");
+        blockedCommands = config.getStringList("command-protection.list");
+        allowedCommands = config.getStringList("allowed-commands.list");
+        opProtectionList = config.getStringList("op-protection.list");
+        opProtectionAlert = config.getString("op-protection.alert");
+        opProtectionCommand = config.getString("op-protection.command");
+        blockedCommandsEnable = config.getBoolean("command-protection.enabled");
+        allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
+        opProtectionEnable = config.getBoolean("op-protection.enabled");
+        ipHistoryEnable = config.getBoolean("ip-history.enabled");
+        pexProtection = config.getBoolean("op-protection.pex-protection");
+        blockedNames = config.getStringList("antibot.name-contains");
+        filterEnabled = config.getBoolean("console-filter.enabled");
+        filterValues = config.getStringList("console-filter.messages");
+        bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
+        customTabComplete = config.getBoolean("custom-tab-complete.enabled");
+        customTabCompleteList = config.getStringList("custom-tab-complete.list");
+        allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
+        customTabCompleteBypass = config.getBoolean("bypass.custom-tab-complete");
 
-        serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
-        rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
-        geoCity = BUKKIT.getOrSetDefault("countries.enable-cities", false);
+        serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
+        rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
+        geoCity = config.getOrSetDefault("countries.enable-cities", false);
 
-        final String countryModeString = BUKKIT.getOrSetDefault("countries.mode", "DISABLED");
+        final String countryModeString = config.getString("countries.mode");
         countryMode = GeoMode.valueOf(countryModeString);
     }
 
     public static void loadBungee() {
-        BUNGEE.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
-        firewallEnabled = BUNGEE.getBoolean("firewall");
-        firewallBlacklistCommand = BUNGEE.getString("firewall.command-blacklist");
-        firewallWhitelistCommand = BUNGEE.getString("firewall.command-whitelist");
-        connectSpeed = BUNGEE.getInt("speed.connection");
-        pingSpeed = BUNGEE.getInt("speed.ping-speed");
-        apiKey = BUNGEE.getString("antibot.api-key");
-        countryList = BUNGEE.getStringList("countries.list");
-        blockedNames = BUNGEE.getStringList("antibot.name-contains");
-        filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
-        filterValues = BUNGEE.getStringList("console-filter.messages");
-        bandwidthOptimizer = BUNGEE.getBoolean("bandwidth-optimizer");
+        final Yaml config = new Yaml("config_bungee.yml", "plugins/EpicGuard");
+        config.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
 
-        serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
-        rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
+        firewallEnabled = config.getBoolean("firewall");
+        firewallBlacklistCommand = config.getString("firewall.command-blacklist");
+        firewallWhitelistCommand = config.getString("firewall.command-whitelist");
+        connectSpeed = config.getInt("speed.connection");
+        pingSpeed = config.getInt("speed.ping-speed");
+        apiKey = config.getString("antibot.api-key");
+        countryList = config.getStringList("countries.list");
+        blockedNames = config.getStringList("antibot.name-contains");
+        filterEnabled = config.getBoolean("console-filter.enabled");
+        filterValues = config.getStringList("console-filter.messages");
+        bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
 
-        final String countryModeString = BUNGEE.getOrSetDefault("countries.mode", "DISABLED");
+        serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
+        rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
+
+        final String countryModeString = config.getOrSetDefault("countries.mode", "DISABLED");
         countryMode = GeoMode.valueOf(countryModeString);
     }
 }

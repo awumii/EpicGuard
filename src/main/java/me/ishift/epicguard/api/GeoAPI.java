@@ -53,7 +53,7 @@ public class GeoAPI {
 
             if (Config.geoCity) {
                 if (!cityFile.exists() || isOutdated(timestampFile)) {
-                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", countryFile);
+                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
                     Logger.eraseFile(timestampFile);
                     Logger.writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
