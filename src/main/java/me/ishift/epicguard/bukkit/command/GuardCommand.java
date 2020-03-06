@@ -90,7 +90,7 @@ public class GuardCommand implements CommandExecutor {
 
         else if (args[0].equalsIgnoreCase("player")) {
             if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + "player <player>"));
+                send(sender, Messages.usage.replace("{USAGE}", s + " player <player>"));
                 return true;
             }
             final Player player = Bukkit.getPlayer(args[1]);
@@ -112,7 +112,7 @@ public class GuardCommand implements CommandExecutor {
 
         else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + "whitelist <address>"));
+                send(sender, Messages.usage.replace("{USAGE}", s + " whitelist <address>"));
                 return true;
             }
             final String address = args[1];
@@ -122,7 +122,7 @@ public class GuardCommand implements CommandExecutor {
 
         else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + "blacklist <address>"));
+                send(sender, Messages.usage.replace("{USAGE}", s + " blacklist <address>"));
                 return true;
             }
             final String address = args[1];

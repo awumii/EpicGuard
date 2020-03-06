@@ -70,7 +70,7 @@ public class GuardCommand extends Command {
 
         else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", "guard whitelist <adress>"));
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard whitelist <adress>"));
                 return;
             }
             final String address = args[1];
@@ -80,7 +80,7 @@ public class GuardCommand extends Command {
 
         else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", "guard blacklist <adress>"));
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard blacklist <adress>"));
                 return;
             }
             final String address = args[1];
