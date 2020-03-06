@@ -23,16 +23,30 @@ import java.util.Map;
 public class UserManager {
     private static final Map<Player, User> userMap = new HashMap<>();
 
-    public static User getUser(Player p) {
-        return userMap.get(p);
+    /**
+     * @param player Target player.
+     * @return User object related to the player.
+     */
+    public static User getUser(Player player) {
+        return userMap.get(player);
     }
 
-    public static void addUser(Player p) {
-        User user = new User(p);
-        userMap.put(p, user);
+    /**
+     * Adding new User to userMap HashMap.
+     *
+     * @param player Target player.
+     */
+    public static void addUser(Player player) {
+        User user = new User(player);
+        userMap.put(player, user);
     }
 
-    public static void removeUser(Player p) {
-        userMap.remove(p);
+    /**
+     * Should be invoked when player becomes null (eg. when he quit server).
+     *
+     * @param player Target player.
+     */
+    public static void removeUser(Player player) {
+        userMap.remove(player);
     }
 }

@@ -19,10 +19,8 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
-import me.ishift.epicguard.bukkit.util.server.Reflection;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Logger;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.util.ChatUtil;
@@ -72,32 +70,6 @@ public class PlayerJoinListener implements Listener {
                 }
                 StorageManager.getFile().set("address-history." + player.getName(), history);
                 user.setAddressList(history);
-            }
-
-            // Brand Verification
-            if (Reflection.isOldVersion()) {
-                PluginMessagesListener.addChannel(player, "MC|BRAND");
-                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (!player.isOnline()) {
-                        return;
-                    }
-
-                    if (Config.channelVerification) {
-                        if (user.getBrand().equals("none")) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.channelPunish).replace("{PLAYER}", player.getName()));
-                            Logger.info(player.getName() + "has been connection! If you think this is an issue, disable 'channel-verification'. Do NOT report this! This is not a bug!");
-                            return;
-                        }
-                        return;
-                    }
-                    if (Config.blockedBrands) {
-                        for (String string : Config.blockedBrandsValues) {
-                            if (user.getBrand().equalsIgnoreCase(string)) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.fix(Config.blockedBrandsPunish).replace("{PLAYER}", player.getName()));
-                            }
-                        }
-                    }
-                }, Config.channelDelay);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

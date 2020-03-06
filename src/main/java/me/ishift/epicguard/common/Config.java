@@ -63,14 +63,6 @@ public class Config {
     public static boolean filterEnabled;
     public static List<String> filterValues;
 
-    public static boolean channelVerification;
-    public static long channelDelay;
-    public static String channelPunish;
-
-    public static boolean blockedBrands;
-    public static String blockedBrandsPunish;
-    public static List<String> blockedBrandsValues;
-
     public static boolean customTabComplete;
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;

@@ -24,7 +24,6 @@ import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.util.ChatUtil;
@@ -42,7 +41,12 @@ public class GuardGui {
     public static final Inventory INVENTORY_MANAGEMENT = Bukkit.createInventory(null, 27, "EpicGuard Management Menu");
     public static final Inventory INVENTORY_PLAYER = Bukkit.createInventory(null, 36, "EpicGuard Player Manager");
 
-    public static void showMain(Player p) {
+    /**
+     * Opens main EpicGuard management GUI.
+     *
+     * @param player Target player.
+     */
+    public static void showMain(Player player) {
         final ItemStack i1 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CLOCK))
                 .setTitle("&cServer real-time status")
                 .addLore("&7See status of your server, in real time.")
@@ -87,7 +91,7 @@ public class GuardGui {
                 .addLore("")
                 .addLore("&6Operators:")
                 .addLore("  &7Amount: &c" + Bukkit.getOperators().size())
-                .addLores(Bukkit.getOperators().stream().map(player -> ChatUtil.fix("  &8- &7" + player.getName() + " &8[" + (player.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
+                .addLores(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix("  &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
         final ItemStack i7 = new ItemBuilder(Material.GOLD_NUGGET)
@@ -124,23 +128,27 @@ public class GuardGui {
         INVENTORY_MANAGEMENT.setItem(16, i4);
         //inventory.setItem(20, i7);
         //eq.setItem(4, i8);
-        p.openInventory(INVENTORY_MANAGEMENT);
+        player.openInventory(INVENTORY_MANAGEMENT);
     }
 
-    public static void showPlayers(Player p) {
+    /**
+     * Opens EpicGuard player management GUI
+     *
+     * @param player Target player.
+     */
+    public static void showPlayers(Player player) {
         int i = 0;
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player1 : Bukkit.getOnlinePlayers()) {
             final List<String> lore = new ArrayList<>();
-            final User user = UserManager.getUser(player);
+            final User user = UserManager.getUser(player1);
 
             lore.add("");
             lore.add(ChatUtil.fix("&6Basic Information:"));
-            lore.add(ChatUtil.fix("  &7Name&8: &f" + player.getName()));
-            lore.add(ChatUtil.fix("  &7UUID&8: &f" + player.getUniqueId()));
-            lore.add(ChatUtil.fix("  &7OP&8: " + (player.isOp() ? "&aYes" : "&cNo")));
+            lore.add(ChatUtil.fix("  &7Name&8: &f" + player1.getName()));
+            lore.add(ChatUtil.fix("  &7UUID&8: &f" + player1.getUniqueId()));
+            lore.add(ChatUtil.fix("  &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
             lore.add(ChatUtil.fix("  &7Country&8: &f" + EpicGuardAPI.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(ChatUtil.fix("  &7City&8: &f" + EpicGuardAPI.getGeoApi().getCity(user.getAddress())));
-            lore.add(ChatUtil.fix("  &7Client Brand&8: &f" + user.getBrand()));
 
             if (Config.ipHistoryEnable && user.getAddresses() != null) {
                 lore.add("");
@@ -149,7 +157,7 @@ public class GuardGui {
             }
 
             final ItemStack itemStack = new ItemBuilder(Material.CHAINMAIL_CHESTPLATE)
-                    .setTitle((player.isOp() ? "&c[OP] " + player.getName() : "&a") + player.getName())
+                    .setTitle((player1.isOp() ? "&c[OP] " : "&a") + player1.getName())
                     .addLores(lore)
                     .build();
 
@@ -158,6 +166,6 @@ public class GuardGui {
         }
         final ItemStack back = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.FENCE_GATE)).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
         INVENTORY_PLAYER.setItem(35, back);
-        p.openInventory(INVENTORY_PLAYER);
+        player.openInventory(INVENTORY_PLAYER);
     }
 }
