@@ -40,22 +40,22 @@ public class GeoAPI {
 
             final File countryFile = new File("plugins/EpicGuard/data/GeoLite2-Country.mmdb");
             final File cityFile = new File("plugins/EpicGuard/data/GeoLite2-City.mmdb");
-            final File dateFile = new File("plugins/EpicGuard/data/last_db_download.txt");
+            final File timestampFile = new File("plugins/EpicGuard/data/last_db_download.txt");
 
             if (Config.countryMode != GeoMode.DISABLED) {
-                if (!countryFile.exists() || isOutdated(dateFile)) {
+                if (!countryFile.exists() || isOutdated(timestampFile)) {
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
-                    Logger.eraseFile(dateFile);
-                    Logger.writeToFile(dateFile, String.valueOf(System.currentTimeMillis()));
+                    Logger.eraseFile(timestampFile);
+                    Logger.writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
-            if (!Config.geoCity) {
-                if (!cityFile.exists() || isOutdated(dateFile)) {
+            if (Config.geoCity) {
+                if (!cityFile.exists() || isOutdated(timestampFile)) {
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", countryFile);
-                    Logger.eraseFile(dateFile);
-                    Logger.writeToFile(dateFile, String.valueOf(System.currentTimeMillis()));
+                    Logger.eraseFile(timestampFile);
+                    Logger.writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
