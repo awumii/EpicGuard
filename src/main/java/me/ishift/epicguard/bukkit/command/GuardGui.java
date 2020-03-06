@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
@@ -22,11 +23,11 @@ import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.server.Memory;
 import me.ishift.epicguard.bukkit.util.server.ServerTPS;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.GeoAPI;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.AttackSpeed;
-import me.ishift.epicguard.universal.util.ChatUtil;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -137,7 +138,8 @@ public class GuardGui {
             lore.add(ChatUtil.fix("  &7Name&8: &f" + player.getName()));
             lore.add(ChatUtil.fix("  &7UUID&8: &f" + player.getUniqueId()));
             lore.add(ChatUtil.fix("  &7OP&8: " + (player.isOp() ? "&aYes" : "&cNo")));
-            lore.add(ChatUtil.fix("  &7Country&8: &f" + GeoAPI.getCountryCode(user.getAddress())));
+            lore.add(ChatUtil.fix("  &7Country&8: &f" + EpicGuardAPI.getGeoApi().getCountryCode(user.getAddress())));
+            lore.add(ChatUtil.fix("  &7City&8: &f" + EpicGuardAPI.getGeoApi().getCity(user.getAddress())));
             lore.add(ChatUtil.fix("  &7Client Brand&8: &f" + user.getBrand()));
 
             if (Config.ipHistoryEnable && user.getAddresses() != null) {

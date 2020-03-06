@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.util.server;
 
-import me.ishift.epicguard.universal.Config;
+import me.ishift.epicguard.common.Config;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;

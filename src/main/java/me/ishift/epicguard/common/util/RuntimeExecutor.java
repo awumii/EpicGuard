@@ -13,12 +13,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal.util;
+package me.ishift.epicguard.common.util;
 
-import net.md_5.bungee.api.ChatColor;
+import me.ishift.epicguard.common.Config;
 
-public class ChatUtil {
-    public static String fix(String text) {
-        return ChatColor.translateAlternateColorCodes('&', text.replace(">>", "»"));
+import java.io.IOException;
+
+public class RuntimeExecutor {
+    public static void execute(String command) {
+        if (!Config.firewallEnabled) return;
+        try {
+            Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void blacklist(String adress) {
+        execute(Config.firewallBlacklistCommand.replace("{IP}", adress));
+    }
+
+    public static void whitelist(String adress) {
+        execute(Config.firewallWhitelistCommand.replace("{IP}", adress));
     }
 }

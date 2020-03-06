@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.common;
 
 import me.ishift.epicguard.bukkit.util.misc.Notificator;
 import me.ishift.epicguard.bungee.GuardBungee;

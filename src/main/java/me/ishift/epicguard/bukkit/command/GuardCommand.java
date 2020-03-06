@@ -15,16 +15,17 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Messages;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.AttackSpeed;
-import me.ishift.epicguard.universal.util.ChatUtil;
-import me.ishift.epicguard.universal.GeoAPI;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.api.GeoAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -99,7 +100,8 @@ public class GuardCommand implements CommandExecutor {
             }
             send(sender, "&7Name: &f" + player.getName());
             send(sender, "&7UUID: &f" + player.getUniqueId());
-            send(sender, "&7Country: &f" + GeoAPI.getCountryCode(player.getAddress().getAddress().getHostAddress()));
+            send(sender, "&7Country: &f" + EpicGuardAPI.getGeoApi().getCountryCode(player.getAddress().getAddress().getHostAddress()));
+            send(sender, "&7City: &f" + EpicGuardAPI.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
             if (Config.ipHistoryEnable) {

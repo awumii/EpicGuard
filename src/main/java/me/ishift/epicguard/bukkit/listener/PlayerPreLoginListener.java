@@ -15,15 +15,16 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.universal.Config;
-import me.ishift.epicguard.universal.Logger;
-import me.ishift.epicguard.universal.StorageManager;
-import me.ishift.epicguard.universal.AttackSpeed;
-import me.ishift.epicguard.universal.check.*;
-import me.ishift.epicguard.universal.types.AttackType;
-import me.ishift.epicguard.universal.GeoAPI;
-import me.ishift.epicguard.universal.types.Reason;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Logger;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.check.*;
+import me.ishift.epicguard.common.types.CounterType;
+import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.common.types.Reason;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,7 +36,7 @@ public class PlayerPreLoginListener implements Listener {
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         final String address = event.getAddress().getHostAddress();
         final String name = event.getName();
-        final String country = GeoAPI.getCountryCode(address);
+        final String country = EpicGuardAPI.getGeoApi().getCountryCode(address);
 
         if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
             AttackSpeed.setAttackMode(true);
@@ -49,8 +50,8 @@ public class PlayerPreLoginListener implements Listener {
         Logger.debug("Country: " + country);
         Logger.debug(" ");
 
-        AttackSpeed.increase(AttackType.CONNECT);
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(AttackType.CONNECT), 20L);
+        AttackSpeed.increase(CounterType.CONNECT);
+        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 20L);
 
         if (StorageManager.isWhitelisted(address)) {
             return;

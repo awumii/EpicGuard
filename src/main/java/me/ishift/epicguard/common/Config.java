@@ -13,10 +13,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.common;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
+import me.ishift.epicguard.common.types.GeoMode;
 
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class Config {
     public static String apiKey;
 
     public static List<String> countryList;
-    public static String countryMode;
+    public static GeoMode countryMode;
+    public static boolean geoCity;
 
     public static List<String> blockedNames;
     public static boolean updater;
@@ -88,7 +90,6 @@ public class Config {
         autoWhitelistTime = BUKKIT.getInt("auto-whitelist.time");
         apiKey = BUKKIT.getString("antibot.api-key");
         countryList = BUKKIT.getStringList("countries.list");
-        countryMode = BUKKIT.getString("countries.mode");
         updater = BUKKIT.getBoolean("updater");
         tabCompleteBlock = BUKKIT.getBoolean("fully-block-tab-complete");
         blockedCommands = BUKKIT.getStringList("command-protection.list");
@@ -112,6 +113,8 @@ public class Config {
 
         serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
+        geoCity = BUKKIT.getOrSetDefault("countries.enable-cities", false);
+        countryMode = GeoMode.valueOf(BUKKIT.getString("countries.mode"));
     }
 
     public static void loadBungee() {
@@ -123,7 +126,6 @@ public class Config {
         pingSpeed = BUNGEE.getInt("speed.ping-speed");
         apiKey = BUNGEE.getString("antibot.api-key");
         countryList = BUNGEE.getStringList("countries.list");
-        countryMode = BUNGEE.getString("countries.mode");
         blockedNames = BUNGEE.getStringList("antibot.name-contains");
         filterEnabled = BUNGEE.getBoolean("console-filter.enabled");
         filterValues = BUNGEE.getStringList("console-filter.messages");
@@ -131,5 +133,6 @@ public class Config {
 
         serverListCheck = BUKKIT.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = BUKKIT.getOrSetDefault("antibot.rejoin-check", true);
+        countryMode = GeoMode.valueOf(BUKKIT.getString("countries.mode"));
     }
 }

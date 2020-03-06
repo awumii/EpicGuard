@@ -16,7 +16,6 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.command.GuardGui;
-import me.ishift.epicguard.universal.AttackSpeed;
 import org.bukkit.Bukkit;
 
 public class RefreshTask implements Runnable {

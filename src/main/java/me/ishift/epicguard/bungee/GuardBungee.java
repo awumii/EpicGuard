@@ -15,11 +15,13 @@
 
 package me.ishift.epicguard.bungee;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.ProxyPingListener;
 import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
-import me.ishift.epicguard.universal.*;
+import me.ishift.epicguard.common.*;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -56,8 +58,6 @@ public class GuardBungee extends Plugin {
         Messages.load();
         Logger.init();
 
-        GeoAPI.init();
-
         this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
 
@@ -69,6 +69,8 @@ public class GuardBungee extends Plugin {
         final BungeeMetrics metrics = new BungeeMetrics(this, 5956);
         metrics.addCustomChart(new BungeeMetrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
         metrics.addCustomChart(new BungeeMetrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
+
+        EpicGuardAPI.setGeoApi(new GeoAPI());
     }
 
     @Override

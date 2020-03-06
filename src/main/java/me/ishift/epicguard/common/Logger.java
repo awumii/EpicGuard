@@ -13,9 +13,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.universal;
+package me.ishift.epicguard.common;
 
-import me.ishift.epicguard.universal.util.DateUtil;
+import me.ishift.epicguard.common.util.DateUtil;
 
 import java.io.*;
 
