@@ -93,7 +93,7 @@ public class GeoAPI {
         if (address != null && getCityReader() != null) {
             if (!address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
                 try {
-                    return countryReader.city(address).getCity().getName();
+                    return getCityReader().city(address).getCity().getName();
                 } catch (IOException | GeoIp2Exception e) {
                     Logger.info("[GeoIp2Exception/IOException] Can't find city for address: " + host);
                 }
