@@ -17,13 +17,14 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Logger;
-import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.check.*;
+import me.ishift.epicguard.common.BotCheck;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
+import me.ishift.epicguard.common.util.Detection;
+import me.ishift.epicguard.common.util.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,7 +48,6 @@ public class PlayerPreLoginListener implements Listener {
         Logger.debug("Player: " + name);
         Logger.debug("Address: " + address);
         Logger.debug("Country: " + country);
-        Logger.debug(" ");
 
         AttackSpeed.increase(CounterType.CONNECT);
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 20L);
@@ -56,34 +56,13 @@ public class PlayerPreLoginListener implements Listener {
             return;
         }
 
-        if (BlacklistCheck.perform(address)) {
-            handleDetection(address, event, Reason.BLACKLIST, false);
+        final Detection detection = BotCheck.getDetection(address, name);
+        if (detection.isDetected()) {
+            handleDetection(address, event, detection.getReason(), detection.isBlacklist());
+            Logger.debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
-
-        if (NameContainsCheck.perform(name)) {
-            handleDetection(address, event, Reason.NAMECONTAINS, true);
-            return;
-        }
-
-        if (GeoCheck.perform(address)) {
-            handleDetection(address, event, Reason.GEO, true);
-            return;
-        }
-
-        if (ServerListCheck.perform(address)) {
-            handleDetection(address, event, Reason.SERVERLIST, false);
-            return;
-        }
-
-        if (VerifyCheck.perform(name)) {
-            handleDetection(address, event, Reason.VERIFY, false);
-            return;
-        }
-
-        if (ProxyCheck.perform(address)) {
-            handleDetection(address, event, Reason.PROXY, true);
-        }
+        Logger.debug("Player has been not detected by any check.");
     }
 
     public static void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {

@@ -16,9 +16,8 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.check.ServerListCheck;
+import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.types.CounterType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ServerPing;

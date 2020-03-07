@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.bukkit.task;
 
-import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.Config;
 
 public class AttackTask implements Runnable {
 
