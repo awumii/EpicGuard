@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bukkit.task;
 
 import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.common.Logger;
+import me.ishift.epicguard.common.util.Logger;
 
 public class UpdaterTask implements Runnable {
     @Override

@@ -19,9 +19,9 @@ import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Logger;
 import me.ishift.epicguard.common.Downloader;
 import me.ishift.epicguard.common.types.GeoMode;
+import me.ishift.epicguard.common.util.Logger;
 
 import java.io.File;
 import java.io.IOException;

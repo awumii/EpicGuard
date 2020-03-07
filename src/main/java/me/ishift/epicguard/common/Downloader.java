@@ -15,6 +15,8 @@
 
 package me.ishift.epicguard.common;
 
+import me.ishift.epicguard.common.util.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

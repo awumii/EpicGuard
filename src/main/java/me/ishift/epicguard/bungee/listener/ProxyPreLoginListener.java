@@ -16,12 +16,13 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.common.Logger;
-import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.check.*;
+import me.ishift.epicguard.common.BotCheck;
+import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
+import me.ishift.epicguard.common.util.Detection;
+import me.ishift.epicguard.common.util.Logger;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -45,34 +46,13 @@ public class ProxyPreLoginListener implements Listener {
             return;
         }
 
-        if (BlacklistCheck.perform(address)) {
-            handleDetection(address, connection, Reason.BLACKLIST, false);
+        final Detection detection = BotCheck.getDetection(address, name);
+        if (detection.isDetected()) {
+            handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
+            Logger.debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
-
-        if (NameContainsCheck.perform(name)) {
-            handleDetection(address, connection, Reason.NAMECONTAINS, true);
-            return;
-        }
-
-        if (GeoCheck.perform(address)) {
-            handleDetection(address, connection, Reason.GEO, true);
-            return;
-        }
-
-        if (ServerListCheck.perform(address)) {
-            handleDetection(address, connection, Reason.SERVERLIST, false);
-            return;
-        }
-
-        if (VerifyCheck.perform(name)) {
-            handleDetection(address, connection, Reason.VERIFY, false);
-            return;
-        }
-
-        if (ProxyCheck.perform(address)) {
-            handleDetection(address, connection, Reason.PROXY, true);
-        }
+        Logger.debug("Player has been not detected by any check.");
     }
 
     public static void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {
