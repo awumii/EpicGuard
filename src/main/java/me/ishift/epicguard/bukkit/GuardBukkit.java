@@ -69,8 +69,11 @@ public class GuardBukkit extends JavaPlugin {
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
 
-        final LogFilter filter = new LogFilter(Config.filterValues);
-        filter.registerFilter();
+        if (Config.filterEnabled) {
+            final LogFilter filter = new LogFilter();
+            filter.setFilteredMessages(Config.filterValues);
+            filter.registerFilter();
+        }
 
         Updater.checkForUpdates();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
