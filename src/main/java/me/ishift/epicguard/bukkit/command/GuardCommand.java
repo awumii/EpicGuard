@@ -19,17 +19,18 @@ import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.util.server.Updater;
+import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
-import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class GuardCommand implements CommandExecutor {
     public static void send(CommandSender sender, String message) {
@@ -37,8 +38,8 @@ public class GuardCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String s, String[] args) {
-        if (sender instanceof Player && !sender.hasPermission(GuardBukkit.PERMISSION)) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String s, @NotNull String[] args) {
+        if (sender instanceof Player && !sender.hasPermission("epicguard.admin")) {
             send(sender, "&7This server uses &6EpicGuard v" + Updater.getCurrentVersion() + " &7by &ciShift&7.");
             send(sender, Messages.noPermission);
             return true;
