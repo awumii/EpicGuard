@@ -15,10 +15,10 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.util.ChatUtil;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +39,7 @@ public class PlayerCommandListener implements Listener {
                 event.setCancelled(true);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
                 Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
+                EpicGuardAPI.getLogger().info("Player " + player.getName() + " has been detected for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                 return;
             }
             // "*" Permission probably can't be detected, so i added checking random permission, if player is not OP.
@@ -47,7 +47,7 @@ public class PlayerCommandListener implements Listener {
                 event.setCancelled(true);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
                 Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                Logger.info("Player " + player.getName() + " has been banned for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
+                EpicGuardAPI.getLogger().info("Player " + player.getName() + " has been detected for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
                 return;
             }
         }
@@ -59,7 +59,7 @@ public class PlayerCommandListener implements Listener {
             }
             event.setCancelled(true);
             player.sendMessage(ChatUtil.fix(Messages.notAllowedCommand));
-            Logger.info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
+            EpicGuardAPI.getLogger().info("Player " + player.getName() + " tried to use command " + cmd + " but has no permission for it!");
             return;
         }
 
@@ -67,7 +67,7 @@ public class PlayerCommandListener implements Listener {
         if (Config.blockedCommandsEnable && Config.blockedCommands.contains(args[0])) {
             event.setCancelled(true);
             player.sendMessage(ChatUtil.fix(Messages.prefix + Messages.blockedCommand));
-            Logger.info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
+            EpicGuardAPI.getLogger().info("Player " + player.getName() + " tried to use forbidden command! (" + cmd + ")");
         }
     }
 }

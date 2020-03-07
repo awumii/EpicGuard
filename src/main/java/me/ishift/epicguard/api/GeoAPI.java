@@ -19,9 +19,7 @@ import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Downloader;
 import me.ishift.epicguard.common.types.GeoMode;
-import me.ishift.epicguard.common.util.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,29 +31,36 @@ public class GeoAPI {
     private DatabaseReader countryReader;
     private DatabaseReader cityReader;
 
-    public GeoAPI() {
+    /**
+     * Creating new GeoAPI instance.
+     */
+    public GeoAPI(String basePath) {
         try {
-            Logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
-            Logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
+            EpicGuardAPI.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
+            EpicGuardAPI.getLogger().info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
 
-            final File countryFile = new File("plugins/EpicGuard/data/GeoLite2-Country.mmdb");
-            final File cityFile = new File("plugins/EpicGuard/data/GeoLite2-City.mmdb");
-            final File timestampFile = new File("plugins/EpicGuard/data/last_db_download.txt");
+            final File countryFile = new File(basePath + "/GeoLite2-Country.mmdb");
+            final File cityFile = new File(basePath + "/GeoLite2-City.mmdb");
+            final File timestampFile = new File(basePath + "/last_db_download.txt");
 
             if (Config.countryMode != GeoMode.DISABLED) {
                 if (!countryFile.exists() || isOutdated(timestampFile)) {
-                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
-                    Logger.eraseFile(timestampFile);
-                    Logger.writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
+                    final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
+                    downloader.download();
+
+                    EpicGuardAPI.getLogger().eraseFile(timestampFile);
+                    EpicGuardAPI.getLogger().writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
             if (Config.geoCity) {
                 if (!cityFile.exists() || isOutdated(timestampFile)) {
-                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
-                    Logger.eraseFile(timestampFile);
-                    Logger.writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
+                    final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
+                    downloader.download();
+
+                    EpicGuardAPI.getLogger().eraseFile(timestampFile);
+                    EpicGuardAPI.getLogger().writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
@@ -76,7 +81,7 @@ public class GeoAPI {
                 try {
                     return getCountryReader().country(address).getCountry().getIsoCode();
                 } catch (IOException | GeoIp2Exception e) {
-                    Logger.info("[GeoIp2Exception/IOException] Can't find country for address: " + host);
+                    EpicGuardAPI.getLogger().info("[GeoIp2Exception/IOException] Can't find country for address: " + host);
                 }
             }
         }
@@ -95,7 +100,7 @@ public class GeoAPI {
                 try {
                     return getCityReader().city(address).getCity().getName();
                 } catch (IOException | GeoIp2Exception e) {
-                    Logger.info("[GeoIp2Exception/IOException] Can't find city for address: " + host);
+                    EpicGuardAPI.getLogger().info("[GeoIp2Exception/IOException] Can't find city for address: " + host);
                 }
             }
         }
@@ -125,7 +130,7 @@ public class GeoAPI {
         try {
             return InetAddress.getByName(hostname);
         } catch (UnknownHostException e) {
-            Logger.info("[UnknownHostException] Can't resolve InetAddress from hostname: " + hostname);
+            EpicGuardAPI.getLogger().info("[UnknownHostException] Can't resolve InetAddress from hostname: " + hostname);
         }
         return null;
     }

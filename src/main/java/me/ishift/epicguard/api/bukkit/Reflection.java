@@ -13,27 +13,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.server;
+package me.ishift.epicguard.api.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Reflection {
-    private static String version;
-
-    public static void init() {
-        version = Bukkit.getServer().getClass().getPackage().getName();
-        version = version.substring(version.lastIndexOf(".") + 1);
-    }
-
-    public static boolean isOldVersion() {
-        return !version.startsWith("v1_13") && !version.startsWith("v1_14") && !version.startsWith("v1_15") && !version.startsWith("v1_16");
-    }
-
+    /**
+     * Example output for 1.8 "v1_8_R3".
+     *
+     * @return Current NMS version.
+     */
     public static String getVersion() {
-        return version;
+        final String version = Bukkit.getServer().getClass().getPackage().getName();
+        return version.substring(version.lastIndexOf(".") + 1);
     }
 
+    /**
+     * @return Is the server version older than 1.13 (material version change).
+     */
+    public static boolean isOldVersion() {
+        return !getVersion().startsWith("v1_13") || !getVersion().startsWith("v1_14") || !getVersion().startsWith("v1_15");
+    }
+
+    /**
+     * Sends specific packet to the player.
+     *
+     * @param player Target player.
+     * @param packet Packet object.
+     */
     public static void sendPacket(final Player player, final Object packet) {
         try {
             final Object handle = player.getClass().getMethod("getHandle").invoke(player);
@@ -44,6 +52,10 @@ public class Reflection {
         }
     }
 
+    /**
+     * @param name Name of the class.
+     * @return NMS class.
+     */
     public static Class<?> getNMSClass(final String name) {
         final String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {

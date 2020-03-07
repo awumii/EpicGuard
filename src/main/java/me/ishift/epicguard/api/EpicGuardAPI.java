@@ -15,18 +15,24 @@
 
 package me.ishift.epicguard.api;
 
-import me.ishift.epicguard.bukkit.util.server.ServerTPS;
-
 public class EpicGuardAPI {
     private static GeoAPI geoApi;
+    private static GuardLogger guardLogger;
 
     /**
-     * This method does work on every Bukkit-based server.
-     *
-     * @return Server's recent TPS (from 1 minute).
+     * @return Current Logger instance.
      */
-    public static String getBukkitTps() {
-        return ServerTPS.getTPS();
+    public static GuardLogger getLogger() {
+        return guardLogger;
+    }
+
+    /**
+     * Should be used only when plugin is loading.
+     *
+     * @param guardLogger New Logger instance.
+     */
+    public static void setLogger(GuardLogger guardLogger) {
+        EpicGuardAPI.guardLogger = guardLogger;
     }
 
     /**

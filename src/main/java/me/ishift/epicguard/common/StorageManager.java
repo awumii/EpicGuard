@@ -22,28 +22,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StorageManager {
-    private static final Json FILE = new Json("storage", "plugins/EpicGuard/data");
+    private static Json storage;
     private static List<String> blacklist = new ArrayList<>();
     private static List<String> whitelist = new ArrayList<>();
     private static int blockedBots = 0;
     private static int checkedConnections = 0;
 
     public static void load() {
-        blacklist = FILE.getOrSetDefault("addresses.blacklist", new ArrayList<>());
-        whitelist = FILE.getOrSetDefault("addresses.whitelist", new ArrayList<>());
-        blockedBots = FILE.getOrSetDefault("stats.blocked-bots", 0);
-        checkedConnections = FILE.getOrSetDefault("stats.checked-connections", 0);
+        storage = new Json("storage", "plugins/EpicGuard/data");
+        blacklist = storage.getOrSetDefault("addresses.blacklist", new ArrayList<>());
+        whitelist = storage.getOrSetDefault("addresses.whitelist", new ArrayList<>());
+        blockedBots = storage.getOrSetDefault("stats.blocked-bots", 0);
+        checkedConnections = storage.getOrSetDefault("stats.checked-connections", 0);
     }
 
     public static void save() {
-        FILE.set("addresses.blacklist", blacklist);
-        FILE.set("addresses.whitelist", whitelist);
-        FILE.set("stats.blocked-bots", blockedBots);
-        FILE.set("stats.checked-connections", checkedConnections);
+        storage.set("addresses.blacklist", blacklist);
+        storage.set("addresses.whitelist", whitelist);
+        storage.set("stats.blocked-bots", blockedBots);
+        storage.set("stats.checked-connections", checkedConnections);
     }
 
     public static Json getFile() {
-        return FILE;
+        return storage;
     }
 
     public static boolean isBlacklisted(String address) {
@@ -62,17 +63,17 @@ public class StorageManager {
         return whitelist;
     }
 
-    public static void blacklist(String adress) {
-        if (blacklist.contains(adress)) return;
-        blacklist.add(adress);
-        RuntimeExecutor.blacklist(adress);
+    public static void blacklist(String address) {
+        if (blacklist.contains(address)) return;
+        blacklist.add(address);
+        RuntimeExecutor.blacklist(address);
     }
 
-    public static void whitelist(String adress) {
-        if (whitelist.contains(adress)) return;
-        whitelist.add(adress);
-        blacklist.remove(adress);
-        RuntimeExecutor.blacklist(adress);
+    public static void whitelist(String address) {
+        if (whitelist.contains(address)) return;
+        whitelist.add(address);
+        blacklist.remove(address);
+        RuntimeExecutor.blacklist(address);
     }
 
     public static int getBlockedBots() {

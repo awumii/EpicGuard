@@ -13,9 +13,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.server;
+package me.ishift.epicguard.api;
 
-import me.ishift.epicguard.common.Config;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -24,12 +23,20 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
 
+import java.util.List;
+
 public class LogFilter extends AbstractFilter {
-    public LogFilter() {
+    private List<String> filteredMessages;
+
+    /**
+     * @param filteredMessages List of messages which should be hidden.
+     */
+    public LogFilter(List<String> filteredMessages) {
+        this.filteredMessages = filteredMessages;
     }
 
     public void registerFilter() {
-        Logger logger = (Logger) LogManager.getRootLogger();
+        final Logger logger = (Logger) LogManager.getRootLogger();
         logger.addFilter(this);
     }
 
@@ -53,17 +60,14 @@ public class LogFilter extends AbstractFilter {
         return msg == null ? Result.NEUTRAL : isLoggable(msg.toString());
     }
 
-    private Result isLoggable(String msg) {
-        if (msg != null) {
-            if (Config.filterEnabled) {
-                for (String string : Config.filterValues) {
-                    if (msg.contains(string)) {
-                        return Result.DENY;
-                    }
+    private Result isLoggable(String message) {
+        if (message != null) {
+            for (String string : this.filteredMessages) {
+                if (message.contains(string)) {
+                    return Result.DENY;
                 }
             }
         }
         return Result.NEUTRAL;
     }
-
 }

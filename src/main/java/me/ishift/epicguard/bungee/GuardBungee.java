@@ -25,7 +25,7 @@ import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.NotificationTask;
 import me.ishift.epicguard.common.StorageManager;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.api.GuardLogger;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -39,15 +39,18 @@ public class GuardBungee extends Plugin {
     public static boolean status = false;
     private static GuardBungee instance;
 
+    /**
+     * @return Instance of GuardBungee (Plugin)
+     */
     public static GuardBungee getInstance() {
         return instance;
     }
 
     @Override
     public void onEnable() {
+        EpicGuardAPI.setLogger(new GuardLogger());
         instance = this;
 
-        new File("plugins/EpicGuard").mkdir();
         final File file = new File(getDataFolder(), "config_bungee.yml");
         if (!file.exists()) {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {
@@ -60,7 +63,6 @@ public class GuardBungee extends Plugin {
         Config.loadBungee();
         StorageManager.load();
         Messages.load();
-        Logger.init();
 
         this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
@@ -74,7 +76,7 @@ public class GuardBungee extends Plugin {
         metrics.addCustomChart(new BungeeMetrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
         metrics.addCustomChart(new BungeeMetrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
 
-        EpicGuardAPI.setGeoApi(new GeoAPI());
+        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data"));
     }
 
     @Override

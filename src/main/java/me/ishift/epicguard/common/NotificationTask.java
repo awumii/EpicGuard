@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common;
 
-import me.ishift.epicguard.bukkit.util.misc.Notificator;
+import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 

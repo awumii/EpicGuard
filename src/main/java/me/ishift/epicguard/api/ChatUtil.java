@@ -13,25 +13,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.server;
+package me.ishift.epicguard.api;
 
-public class Memory {
-    private static long format(long value) {
-        return value / 1048576;
-    }
+import net.md_5.bungee.api.ChatColor;
 
-    public static long getUsage() {
-        final Runtime runtime = Runtime.getRuntime();
-        return format(runtime.maxMemory() - runtime.freeMemory());
-    }
-
-    public static long getTotal() {
-        final Runtime runtime = Runtime.getRuntime();
-        return format(runtime.maxMemory());
-    }
-
-    public static long getFree() {
-        final Runtime runtime = Runtime.getRuntime();
-        return format(runtime.freeMemory());
+public class ChatUtil {
+    /**
+     * @param text Raw message to be formatted.
+     * @return Message with formatted colors.
+     */
+    public static String fix(String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
     }
 }

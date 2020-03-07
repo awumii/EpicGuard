@@ -17,6 +17,7 @@ package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.BotCheck;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.types.CounterType;
 import net.md_5.bungee.api.ProxyServer;
@@ -31,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class ProxyPingListener implements Listener {
     @EventHandler
     public void onProxyPing(ProxyPingEvent event) {
-        ServerListCheck.addAddress(event.getConnection().getAddress().getAddress().getHostAddress());
+        BotCheck.addPing(event.getConnection().getAddress().getAddress().getHostAddress());
         AttackSpeed.increase(CounterType.PING);
         ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> AttackSpeed.decrease(CounterType.PING), 1, TimeUnit.SECONDS);
 

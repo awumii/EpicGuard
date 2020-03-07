@@ -13,21 +13,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.misc;
+package me.ishift.epicguard.bukkit.util;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.util.player.ActionBar;
+import me.ishift.epicguard.api.bukkit.ActionBarAPI;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 
 public class Notificator {
     public static void broadcast(String text) {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
-            if (u != null && player.hasPermission(GuardBukkit.PERMISSION)) {
+            if (u != null && player.hasPermission("epicguard.admin")) {
                 player.sendMessage(ChatUtil.fix(Messages.prefix + text));
             }
         });
@@ -37,8 +36,8 @@ public class Notificator {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
             if (u != null && u.isNotifications()) {
-                if (player.hasPermission(GuardBukkit.PERMISSION)) {
-                    ActionBar.sendActionBar(player, text);
+                if (player.hasPermission("epicguard.admin")) {
+                    ActionBarAPI.sendActionBar(player, text);
                 }
             }
         });
