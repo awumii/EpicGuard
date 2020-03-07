@@ -16,7 +16,6 @@
 package me.ishift.epicguard.api.bukkit;
 
 import me.ishift.epicguard.api.ChatUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -32,7 +31,7 @@ public class ItemBuilder {
     private final short data;
     private final List<String> lore;
     private final HashMap<Enchantment, Integer> enchants;
-    private Material mat;
+    private Material material;
     private int amount;
     private String title;
     private Color color;
@@ -40,44 +39,44 @@ public class ItemBuilder {
     /**
      * Creating ItemBuilder only with Material type.
      *
-     * @param mat Item type.
+     * @param material Item type.
      */
-    public ItemBuilder(final Material mat) {
-        this(mat, 1);
+    public ItemBuilder(final Material material) {
+        this(material, 1);
     }
 
     /**
      * Creating ItemBuilder with type and specified amount.
      *
-     * @param mat Item type.
+     * @param material Item type.
      * @param amount Item amount.
      */
-    public ItemBuilder(final Material mat, final int amount) {
-        this(mat, amount, (short) 0);
+    public ItemBuilder(final Material material, final int amount) {
+        this(material, amount, (short) 0);
     }
 
     /**
      * Creating ItemBuilder with type and data.
      *
-     * @param mat Item type.
+     * @param material Item type.
      * @param data Item data
      */
-    public ItemBuilder(final Material mat, final short data) {
-        this(mat, 1, data);
+    public ItemBuilder(final Material material, final short data) {
+        this(material, 1, data);
     }
 
     /**
      * Creating ItemBuilder with type, amount, and data.
      *
-     * @param mat Item type.
+     * @param material Item type.
      * @param amount Item amount.
      * @param data Item data.
      */
-    public ItemBuilder(final Material mat, final int amount, final short data) {
+    public ItemBuilder(final Material material, final int amount, final short data) {
         this.title = null;
         this.lore = new ArrayList<>();
         this.enchants = new HashMap<>();
-        this.mat = mat;
+        this.material = material;
         this.amount = amount;
         this.data = data;
     }
@@ -129,7 +128,7 @@ public class ItemBuilder {
      * @return Current ItemBuilder object.
      */
     public ItemBuilder setColor(final Color color) {
-        if (!this.mat.name().contains("LEATHER_")) {
+        if (!this.material.name().contains("LEATHER_")) {
             throw new IllegalArgumentException("Can't set color for NON-LEATHER material.");
         }
         this.color = color;
@@ -142,16 +141,12 @@ public class ItemBuilder {
      * @return Complete ItemStack with all data and meta.
      */
     public ItemStack build() {
-        final Material mat = this.mat;
-        if (mat == null) {
-            Bukkit.getLogger().warning("Material is null.");
-        }
-        final ItemStack item = new ItemStack(this.mat, this.amount, this.data);
+        final ItemStack item = new ItemStack(this.material, this.amount, this.data);
         final ItemMeta meta = item.getItemMeta();
-        if (this.title != null) {
+        if (this.title != null && meta != null) {
             meta.setDisplayName(this.title);
         }
-        if (!this.lore.isEmpty()) {
+        if (!this.lore.isEmpty() && meta != null) {
             meta.setLore(this.lore);
         }
         if (meta instanceof LeatherArmorMeta) {
