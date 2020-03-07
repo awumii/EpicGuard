@@ -18,6 +18,8 @@ package me.ishift.epicguard.api.bukkit;
 import org.bukkit.Material;
 
 public enum UMaterial {
+    SIGN("SIGN", "OAK_SIGN"),
+    COMMAND_BLOCK("COMMAND", "COMMAND_BLOCK"),
     CLOCK("WATCH", "CLOCK"),
     EXP_BOTTLE("EXP_BOTTLE", "EXPERIENCE_BOTTLE"),
     BOOK_AND_QUILL("BOOK_AND_QUILL", "WRITABLE_BOOK"),

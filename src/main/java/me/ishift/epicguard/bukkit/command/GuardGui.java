@@ -20,9 +20,6 @@ import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.api.bukkit.UMaterial;
 import me.ishift.epicguard.api.bukkit.ItemBuilder;
-import me.ishift.epicguard.api.Memory;
-import me.ishift.epicguard.api.bukkit.ServerTPS;
-import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.StorageManager;
@@ -47,32 +44,24 @@ public class GuardGui {
      * @param player Target player.
      */
     public static void showMain(Player player) {
-        final ItemStack i1 = new ItemBuilder(UMaterial.CLOCK.getMaterial())
-                .setTitle("&cServer real-time status")
-                .addLore("&7See status of your server, in real time.")
+        final ItemStack i1 = new ItemBuilder(UMaterial.COMMAND_BLOCK.getMaterial())
+                .setTitle("&cServer status.")
+                .addLore("&7See status of your server.")
                 .addLore("")
-                .addLore("&6AntiBot Mode:")
-                .addLore("  &7Server is&8: " + (AttackSpeed.isUnderAttack() ? "&cUnder Attack" : "&aListening..."))
-                .addLore("")
-                .addLore("&6Current Connections:")
-                .addLore("  &7Connect Per Second&8: &c" + AttackSpeed.getConnectPerSecond())
-                .addLore("  &7Ping Per Second&8: &c" + AttackSpeed.getPingPerSecond())
+                .addLore("&6Status:")
+                .addLore("  &7Attack&8: " + (AttackSpeed.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
+                .addLore("  &7Connections&8: &c" + AttackSpeed.getConnectPerSecond() + "/s")
+                .addLore("  &7Pings&8: &c" + AttackSpeed.getPingPerSecond() + "/s")
                 .build();
 
         final ItemStack i2 = new ItemBuilder(Material.COMPASS)
-                .setTitle("&cPlayer Manager Menu")
+                .setTitle("&cPlayer management menu.")
+                .addLore("")
                 .addLore("&7Get to know about your players.")
-                .addLore("")
-                .addLore("&6Players:")
-                .addLore("  &7Online players: &a" + Bukkit.getOnlinePlayers().size())
-                .addLore("")
-                .addLore("&6Description:")
-                .addLore("  &7Click to show all online players in one GUI.")
-                .addLore("  &7GUI will show information you can get")
-                .addLore("  &7by command &6/guard player <nickname>&e.")
+                .addLore("&fLeft Click &7to show GUI with all players.")
                 .build();
 
-        final ItemStack i3 = new ItemBuilder(UMaterial.EXP_BOTTLE.getMaterial())
+        final ItemStack i3 = new ItemBuilder(UMaterial.SIGN.getMaterial())
                 .setTitle("&cAntibot Statistics")
                 .addLore("&7See statistics about collected data.")
                 .addLore("")
@@ -80,19 +69,20 @@ public class GuardGui {
                 .addLore("  &7Checked connections&8: &e" + StorageManager.getCheckedConnections())
                 .addLore("  &7Blocked bots&8: &c" + StorageManager.getBlockedBots())
                 .addLore("")
-                .addLore("&6IP Manager:")
+                .addLore("&6Storage manager:")
                 .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getBlacklist().size())
                 .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getWhitelist().size())
                 .build();
 
-        final ItemStack i4 = new ItemBuilder(Material.DIAMOND_BLOCK)
+        final ItemStack i4 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
                 .setTitle("&cOpped Players")
                 .addLore("&7See who have operator permission.")
                 .addLore("")
-                .addLore("&6Operators:")
-                .addLore("  &7Amount: &c" + Bukkit.getOperators().size())
-                .setLore(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix("  &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
+                .addLore("&7Amount: &c" + Bukkit.getOperators().size())
+                .setLore(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix(" &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
+
+        /* This will be re-added when we expand the gui with more 'pages'.
 
         final ItemStack i7 = new ItemBuilder(Material.GOLD_NUGGET)
                 .setTitle("&cPlugin Information")
@@ -122,12 +112,12 @@ public class GuardGui {
                 .addLore("  &7Version&8: &c" + Bukkit.getBukkitVersion())
                 .build();
 
+         */
+
         INVENTORY_MANAGEMENT.setItem(10, i1);
         INVENTORY_MANAGEMENT.setItem(12, i2);
         INVENTORY_MANAGEMENT.setItem(14, i3);
         INVENTORY_MANAGEMENT.setItem(16, i4);
-        //inventory.setItem(20, i7);
-        //eq.setItem(4, i8);
         player.openInventory(INVENTORY_MANAGEMENT);
     }
 
