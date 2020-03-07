@@ -28,10 +28,13 @@ import java.util.List;
 public class LogFilter extends AbstractFilter {
     private List<String> filteredMessages;
 
+    public LogFilter() {
+    }
+
     /**
      * @param filteredMessages List of messages which should be hidden.
      */
-    public LogFilter(List<String> filteredMessages) {
+    public void setFilteredMessages(List<String> filteredMessages) {
         this.filteredMessages = filteredMessages;
     }
 
