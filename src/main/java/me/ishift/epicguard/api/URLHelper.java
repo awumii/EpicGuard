@@ -45,7 +45,7 @@ public class URLHelper {
      * The User-Agent property is set to "Mozilla/4.0"
      *
      * @param requestURL Target URL.
-     * @return Content of website, every line as List<String>
+     * @return Content of website, every line as String list.
      */
     public static List<String> readLines(String requestURL) {
         try {

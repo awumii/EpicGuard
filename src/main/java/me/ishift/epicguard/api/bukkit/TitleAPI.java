@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
 public class TitleAPI {
     /**
      * Sends title and/or subtitle message with specified times.
-     * Message is formatted by ChatUtil with color '&' replacement.
+     * Message is formatted by ChatUtil with color replacement.
      * Using Reflection to work on every Bukkit version.
      *
      * @param player Target player who should see the title message.

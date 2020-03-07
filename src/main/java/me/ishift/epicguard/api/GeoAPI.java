@@ -33,6 +33,7 @@ public class GeoAPI {
 
     /**
      * Creating new GeoAPI instance.
+     * @param basePath Base path where every files will be downloaded.
      */
     public GeoAPI(String basePath) {
         try {
