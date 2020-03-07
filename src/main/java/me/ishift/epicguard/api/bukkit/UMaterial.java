@@ -13,12 +13,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.misc;
+package me.ishift.epicguard.api.bukkit;
 
-import me.ishift.epicguard.bukkit.util.server.Reflection;
 import org.bukkit.Material;
 
-public enum UniversalMaterial {
+public enum UMaterial {
     CLOCK("WATCH", "CLOCK"),
     EXP_BOTTLE("EXP_BOTTLE", "EXPERIENCE_BOTTLE"),
     BOOK_AND_QUILL("BOOK_AND_QUILL", "WRITABLE_BOOK"),
@@ -26,26 +25,24 @@ public enum UniversalMaterial {
     NETHER_BRICK("NETHER_BRICK_ITEM", "NETHER_BRICK"),
     FENCE_GATE("FENCE_GATE", "OAK_FENCE_GATE");
 
-    private String legacy;
-    private String current;
+    private Material material;
 
-    UniversalMaterial(String legacy, String current) {
-        this.legacy = legacy;
-        this.current = current;
-    }
-
-    public static Material get(UniversalMaterial material) {
+    /**
+     * @param legacy Legacy enum material name.
+     * @param newest New enum material name.
+     */
+    UMaterial(String legacy, String newest) {
         if (Reflection.isOldVersion()) {
-            return Material.getMaterial(material.getLegacy());
+            this.material = Material.getMaterial(legacy);
+            return;
         }
-        return Material.getMaterial(material.getCurrent());
+        this.material = Material.getMaterial(newest);
     }
 
-    public String getCurrent() {
-        return this.current;
-    }
-
-    public String getLegacy() {
-        return this.legacy;
+    /**
+     * @return Material for current server version.
+     */
+    public Material getMaterial() {
+        return material;
     }
 }

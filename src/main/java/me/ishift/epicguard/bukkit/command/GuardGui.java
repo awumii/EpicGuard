@@ -18,15 +18,15 @@ package me.ishift.epicguard.bukkit.command;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.util.misc.UniversalMaterial;
-import me.ishift.epicguard.bukkit.util.player.ItemBuilder;
-import me.ishift.epicguard.bukkit.util.server.Memory;
-import me.ishift.epicguard.bukkit.util.server.ServerTPS;
-import me.ishift.epicguard.bukkit.util.server.Updater;
+import me.ishift.epicguard.api.bukkit.UMaterial;
+import me.ishift.epicguard.api.bukkit.ItemBuilder;
+import me.ishift.epicguard.api.Memory;
+import me.ishift.epicguard.api.bukkit.ServerTPS;
+import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.StorageManager;
-import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public class GuardGui {
      * @param player Target player.
      */
     public static void showMain(Player player) {
-        final ItemStack i1 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.CLOCK))
+        final ItemStack i1 = new ItemBuilder(UMaterial.CLOCK.getMaterial())
                 .setTitle("&cServer real-time status")
                 .addLore("&7See status of your server, in real time.")
                 .addLore("")
@@ -72,7 +72,7 @@ public class GuardGui {
                 .addLore("  &7by command &6/guard player <nickname>&e.")
                 .build();
 
-        final ItemStack i3 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.EXP_BOTTLE))
+        final ItemStack i3 = new ItemBuilder(UMaterial.EXP_BOTTLE.getMaterial())
                 .setTitle("&cAntibot Statistics")
                 .addLore("&7See statistics about collected data.")
                 .addLore("")
@@ -91,7 +91,7 @@ public class GuardGui {
                 .addLore("")
                 .addLore("&6Operators:")
                 .addLore("  &7Amount: &c" + Bukkit.getOperators().size())
-                .addLores(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix("  &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
+                .setLore(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix("  &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
         final ItemStack i7 = new ItemBuilder(Material.GOLD_NUGGET)
@@ -108,7 +108,7 @@ public class GuardGui {
                 .addLore("  &7Support Server&8: &cdiscord.gg/VkfhFCv")
                 .build();
 
-        final ItemStack i8 = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.NETHER_BRICK))
+        final ItemStack i8 = new ItemBuilder(Material.NETHER_BRICK)
                 .setTitle("&cServer Information")
                 .addLore("&7Some information about your server.")
                 .addLore("")
@@ -158,13 +158,13 @@ public class GuardGui {
 
             final ItemStack itemStack = new ItemBuilder(Material.CHAINMAIL_CHESTPLATE)
                     .setTitle((player1.isOp() ? "&c[OP] " : "&a") + player1.getName())
-                    .addLores(lore)
+                    .setLore(lore)
                     .build();
 
             INVENTORY_PLAYER.setItem(i, itemStack);
             i++;
         }
-        final ItemStack back = new ItemBuilder(UniversalMaterial.get(UniversalMaterial.FENCE_GATE)).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
+        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.getMaterial()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
         INVENTORY_PLAYER.setItem(35, back);
         player.openInventory(INVENTORY_PLAYER);
     }

@@ -13,15 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.player;
+package me.ishift.epicguard.api.bukkit;
 
-import me.ishift.epicguard.bukkit.util.server.Reflection;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class ActionBar {
+public class ActionBarAPI {
+    /**
+     * Sending ActionBar message to a player.
+     *
+     * @param player Target player.
+     * @param message Message to show.
+     */
     public static void sendActionBar(Player player, String message) {
         if (!player.isOnline()) {
             return;

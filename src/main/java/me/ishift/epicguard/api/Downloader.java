@@ -13,9 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common;
-
-import me.ishift.epicguard.common.util.Logger;
+package me.ishift.epicguard.api;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,22 +24,48 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class Downloader {
+    private String url;
+    private File file;
 
     /**
-     * @param fromUrl URL from where file should be downloaded.
+     * @param url URL from where file should be downloaded.
      * @param file Target location, where file should be downloaded.
+     */
+    public Downloader(String url, File file) {
+        this.url = url;
+        this.file = file;
+    }
+
+    /**
+     * @return Target file.
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * @return URL from where file will be downloaded.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Downloads file.
+     * User-Agent property is set to "Mozilla/4.0".
+     *
      * @throws IOException If file could not be created/deleted.
      */
-    public static void download(String fromUrl, File file) throws IOException {
-        Logger.info("Downloding file from: " + fromUrl);
-        Logger.info("This may take some time, please wait...");
-        if (file.createNewFile()) {
-            Logger.debug("Created file " + file.getName());
-        }
+    public void download() throws IOException {
+        EpicGuardAPI.getLogger().info("Downloding file from: " + this.url);
+        EpicGuardAPI.getLogger().info("This may take some time, please wait...");
         if (file.delete()) {
-            Logger.debug("Deleted file " + file.getName());
+            EpicGuardAPI.getLogger().debug("Deleted file " + file.getName());
         }
-        final URLConnection connection = new URL(fromUrl).openConnection();
+        if (file.createNewFile()) {
+            EpicGuardAPI.getLogger().debug("Created file " + file.getName());
+        }
+        final URLConnection connection = new URL(this.url).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
         final ReadableByteChannel rbc = Channels.newChannel(connection.getInputStream());

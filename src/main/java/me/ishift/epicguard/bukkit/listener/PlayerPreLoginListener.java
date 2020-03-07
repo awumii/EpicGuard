@@ -17,14 +17,10 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
-import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.BotCheck;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.*;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.util.Detection;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.common.Detection;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,11 +39,11 @@ public class PlayerPreLoginListener implements Listener {
         }
 
         StorageManager.increaseCheckedConnections();
-        Logger.debug(" ");
-        Logger.debug("~-~-~-~-~-~-~-~-~-~-~-~-");
-        Logger.debug("Player: " + name);
-        Logger.debug("Address: " + address);
-        Logger.debug("Country: " + country);
+        EpicGuardAPI.getLogger().debug(" ");
+        EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
+        EpicGuardAPI.getLogger().debug("Player: " + name);
+        EpicGuardAPI.getLogger().debug("Address: " + address);
+        EpicGuardAPI.getLogger().debug("Country: " + country);
 
         AttackSpeed.increase(CounterType.CONNECT);
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 20L);
@@ -59,10 +55,10 @@ public class PlayerPreLoginListener implements Listener {
         final Detection detection = BotCheck.getDetection(address, name);
         if (detection.isDetected()) {
             handleDetection(address, event, detection.getReason(), detection.isBlacklist());
-            Logger.debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
+            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
-        Logger.debug("Player has been not detected by any check.");
+        EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
     public static void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {

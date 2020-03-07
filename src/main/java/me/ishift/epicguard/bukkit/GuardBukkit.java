@@ -24,21 +24,17 @@ import me.ishift.epicguard.bukkit.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.RefreshTask;
 import me.ishift.epicguard.bukkit.task.UpdaterTask;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.util.misc.Metrics;
-import me.ishift.epicguard.bukkit.util.server.LogFilter;
-import me.ishift.epicguard.bukkit.util.server.Reflection;
-import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.NotificationTask;
-import me.ishift.epicguard.common.StorageManager;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.bukkit.util.Metrics;
+import me.ishift.epicguard.api.LogFilter;
+import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.common.*;
+import me.ishift.epicguard.api.GuardLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GuardBukkit extends JavaPlugin {
-    public static final String PERMISSION = "epicguard.admin";
+    private LogFilter logFilter;
 
     /**
      * @return Instance of GuardBukkit.
@@ -49,13 +45,11 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        final long ms = System.currentTimeMillis();
+        EpicGuardAPI.setLogger(new GuardLogger());
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
         StorageManager.load();
-        Logger.init();
-        Reflection.init();
 
         this.registerListeners();
         this.registerTasks();
@@ -63,7 +57,8 @@ public class GuardBukkit extends JavaPlugin {
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
 
-        new LogFilter().registerFilter();
+        this.logFilter = new LogFilter(Config.filterValues);
+        this.logFilter.registerFilter();
 
         Updater.checkForUpdates();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
@@ -72,13 +67,11 @@ public class GuardBukkit extends JavaPlugin {
         metrics.addCustomChart(new Metrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
         metrics.addCustomChart(new Metrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
 
-        EpicGuardAPI.setGeoApi(new GeoAPI());
-        Logger.info("Succesfully loaded! Took: " + (System.currentTimeMillis() - ms) + "ms");
+        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data"));
     }
 
     @Override
     public void onDisable() {
-        Logger.info("Saving data and disabling plugin.");
         StorageManager.save();
     }
 
@@ -100,7 +93,7 @@ public class GuardBukkit extends JavaPlugin {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
 
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 1800L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 5800L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
     }
 }

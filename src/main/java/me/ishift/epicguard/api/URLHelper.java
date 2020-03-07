@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.util;
+package me.ishift.epicguard.api;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +24,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class URLHelper {
+    /**
+     * The User-Agent property is set to "Mozilla/4.0"
+     *
+     * @param requestURL Target URL.
+     * @return Content of website, in single String.
+     * @throws IOException If HTTP error has encountered.
+     */
     public static String readString(String requestURL) throws IOException {
         final URLConnection connection = new URL(requestURL).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
@@ -34,6 +41,12 @@ public class URLHelper {
         }
     }
 
+    /**
+     * The User-Agent property is set to "Mozilla/4.0"
+     *
+     * @param requestURL Target URL.
+     * @return Content of website, every line as List<String>
+     */
     public static List<String> readLines(String requestURL) {
         try {
             final URLConnection connection = new URL(requestURL).openConnection();

@@ -3,8 +3,7 @@ package me.ishift.epicguard.common;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.types.GeoMode;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.util.Detection;
-import me.ishift.epicguard.common.util.URLHelper;
+import me.ishift.epicguard.api.URLHelper;
 
 import java.util.ArrayList;
 import java.util.List;

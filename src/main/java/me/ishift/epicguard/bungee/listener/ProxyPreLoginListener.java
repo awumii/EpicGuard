@@ -15,14 +15,14 @@
 
 package me.ishift.epicguard.bungee.listener;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.common.AttackSpeed;
 import me.ishift.epicguard.common.BotCheck;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.util.Detection;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.common.Detection;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -49,16 +49,16 @@ public class ProxyPreLoginListener implements Listener {
         final Detection detection = BotCheck.getDetection(address, name);
         if (detection.isDetected()) {
             handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
-            Logger.debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
+            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
-        Logger.debug("Player has been not detected by any check.");
+        EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
     public static void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {
         connection.disconnect(new TextComponent(reason.getReason()));
         if (GuardBungee.log) {
-            Logger.info("Closing: " + address + "(" + connection.getName() + "), (" + reason + ")]");
+            EpicGuardAPI.getLogger().info("Closing: " + address + "(" + connection.getName() + "), (" + reason + ")]");
         }
 
         if (blacklist) StorageManager.blacklist(address);

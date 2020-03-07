@@ -13,13 +13,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.server;
+package me.ishift.epicguard.bukkit.util;
 
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.util.ChatUtil;
-import me.ishift.epicguard.common.util.URLHelper;
+import me.ishift.epicguard.api.ChatUtil;
+import me.ishift.epicguard.api.URLHelper;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class Updater {
     }
 
     public static void notify(Player p) {
-        if (Config.updater && p.hasPermission(GuardBukkit.PERMISSION) && updateAvailable) {
+        if (Config.updater && p.hasPermission("epicguard.admin") && updateAvailable) {
             p.sendMessage(ChatUtil.fix(Messages.prefix + "&cOutdated version &8(&6" + CURRENT_VERSION + "&8)&c! New version is available &8(&6" + Updater.latestVersion + "&8)"));
             p.sendMessage(ChatUtil.fix(Messages.prefix + "&cPlease download update here: &6https://www.spigotmc.org/resources/72369"));
         }

@@ -13,14 +13,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.player;
+package me.ishift.epicguard.api.bukkit;
 
-import me.ishift.epicguard.bukkit.util.server.Reflection;
+import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 
-public class Title {
+public class TitleAPI {
+    /**
+     * Sends title and/or subtitle message with specified times.
+     * Message is formatted by ChatUtil with color '&' replacement.
+     * Using Reflection to work on every Bukkit version.
+     *
+     * @param player Target player who should see the title message.
+     * @param title Title message.
+     * @param subtitle Subtitle message.
+     * @param fadeInTime Fade in time in ticks.
+     * @param showTime How long title should be displayed.
+     * @param fadeOutTime Fade out time in ticks
+     */
     public static void send(Player player, String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
         try {
             final Object chatTitle = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class)

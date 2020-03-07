@@ -13,13 +13,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.bukkit.util.server;
+package me.ishift.epicguard.api.bukkit;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 
 public class ServerTPS {
+    /**
+     * @return Current server's TPS (from 1 minute).
+     */
     public static String getTPS() {
         try {
             final DecimalFormat format = new DecimalFormat("##.##");

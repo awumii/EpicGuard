@@ -15,13 +15,14 @@
 
 package me.ishift.epicguard.bukkit.task;
 
-import me.ishift.epicguard.bukkit.util.server.Updater;
-import me.ishift.epicguard.common.util.Logger;
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.api.GuardLogger;
 
 public class UpdaterTask implements Runnable {
     @Override
     public void run() {
         Updater.checkForUpdates();
-        Logger.init();
+        EpicGuardAPI.setLogger(new GuardLogger());
     }
 }

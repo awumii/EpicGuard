@@ -13,20 +13,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.util;
+package me.ishift.epicguard.api;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DateUtil {
+    /**
+     * Time format is set to HH:mm:ss
+     *
+     * @return Current system time.
+     */
     public static String getTime() {
         return format("HH:mm:ss");
     }
 
+    /**
+     * Date format is set to dd-M-yyyy
+     *
+     * @return Current system date.
+     */
     public static String getDate() {
         return format("dd-M-yyyy");
     }
 
+    /**
+     * @param sdfValue Pattern for SimpleDateFormat.
+     * @return Formatted String of SimpleDateFormat.
+     */
     public static String format(String sdfValue) {
         final Calendar cal = Calendar.getInstance();
         final SimpleDateFormat sdf = new SimpleDateFormat(sdfValue);
