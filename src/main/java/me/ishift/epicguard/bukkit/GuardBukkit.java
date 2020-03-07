@@ -34,7 +34,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GuardBukkit extends JavaPlugin {
-    private LogFilter logFilter;
 
     /**
      * @return Instance of GuardBukkit.
@@ -51,14 +50,27 @@ public class GuardBukkit extends JavaPlugin {
         Messages.load();
         StorageManager.load();
 
-        this.registerListeners();
-        this.registerTasks();
+        final PluginManager pm = this.getServer().getPluginManager();
+        pm.registerEvents(new PlayerPreLoginListener(), this);
+        pm.registerEvents(new ServerListPingListener(), this);
+        pm.registerEvents(new PlayerJoinListener(), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
+        pm.registerEvents(new PlayerInventoryClickListener(), this);
+        pm.registerEvents(new PlayerCommandListener(), this);
+        if (pm.isPluginEnabled("ProtocolLib")) {
+            new PlayerTabCompletePacket(this);
+        }
+
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 5800L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
 
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());
 
-        this.logFilter = new LogFilter(Config.filterValues);
-        this.logFilter.registerFilter();
+        final LogFilter filter = new LogFilter(Config.filterValues);
+        filter.registerFilter();
 
         Updater.checkForUpdates();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
@@ -73,27 +85,5 @@ public class GuardBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         StorageManager.save();
-    }
-
-    private void registerListeners() {
-        final PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvents(new PlayerPreLoginListener(), this);
-        pm.registerEvents(new ServerListPingListener(), this);
-        pm.registerEvents(new PlayerJoinListener(), this);
-        pm.registerEvents(new PlayerQuitListener(), this);
-        pm.registerEvents(new PlayerInventoryClickListener(), this);
-        pm.registerEvents(new PlayerCommandListener(), this);
-
-        if (pm.isPluginEnabled("ProtocolLib")) {
-            new PlayerTabCompletePacket(this);
-        }
-    }
-
-    private void registerTasks() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
-
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 40L, 5800L);
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
     }
 }

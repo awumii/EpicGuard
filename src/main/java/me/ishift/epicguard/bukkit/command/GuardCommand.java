@@ -46,20 +46,21 @@ public class GuardCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ChatUtil.fix("&8*---------------------------------------------------*"));
-            sender.sendMessage(ChatUtil.fix("   &6&lEpicGuard"));
+            sender.sendMessage(ChatUtil.fix("&8&m---------------------------------------------------"));
+            sender.sendMessage(ChatUtil.fix("  &6&lEpicGuard"));
             sender.sendMessage(ChatUtil.fix(""));
-            sender.sendMessage(ChatUtil.fix("   &7Running version &f" + Updater.getCurrentVersion()));
-            sender.sendMessage(ChatUtil.fix("   &7Created by &fiShift"));
+            sender.sendMessage(ChatUtil.fix("  &7Running version &f" + Updater.getCurrentVersion()));
+            sender.sendMessage(ChatUtil.fix("  &7Created by &fiShift &8© 2020"));
+            sender.sendMessage(ChatUtil.fix("  &7Licensed under &8GPLv3 &7license."));
             sender.sendMessage(ChatUtil.fix(""));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " menu &8- &7Open main plugin GUI."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " status &8- &7Toggle antibot notifications (titles)."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " reload &8- &7Reload configuration and messages."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " reset &8- &7Disabling attack mode and resetting counters."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " player <player> &8- &7See information about specific player."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " whitelist <adress> &8- &7Add specific adress to the whitelist."));
-            sender.sendMessage(ChatUtil.fix(" &f/" + s + " blacklist <adress> &8- &7Add specific adress to the blacklist."));
-            sender.sendMessage(ChatUtil.fix("&8*---------------------------------------------------*"));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &fmenu &7to open main plugin GUI."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &fstatus &7to toggle antibot notifications."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &freload &7to reload configuration and messages."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &freset &7to disable attack mode and reset counters."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &fplayer <player> &7to see information about specific player."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &fwhitelist <adress> &7to add specific adress to the whitelist."));
+            sender.sendMessage(ChatUtil.fix(" &7/guard &fblacklist <adress> &7to add specific adress to the blacklist."));
+            sender.sendMessage(ChatUtil.fix("&8&m---------------------------------------------------"));
             return true;
         }
 

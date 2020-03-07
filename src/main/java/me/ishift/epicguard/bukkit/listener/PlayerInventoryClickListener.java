@@ -35,10 +35,11 @@ public class PlayerInventoryClickListener implements Listener {
             if (im == null) {
                 return;
             }
-            if (im.getDisplayName().contains("Player Manager Menu")) {
+            if (im.getDisplayName().contains("Player management menu.")) {
                 GuardGui.showPlayers(p);
             }
         }
+
         if (event.getView().getTitle().equals("EpicGuard Player Manager")) {
             if (event.getCurrentItem() == null) {
                 return;
