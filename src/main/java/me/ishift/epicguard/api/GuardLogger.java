@@ -21,7 +21,8 @@ import java.io.*;
 import java.util.logging.Logger;
 
 public class GuardLogger {
-    private File file;
+    private String name;
+    private String path;
     private Logger logger;
 
     /**
@@ -30,20 +31,13 @@ public class GuardLogger {
      * @param path Path for the log files.
      */
     public GuardLogger(String name, String path) {
+        this.name = name;
+        this.path = path;
         this.logger = Logger.getLogger(name);
-        try {
-            final File logDir = new File(path + "/logs");
-            if (logDir.createNewFile()) {
-                this.debug("Created new log file.");
-            }
+        final File logDir = new File(path + "/logs");
 
-            final File logFile = new File(path + "/logs/" + name + "Logs-" + DateUtil.getDate() + ".txt");
-            if (logFile.createNewFile()) {
-                this.debug("Created new log file.");
-            }
-            this.file = logFile;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (logDir.mkdir()) {
+            this.info("Created log directory.");
         }
     }
 
@@ -112,6 +106,7 @@ public class GuardLogger {
         final String logMessage = "(" + DateUtil.getTime() + ") " + message;
 
         if (!hide) this.logger.info(message);
-        this.writeToFile(this.file, logMessage);
+        final File file = new File(this.path + "/logs/" + this.name + "Logs-" + DateUtil.getDate() + ".txt");
+        this.writeToFile(file, logMessage);
     }
 }
