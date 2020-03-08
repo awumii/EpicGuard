@@ -44,7 +44,7 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        EpicGuardAPI.setLogger(new GuardLogger());
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
