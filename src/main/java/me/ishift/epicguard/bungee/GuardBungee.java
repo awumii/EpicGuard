@@ -48,7 +48,7 @@ public class GuardBungee extends Plugin {
 
     @Override
     public void onEnable() {
-        EpicGuardAPI.setLogger(new GuardLogger());
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
         instance = this;
 
         final File file = new File(getDataFolder(), "config_bungee.yml");

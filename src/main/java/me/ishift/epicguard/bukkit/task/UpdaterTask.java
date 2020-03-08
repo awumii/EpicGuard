@@ -23,6 +23,6 @@ public class UpdaterTask implements Runnable {
     @Override
     public void run() {
         Updater.checkForUpdates();
-        EpicGuardAPI.setLogger(new GuardLogger());
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
     }
 }
