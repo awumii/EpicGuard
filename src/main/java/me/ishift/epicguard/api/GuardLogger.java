@@ -26,16 +26,18 @@ public class GuardLogger {
 
     /**
      * Creating new GuardLogger instance
+     * @param name Name of the Logger.
+     * @param path Path for the log files.
      */
-    public GuardLogger() {
-        this.logger = Logger.getLogger("EpicGuard");
+    public GuardLogger(String name, String path) {
+        this.logger = Logger.getLogger(name);
         try {
-            final File logDir = new File("plugins/EpicGuard/logs");
+            final File logDir = new File(path + "/logs");
             if (logDir.createNewFile()) {
                 this.debug("Created new log file.");
             }
 
-            final File logFile = new File("plugins/EpicGuard/logs/EpicGuardLogs-" + DateUtil.getDate() + ".txt");
+            final File logFile = new File(path + "/logs/" + name + "Logs-" + DateUtil.getDate() + ".txt");
             if (logFile.createNewFile()) {
                 this.debug("Created new log file.");
             }
@@ -70,13 +72,13 @@ public class GuardLogger {
      * @param message Message to be logged.
      */
     public void writeToFile(File file, String message) {
-        if (!file.exists()) {
-            return;
-        }
-        if (AttackSpeed.getConnectPerSecond() > 40) {
+        if (this.logger.getName().equals("EpicGuard") && AttackSpeed.isUnderAttack()) {
             return;
         }
         try {
+            if (!file.exists() || file.createNewFile()) {
+                return;
+            }
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();
