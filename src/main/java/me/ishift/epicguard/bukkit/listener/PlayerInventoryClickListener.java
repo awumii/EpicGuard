@@ -25,32 +25,34 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class PlayerInventoryClickListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        final Player p = (Player) event.getWhoClicked();
-        if (event.getView().getTitle().equals("EpicGuard Management Menu")) {
+        final String title = event.getView().getTitle();
+        final Player player = (Player) event.getWhoClicked();
+
+        if (event.getCurrentItem() == null) {
+            return;
+        }
+        final ItemMeta im = event.getCurrentItem().getItemMeta();
+        if (im == null) {
+            return;
+        }
+        final String itemTitle = im.getDisplayName();
+
+        if (title.contains("EpicGuard")) {
             event.setCancelled(true);
-            if (event.getCurrentItem() == null) {
-                return;
-            }
-            final ItemMeta im = event.getCurrentItem().getItemMeta();
-            if (im == null) {
-                return;
-            }
-            if (im.getDisplayName().contains("Player management menu.")) {
-                GuardGui.showPlayers(p);
-            }
         }
 
-        if (event.getView().getTitle().equals("EpicGuard Player Manager")) {
-            if (event.getCurrentItem() == null) {
-                return;
+        if (itemTitle.contains("Back to main menu")) {
+            GuardGui.showMain(player);
+        }
+
+        if (title.equals("EpicGuard | Management Menu")) {
+            if (itemTitle.contains("Player management menu")) {
+                GuardGui.showPlayers(player);
             }
-            if (event.getCurrentItem().getItemMeta() == null) {
-                return;
+
+            if (itemTitle.contains("Module management menu")) {
+                GuardGui.showModules(player);
             }
-            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Back to main menu")) {
-                GuardGui.showMain(p);
-            }
-            event.setCancelled(true);
         }
     }
 }
