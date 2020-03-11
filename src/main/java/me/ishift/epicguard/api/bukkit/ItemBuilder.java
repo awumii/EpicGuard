@@ -22,6 +22,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,13 +36,14 @@ public class ItemBuilder {
     private int amount;
     private String title;
     private Color color;
+    private String skullOwner;
 
     /**
      * Creating ItemBuilder only with Material type.
      *
      * @param material Item type.
      */
-    public ItemBuilder(final Material material) {
+    public ItemBuilder(Material material) {
         this(material, 1);
     }
 
@@ -51,7 +53,7 @@ public class ItemBuilder {
      * @param material Item type.
      * @param amount Item amount.
      */
-    public ItemBuilder(final Material material, final int amount) {
+    public ItemBuilder(Material material, int amount) {
         this(material, amount, (short) 0);
     }
 
@@ -61,7 +63,7 @@ public class ItemBuilder {
      * @param material Item type.
      * @param data Item data
      */
-    public ItemBuilder(final Material material, final short data) {
+    public ItemBuilder(Material material, short data) {
         this(material, 1, data);
     }
 
@@ -72,7 +74,7 @@ public class ItemBuilder {
      * @param amount Item amount.
      * @param data Item data.
      */
-    public ItemBuilder(final Material material, final int amount, final short data) {
+    public ItemBuilder(Material material, int amount, short data) {
         this.title = null;
         this.lore = new ArrayList<>();
         this.enchants = new HashMap<>();
@@ -87,7 +89,7 @@ public class ItemBuilder {
      * @param title Item title.
      * @return Current ItemBuilder object.
      */
-    public ItemBuilder setTitle(final String title) {
+    public ItemBuilder setTitle(String title) {
         this.title = ChatUtil.fix(title);
         return this;
     }
@@ -96,7 +98,7 @@ public class ItemBuilder {
      * @param lore String list to set as the lore.
      * @return Current ItemBuilder object.
      */
-    public ItemBuilder setLore(final List<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         this.lore.addAll(lore);
         return this;
     }
@@ -105,7 +107,7 @@ public class ItemBuilder {
      * @param lore Adding single string to item lore.
      * @return Current ItemBuilder object.
      */
-    public ItemBuilder addLore(final String lore) {
+    public ItemBuilder addLore(String lore) {
         this.lore.add(ChatUtil.fix(lore));
         return this;
     }
@@ -115,7 +117,7 @@ public class ItemBuilder {
      * @param level Level of enchantment
      * @return Current ItemBuilder object.
      */
-    public ItemBuilder addEnchantment(final Enchantment enchant, final int level) {
+    public ItemBuilder addEnchantment(Enchantment enchant, int level) {
         this.enchants.remove(enchant);
         this.enchants.put(enchant, level);
         return this;
@@ -127,11 +129,19 @@ public class ItemBuilder {
      * @param color Color for the armor.
      * @return Current ItemBuilder object.
      */
-    public ItemBuilder setColor(final Color color) {
+    public ItemBuilder setColor(Color color) {
         if (!this.material.name().contains("LEATHER_")) {
             throw new IllegalArgumentException("Can't set color for NON-LEATHER material.");
         }
         this.color = color;
+        return this;
+    }
+
+    public ItemBuilder setSkullOwner(String skullOwner) {
+        if (this.material != UMaterial.SKULL.get()) {
+            throw new IllegalArgumentException("Can't set skull owner for material that is not a skull!");
+        }
+        this.skullOwner = skullOwner;
         return this;
     }
 
@@ -151,6 +161,9 @@ public class ItemBuilder {
         }
         if (meta instanceof LeatherArmorMeta) {
             ((LeatherArmorMeta) meta).setColor(this.color);
+        }
+        if (this.skullOwner != null) {
+            ((SkullMeta) meta).setOwner(this.skullOwner);
         }
         item.setItemMeta(meta);
         item.addUnsafeEnchantments(this.enchants);

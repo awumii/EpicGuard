@@ -57,6 +57,7 @@ public class GuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerInventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
+
         if (pm.isPluginEnabled("ProtocolLib")) {
             new PlayerTabCompletePacket(this);
         }

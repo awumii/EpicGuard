@@ -13,24 +13,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.api;
+package me.ishift.epicguard.api.bukkit;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class ChatUtil {
+import java.util.List;
+
+public class SkullUtil {
     /**
-     * @param text Raw message to be formatted.
-     * @return Message with formatted colors.
+     * @param player Skull owner.
+     * @return Player's skull ItemStack.
      */
-    public static String fix(String text) {
-        return ChatColor.translateAlternateColorCodes('&', text);
-    }
+    public static ItemStack getSkull(Player player, String name, List<String> lore) {
+        short data = 0;
+        if (Reflection.isOldVersion()) {
+            data = 3;
+        }
 
-    /**
-     * @param bol Boolean value.
-     * @return Formatted boolean as String.
-     */
-    public static String formatBol(boolean bol) {
-        return bol ? "&aEnabled" : "&cDisabled";
+        return new ItemBuilder(UMaterial.SKULL.get(), data)
+                .setTitle(name)
+                .setLore(lore)
+                .setSkullOwner(player.getName())
+                .build();
     }
 }
