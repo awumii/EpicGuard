@@ -2,8 +2,8 @@
 More information here: https://www.spigotmc.org/resources/72369/  
 
 ## API
-Javadoc: https://polskistevek.github.io/EpicGuard/
-Every API class is contained in 'me.ishift.epicguard.api' package, and is well documented :).
+Javadoc: https://polskistevek.github.io/EpicGuard/  
+Every API class is contained in 'me.ishift.epicguard.api' package.
 ```
 <repository>
     <id>jitpack.io</id>
