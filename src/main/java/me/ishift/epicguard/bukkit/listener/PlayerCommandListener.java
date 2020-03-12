@@ -42,14 +42,6 @@ public class PlayerCommandListener implements Listener {
                 EpicGuardAPI.getLogger().info("Player " + player.getName() + " has been detected for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
                 return;
             }
-            // "*" Permission probably can't be detected, so i added checking random permission, if player is not OP.
-            if (player.hasPermission("experimentalpex.detection") && Config.pexProtection) {
-                event.setCancelled(true);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
-                Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                EpicGuardAPI.getLogger().info("Player " + player.getName() + " has been detected for OP_PROTECTION_PEX_EXPERIMENTAL (Force-OP-PEX) detection! (" + cmd + ")");
-                return;
-            }
         }
 
         // Allowed Commands module.

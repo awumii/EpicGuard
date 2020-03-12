@@ -41,7 +41,9 @@ public class PlayerTabCompletePacket extends PacketAdapter {
 
         // Custom TabComplete.
         final Player player = event.getPlayer();
-        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) return;
+        if (Config.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) {
+            return;
+        }
 
         final PacketContainer packetContainer = event.getPacket();
         final String message = packetContainer.getStrings().read(0);

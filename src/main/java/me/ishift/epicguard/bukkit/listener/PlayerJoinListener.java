@@ -23,7 +23,6 @@ import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
-import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +31,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerJoinListener implements Listener {
 
@@ -43,14 +41,6 @@ public class PlayerJoinListener implements Listener {
             UserManager.addUser(player);
             final User user = UserManager.getUser(player);
             final String address = user.getAddress();
-
-            // AntiBypass
-            if (StorageManager.isBlacklisted(address)) {
-                event.setJoinMessage("");
-                player.kickPlayer(Messages.messageKickBlacklist.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining()));
-                return;
-            }
-
             Updater.notify(player);
 
             if (Config.autoWhitelist) {
