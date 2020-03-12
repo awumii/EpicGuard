@@ -11,7 +11,8 @@ name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.GuardBukkit
 load: STARTUP
-softdepend: [ProtocolLib, EssentialsGeoIP]
+softdepend: [ProtocolLib]
+loadbefore: [EssentialsGeoIP]
 
 # Other information about plugin section.
 authors: [iShift, ruzekh]

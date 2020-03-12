@@ -44,13 +44,31 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        final PluginManager pm = this.getServer().getPluginManager();
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
+
+        if (pm.isPluginEnabled("EssentialsGeoIP")) {
+            EpicGuardAPI.getLogger().info("╔═════════════════════════════════════════════╗");
+            EpicGuardAPI.getLogger().info("");
+            EpicGuardAPI.getLogger().info("   [!] EPICGUARD INCOMPATIBILITY WARNING [!]");
+            EpicGuardAPI.getLogger().info("");
+            EpicGuardAPI.getLogger().info("  Looks like you are using EssentialsGeoIP");
+            EpicGuardAPI.getLogger().info("  EssentialsGeoIP is using outdated GeoIP");
+            EpicGuardAPI.getLogger().info("  library, so EpicGuard and it will throw");
+            EpicGuardAPI.getLogger().info("  errors on every connection. Please remove");
+            EpicGuardAPI.getLogger().info("  EssentialsGeoIP plugin and restart the server.");
+            EpicGuardAPI.getLogger().info("");
+            EpicGuardAPI.getLogger().info("         EpicGuard will now disable.");
+            EpicGuardAPI.getLogger().info("");
+            EpicGuardAPI.getLogger().info("╚═════════════════════════════════════════════╝");
+            pm.disablePlugin(this);
+        }
+
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
         StorageManager.load();
 
-        final PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerJoinListener(), this);
