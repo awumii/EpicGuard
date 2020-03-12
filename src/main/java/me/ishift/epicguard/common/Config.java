@@ -57,7 +57,6 @@ public class Config {
     public static boolean opProtectionEnable;
     public static boolean ipHistoryEnable;
     public static boolean rejoinCheck;
-    public static boolean pexProtection;
     public static boolean serverListCheck;
 
     public static boolean filterEnabled;
@@ -91,7 +90,6 @@ public class Config {
         allowedCommandsEnable = config.getBoolean("allowed-commands.enabled");
         opProtectionEnable = config.getBoolean("op-protection.enabled");
         ipHistoryEnable = config.getBoolean("ip-history.enabled");
-        pexProtection = config.getBoolean("op-protection.pex-protection");
         blockedNames = config.getStringList("antibot.name-contains");
         filterEnabled = config.getBoolean("console-filter.enabled");
         filterValues = config.getStringList("console-filter.messages");

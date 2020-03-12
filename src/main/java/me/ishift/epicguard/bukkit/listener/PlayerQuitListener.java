@@ -16,7 +16,6 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.common.StorageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,10 +28,5 @@ public class PlayerQuitListener implements Listener {
         final Player player = event.getPlayer();
         final String adress = player.getAddress().getAddress().getHostAddress();
         UserManager.removeUser(player);
-
-        // Anti Bypass
-        if (StorageManager.isBlacklisted(adress)) {
-            event.setQuitMessage("");
-        }
     }
 }

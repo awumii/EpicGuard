@@ -33,11 +33,9 @@ public class ServerListPingListener implements Listener {
         AttackSpeed.increase(CounterType.PING);
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.PING), 20L);
 
-        if (AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-            if (Config.bandwidthOptimizer) {
-                event.setMotd("");
-                event.setMaxPlayers(0);
-            }
+        if (AttackSpeed.getPingPerSecond() > Config.pingSpeed && Config.bandwidthOptimizer) {
+            event.setMotd("");
+            event.setMaxPlayers(0);
         }
     }
 }
