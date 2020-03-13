@@ -24,7 +24,6 @@ countries:
   list:
     - GB
     - DE
-    - PL
 
 ###############################
 ##           AntiBot         ##
@@ -65,9 +64,9 @@ console-filter:
 
 speed:
   # How many connections per second should be made to activate additional checks.
-  connection: 7
+  connection: 5
   # How many pings per second should be made to activate additional checks.
-  ping-speed: 10
+  ping-speed: 7
 
 ###############################
 ##           Firewall        ##

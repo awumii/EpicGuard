@@ -36,7 +36,8 @@ public class Config {
 
     public static List<String> countryList;
     public static GeoMode countryMode;
-    public static boolean geoCity;
+    public static boolean cityEnabled;
+    public static boolean countryEnabled;
 
     public static List<String> blockedNames;
     public static boolean updater;
@@ -101,7 +102,9 @@ public class Config {
 
         serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
-        geoCity = config.getOrSetDefault("countries.enable-cities", false);
+
+        cityEnabled = config.getOrSetDefault("download-databases.city", true);
+        countryEnabled = config.getOrSetDefault("download-databases.country", true);
 
         final String countryModeString = config.getString("countries.mode");
         countryMode = GeoMode.valueOf(countryModeString);

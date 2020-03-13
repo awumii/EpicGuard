@@ -18,8 +18,6 @@ package me.ishift.epicguard.api;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.types.GeoMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +32,10 @@ public class GeoAPI {
     /**
      * Creating new GeoAPI instance.
      * @param basePath Base path where every files will be downloaded.
+     * @param country Should country database be enabled/downloaded?
+     * @param city Should city database be enabled/downloaded?
      */
-    public GeoAPI(String basePath) {
+    public GeoAPI(String basePath, boolean country, boolean city) {
         try {
             EpicGuardAPI.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
             EpicGuardAPI.getLogger().info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
@@ -44,7 +44,7 @@ public class GeoAPI {
             final File cityFile = new File(basePath + "/GeoLite2-City.mmdb");
             final File timestampFile = new File(basePath + "/last_db_download.txt");
 
-            if (Config.countryMode != GeoMode.DISABLED) {
+            if (country) {
                 if (!countryFile.exists() || isOutdated(timestampFile)) {
                     final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
                     downloader.download();
@@ -55,7 +55,7 @@ public class GeoAPI {
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
-            if (Config.geoCity) {
+            if (city) {
                 if (!cityFile.exists() || isOutdated(timestampFile)) {
                     final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
                     downloader.download();
