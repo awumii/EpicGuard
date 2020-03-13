@@ -18,6 +18,7 @@ package me.ishift.epicguard.api.bukkit;
 import org.bukkit.Material;
 
 public enum UMaterial {
+    CHEST_MINECART("STORAGE_MINECART", "CHEST_MINECART"),
     FIREWORK("FIREWORK", "FIREWORK_ROCKET"),
     ENCHANTING_TABLE("ENCHANTMENT_TABLE", "ENCHANTING_TABLE"),
     SKULL("SKULL_ITEM", "PLAYER_HEAD"),
@@ -47,7 +48,7 @@ public enum UMaterial {
     /**
      * @return Material for current server version.
      */
-    public Material get() {
-        return material;
+    public Material getMaterial() {
+        return this.material;
     }
 }

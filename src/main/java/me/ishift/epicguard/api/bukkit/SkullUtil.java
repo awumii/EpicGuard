@@ -33,7 +33,7 @@ public class SkullUtil {
             data = 3;
         }
 
-        return new ItemBuilder(UMaterial.SKULL.get(), data)
+        return new ItemBuilder(UMaterial.SKULL.getMaterial(), data)
                 .setTitle(name)
                 .setLore(lore)
                 .setSkullOwner(player.getName())

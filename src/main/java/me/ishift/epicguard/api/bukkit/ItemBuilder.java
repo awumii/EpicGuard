@@ -138,7 +138,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setSkullOwner(String skullOwner) {
-        if (this.material != UMaterial.SKULL.get()) {
+        if (this.material != UMaterial.SKULL.getMaterial()) {
             throw new IllegalArgumentException("Can't set skull owner for material that is not a skull!");
         }
         this.skullOwner = skullOwner;

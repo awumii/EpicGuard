@@ -16,8 +16,6 @@
 package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.api.Memory;
-import me.ishift.epicguard.api.bukkit.ServerTPS;
 import me.ishift.epicguard.api.bukkit.SkullUtil;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
@@ -49,7 +47,12 @@ public class GuardGui {
      * @param player Target player.
      */
     public static void showMain(Player player) {
-        final ItemStack i1 = new ItemBuilder(UMaterial.COMMAND_BLOCK.get())
+        System.out.println(UMaterial.CHEST_MINECART.getMaterial());
+        System.out.println(UMaterial.ENCHANTING_TABLE.getMaterial());
+        System.out.println(UMaterial.NETHER_BRICK.getMaterial());
+        System.out.println(UMaterial.SKULL.getMaterial());
+
+        final ItemStack i1 = new ItemBuilder(UMaterial.CHEST_MINECART.getMaterial())
                 .setTitle("&cServer status.")
                 .addLore("&7See status of your server.")
                 .addLore("")
@@ -67,7 +70,7 @@ public class GuardGui {
                 .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getWhitelist().size())
                 .build();
 
-        final ItemStack i2 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.get())
+        final ItemStack i2 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
                 .setTitle("&cPlugin Information")
                 .addLore("&7Plugin author, version etc.")
                 .addLore("")
@@ -121,12 +124,13 @@ public class GuardGui {
                 .setLore(Bukkit.getOperators().stream().map(operator -> ChatUtil.fix(" &8- &7" + operator.getName() + " &8[" + (operator.isOnline() ? "&aOnline" : "&4Offline") + "&8]")).collect(Collectors.toList()))
                 .build();
 
-        final ItemStack i2 = new ItemBuilder(UMaterial.ENCHANTING_TABLE.get())
+        final ItemStack i2 = new ItemBuilder(UMaterial.ENCHANTING_TABLE.getMaterial())
                 .setTitle("&cGeolocation")
                 .addLore("&7Control your player's location.")
                 .addLore("")
                 .addLore("&6Status:")
-                .addLore("&7City database: " + ChatUtil.formatBol(Config.geoCity))
+                .addLore("&7City database: " + ChatUtil.formatBol(Config.cityEnabled))
+                .addLore("&7Country database: " + ChatUtil.formatBol(Config.countryEnabled))
                 .addLore("&7Country filter: &6" + Config.countryMode.name())
                 .addLore("")
                 .addLore("&6Filtered Countries (" + Config.countryList.size() + "):")
@@ -173,7 +177,7 @@ public class GuardGui {
                 .addLore("&7Firewall: " + ChatUtil.formatBol(Config.firewallEnabled))
                 .build();
 
-        final ItemStack info = new ItemBuilder(UMaterial.BOOK_AND_QUILL.get())
+        final ItemStack info = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
                 .setTitle("&cNOTE!")
                 .addLore("&7Some of the EpicGuard settings are")
                 .addLore("&7not displayed here, you should see")
@@ -187,7 +191,7 @@ public class GuardGui {
         INVENTORY_MODULES.setItem(15, i6);
         INVENTORY_MODULES.setItem(18, info);
 
-        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.get()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
+        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.getMaterial()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
         INVENTORY_MODULES.setItem(26, back);
 
         player.openInventory(INVENTORY_MODULES);
@@ -223,7 +227,7 @@ public class GuardGui {
             i++;
         }
 
-        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.get()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
+        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.getMaterial()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
         INVENTORY_PLAYER.setItem(35, back);
         player.openInventory(INVENTORY_PLAYER);
     }

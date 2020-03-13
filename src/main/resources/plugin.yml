@@ -18,7 +18,6 @@ loadbefore: [EssentialsGeoIP]
 authors: [iShift, ruzekh]
 website: https://www.spigotmc.org/resources/72369/
 description: Spigot & Bungee - Advanced server protection package!
-api-version: '1.13'
 
 # Plugin commands section.
 commands:
