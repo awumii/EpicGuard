@@ -24,8 +24,9 @@ countries:
   list:
     - GB
     - DE
-    - PL
-  enable-cities: false
+  download-databases:
+    city: true
+    country: true
 
 ###############################
 ##           AntiBot         ##
@@ -72,9 +73,9 @@ updater: true
 
 speed:
   # How many connections per second should be made to activate additional checks.
-  connection: 7
+  connection: 5
   # How many pings per second should be made to activate additional checks.
-  ping-speed: 10
+  ping-speed: 7
 
 # Block tab-complete packet using ProtocolLib.
 # Useful when using a multi-version server, because 1.13+ players

@@ -101,7 +101,7 @@ public class GuardBukkit extends JavaPlugin {
         metrics.addCustomChart(new Metrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
         metrics.addCustomChart(new Metrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
 
-        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data"));
+        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data", Config.countryEnabled, Config.cityEnabled));
     }
 
     @Override
