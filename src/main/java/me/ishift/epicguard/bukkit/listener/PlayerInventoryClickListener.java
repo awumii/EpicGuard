@@ -27,27 +27,27 @@ public class PlayerInventoryClickListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         final String title = event.getView().getTitle();
         final Player player = (Player) event.getWhoClicked();
-
-        if (event.getCurrentItem() == null) {
+        if (!title.contains("EpicGuard") || event.getCurrentItem() == null) {
             return;
         }
+
         final ItemMeta im = event.getCurrentItem().getItemMeta();
         if (im == null) {
             return;
         }
-        final String itemTitle = im.getDisplayName();
 
-        if (title.contains("EpicGuard")) {
-            event.setCancelled(true);
-        }
+        final String itemTitle = im.getDisplayName();
+        event.setCancelled(true);
 
         if (itemTitle.contains("Back to main menu")) {
             GuardGui.showMain(player);
+            return;
         }
 
         if (title.equals("EpicGuard | Management Menu")) {
             if (itemTitle.contains("Player management menu")) {
                 GuardGui.showPlayers(player);
+                return;
             }
 
             if (itemTitle.contains("Module management menu")) {
