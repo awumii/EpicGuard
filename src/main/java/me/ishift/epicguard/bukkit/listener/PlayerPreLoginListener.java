@@ -32,7 +32,6 @@ public class PlayerPreLoginListener implements Listener {
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         final String address = event.getAddress().getHostAddress();
         final String name = event.getName();
-        final String country = EpicGuardAPI.getGeoApi().getCountryCode(address);
 
         if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
             AttackSpeed.setAttackMode(true);
@@ -43,7 +42,6 @@ public class PlayerPreLoginListener implements Listener {
         EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
         EpicGuardAPI.getLogger().debug("Player: " + name);
         EpicGuardAPI.getLogger().debug("Address: " + address);
-        EpicGuardAPI.getLogger().debug("Country: " + country);
 
         AttackSpeed.increase(CounterType.CONNECT);
         Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 20L);

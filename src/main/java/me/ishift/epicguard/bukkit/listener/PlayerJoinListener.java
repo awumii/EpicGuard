@@ -34,13 +34,16 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         UserManager.addUser(player);
-        final User user = UserManager.getUser(player);
-        final String address = user.getAddress();
+
         Updater.notify(player);
 
         if (Config.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                if (player.isOnline()) StorageManager.whitelist(address);
+                if (player.isOnline()) {
+                    final User user = UserManager.getUser(player);
+                    final String address = user.getAddress();
+                    StorageManager.whitelist(address);
+                }
             }, Config.autoWhitelistTime);
         }
     }
