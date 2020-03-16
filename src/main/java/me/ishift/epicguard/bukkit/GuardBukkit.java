@@ -97,9 +97,7 @@ public class GuardBukkit extends JavaPlugin {
         Updater.checkForUpdates();
         Bukkit.getOnlinePlayers().forEach(UserManager::addUser);
 
-        final Metrics metrics = new Metrics(this, 5845);
-        metrics.addCustomChart(new Metrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
-        metrics.addCustomChart(new Metrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
+        new Metrics(this, 5845);
 
         EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data", Config.countryEnabled, Config.cityEnabled));
     }

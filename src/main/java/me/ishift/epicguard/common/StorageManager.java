@@ -43,10 +43,6 @@ public class StorageManager {
         storage.set("stats.checked-connections", checkedConnections);
     }
 
-    public static Json getFile() {
-        return storage;
-    }
-
     public static boolean isBlacklisted(String address) {
         return blacklist.contains(address);
     }
@@ -64,13 +60,17 @@ public class StorageManager {
     }
 
     public static void blacklist(String address) {
-        if (blacklist.contains(address)) return;
+        if (blacklist.contains(address)) {
+            return;
+        }
         blacklist.add(address);
         RuntimeExecutor.blacklist(address);
     }
 
     public static void whitelist(String address) {
-        if (whitelist.contains(address)) return;
+        if (whitelist.contains(address)) {
+            return;
+        }
         whitelist.add(address);
         blacklist.remove(address);
         RuntimeExecutor.blacklist(address);

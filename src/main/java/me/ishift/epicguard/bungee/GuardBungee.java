@@ -72,10 +72,7 @@ public class GuardBungee extends Plugin {
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
 
-        final BungeeMetrics metrics = new BungeeMetrics(this, 5956);
-        metrics.addCustomChart(new BungeeMetrics.SingleLineChart("stoppedBots", StorageManager::getBlockedBots));
-        metrics.addCustomChart(new BungeeMetrics.SingleLineChart("checkedConnections", StorageManager::getCheckedConnections));
-
+        new BungeeMetrics(this, 5956);
         EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data", Config.countryEnabled, false));
     }
 

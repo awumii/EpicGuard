@@ -52,6 +52,10 @@ public class Detection {
     private boolean blacklist;
     private Reason reason;
 
+    public Detection() {
+        this.detected = true;
+    }
+
     public Reason getReason() {
         return reason;
     }
