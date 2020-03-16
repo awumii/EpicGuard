@@ -105,10 +105,6 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&7City: &f" + EpicGuardAPI.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
-            if (Config.ipHistoryEnable) {
-                send(sender, "&6[IP History]");
-                UserManager.getUser(player).getAddresses().forEach(address -> send(sender, " &7- &f" + address));
-            }
         }
 
         else if (args[0].equalsIgnoreCase("whitelist")) {

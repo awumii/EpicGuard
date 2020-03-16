@@ -99,9 +99,6 @@ auto-whitelist:
 ##     Server Protection     ##
 ###############################
 
-ip-history:
-  enabled: true
-
 op-protection:
   enabled: false
   # Permission to see alert: epicguard.protection.notify

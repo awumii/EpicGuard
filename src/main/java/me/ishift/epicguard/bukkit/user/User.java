@@ -17,10 +17,7 @@ package me.ishift.epicguard.bukkit.user;
 
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class User {
-    private List<String> addressList;
     private boolean notifications;
     private String address;
 
@@ -39,13 +36,5 @@ public class User {
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
-    }
-
-    public List<String> getAddresses() {
-        return addressList;
-    }
-
-    public void setAddressList(List<String> addressList) {
-        this.addressList = addressList;
     }
 }

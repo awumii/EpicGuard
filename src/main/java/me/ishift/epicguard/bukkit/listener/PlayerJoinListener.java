@@ -18,10 +18,8 @@ package me.ishift.epicguard.bukkit.listener;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,39 +28,20 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.List;
-
 public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
-        try {
-            final Player player = event.getPlayer();
-            UserManager.addUser(player);
-            final User user = UserManager.getUser(player);
-            final String address = user.getAddress();
-            Updater.notify(player);
+        final Player player = event.getPlayer();
+        UserManager.addUser(player);
+        final User user = UserManager.getUser(player);
+        final String address = user.getAddress();
+        Updater.notify(player);
 
-            if (Config.autoWhitelist) {
-                Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
-                    if (player.isOnline()) StorageManager.whitelist(address);
-                }, Config.autoWhitelistTime);
-            }
-
-            // IP History manager
-            if (Config.ipHistoryEnable) {
-                final List<String> history = StorageManager.getFile().getStringList("address-history." + player.getName());
-                if (!history.contains(address)) {
-                    if (!history.isEmpty()) {
-                        Notificator.broadcast(Messages.historyNew.replace("{NICK}", player.getName()).replace("{IP}", address));
-                    }
-                    history.add(address);
-                }
-                StorageManager.getFile().set("address-history." + player.getName(), history);
-                user.setAddressList(history);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (Config.autoWhitelist) {
+            Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+                if (player.isOnline()) StorageManager.whitelist(address);
+            }, Config.autoWhitelistTime);
         }
     }
 }

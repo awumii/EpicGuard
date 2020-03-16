@@ -168,7 +168,6 @@ public class GuardGui {
                 .addLore("&7ServerList check: " + ChatUtil.formatBol(Config.serverListCheck))
                 .addLore("&7Console filter: " + ChatUtil.formatBol(Config.filterEnabled))
                 .addLore("&7Bandwidth optimizer: " + ChatUtil.formatBol(Config.bandwidthOptimizer))
-                .addLore("&7IP history: " + ChatUtil.formatBol(Config.ipHistoryEnable))
                 .addLore("")
                 .addLore("&7Connection detect speed: &6" + Config.connectSpeed)
                 .addLore("&7Ping detect speed: &6" + Config.pingSpeed)
@@ -215,12 +214,6 @@ public class GuardGui {
             lore.add(ChatUtil.fix("  &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
             lore.add(ChatUtil.fix("  &7Country&8: &f" + EpicGuardAPI.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(ChatUtil.fix("  &7City&8: &f" + EpicGuardAPI.getGeoApi().getCity(user.getAddress())));
-
-            if (Config.ipHistoryEnable && user.getAddresses() != null) {
-                lore.add("");
-                lore.add(ChatUtil.fix("&6IP History:"));
-                user.getAddresses().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
-            }
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             INVENTORY_PLAYER.setItem(i, itemStack);
