@@ -34,6 +34,8 @@ public class BotCheck {
         else if (proxyCheck(address)) {
             detection.setReason(Reason.PROXY);
             detection.setBlacklist(true);
+        } else {
+            detection.setDetected(false);
         }
         return detection;
     }
