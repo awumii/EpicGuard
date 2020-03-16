@@ -34,14 +34,11 @@ public class PlayerCommandListener implements Listener {
         final String[] args = cmd.split(" ");
 
         // OP Protection module.
-        if (Config.opProtectionEnable && !Config.opProtectionList.contains(player.getName())) {
-            if (player.isOp()) {
-                event.setCancelled(true);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
-                Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
-                EpicGuardAPI.getLogger().info("Player " + player.getName() + " has been detected for OP_PROTECTION (Force-OP) detection! (" + cmd + ")");
-                return;
-            }
+        if (Config.opProtectionEnable && !Config.opProtectionList.contains(player.getName()) && player.isOp()) {
+            event.setCancelled(true);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Config.opProtectionCommand.replace("{PLAYER}", player.getName()));
+            Bukkit.broadcast(ChatUtil.fix(Config.opProtectionAlert.replace("{PLAYER}", player.getName())), "epicguard.protection.notify");
+            return;
         }
 
         // Allowed Commands module.
