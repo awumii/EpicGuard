@@ -19,34 +19,31 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class UserManager {
-    private static final Map<Player, User> userMap = new HashMap<>();
+    private static final Map<UUID, User> userMap = new HashMap<>();
 
     /**
      * @param player Target player.
      * @return User object related to the player.
      */
     public static User getUser(Player player) {
-        return userMap.get(player);
+        return userMap.get(player.getUniqueId());
     }
 
     /**
-     * Adding new User to userMap HashMap.
-     *
      * @param player Target player.
      */
     public static void addUser(Player player) {
-        User user = new User(player);
-        userMap.put(player, user);
+        final User user = new User(player);
+        userMap.put(player.getUniqueId(), user);
     }
 
     /**
-     * Should be invoked when player becomes null (eg. when he quit server).
-     *
      * @param player Target player.
      */
     public static void removeUser(Player player) {
-        userMap.remove(player);
+        userMap.remove(player.getUniqueId());
     }
 }
