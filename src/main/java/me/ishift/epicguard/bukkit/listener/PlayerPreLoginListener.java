@@ -16,12 +16,10 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.common.*;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.Detection;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,18 +31,16 @@ public class PlayerPreLoginListener implements Listener {
         final String address = event.getAddress().getHostAddress();
         final String name = event.getName();
 
-        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-            AttackSpeed.setAttackMode(true);
-        }
-
         StorageManager.increaseCheckedConnections();
+        AttackSpeed.increase(CounterType.CONNECT);
         EpicGuardAPI.getLogger().debug(" ");
         EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
         EpicGuardAPI.getLogger().debug("Player: " + name);
         EpicGuardAPI.getLogger().debug("Address: " + address);
 
-        AttackSpeed.increase(CounterType.CONNECT);
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 20L);
+        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
+            AttackSpeed.setAttackMode(true);
+        }
 
         if (StorageManager.isWhitelisted(address)) {
             return;
@@ -61,7 +57,9 @@ public class PlayerPreLoginListener implements Listener {
 
     public static void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getReason());
-        if (blacklist) StorageManager.blacklist(address);
+        if (blacklist) {
+            StorageManager.blacklist(address);
+        }
 
         StorageManager.increaseBlockedBots();
         AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);

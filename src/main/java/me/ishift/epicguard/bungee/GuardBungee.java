@@ -23,7 +23,7 @@ import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.NotificationTask;
+import me.ishift.epicguard.common.task.NotificationTask;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.api.GuardLogger;
 import net.md_5.bungee.api.plugin.Plugin;
