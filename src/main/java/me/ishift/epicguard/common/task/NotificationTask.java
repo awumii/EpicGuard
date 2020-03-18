@@ -33,7 +33,7 @@ package me.ishift.epicguard.common.task;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
-import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 
 public class NotificationTask implements Runnable {
     private Server server;

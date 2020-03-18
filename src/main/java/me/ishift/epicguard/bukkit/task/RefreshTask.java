@@ -22,11 +22,12 @@ public class RefreshTask implements Runnable {
     @Override
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            if (player.getOpenInventory().getTitle().equals("EpicGuard Management Menu")) {
+            if (player.getOpenInventory().getTitle().equals("EpicGuard | Management Menu")) {
                 GuardGui.showMain(player);
                 return;
             }
-            if (player.getOpenInventory().getTitle().equals("EpicGuard Player Manager")) {
+
+            if (player.getOpenInventory().getTitle().equals("EpicGuard | Player Manager")) {
                 GuardGui.showPlayers(player);
             }
         });

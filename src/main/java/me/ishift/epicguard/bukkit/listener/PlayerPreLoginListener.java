@@ -17,9 +17,11 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.*;
+import me.ishift.epicguard.common.detection.AttackSpeed;
+import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.Detection;
+import me.ishift.epicguard.common.detection.Detection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

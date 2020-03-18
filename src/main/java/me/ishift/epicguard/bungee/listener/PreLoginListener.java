@@ -17,12 +17,12 @@ package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.BotCheck;
+import me.ishift.epicguard.common.detection.AttackSpeed;
+import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.Detection;
+import me.ishift.epicguard.common.detection.Detection;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
@@ -30,7 +30,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 
-public class ProxyPreLoginListener implements Listener {
+public class PreLoginListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
         final PendingConnection connection = event.getConnection();

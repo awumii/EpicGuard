@@ -20,7 +20,7 @@ import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.*;
-import me.ishift.epicguard.bukkit.task.AttackTask;
+import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.RefreshTask;
 import me.ishift.epicguard.bukkit.task.UpdaterTask;
 import me.ishift.epicguard.bukkit.user.UserManager;
