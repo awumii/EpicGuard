@@ -18,8 +18,8 @@ package me.ishift.epicguard.bungee;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bungee.command.GuardCommand;
-import me.ishift.epicguard.bungee.listener.ProxyPingListener;
-import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
+import me.ishift.epicguard.bungee.listener.PingListener;
+import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
@@ -49,10 +49,11 @@ public class GuardBungee extends Plugin {
 
     @Override
     public void onEnable() {
-        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
+        final String path = "plugins/EpicGuard";
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         instance = this;
 
-        final File file = new File(getDataFolder(), "config_bungee.yml");
+        final File file = new File(path, "config_bungee.yml");
         if (!file.exists()) {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {
                 Files.copy(in, file.toPath());
@@ -65,10 +66,9 @@ public class GuardBungee extends Plugin {
         StorageManager.load();
         Messages.load();
 
-        this.getProxy().getPluginManager().registerListener(this, new ProxyPreLoginListener());
-        this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
+        this.getProxy().getPluginManager().registerListener(this, new PreLoginListener());
+        this.getProxy().getPluginManager().registerListener(this, new PingListener());
 
-        this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 20L, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new CounterTask(), 1L, 1L, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new NotificationTask(NotificationTask.Server.BUNGEE), 1L, 100L, TimeUnit.MILLISECONDS);
 

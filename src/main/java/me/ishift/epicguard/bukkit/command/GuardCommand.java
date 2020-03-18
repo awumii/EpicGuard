@@ -20,7 +20,7 @@ import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;

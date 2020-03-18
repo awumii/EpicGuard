@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.task;
 
-import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 
 public class CounterTask implements Runnable {
     @Override
