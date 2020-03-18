@@ -62,6 +62,7 @@ public class GuardBukkit extends JavaPlugin {
             EpicGuardAPI.getLogger().info("");
             EpicGuardAPI.getLogger().info("╚═════════════════════════════════════════════╝");
             pm.disablePlugin(this);
+            return;
         }
 
         this.saveDefaultConfig();

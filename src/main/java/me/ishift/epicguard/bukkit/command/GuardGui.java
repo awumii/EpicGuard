@@ -47,11 +47,6 @@ public class GuardGui {
      * @param player Target player.
      */
     public static void showMain(Player player) {
-        System.out.println(UMaterial.CHEST_MINECART.getMaterial());
-        System.out.println(UMaterial.ENCHANTING_TABLE.getMaterial());
-        System.out.println(UMaterial.NETHER_BRICK.getMaterial());
-        System.out.println(UMaterial.SKULL.getMaterial());
-
         final ItemStack i1 = new ItemBuilder(UMaterial.CHEST_MINECART.getMaterial())
                 .setTitle("&cServer status.")
                 .addLore("&7See status of your server.")
