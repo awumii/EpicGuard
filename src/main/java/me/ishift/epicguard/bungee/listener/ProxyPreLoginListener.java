@@ -23,14 +23,12 @@ import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.Detection;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-import java.util.concurrent.TimeUnit;
 
 public class ProxyPreLoginListener implements Listener {
     @EventHandler
@@ -40,7 +38,6 @@ public class ProxyPreLoginListener implements Listener {
         final String name = connection.getName();
 
         AttackSpeed.increase(CounterType.CONNECT);
-        ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> AttackSpeed.decrease(CounterType.CONNECT), 1, TimeUnit.SECONDS);
 
         if (StorageManager.isWhitelisted(address)) {
             return;
