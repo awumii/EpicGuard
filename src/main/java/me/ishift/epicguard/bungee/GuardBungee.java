@@ -23,6 +23,7 @@ import me.ishift.epicguard.bungee.listener.ProxyPreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.api.GuardLogger;
@@ -68,7 +69,8 @@ public class GuardBungee extends Plugin {
         this.getProxy().getPluginManager().registerListener(this, new ProxyPingListener());
 
         this.getProxy().getScheduler().schedule(this, new AttackClearTask(), 1L, 20L, TimeUnit.SECONDS);
-        this.getProxy().getScheduler().schedule(this, new NotificationTask(NotificationTask.Server.BUNGEE), 1L, 300L, TimeUnit.MILLISECONDS);
+        this.getProxy().getScheduler().schedule(this, new CounterTask(), 1L, 1L, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new NotificationTask(NotificationTask.Server.BUNGEE), 1L, 100L, TimeUnit.MILLISECONDS);
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
 

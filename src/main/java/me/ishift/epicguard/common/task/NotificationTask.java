@@ -34,7 +34,6 @@ import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.common.AttackSpeed;
-import me.ishift.epicguard.common.types.CounterType;
 
 public class NotificationTask implements Runnable {
     private Server server;
@@ -45,9 +44,6 @@ public class NotificationTask implements Runnable {
 
     @Override
     public void run() {
-        AttackSpeed.decrease(CounterType.PING);
-        AttackSpeed.decrease(CounterType.CONNECT);
-
         final String message = "&a" + AttackSpeed.getConnectPerSecond() + "&7/&acps &8| &c" + AttackSpeed.getTotalBots() + " &7blocked &8» &f" + AttackSpeed.getLastBot() + " &8[&c" +  AttackSpeed.getLastReason().name() + "&8]";
 
         if (this.server == Server.SPIGOT) {
