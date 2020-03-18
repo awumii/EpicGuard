@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.api;
 
-import me.ishift.epicguard.common.AttackSpeed;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 
 import java.io.*;
 import java.util.logging.Logger;
@@ -70,7 +70,8 @@ public class GuardLogger {
             return;
         }
         try {
-            if (!file.exists() || file.createNewFile()) {
+            if (!file.exists()) {
+                file.createNewFile();
                 return;
             }
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
@@ -106,7 +107,7 @@ public class GuardLogger {
         final String logMessage = "(" + DateUtil.getTime() + ") " + message;
 
         if (!hide) this.logger.info(message);
-        final File file = new File(this.path + "/logs/" + this.name + "Logs-" + DateUtil.getDate() + ".txt");
+        final File file = new File(this.path + "/logs/" + this.name + "-" + DateUtil.getDate() + ".txt");
         this.writeToFile(file, logMessage);
     }
 }
