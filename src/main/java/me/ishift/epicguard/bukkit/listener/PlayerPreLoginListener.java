@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
 public class PlayerPreLoginListener implements Listener {
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         final String address = event.getAddress().getHostAddress();
@@ -51,14 +52,14 @@ public class PlayerPreLoginListener implements Listener {
 
         final Detection detection = BotCheck.getDetection(address, name);
         if (detection.isDetected()) {
-            handleDetection(address, event, detection.getReason(), detection.isBlacklist());
+            this.handleDetection(address, event, detection.getReason(), detection.isBlacklist());
             EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
         EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
-    public static void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
+    private void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getReason());
         if (blacklist) {
             StorageManager.blacklist(address);
