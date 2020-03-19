@@ -16,10 +16,12 @@
 package me.ishift.epicguard.api;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,16 +31,22 @@ public class URLHelper {
      *
      * @param requestURL Target URL.
      * @return Content of website, in single String.
-     * @throws IOException If HTTP error has encountered.
      */
-    public static String readString(String requestURL) throws IOException {
-        final URLConnection connection = new URL(requestURL).openConnection();
-        connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+    public static String readString(String requestURL) {
+        try {
+            final URLConnection connection = new URL(requestURL).openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
-        try (Scanner scanner = new Scanner(connection.getInputStream(), StandardCharsets.UTF_8.toString())) {
-            scanner.useDelimiter("\\A");
-            return scanner.hasNext() ? scanner.next() : "";
+            try (Scanner scanner = new Scanner(connection.getInputStream(), StandardCharsets.UTF_8.toString())) {
+                scanner.useDelimiter("\\A");
+                return scanner.hasNext() ? scanner.next() : "";
+            }
+        } catch (IOException e) {
+            EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
+            EpicGuardAPI.getLogger().info(" Error: " + e.toString());
+            Arrays.stream(e.getStackTrace()).map(stackTraceElement -> stackTraceElement.toString().split("\\(")).filter(errors -> errors[0].contains("me.ishift.epicguard")).map(errors -> errors[1]).map(line -> line.replace(".java", "")).map(line -> line.replace(":", " Line: ")).map(line -> line.replace("\\)", "")).forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
         }
+        return requestURL;
     }
 
     /**
@@ -64,7 +72,9 @@ public class URLHelper {
             scanner.close();
             return lines;
         } catch (IOException e) {
-            e.printStackTrace();
+            EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
+            EpicGuardAPI.getLogger().info(" Error: " + e.toString());
+            Arrays.stream(e.getStackTrace()).map(stackTraceElement -> stackTraceElement.toString().split("\\(")).filter(errors -> errors[0].contains("me.ishift.epicguard")).map(errors -> errors[1]).map(line -> line.replace(".java", "")).map(line -> line.replace(":", " Line: ")).map(line -> line.replace("\\)", "")).forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
         }
         return null;
     }

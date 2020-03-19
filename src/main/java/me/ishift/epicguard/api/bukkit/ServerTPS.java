@@ -23,7 +23,7 @@ public class ServerTPS {
     /**
      * @return Current server's TPS (from 1 minute).
      */
-    public static String getTPS() throws IllegalAccessException {
+    public static String getTPS() {
         try {
             final DecimalFormat format = new DecimalFormat("##.##");
             final Object serverInstance;
@@ -33,7 +33,7 @@ public class ServerTPS {
 
             double[] tps = ((double[]) tpsField.get(serverInstance));
             return format.format(tps[0]);
-        } catch (NoSuchMethodException | InvocationTargetException | NoSuchFieldException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return "20.0";

@@ -27,11 +27,11 @@ public class User {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public boolean isNotifications() {
-        return notifications;
+        return this.notifications;
     }
 
     public void setNotifications(boolean notifications) {

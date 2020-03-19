@@ -36,11 +36,7 @@ public class Updater {
 
     public static void checkForUpdates() {
         if (Config.updater) {
-            try {
-                latestVersion = URLHelper.readString(UPDATE_URL);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            latestVersion = URLHelper.readString(UPDATE_URL);
             updateAvailable = !latestVersion.equals(CURRENT_VERSION);
         }
     }
