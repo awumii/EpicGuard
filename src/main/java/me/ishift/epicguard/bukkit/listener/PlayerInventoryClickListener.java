@@ -44,7 +44,7 @@ public class PlayerInventoryClickListener implements Listener {
             return;
         }
 
-        if (title.equals("EpicGuard | Management Menu")) {
+        if ("EpicGuard | Management Menu".equals(title)) {
             if (itemTitle.contains("Player management menu")) {
                 GuardGui.showPlayers(player);
                 return;
