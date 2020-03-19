@@ -19,10 +19,12 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserManager {
-    private static final Map<UUID, User> userMap = new HashMap<>();
+    private static final Map<UUID, User> userMap = new ConcurrentHashMap<>();
 
     /**
      * @param player Target player.
