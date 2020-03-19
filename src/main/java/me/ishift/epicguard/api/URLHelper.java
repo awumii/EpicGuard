@@ -16,7 +16,6 @@
 package me.ishift.epicguard.api;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -74,7 +73,14 @@ public class URLHelper {
         } catch (IOException e) {
             EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
             EpicGuardAPI.getLogger().info(" Error: " + e.toString());
-            Arrays.stream(e.getStackTrace()).map(stackTraceElement -> stackTraceElement.toString().split("\\(")).filter(errors -> errors[0].contains("me.ishift.epicguard")).map(errors -> errors[1]).map(line -> line.replace(".java", "")).map(line -> line.replace(":", " Line: ")).map(line -> line.replace("\\)", "")).forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
+            Arrays.stream(e.getStackTrace())
+                    .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
+                    .filter(errors -> errors[0].contains("me.ishift.epicguard"))
+                    .map(errors -> errors[1])
+                    .map(line -> line.replace(".java", ""))
+                    .map(line -> line.replace(":", " Line: "))
+                    .map(line -> line.replace("\\)", ""))
+                    .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
         }
         return null;
     }

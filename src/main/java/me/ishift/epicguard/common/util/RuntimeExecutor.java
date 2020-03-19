@@ -15,9 +15,11 @@
 
 package me.ishift.epicguard.common.util;
 
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class RuntimeExecutor {
     public static void execute(String command) {
@@ -27,7 +29,16 @@ public class RuntimeExecutor {
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
+            EpicGuardAPI.getLogger().info(" Error: " + ex.toString());
+            Arrays.stream(ex.getStackTrace())
+                    .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
+                    .filter(errors -> errors[0].contains("me.ishift.epicguard"))
+                    .map(errors -> errors[1])
+                    .map(line -> line.replace(".java", ""))
+                    .map(line -> line.replace(":", " Line: "))
+                    .map(line -> line.replace("\\)", ""))
+                    .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
         }
     }
 
