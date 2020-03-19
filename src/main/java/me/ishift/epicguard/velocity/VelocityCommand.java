@@ -24,10 +24,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class VelocityCommand implements Command {
     @Override
     public void execute(@NonNull CommandSource source, String[] args) {
-        VelocityUtil.send(source, "&3&lEpicGuard &3v3.11.2-BETA (by iShift, ruzekh)");
-        VelocityUtil.send(source, "&7Collected server statistics.");
-        VelocityUtil.send(source, "&fCurrent connections: &a" + AttackSpeed.getConnectPerSecond() + "/s");
-        VelocityUtil.send(source, "&fBlacklist size: &a" + StorageManager.getBlacklist().size() + " IPs");
-        VelocityUtil.send(source, "&fWhitelist size: &a" + StorageManager.getWhitelist().size() + " IPs");
+        VelocityUtil.send(source, "&8*-------------------------------------------------------------*");
+        VelocityUtil.send(source, "&e&lEpicGuard");
+        VelocityUtil.send(source, "");
+        VelocityUtil.send(source, "&eVersion 3.11.2-BETA &6(by iShift, ruzekh)");
+        VelocityUtil.send(source, "");
+        VelocityUtil.send(source, "&eAtack Statistics.");
+        VelocityUtil.send(source, "");
+        VelocityUtil.send(source, "&eCurrent connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
+        VelocityUtil.send(source, "&eBlacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
+        VelocityUtil.send(source, "&eWhitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
+        VelocityUtil.send(source, "&8&m*-------------------------------------------------------------*");
     }
 }
