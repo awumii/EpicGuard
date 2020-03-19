@@ -29,10 +29,8 @@ public class PingListener implements Listener {
         BotCheck.addPing(event.getConnection().getAddress().getAddress().getHostAddress());
         AttackSpeed.increase(CounterType.PING);
 
-        if (AttackSpeed.isUnderAttack()) {
-            if (Config.bandwidthOptimizer) {
-                event.setResponse(null);
-            }
+        if (AttackSpeed.isUnderAttack() && Config.bandwidthOptimizer) {
+            event.setResponse(null);
         }
     }
 }

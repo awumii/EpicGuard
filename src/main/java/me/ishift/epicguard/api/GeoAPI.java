@@ -77,13 +77,11 @@ public class GeoAPI {
     public String getCountryCode(String host) {
         final InetAddress address = getAddress(host);
 
-        if (address != null && getCountryReader() != null) {
-            if (!address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
-                try {
-                    return getCountryReader().country(address).getCountry().getIsoCode();
-                } catch (IOException | GeoIp2Exception e) {
-                    EpicGuardAPI.getLogger().info("[GeoIp2Exception/IOException] Can't find country for address: " + host);
-                }
+        if (address != null && getCountryReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+            try {
+                return getCountryReader().country(address).getCountry().getIsoCode();
+            } catch (IOException | GeoIp2Exception e) {
+                EpicGuardAPI.getLogger().info("Can't find country for address: " + host);
             }
         }
         return "Unknown?";

@@ -91,11 +91,9 @@ public class BotCheck {
     }
 
     public static boolean verifyCheck(String nickname) {
-        if (Config.rejoinCheck && AttackSpeed.isUnderAttack()) {
-            if (!REJOIN.contains(nickname)) {
-                REJOIN.add(nickname);
-                return true;
-            }
+        if (Config.rejoinCheck && AttackSpeed.isUnderAttack() && !REJOIN.contains(nickname)) {
+            REJOIN.add(nickname);
+            return true;
         }
         return false;
     }
