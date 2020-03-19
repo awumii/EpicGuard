@@ -38,6 +38,7 @@ antibot:
   name-contains:
     - mcstorm
     - mcspam
+    - mcdrop
     - bot
     - proxy
   # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!

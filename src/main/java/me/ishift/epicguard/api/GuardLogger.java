@@ -70,8 +70,7 @@ public class GuardLogger {
             return;
         }
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!file.createNewFile()) {
                 return;
             }
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
@@ -106,7 +105,9 @@ public class GuardLogger {
     private void log(String message, boolean hide) {
         final String logMessage = "(" + DateUtil.getTime() + ") " + message;
 
-        if (!hide) this.logger.info(message);
+        if (!hide) {
+            this.logger.info(message);
+        }
         final File file = new File(this.path + "/logs/" + this.name + "-" + DateUtil.getDate() + ".txt");
         this.writeToFile(file, logMessage);
     }

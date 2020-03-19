@@ -68,11 +68,11 @@ public class StorageManager {
     }
 
     public static void whitelist(String address) {
+        blacklist.remove(address);
         if (whitelist.contains(address)) {
             return;
         }
         whitelist.add(address);
-        blacklist.remove(address);
         RuntimeExecutor.blacklist(address);
     }
 
