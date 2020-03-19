@@ -34,6 +34,6 @@ public class PostLoginListener implements Listener {
             if (player.isConnected()) {
                 StorageManager.whitelist(player.getAddress().getAddress().getHostAddress());
             }
-        }, 1, TimeUnit.SECONDS);
+        }, 1, TimeUnit.MINUTES);
     }
 }
