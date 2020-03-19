@@ -16,7 +16,6 @@
 package me.ishift.epicguard.common.types;
 
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.api.ChatUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +35,6 @@ public enum Reason {
     }
 
     public String getReason() {
-        return this.reason.stream().map(s -> ChatUtil.fix(s) + "\n").collect(Collectors.joining());
+        return this.reason.stream().map(s -> s.replace("&", "§") + "\n").collect(Collectors.joining());
     }
 }
