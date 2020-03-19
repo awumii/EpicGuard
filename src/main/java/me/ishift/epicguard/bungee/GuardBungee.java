@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
@@ -58,7 +59,16 @@ public class GuardBungee extends Plugin {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
-                e.printStackTrace();
+                EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
+                EpicGuardAPI.getLogger().info(" Error: " + e.toString());
+                Arrays.stream(e.getStackTrace())
+                        .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
+                        .filter(errors -> errors[0].contains("me.ishift.epicguard"))
+                        .map(errors -> errors[1])
+                        .map(line -> line.replace(".java", ""))
+                        .map(line -> line.replace(":", " Line: "))
+                        .map(line -> line.replace("\\)", ""))
+                        .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
             }
         }
 
