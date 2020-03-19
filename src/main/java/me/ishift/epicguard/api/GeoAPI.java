@@ -94,13 +94,11 @@ public class GeoAPI {
     public String getCity(String host) {
         final InetAddress address = getAddress(host);
 
-        if (address != null && getCityReader() != null) {
-            if (!address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
-                try {
-                    return getCityReader().city(address).getCity().getName();
-                } catch (IOException | GeoIp2Exception e) {
-                    EpicGuardAPI.getLogger().info("[GeoIp2Exception/IOException] Can't find city for address: " + host);
-                }
+        if (address != null && getCityReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+            try {
+                return getCityReader().city(address).getCity().getName();
+            } catch (IOException | GeoIp2Exception e) {
+                EpicGuardAPI.getLogger().info("[GeoIp2Exception/IOException] Can't find city for address: " + host);
             }
         }
         return "Unknown?";

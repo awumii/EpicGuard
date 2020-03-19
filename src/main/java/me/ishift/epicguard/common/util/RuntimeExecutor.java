@@ -21,7 +21,9 @@ import java.io.IOException;
 
 public class RuntimeExecutor {
     public static void execute(String command) {
-        if (!Config.firewallEnabled) return;
+        if (!Config.firewallEnabled) {
+            return;
+        }
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {

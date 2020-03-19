@@ -16,7 +16,8 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.common.*;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.types.CounterType;
