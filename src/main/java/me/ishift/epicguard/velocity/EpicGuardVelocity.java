@@ -29,6 +29,10 @@ import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.task.CounterTask;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
@@ -43,17 +47,31 @@ public class EpicGuardVelocity {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
         StorageManager.load();
-        Config.loadBungee();
+        final String path = "plugins/EpicGuard";
+        this.copyConfig();
         Messages.load();
-        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
-        EpicGuardAPI.setGeoApi(new GeoAPI("plugins/EpicGuard", Config.countryEnabled, false));
+        Config.loadBungee();
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
+        EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
+        server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
         server.getEventManager().register(this, new PreLoginListener());
     }
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
         StorageManager.save();
+    }
+
+    private void copyConfig() {
+        final File file = new File("plugins/EpicGuard", "config_bungee.yml");
+        if (!file.exists()) {
+            try (InputStream in = getClass().getClassLoader().getResourceAsStream("config_bungee.yml")) {
+                assert in != null;
+                Files.copy(in, file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

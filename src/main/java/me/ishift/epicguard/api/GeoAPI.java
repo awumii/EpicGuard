@@ -40,9 +40,9 @@ public class GeoAPI {
             EpicGuardAPI.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
             EpicGuardAPI.getLogger().info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
 
-            final File countryFile = new File(basePath + "/GeoLite2-Country.mmdb");
-            final File cityFile = new File(basePath + "/GeoLite2-City.mmdb");
-            final File timestampFile = new File(basePath + "/last_db_download.txt");
+            final File countryFile = new File(basePath + "/data/GeoLite2-Country.mmdb");
+            final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
+            final File timestampFile = new File(basePath + "/data/last_db_download.txt");
 
             if (country) {
                 if (!countryFile.exists() || isOutdated(timestampFile)) {

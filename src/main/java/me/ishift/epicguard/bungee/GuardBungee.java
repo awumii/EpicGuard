@@ -85,7 +85,7 @@ public class GuardBungee extends Plugin {
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
 
         new BungeeMetrics(this, 5956);
-        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data", Config.countryEnabled, false));
+        EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
     }
 
     @Override

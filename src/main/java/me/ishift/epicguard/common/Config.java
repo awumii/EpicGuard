@@ -129,5 +129,7 @@ public class Config {
 
         final String countryModeString = config.getOrSetDefault("countries.mode", "DISABLED");
         countryMode = GeoMode.valueOf(countryModeString);
+
+        countryEnabled = config.getOrSetDefault("download-databases.country", true);
     }
 }
