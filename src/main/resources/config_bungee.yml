@@ -24,6 +24,8 @@ countries:
   list:
     - GB
     - DE
+  download-databases:
+    country: true
 
 ###############################
 ##           AntiBot         ##

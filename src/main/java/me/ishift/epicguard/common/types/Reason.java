@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 public enum Reason {
     GEO(Messages.messageKickCountry),
     PROXY(Messages.messageKickProxy),
-    SERVERLIST(Messages.messagesKickServerList),
+    SERVER_LIST(Messages.messagesKickServerList),
     BLACKLIST(Messages.messageKickBlacklist),
     VERIFY(Messages.messageKickVerify),
-    NAMECONTAINS(Messages.messageKickNamecontains);
+    NAME_CONTAINS(Messages.messageKickNamecontains);
 
     private List<String> reason;
 

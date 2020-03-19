@@ -21,11 +21,17 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.task.CounterTask;
 
-@Plugin(id = "EpicGuard", name = "EpicGuard", version = "1.0-SNAPSHOT",
+import java.util.concurrent.TimeUnit;
+
+@Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
         description = "Advanced server protection.", authors = {"iShift", "ruzekh"})
 public class EpicGuardVelocity {
     private ProxyServer server;
@@ -37,9 +43,12 @@ public class EpicGuardVelocity {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
         StorageManager.load();
         Config.loadBungee();
         Messages.load();
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
+        EpicGuardAPI.setGeoApi(new GeoAPI("plugins/EpicGuard", Config.countryEnabled, false));
         server.getEventManager().register(this, new PreLoginListener());
     }
 
