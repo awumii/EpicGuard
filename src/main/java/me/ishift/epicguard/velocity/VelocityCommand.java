@@ -24,16 +24,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class VelocityCommand implements Command {
     @Override
     public void execute(@NonNull CommandSource source, String[] args) {
-        VelocityUtil.send(source, "&8*-------------------------------------------------------------*");
-        VelocityUtil.send(source, "&e&lEpicGuard");
+        VelocityUtil.send(source, "&8&m---------------------------------------");
+        VelocityUtil.send(source, "&e&lEpicGuard &e3.11.2-BETA &6(by iShift, ruzekh)");
         VelocityUtil.send(source, "");
-        VelocityUtil.send(source, "&eVersion 3.11.2-BETA &6(by iShift, ruzekh)");
+        VelocityUtil.send(source, "&c&l★ Attack Statistics.");
         VelocityUtil.send(source, "");
-        VelocityUtil.send(source, "&eAtack Statistics.");
-        VelocityUtil.send(source, "");
-        VelocityUtil.send(source, "&eCurrent connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
-        VelocityUtil.send(source, "&eBlacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
-        VelocityUtil.send(source, "&eWhitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
-        VelocityUtil.send(source, "&8&m*-------------------------------------------------------------*");
+        VelocityUtil.send(source, " &8» &7Current connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
+        VelocityUtil.send(source, " &8» &7Blacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
+        VelocityUtil.send(source, " &8» &7Whitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
+        VelocityUtil.send(source, "&8&m---------------------------------------");
     }
 }

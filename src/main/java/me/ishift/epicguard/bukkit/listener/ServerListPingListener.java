@@ -15,12 +15,10 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.types.CounterType;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -31,7 +29,6 @@ public class ServerListPingListener implements Listener {
     public void onPing(ServerListPingEvent event) {
         BotCheck.addPing(event.getAddress().getHostAddress());
         AttackSpeed.increase(CounterType.PING);
-        Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> AttackSpeed.decrease(CounterType.PING), 20L);
 
         if (AttackSpeed.getPingPerSecond() > Config.pingSpeed && Config.bandwidthOptimizer) {
             event.setMotd("");
