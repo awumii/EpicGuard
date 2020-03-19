@@ -35,7 +35,7 @@ public class BotCheck {
             detection.setReason(Reason.BLACKLIST);
         }
         else if (nameCheck(nickname)) {
-            detection.setReason(Reason.NAMECONTAINS);
+            detection.setReason(Reason.NAME_CONTAINS);
             detection.setBlacklist(true);
         }
         else if (geoCheck(address)) {
@@ -43,7 +43,7 @@ public class BotCheck {
             detection.setBlacklist(true);
         }
         else if (serverListCheck(address)) {
-            detection.setReason(Reason.SERVERLIST);
+            detection.setReason(Reason.SERVER_LIST);
         }
         else if (verifyCheck(nickname)) {
             detection.setReason(Reason.VERIFY);

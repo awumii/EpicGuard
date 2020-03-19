@@ -19,7 +19,7 @@ import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Utils {
+public class VelocityUtil {
     /**
      * @param message Message to be formatted.
      * @return Formatted message.
@@ -33,6 +33,6 @@ public class Utils {
      * @return TextComponent from message.
      */
     public static @NonNull TextComponent getComponent(String message) {
-        return LegacyComponentSerializer.legacy().deserialize(Utils.fixColor(message));
+        return LegacyComponentSerializer.legacy().deserialize(VelocityUtil.fixColor(message));
     }
 }

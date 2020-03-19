@@ -44,7 +44,7 @@ public class PreLoginListener {
 
     private void handleDetection(String address, PreLoginEvent event, Detection detection) {
         final String reason = detection.getReason().getReason();
-        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(reason)));
+        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(VelocityUtil.getComponent(reason)));
         if (detection.isBlacklist()) {
             StorageManager.blacklist(address);
         }
