@@ -27,6 +27,7 @@ import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 
 import java.io.File;
@@ -53,9 +54,13 @@ public class EpicGuardVelocity {
         Messages.load();
         Config.loadBungee();
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
+        EpicGuardAPI.getLogger().info("Please ignore [ERROR] prefix and red color of these log messages, there is nothing wrong!");
         EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
+
         server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
         server.getEventManager().register(this, new PreLoginListener());
+        server.getCommandManager().register(new VelocityCommand(), "guard", "epicguard", "ab", "antibot");
     }
 
     @Subscribe

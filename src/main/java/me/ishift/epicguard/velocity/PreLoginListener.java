@@ -18,6 +18,8 @@ package me.ishift.epicguard.velocity;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
+import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
@@ -31,6 +33,11 @@ public class PreLoginListener {
         final String address = connection.getRemoteAddress().getAddress().getHostAddress();
         final String nickname = event.getUsername();
         AttackSpeed.increase(CounterType.CONNECT);
+        EpicGuardAPI.getLogger().debug("Performing check on " + nickname + " [" + address + "]");
+
+        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
+            AttackSpeed.setAttackMode(true);
+        }
 
         if (StorageManager.isWhitelisted(address)) {
             return;
@@ -38,8 +45,12 @@ public class PreLoginListener {
 
         final Detection detection = BotCheck.getDetection(address, nickname);
         if (detection.isDetected()) {
+            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name());
             this.handleDetection(address, event, detection);
+            return;
         }
+        EpicGuardAPI.getLogger().debug("Looks like this player is legit.");
+        EpicGuardAPI.getLogger().debug(" ");
     }
 
     private void handleDetection(String address, PreLoginEvent event, Detection detection) {

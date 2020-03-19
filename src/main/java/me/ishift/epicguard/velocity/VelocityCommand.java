@@ -15,28 +15,19 @@
 
 package me.ishift.epicguard.velocity;
 
+import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
-import net.kyori.text.TextComponent;
+import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class VelocityUtil {
-    /**
-     * @param message Message to be formatted.
-     * @return Formatted message.
-     */
-    public static String fixColor(String message) {
-        return message.replace("&", "§");
-    }
-
-    /**
-     * @param message Raw message.
-     * @return TextComponent from message.
-     */
-    public static @NonNull TextComponent getComponent(String message) {
-        return TextComponent.of(fixColor(message));
-    }
-
-    public static void send(CommandSource source, String message) {
-        source.sendMessage(getComponent(message));
+public class VelocityCommand implements Command {
+    @Override
+    public void execute(@NonNull CommandSource source, String[] args) {
+        VelocityUtil.send(source, "&3&lEpicGuard &3v3.11.2-BETA (by iShift, ruzekh)");
+        VelocityUtil.send(source, "&7Collected server statistics.");
+        VelocityUtil.send(source, "&fCurrent connections: &a" + AttackSpeed.getConnectPerSecond() + "/s");
+        VelocityUtil.send(source, "&fBlacklist size: &a" + StorageManager.getBlacklist().size() + " IPs");
+        VelocityUtil.send(source, "&fWhitelist size: &a" + StorageManager.getWhitelist().size() + " IPs");
     }
 }
