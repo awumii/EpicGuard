@@ -63,6 +63,9 @@ public class EpicGuardVelocity {
         StorageManager.save();
     }
 
+    /**
+     * This method will copy default configuration.
+     */
     private void copyConfig() {
         final File file = new File("plugins/EpicGuard", "config_bungee.yml");
         if (!file.exists()) {
