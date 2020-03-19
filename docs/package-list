@@ -11,5 +11,7 @@ me.ishift.epicguard.bungee.command
 me.ishift.epicguard.bungee.listener
 me.ishift.epicguard.bungee.util
 me.ishift.epicguard.common
+me.ishift.epicguard.common.detection
+me.ishift.epicguard.common.task
 me.ishift.epicguard.common.types
 me.ishift.epicguard.common.util
