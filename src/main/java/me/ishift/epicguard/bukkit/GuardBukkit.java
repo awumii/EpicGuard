@@ -111,7 +111,7 @@ public class GuardBukkit extends JavaPlugin {
 
         new Metrics(this, 5845);
 
-        EpicGuardAPI.setGeoApi(new GeoAPI(this.getDataFolder() + "/data", Config.countryEnabled, Config.cityEnabled));
+        EpicGuardAPI.setGeoApi(new GeoAPI("plugins/EpicGuard", Config.countryEnabled, Config.cityEnabled));
     }
 
     @Override
