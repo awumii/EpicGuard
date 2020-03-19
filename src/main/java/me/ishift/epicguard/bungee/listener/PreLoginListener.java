@@ -45,14 +45,14 @@ public class PreLoginListener implements Listener {
 
         final Detection detection = BotCheck.getDetection(address, name);
         if (detection.isDetected()) {
-            handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
+            this.handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
             EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
             return;
         }
         EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
-    public static void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {
+    private void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {
         connection.disconnect(new TextComponent(reason.getReason()));
         if (GuardBungee.log) {
             EpicGuardAPI.getLogger().info("Closing: " + address + "(" + connection.getName() + "), (" + reason + ")]");
