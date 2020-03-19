@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 public class GuardGui {
     public static final Inventory INVENTORY_MANAGEMENT = Bukkit.createInventory(null, 27, "EpicGuard | Management Menu");
-    public static final Inventory INVENTORY_PLAYER = Bukkit.createInventory(null, 36, "EpicGuard | Player Manager");
+    public static final Inventory INVENTORY_PLAYER = Bukkit.createInventory(null, 54, "EpicGuard | Player Manager");
     public static final Inventory INVENTORY_MODULES = Bukkit.createInventory(null, 27, "EpicGuard | Module Manager");
 
     /**
@@ -216,7 +216,7 @@ public class GuardGui {
         }
 
         final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.getMaterial()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
-        INVENTORY_PLAYER.setItem(35, back);
+        INVENTORY_PLAYER.setItem(53, back);
         player.openInventory(INVENTORY_PLAYER);
     }
 }
