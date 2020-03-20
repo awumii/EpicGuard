@@ -28,20 +28,28 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.List;
+
 public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         UserManager.addUser(player);
-
+        final User user = UserManager.getUser(player);
+        final String address = user.getAddress();
         Updater.notify(player);
+
+        final List<String> history = StorageManager.getStorage().getStringList("address-history." + player.getName());
+        if (!history.contains(address)) {
+            history.add(address);
+        }
+        StorageManager.getStorage().set("address-history." + player.getName(), history);
+        user.setAddressHistory(history);
 
         if (Config.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                 if (player.isOnline()) {
-                    final User user = UserManager.getUser(player);
-                    final String address = user.getAddress();
                     StorageManager.whitelist(address);
                 }
             }, Config.autoWhitelistTime);

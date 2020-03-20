@@ -28,6 +28,10 @@ public class StorageManager {
     private static int blockedBots = 0;
     private static int checkedConnections = 0;
 
+    public static Json getStorage() {
+        return storage;
+    }
+
     public static void load() {
         storage = new Json("storage", "plugins/EpicGuard/data");
         blacklist = storage.getOrSetDefault("addresses.blacklist", new ArrayList<>());
