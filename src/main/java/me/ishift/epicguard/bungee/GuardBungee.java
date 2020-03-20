@@ -34,7 +34,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class GuardBungee extends Plugin {
@@ -54,7 +53,6 @@ public class GuardBungee extends Plugin {
         Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
 
         final String path = "plugins/EpicGuard";
-        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         instance = this;
 
         final File file = new File(path, "config_bungee.yml");
@@ -79,6 +77,8 @@ public class GuardBungee extends Plugin {
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
 
         new BungeeMetrics(this, 5956);
+
+        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
     }
 

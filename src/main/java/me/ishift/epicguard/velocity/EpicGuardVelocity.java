@@ -57,7 +57,6 @@ public class EpicGuardVelocity {
             Messages.load();
             Config.loadBungee();
             EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
-            EpicGuardAPI.getLogger().info("Please ignore [ERROR] prefix and red color of these log messages, there is nothing wrong!");
             EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
 
             server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
