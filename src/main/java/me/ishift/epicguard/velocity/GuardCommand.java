@@ -29,7 +29,8 @@ public class GuardCommand implements Command {
         Utils.send(source, "");
         Utils.send(source, "&c&l★ Attack Statistics.");
         Utils.send(source, "");
-        Utils.send(source, " &8» &7Current connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
+        Utils.send(source, " &8» &7Connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
+        Utils.send(source, " &8» &7Blocked bots: &6" + AttackSpeed.getTotalBots() + "/s");
         Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
         Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
         Utils.send(source, "&8&m---------------------------------------");
