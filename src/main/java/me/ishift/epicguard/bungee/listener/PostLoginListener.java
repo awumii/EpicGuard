@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
@@ -32,7 +32,7 @@ public class PostLoginListener implements Listener {
 
         ProxyServer.getInstance().getScheduler().schedule(GuardBungee.getInstance(), () -> {
             if (player.isConnected()) {
-                StorageManager.whitelist(player.getAddress().getAddress().getHostAddress());
+                StorageManager.getStorage().whitelist(player.getAddress().getAddress().getHostAddress());
             }
         }, 1, TimeUnit.MINUTES);
     }

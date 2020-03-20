@@ -19,7 +19,7 @@ import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -75,7 +75,7 @@ public class GuardCommand extends Command {
                 return;
             }
             final String address = args[1];
-            StorageManager.whitelist(address);
+            StorageManager.getStorage().whitelist(address);
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
         }
 
@@ -85,7 +85,7 @@ public class GuardCommand extends Command {
                 return;
             }
             final String address = args[1];
-            StorageManager.blacklist(address);
+            StorageManager.getStorage().blacklist(address);
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address));
         }
 

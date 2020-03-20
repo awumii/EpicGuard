@@ -20,7 +20,7 @@ import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.detection.Detection;
@@ -41,7 +41,7 @@ public class PreLoginListener implements Listener {
 
             AttackSpeed.increase(CounterType.CONNECT);
 
-            if (StorageManager.isWhitelisted(address)) {
+            if (StorageManager.getStorage().isWhitelisted(address)) {
                 return;
             }
 
@@ -64,7 +64,7 @@ public class PreLoginListener implements Listener {
         }
 
         if (blacklist) {
-            StorageManager.blacklist(address);
+            StorageManager.getStorage().blacklist(address);
         }
         AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
         AttackSpeed.setLastReason(reason);

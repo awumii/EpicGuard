@@ -29,7 +29,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerTabCompletePacket;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.RefreshTask;
 import me.ishift.epicguard.bukkit.task.UpdaterTask;
@@ -60,7 +60,7 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
-        StorageManager.load();
+        StorageManager.getStorage().load();
 
         final PluginManager pm = this.getServer().getPluginManager();
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
@@ -101,6 +101,6 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        StorageManager.save();
+        StorageManager.getStorage().save();
     }
 }

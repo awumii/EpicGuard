@@ -17,7 +17,7 @@ package me.ishift.epicguard.common.detection;
 
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.types.GeoMode;
 import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.api.URLHelper;
@@ -68,7 +68,7 @@ public class BotCheck {
     }
 
     public static boolean blacklistCheck(String address) {
-        return StorageManager.isBlacklisted(address);
+        return StorageManager.getStorage().isBlacklisted(address);
     }
 
     public static boolean geoCheck(String address) {

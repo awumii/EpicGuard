@@ -22,9 +22,10 @@ import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.api.bukkit.UMaterial;
 import me.ishift.epicguard.api.bukkit.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -57,12 +58,12 @@ public class GuardGui {
                 .addLore("  &7Pings&8: &c" + AttackSpeed.getPingPerSecond() + "/s")
                 .addLore("")
                 .addLore("&6Connections:")
-                .addLore("  &7Checked connections&8: &e" + StorageManager.getCheckedConnections())
-                .addLore("  &7Blocked bots&8: &c" + StorageManager.getBlockedBots())
+                .addLore("  &7Checked connections&8: &e" + StorageManager.getStorage().getCheckedConnections())
+                .addLore("  &7Blocked bots&8: &c" + StorageManager.getStorage().getBlockedBots())
                 .addLore("")
                 .addLore("&6Storage manager:")
-                .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getBlacklist().size())
-                .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getWhitelist().size())
+                .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
+                .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getStorage().getWhitelist().size())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
@@ -210,9 +211,11 @@ public class GuardGui {
             lore.add(ChatUtil.fix("  &7Country&8: &f" + EpicGuardAPI.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(ChatUtil.fix("  &7City&8: &f" + EpicGuardAPI.getGeoApi().getCity(user.getAddress())));
 
-            lore.add("");
-            lore.add(ChatUtil.fix("&6IP History:"));
-            user.getAddressHistory().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
+            if (!user.getAddressHistory().isEmpty()) {
+                lore.add("");
+                lore.add(ChatUtil.fix("&6IP History:"));
+                user.getAddressHistory().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
+            }
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             INVENTORY_PLAYER.setItem(i, itemStack);

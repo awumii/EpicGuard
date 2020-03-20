@@ -17,6 +17,7 @@ package me.ishift.epicguard.common;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
+import me.ishift.epicguard.common.data.StorageType;
 import me.ishift.epicguard.common.types.GeoMode;
 
 import java.util.List;
@@ -66,6 +67,8 @@ public class Config {
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;
 
+    public static StorageType storageType;
+
     public static void loadBukkit() {
         final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
         config.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
@@ -106,6 +109,9 @@ public class Config {
 
         final String countryModeString = config.getString("countries.mode");
         countryMode = GeoMode.valueOf(countryModeString);
+
+        final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
+        storageType = StorageType.valueOf(storageTypeString);
     }
 
     public static void loadBungee() {
@@ -131,5 +137,8 @@ public class Config {
         countryMode = GeoMode.valueOf(countryModeString);
 
         countryEnabled = config.getOrSetDefault("download-databases.country", true);
+
+        final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
+        storageType = StorageType.valueOf(storageTypeString);
     }
 }

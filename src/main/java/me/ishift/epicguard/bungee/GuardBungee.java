@@ -26,7 +26,7 @@ import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.api.GuardLogger;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -65,7 +65,7 @@ public class GuardBungee extends Plugin {
         }
 
         Config.loadBungee();
-        StorageManager.load();
+        StorageManager.getStorage().load();
         Messages.load();
 
         this.getProxy().getPluginManager().registerListener(this, new PreLoginListener());
@@ -84,6 +84,6 @@ public class GuardBungee extends Plugin {
 
     @Override
     public void onDisable() {
-        StorageManager.save();
+        StorageManager.getStorage().save();
     }
 }

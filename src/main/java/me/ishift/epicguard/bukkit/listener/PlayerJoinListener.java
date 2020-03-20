@@ -20,7 +20,8 @@ import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.data.storage.Flat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,16 +44,19 @@ public class PlayerJoinListener implements Listener {
         if (Config.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                 if (player.isOnline()) {
-                    StorageManager.whitelist(address);
+                    StorageManager.getStorage().whitelist(address);
                 }
             }, Config.autoWhitelistTime);
         }
 
-        final List<String> history = StorageManager.getStorage().getStringList("address-history." + player.getName());
-        if (!history.contains(address)) {
-            history.add(address);
+        if (StorageManager.getStorage() instanceof Flat) {
+            final Flat flat = (Flat) StorageManager.getStorage();
+            final List<String> history = flat.getFile().getStringList("address-history." + player.getName());
+            if (!history.contains(address)) {
+                history.add(address);
+            }
+            flat.getFile().set("address-history." + player.getName(), history);
+            user.setAddressHistory(history);
         }
-        StorageManager.getStorage().set("address-history." + player.getName(), history);
-        user.setAddressHistory(history);
     }
 }
