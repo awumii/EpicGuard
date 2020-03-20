@@ -210,11 +210,9 @@ public class GuardGui {
             lore.add(ChatUtil.fix("  &7Country&8: &f" + EpicGuardAPI.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(ChatUtil.fix("  &7City&8: &f" + EpicGuardAPI.getGeoApi().getCity(user.getAddress())));
 
-            if (user.getAddressHistory() != null) {
-                lore.add("");
-                lore.add(ChatUtil.fix("&6IP History:"));
-                user.getAddressHistory().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
-            }
+            lore.add("");
+            lore.add(ChatUtil.fix("&6IP History:"));
+            user.getAddressHistory().forEach(address -> lore.add(ChatUtil.fix("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             INVENTORY_PLAYER.setItem(i, itemStack);

@@ -40,13 +40,6 @@ public class PlayerJoinListener implements Listener {
         final String address = user.getAddress();
         Updater.notify(player);
 
-        final List<String> history = StorageManager.getStorage().getStringList("address-history." + player.getName());
-        if (!history.contains(address)) {
-            history.add(address);
-        }
-        StorageManager.getStorage().set("address-history." + player.getName(), history);
-        user.setAddressHistory(history);
-
         if (Config.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
                 if (player.isOnline()) {
@@ -54,5 +47,12 @@ public class PlayerJoinListener implements Listener {
                 }
             }, Config.autoWhitelistTime);
         }
+
+        final List<String> history = StorageManager.getStorage().getStringList("address-history." + player.getName());
+        if (!history.contains(address)) {
+            history.add(address);
+        }
+        StorageManager.getStorage().set("address-history." + player.getName(), history);
+        user.setAddressHistory(history);
     }
 }

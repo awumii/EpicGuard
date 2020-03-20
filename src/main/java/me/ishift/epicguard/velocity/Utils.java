@@ -19,7 +19,7 @@ import com.velocitypowered.api.command.CommandSource;
 import net.kyori.text.TextComponent;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class VelocityUtil {
+public class Utils {
     /**
      * @param message Message to be formatted.
      * @return Formatted message.

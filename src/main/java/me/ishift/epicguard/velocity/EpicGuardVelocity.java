@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
         description = "Advanced server protection.", authors = {"iShift", "ruzekh"})
 public class EpicGuardVelocity {
-    private ProxyServer server;
+    private final ProxyServer server;
 
     @Inject
     public EpicGuardVelocity(ProxyServer server) {
@@ -60,7 +60,7 @@ public class EpicGuardVelocity {
         server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
         server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
         server.getEventManager().register(this, new PreLoginListener());
-        server.getCommandManager().register(new VelocityCommand(), "guard", "epicguard", "ab", "antibot");
+        server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
     }
 
     @Subscribe

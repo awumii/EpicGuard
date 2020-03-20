@@ -21,17 +21,17 @@ import me.ishift.epicguard.common.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class VelocityCommand implements Command {
+public class GuardCommand implements Command {
     @Override
     public void execute(@NonNull CommandSource source, String[] args) {
-        VelocityUtil.send(source, "&8&m---------------------------------------");
-        VelocityUtil.send(source, "&e&lEpicGuard &e3.11.2-BETA &6(by iShift, ruzekh)");
-        VelocityUtil.send(source, "");
-        VelocityUtil.send(source, "&c&l★ Attack Statistics.");
-        VelocityUtil.send(source, "");
-        VelocityUtil.send(source, " &8» &7Current connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
-        VelocityUtil.send(source, " &8» &7Blacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
-        VelocityUtil.send(source, " &8» &7Whitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
-        VelocityUtil.send(source, "&8&m---------------------------------------");
+        Utils.send(source, "&8&m---------------------------------------");
+        Utils.send(source, "&e&lEpicGuard &e3.11.2-BETA &6(by iShift, ruzekh)");
+        Utils.send(source, "");
+        Utils.send(source, "&c&l★ Attack Statistics.");
+        Utils.send(source, "");
+        Utils.send(source, " &8» &7Current connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
+        Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
+        Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
+        Utils.send(source, "&8&m---------------------------------------");
     }
 }
