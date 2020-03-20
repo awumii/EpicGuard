@@ -18,7 +18,7 @@ package me.ishift.epicguard.bukkit.listener;
 import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.types.CounterType;
@@ -37,7 +37,7 @@ public class PlayerPreLoginListener implements Listener {
             final String address = event.getAddress().getHostAddress();
             final String name = event.getName();
 
-            StorageManager.increaseCheckedConnections();
+            StorageManager.getStorage().increaseCheckedConnections();
             AttackSpeed.increase(CounterType.CONNECT);
             EpicGuardAPI.getLogger().debug(" ");
             EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
@@ -48,7 +48,7 @@ public class PlayerPreLoginListener implements Listener {
                 AttackSpeed.setAttackMode(true);
             }
 
-            if (StorageManager.isWhitelisted(address)) {
+            if (StorageManager.getStorage().isWhitelisted(address)) {
                 return;
             }
 
@@ -67,10 +67,10 @@ public class PlayerPreLoginListener implements Listener {
     private void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getReason());
         if (blacklist) {
-            StorageManager.blacklist(address);
+            StorageManager.getStorage().blacklist(address);
         }
 
-        StorageManager.increaseBlockedBots();
+        StorageManager.getStorage().increaseBlockedBots();
         AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
         AttackSpeed.setLastReason(reason);
         AttackSpeed.setLastBot(event.getName());

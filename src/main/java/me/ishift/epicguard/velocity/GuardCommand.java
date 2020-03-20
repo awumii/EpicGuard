@@ -17,7 +17,7 @@ package me.ishift.epicguard.velocity;
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -31,8 +31,8 @@ public class GuardCommand implements Command {
         Utils.send(source, "");
         Utils.send(source, " &8» &7Connections: &6" + AttackSpeed.getConnectPerSecond() + "/s");
         Utils.send(source, " &8» &7Blocked bots: &6" + AttackSpeed.getTotalBots() + "/s");
-        Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getBlacklist().size() + " IPs");
-        Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getWhitelist().size() + " IPs");
+        Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getStorage().getBlacklist().size() + " IPs");
+        Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getStorage().getWhitelist().size() + " IPs");
         Utils.send(source, "&8&m---------------------------------------");
     }
 }

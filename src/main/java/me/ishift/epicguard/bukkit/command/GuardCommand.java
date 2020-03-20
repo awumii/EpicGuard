@@ -23,7 +23,7 @@ import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -113,7 +113,7 @@ public class GuardCommand implements CommandExecutor {
                 return true;
             }
             final String address = args[1];
-            StorageManager.whitelist(address);
+            StorageManager.getStorage().whitelist(address);
             send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
         }
 
@@ -123,7 +123,7 @@ public class GuardCommand implements CommandExecutor {
                 return true;
             }
             final String address = args[1];
-            StorageManager.blacklist(address);
+            StorageManager.getStorage().blacklist(address);
             send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
         }
 

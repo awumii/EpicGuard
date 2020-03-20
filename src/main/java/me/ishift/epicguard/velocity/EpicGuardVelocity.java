@@ -27,7 +27,7 @@ import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 
@@ -51,7 +51,7 @@ public class EpicGuardVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         try {
-            StorageManager.load();
+            StorageManager.getStorage().load();
             final String path = "plugins/EpicGuard";
             this.copyConfig();
             Messages.load();
@@ -70,7 +70,7 @@ public class EpicGuardVelocity {
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
-        StorageManager.save();
+        StorageManager.getStorage().save();
     }
 
     /**

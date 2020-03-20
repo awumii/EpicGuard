@@ -19,9 +19,8 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
 import io.sentry.Sentry;
-import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.StorageManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.detection.Detection;
@@ -40,7 +39,7 @@ public class PreLoginListener {
                 AttackSpeed.setAttackMode(true);
             }
 
-            if (StorageManager.isWhitelisted(address)) {
+            if (StorageManager.getStorage().isWhitelisted(address)) {
                 return;
             }
 
@@ -58,7 +57,7 @@ public class PreLoginListener {
 
         event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(reason)));
         if (detection.isBlacklist()) {
-            StorageManager.blacklist(address);
+            StorageManager.getStorage().blacklist(address);
         }
     }
 }
