@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.api.bukkit;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.entity.Player;
 
@@ -56,7 +57,7 @@ public class TitleAPI {
             Reflection.sendPacket(player, packet);
             Reflection.sendPacket(player, timingPacket);
         } catch (Exception e) {
-            e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 }

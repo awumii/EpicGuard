@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.api.bukkit;
 
+import io.sentry.Sentry;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -48,7 +49,7 @@ public class Reflection {
             final Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
             playerConnection.getClass().getMethod("sendPacket", getNMSClass("Packet")).invoke(playerConnection, packet);
         } catch (Exception e) {
-            e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 
@@ -61,7 +62,7 @@ public class Reflection {
         try {
             return Class.forName("net.minecraft.server." + version + "." + name);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Sentry.capture(e);
             return null;
         }
     }

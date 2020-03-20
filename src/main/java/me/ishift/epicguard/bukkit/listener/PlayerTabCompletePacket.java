@@ -21,6 +21,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import org.bukkit.entity.Player;
@@ -66,16 +67,7 @@ public class PlayerTabCompletePacket extends PacketAdapter {
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(event.getPlayer(), response);
             } catch (Exception e) {
-                EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
-                EpicGuardAPI.getLogger().info(" Error: " + e.toString());
-                Arrays.stream(e.getStackTrace())
-                        .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
-                        .filter(errors -> errors[0].contains("me.ishift.epicguard"))
-                        .map(errors -> errors[1])
-                        .map(line -> line.replace(".java", ""))
-                        .map(line -> line.replace(":", " Line: "))
-                        .map(line -> line.replace("\\)", ""))
-                        .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
+                Sentry.capture(e);
             }
         }
     }

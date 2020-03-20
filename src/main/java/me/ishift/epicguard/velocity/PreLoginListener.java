@@ -18,6 +18,7 @@ package me.ishift.epicguard.velocity;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.StorageManager;
@@ -29,22 +30,26 @@ import me.ishift.epicguard.common.types.CounterType;
 public class PreLoginListener {
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
-        final InboundConnection connection = event.getConnection();
-        final String address = connection.getRemoteAddress().getAddress().getHostAddress();
-        final String nickname = event.getUsername();
-        AttackSpeed.increase(CounterType.CONNECT);
+        try {
+            final InboundConnection connection = event.getConnection();
+            final String address = connection.getRemoteAddress().getAddress().getHostAddress();
+            final String nickname = event.getUsername();
+            AttackSpeed.increase(CounterType.CONNECT);
 
-        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-            AttackSpeed.setAttackMode(true);
-        }
+            if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
+                AttackSpeed.setAttackMode(true);
+            }
 
-        if (StorageManager.isWhitelisted(address)) {
-            return;
-        }
+            if (StorageManager.isWhitelisted(address)) {
+                return;
+            }
 
-        final Detection detection = BotCheck.getDetection(address, nickname);
-        if (detection.isDetected()) {
-            this.handleDetection(address, event, detection);
+            final Detection detection = BotCheck.getDetection(address, nickname);
+            if (detection.isDetected()) {
+                this.handleDetection(address, event, detection);
+            }
+        } catch (Exception e) {
+            Sentry.capture(e);
         }
     }
 

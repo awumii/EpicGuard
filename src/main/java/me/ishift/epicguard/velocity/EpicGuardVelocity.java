@@ -21,6 +21,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.api.GuardLogger;
@@ -44,23 +45,28 @@ public class EpicGuardVelocity {
     @Inject
     public EpicGuardVelocity(ProxyServer server) {
         this.server = server;
+        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        StorageManager.load();
-        final String path = "plugins/EpicGuard";
-        this.copyConfig();
-        Messages.load();
-        Config.loadBungee();
-        EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
-        EpicGuardAPI.getLogger().info("Please ignore [ERROR] prefix and red color of these log messages, there is nothing wrong!");
-        EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
+        try {
+            StorageManager.load();
+            final String path = "plugins/EpicGuard";
+            this.copyConfig();
+            Messages.load();
+            Config.loadBungee();
+            EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
+            EpicGuardAPI.getLogger().info("Please ignore [ERROR] prefix and red color of these log messages, there is nothing wrong!");
+            EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
 
-        server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
-        server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
-        server.getEventManager().register(this, new PreLoginListener());
-        server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
+            server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
+            server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
+            server.getEventManager().register(this, new PreLoginListener());
+            server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
+        } catch (Exception e) {
+            Sentry.capture(e);
+        }
     }
 
     @Subscribe
@@ -78,7 +84,7 @@ public class EpicGuardVelocity {
                 assert in != null;
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
-                e.printStackTrace();
+                Sentry.capture(e);
             }
         }
     }

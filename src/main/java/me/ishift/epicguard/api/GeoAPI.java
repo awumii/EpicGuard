@@ -18,6 +18,7 @@ package me.ishift.epicguard.api;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import io.sentry.Sentry;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class GeoAPI {
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 
