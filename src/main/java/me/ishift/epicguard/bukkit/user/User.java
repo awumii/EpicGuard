@@ -21,14 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private boolean notifications;
-    private String address;
     private List<String> addressHistory;
+    private boolean notifications;
+    private final String address;
 
     public User(Player player) {
         this.notifications = false;
         this.address = player.getAddress().getAddress().getHostAddress();
         this.addressHistory = new ArrayList<>();
+    }
+
+    public List<String> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<String> addressHistory) {
+        this.addressHistory = addressHistory;
     }
 
     public String getAddress() {
@@ -41,13 +49,5 @@ public class User {
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
-    }
-
-    public List<String> getAddressHistory() {
-        return addressHistory;
-    }
-
-    public void setAddressHistory(List<String> addressHistory) {
-        this.addressHistory = addressHistory;
     }
 }

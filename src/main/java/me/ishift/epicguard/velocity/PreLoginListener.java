@@ -33,7 +33,6 @@ public class PreLoginListener {
         final String address = connection.getRemoteAddress().getAddress().getHostAddress();
         final String nickname = event.getUsername();
         AttackSpeed.increase(CounterType.CONNECT);
-        EpicGuardAPI.getLogger().debug("Performing check on " + nickname + " [" + address + "]");
 
         if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
             AttackSpeed.setAttackMode(true);
@@ -45,18 +44,14 @@ public class PreLoginListener {
 
         final Detection detection = BotCheck.getDetection(address, nickname);
         if (detection.isDetected()) {
-            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name());
             this.handleDetection(address, event, detection);
-            return;
         }
-        EpicGuardAPI.getLogger().debug("Looks like this player is legit.");
-        EpicGuardAPI.getLogger().debug(" ");
     }
 
     private void handleDetection(String address, PreLoginEvent event, Detection detection) {
         final String reason = detection.getReason().getReason();
 
-        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(VelocityUtil.getComponent(reason)));
+        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(reason)));
         if (detection.isBlacklist()) {
             StorageManager.blacklist(address);
         }
