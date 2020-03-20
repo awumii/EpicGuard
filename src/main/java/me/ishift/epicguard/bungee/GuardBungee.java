@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bungee;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bungee.command.GuardCommand;
@@ -50,6 +51,8 @@ public class GuardBungee extends Plugin {
 
     @Override
     public void onEnable() {
+        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
+
         final String path = "plugins/EpicGuard";
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         instance = this;
@@ -59,16 +62,7 @@ public class GuardBungee extends Plugin {
             try (InputStream in = getResourceAsStream("config_bungee.yml")) {
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
-                EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
-                EpicGuardAPI.getLogger().info(" Error: " + e.toString());
-                Arrays.stream(e.getStackTrace())
-                        .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
-                        .filter(errors -> errors[0].contains("me.ishift.epicguard"))
-                        .map(errors -> errors[1])
-                        .map(line -> line.replace(".java", ""))
-                        .map(line -> line.replace(":", " Line: "))
-                        .map(line -> line.replace("\\)", ""))
-                        .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
+                Sentry.capture(e);
             }
         }
 

@@ -15,12 +15,13 @@
 
 package me.ishift.epicguard.api;
 
+import io.sentry.Sentry;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,9 +42,7 @@ public class URLHelper {
                 return scanner.hasNext() ? scanner.next() : "";
             }
         } catch (IOException e) {
-            EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
-            EpicGuardAPI.getLogger().info(" Error: " + e.toString());
-            Arrays.stream(e.getStackTrace()).map(stackTraceElement -> stackTraceElement.toString().split("\\(")).filter(errors -> errors[0].contains("me.ishift.epicguard")).map(errors -> errors[1]).map(line -> line.replace(".java", "")).map(line -> line.replace(":", " Line: ")).map(line -> line.replace("\\)", "")).forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
+            Sentry.capture(e);
         }
         return requestURL;
     }
@@ -71,16 +70,7 @@ public class URLHelper {
             scanner.close();
             return lines;
         } catch (IOException e) {
-            EpicGuardAPI.getLogger().info("[ERROR] ExceptionStackTrace");
-            EpicGuardAPI.getLogger().info(" Error: " + e.toString());
-            Arrays.stream(e.getStackTrace())
-                    .map(stackTraceElement -> stackTraceElement.toString().split("\\("))
-                    .filter(errors -> errors[0].contains("me.ishift.epicguard"))
-                    .map(errors -> errors[1])
-                    .map(line -> line.replace(".java", ""))
-                    .map(line -> line.replace(":", " Line: "))
-                    .map(line -> line.replace("\\)", ""))
-                    .forEach(line -> EpicGuardAPI.getLogger().info("Klasa: " + line));
+            Sentry.capture(e);
         }
         return null;
     }

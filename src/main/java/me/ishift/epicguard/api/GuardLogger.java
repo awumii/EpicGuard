@@ -15,15 +15,16 @@
 
 package me.ishift.epicguard.api;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 
 import java.io.*;
 import java.util.logging.Logger;
 
 public class GuardLogger {
-    private String name;
-    private String path;
-    private Logger logger;
+    private final String name;
+    private final String path;
+    private final Logger logger;
 
     /**
      * Creating new GuardLogger instance
@@ -78,7 +79,7 @@ public class GuardLogger {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 
@@ -92,7 +93,7 @@ public class GuardLogger {
             final PrintWriter pw = new PrintWriter(file);
             pw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 

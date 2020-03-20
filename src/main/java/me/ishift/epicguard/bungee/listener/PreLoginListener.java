@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bungee.listener;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.common.detection.AttackSpeed;
@@ -33,23 +34,27 @@ import net.md_5.bungee.event.EventHandler;
 public class PreLoginListener implements Listener {
     @EventHandler
     public void onPreLogin(PreLoginEvent event) {
-        final PendingConnection connection = event.getConnection();
-        final String address = connection.getAddress().getAddress().getHostAddress();
-        final String name = connection.getName();
+        try {
+            final PendingConnection connection = event.getConnection();
+            final String address = connection.getAddress().getAddress().getHostAddress();
+            final String name = connection.getName();
 
-        AttackSpeed.increase(CounterType.CONNECT);
+            AttackSpeed.increase(CounterType.CONNECT);
 
-        if (StorageManager.isWhitelisted(address)) {
-            return;
+            if (StorageManager.isWhitelisted(address)) {
+                return;
+            }
+
+            final Detection detection = BotCheck.getDetection(address, name);
+            if (detection.isDetected()) {
+                this.handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
+                EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
+                return;
+            }
+            EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
+        } catch (Exception e) {
+            Sentry.capture(e);
         }
-
-        final Detection detection = BotCheck.getDetection(address, name);
-        if (detection.isDetected()) {
-            this.handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
-            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
-            return;
-        }
-        EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
     public void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {

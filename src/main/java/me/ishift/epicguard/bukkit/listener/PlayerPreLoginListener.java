@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.StorageManager;
@@ -32,31 +33,35 @@ public class PlayerPreLoginListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        final String address = event.getAddress().getHostAddress();
-        final String name = event.getName();
+        try {
+            final String address = event.getAddress().getHostAddress();
+            final String name = event.getName();
 
-        StorageManager.increaseCheckedConnections();
-        AttackSpeed.increase(CounterType.CONNECT);
-        EpicGuardAPI.getLogger().debug(" ");
-        EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
-        EpicGuardAPI.getLogger().debug("Player: " + name);
-        EpicGuardAPI.getLogger().debug("Address: " + address);
+            StorageManager.increaseCheckedConnections();
+            AttackSpeed.increase(CounterType.CONNECT);
+            EpicGuardAPI.getLogger().debug(" ");
+            EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
+            EpicGuardAPI.getLogger().debug("Player: " + name);
+            EpicGuardAPI.getLogger().debug("Address: " + address);
 
-        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-            AttackSpeed.setAttackMode(true);
+            if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
+                AttackSpeed.setAttackMode(true);
+            }
+
+            if (StorageManager.isWhitelisted(address)) {
+                return;
+            }
+
+            final Detection detection = BotCheck.getDetection(address, name);
+            if (detection.isDetected()) {
+                this.handleDetection(address, event, detection.getReason(), detection.isBlacklist());
+                EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
+                return;
+            }
+            EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
+        } catch (Exception e) {
+            Sentry.capture(e);
         }
-
-        if (StorageManager.isWhitelisted(address)) {
-            return;
-        }
-
-        final Detection detection = BotCheck.getDetection(address, name);
-        if (detection.isDetected()) {
-            this.handleDetection(address, event, detection.getReason(), detection.isBlacklist());
-            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
-            return;
-        }
-        EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
     private void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
