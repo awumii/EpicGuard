@@ -17,9 +17,14 @@ package me.ishift.epicguard.api;
 
 import io.sentry.Sentry;
 import me.ishift.epicguard.common.detection.AttackSpeed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.logging.Logger;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class GuardLogger {
     private final String name;
@@ -34,7 +39,7 @@ public class GuardLogger {
     public GuardLogger(String name, String path) {
         this.name = name;
         this.path = path;
-        this.logger = Logger.getLogger(name);
+        this.logger = LoggerFactory.getLogger(name);
         final File logDir = new File(path + "/logs");
 
         if (logDir.mkdir()) {

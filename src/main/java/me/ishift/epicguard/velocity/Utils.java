@@ -36,6 +36,10 @@ public class Utils {
         return TextComponent.of(fixColor(message));
     }
 
+    /**
+     * @param source Command sender.
+     * @param message Message to be sent.
+     */
     public static void send(CommandSource source, String message) {
         source.sendMessage(getComponent(message));
     }
