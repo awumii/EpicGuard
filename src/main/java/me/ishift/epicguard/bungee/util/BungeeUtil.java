@@ -24,8 +24,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class BungeeUtil {
-
-    private static void sendTitle(ProxiedPlayer player, String title, String subtitle) {
+    /**
+     * @param player Target player.
+     * @param title Title message.
+     * @param subtitle Subtitle message.
+     */
+    public static void sendTitle(ProxiedPlayer player, String title, String subtitle) {
         final Title titleBuilder = GuardBungee.getInstance().getProxy().createTitle()
                 .title(new TextComponent(ChatUtil.fix(title)))
                 .subTitle(new TextComponent(ChatUtil.fix(subtitle)))
@@ -35,10 +39,18 @@ public class BungeeUtil {
         player.sendTitle(titleBuilder);
     }
 
+    /**
+     * @param player Target player.
+     * @param message Message to be sent.
+     */
     public static void sendActionBar(ProxiedPlayer player, String message) {
         player.sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtil.fix(message)));
     }
 
+    /**
+     * @param sender Target command sender.
+     * @param message Message to be sent.
+     */
     public static void sendMessage(CommandSender sender, String message) {
         final TextComponent component = new TextComponent(ChatUtil.fix(message));
         sender.sendMessage(component);
