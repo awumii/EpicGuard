@@ -22,12 +22,9 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import io.sentry.Sentry;
-import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import java.util.Arrays;
 
 public class PlayerTabCompletePacket extends PacketAdapter {
     public PlayerTabCompletePacket(Plugin plugin) {

@@ -22,8 +22,6 @@ import me.ishift.epicguard.api.ChatUtil;
 import me.ishift.epicguard.api.URLHelper;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
-
 public class Updater {
     private static final String CURRENT_VERSION = GuardBukkit.getInstance().getDescription().getVersion();
     private static final String UPDATE_URL = "https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/version.info";
