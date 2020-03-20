@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class GeoAPI {
     private DatabaseReader countryReader;
@@ -43,32 +42,34 @@ public class GeoAPI {
 
             final File countryFile = new File(basePath + "/data/GeoLite2-Country.mmdb");
             final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
-            final File timestampFile = new File(basePath + "/data/last_db_download.txt");
 
             if (country) {
-                if (!countryFile.exists() || isOutdated(timestampFile)) {
+                if (!countryFile.exists() || isOutdated()) {
                     final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
                     downloader.download();
-
-                    EpicGuardAPI.getLogger().eraseFile(timestampFile);
-                    EpicGuardAPI.getLogger().writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
             if (city) {
-                if (!cityFile.exists() || isOutdated(timestampFile)) {
+                if (!cityFile.exists() || isOutdated()) {
                     final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
                     downloader.download();
-
-                    EpicGuardAPI.getLogger().eraseFile(timestampFile);
-                    EpicGuardAPI.getLogger().writeToFile(timestampFile, String.valueOf(System.currentTimeMillis()));
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
         } catch (IOException e) {
             Sentry.capture(e);
         }
+    }
+
+    /**
+     * @return Boolean whether the database is outdated or not.
+     */
+    private boolean isOutdated() {
+        final String databaseVersion = "2020-03-17";
+        final String latestVersion = URLHelper.readString("https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/database.info");
+        return !databaseVersion.equals(latestVersion);
     }
 
     /**
@@ -131,19 +132,5 @@ public class GeoAPI {
             EpicGuardAPI.getLogger().info("[UnknownHostException] Can't resolve InetAddress from hostname: " + hostname);
         }
         return null;
-    }
-
-    /**
-     * @param dateFile File with last download timestamp
-     * @return Boolean whether the database is outdated or not.
-     * @throws IOException If file can't be created for some reason.
-     */
-    private boolean isOutdated(File dateFile) throws IOException {
-        if (dateFile.createNewFile()) {
-            return true;
-        }
-        final Scanner scanner = new Scanner(dateFile);
-        final long timeOld = Long.parseLong(scanner.next());
-        return (System.currentTimeMillis() - timeOld) > 604800000;
     }
 }

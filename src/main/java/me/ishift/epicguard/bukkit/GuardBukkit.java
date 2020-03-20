@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit;
 
+import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
@@ -54,6 +55,8 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
+
         final PluginManager pm = this.getServer().getPluginManager();
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));
 
