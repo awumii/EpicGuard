@@ -15,17 +15,83 @@
 
 package me.ishift.epicguard.common.data.storage;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.data.DataStorage;
+import me.ishift.epicguard.common.data.StorageManager;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class MySQL extends DataStorage {
+    private HikariDataSource dataSource;
 
     @Override
     public void load() {
-        //TODO MySQL Connection using HikariCP
+        this.initConnection();
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS 'epicguard_blacklist' (`address` TEXT NOT NULL);");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS 'epicguard_whitelist' (`address` TEXT NOT NULL);");
     }
 
     @Override
     public void save() {
-        //TODO MySQL Connection using HikariCP
+        this.executeUpdate("INSERT INTO `epicguard_whitelist` (`address`) VALUES " + this.fromList(this.whitelist));
+        this.executeUpdate("INSERT INTO `epicguard_blacklist` (`address`) VALUES " + this.fromList(this.blacklist));
+    }
+
+    private void initConnection() {
+        final HikariConfig config = new HikariConfig();
+        config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
+
+        config.setMaximumPoolSize(StorageManager.poolSize);
+        config.setConnectionTimeout(StorageManager.connectionTimeout);
+
+        config.setJdbcUrl("jdbc:mysql://" + StorageManager.mysqlHost + ":" + StorageManager.mysqlPort + "/" + StorageManager.mysqlDatabase + "?useSSL=" + StorageManager.mysqlSSL);
+        config.setUsername(StorageManager.mysqlUser);
+        config.setPassword(StorageManager.mysqlPassword);
+        config.addDataSourceProperty("cachePrepStmts", true);
+        config.addDataSourceProperty("prepStmtCacheSize", 250);
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
+        config.addDataSourceProperty("useServerPrepStmts", true);
+
+        this.dataSource = new HikariDataSource(config);
+    }
+
+    private ResultSet executeQuery(String query) {
+        try {
+            System.out.println("Executing query '" + query + "'.");
+            final Connection connection = this.dataSource.getConnection();
+            final Statement statement = connection.createStatement();
+            return statement.executeQuery(query);
+        } catch (SQLException ex) {
+            System.out.println("Could not execute query to the database '" + query + "'.");
+        }
+        return null;
+    }
+
+    private void executeUpdate(String query) {
+        try {
+            final Connection connection = this.dataSource.getConnection();
+            final Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            statement.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            EpicGuardAPI.getLogger().info("Could not execute update to the database '" + query + "'.");
+        }
+    }
+
+    private String fromList(List<String> list) {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for (String address : this.whitelist) {
+            joiner.add("('" + address + "')");
+        }
+        return joiner.toString();
     }
 }

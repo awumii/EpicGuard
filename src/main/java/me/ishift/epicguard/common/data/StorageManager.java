@@ -15,19 +15,46 @@
 
 package me.ishift.epicguard.common.data;
 
-import me.ishift.epicguard.common.Config;
+import de.leonhard.storage.Yaml;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
 public class StorageManager {
     private static DataStorage storage;
 
+    public static StorageType storageType;
+    public static String mysqlHost;
+    public static int mysqlPort;
+    public static String mysqlDatabase;
+    public static String mysqlUser;
+    public static String mysqlPassword;
+    public static boolean mysqlSSL;
+
+    public static int poolSize;
+    public static int connectionTimeout;
+
     public static void init() {
-        if (Config.storageType == StorageType.FLAT) {
+        final Yaml config = new Yaml("storage_config", "plugins/EpicGuard");
+
+        final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
+        storageType = StorageType.valueOf(storageTypeString);
+
+        mysqlPassword = config.getOrSetDefault("mysql.user.password", "password");
+        mysqlUser = config.getOrSetDefault("mysql.user.username", "admin");
+        mysqlHost = config.getOrSetDefault("mysql.connection.host", "127.0.0.1");
+        mysqlPort = config.getOrSetDefault("mysql.connection.port", 3306);
+        mysqlDatabase = config.getOrSetDefault("mysql.connection.database", "your-database");
+        mysqlSSL = config.getOrSetDefault("mysql.connection.use-ssl", true);
+
+        poolSize = config.getOrSetDefault("mysql.settings.pool-size", 5);
+        connectionTimeout = config.getOrSetDefault("mysql.settings.connection-timeout", 30000);
+
+        if (storageType == StorageType.FLAT) {
             storage = new Flat();
-            return;
+        } else {
+            storage = new MySQL();
         }
-        storage = new MySQL();
+        storage.load();
     }
 
     public static void save() {
