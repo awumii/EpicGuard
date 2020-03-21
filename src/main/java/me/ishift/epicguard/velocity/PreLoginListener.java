@@ -25,6 +25,7 @@ import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.detection.Detection;
 import me.ishift.epicguard.common.types.CounterType;
+import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
     @Subscribe

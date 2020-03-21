@@ -65,7 +65,7 @@ public class GuardBungee extends Plugin {
         }
 
         Config.loadBungee();
-        StorageManager.getStorage().load();
+        StorageManager.init();
         Messages.load();
 
         this.getProxy().getPluginManager().registerListener(this, new PreLoginListener());

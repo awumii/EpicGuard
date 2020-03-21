@@ -24,8 +24,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class Downloader {
-    private String url;
-    private File file;
+    private final String url;
+    private final File file;
 
     /**
      * @param url URL from where file should be downloaded.

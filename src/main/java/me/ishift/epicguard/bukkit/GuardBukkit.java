@@ -60,7 +60,7 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
-        StorageManager.getStorage().load();
+        StorageManager.init();
 
         final PluginManager pm = this.getServer().getPluginManager();
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", "plugins/EpicGuard"));

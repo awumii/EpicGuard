@@ -17,6 +17,7 @@ package me.ishift.epicguard.common.data;
 
 import me.ishift.epicguard.common.util.RuntimeExecutor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DataStorage {
@@ -24,6 +25,11 @@ public abstract class DataStorage {
     public List<String> whitelist;
     public int blockedBots;
     public int checkedConnections;
+
+    public DataStorage() {
+        this.blacklist = new ArrayList<>();
+        this.whitelist = new ArrayList<>();
+    }
 
     public boolean isBlacklisted(String address) {
         return this.blacklist.contains(address);
