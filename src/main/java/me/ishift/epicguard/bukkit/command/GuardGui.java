@@ -15,18 +15,17 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.api.ChatUtil;
 import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.api.bukkit.ItemBuilder;
 import me.ishift.epicguard.api.bukkit.SkullUtil;
+import me.ishift.epicguard.api.bukkit.UMaterial;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.api.bukkit.UMaterial;
-import me.ishift.epicguard.api.bukkit.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.common.data.DataStorage;
-import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.api.ChatUtil;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

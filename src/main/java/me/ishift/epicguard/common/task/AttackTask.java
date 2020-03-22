@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.common.task;
 
-import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 
 public class AttackTask implements Runnable {
 

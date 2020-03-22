@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private final String address;
     private List<String> addressHistory;
     private boolean notifications;
-    private final String address;
 
     public User(Player player) {
         this.notifications = false;

@@ -20,8 +20,6 @@ import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
 public class StorageManager {
-    private static DataStorage storage;
-
     public static StorageType storageType;
     public static String mysqlHost;
     public static int mysqlPort;
@@ -29,9 +27,9 @@ public class StorageManager {
     public static String mysqlUser;
     public static String mysqlPassword;
     public static boolean mysqlSSL;
-
     public static int poolSize;
     public static int connectionTimeout;
+    private static DataStorage storage;
 
     public static void init() {
         final Yaml config = new Yaml("storage_config", "plugins/EpicGuard");

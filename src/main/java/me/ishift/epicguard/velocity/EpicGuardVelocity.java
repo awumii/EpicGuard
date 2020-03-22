@@ -21,16 +21,15 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
-import me.ishift.epicguard.common.DependencyLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +45,6 @@ public class EpicGuardVelocity {
     @Inject
     public EpicGuardVelocity(ProxyServer server) {
         this.server = server;
-        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
     }
 
     @Subscribe
@@ -66,7 +64,7 @@ public class EpicGuardVelocity {
             server.getEventManager().register(this, new PreLoginListener());
             server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
         } catch (Exception e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 
@@ -85,7 +83,7 @@ public class EpicGuardVelocity {
                 assert in != null;
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
-                Sentry.capture(e);
+                e.printStackTrace();
             }
         }
     }

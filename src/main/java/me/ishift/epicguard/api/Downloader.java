@@ -28,7 +28,7 @@ public class Downloader {
     private final File file;
 
     /**
-     * @param url URL from where file should be downloaded.
+     * @param url  URL from where file should be downloaded.
      * @param file Target location, where file should be downloaded.
      */
     public Downloader(String url, File file) {

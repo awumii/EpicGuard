@@ -54,22 +54,17 @@ public class Detection {
 
         if (blacklistCheck(address)) {
             this.reason = Reason.BLACKLIST;
-        }
-        else if (nameCheck(nickname)) {
+        } else if (nameCheck(nickname)) {
             this.reason = Reason.NAME_CONTAINS;
             this.blacklist = true;
-        }
-        else if (serverListCheck(address)) {
+        } else if (serverListCheck(address)) {
             this.reason = Reason.SERVER_LIST;
-        }
-        else if (verifyCheck(nickname)) {
+        } else if (verifyCheck(nickname)) {
             this.reason = Reason.VERIFY;
-        }
-        else if (geoCheck(address)) {
+        } else if (geoCheck(address)) {
             this.reason = Reason.GEO;
             this.blacklist = true;
-        }
-        else if (proxyCheck(address)) {
+        } else if (proxyCheck(address)) {
             this.reason = Reason.PROXY;
             this.blacklist = true;
         } else {
@@ -137,16 +132,16 @@ public class Detection {
         return reason;
     }
 
+    public void setReason(Reason reason) {
+        this.reason = reason;
+    }
+
     public boolean isBlacklist() {
         return blacklist;
     }
 
     public void setBlacklist(boolean blacklist) {
         this.blacklist = blacklist;
-    }
-
-    public void setReason(Reason reason) {
-        this.reason = reason;
     }
 
     public boolean isDetected() {

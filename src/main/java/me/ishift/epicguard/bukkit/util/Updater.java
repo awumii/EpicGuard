@@ -15,11 +15,11 @@
 
 package me.ishift.epicguard.bukkit.util;
 
+import me.ishift.epicguard.api.ChatUtil;
+import me.ishift.epicguard.api.URLHelper;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.api.URLHelper;
 import org.bukkit.entity.Player;
 
 public class Updater {

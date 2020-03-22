@@ -52,7 +52,7 @@ public class Utils {
     }
 
     /**
-     * @param source Command sender.
+     * @param source  Command sender.
      * @param message Message to be sent.
      */
     public static void send(CommandSource source, String message) {

@@ -15,9 +15,11 @@
 
 package me.ishift.epicguard.bukkit;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.api.GuardLogger;
+import me.ishift.epicguard.api.LogFilter;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
@@ -27,18 +29,15 @@ import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.PlayerTabCompletePacket;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.DependencyLoader;
-import me.ishift.epicguard.common.Messages;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.bukkit.task.RefreshTask;
 import me.ishift.epicguard.bukkit.task.UpdaterTask;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Metrics;
-import me.ishift.epicguard.api.LogFilter;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.api.GuardLogger;
+import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
 import org.bukkit.Bukkit;
@@ -56,8 +55,6 @@ public class GuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
-
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();

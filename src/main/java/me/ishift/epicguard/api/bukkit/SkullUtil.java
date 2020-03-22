@@ -23,8 +23,8 @@ import java.util.List;
 public class SkullUtil {
     /**
      * @param player Skull owner.
-     * @param name Name of the ItemStack.
-     * @param lore Lore of the ItemStack.
+     * @param name   Name of the ItemStack.
+     * @param lore   Lore of the ItemStack.
      * @return Player's skull ItemStack.
      */
     public static ItemStack getSkull(Player player, String name, List<String> lore) {

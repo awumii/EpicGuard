@@ -21,7 +21,6 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import io.sentry.Sentry;
 import me.ishift.epicguard.common.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -64,7 +63,7 @@ public class PlayerTabCompletePacket extends PacketAdapter {
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(event.getPlayer(), response);
             } catch (Exception e) {
-                Sentry.capture(e);
+                e.printStackTrace();
             }
         }
     }

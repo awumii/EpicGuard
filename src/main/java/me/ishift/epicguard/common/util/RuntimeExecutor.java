@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.util;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.common.Config;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class RuntimeExecutor {
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {
-            Sentry.capture(ex);
+            ex.printStackTrace();
         }
     }
 

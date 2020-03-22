@@ -32,8 +32,8 @@ public class ItemBuilder {
     private final short data;
     private final List<String> lore;
     private final HashMap<Enchantment, Integer> enchants;
-    private Material material;
-    private int amount;
+    private final Material material;
+    private final int amount;
     private String title;
     private Color color;
     private String skullOwner;
@@ -51,7 +51,7 @@ public class ItemBuilder {
      * Creating ItemBuilder with type and specified amount.
      *
      * @param material Item type.
-     * @param amount Item amount.
+     * @param amount   Item amount.
      */
     public ItemBuilder(Material material, int amount) {
         this(material, amount, (short) 0);
@@ -61,7 +61,7 @@ public class ItemBuilder {
      * Creating ItemBuilder with type and data.
      *
      * @param material Item type.
-     * @param data Item data
+     * @param data     Item data
      */
     public ItemBuilder(Material material, short data) {
         this(material, 1, data);
@@ -71,8 +71,8 @@ public class ItemBuilder {
      * Creating ItemBuilder with type, amount, and data.
      *
      * @param material Item type.
-     * @param amount Item amount.
-     * @param data Item data.
+     * @param amount   Item amount.
+     * @param data     Item data.
      */
     public ItemBuilder(Material material, int amount, short data) {
         this.title = null;
@@ -114,7 +114,7 @@ public class ItemBuilder {
 
     /**
      * @param enchant Enchantment object
-     * @param level Level of enchantment
+     * @param level   Level of enchantment
      * @return Current ItemBuilder object.
      */
     public ItemBuilder addEnchantment(Enchantment enchant, int level) {
