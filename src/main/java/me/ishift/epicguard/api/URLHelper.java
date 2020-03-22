@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.api;
 
-import io.sentry.Sentry;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +41,7 @@ public class URLHelper {
                 return scanner.hasNext() ? scanner.next() : "";
             }
         } catch (IOException e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
         return requestURL;
     }
@@ -70,7 +69,7 @@ public class URLHelper {
             scanner.close();
             return lines;
         } catch (IOException e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
         return null;
     }

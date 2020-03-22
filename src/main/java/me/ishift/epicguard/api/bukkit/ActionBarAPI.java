@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.api.bukkit;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.entity.Player;
 
@@ -26,7 +26,7 @@ public class ActionBarAPI {
     /**
      * Sending ActionBar message to a player.
      *
-     * @param player Target player.
+     * @param player  Target player.
      * @param message Message to show.
      */
     public static void sendActionBar(Player player, String message) {
@@ -64,7 +64,7 @@ public class ActionBarAPI {
             Method sendPacketMethod = playerConnection.getClass().getDeclaredMethod("sendPacket", packetClass);
             sendPacketMethod.invoke(playerConnection, packet);
         } catch (Exception e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 }

@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.api.bukkit;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.ChatUtil;
 import org.bukkit.entity.Player;
 
@@ -27,11 +27,11 @@ public class TitleAPI {
      * Message is formatted by ChatUtil with color replacement.
      * Using Reflection to work on every Bukkit version.
      *
-     * @param player Target player who should see the title message.
-     * @param title Title message.
-     * @param subtitle Subtitle message.
-     * @param fadeInTime Fade in time in ticks.
-     * @param showTime How long title should be displayed.
+     * @param player      Target player who should see the title message.
+     * @param title       Title message.
+     * @param subtitle    Subtitle message.
+     * @param fadeInTime  Fade in time in ticks.
+     * @param showTime    How long title should be displayed.
      * @param fadeOutTime Fade out time in ticks
      */
     public static void send(Player player, String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime) {
@@ -57,7 +57,7 @@ public class TitleAPI {
             Reflection.sendPacket(player, packet);
             Reflection.sendPacket(player, timingPacket);
         } catch (Exception e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 }

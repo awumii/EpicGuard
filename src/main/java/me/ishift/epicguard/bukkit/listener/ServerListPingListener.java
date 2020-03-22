@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.data.StorageManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;

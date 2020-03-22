@@ -15,16 +15,16 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.api.ChatUtil;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.bukkit.GuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
-import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.api.ChatUtil;
+import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -70,9 +70,7 @@ public class GuardCommand implements CommandExecutor {
                 return true;
             }
             GuardGui.showMain((Player) sender);
-        }
-
-        else if (args[0].equalsIgnoreCase("status")) {
+        } else if (args[0].equalsIgnoreCase("status")) {
             if (!(sender instanceof Player)) {
                 send(sender, Messages.playerOnly);
                 return true;
@@ -80,16 +78,12 @@ public class GuardCommand implements CommandExecutor {
             final User user = UserManager.getUser((Player) sender);
             send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
             user.setNotifications(!user.isNotifications());
-        }
-
-        else if (args[0].equalsIgnoreCase("reload")) {
+        } else if (args[0].equalsIgnoreCase("reload")) {
             GuardBukkit.getInstance().reloadConfig();
             Config.loadBukkit();
             Messages.load();
             send(sender, Messages.configReload);
-        }
-
-        else if (args[0].equalsIgnoreCase("player")) {
+        } else if (args[0].equalsIgnoreCase("player")) {
             if (args.length != 2) {
                 send(sender, Messages.usage.replace("{USAGE}", s + " player <player>"));
                 return true;
@@ -105,9 +99,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, "&7City: &f" + EpicGuardAPI.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
-        }
-
-        else if (args[0].equalsIgnoreCase("whitelist")) {
+        } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
                 send(sender, Messages.usage.replace("{USAGE}", s + " whitelist <address>"));
                 return true;
@@ -115,9 +107,7 @@ public class GuardCommand implements CommandExecutor {
             final String address = args[1];
             StorageManager.getStorage().whitelist(address);
             send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
-        }
-
-        else if (args[0].equalsIgnoreCase("blacklist")) {
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
                 send(sender, Messages.usage.replace("{USAGE}", s + " blacklist <address>"));
                 return true;
@@ -125,9 +115,7 @@ public class GuardCommand implements CommandExecutor {
             final String address = args[1];
             StorageManager.getStorage().blacklist(address);
             send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
-        }
-
-        else if (args[0].equalsIgnoreCase("reset")) {
+        } else if (args[0].equalsIgnoreCase("reset")) {
             AttackSpeed.reset();
             send(sender, Messages.reset);
         } else {

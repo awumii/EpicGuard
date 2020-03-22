@@ -80,8 +80,7 @@ public class MySQL extends DataStorage {
             final Statement statement = connection.createStatement();
             statement.executeUpdate(query);
             statement.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             EpicGuardAPI.getLogger().info("Could not execute update to the database '" + query + "'.");
         }

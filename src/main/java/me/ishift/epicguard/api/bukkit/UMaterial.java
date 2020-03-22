@@ -31,7 +31,7 @@ public enum UMaterial {
     NETHER_BRICK("NETHER_BRICK_ITEM", "NETHER_BRICK"),
     FENCE_GATE("FENCE_GATE", "OAK_FENCE_GATE");
 
-    private Material material;
+    private final Material material;
 
     /**
      * @param legacy Legacy enum material name.

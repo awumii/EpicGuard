@@ -15,22 +15,21 @@
 
 package me.ishift.epicguard.bungee;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.api.LogFilter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.api.GuardLogger;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -53,8 +52,6 @@ public class GuardBungee extends Plugin {
 
     @Override
     public void onEnable() {
-        Sentry.init("https://e7ee770a0ec94517b498284594d37adf@sentry.io/1868578");
-
         final String path = "plugins/EpicGuard";
         instance = this;
         Messages.load();
@@ -64,7 +61,7 @@ public class GuardBungee extends Plugin {
             try (InputStream in = this.getResourceAsStream("config_bungee.yml")) {
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
-                Sentry.capture(e);
+                e.printStackTrace();
             }
         }
 

@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.common.detection.Detection;
 import org.bukkit.event.EventHandler;
@@ -27,25 +27,21 @@ public class PlayerPreLoginListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        try {
-            final String address = event.getAddress().getHostAddress();
-            final String name = event.getName();
+        final String address = event.getAddress().getHostAddress();
+        final String name = event.getName();
 
-            EpicGuardAPI.getLogger().debug(" ");
-            EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
-            EpicGuardAPI.getLogger().debug("Player: " + name);
-            EpicGuardAPI.getLogger().debug("Address: " + address);
+        EpicGuardAPI.getLogger().debug(" ");
+        EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
+        EpicGuardAPI.getLogger().debug("Player: " + name);
+        EpicGuardAPI.getLogger().debug("Address: " + address);
 
-            final Detection detection = new Detection(address, name);
-            if (detection.isDetected()) {
-                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getReason());
-                EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
-                return;
-            }
-            EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
-        } catch (Exception e) {
-            Sentry.capture(e);
+        final Detection detection = new Detection(address, name);
+        if (detection.isDetected()) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getReason());
+            EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
+            return;
         }
+        EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
     }
 
 }

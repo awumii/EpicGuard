@@ -30,9 +30,9 @@
 
 package me.ishift.epicguard.bukkit.util;
 
+import me.ishift.epicguard.api.bukkit.ActionBarAPI;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.api.bukkit.ActionBarAPI;
 import org.bukkit.Bukkit;
 
 public class Notificator {

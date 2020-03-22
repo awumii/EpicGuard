@@ -57,19 +57,13 @@ public class GuardCommand extends Command {
         if (args[0].equalsIgnoreCase("log")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + "&aToggled console logging");
             GuardBungee.log = !GuardBungee.log;
-        }
-
-        else if (args[0].equalsIgnoreCase("status")) {
+        } else if (args[0].equalsIgnoreCase("status")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + (GuardBungee.status ? Messages.statusOff : Messages.statusOn));
             GuardBungee.status = !GuardBungee.status;
-        }
-
-        else if (args[0].equalsIgnoreCase("reload")) {
+        } else if (args[0].equalsIgnoreCase("reload")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
             Config.loadBungee();
-        }
-
-        else if (args[0].equalsIgnoreCase("whitelist")) {
+        } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard whitelist <adress>"));
                 return;
@@ -77,9 +71,7 @@ public class GuardCommand extends Command {
             final String address = args[1];
             StorageManager.getStorage().whitelist(address);
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
-        }
-
-        else if (args[0].equalsIgnoreCase("blacklist")) {
+        } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length != 2) {
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard blacklist <adress>"));
                 return;
@@ -87,9 +79,7 @@ public class GuardCommand extends Command {
             final String address = args[1];
             StorageManager.getStorage().blacklist(address);
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address));
-        }
-
-        else {
+        } else {
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.unknownCommand);
         }
     }

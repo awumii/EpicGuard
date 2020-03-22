@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.api.bukkit;
 
-import io.sentry.Sentry;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -36,7 +35,7 @@ public class ServerTPS {
             double[] tps = ((double[]) tpsField.get(serverInstance));
             return format.format(tps[0]);
         } catch (NoSuchMethodException | InvocationTargetException | NoSuchFieldException | IllegalAccessException e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
         return "20.0";
     }

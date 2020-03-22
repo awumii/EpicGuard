@@ -18,24 +18,19 @@ package me.ishift.epicguard.velocity;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
-import io.sentry.Sentry;
 import me.ishift.epicguard.common.detection.Detection;
 import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
-        try {
-            final InboundConnection connection = event.getConnection();
-            final String address = connection.getRemoteAddress().getAddress().getHostAddress();
-            final String name = event.getUsername();
+        final InboundConnection connection = event.getConnection();
+        final String address = connection.getRemoteAddress().getAddress().getHostAddress();
+        final String name = event.getUsername();
 
-            final Detection detection = new Detection(address, name);
-            if (detection.isDetected()) {
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getReason())));
-            }
-        } catch (Exception e) {
-            Sentry.capture(e);
+        final Detection detection = new Detection(address, name);
+        if (detection.isDetected()) {
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getReason())));
         }
     }
 }

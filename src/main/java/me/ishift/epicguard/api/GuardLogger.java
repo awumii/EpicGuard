@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.api;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +33,7 @@ public class GuardLogger {
 
     /**
      * Creating new GuardLogger instance
+     *
      * @param name Name of the Logger.
      * @param path Path for the log files.
      */
@@ -68,7 +69,7 @@ public class GuardLogger {
     /**
      * Appending a message to the text file.
      *
-     * @param file Target file.
+     * @param file    Target file.
      * @param message Message to be logged.
      */
     public void writeToFile(File file, String message) {
@@ -84,7 +85,7 @@ public class GuardLogger {
             bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (Exception e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 
@@ -98,7 +99,7 @@ public class GuardLogger {
             final PrintWriter pw = new PrintWriter(file);
             pw.close();
         } catch (FileNotFoundException e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 
@@ -106,7 +107,7 @@ public class GuardLogger {
      * Method is private, use debug() or info().
      *
      * @param message Log message
-     * @param hide Should message be hidden in console (debug) or not.
+     * @param hide    Should message be hidden in console (debug) or not.
      */
     private void log(String message, boolean hide) {
         final String logMessage = "(" + DateUtil.getTime() + ") " + message;

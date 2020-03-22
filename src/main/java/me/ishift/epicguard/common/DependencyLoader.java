@@ -15,9 +15,8 @@
 
 package me.ishift.epicguard.common;
 
-import io.sentry.Sentry;
+
 import me.ishift.epicguard.api.Downloader;
-import me.ishift.epicguard.api.EpicGuardAPI;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class DependencyLoader {
                 try {
                     downloader.download();
                 } catch (IOException ioException) {
-                    Sentry.capture(ioException);
+                    ioException.printStackTrace();
                 }
             }
             loadLibrary(lib);
@@ -60,7 +59,7 @@ public class DependencyLoader {
             method.setAccessible(true);
             method.invoke(classLoader, url);
         } catch (Exception e) {
-            Sentry.capture(e);
+            e.printStackTrace();
         }
     }
 }
