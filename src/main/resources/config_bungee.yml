@@ -69,7 +69,7 @@ console-filter:
 
 speed:
   # How many connections per second should be made to activate additional checks.
-  connection: 5
+  connection: 4
 
 ###############################
 ##           Firewall        ##
