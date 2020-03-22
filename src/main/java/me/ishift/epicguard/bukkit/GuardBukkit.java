@@ -28,6 +28,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.PlayerTabCompletePacket;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;

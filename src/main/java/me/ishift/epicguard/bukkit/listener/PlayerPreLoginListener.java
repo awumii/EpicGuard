@@ -17,12 +17,6 @@ package me.ishift.epicguard.bukkit.listener;
 
 import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.detection.AttackSpeed;
-import me.ishift.epicguard.common.detection.BotCheck;
-import me.ishift.epicguard.common.types.CounterType;
-import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.detection.Detection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,24 +31,14 @@ public class PlayerPreLoginListener implements Listener {
             final String address = event.getAddress().getHostAddress();
             final String name = event.getName();
 
-            StorageManager.getStorage().increaseCheckedConnections();
-            AttackSpeed.increase(CounterType.CONNECT);
             EpicGuardAPI.getLogger().debug(" ");
             EpicGuardAPI.getLogger().debug("~-~-~-~-~-~-~-~-~-~-~-~-");
             EpicGuardAPI.getLogger().debug("Player: " + name);
             EpicGuardAPI.getLogger().debug("Address: " + address);
 
-            if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-                AttackSpeed.setAttackMode(true);
-            }
-
-            if (StorageManager.getStorage().isWhitelisted(address)) {
-                return;
-            }
-
-            final Detection detection = BotCheck.getDetection(address, name);
+            final Detection detection = new Detection(address, name);
             if (detection.isDetected()) {
-                this.handleDetection(address, event, detection.getReason(), detection.isBlacklist());
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getReason());
                 EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
                 return;
             }
@@ -64,15 +48,4 @@ public class PlayerPreLoginListener implements Listener {
         }
     }
 
-    private void handleDetection(String address, AsyncPlayerPreLoginEvent event, Reason reason, boolean blacklist) {
-        event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getReason());
-        if (blacklist) {
-            StorageManager.getStorage().blacklist(address);
-        }
-
-        StorageManager.getStorage().increaseBlockedBots();
-        AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
-        AttackSpeed.setLastReason(reason);
-        AttackSpeed.setLastBot(event.getName());
-    }
 }

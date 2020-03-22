@@ -18,10 +18,11 @@ package me.ishift.epicguard.common.task;
 import me.ishift.epicguard.bukkit.util.Notificator;
 import me.ishift.epicguard.bungee.GuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
+import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 
 public class NotificationTask implements Runnable {
-    private Server server;
+    private final Server server;
 
     public NotificationTask(Server server) {
         this.server = server;
@@ -29,7 +30,7 @@ public class NotificationTask implements Runnable {
 
     @Override
     public void run() {
-        final String message = "&a" + AttackSpeed.getConnectPerSecond() + "&7/&acps &8| &c" + AttackSpeed.getTotalBots() + " &7blocked &8» &f" + AttackSpeed.getLastBot() + " &8[&c" +  AttackSpeed.getLastReason().name() + "&8]";
+        final String message = Messages.prefix + "&cConnections per second: &6" + AttackSpeed.getConnectPerSecond();
 
         if (this.server == Server.SPIGOT) {
             Notificator.action(message);
@@ -38,8 +39,13 @@ public class NotificationTask implements Runnable {
         if (this.server == Server.BUNGEE && GuardBungee.status) {
             GuardBungee.getInstance().getProxy().getPlayers()
                     .stream()
-                    .filter(player -> player.getPermissions().contains("epicguard.admin"))
-                    .forEach(player -> BungeeUtil.sendActionBar(player, message));
+                    .filter(player -> player.getPermissions().contains("epicguard.status"))
+                    .forEach(player -> {
+                        BungeeUtil.sendActionBar(player, message);
+                        if (AttackSpeed.isUnderAttack()) {
+                            BungeeUtil.sendTitle(player, "&c" + AttackSpeed.getTotalBots() + " blocked connections", "&7Server is under &aattack...");
+                        }
+                    });
         }
     }
 

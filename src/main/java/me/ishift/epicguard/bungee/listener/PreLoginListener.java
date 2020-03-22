@@ -16,13 +16,6 @@
 package me.ishift.epicguard.bungee.listener;
 
 import io.sentry.Sentry;
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.bungee.GuardBungee;
-import me.ishift.epicguard.common.detection.AttackSpeed;
-import me.ishift.epicguard.common.detection.BotCheck;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.types.CounterType;
-import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.detection.Detection;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -39,35 +32,13 @@ public class PreLoginListener implements Listener {
             final String address = connection.getAddress().getAddress().getHostAddress();
             final String name = connection.getName();
 
-            AttackSpeed.increase(CounterType.CONNECT);
-
-            if (StorageManager.getStorage().isWhitelisted(address)) {
-                return;
-            }
-
-            final Detection detection = BotCheck.getDetection(address, name);
+            final Detection detection = new Detection(address, name);
             if (detection.isDetected()) {
-                this.handleDetection(address, connection, detection.getReason(), detection.isBlacklist());
-                EpicGuardAPI.getLogger().debug("Detected for: " + detection.getReason().name() + ", blacklist: " + detection.isBlacklist());
-                return;
+                event.setCancelReason(new TextComponent(detection.getReason().getReason()));
+                event.setCancelled(true);
             }
-            EpicGuardAPI.getLogger().debug("Player has been not detected by any check.");
         } catch (Exception e) {
             Sentry.capture(e);
         }
-    }
-
-    public void handleDetection(String address, PendingConnection connection, Reason reason, boolean blacklist) {
-        connection.disconnect(new TextComponent(reason.getReason()));
-        if (GuardBungee.log) {
-            EpicGuardAPI.getLogger().info("Closing: " + address + "(" + connection.getName() + "), (" + reason + ")]");
-        }
-
-        if (blacklist) {
-            StorageManager.getStorage().blacklist(address);
-        }
-        AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
-        AttackSpeed.setLastReason(reason);
-        AttackSpeed.setLastBot(connection.getName());
     }
 }

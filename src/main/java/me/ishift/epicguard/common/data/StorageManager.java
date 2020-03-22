@@ -39,6 +39,8 @@ public class StorageManager {
         final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
         storageType = StorageType.valueOf(storageTypeString);
 
+        config.setDefault("DO-NOT-USE-MYSQL-PLEASE", "IT IS NOT READY YET, IT WILL BE WORKING IN THE FUTURE!!");
+
         mysqlPassword = config.getOrSetDefault("mysql.user.password", "password");
         mysqlUser = config.getOrSetDefault("mysql.user.username", "admin");
         mysqlHost = config.getOrSetDefault("mysql.connection.host", "127.0.0.1");

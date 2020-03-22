@@ -129,10 +129,7 @@ public class GuardCommand implements CommandExecutor {
 
         else if (args[0].equalsIgnoreCase("reset")) {
             AttackSpeed.reset();
-            AttackSpeed.setConnectPerSecond(0);
-            AttackSpeed.setPingPerSecond(0);
             send(sender, Messages.reset);
-
         } else {
             send(sender, Messages.unknownCommand);
         }

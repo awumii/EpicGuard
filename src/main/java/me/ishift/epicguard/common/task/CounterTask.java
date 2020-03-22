@@ -20,7 +20,6 @@ import me.ishift.epicguard.common.detection.AttackSpeed;
 public class CounterTask implements Runnable {
     @Override
     public void run() {
-        AttackSpeed.setPingPerSecond(0);
         AttackSpeed.setConnectPerSecond(0);
     }
 }

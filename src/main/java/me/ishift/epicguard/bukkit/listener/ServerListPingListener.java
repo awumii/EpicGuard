@@ -15,10 +15,8 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.common.detection.AttackSpeed;
-import me.ishift.epicguard.common.detection.BotCheck;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.types.CounterType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -27,12 +25,12 @@ public class ServerListPingListener implements Listener {
 
     @EventHandler
     public void onPing(ServerListPingEvent event) {
-        BotCheck.addPing(event.getAddress().getHostAddress());
-        AttackSpeed.increase(CounterType.PING);
+        StorageManager.getStorage().getPingData().add(event.getAddress().getHostAddress());
 
-        if (AttackSpeed.getPingPerSecond() > Config.pingSpeed && Config.bandwidthOptimizer) {
+        if (Config.bandwidthOptimizer) {
             event.setMotd("");
             event.setMaxPlayers(0);
+            event.setServerIcon(null);
         }
     }
 }

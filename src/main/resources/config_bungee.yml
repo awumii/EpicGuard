@@ -59,6 +59,7 @@ console-filter:
     - lost connection
     - authlib
     - GameProfile
+    - InitialHandler
 
 ###############################
 ##           Advanced        ##
@@ -69,8 +70,6 @@ console-filter:
 speed:
   # How many connections per second should be made to activate additional checks.
   connection: 5
-  # How many pings per second should be made to activate additional checks.
-  ping-speed: 7
 
 ###############################
 ##           Firewall        ##

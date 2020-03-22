@@ -22,7 +22,7 @@ public class AttackTask implements Runnable {
 
     @Override
     public void run() {
-        if (AttackSpeed.isUnderAttack() && AttackSpeed.getPingPerSecond() < Config.pingSpeed && AttackSpeed.getConnectPerSecond() < Config.connectSpeed) {
+        if (AttackSpeed.getConnectPerSecond() < Config.connectSpeed) {
             AttackSpeed.reset();
         }
     }

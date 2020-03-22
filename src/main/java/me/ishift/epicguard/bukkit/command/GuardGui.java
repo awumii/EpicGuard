@@ -22,6 +22,7 @@ import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.api.bukkit.UMaterial;
 import me.ishift.epicguard.api.bukkit.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.Updater;
+import me.ishift.epicguard.common.data.DataStorage;
 import me.ishift.epicguard.common.detection.AttackSpeed;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
@@ -54,7 +55,6 @@ public class GuardGui {
                 .addLore("&6Status:")
                 .addLore("  &7Attack&8: " + (AttackSpeed.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
                 .addLore("  &7Connections&8: &c" + AttackSpeed.getConnectPerSecond() + "/s")
-                .addLore("  &7Pings&8: &c" + AttackSpeed.getPingPerSecond() + "/s")
                 .addLore("")
                 .addLore("&6Connections:")
                 .addLore("  &7Checked connections&8: &e" + StorageManager.getStorage().getCheckedConnections())

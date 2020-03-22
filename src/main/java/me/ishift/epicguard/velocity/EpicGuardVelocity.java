@@ -30,7 +30,7 @@ import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
-import me.ishift.epicguard.velocity.util.JdbcLoader;
+import me.ishift.epicguard.common.DependencyLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +58,7 @@ public class EpicGuardVelocity {
             Config.loadBungee();
             EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
             EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
-            JdbcLoader.init();
+            DependencyLoader.checkJars();
             StorageManager.init();
 
             server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
