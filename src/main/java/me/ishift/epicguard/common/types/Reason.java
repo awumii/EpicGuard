@@ -28,7 +28,7 @@ public enum Reason {
     VERIFY(Messages.messageKickVerify),
     NAME_CONTAINS(Messages.messageKickNamecontains);
 
-    private List<String> reason;
+    private final List<String> reason;
 
     Reason(List<String> reason) {
         this.reason = reason;

@@ -25,7 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
+import java.util.Collection;
 import java.util.StringJoiner;
 
 public class MySQL extends DataStorage {
@@ -33,31 +33,15 @@ public class MySQL extends DataStorage {
 
     @Override
     public void load() {
-        this.whitelist.add("188.146.103.125");
-        this.whitelist.add("88.46.23.20");
-        this.whitelist.add("98.7.53.122");
         this.initConnection();
-        this.update();
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_blacklist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_whitelist(`address` TEXT NOT NULL);");
     }
 
     @Override
     public void save() {
-        this.executeUpdate("INSERT INTO `epicguard_whitelist` (`address`) VALUES " + this.fromList(this.whitelist));
-        this.executeUpdate("INSERT INTO `epicguard_blacklist` (`address`) VALUES " + this.fromList(this.blacklist));
-    }
-
-    public void update() {
-        //final ResultSet rs = this.executeQuery("SELECT * from `epicguard_whitelist`");
-        StringBuilder update = new StringBuilder();
-
-        update.append("INSTERT INTO `");
-        update.append("epicguard_whitelist");
-        update.append("` SET address = ");
-        update.append(this.fromList(this.whitelist));
-
-        this.executeUpdate(update.toString());
+        this.executeUpdate("INSERT INTO `epicguard_whitelist` (`address`) VALUES " + this.fromList(this.getWhitelist()));
+        this.executeUpdate("INSERT INTO `epicguard_blacklist` (`address`) VALUES " + this.fromList(this.getBlacklist()));
     }
 
     private void initConnection() {
@@ -103,9 +87,9 @@ public class MySQL extends DataStorage {
         }
     }
 
-    private String fromList(List<String> list) {
+    private String fromList(Collection<String> list) {
         final StringJoiner joiner = new StringJoiner(", ");
-        for (String address : this.whitelist) {
+        for (String address : this.getWhitelist()) {
             joiner.add("('" + address + "')");
         }
         return joiner.toString();

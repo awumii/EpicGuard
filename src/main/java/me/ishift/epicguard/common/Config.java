@@ -17,7 +17,6 @@ package me.ishift.epicguard.common;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
-import me.ishift.epicguard.common.data.StorageType;
 import me.ishift.epicguard.common.types.GeoMode;
 
 import java.util.List;

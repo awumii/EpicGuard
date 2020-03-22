@@ -19,12 +19,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
 import io.sentry.Sentry;
-import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.detection.AttackSpeed;
-import me.ishift.epicguard.common.detection.BotCheck;
 import me.ishift.epicguard.common.detection.Detection;
-import me.ishift.epicguard.common.types.CounterType;
 import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
@@ -33,32 +28,14 @@ public class PreLoginListener {
         try {
             final InboundConnection connection = event.getConnection();
             final String address = connection.getRemoteAddress().getAddress().getHostAddress();
-            final String nickname = event.getUsername();
-            AttackSpeed.increase(CounterType.CONNECT);
+            final String name = event.getUsername();
 
-            if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed || AttackSpeed.getPingPerSecond() > Config.pingSpeed) {
-                AttackSpeed.setAttackMode(true);
-            }
-
-            if (StorageManager.getStorage().isWhitelisted(address)) {
-                return;
-            }
-
-            final Detection detection = BotCheck.getDetection(address, nickname);
+            final Detection detection = new Detection(address, name);
             if (detection.isDetected()) {
-                this.handleDetection(address, event, detection);
+                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getReason())));
             }
         } catch (Exception e) {
             Sentry.capture(e);
-        }
-    }
-
-    private void handleDetection(String address, PreLoginEvent event, Detection detection) {
-        final String reason = detection.getReason().getReason();
-
-        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(reason)));
-        if (detection.isBlacklist()) {
-            StorageManager.getStorage().blacklist(address);
         }
     }
 }

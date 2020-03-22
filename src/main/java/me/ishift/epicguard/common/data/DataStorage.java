@@ -17,51 +17,49 @@ package me.ishift.epicguard.common.data;
 
 import me.ishift.epicguard.common.util.RuntimeExecutor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 public abstract class DataStorage {
-    public List<String> blacklist;
-    public List<String> whitelist;
+    public Collection<String> rejoinData;
+    public Collection<String> pingData;
+    public Collection<String> blacklist;
+    public Collection<String> whitelist;
     public int blockedBots;
     public int checkedConnections;
 
     public DataStorage() {
-        this.blacklist = new ArrayList<>();
-        this.whitelist = new ArrayList<>();
-    }
-
-    public boolean isBlacklisted(String address) {
-        return this.blacklist.contains(address);
-    }
-
-    public boolean isWhitelisted(String address) {
-        return this.whitelist.contains(address);
-    }
-
-    public List<String> getBlacklist() {
-        return this.blacklist;
-    }
-
-    public List<String> getWhitelist() {
-        return this.whitelist;
+        this.blacklist = new HashSet<>();
+        this.whitelist = new HashSet<>();
+        this.rejoinData = new HashSet<>();
+        this.pingData = new HashSet<>();
     }
 
     public void blacklist(String address) {
-        if (this.blacklist.contains(address)) {
-            return;
-        }
         this.blacklist.add(address);
         RuntimeExecutor.blacklist(address);
     }
 
     public void whitelist(String address) {
         this.blacklist.remove(address);
-        if (this.whitelist.contains(address)) {
-            return;
-        }
         this.whitelist.add(address);
         RuntimeExecutor.blacklist(address);
+    }
+
+    public Collection<String> getPingData() {
+        return pingData;
+    }
+
+    public Collection<String> getRejoinData() {
+        return rejoinData;
+    }
+
+    public Collection<String> getBlacklist() {
+        return blacklist;
+    }
+
+    public Collection<String> getWhitelist() {
+        return whitelist;
     }
 
     public int getBlockedBots() {

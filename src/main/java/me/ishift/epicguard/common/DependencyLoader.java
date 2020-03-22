@@ -13,10 +13,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.velocity.util;
+package me.ishift.epicguard.common;
 
 import io.sentry.Sentry;
 import me.ishift.epicguard.api.Downloader;
+import me.ishift.epicguard.api.EpicGuardAPI;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,21 +28,27 @@ import java.net.URLClassLoader;
 /**
  * Velocity does not include mysql/jdbc, so we need to download it and load.
  */
-public class JdbcLoader {
-    public static void init() {
-        final String version = "8.0.19";
-        final String url = "https://repo1.maven.org/maven2/mysql/mysql-connector-java/" + version + "/mysql-connector-java-" + version + ".jar";
-        final File lib = new File("plugins/EpicGuard/mysql-connector-java-" + version + ".jar");
+public class DependencyLoader {
+    public static void checkJars() {
+        tryDownload("com.mysql.jdbc.Driver", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar", "mysql-connector-java-\" + version + \".jar");
+    }
 
-        if (!lib.exists()) {
-            final Downloader downloader = new Downloader(url, lib);
-            try {
-                downloader.download();
-            } catch (IOException e) {
-                Sentry.capture(e);
+    public static void tryDownload(String className, String url, String fileName) {
+        try {
+            Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            final File lib = new File("plugins/EpicGuard/lib/" + fileName + ".jar");
+
+            if (!lib.exists()) {
+                final Downloader downloader = new Downloader(url, lib);
+                try {
+                    downloader.download();
+                } catch (IOException ioException) {
+                    Sentry.capture(ioException);
+                }
             }
+            loadLibrary(lib);
         }
-        loadLibrary(lib);
     }
 
     public static void loadLibrary(File file) {

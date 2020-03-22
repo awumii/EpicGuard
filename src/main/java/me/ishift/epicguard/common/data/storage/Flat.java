@@ -19,6 +19,8 @@ import de.leonhard.storage.Json;
 import me.ishift.epicguard.common.data.DataStorage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Flat extends DataStorage {
     private Json storage;
@@ -26,8 +28,8 @@ public class Flat extends DataStorage {
     @Override
     public void load() {
         this.storage = new Json("storage", "plugins/EpicGuard/data");
-        this.blacklist = this.storage.getOrSetDefault("addresses.blacklist", new ArrayList<>());
-        this.whitelist = this.storage.getOrSetDefault("addresses.whitelist", new ArrayList<>());
+        this.blacklist = this.storage.getOrSetDefault("addresses.blacklist", new HashSet<>());
+        this.whitelist = this.storage.getOrSetDefault("addresses.whitelist", new HashSet<>());
         this.blockedBots = this.storage.getOrSetDefault("stats.blocked-bots", 0);
         this.checkedConnections = this.storage.getOrSetDefault("stats.checked-connections", 0);
     }

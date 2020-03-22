@@ -18,12 +18,15 @@ package me.ishift.epicguard.bungee;
 import io.sentry.Sentry;
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
+import me.ishift.epicguard.api.LogFilter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
 import me.ishift.epicguard.common.data.StorageManager;
@@ -54,10 +57,11 @@ public class GuardBungee extends Plugin {
 
         final String path = "plugins/EpicGuard";
         instance = this;
+        Messages.load();
 
         final File file = new File(path, "config_bungee.yml");
         if (!file.exists()) {
-            try (InputStream in = getResourceAsStream("config_bungee.yml")) {
+            try (InputStream in = this.getResourceAsStream("config_bungee.yml")) {
                 Files.copy(in, file.toPath());
             } catch (IOException e) {
                 Sentry.capture(e);
@@ -66,12 +70,12 @@ public class GuardBungee extends Plugin {
 
         Config.loadBungee();
         StorageManager.init();
-        Messages.load();
 
         this.getProxy().getPluginManager().registerListener(this, new PreLoginListener());
         this.getProxy().getPluginManager().registerListener(this, new PingListener());
 
         this.getProxy().getScheduler().schedule(this, new CounterTask(), 1L, 1L, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new AttackTask(), 1L, 10L, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new NotificationTask(NotificationTask.Server.BUNGEE), 1L, 100L, TimeUnit.MILLISECONDS);
 
         this.getProxy().getPluginManager().registerCommand(this, new GuardCommand("guard"));
@@ -80,6 +84,12 @@ public class GuardBungee extends Plugin {
 
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
+
+        if (Config.filterEnabled) {
+            final LogFilter filter = new LogFilter();
+            filter.setFilteredMessages(Config.filterValues);
+            filter.registerFilter();
+        }
     }
 
     @Override

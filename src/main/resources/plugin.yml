@@ -10,7 +10,6 @@
 name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.GuardBukkit
-load: STARTUP
 softdepend: [ProtocolLib]
 loadbefore: [EssentialsGeoIP]
 
