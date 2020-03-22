@@ -31,9 +31,13 @@ public class NotificationTask implements Runnable {
     @Override
     public void run() {
         final String message = Messages.prefix + "&cConnections per second: &6" + AttackSpeed.getConnectPerSecond();
+        final String title = "&c" + AttackSpeed.getTotalBots() + " blocked connections";
+        final String subtitle = "&7Server is under &aattack...";
 
         if (this.server == Server.SPIGOT) {
             Notificator.action(message);
+            Notificator.title(title, subtitle);
+            return;
         }
 
         if (this.server == Server.BUNGEE && GuardBungee.status) {
@@ -43,7 +47,7 @@ public class NotificationTask implements Runnable {
                     .forEach(player -> {
                         BungeeUtil.sendActionBar(player, message);
                         if (AttackSpeed.isUnderAttack()) {
-                            BungeeUtil.sendTitle(player, "&c" + AttackSpeed.getTotalBots() + " blocked connections", "&7Server is under &aattack...");
+                            BungeeUtil.sendTitle(player, title, subtitle);
                         }
                     });
         }

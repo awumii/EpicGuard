@@ -75,7 +75,7 @@ public class GuardBukkit extends JavaPlugin {
         }
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 400L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 900L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 80L, 5800L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CounterTask(), 1L, 20L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
