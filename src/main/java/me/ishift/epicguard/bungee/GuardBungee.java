@@ -82,7 +82,14 @@ public class GuardBungee extends Plugin {
         EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
         EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
 
+
         if (Config.filterEnabled) {
+            try {
+                Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
+            } catch (ClassNotFoundException e) {
+                EpicGuardAPI.getLogger().info("Looks like you are running regular BungeeCord! LogFilter has been disabled. We prefer using waterfall, it is same as bungeecord but with more optimizations ;)");
+                return;
+            }
             final LogFilter filter = new LogFilter();
             filter.setFilteredMessages(Config.filterValues);
             filter.registerFilter();
