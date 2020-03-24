@@ -50,6 +50,18 @@ antibot:
   rejoin-check: true
   server-list-check: true
 
+# Enabling advanced-proxy-checker will no longer use
+# the key you provided in antibot.api-key section.
+# It will use all the sites you have set below.
+advanced-proxy-checker:
+  enabled: true
+  checkers:
+    '1':
+      url: http://proxycheck.io/v2/{ADDRESS}
+      contains:
+        - yes
+        - VPN
+
 # If console log contains text listed below, it
 # will be hidden. This will decrease CPU usage.
 console-filter:
@@ -60,12 +72,6 @@ console-filter:
     - authlib
     - GameProfile
     - InitialHandler
-
-###############################
-##           Advanced        ##
-###############################
-# You SHOULD configure it, to fit your server's player amount.
-# If you have small server, don't change it, or change it to smaller values
 
 speed:
   # How many connections per second should be made to activate additional checks.
