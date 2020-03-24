@@ -16,9 +16,12 @@
 package me.ishift.epicguard.common;
 
 import de.leonhard.storage.Yaml;
-import de.leonhard.storage.internal.settings.ConfigSettings;
+import me.ishift.epicguard.common.detection.ProxyChecker;
+import me.ishift.epicguard.common.detection.ProxyManager;
 import me.ishift.epicguard.common.types.GeoMode;
 
+import java.lang.reflect.Proxy;
+import java.util.Arrays;
 import java.util.List;
 
 public class Config {
@@ -65,10 +68,9 @@ public class Config {
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;
 
-    public static void loadBukkit() {
-        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
-        config.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
+    public static boolean advancedProxyChecker;
 
+    private static void load(Yaml config) {
         firewallEnabled = config.getBoolean("firewall");
         firewallBlacklistCommand = config.getString("firewall.command-blacklist");
         firewallWhitelistCommand = config.getString("firewall.command-whitelist");
@@ -104,29 +106,30 @@ public class Config {
 
         final String countryModeString = config.getString("countries.mode");
         countryMode = GeoMode.valueOf(countryModeString);
+
+        advancedProxyChecker = config.getOrSetDefault("advanced-proxy-checker.enabled", false);
+        // Setting example.
+        config.setDefault("advanced-proxy-checker.checkers.1.url", "http://proxycheck.io/v2/{ADDRESS}");
+        config.setDefault("advanced-proxy-checker.checkers.1.contains", Arrays.asList("yes", "VPN"));
+        if (!advancedProxyChecker) {
+            return;
+        }
+
+        final String basePath = "advanced-proxy-checker.checkers";
+        config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
+            final String url = config.getString(path + ".url");
+            final List<String> contains = config.getStringList(path + ".contains");
+            ProxyManager.getCheckers().add(new ProxyChecker(url, contains));
+        });
+    }
+
+    public static void loadBukkit() {
+        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
+        load(config);
     }
 
     public static void loadBungee() {
         final Yaml config = new Yaml("config_bungee.yml", "plugins/EpicGuard");
-        config.setConfigSettings(ConfigSettings.PRESERVE_COMMENTS);
-
-        firewallEnabled = config.getBoolean("firewall");
-        firewallBlacklistCommand = config.getString("firewall.command-blacklist");
-        firewallWhitelistCommand = config.getString("firewall.command-whitelist");
-        connectSpeed = config.getInt("speed.connection");
-        pingSpeed = config.getInt("speed.ping-speed");
-        apiKey = config.getString("antibot.api-key");
-        countryList = config.getStringList("countries.list");
-        blockedNames = config.getStringList("antibot.name-contains");
-        filterEnabled = config.getBoolean("console-filter.enabled");
-        filterValues = config.getStringList("console-filter.messages");
-
-        serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
-        rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
-
-        final String countryModeString = config.getOrSetDefault("countries.mode", "DISABLED");
-        countryMode = GeoMode.valueOf(countryModeString);
-
-        countryEnabled = config.getOrSetDefault("download-databases.country", true);
+        load(config);
     }
 }
