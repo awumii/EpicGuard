@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,11 +25,5 @@ public class ServerListPingListener implements Listener {
     @EventHandler
     public void onPing(ServerListPingEvent event) {
         StorageManager.getStorage().getPingData().add(event.getAddress().getHostAddress());
-
-        if (Config.bandwidthOptimizer) {
-            event.setMotd("");
-            event.setMaxPlayers(0);
-            event.setServerIcon(null);
-        }
     }
 }

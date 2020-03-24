@@ -161,7 +161,6 @@ public class GuardGui {
                 .addLore("&7Rejoin check: " + ChatUtil.formatBol(Config.rejoinCheck))
                 .addLore("&7ServerList check: " + ChatUtil.formatBol(Config.serverListCheck))
                 .addLore("&7Console filter: " + ChatUtil.formatBol(Config.filterEnabled))
-                .addLore("&7Bandwidth optimizer: " + ChatUtil.formatBol(Config.bandwidthOptimizer))
                 .addLore("")
                 .addLore("&7Connection detect speed: &6" + Config.connectSpeed)
                 .addLore("&7Ping detect speed: &6" + Config.pingSpeed)

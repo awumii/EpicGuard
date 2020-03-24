@@ -15,9 +15,7 @@
 
 package me.ishift.epicguard.bungee.listener;
 
-import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.detection.AttackSpeed;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -26,9 +24,5 @@ public class PingListener implements Listener {
     @EventHandler
     public void onProxyPing(ProxyPingEvent event) {
         StorageManager.getStorage().getPingData().add(event.getConnection().getAddress().getAddress().getHostName());
-
-        if (AttackSpeed.isUnderAttack() && Config.bandwidthOptimizer) {
-            event.setResponse(null);
-        }
     }
 }
