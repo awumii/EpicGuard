@@ -39,9 +39,8 @@ public class DependencyLoader {
             final File lib = new File("plugins/EpicGuard/lib/" + fileName + ".jar");
 
             if (!lib.exists()) {
-                final Downloader downloader = new Downloader(url, lib);
                 try {
-                    downloader.download();
+                    Downloader.download(url, lib);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
