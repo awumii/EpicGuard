@@ -24,40 +24,14 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class Downloader {
-    private final String url;
-    private final File file;
 
     /**
-     * @param url  URL from where file should be downloaded.
-     * @param file Target location, where file should be downloaded.
-     */
-    public Downloader(String url, File file) {
-        this.url = url;
-        this.file = file;
-    }
-
-    /**
-     * @return Target file.
-     */
-    public File getFile() {
-        return file;
-    }
-
-    /**
-     * @return URL from where file will be downloaded.
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     * Downloads file.
-     * User-Agent property is set to "Mozilla/4.0".
-     *
+     * @param urlFrom URL from where file will be downloaded.
+     * @param file File where it should be downloaded.
      * @throws IOException If file could not be created/deleted.
      */
-    public void download() throws IOException {
-        EpicGuardAPI.getLogger().info("Downloding file from: " + this.url);
+    public static void download(String urlFrom, File file) throws IOException {
+        EpicGuardAPI.getLogger().info("Downloding file from: " + urlFrom);
         EpicGuardAPI.getLogger().info("This may take some time, please wait...");
         if (file.delete()) {
             EpicGuardAPI.getLogger().debug("Deleted file " + file.getName());
@@ -65,7 +39,7 @@ public class Downloader {
         if (file.createNewFile()) {
             EpicGuardAPI.getLogger().debug("Created file " + file.getName());
         }
-        final URLConnection connection = new URL(this.url).openConnection();
+        final URLConnection connection = new URL(urlFrom).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
         final ReadableByteChannel rbc = Channels.newChannel(connection.getInputStream());

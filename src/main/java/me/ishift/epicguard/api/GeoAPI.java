@@ -45,16 +45,14 @@ public class GeoAPI {
 
             if (country) {
                 if (!countryFile.exists() || isOutdated()) {
-                    final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
-                    downloader.download();
+                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
             if (city) {
                 if (!cityFile.exists() || isOutdated()) {
-                    final Downloader downloader = new Downloader("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
-                    downloader.download();
+                    Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
