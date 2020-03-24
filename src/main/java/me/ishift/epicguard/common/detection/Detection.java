@@ -84,7 +84,7 @@ public class Detection {
         if (Config.advancedProxyChecker) {
             return ProxyManager.isProxyUser(address);
         }
-        final String url = "http://proxycheck.io/v2/" + address + "?key=" + Config.apiKey;
+        final String url = "https://proxycheck.io/v2/" + address + "?key=" + Config.apiKey;
         final List<String> response = URLHelper.readLines(url);
 
         if (response != null) {
