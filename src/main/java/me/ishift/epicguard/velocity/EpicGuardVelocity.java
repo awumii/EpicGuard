@@ -25,7 +25,7 @@ import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.api.GuardLogger;
 import me.ishift.epicguard.common.Config;
-import me.ishift.epicguard.common.DependencyLoader;
+import me.ishift.epicguard.common.util.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;

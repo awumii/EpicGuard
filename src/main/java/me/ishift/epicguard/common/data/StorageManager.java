@@ -64,4 +64,8 @@ public class StorageManager {
     public static DataStorage getStorage() {
         return storage;
     }
+
+    public static StorageType getStorageType() {
+        return storageType;
+    }
 }

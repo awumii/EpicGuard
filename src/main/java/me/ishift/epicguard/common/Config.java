@@ -42,7 +42,6 @@ public class Config {
     public static List<String> blockedNames;
     public static boolean updater;
     public static boolean tabCompleteBlock;
-    public static boolean bandwidthOptimizer;
 
     public static List<String> blockedCommands;
     public static List<String> allowedCommands;
@@ -92,7 +91,6 @@ public class Config {
         blockedNames = config.getStringList("antibot.name-contains");
         filterEnabled = config.getBoolean("console-filter.enabled");
         filterValues = config.getStringList("console-filter.messages");
-        bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
         customTabComplete = config.getBoolean("custom-tab-complete.enabled");
         customTabCompleteList = config.getStringList("custom-tab-complete.list");
         allowedCommandsBypass = config.getBoolean("bypass.allowed-commands");
@@ -122,7 +120,6 @@ public class Config {
         blockedNames = config.getStringList("antibot.name-contains");
         filterEnabled = config.getBoolean("console-filter.enabled");
         filterValues = config.getStringList("console-filter.messages");
-        bandwidthOptimizer = config.getBoolean("bandwidth-optimizer");
 
         serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
         rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);

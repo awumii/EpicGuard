@@ -21,6 +21,7 @@ import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.data.StorageType;
 import me.ishift.epicguard.common.data.storage.Flat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -49,7 +50,7 @@ public class PlayerJoinListener implements Listener {
             }, Config.autoWhitelistTime);
         }
 
-        if (StorageManager.getStorage() instanceof Flat) {
+        if (StorageManager.getStorageType() == StorageType.FLAT) {
             final Flat flat = (Flat) StorageManager.getStorage();
             final List<String> history = flat.getFile().getStringList("address-history." + player.getName());
             if (!history.contains(address)) {
