@@ -15,16 +15,14 @@
 
 package me.ishift.epicguard.api;
 
-
 import me.ishift.epicguard.common.detection.AttackSpeed;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class GuardLogger {
     private final String name;
@@ -40,7 +38,7 @@ public class GuardLogger {
     public GuardLogger(String name, String path) {
         this.name = name;
         this.path = path;
-        this.logger = LogManager.getLogger(name);
+        this.logger = Logger.getLogger(name);
         final File logDir = new File(path + "/logs");
 
         if (logDir.mkdir()) {
