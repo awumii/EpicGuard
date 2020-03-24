@@ -51,6 +51,7 @@ public class EpicGuardVelocity {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         try {
             final String path = "plugins/EpicGuard";
+            new File(path).mkdir();
             this.copyConfig();
             Messages.load();
             Config.loadBungee();
