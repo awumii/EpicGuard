@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.bukkit;
 
-
 import me.ishift.epicguard.api.EpicGuardAPI;
 import me.ishift.epicguard.api.GeoAPI;
 import me.ishift.epicguard.api.GuardLogger;
@@ -40,6 +39,7 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
+import me.ishift.epicguard.common.util.DependencyLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +58,7 @@ public class GuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         Config.loadBukkit();
         Messages.load();
+        DependencyLoader.checkJars();
         StorageManager.init();
 
         final PluginManager pm = this.getServer().getPluginManager();

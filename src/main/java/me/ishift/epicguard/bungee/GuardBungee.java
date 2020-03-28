@@ -30,6 +30,7 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.task.AttackTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.NotificationTask;
+import me.ishift.epicguard.common.util.DependencyLoader;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -66,6 +67,7 @@ public class GuardBungee extends Plugin {
         }
 
         Config.loadBungee();
+        DependencyLoader.checkJars();
         StorageManager.init();
 
         this.getProxy().getPluginManager().registerListener(this, new PreLoginListener());

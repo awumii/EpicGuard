@@ -29,7 +29,8 @@ import java.net.URLClassLoader;
  */
 public class DependencyLoader {
     public static void checkJars() {
-        tryDownload("com.mysql.jdbc.Driver", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar", "mysql-connector-java-\" + version + \".jar");
+        tryDownload("com.zaxxer.hikari.HikariDataSource", "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.2/HikariCP-3.4.2.jar", "HikariCP-3.4.2.jar.jar");
+        tryDownload("com.mysql.jdbc.Driver", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar", "mysql-connector-java-8.0.19.jar");
     }
 
     public static void tryDownload(String className, String url, String fileName) {
