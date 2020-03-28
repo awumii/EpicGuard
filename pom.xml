@@ -6,7 +6,7 @@
 
     <groupId>me.ishift</groupId>
     <artifactId>EpicGuard</artifactId>
-    <version>3.13.0</version>
+    <version>3.13.0-dev</version>
 
     <dependencies>
         <dependency>
@@ -60,6 +60,13 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>3.4.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.yooniks</groupId>
+            <artifactId>phasmatos-inventory-api</artifactId>
+            <version>v1.1</version>
         </dependency>
     </dependencies>
 
@@ -126,7 +133,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <minimizeJar>true</minimizeJar>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
                         <relocation>
