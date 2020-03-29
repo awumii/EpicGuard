@@ -13,9 +13,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.api.bukkit;
+package me.ishift.epicguard.bukkit.util;
 
-import me.ishift.epicguard.api.ChatUtil;
+import me.ishift.epicguard.common.util.ChatUtil;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

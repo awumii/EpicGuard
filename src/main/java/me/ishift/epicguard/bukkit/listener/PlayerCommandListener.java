@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import org.bukkit.Bukkit;

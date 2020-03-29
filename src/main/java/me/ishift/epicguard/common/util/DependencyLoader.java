@@ -16,8 +16,6 @@
 package me.ishift.epicguard.common.util;
 
 
-import me.ishift.epicguard.api.Downloader;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -37,6 +35,8 @@ public class DependencyLoader {
         try {
             Class.forName(className);
         } catch (ClassNotFoundException e) {
+            final File dir = new File("plugins/EpicGuard/lib");
+            dir.mkdir();
             final File lib = new File("plugins/EpicGuard/lib/" + fileName + ".jar");
 
             if (!lib.exists()) {

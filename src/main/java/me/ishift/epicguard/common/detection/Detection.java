@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.api.URLHelper;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.common.util.URLHelper;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.types.GeoMode;

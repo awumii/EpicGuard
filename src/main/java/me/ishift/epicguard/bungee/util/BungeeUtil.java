@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.bungee.util;
 
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.bungee.EpicGuardBungee;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.Title;
@@ -30,7 +30,7 @@ public class BungeeUtil {
      * @param subtitle Subtitle message.
      */
     public static void sendTitle(ProxiedPlayer player, String title, String subtitle) {
-        final Title titleBuilder = GuardBungee.getInstance().getProxy().createTitle()
+        final Title titleBuilder = EpicGuardBungee.getInstance().getProxy().createTitle()
                 .title(new TextComponent(ChatUtil.fix(title)))
                 .subTitle(new TextComponent(ChatUtil.fix(subtitle)))
                 .fadeIn(0)

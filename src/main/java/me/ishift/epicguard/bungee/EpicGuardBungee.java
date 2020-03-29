@@ -16,10 +16,10 @@
 package me.ishift.epicguard.bungee;
 
 
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.api.GeoAPI;
-import me.ishift.epicguard.api.GuardLogger;
-import me.ishift.epicguard.api.LogFilter;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.common.util.GeoAPI;
+import me.ishift.epicguard.common.util.GuardLogger;
+import me.ishift.epicguard.common.util.LogFilter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
@@ -39,15 +39,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
-public class GuardBungee extends Plugin {
+public class EpicGuardBungee extends Plugin {
     public static boolean log = false;
     public static boolean status = false;
-    private static GuardBungee instance;
+    private static EpicGuardBungee instance;
 
     /**
      * @return Instance of GuardBungee (Plugin)
      */
-    public static GuardBungee getInstance() {
+    public static EpicGuardBungee getInstance() {
         return instance;
     }
 

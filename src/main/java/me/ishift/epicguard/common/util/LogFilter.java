@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.api;
+package me.ishift.epicguard.common.util;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

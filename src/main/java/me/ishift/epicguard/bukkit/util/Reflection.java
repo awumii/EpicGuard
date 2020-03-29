@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.api.bukkit;
+package me.ishift.epicguard.bukkit.util;
 
 
 import org.bukkit.Bukkit;

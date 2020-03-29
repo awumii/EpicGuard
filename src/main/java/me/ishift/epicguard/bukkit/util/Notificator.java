@@ -30,8 +30,6 @@
 
 package me.ishift.epicguard.bukkit.util;
 
-import me.ishift.epicguard.api.bukkit.ActionBarAPI;
-import me.ishift.epicguard.api.bukkit.TitleAPI;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import org.bukkit.Bukkit;
@@ -50,7 +48,7 @@ public class Notificator {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final User u = UserManager.getUser(player);
             if (u != null && u.isNotifications() && player.hasPermission("epicguard.admin")) {
-                TitleAPI.send(player, title, subtitle, 0, 20, 0);
+                TitleAPI.send(player, title, subtitle, 1, 20, 1);
             }
         });
     }

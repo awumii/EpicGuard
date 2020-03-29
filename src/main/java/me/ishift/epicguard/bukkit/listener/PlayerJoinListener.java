@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
@@ -43,7 +43,7 @@ public class PlayerJoinListener implements Listener {
         Updater.notify(player);
 
         if (Config.autoWhitelist) {
-            Bukkit.getScheduler().runTaskLater(GuardBukkit.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLater(EpicGuardBukkit.getInstance(), () -> {
                 if (player.isOnline()) {
                     StorageManager.getStorage().whitelist(address);
                 }
