@@ -15,10 +15,10 @@
 
 package me.ishift.epicguard.bukkit;
 
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.api.GeoAPI;
-import me.ishift.epicguard.api.GuardLogger;
-import me.ishift.epicguard.api.LogFilter;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.common.util.GeoAPI;
+import me.ishift.epicguard.common.util.GuardLogger;
+import me.ishift.epicguard.common.util.LogFilter;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
@@ -44,13 +44,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class GuardBukkit extends JavaPlugin {
+public class EpicGuardBukkit extends JavaPlugin {
 
     /**
      * @return Instance of GuardBukkit.
      */
-    public static GuardBukkit getInstance() {
-        return JavaPlugin.getPlugin(GuardBukkit.class);
+    public static EpicGuardBukkit getInstance() {
+        return JavaPlugin.getPlugin(EpicGuardBukkit.class);
     }
 
     @Override
@@ -75,11 +75,11 @@ public class GuardBukkit extends JavaPlugin {
             new PlayerTabCompletePacket(this);
         }
 
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new RefreshTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new AttackTask(), 1L, 900L);
+        Bukkit.getServer().getScheduler().runTaskTimer(this, new RefreshTask(), 1L, 20L);
+        Bukkit.getServer().getScheduler().runTaskTimer(this, new AttackTask(), 1L, 900L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new UpdaterTask(), 80L, 5800L);
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new CounterTask(), 1L, 20L);
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 1L);
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new NotificationTask(NotificationTask.Server.SPIGOT), 20L, 5L);
 
         this.getCommand("epicguard").setExecutor(new GuardCommand());
         this.getCommand("epicguard").setTabCompleter(new GuardTabCompleter());

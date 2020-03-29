@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.api;
+package me.ishift.epicguard.common.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,14 +31,8 @@ public class Downloader {
      * @throws IOException If file could not be created/deleted.
      */
     public static void download(String urlFrom, File file) throws IOException {
-        EpicGuardAPI.getLogger().info("Downloding file from: " + urlFrom);
-        EpicGuardAPI.getLogger().info("This may take some time, please wait...");
-        if (file.delete()) {
-            EpicGuardAPI.getLogger().debug("Deleted file " + file.getName());
-        }
-        if (file.createNewFile()) {
-            EpicGuardAPI.getLogger().debug("Created file " + file.getName());
-        }
+        file.delete();
+        file.createNewFile();
         final URLConnection connection = new URL(urlFrom).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 

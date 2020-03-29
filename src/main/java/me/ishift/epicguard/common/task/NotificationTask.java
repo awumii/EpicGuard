@@ -16,7 +16,7 @@
 package me.ishift.epicguard.common.task;
 
 import me.ishift.epicguard.bukkit.util.Notificator;
-import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.bungee.EpicGuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.detection.AttackSpeed;
@@ -32,16 +32,18 @@ public class NotificationTask implements Runnable {
     public void run() {
         final String message = Messages.prefix + "&cConnections per second: &6" + AttackSpeed.getConnectPerSecond();
         final String title = "&c" + AttackSpeed.getTotalBots() + " blocked connections";
-        final String subtitle = "&7Server is under &aattack...";
+        final String subtitle = "&7Server is under &cattack...";
 
         if (this.server == Server.SPIGOT) {
             Notificator.action(message);
-            Notificator.title(title, subtitle);
+            if (AttackSpeed.isUnderAttack()) {
+                Notificator.title(title, subtitle);
+            }
             return;
         }
 
-        if (this.server == Server.BUNGEE && GuardBungee.status) {
-            GuardBungee.getInstance().getProxy().getPlayers()
+        if (this.server == Server.BUNGEE && EpicGuardBungee.status) {
+            EpicGuardBungee.getInstance().getProxy().getPlayers()
                     .stream()
                     .filter(player -> player.getPermissions().contains("epicguard.status"))
                     .forEach(player -> {

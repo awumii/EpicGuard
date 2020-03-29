@@ -15,9 +15,9 @@
 
 package me.ishift.epicguard.bukkit.command;
 
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;
@@ -79,7 +79,7 @@ public class GuardCommand implements CommandExecutor {
             send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
             user.setNotifications(!user.isNotifications());
         } else if (args[0].equalsIgnoreCase("reload")) {
-            GuardBukkit.getInstance().reloadConfig();
+            EpicGuardBukkit.getInstance().reloadConfig();
             Config.loadBukkit();
             Messages.load();
             send(sender, Messages.configReload);

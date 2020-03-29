@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bukkit.listener;
 
 
-import me.ishift.epicguard.api.EpicGuardAPI;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
 import me.ishift.epicguard.common.detection.Detection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

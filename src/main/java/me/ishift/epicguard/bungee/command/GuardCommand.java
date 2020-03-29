@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bungee.command;
 
-import me.ishift.epicguard.bungee.GuardBungee;
+import me.ishift.epicguard.bungee.EpicGuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
@@ -35,7 +35,7 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, "&8&m---------------------------------------------------");
             BungeeUtil.sendMessage(sender, "  &6&lEpicGuard");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, "  &7Running version &f" + GuardBungee.getInstance().getDescription().getVersion());
+            BungeeUtil.sendMessage(sender, "  &7Running version &f" + EpicGuardBungee.getInstance().getDescription().getVersion());
             BungeeUtil.sendMessage(sender, "  &7Created by &fiShift &8© 2020");
             BungeeUtil.sendMessage(sender, "  &7Licensed under &8GPLv3 &7license.");
             BungeeUtil.sendMessage(sender, "");
@@ -56,10 +56,10 @@ public class GuardCommand extends Command {
 
         if (args[0].equalsIgnoreCase("log")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + "&aToggled console logging");
-            GuardBungee.log = !GuardBungee.log;
+            EpicGuardBungee.log = !EpicGuardBungee.log;
         } else if (args[0].equalsIgnoreCase("status")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + (GuardBungee.status ? Messages.statusOff : Messages.statusOn));
-            GuardBungee.status = !GuardBungee.status;
+            BungeeUtil.sendMessage(sender, Messages.prefix + (EpicGuardBungee.status ? Messages.statusOff : Messages.statusOn));
+            EpicGuardBungee.status = !EpicGuardBungee.status;
         } else if (args[0].equalsIgnoreCase("reload")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
             Config.loadBungee();

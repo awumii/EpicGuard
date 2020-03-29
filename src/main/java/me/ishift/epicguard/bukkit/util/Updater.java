@@ -15,15 +15,15 @@
 
 package me.ishift.epicguard.bukkit.util;
 
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.api.URLHelper;
-import me.ishift.epicguard.bukkit.GuardBukkit;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.common.util.URLHelper;
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.Messages;
 import org.bukkit.entity.Player;
 
 public class Updater {
-    private static final String CURRENT_VERSION = GuardBukkit.getInstance().getDescription().getVersion();
+    private static final String CURRENT_VERSION = EpicGuardBukkit.getInstance().getDescription().getVersion();
     private static final String UPDATE_URL = "https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/version.info";
     private static String latestVersion;
     private static boolean updateAvailable = false;

@@ -15,11 +15,11 @@
 
 package me.ishift.epicguard.bukkit.command;
 
-import me.ishift.epicguard.api.ChatUtil;
-import me.ishift.epicguard.api.EpicGuardAPI;
-import me.ishift.epicguard.api.bukkit.ItemBuilder;
-import me.ishift.epicguard.api.bukkit.SkullUtil;
-import me.ishift.epicguard.api.bukkit.UMaterial;
+import me.ishift.epicguard.common.util.ChatUtil;
+import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.bukkit.util.ItemBuilder;
+import me.ishift.epicguard.bukkit.util.SkullUtil;
+import me.ishift.epicguard.bukkit.util.UMaterial;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Updater;

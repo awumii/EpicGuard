@@ -1,6 +1,6 @@
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.api.URLHelper;
+import me.ishift.epicguard.common.util.URLHelper;
 
 import java.util.Collection;
 import java.util.HashSet;
