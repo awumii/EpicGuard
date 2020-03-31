@@ -17,7 +17,6 @@ package me.ishift.epicguard.common.data.storage;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.ishift.epicguard.common.util.EpicGuardAPI;
 import me.ishift.epicguard.common.data.DataStorage;
 import me.ishift.epicguard.common.data.StorageManager;
 
@@ -45,15 +44,22 @@ public class MySQL extends DataStorage {
     }
 
     private void initConnection() {
+        final String mysqlPassword = config.getOrSetDefault("mysql.user.password", "password");
+        final String mysqlUser = config.getOrSetDefault("mysql.user.username", "admin");
+        final String mysqlHost = config.getOrSetDefault("mysql.connection.host", "127.0.0.1");
+        final int mysqlPort = config.getOrSetDefault("mysql.connection.port", 3306);
+        final String mysqlDatabase = config.getOrSetDefault("mysql.connection.database", "your-database");
+        final boolean mysqlSSL = config.getOrSetDefault("mysql.connection.use-ssl", true);
+        final int poolSize = config.getOrSetDefault("mysql.settings.pool-size", 5);
+        final int connectionTimeout = config.getOrSetDefault("mysql.settings.connection-timeout", 30000);
+
         final HikariConfig config = new HikariConfig();
         config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
-
-        config.setMaximumPoolSize(StorageManager.poolSize);
-        config.setConnectionTimeout(StorageManager.connectionTimeout);
-
-        config.setJdbcUrl("jdbc:mysql://" + StorageManager.mysqlHost + ":" + StorageManager.mysqlPort + "/" + StorageManager.mysqlDatabase + "?useSSL=" + StorageManager.mysqlSSL);
-        config.setUsername(StorageManager.mysqlUser);
-        config.setPassword(StorageManager.mysqlPassword);
+        config.setMaximumPoolSize(poolSize);
+        config.setConnectionTimeout(connectionTimeout);
+        config.setJdbcUrl("jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + mysqlDatabase + "?useSSL=" + mysqlSSL);
+        config.setUsername(mysqlUser);
+        config.setPassword(mysqlPassword);
         config.addDataSourceProperty("cachePrepStmts", true);
         config.addDataSourceProperty("prepStmtCacheSize", 250);
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
@@ -69,7 +75,7 @@ public class MySQL extends DataStorage {
             final Statement statement = connection.createStatement();
             return statement.executeQuery(query);
         } catch (SQLException ex) {
-            System.out.println("Could not execute query to the database '" + query + "'.");
+            ex.printStackTrace();
         }
         return null;
     }
@@ -82,7 +88,6 @@ public class MySQL extends DataStorage {
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();
-            EpicGuardAPI.getLogger().info("Could not execute update to the database '" + query + "'.");
         }
     }
 
