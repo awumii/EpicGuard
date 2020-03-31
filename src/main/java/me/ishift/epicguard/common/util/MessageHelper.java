@@ -13,9 +13,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.types;
+package me.ishift.epicguard.common.util;
 
-public enum GeoMode {
-    WHITELIST,
-    BLACKLIST
+import net.md_5.bungee.api.ChatColor;
+
+public class MessageHelper {
+    /**
+     * @param text Raw message to be formatted.
+     * @return Message with formatted colors.
+     */
+    public static String color(String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
 }

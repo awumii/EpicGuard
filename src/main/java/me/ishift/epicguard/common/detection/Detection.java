@@ -15,9 +15,8 @@
 
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.common.util.EpicGuardAPI;
+import me.ishift.epicguard.common.Configuration;
 import me.ishift.epicguard.common.util.URLHelper;
-import me.ishift.epicguard.common.Config;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.types.GeoMode;
 import me.ishift.epicguard.common.types.Reason;
@@ -25,8 +24,8 @@ import me.ishift.epicguard.common.types.Reason;
 import java.util.List;
 
 public class Detection {
-    private final String address;
-    private final String nickname;
+    private String address;
+    private String nickname;
 
     private boolean detected;
     private boolean blacklist;
@@ -41,30 +40,34 @@ public class Detection {
     }
 
     public void perform() {
-        StorageManager.getStorage().increaseCheckedConnections();
         if (StorageManager.getStorage().getWhitelist().contains(address)) {
             this.detected = false;
             return;
         }
 
-        AttackSpeed.setConnectPerSecond(AttackSpeed.getConnectPerSecond() + 1);
-        if (AttackSpeed.getConnectPerSecond() > Config.connectSpeed) {
-            AttackSpeed.setAttackMode(true);
+        AttackManager.increaseConnectPerSecond();
+        if (AttackManager.getConnectPerSecond() > Configuration.CONNECTION_SPEED) {
+            AttackManager.setAttackMode(true);
         }
 
         if (blacklistCheck(address)) {
             this.reason = Reason.BLACKLIST;
-        } else if (nameCheck(nickname)) {
+        }
+        else if (nameCheck(nickname)) {
             this.reason = Reason.NAME_CONTAINS;
             this.blacklist = true;
-        } else if (serverListCheck(address)) {
+        }
+        else if (serverListCheck(address)) {
             this.reason = Reason.SERVER_LIST;
-        } else if (verifyCheck(nickname)) {
-            this.reason = Reason.VERIFY;
-        } else if (geoCheck(address)) {
+        }
+        else if (rejoinCheck(nickname)) {
+            this.reason = Reason.REJOIN;
+        }
+        else if (geoCheck(address)) {
             this.reason = Reason.GEO;
             this.blacklist = true;
-        } else if (proxyCheck(address)) {
+        }
+        else if (proxyCheck(address)) {
             this.reason = Reason.PROXY;
             this.blacklist = true;
         } else {
@@ -72,7 +75,7 @@ public class Detection {
         }
 
         if (this.detected) {
-            AttackSpeed.setTotalBots(AttackSpeed.getTotalBots() + 1);
+            AttackManager.increaseBots();
         }
 
         if (this.blacklist) {
@@ -81,14 +84,12 @@ public class Detection {
     }
 
     private boolean proxyCheck(String address) {
-        if (Config.advancedProxyChecker) {
-            return ProxyManager.isProxyUser(address);
-        }
-        final String url = "https://proxycheck.io/v2/" + address + "?key=" + Config.apiKey;
-        final List<String> response = URLHelper.readLines(url);
-
-        if (response != null) {
-            return response.contains("yes");
+        for (ProxyChecker proxyChecker : AttackManager.getCheckers()) {
+            final String url = proxyChecker.getUrl().replace("{ADDRESS}", address);
+            final List<String> response = URLHelper.readLines(url);
+            if (response != null && response.contains(proxyChecker.getUrl())) {
+                return true;
+            }
         }
         return false;
     }
@@ -98,26 +99,29 @@ public class Detection {
     }
 
     private boolean geoCheck(String address) {
-        final String country = EpicGuardAPI.getGeoApi().getCountryCode(address);
-
-        if (country == null || country.equals("Unknown?") || Config.countryMode == GeoMode.DISABLED) {
+        if (AttackManager.getGeoApi() == null) {
             return false;
         }
-        if (Config.countryMode == GeoMode.WHITELIST) {
-            return !Config.countryList.contains(country);
+
+        final String country = AttackManager.getGeoApi().getCountryCode(address);
+        if (country.equals("Unknown?")) {
+            return false;
         }
-        if (Config.countryMode == GeoMode.BLACKLIST) {
-            return Config.countryList.contains(country);
+        if (Configuration.GEO_CHECK_MODE == GeoMode.WHITELIST) {
+            return !Configuration.GEO_CHECK_VALUES.contains(country);
+        }
+        if (Configuration.GEO_CHECK_MODE == GeoMode.BLACKLIST) {
+            return Configuration.GEO_CHECK_VALUES.contains(country);
         }
         return false;
     }
 
     private boolean nameCheck(String nickname) {
-        return Config.blockedNames.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
+        return Configuration.BLOCKED_NAMES.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
     }
 
-    private boolean verifyCheck(String nickname) {
-        if (Config.rejoinCheck && AttackSpeed.isUnderAttack() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
+    private boolean rejoinCheck(String nickname) {
+        if (Configuration.REJOIN_CHECK && AttackManager.isUnderAttack() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
             StorageManager.getStorage().getRejoinData().add(nickname);
             return true;
         }
@@ -125,7 +129,7 @@ public class Detection {
     }
 
     private boolean serverListCheck(String address) {
-        if (Config.serverListCheck && AttackSpeed.isUnderAttack()) {
+        if (Configuration.SERVER_LIST_CHECK && AttackManager.isUnderAttack()) {
             return !StorageManager.getStorage().getPingData().contains(address);
         }
         return false;

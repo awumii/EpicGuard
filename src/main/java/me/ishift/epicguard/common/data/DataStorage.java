@@ -15,20 +15,22 @@
 
 package me.ishift.epicguard.common.data;
 
-import me.ishift.epicguard.common.util.RuntimeExecutor;
+import de.leonhard.storage.Config;
+import de.leonhard.storage.Yaml;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public abstract class DataStorage {
+    public Config config;
+
     public Collection<String> rejoinData;
     public Collection<String> pingData;
     public Collection<String> blacklist;
     public Collection<String> whitelist;
-    public int blockedBots;
-    public int checkedConnections;
 
     public DataStorage() {
+        this.config = new Config("storage", "plugins/EpicGuard");
         this.blacklist = new HashSet<>();
         this.whitelist = new HashSet<>();
         this.rejoinData = new HashSet<>();
@@ -37,13 +39,11 @@ public abstract class DataStorage {
 
     public void blacklist(String address) {
         this.blacklist.add(address);
-        RuntimeExecutor.blacklist(address);
     }
 
     public void whitelist(String address) {
         this.blacklist.remove(address);
         this.whitelist.add(address);
-        RuntimeExecutor.blacklist(address);
     }
 
     public Collection<String> getPingData() {
@@ -60,22 +60,6 @@ public abstract class DataStorage {
 
     public Collection<String> getWhitelist() {
         return whitelist;
-    }
-
-    public int getBlockedBots() {
-        return this.blockedBots;
-    }
-
-    public int getCheckedConnections() {
-        return this.checkedConnections;
-    }
-
-    public void increaseBlockedBots() {
-        this.blockedBots++;
-    }
-
-    public void increaseCheckedConnections() {
-        this.checkedConnections++;
     }
 
     public abstract void load();

@@ -1,5 +1,5 @@
 # Important plugin section.
-name: '${project.name}'
+name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bungee.GuardBungee
 

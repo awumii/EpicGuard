@@ -21,71 +21,43 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import me.ishift.epicguard.common.util.EpicGuardAPI;
-import me.ishift.epicguard.common.util.GeoAPI;
-import me.ishift.epicguard.common.util.GuardLogger;
-import me.ishift.epicguard.common.Config;
+import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.util.GeoApi;
+import me.ishift.epicguard.common.Configuration;
 import me.ishift.epicguard.common.util.DependencyLoader;
 import me.ishift.epicguard.common.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.task.AttackTask;
-import me.ishift.epicguard.common.task.CounterTask;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
         description = "Advanced server protection.", authors = {"iShift", "ruzekh"})
 public class EpicGuardVelocity {
-    private final ProxyServer server;
+    private static EpicGuardVelocity epicGuardVelocity;
+    private ProxyServer server;
 
     @Inject
     public EpicGuardVelocity(ProxyServer server) {
+        epicGuardVelocity = this;
         this.server = server;
+        AttackManager.init();
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        try {
-            final String path = "plugins/EpicGuard";
-            new File(path).mkdir();
-            this.copyConfig();
-            Messages.load();
-            Config.loadBungee();
-            EpicGuardAPI.setLogger(new GuardLogger("EpicGuard", path));
-            EpicGuardAPI.setGeoApi(new GeoAPI(path, Config.countryEnabled, false));
-            DependencyLoader.checkJars();
-            StorageManager.init();
+        //server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
+        //server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
 
-            server.getScheduler().buildTask(this, new CounterTask()).repeat(1, TimeUnit.SECONDS).schedule();
-            server.getScheduler().buildTask(this, new AttackTask()).repeat(20, TimeUnit.SECONDS).schedule();
-            server.getEventManager().register(this, new PreLoginListener());
-            server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        server.getEventManager().register(this, new PreLoginListener());
+        server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
     }
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
-        StorageManager.getStorage().save();
+        StorageManager.shutdown();
     }
 
-    /**
-     * This method will copy default configuration.
-     */
-    private void copyConfig() {
-        final File file = new File("plugins/EpicGuard", "config_bungee.yml");
-        if (!file.exists()) {
-            try (InputStream in = getClass().getClassLoader().getResourceAsStream("config_bungee.yml")) {
-                assert in != null;
-                Files.copy(in, file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static EpicGuardVelocity getInstance() {
+        return epicGuardVelocity;
     }
 }
