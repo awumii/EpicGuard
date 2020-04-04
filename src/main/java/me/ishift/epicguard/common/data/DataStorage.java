@@ -15,14 +15,13 @@
 
 package me.ishift.epicguard.common.data;
 
-import de.leonhard.storage.Config;
 import de.leonhard.storage.Yaml;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public abstract class DataStorage {
-    public Config config;
+    public Yaml config;
 
     public Collection<String> rejoinData;
     public Collection<String> pingData;
@@ -30,7 +29,7 @@ public abstract class DataStorage {
     public Collection<String> whitelist;
 
     public DataStorage() {
-        this.config = new Config("storage", "plugins/EpicGuard");
+        this.config = new Yaml("storage", "plugins/EpicGuard");
         this.blacklist = new HashSet<>();
         this.whitelist = new HashSet<>();
         this.rejoinData = new HashSet<>();

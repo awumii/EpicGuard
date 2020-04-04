@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.common;
 
-import de.leonhard.storage.Config;
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
 import me.ishift.epicguard.common.detection.AttackManager;
@@ -26,59 +25,72 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Configuration {
-    public static int CONNECTION_SPEED;
+    public static int connectSpeed;
+    public static int pingSpeed;
 
-    public static boolean GEO_CHECK;
-    public static GeoMode GEO_CHECK_MODE;
-    public static List<String> GEO_CHECK_VALUES;
-    public static boolean GEO_COUNTRY;
-    public static boolean GEO_CITY;
+    public static boolean autoWhitelist;
+    public static int autoWhitelistTime;
 
-    public static boolean SERVER_LIST_CHECK;
-    public static boolean REJOIN_CHECK;
+    public static String apiKey;
 
-    public static boolean AUTO_WHITELIST;
-    public static int AUTO_WHITELIST_TIME;
+    public static List<String> countryList;
+    public static GeoMode countryMode;
+    public static boolean cityEnabled;
+    public static boolean countryEnabled;
 
-    public static boolean CONSOLE_FILTER;
-    public static List<String> CONSOLE_FILTER_VALUES;
+    public static List<String> blockedNames;
 
-    public static List<String> BLOCKED_NAMES;
+    public static boolean rejoinCheck;
+    public static boolean serverListCheck;
 
-    public static void load() {
-        final Config config = new Config("config", "plugins/EpicGuard");
-        config.setConfigSettings(ConfigSettings.SKIP_COMMENTS);
+    public static boolean filterEnabled;
+    public static List<String> filterValues;
 
-        SERVER_LIST_CHECK = config.getOrSetDefault("General.ServerListCheck", true);
-        REJOIN_CHECK = config.getOrSetDefault("General.ReJoinCheck", true);
+    public static boolean advancedProxyChecker;
 
-        AUTO_WHITELIST = config.getOrSetDefault("General.AutoWhitelist.Enabled", true);
-        AUTO_WHITELIST_TIME = config.getOrSetDefault("General.AutoWhitelist.SecondsOnline", 60);
+    private static void load(Yaml config) {
+        connectSpeed = config.getInt("speed.connection");
+        pingSpeed = config.getInt("speed.ping-speed");
+        autoWhitelist = config.getBoolean("auto-whitelist.enabled");
+        autoWhitelistTime = config.getInt("auto-whitelist.time");
+        apiKey = config.getString("antibot.api-key");
+        countryList = config.getStringList("countries.list");
+        blockedNames = config.getStringList("antibot.name-contains");
+        filterEnabled = config.getBoolean("console-filter.enabled");
+        filterValues = config.getStringList("console-filter.messages");
 
-        CONSOLE_FILTER = config.getOrSetDefault("ConsoleFilter.Enabled", true);
-        CONSOLE_FILTER_VALUES = config.getOrSetDefault("ConsoleFilter.Messages", Arrays.asList("lost connection", "InitialHandler", "UUID of player", "logged in", "GameProfile"));
+        serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
+        rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
 
-        CONNECTION_SPEED = config.getOrSetDefault("AttackConnectionSpeed", 8);
-        GEO_CHECK = config.getOrSetDefault("Geographical.Enabled", true);
-        GEO_COUNTRY = config.getOrSetDefault("Geographical.Download.Country", true);
-        GEO_CITY = config.getOrSetDefault("Geographical.Download.City", true);
-        GEO_CHECK_MODE = GeoMode.valueOf(config.getOrSetDefault("Geographical.Mode", "WHITELIST").toUpperCase());
-        config.setDefault("Geographical.Countries", Arrays.asList("DE", "US", "PL"));
+        cityEnabled = config.getOrSetDefault("download-databases.city", true);
+        countryEnabled = config.getOrSetDefault("download-databases.country", true);
 
-        config.setDefault("ProxyCheckers.1.address", "https://proxycheck.io/v2/{ADDRESS}?key=YOUR_KEY&vpn=1");
-        config.setDefault("ProxyCheckers.1.response", "yes");
+        final String countryModeString = config.getString("countries.mode");
+        countryMode = GeoMode.valueOf(countryModeString);
 
-        config.setDefault("ProxyCheckers.2.address", "https://check.getipintel.net/check.php?ip={ADDRESS}&format=json&contact=hello@yourmail.com&flags=m");
-        config.setDefault("ProxyCheckers.2.response", "1");
+        advancedProxyChecker = config.getOrSetDefault("advanced-proxy-checker.enabled", false);
+        // Setting example.
+        config.setDefault("advanced-proxy-checker.checkers.1.url", "http://proxycheck.io/v2/{ADDRESS}");
+        config.setDefault("advanced-proxy-checker.checkers.1.contains", Arrays.asList("yes", "VPN"));
+        if (!advancedProxyChecker) {
+            return;
+        }
 
-        config.setDefault("ProxyCheckers.3.address", "https://www.stopforumspam.com/api?ip={ADDRESS}");
-        config.setDefault("ProxyCheckers.3.response", "yes");
-
-        final String basePath = "ProxyCheckers";
+        final String basePath = "advanced-proxy-checker.checkers";
         config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
-            final String url = config.getString(path + ".address");
-            final List<String> contains = config.getStringList(path + ".response");
+            final String url = config.getString(path + ".url");
+            final List<String> contains = config.getStringList(path + ".contains");
             AttackManager.getCheckers().add(new ProxyChecker(url, contains));
         });
+    }
+
+    public static void loadBukkit() {
+        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
+        load(config);
+    }
+
+    public static void loadBungee() {
+        final Yaml config = new Yaml("config_bungee.yml", "plugins/EpicGuard");
+        load(config);
     }
 }
