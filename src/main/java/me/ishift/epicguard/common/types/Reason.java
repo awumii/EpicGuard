@@ -28,13 +28,13 @@ public enum Reason {
     REJOIN(Messages.KICK_VERIFY),
     NAME_CONTAINS(Messages.KICK_NICKNAME);
 
-    private final List<String> reason;
+    private final List<String> message;
 
-    Reason(List<String> reason) {
-        this.reason = reason;
+    Reason(List<String> message) {
+        this.message = message;
     }
 
-    public String getReason() {
-        return this.reason.stream().map(s -> s.replace("&", "§") + "\n").collect(Collectors.joining());
+    public String getMessage() {
+        return this.message.stream().map(s -> s.replace("&", "§") + "\n").collect(Collectors.joining());
     }
 }

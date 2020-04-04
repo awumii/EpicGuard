@@ -1,7 +1,7 @@
 # Important plugin section.
 name: EpicGuard
 version: '${project.version}'
-main: me.ishift.epicguard.bungee.GuardBungee
+main: me.ishift.epicguard.bungee.EpicGuardBungee
 
 # Other information about plugin section.
 author: iShift

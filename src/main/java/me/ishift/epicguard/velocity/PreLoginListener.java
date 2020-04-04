@@ -30,7 +30,7 @@ public class PreLoginListener {
 
         final Detection detection = new Detection(address, name);
         if (detection.isDetected()) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getReason())));
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getMessage())));
         }
     }
 }

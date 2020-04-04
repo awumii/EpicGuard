@@ -9,7 +9,7 @@
 # Important plugin section.
 name: EpicGuard
 version: '${project.version}'
-main: me.ishift.epicguard.bukkit.GuardBukkit
+main: me.ishift.epicguard.bukkit.EpicGuardBukkit
 softdepend: [ProtocolLib]
 
 # Other information about plugin section.
