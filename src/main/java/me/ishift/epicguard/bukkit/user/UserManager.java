@@ -1,0 +1,54 @@
+/*
+ * EpicGuard is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * EpicGuard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+package me.ishift.epicguard.bukkit.user;
+
+import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class UserManager {
+    private Map<UUID, User> userMap;
+
+    public UserManager() {
+        this.userMap = new HashMap<>();
+    }
+
+    /**
+     * @param player Target player.
+     * @return User object related to the player.
+     */
+    public User getUser(Player player) {
+        return this.userMap.get(player.getUniqueId());
+    }
+
+    /**
+     * @param player Target player.
+     */
+    public void addUser(Player player) {
+        final User user = new User(player);
+        this.userMap.put(player.getUniqueId(), user);
+    }
+
+    /**
+     * @param player Target player.
+     */
+    public void removeUser(Player player) {
+        this.userMap.remove(player.getUniqueId());
+    }
+}

@@ -39,7 +39,7 @@ public class Utils {
      * @param message Message to be formatted.
      * @return Formatted message.
      */
-    public static String fixColor(String message) {
+    public static String color(String message) {
         return message.replace("&", "§");
     }
 
@@ -48,7 +48,7 @@ public class Utils {
      * @return TextComponent from message.
      */
     public static @NonNull TextComponent getComponent(String message) {
-        return TextComponent.of(fixColor(message));
+        return TextComponent.of(color(message));
     }
 
     /**
