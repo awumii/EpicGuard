@@ -17,11 +17,9 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
-import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.SkullUtil;
 import me.ishift.epicguard.bukkit.util.UMaterial;
-import me.ishift.epicguard.common.Configuration;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.util.MessageHelper;
@@ -33,7 +31,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GuardGui {
     public static final Inventory INVENTORY_MANAGEMENT = Bukkit.createInventory(null, 27, "EpicGuard | Management Menu");
