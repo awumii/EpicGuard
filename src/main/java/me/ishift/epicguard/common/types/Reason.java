@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Reason {
-    GEO(Messages.KICK_GEO),
-    PROXY(Messages.KICK_PROXY),
-    SERVER_LIST(Messages.KICK_PING),
-    BLACKLIST(Messages.KICK_BLACKLIST),
-    REJOIN(Messages.KICK_VERIFY),
-    NAME_CONTAINS(Messages.KICK_NICKNAME);
+    GEO(Messages.messageKickCountry),
+    PROXY(Messages.messageKickProxy),
+    SERVER_LIST(Messages.messagesKickServerList),
+    BLACKLIST(Messages.messageKickBlacklist),
+    REJOIN(Messages.messageKickVerify),
+    NAME_CONTAINS(Messages.messageKickNamecontains);
 
     private final List<String> message;
 
