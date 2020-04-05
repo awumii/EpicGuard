@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.common.Configuration;
+import me.ishift.epicguard.common.config.Configuration;
 import me.ishift.epicguard.common.util.URLHelper;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.types.GeoMode;
@@ -46,7 +46,7 @@ public class Detection {
         }
 
         AttackManager.increaseConnectPerSecond();
-        if (AttackManager.getConnectPerSecond() > Configuration.CONNECTION_SPEED) {
+        if (AttackManager.getConnectPerSecond() > Configuration.connectSpeed) {
             AttackManager.setAttackMode(true);
         }
 
@@ -107,21 +107,21 @@ public class Detection {
         if (country.equals("Unknown?")) {
             return false;
         }
-        if (Configuration.GEO_CHECK_MODE == GeoMode.WHITELIST) {
-            return !Configuration.GEO_CHECK_VALUES.contains(country);
+        if (Configuration.countryMode == GeoMode.WHITELIST) {
+            return !Configuration.countryList.contains(country);
         }
-        if (Configuration.GEO_CHECK_MODE == GeoMode.BLACKLIST) {
-            return Configuration.GEO_CHECK_VALUES.contains(country);
+        if (Configuration.countryMode == GeoMode.BLACKLIST) {
+            return Configuration.countryList.contains(country);
         }
         return false;
     }
 
     private boolean nameCheck(String nickname) {
-        return Configuration.BLOCKED_NAMES.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
+        return Configuration.blockedNames.stream().anyMatch(string -> nickname.toLowerCase().contains(string.toLowerCase()));
     }
 
     private boolean rejoinCheck(String nickname) {
-        if (Configuration.REJOIN_CHECK && AttackManager.isUnderAttack() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
+        if (Configuration.rejoinCheck && AttackManager.isUnderAttack() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
             StorageManager.getStorage().getRejoinData().add(nickname);
             return true;
         }
@@ -129,7 +129,7 @@ public class Detection {
     }
 
     private boolean serverListCheck(String address) {
-        if (Configuration.SERVER_LIST_CHECK && AttackManager.isUnderAttack()) {
+        if (Configuration.serverListCheck && AttackManager.isUnderAttack()) {
             return !StorageManager.getStorage().getPingData().contains(address);
         }
         return false;

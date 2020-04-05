@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.types;
 
-import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.config.Messages;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common;
+package me.ishift.epicguard.common.config;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
@@ -48,7 +48,8 @@ public class Configuration {
 
     public static boolean advancedProxyChecker;
 
-    private static void load(Yaml config) {
+    public static void load() {
+        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
         connectSpeed = config.getInt("speed.connection");
         pingSpeed = config.getInt("speed.ping-speed");
         autoWhitelist = config.getBoolean("auto-whitelist.enabled");
@@ -82,15 +83,5 @@ public class Configuration {
             final List<String> contains = config.getStringList(path + ".contains");
             AttackManager.getCheckers().add(new ProxyChecker(url, contains));
         });
-    }
-
-    public static void loadBukkit() {
-        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
-        load(config);
-    }
-
-    public static void loadBungee() {
-        final Yaml config = new Yaml("config_bungee.yml", "plugins/EpicGuard");
-        load(config);
     }
 }
