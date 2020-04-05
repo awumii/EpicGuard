@@ -66,7 +66,7 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOn);
         } else if (args[0].equalsIgnoreCase("reload")) {
             BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
-            Configuration.loadBungee();
+            Configuration.load();
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard whitelist <adress>"));

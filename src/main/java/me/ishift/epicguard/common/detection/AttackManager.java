@@ -1,7 +1,7 @@
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.common.Configuration;
-import me.ishift.epicguard.common.Messages;
+import me.ishift.epicguard.common.config.Configuration;
+import me.ishift.epicguard.common.config.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.util.DependencyLoader;
 import me.ishift.epicguard.common.util.GeoApi;
@@ -21,8 +21,8 @@ public class AttackManager {
         Configuration.load();
         Messages.load();
         DependencyLoader.load();
-        if (Configuration.GEO_CHECK) {
-            geoApi = new GeoApi("plugins/EpicGuard", Configuration.GEO_COUNTRY, Configuration.GEO_COUNTRY);
+        if (Configuration.countryEnabled) {
+            geoApi = new GeoApi("plugins/EpicGuard", true, Configuration.cityEnabled);
         }
         StorageManager.load();
     }
