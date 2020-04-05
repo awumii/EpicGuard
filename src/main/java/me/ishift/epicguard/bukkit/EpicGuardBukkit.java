@@ -10,7 +10,9 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.user.UserManager;
+import me.ishift.epicguard.common.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.util.Log4jFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
@@ -38,13 +40,19 @@ public class EpicGuardBukkit extends JavaPlugin {
             new TabCompletePacketListener(this);
         }
 
+        if (Configuration.filterEnabled) {
+            final Log4jFilter filter = new Log4jFilter();
+            filter.setFilteredMessages(Configuration.filterValues);
+            filter.registerFilter();
+        }
+
         final PluginCommand command = this.getCommand("guard");
         if (command != null) {
             command.setExecutor(new GuardCommand());
             command.setTabCompleter(new GuardTabCompleter());
             return;
         }
-        throw new IllegalStateException("Could not create the command. This issue shouldn't ever happen, please contact author about this.");
+        throw new IllegalStateException("Could not initialize the command. This issue shouldn't ever happen, please contact author about this.");
     }
 
     public static EpicGuardBukkit getInstance() {
