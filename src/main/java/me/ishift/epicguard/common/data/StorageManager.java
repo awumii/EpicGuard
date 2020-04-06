@@ -24,10 +24,15 @@ public class StorageManager {
     private static DataStorage storage;
 
     public static void load() {
+        /* This will be enabled after MYSQL is finished.
+
         final Yaml config = new Yaml("storage_config", "plugins/EpicGuard");
+        config.setHeader("You can set this to FLAT or MYSQL.", "After setting this to MYSQL, more settings will appear.");
 
         final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
         storageType = StorageType.valueOf(storageTypeString);
+        */
+        storageType = StorageType.FLAT;
 
         if (storageType == StorageType.FLAT) {
             storage = new Flat();
