@@ -23,8 +23,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class URLHelper {
+    public static final Logger logger = Logger.getLogger("URLHelper");
     /**
      * The User-Agent property is set to "Mozilla/4.0"
      *
@@ -41,7 +43,7 @@ public class URLHelper {
                 return scanner.hasNext() ? scanner.next() : "";
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Could not read content of: " + requestURL + " (" + e.getMessage() + ")");
         }
         return requestURL;
     }
@@ -69,7 +71,7 @@ public class URLHelper {
             scanner.close();
             return lines;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Could not read lines from: " + requestURL + " (" + e.getMessage() + ")");
         }
         return null;
     }
