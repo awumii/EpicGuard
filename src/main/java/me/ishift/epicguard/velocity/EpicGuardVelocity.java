@@ -45,7 +45,6 @@ public class EpicGuardVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
-        Configuration.load();
         AttackManager.init();
 
         server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(20, TimeUnit.SECONDS).schedule();

@@ -21,10 +21,11 @@ public class AttackManager {
         Configuration.load();
         Messages.load();
         LibraryLoader.init();
+        StorageManager.load();
+
         if (Configuration.countryEnabled) {
             geoApi = new GeoApi("plugins/EpicGuard", true, Configuration.cityEnabled);
         }
-        StorageManager.load();
     }
 
     public static boolean check(String address, String nickname) {
