@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class GeoApi {
@@ -39,21 +40,33 @@ public class GeoApi {
      */
     public GeoApi(String basePath, boolean country, boolean city) {
         this.logger = Logger.getLogger("GeoAPI");
-        this.logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
-        this.logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
+        this.logger.info("[EpicGuard/GeoAPI] This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
+        this.logger.info("[EpicGuard/GeoAPI] By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
 
         final File countryFile = new File(basePath + "/data/GeoLite2-Country.mmdb");
         final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
+        final File databaseAgeFile = new File(basePath + "/database.info");
+
+        // Ugly fix but without it, IOException on Downloader occurs.
+        final File directory = new File(basePath);
+        final File directory2 = new File(basePath + "/data");
+        if (!directory.exists()) {
+            directory.mkdir();
+            directory2.mkdir();
+        }
+
         try {
             if (country) {
-                if (!countryFile.exists() || isOutdated()) {
+                if (!countryFile.exists() || isOutdated(databaseAgeFile)) {
+                    this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-Country.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
             if (city) {
-                if (!cityFile.exists() || isOutdated()) {
+                if (!cityFile.exists() || isOutdated(databaseAgeFile)) {
+                    this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-City.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
@@ -64,12 +77,19 @@ public class GeoApi {
     }
 
     /**
+     * Checking if the database is older than a week.
+     *
+     * @param dateFile File with last download timestamp
      * @return Boolean whether the database is outdated or not.
+     * @throws IOException If file can't be created.
      */
-    private boolean isOutdated() {
-        final String databaseVersion = "2020-03-17";
-        final String latestVersion = URLHelper.readString("https://raw.githubusercontent.com/PolskiStevek/EpicGuard/master/files/database.info");
-        return !databaseVersion.equals(latestVersion);
+    private boolean isOutdated(File dateFile) throws IOException {
+        if (dateFile.createNewFile()) {
+            return true;
+        }
+        final Scanner scanner = new Scanner(dateFile);
+        final long timeOld = Long.parseLong(scanner.next());
+        return (System.currentTimeMillis() - timeOld) > 604800000;
     }
 
     /**
