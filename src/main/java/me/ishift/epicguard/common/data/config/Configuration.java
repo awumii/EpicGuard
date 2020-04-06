@@ -13,10 +13,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.config;
+package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
-import de.leonhard.storage.internal.settings.ConfigSettings;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.detection.ProxyChecker;
 import me.ishift.epicguard.common.types.GeoMode;
@@ -31,6 +30,7 @@ public class Configuration {
     public static boolean autoWhitelist;
     public static int autoWhitelistTime;
 
+    public static boolean simpleProxyCheck;
     public static String apiKey;
 
     public static List<String> countryList;
@@ -50,29 +50,32 @@ public class Configuration {
 
     public static void load() {
         final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
-        connectSpeed = config.getInt("speed.connection");
-        pingSpeed = config.getInt("speed.ping-speed");
+
+        connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
+        pingSpeed = config.getInt("antibot.additional-protection.conditions.ping-per-second");
+
+        serverListCheck = config.getBoolean("antibot.additional-protection.checks.server-list-check");
+        rejoinCheck = config.getBoolean("antibot.additional-protection.checks.rejoin-check");
+
         autoWhitelist = config.getBoolean("auto-whitelist.enabled");
         autoWhitelistTime = config.getInt("auto-whitelist.time");
-        apiKey = config.getString("antibot.api-key");
-        countryList = config.getStringList("countries.list");
-        blockedNames = config.getStringList("antibot.name-contains");
+
+        simpleProxyCheck = config.getBoolean("antibot.simple-proxy-check.enabled");
+        apiKey = config.getString("antibot.simple-proxy-check.api-key");
+
+        blockedNames = config.getStringList("antibot.name-contains-check");
+
         filterEnabled = config.getBoolean("console-filter.enabled");
         filterValues = config.getStringList("console-filter.messages");
 
-        serverListCheck = config.getOrSetDefault("antibot.server-list-check", true);
-        rejoinCheck = config.getOrSetDefault("antibot.rejoin-check", true);
+        countryList = config.getStringList("geographical.list");
+        cityEnabled = config.getBoolean("geographical.download-databases.city");
+        countryEnabled = config.getBoolean("geographical.download-databases.country");
 
-        cityEnabled = config.getOrSetDefault("download-databases.city", true);
-        countryEnabled = config.getOrSetDefault("download-databases.country", true);
-
-        final String countryModeString = config.getString("countries.mode");
+        final String countryModeString = config.getString("geographical.mode");
         countryMode = GeoMode.valueOf(countryModeString);
 
-        advancedProxyChecker = config.getOrSetDefault("advanced-proxy-checker.enabled", false);
-        // Setting example.
-        config.setDefault("advanced-proxy-checker.checkers.1.url", "http://proxycheck.io/v2/{ADDRESS}");
-        config.setDefault("advanced-proxy-checker.checkers.1.contains", Arrays.asList("yes", "VPN"));
+        advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
         if (!advancedProxyChecker) {
             return;
         }

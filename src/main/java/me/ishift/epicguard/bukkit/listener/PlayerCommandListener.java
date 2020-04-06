@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.SpigotSettings;
-import me.ishift.epicguard.common.config.Messages;
+import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -11,7 +11,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.common.config.Configuration;
+import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import org.bukkit.Bukkit;
