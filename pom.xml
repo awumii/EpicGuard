@@ -64,9 +64,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.yooniks</groupId>
-            <artifactId>phasmatos-inventory-api</artifactId>
-            <version>v1.1</version>
+            <groupId>fr.minuskube.inv</groupId>
+            <artifactId>smart-invs</artifactId>
+            <version>1.2.7</version>
         </dependency>
     </dependencies>
 

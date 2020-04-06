@@ -1,5 +1,6 @@
 package me.ishift.epicguard.bukkit;
 
+import fr.minuskube.inv.InventoryManager;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
@@ -21,12 +22,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EpicGuardBukkit extends JavaPlugin {
     private static EpicGuardBukkit epicGuardBukkit;
     private UserManager userManager;
+    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
         epicGuardBukkit = this;
         AttackManager.init();
         this.userManager = new UserManager();
+        this.inventoryManager = new InventoryManager(this);
+        this.inventoryManager.init();
 
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(), this);
@@ -50,13 +54,15 @@ public class EpicGuardBukkit extends JavaPlugin {
         if (command != null) {
             command.setExecutor(new GuardCommand());
             command.setTabCompleter(new GuardTabCompleter());
-            return;
         }
-        throw new IllegalStateException("Could not initialize the command. This issue shouldn't ever happen, please contact author about this.");
     }
 
     public static EpicGuardBukkit getInstance() {
         return epicGuardBukkit;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 
     public UserManager getUserManager() {
