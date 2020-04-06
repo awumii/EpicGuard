@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.EpicGuardBungee;
-import me.ishift.epicguard.common.config.Configuration;
+import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.StorageManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

@@ -1,7 +1,7 @@
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.common.config.Configuration;
-import me.ishift.epicguard.common.config.Messages;
+import me.ishift.epicguard.common.data.config.Configuration;
+import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.util.DependencyLoader;
 import me.ishift.epicguard.common.util.GeoApi;
