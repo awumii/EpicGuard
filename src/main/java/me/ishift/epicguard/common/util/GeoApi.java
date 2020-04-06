@@ -47,14 +47,6 @@ public class GeoApi {
         final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
         final File databaseAgeFile = new File(basePath + "/data/database.info");
 
-        // Ugly fix but without it, IOException on Downloader occurs.
-        final File directory = new File(basePath);
-        final File directory2 = new File(basePath + "/data");
-        if (!directory.exists()) {
-            directory.mkdir();
-            directory2.mkdir();
-        }
-
         try {
             if (country) {
                 if (!countryFile.exists() || isOutdated(databaseAgeFile)) {
