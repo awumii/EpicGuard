@@ -11,6 +11,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
 import me.ishift.epicguard.bukkit.user.UserManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.util.Log4jFilter;
@@ -28,7 +29,6 @@ public class EpicGuardBukkit extends JavaPlugin {
     public void onEnable() {
         epicGuardBukkit = this;
         this.saveDefaultConfig();
-        Configuration.load();
         SpigotSettings.load();
         AttackManager.init();
 

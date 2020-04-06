@@ -15,7 +15,7 @@ public class FileUtil {
      *
      * @param file File which should be erased.
      */
-    public void eraseFile(File file) {
+    public static void eraseFile(File file) {
         try {
             final PrintWriter pw = new PrintWriter(file);
             pw.close();
@@ -30,7 +30,7 @@ public class FileUtil {
      * @param file Target file.
      * @param message Message to be logged.
      */
-    public void writeToFile(File file, String message) {
+    public static void writeToFile(File file, String message) {
         try {
             if (!file.exists() || file.createNewFile()) {
                 return;

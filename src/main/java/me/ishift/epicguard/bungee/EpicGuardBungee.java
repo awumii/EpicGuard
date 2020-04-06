@@ -5,6 +5,7 @@ import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PostLoginListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.util.FileUtil;
@@ -29,7 +30,6 @@ public class EpicGuardBungee extends Plugin {
         epicGuardBungee = this;
         this.statusPlayers = new ArrayList<>();
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
-        Configuration.load();
         AttackManager.init();
 
         final PluginManager pm = this.getProxy().getPluginManager();

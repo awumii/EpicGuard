@@ -45,7 +45,7 @@ public class GeoApi {
 
         final File countryFile = new File(basePath + "/data/GeoLite2-Country.mmdb");
         final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
-        final File databaseAgeFile = new File(basePath + "/database.info");
+        final File databaseAgeFile = new File(basePath + "/data/database.info");
 
         // Ugly fix but without it, IOException on Downloader occurs.
         final File directory = new File(basePath);
@@ -60,6 +60,9 @@ public class GeoApi {
                 if (!countryFile.exists() || isOutdated(databaseAgeFile)) {
                     this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-Country.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
+
+                    FileUtil.eraseFile(databaseAgeFile);
+                    FileUtil.writeToFile(databaseAgeFile, String.valueOf(System.currentTimeMillis()));
                 }
                 countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
@@ -68,6 +71,9 @@ public class GeoApi {
                 if (!cityFile.exists() || isOutdated(databaseAgeFile)) {
                     this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-City.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
+
+                    FileUtil.eraseFile(databaseAgeFile);
+                    FileUtil.writeToFile(databaseAgeFile, String.valueOf(System.currentTimeMillis()));
                 }
                 cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }

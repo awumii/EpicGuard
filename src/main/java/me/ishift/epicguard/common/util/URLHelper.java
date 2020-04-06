@@ -43,7 +43,7 @@ public class URLHelper {
                 return scanner.hasNext() ? scanner.next() : "";
             }
         } catch (IOException e) {
-            logger.warning("Could not read content of: " + requestURL + " (" + e.getMessage() + ")");
+            logger.warning("[EpicGuard/URHelper] Could not read content of: " + requestURL + " (" + e.getMessage() + ")");
         }
         return requestURL;
     }
@@ -71,7 +71,7 @@ public class URLHelper {
             scanner.close();
             return lines;
         } catch (IOException e) {
-            logger.warning("Could not read lines from: " + requestURL + " (" + e.getMessage() + ")");
+            logger.warning("[EpicGuard/URHelper] Could not read lines from: " + requestURL + " (" + e.getMessage() + ")");
         }
         return null;
     }
