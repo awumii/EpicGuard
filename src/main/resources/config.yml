@@ -49,6 +49,7 @@ antibot:
   # true - whitelisted players won't be checked for proxy/vpn (reducing API usage)
   # false - every player will be checked for proxy/vpn.
   # If you set this to false, you MUST use advanced-proxy-checker with unlimited requests (paid plan?).
+  # WARN: Disabling this WILL DISABLE whitelist check (this may affect regular players).
   whitelisted-players-skip-proxy-check: true
   # Additional protection aka "Attack Mode".
   # When certain conditions are met, this mode will enable.
