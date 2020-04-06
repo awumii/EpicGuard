@@ -22,9 +22,12 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.util.FileUtil;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
@@ -37,13 +40,15 @@ public class EpicGuardVelocity {
     public EpicGuardVelocity(ProxyServer server) {
         epicGuardVelocity = this;
         this.server = server;
-        AttackManager.init();
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(20, TimeUnit.SECONDS).schedule();
+        FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
+        Configuration.load();
+        AttackManager.init();
 
+        server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(20, TimeUnit.SECONDS).schedule();
         server.getEventManager().register(this, new PreLoginListener());
         server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
     }
