@@ -18,7 +18,6 @@ package me.ishift.epicguard.common.data.storage;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import me.ishift.epicguard.common.data.DataStorage;
-import me.ishift.epicguard.common.data.StorageManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
