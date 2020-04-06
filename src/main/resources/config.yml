@@ -1,0 +1,95 @@
+#
+#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
+#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
+#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
+#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
+#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
+# Thank you for downloading my plugin!
+# SpigotMC Link: https://www.spigotmc.org/resources/epicguard-advanced-server-protection-antibot-more.72369/
+# My Discord: iShift#0524
+
+###############################
+##           Countries       ##
+###############################
+
+countries:
+  # This has three values:
+  # WHITELIST = countries listed below CAN join, every other can't.
+  # BLACKLIST = countries listed below CAN'T join, every other can.
+  # DISABLED = disable this module.
+  mode: DISABLED
+  # List of country codes:
+  # https://dev.maxmind.com/geoip/legacy/codes/iso3166/
+  list:
+    - GB
+    - DE
+download-databases:
+  city: true
+  country: true
+
+###############################
+##           AntiBot         ##
+###############################
+
+antibot:
+  # If a player/bot's nickname contains one of the values below, he will be blocked.
+  # This SHOULD be lower-case
+  name-contains:
+    - mcstorm
+    - mcspam
+    - bot
+    - proxy
+    - mcdrop
+  # HIGHLY RECOMMENDED: Register on https://proxycheck.io/dashboard and get a free API KEY!
+  # You can leave it empty, but your protection will be limited.
+  # With key - 1000 requests/24h
+  # Without key - 100 requests/24h
+  api-key: "YOUR_KEY"
+  # This two checks will only perform when there is an active attack!
+  rejoin-check: true
+  server-list-check: true
+
+# Enabling advanced-proxy-checker will no longer use
+# the key you provided in antibot.api-key section.
+# It will use all the sites you have set below.
+advanced-proxy-checker:
+  enabled: true
+  checkers:
+    '1':
+      url: "https://proxycheck.io/v2/{ADDRESS}"
+      contains:
+        - yes
+        - VPN
+
+###############################
+##        Settings           ##
+###############################
+
+# If console log contains text listed below, it
+# will be hidden. This will decrease CPU usage.
+console-filter:
+  enabled: true
+  messages:
+    - Disconnecting
+    - lost connection
+    - authlib
+    - GameProfile
+    - InitialHandler
+
+speed:
+  # How many connections per second should be made to activate additional checks.
+  connection: 4
+
+# Block tab-complete packet using ProtocolLib.
+# Useful when using a multi-version server, because 1.13+ players
+# receive different packet than older version players.
+fully-block-tab-complete: false
+
+auto-whitelist:
+  # Enable automatic player whitelisting.
+  # When a player is whitelisted, all checks are skipped.
+  enabled: true
+  # How much time (in ticks), the player should be online to be added to the whitelist.
+  # 20 ticks = 1 second
+  time: 8400
