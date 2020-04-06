@@ -15,11 +15,11 @@
 
 package me.ishift.epicguard.common.detection;
 
-import me.ishift.epicguard.common.data.config.Configuration;
-import me.ishift.epicguard.common.util.URLHelper;
 import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.types.GeoMode;
 import me.ishift.epicguard.common.types.Reason;
+import me.ishift.epicguard.common.util.URLHelper;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class Detection {
     }
 
     public void perform() {
-        if (StorageManager.getStorage().getWhitelist().contains(address)) {
+        if (StorageManager.getStorage().getWhitelist().contains(address) && !Configuration.whitelistedSkipProxyCheck) {
             this.detected = false;
             return;
         }

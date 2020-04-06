@@ -31,6 +31,7 @@ public class Configuration {
     public static int autoWhitelistTime;
 
     public static boolean simpleProxyCheck;
+    public static boolean whitelistedSkipProxyCheck;
     public static String apiKey;
 
     public static List<String> countryList;
@@ -64,6 +65,7 @@ public class Configuration {
         apiKey = config.getString("antibot.simple-proxy-check.api-key");
 
         blockedNames = config.getStringList("antibot.name-contains-check");
+        whitelistedSkipProxyCheck = config.getBoolean("antibot.whitelisted-players-skip-proxy-check");
 
         filterEnabled = config.getBoolean("console-filter.enabled");
         filterValues = config.getStringList("console-filter.messages");
@@ -76,15 +78,14 @@ public class Configuration {
         countryMode = GeoMode.valueOf(countryModeString);
 
         advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
-        if (!advancedProxyChecker) {
-            return;
-        }
 
-        final String basePath = "advanced-proxy-checker.checkers";
-        config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
-            final String url = config.getString(path + ".url");
-            final List<String> contains = config.getStringList(path + ".contains");
-            AttackManager.getCheckers().add(new ProxyChecker(url, contains));
-        });
+        if (advancedProxyChecker) {
+            final String basePath = "advanced-proxy-checker.checkers";
+            config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
+                final String url = config.getString(path + ".url");
+                final List<String> contains = config.getStringList(path + ".contains");
+                AttackManager.getCheckers().add(new ProxyChecker(url, contains));
+            });
+        }
     }
 }
