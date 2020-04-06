@@ -21,8 +21,8 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 
 import java.util.concurrent.TimeUnit;

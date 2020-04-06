@@ -16,7 +16,6 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
-import me.ishift.epicguard.bukkit.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

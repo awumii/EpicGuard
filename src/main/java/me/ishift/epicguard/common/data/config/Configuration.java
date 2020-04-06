@@ -20,7 +20,6 @@ import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.detection.ProxyChecker;
 import me.ishift.epicguard.common.types.GeoMode;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Configuration {
