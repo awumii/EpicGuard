@@ -20,6 +20,8 @@ import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.detection.ProxyChecker;
 import me.ishift.epicguard.common.types.GeoMode;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Configuration {
@@ -89,6 +91,27 @@ public class Configuration {
                 final List<String> contains = config.getStringList(path + ".contains");
                 AttackManager.getCheckers().add(new ProxyChecker(url, contains));
             });
+        }
+    }
+
+    /**
+     * Very messy method to check and remove the old config, but i don't have any other idea.
+     */
+    public static void checkVersion() {
+        final File cfg = new File("plugins/EpicGuard/config.yml");
+        final File fileDir = new File("plugins/EpicGuard/data");
+        final File file = new File("plugins/EpicGuard/data/update.temp");
+        if (!cfg.exists()) {
+            return;
+        }
+        if (!file.exists()) {
+            fileDir.mkdirs();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            cfg.delete();
         }
     }
 }

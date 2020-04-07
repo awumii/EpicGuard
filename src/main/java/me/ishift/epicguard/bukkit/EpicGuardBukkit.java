@@ -31,6 +31,7 @@ public class EpicGuardBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         epicGuardBukkit = this;
+        Configuration.checkVersion();
         this.saveDefaultConfig();
         SpigotSettings.load();
         AttackManager.init();
