@@ -36,7 +36,6 @@ public class Configuration {
 
     public static boolean simpleProxyCheck;
     public static String apiKey;
-    public static boolean whitelistedSkipProxyCheck;
 
     public static List<String> countryList;
     public static GeoMode countryMode;
@@ -72,7 +71,6 @@ public class Configuration {
             apiKey = config.getString("antibot.simple-proxy-check.api-key");
 
             blockedNames = config.getStringList("antibot.name-contains-check");
-            whitelistedSkipProxyCheck = config.getBoolean("antibot.whitelisted-players-skip-proxy-check");
 
             filterEnabled = config.getBoolean("console-filter.enabled");
             filterValues = config.getStringList("console-filter.messages");
