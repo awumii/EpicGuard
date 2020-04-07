@@ -23,6 +23,7 @@ import me.ishift.epicguard.common.types.GeoMode;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Configuration {
     public static int connectSpeed;
@@ -53,44 +54,54 @@ public class Configuration {
     public static boolean advancedProxyChecker;
 
     public static void load() {
-        final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
+        try {
+            final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
 
-        connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
-        pingSpeed = config.getInt("antibot.additional-protection.conditions.ping-per-second");
+            connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
+            pingSpeed = config.getInt("antibot.additional-protection.conditions.ping-per-second");
 
-        checkConditionsDelay = config.getInt("antibot.additional-protection.check-conditions-delay");
+            checkConditionsDelay = config.getInt("antibot.additional-protection.check-conditions-delay");
 
-        serverListCheck = config.getBoolean("antibot.additional-protection.checks.server-list-check");
-        rejoinCheck = config.getBoolean("antibot.additional-protection.checks.rejoin-check");
+            serverListCheck = config.getBoolean("antibot.additional-protection.checks.server-list-check");
+            rejoinCheck = config.getBoolean("antibot.additional-protection.checks.rejoin-check");
 
-        autoWhitelist = config.getBoolean("auto-whitelist.enabled");
-        autoWhitelistTime = config.getInt("auto-whitelist.time");
+            autoWhitelist = config.getBoolean("auto-whitelist.enabled");
+            autoWhitelistTime = config.getInt("auto-whitelist.time");
 
-        simpleProxyCheck = config.getBoolean("antibot.simple-proxy-check.enabled");
-        apiKey = config.getString("antibot.simple-proxy-check.api-key");
+            simpleProxyCheck = config.getBoolean("antibot.simple-proxy-check.enabled");
+            apiKey = config.getString("antibot.simple-proxy-check.api-key");
 
-        blockedNames = config.getStringList("antibot.name-contains-check");
-        whitelistedSkipProxyCheck = config.getBoolean("antibot.whitelisted-players-skip-proxy-check");
+            blockedNames = config.getStringList("antibot.name-contains-check");
+            whitelistedSkipProxyCheck = config.getBoolean("antibot.whitelisted-players-skip-proxy-check");
 
-        filterEnabled = config.getBoolean("console-filter.enabled");
-        filterValues = config.getStringList("console-filter.messages");
+            filterEnabled = config.getBoolean("console-filter.enabled");
+            filterValues = config.getStringList("console-filter.messages");
 
-        countryList = config.getStringList("geographical.list");
-        cityEnabled = config.getBoolean("geographical.download-databases.city");
-        countryEnabled = config.getBoolean("geographical.download-databases.country");
+            countryList = config.getStringList("geographical.list");
+            cityEnabled = config.getBoolean("geographical.download-databases.city");
+            countryEnabled = config.getBoolean("geographical.download-databases.country");
 
-        final String countryModeString = config.getString("geographical.mode");
-        countryMode = GeoMode.valueOf(countryModeString);
+            final String countryModeString = config.getString("geographical.mode");
+            countryMode = GeoMode.valueOf(countryModeString);
 
-        advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
+            advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
 
-        if (advancedProxyChecker) {
-            final String basePath = "advanced-proxy-checker.checkers";
-            config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
-                final String url = config.getString(path + ".url");
-                final List<String> contains = config.getStringList(path + ".contains");
-                AttackManager.getCheckers().add(new ProxyChecker(url, contains));
-            });
+            if (advancedProxyChecker) {
+                final String basePath = "advanced-proxy-checker.checkers";
+                config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
+                    final String url = config.getString(path + ".url");
+                    final List<String> contains = config.getStringList(path + ".contains");
+                    AttackManager.getCheckers().add(new ProxyChecker(url, contains));
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            final Logger logger = Logger.getLogger("ConfigurationLoader");
+            logger.warning("==================================");
+            logger.warning(" FAILED TO LOAD CONFIGURATION FILE!");
+            logger.warning(" IF YOU HAVE UPDATED THE PLUGIN, RESTART THE SERVER.");
+            logger.warning(" IF THIS ISN'T AN UPDATE, PLEASE CORRECT YOUR CONFIG.");
+            logger.warning("==================================");
         }
     }
 
