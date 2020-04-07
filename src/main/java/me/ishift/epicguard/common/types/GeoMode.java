@@ -17,5 +17,6 @@ package me.ishift.epicguard.common.types;
 
 public enum GeoMode {
     WHITELIST,
-    BLACKLIST
+    BLACKLIST,
+    DISABLED
 }
