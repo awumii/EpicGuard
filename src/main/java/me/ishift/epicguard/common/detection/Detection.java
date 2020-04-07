@@ -40,7 +40,7 @@ public class Detection {
     }
 
     public void perform() {
-        if (StorageManager.getStorage().getWhitelist().contains(address) && !Configuration.whitelistedSkipProxyCheck) {
+        if (StorageManager.getStorage().getWhitelist().contains(address)) {
             this.detected = false;
             return;
         }
