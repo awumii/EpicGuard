@@ -23,6 +23,6 @@ import net.md_5.bungee.event.EventHandler;
 public class PingListener implements Listener {
     @EventHandler
     public void onProxyPing(ProxyPingEvent event) {
-        StorageManager.getStorage().getPingData().add(event.getConnection().getAddress().getAddress().getHostName());
+        StorageManager.getStorage().getPingData().add(event.getConnection().getAddress().getAddress().getHostAddress());
     }
 }
