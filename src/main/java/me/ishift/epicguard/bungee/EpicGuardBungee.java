@@ -34,6 +34,7 @@ public class EpicGuardBungee extends Plugin {
     public void onEnable() {
         epicGuardBungee = this;
         this.statusPlayers = new ArrayList<>();
+        Configuration.checkVersion();
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
         AttackManager.init();
 
