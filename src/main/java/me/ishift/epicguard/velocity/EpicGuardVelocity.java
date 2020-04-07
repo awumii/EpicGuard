@@ -25,6 +25,7 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.FileUtil;
 
 import java.io.File;
@@ -47,7 +48,9 @@ public class EpicGuardVelocity {
         FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
         AttackManager.init();
 
-        server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(20, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new CounterResetTask()).repeat(1, TimeUnit.SECONDS).schedule();
+
         server.getEventManager().register(this, new PreLoginListener());
         server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
     }

@@ -63,7 +63,6 @@ public class Messages {
         blacklisted = FILE.getOrSetDefault("other.address-blacklisted", "&7Succesfully &cblacklisted &7address: &c{ADDRESS}");
         whitelisted = FILE.getOrSetDefault("other.address-whitelisted", "&7Succesfully &awhitelisted &7address: &a{ADDRESS}");
         unknownCommand = FILE.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
-        reset = FILE.getOrSetDefault("other.reset", "&7Attack data and counters has been &ccleared&7.");
         statusOn = FILE.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
         statusOff = FILE.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
     }

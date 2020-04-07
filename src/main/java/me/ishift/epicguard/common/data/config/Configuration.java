@@ -26,6 +26,8 @@ public class Configuration {
     public static int connectSpeed;
     public static int pingSpeed;
 
+    public static long checkConditionsDelay;
+
     public static boolean autoWhitelist;
     public static int autoWhitelistTime;
 
@@ -53,6 +55,8 @@ public class Configuration {
 
         connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
         pingSpeed = config.getInt("antibot.additional-protection.conditions.ping-per-second");
+
+        checkConditionsDelay = config.getInt("antibot.additional-protection.check-conditions-delay");
 
         serverListCheck = config.getBoolean("antibot.additional-protection.checks.server-list-check");
         rejoinCheck = config.getBoolean("antibot.additional-protection.checks.rejoin-check");

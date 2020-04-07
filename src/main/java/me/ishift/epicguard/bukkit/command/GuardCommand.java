@@ -45,12 +45,10 @@ public class GuardCommand implements CommandExecutor {
             sender.sendMessage(MessageHelper.color(""));
             sender.sendMessage(MessageHelper.color("  &7Running version &f" + version));
             sender.sendMessage(MessageHelper.color("  &7Created by &fiShift &8© 2020"));
-            sender.sendMessage(MessageHelper.color("  &7Licensed under &8GPLv3 &7license."));
             sender.sendMessage(MessageHelper.color(""));
             sender.sendMessage(MessageHelper.color(" &7/guard &fmenu &7to open main plugin GUI."));
             sender.sendMessage(MessageHelper.color(" &7/guard &fstatus &7to toggle antibot notifications."));
             sender.sendMessage(MessageHelper.color(" &7/guard &freload &7to reload configuration and messages."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &freset &7to disable attack mode and reset counters."));
             sender.sendMessage(MessageHelper.color(" &7/guard &fplayer <player> &7to see information about specific player."));
             sender.sendMessage(MessageHelper.color(" &7/guard &fwhitelist <adress> &7to add specific adress to the whitelist."));
             sender.sendMessage(MessageHelper.color(" &7/guard &fblacklist <adress> &7to add specific adress to the blacklist."));

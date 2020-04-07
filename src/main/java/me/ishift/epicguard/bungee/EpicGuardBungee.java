@@ -8,18 +8,23 @@ import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.FileUtil;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+import net.md_5.bungee.api.scheduler.TaskScheduler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class EpicGuardBungee extends Plugin {
     private static EpicGuardBungee epicGuardBungee;
@@ -37,6 +42,10 @@ public class EpicGuardBungee extends Plugin {
         pm.registerListener(this, new PostLoginListener());
         pm.registerListener(this, new PingListener());
         pm.registerCommand(this, new GuardCommand("guard"));
+
+        final TaskScheduler scheduler = this.getProxy().getScheduler();
+        scheduler.schedule(this, new AttackToggleTask(), Configuration.checkConditionsDelay, TimeUnit.SECONDS);
+        scheduler.schedule(this, new CounterResetTask(), 1, TimeUnit.SECONDS);
 
         new BungeeMetrics(this, 5956);
 

@@ -41,6 +41,10 @@ public class AttackManager {
         connectPerSecond++;
     }
 
+    public static void setConnectPerSecond(int connectPerSecond) {
+        AttackManager.connectPerSecond = connectPerSecond;
+    }
+
     public static void increaseBots() {
         totalBots++;
     }

@@ -14,11 +14,14 @@ import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class EpicGuardBukkit extends JavaPlugin {
     private static EpicGuardBukkit epicGuardBukkit;
@@ -43,6 +46,10 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerInventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
+
+        final BukkitScheduler scheduler = this.getServer().getScheduler();
+        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(), 0L, Configuration.checkConditionsDelay * 2L);
+        scheduler.runTaskTimerAsynchronously(this, new CounterResetTask(), 0L, 20L);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
             new TabCompletePacketListener(this);
