@@ -120,7 +120,7 @@ public class Detection {
         }
 
         final String country = AttackManager.getGeoApi().getCountryCode(address);
-        if (country.equals("Unknown?")) {
+        if (country.equals("Unknown?") || Configuration.countryMode == GeoMode.DISABLED) {
             return false;
         }
         if (Configuration.countryMode == GeoMode.WHITELIST) {
