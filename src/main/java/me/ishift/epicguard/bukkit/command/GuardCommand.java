@@ -34,7 +34,7 @@ public class GuardCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String s, @NotNull String[] args) {
         final String version = EpicGuardBukkit.getInstance().getDescription().getVersion();
         if (sender instanceof Player && !sender.hasPermission("epicguard.admin")) {
-            send(sender, "&7This server uses &6EpicGuard v" + version + " &7by &ciShift&7.");
+            send(sender, "&7This server uses &6EpicGuard v" + version + " &7by &ciShift and rusekh&7.");
             send(sender, Messages.noPermission);
             return true;
         }
@@ -44,7 +44,7 @@ public class GuardCommand implements CommandExecutor {
             sender.sendMessage(MessageHelper.color("  &6&lEpicGuard"));
             sender.sendMessage(MessageHelper.color(""));
             sender.sendMessage(MessageHelper.color("  &7Running version &f" + version));
-            sender.sendMessage(MessageHelper.color("  &7Created by &fiShift &8© 2020"));
+            sender.sendMessage(MessageHelper.color("  &7Created by &fiShift and rusekh &8© 2020"));
             sender.sendMessage(MessageHelper.color(""));
             sender.sendMessage(MessageHelper.color(" &7/guard &fmenu &7to open main plugin GUI."));
             sender.sendMessage(MessageHelper.color(" &7/guard &fstatus &7to toggle antibot notifications."));
