@@ -84,11 +84,27 @@ public class Detection {
     }
 
     private boolean proxyCheck(String address) {
-        for (ProxyChecker proxyChecker : AttackManager.getCheckers()) {
-            final String url = proxyChecker.getUrl().replace("{ADDRESS}", address);
+        if (Configuration.simpleProxyCheck) {
+            final String url = "https://proxycheck.io/v2/" + address + "?key=" + Configuration.apiKey;
             final List<String> response = URLHelper.readLines(url);
-            if (response != null && response.contains(proxyChecker.getUrl())) {
-                return true;
+            return response != null && response.contains("yes");
+        }
+
+        if (Configuration.advancedProxyChecker) {
+            for (ProxyChecker proxyChecker : AttackManager.getCheckers()) {
+                final String url = proxyChecker.getUrl().replace("{ADDRESS}", address);
+                final List<String> response = URLHelper.readLines(url);
+
+                if (response == null) {
+                    return false;
+                }
+                for (String responseString : response) {
+                    for (String containsString : proxyChecker.getContains()) {
+                        if (responseString.contains(containsString)) {
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;

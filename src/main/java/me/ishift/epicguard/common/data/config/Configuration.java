@@ -34,8 +34,8 @@ public class Configuration {
     public static int autoWhitelistTime;
 
     public static boolean simpleProxyCheck;
-    public static boolean whitelistedSkipProxyCheck;
     public static String apiKey;
+    public static boolean whitelistedSkipProxyCheck;
 
     public static List<String> countryList;
     public static GeoMode countryMode;
