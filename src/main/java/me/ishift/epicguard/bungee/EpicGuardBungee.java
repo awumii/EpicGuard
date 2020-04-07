@@ -44,9 +44,8 @@ public class EpicGuardBungee extends Plugin {
         pm.registerListener(this, new PingListener());
         pm.registerCommand(this, new GuardCommand("guard"));
 
-        final TaskScheduler scheduler = this.getProxy().getScheduler();
-        scheduler.schedule(this, new AttackToggleTask(), Configuration.checkConditionsDelay, TimeUnit.SECONDS);
-        scheduler.schedule(this, new CounterResetTask(), 1, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new AttackToggleTask(), 1L, Configuration.checkConditionsDelay, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new CounterResetTask(), 1L, 1L, TimeUnit.SECONDS);
 
         new BungeeMetrics(this, 5956);
 
