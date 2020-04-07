@@ -55,6 +55,9 @@ antibot:
   # When certain conditions are met, this mode will enable.
   # Additional checks will be performed to block every bot.
   additional-protection:
+    # Time in seconds between next condition check.
+    # If conditions aren't met, additional protection will be disabled.
+    check-conditions-delay: 10
     # Only one condition will need to be met to activate attack mode.
     conditions:
       connections-per-second: 6

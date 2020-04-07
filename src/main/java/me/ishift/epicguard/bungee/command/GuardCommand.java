@@ -37,7 +37,6 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, "  &7Running version &f" + EpicGuardBungee.getInstance().getDescription().getVersion());
             BungeeUtil.sendMessage(sender, "  &7Created by &fiShift &8© 2020");
-            BungeeUtil.sendMessage(sender, "  &7Licensed under &8GPLv3 &7license.");
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, " &7/guard status &8- &7Toggle antibot actionbar.");
             BungeeUtil.sendMessage(sender, " &7/guard reload &8- &7Reload configuration and messages.");
