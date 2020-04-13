@@ -34,12 +34,16 @@ public class MySQL extends DataStorage {
         this.initConnection();
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_blacklist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_whitelist(`address` TEXT NOT NULL);");
+        this.executeUpdate("SELECT * FROM `epicguard_whitelist`");
+        this.executeUpdate("SELECT * FROM `epicguard_blacklist`");
     }
 
     @Override
     public void save() {
         this.executeUpdate("INSERT INTO `epicguard_whitelist` (`address`) VALUES " + this.fromList(this.getWhitelist()));
         this.executeUpdate("INSERT INTO `epicguard_blacklist` (`address`) VALUES " + this.fromList(this.getBlacklist()));
+        this.executeUpdate("SELECT * FROM `epicguard_whitelist`");
+        this.executeUpdate("SELECT * FROM `epicguard_blacklist`");
     }
 
     private void initConnection() {
