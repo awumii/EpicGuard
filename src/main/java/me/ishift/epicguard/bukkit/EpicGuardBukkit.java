@@ -25,6 +25,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
 import me.ishift.epicguard.bukkit.user.UserManager;
+import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.detection.AttackManager;
@@ -76,6 +77,7 @@ public class EpicGuardBukkit extends JavaPlugin {
             command.setExecutor(new GuardCommand());
             command.setTabCompleter(new GuardTabCompleter());
         }
+        new Metrics(this, 5845);
     }
 
     public static EpicGuardBukkit getInstance() {
