@@ -62,7 +62,7 @@ public class GuardGui {
                 .addLore("&6Plugin:")
                 .addLore("  &7Name&8: &aEpicGuard")
                 .addLore("  &7Version&8: &e" + EpicGuardBukkit.getInstance().getDescription().getVersion())
-                .addLore("  &7Authors&8: &eiShift, ruzekh")
+                .addLore("  &7Authors&8: &eiShift, rusekh")
                 .addLore("")
                 .addLore("&6Support:")
                 .addLore("  &7Dev's Discord&8: &ciShift#0524")
@@ -108,12 +108,6 @@ public class GuardGui {
             lore.add(MessageHelper.color("  &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
             lore.add(MessageHelper.color("  &7Country&8: &f" + AttackManager.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(MessageHelper.color("  &7City&8: &f" + AttackManager.getGeoApi().getCity(user.getAddress())));
-
-            if (!user.getAddressHistory().isEmpty()) {
-                lore.add("");
-                lore.add(MessageHelper.color("&6IP History:"));
-                user.getAddressHistory().forEach(address -> lore.add(MessageHelper.color("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&aCurrent&8)" : ""))));
-            }
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             INVENTORY_PLAYER.setItem(i, itemStack);
