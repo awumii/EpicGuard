@@ -45,7 +45,6 @@ public class EpicGuardVelocity {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        Configuration.checkVersion();
         FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
         AttackManager.init();
 
