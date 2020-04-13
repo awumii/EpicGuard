@@ -1,6 +1,5 @@
 package me.ishift.epicguard.bukkit;
 
-import fr.minuskube.inv.InventoryManager;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
@@ -11,12 +10,12 @@ import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
 import me.ishift.epicguard.bukkit.user.UserManager;
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.detection.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.Log4jFilter;
+import me.ishift.inventory.api.InventoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
@@ -26,7 +25,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class EpicGuardBukkit extends JavaPlugin {
     private static EpicGuardBukkit epicGuardBukkit;
     private UserManager userManager;
-    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
@@ -35,10 +33,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         this.saveDefaultConfig();
         SpigotSettings.load();
         AttackManager.init();
-
         this.userManager = new UserManager();
-        this.inventoryManager = new InventoryManager(this);
-        this.inventoryManager.init();
 
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(), this);
@@ -71,10 +66,6 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     public static EpicGuardBukkit getInstance() {
         return epicGuardBukkit;
-    }
-
-    public InventoryManager getInventoryManager() {
-        return inventoryManager;
     }
 
     public UserManager getUserManager() {
