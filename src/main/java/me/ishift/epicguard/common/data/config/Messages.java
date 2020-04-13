@@ -28,6 +28,7 @@ public class Messages {
     public static List<String> messageKickBlacklist;
     public static List<String> messageKickVerify;
     public static List<String> messageKickNamecontains;
+
     public static String noPermission;
     public static String prefix;
     public static String notAllowedCommand;
@@ -39,9 +40,11 @@ public class Messages {
     public static String blacklisted;
     public static String whitelisted;
     public static String unknownCommand;
-    public static String reset;
     public static String statusOn;
     public static String statusOff;
+
+    public static String operatorDisabled;
+    public static String namespacedDisabled;
 
     public static void load() {
         prefix = FILE.getOrSetDefault("prefix", "&8[&6&lEpicGuard&8] &7");
@@ -65,5 +68,8 @@ public class Messages {
         unknownCommand = FILE.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
         statusOn = FILE.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
         statusOff = FILE.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
+
+        operatorDisabled = FILE.getOrSetDefault("other.operator-mechanics-disabled", "&cOperator mechanics has been disabled on this server.");
+        namespacedDisabled = FILE.getOrSetDefault("other.namespaced-disabled", "&cNamespaced commands (with ':' symbol) has been disabled on this server!.");
     }
 }
