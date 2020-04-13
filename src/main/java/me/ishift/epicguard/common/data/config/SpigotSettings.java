@@ -1,4 +1,4 @@
-package me.ishift.epicguard.bukkit;
+package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
 
@@ -24,6 +24,9 @@ public class SpigotSettings {
     public static List<String> customTabCompleteList;
     public static boolean customTabCompleteBypass;
 
+    public static boolean disableOperatorMechanics;
+    public static boolean blockNamespacedCommands;
+
     public static void load() {
         final Yaml config = new Yaml("spigot.yml", "plugins/EpicGuard");
 
@@ -43,5 +46,8 @@ public class SpigotSettings {
         customTabComplete = config.getOrSetDefault("custom-tab-complete.enabled", false);
         customTabCompleteList = config.getOrSetDefault("custom-tab-complete.list", Arrays.asList("/example", "/example2"));
         allowedCommandsBypass = config.getOrSetDefault("custom-tab-complete.bypass-permission", true);
+
+        disableOperatorMechanics = config.getOrSetDefault("disable-vanilla-operator-mechanics", false);
+        blockNamespacedCommands = config.getOrSetDefault("block-namespaced-commands", false);
     }
 }

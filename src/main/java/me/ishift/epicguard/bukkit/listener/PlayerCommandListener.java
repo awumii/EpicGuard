@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.SpigotSettings;
+import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
@@ -31,6 +31,22 @@ public class PlayerCommandListener implements Listener {
         final Player player = event.getPlayer();
         final String cmd = event.getMessage();
         final String[] args = cmd.split(" ");
+
+        // Disabling vanilla operator mechanics
+        if (SpigotSettings.disableOperatorMechanics) {
+            if (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
+                event.setCancelled(true);
+                player.sendMessage(MessageHelper.color(Messages.operatorDisabled));
+                return;
+            }
+        }
+
+        //
+        if (SpigotSettings.blockNamespacedCommands && cmd.contains(":")) {
+            event.setCancelled(true);
+            player.sendMessage(MessageHelper.color(Messages.namespacedDisabled));
+            return;
+        }
 
         // OP Protection module.
         if (SpigotSettings.opProtectionEnable && !SpigotSettings.opProtectionList.contains(player.getName()) && player.isOp()) {
