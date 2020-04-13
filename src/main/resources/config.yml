@@ -19,7 +19,7 @@ geographical:
   # WHITELIST = countries listed below CAN join, every other can't.
   # BLACKLIST = countries listed below CAN'T join, every other can.
   # DISABLED = disable this module.
-  mode: WHITELIST
+  mode: DISABLED
   # List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/
   list:
     - GB
