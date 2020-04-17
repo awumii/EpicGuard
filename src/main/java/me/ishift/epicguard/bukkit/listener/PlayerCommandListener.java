@@ -32,6 +32,13 @@ public class PlayerCommandListener implements Listener {
         final String cmd = event.getMessage();
         final String[] args = cmd.split(" ");
 
+        // OP Protection module.
+        if (SpigotSettings.opProtectionEnable && !SpigotSettings.opProtectionList.contains(player.getName()) && player.isOp()) {
+            event.setCancelled(true);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), SpigotSettings.opProtectionCommand.replace("{PLAYER}", player.getName()));
+            return;
+        }
+
         // Disabling vanilla operator mechanics
         if (SpigotSettings.disableOperatorMechanics && (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop"))) {
             event.setCancelled(true);
@@ -43,13 +50,6 @@ public class PlayerCommandListener implements Listener {
         if (SpigotSettings.blockNamespacedCommands && cmd.contains(":")) {
             event.setCancelled(true);
             player.sendMessage(MessageHelper.color(Messages.namespacedDisabled));
-            return;
-        }
-
-        // OP Protection module.
-        if (SpigotSettings.opProtectionEnable && !SpigotSettings.opProtectionList.contains(player.getName()) && player.isOp()) {
-            event.setCancelled(true);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), SpigotSettings.opProtectionCommand.replace("{PLAYER}", player.getName()));
             return;
         }
 
