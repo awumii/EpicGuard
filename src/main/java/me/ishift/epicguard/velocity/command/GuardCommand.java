@@ -19,7 +19,6 @@ import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.velocity.EpicGuardVelocity;
 import me.ishift.epicguard.velocity.util.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

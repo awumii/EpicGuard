@@ -17,10 +17,10 @@ package me.ishift.epicguard.bukkit.command;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
-import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
@@ -68,7 +68,7 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, Messages.playerOnly);
                 return true;
             }
-            GuardGui.showMain((Player) sender);
+            EpicGuardBukkit.getInstance().getInventoryManager().open("MAIN", (Player) sender);
         } else if (args[0].equalsIgnoreCase("status")) {
             if (!(sender instanceof Player)) {
                 send(sender, Messages.playerOnly);

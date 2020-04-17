@@ -20,14 +20,15 @@ import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PostLoginListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
-import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.FileUtil;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;

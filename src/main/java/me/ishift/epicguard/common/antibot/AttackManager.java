@@ -9,8 +9,8 @@ import me.ishift.epicguard.common.antibot.check.checks.ServerListCheck;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
-import me.ishift.epicguard.common.util.LibraryLoader;
 import me.ishift.epicguard.common.util.GeoApi;
+import me.ishift.epicguard.common.util.LibraryLoader;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -34,9 +34,9 @@ import me.ishift.epicguard.bukkit.module.modules.OperatorMechanics;
 import me.ishift.epicguard.bukkit.module.modules.OperatorProtection;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Metrics;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
-import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.Log4jFilter;
@@ -46,7 +46,6 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import sun.security.tools.keytool.Main;
 
 import java.util.LinkedList;
 import java.util.List;
