@@ -21,6 +21,7 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -78,6 +79,7 @@ public class GuardCommand implements CommandExecutor {
             user.setNotifications(!user.isNotifications());
         } else if (args[0].equalsIgnoreCase("reload")) {
             Configuration.load();
+            SpigotSettings.load();
             Messages.load();
             send(sender, Messages.configReload);
         } else if (args[0].equalsIgnoreCase("player")) {
