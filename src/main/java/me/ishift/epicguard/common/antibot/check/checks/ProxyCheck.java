@@ -9,8 +9,14 @@ import me.ishift.epicguard.common.util.URLHelper;
 import java.util.List;
 
 public class ProxyCheck implements Check {
+    private final AttackManager attackManager;
+
+    public ProxyCheck(AttackManager attackManager) {
+        this.attackManager = attackManager;
+    }
+
     @Override
-    public boolean execute(String address, String nickname, AttackManager attackManager) {
+    public boolean execute(String address, String nickname) {
         if (Configuration.simpleProxyCheck) {
             final String url = "https://proxycheck.io/v2/" + address + "?key=" + Configuration.apiKey;
             final List<String> response = URLHelper.readLines(url);
@@ -18,7 +24,7 @@ public class ProxyCheck implements Check {
         }
 
         if (Configuration.advancedProxyChecker) {
-            for (ProxyChecker proxyChecker : attackManager.getProxyCheckers()) {
+            for (ProxyChecker proxyChecker : this.attackManager.getProxyCheckers()) {
                 final String url = proxyChecker.getUrl().replace("{ADDRESS}", address);
                 final List<String> response = URLHelper.readLines(url);
 

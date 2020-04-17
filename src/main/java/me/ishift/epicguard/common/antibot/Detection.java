@@ -51,24 +51,24 @@ public class Detection {
         }
 
         // Performing checks.
-        if (this.attackManager.getBlacklistCheck().execute(address, nickname, this.attackManager)) {
+        if (this.attackManager.getBlacklistCheck().execute(address, nickname)) {
             this.reason = Reason.BLACKLIST;
         }
-        else if (this.attackManager.getNicknameCheck().execute(address, nickname, this.attackManager)) {
+        else if (this.attackManager.getNicknameCheck().execute(address, nickname)) {
             this.reason = Reason.NAME_CONTAINS;
             this.blacklist = true;
         }
-        else if (this.attackManager.getServerListCheck().execute(address, nickname, this.attackManager)) {
+        else if (this.attackManager.getServerListCheck().execute(address, nickname)) {
             this.reason = Reason.SERVER_LIST;
         }
-        else if (this.attackManager.getReJoinCheck().execute(address, nickname, this.attackManager)) {
+        else if (this.attackManager.getReJoinCheck().execute(address, nickname)) {
             this.reason = Reason.REJOIN;
         }
-        else if (this.attackManager.getGeographicalCheck().execute(address, nickname, this.attackManager)) {
+        else if (this.attackManager.getGeographicalCheck().execute(address, nickname)) {
             this.reason = Reason.GEO;
             this.blacklist = true;
         }
-        else if (this.attackManager.getProxyCheck().execute(address, nickname, this.attackManager)) {
+        else if (this.attackManager.getProxyCheck().execute(address, nickname)) {
             this.reason = Reason.PROXY;
             this.blacklist = true;
         }

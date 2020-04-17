@@ -38,11 +38,11 @@ public class AttackManager {
         StorageManager.load();
 
         this.blacklistCheck = new BlacklistCheck();
-        this.geographicalCheck = new GeographicalCheck();
+        this.geographicalCheck = new GeographicalCheck(this);
         this.nicknameCheck = new NicknameCheck();
-        this.proxyCheck = new ProxyCheck();
-        this.reJoinCheck = new ReJoinCheck();
-        this.serverListCheck = new ServerListCheck();
+        this.proxyCheck = new ProxyCheck(this);
+        this.reJoinCheck = new ReJoinCheck(this);
+        this.serverListCheck = new ServerListCheck(this);
 
         if (Configuration.advancedProxyChecker) {
             this.proxyCheckers.addAll(Configuration.proxyCheckers);
