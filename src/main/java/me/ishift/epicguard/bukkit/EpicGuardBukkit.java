@@ -25,6 +25,12 @@ import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
 import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
+import me.ishift.epicguard.bukkit.module.Module;
+import me.ishift.epicguard.bukkit.module.modules.AllowedCommands;
+import me.ishift.epicguard.bukkit.module.modules.BlockedCommands;
+import me.ishift.epicguard.bukkit.module.modules.NamespacedCommands;
+import me.ishift.epicguard.bukkit.module.modules.OperatorMechanics;
+import me.ishift.epicguard.bukkit.module.modules.OperatorProtection;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.data.config.Configuration;
@@ -39,9 +45,13 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class EpicGuardBukkit extends JavaPlugin {
     private static EpicGuardBukkit epicGuardBukkit;
     private UserManager userManager;
+    private List<Module> modules;
 
     @Override
     public void onEnable() {
@@ -50,6 +60,12 @@ public class EpicGuardBukkit extends JavaPlugin {
         SpigotSettings.load();
         AttackManager.init();
         this.userManager = new UserManager();
+        this.modules = new LinkedList<>();
+        this.modules.add(new OperatorProtection());
+        this.modules.add(new BlockedCommands());
+        this.modules.add(new AllowedCommands());
+        this.modules.add(new NamespacedCommands());
+        this.modules.add(new OperatorMechanics());
 
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(), this);
@@ -88,5 +104,9 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     public UserManager getUserManager() {
         return userManager;
+    }
+
+    public List<Module> getModules() {
+        return modules;
     }
 }
