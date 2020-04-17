@@ -20,6 +20,7 @@ import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.inventory.MainInventory;
 import me.ishift.epicguard.bukkit.inventory.PlayersInventory;
 import me.ishift.epicguard.bukkit.listener.ConsoleCommandListener;
+import me.ishift.epicguard.bukkit.listener.PlayerBuildListener;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
 import me.ishift.epicguard.bukkit.listener.PlayerJoinListener;
 import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
@@ -56,6 +57,7 @@ public class EpicGuardBukkit extends JavaPlugin {
     private AttackManager attackManager;
     private UserManager userManager;
     private InventoryManager inventoryManager;
+    private OperatorProtection operatorProtection;
     private List<Module> modules;
 
     @Override
@@ -67,8 +69,9 @@ public class EpicGuardBukkit extends JavaPlugin {
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
 
+        this.operatorProtection = new OperatorProtection();
         this.modules = new LinkedList<>();
-        this.modules.add(new OperatorProtection());
+        this.modules.add(this.operatorProtection);
         this.modules.add(new BlockedCommands());
         this.modules.add(new AllowedCommands());
         this.modules.add(new NamespacedCommands());
@@ -85,6 +88,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
+        pm.registerEvents(new PlayerBuildListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
         scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.attackManager), 0L, Configuration.checkConditionsDelay * 2L);
@@ -126,5 +130,9 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     public List<Module> getModules() {
         return modules;
+    }
+
+    public OperatorProtection getOperatorProtection() {
+        return operatorProtection;
     }
 }
