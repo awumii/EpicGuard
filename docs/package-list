@@ -10,7 +10,7 @@ me.ishift.epicguard.bungee.util
 me.ishift.epicguard.common.data
 me.ishift.epicguard.common.data.config
 me.ishift.epicguard.common.data.storage
-me.ishift.epicguard.common.detection
+me.ishift.epicguard.common.antibot
 me.ishift.epicguard.common.task
 me.ishift.epicguard.common.types
 me.ishift.epicguard.common.util
