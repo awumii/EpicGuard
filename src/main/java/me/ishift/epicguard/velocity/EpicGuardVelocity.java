@@ -23,36 +23,37 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
-import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.FileUtil;
+import me.ishift.epicguard.velocity.command.GuardCommand;
+import me.ishift.epicguard.velocity.listener.PreLoginListener;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "epicguard", name = "EpicGuard", version = "3.11.2-BETA",
+@Plugin(id = "epicguard", name = "EpicGuard", version = "4.1.0",
         description = "Advanced server protection.", authors = {"iShift", "ruzekh"})
 public class EpicGuardVelocity {
-    private static EpicGuardVelocity epicGuardVelocity;
-    private ProxyServer server;
+    private AttackManager attackManager;
+    private final ProxyServer server;
 
     @Inject
     public EpicGuardVelocity(ProxyServer server) {
-        epicGuardVelocity = this;
         this.server = server;
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
-        AttackManager.init();
+        this.attackManager = new AttackManager();
 
-        server.getScheduler().buildTask(this, new AttackToggleTask()).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
-        server.getScheduler().buildTask(this, new CounterResetTask()).repeat(1, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new AttackToggleTask(this.attackManager)).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new CounterResetTask(this.attackManager)).repeat(1, TimeUnit.SECONDS).schedule();
 
-        server.getEventManager().register(this, new PreLoginListener());
-        server.getCommandManager().register(new GuardCommand(), "guard", "epicguard", "ab", "antibot");
+        server.getEventManager().register(this, new PreLoginListener(this.attackManager));
+        server.getCommandManager().register(new GuardCommand(this.attackManager), "guard", "epicguard", "ab", "antibot");
     }
 
     @Subscribe
@@ -60,7 +61,7 @@ public class EpicGuardVelocity {
         StorageManager.shutdown();
     }
 
-    public static EpicGuardVelocity getInstance() {
-        return epicGuardVelocity;
+    public AttackManager getAttackManager() {
+        return this.attackManager;
     }
 }

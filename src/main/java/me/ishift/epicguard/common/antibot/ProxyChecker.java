@@ -1,10 +1,10 @@
-package me.ishift.epicguard.common.detection;
+package me.ishift.epicguard.common.antibot;
 
 import java.util.List;
 
 public class ProxyChecker {
-    private String url;
-    private List<String> contains;
+    private final String url;
+    private final List<String> contains;
 
     public ProxyChecker(String url, List<String> contains) {
         this.url = url;
@@ -12,10 +12,10 @@ public class ProxyChecker {
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public List<String> getContains() {
-        return contains;
+        return this.contains;
     }
 }

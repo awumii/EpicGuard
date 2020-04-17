@@ -16,10 +16,11 @@
 package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
-import me.ishift.epicguard.common.detection.AttackManager;
-import me.ishift.epicguard.common.detection.ProxyChecker;
+import me.ishift.epicguard.common.antibot.ProxyChecker;
 import me.ishift.epicguard.common.types.GeoMode;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -49,6 +50,7 @@ public class Configuration {
     public static List<String> filterValues;
 
     public static boolean advancedProxyChecker;
+    public static Collection<ProxyChecker> proxyCheckers;
 
     public static void load() {
         try {
@@ -81,13 +83,13 @@ public class Configuration {
             countryMode = GeoMode.valueOf(countryModeString);
 
             advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
-
+            proxyCheckers = new HashSet<>();
             if (advancedProxyChecker) {
                 final String basePath = "advanced-proxy-checker.checkers";
                 config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
                     final String url = config.getString(path + ".url");
                     final List<String> contains = config.getStringList(path + ".contains");
-                    AttackManager.getCheckers().add(new ProxyChecker(url, contains));
+                    proxyCheckers.add(new ProxyChecker(url, contains));
                 });
             }
         } catch (Exception e) {

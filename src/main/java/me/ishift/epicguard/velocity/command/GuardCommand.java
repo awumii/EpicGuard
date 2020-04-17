@@ -13,16 +13,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.velocity;
+package me.ishift.epicguard.velocity.command;
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.velocity.EpicGuardVelocity;
 import me.ishift.epicguard.velocity.util.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class GuardCommand implements Command {
+    private final AttackManager attackManager;
+
+    public GuardCommand(AttackManager attackManager) {
+        this.attackManager = attackManager;
+    }
+
     @Override
     public void execute(@NonNull CommandSource source, String[] args) {
         Utils.send(source, "&8&m---------------------------------------");
@@ -30,8 +37,8 @@ public class GuardCommand implements Command {
         Utils.send(source, "");
         Utils.send(source, "&c&l★ Attack Statistics.");
         Utils.send(source, "");
-        Utils.send(source, " &8» &7Connections: &6" + AttackManager.getConnectPerSecond() + "/s");
-        Utils.send(source, " &8» &7Blocked bots: &6" + AttackManager.getTotalBots() + "/s");
+        Utils.send(source, " &8» &7Connections: &6" + this.attackManager.getConnectPerSecond() + "/s");
+        Utils.send(source, " &8» &7Blocked bots: &6" + this.attackManager.getTotalBots() + "/s");
         Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getStorage().getBlacklist().size() + " IPs");
         Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getStorage().getWhitelist().size() + " IPs");
         Utils.send(source, "&8&m---------------------------------------");
