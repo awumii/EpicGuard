@@ -46,7 +46,7 @@ public class SpigotSettings {
 
         customTabComplete = config.getOrSetDefault("custom-tab-complete.enabled", false);
         customTabCompleteList = config.getOrSetDefault("custom-tab-complete.list", Arrays.asList("/example", "/example2"));
-        allowedCommandsBypass = config.getOrSetDefault("custom-tab-complete.bypass-permission", true);
+        customTabCompleteBypass = config.getOrSetDefault("custom-tab-complete.bypass-permission", true);
 
         disableOperatorMechanics = config.getOrSetDefault("disable-vanilla-operator-mechanics", false);
         disableOperatorMechanics = config.getOrSetDefault("disable-vanilla-operator-mechanics-in-console", false);
