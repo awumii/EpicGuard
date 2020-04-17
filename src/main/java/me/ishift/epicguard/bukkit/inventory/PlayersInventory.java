@@ -34,12 +34,18 @@ public class PlayersInventory extends ClickableInventory {
             final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player1);
 
             lore.add("");
-            lore.add(MessageHelper.color("&6Basic Information:"));
-            lore.add(MessageHelper.color("  &7Name&8: &f" + player1.getName()));
-            lore.add(MessageHelper.color("  &7UUID&8: &f" + player1.getUniqueId()));
-            lore.add(MessageHelper.color("  &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
-            lore.add(MessageHelper.color("  &7Country&8: &f" + attackManager.getGeoApi().getCountryCode(user.getAddress())));
-            lore.add(MessageHelper.color("  &7City&8: &f" + attackManager.getGeoApi().getCity(user.getAddress())));
+            lore.add(MessageHelper.color(" &8» &7Name&8: &f" + player1.getName()));
+            lore.add(MessageHelper.color(" &8» &7UUID&8: &f" + player1.getUniqueId()));
+            lore.add(MessageHelper.color(" &8» &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
+            lore.add(MessageHelper.color(" &8» &7Country&8: &f" + attackManager.getGeoApi().getCountryCode(user.getAddress())));
+            lore.add(MessageHelper.color(" &8» &7City&8: &f" + attackManager.getGeoApi().getCity(user.getAddress())));
+            lore.add("");
+
+            if (!user.getAddressHistory().isEmpty()) {
+                lore.add("");
+                lore.add(MessageHelper.color(" &8» &7IP History:"));
+                user.getAddressHistory().forEach(address -> lore.add(MessageHelper.color("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""))));
+            }
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             inventory.setItem(i, itemStack);
@@ -53,6 +59,7 @@ public class PlayersInventory extends ClickableInventory {
     @Override
     public void onClick(InventoryClickEvent event) {
         final Player player = (Player) event.getWhoClicked();
+        event.setCancelled(true);
         if (event.getSlot() == 53) {
             player.closeInventory();
             EpicGuardBukkit.getInstance().getInventoryManager().open("MAIN", player);
