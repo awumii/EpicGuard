@@ -1,7 +1,7 @@
 package me.ishift.epicguard.common.task;
 
-import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.data.config.Configuration;
 
 public class AttackToggleTask implements Runnable {
     private final AttackManager attackManager;

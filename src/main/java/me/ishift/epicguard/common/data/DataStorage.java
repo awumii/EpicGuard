@@ -16,7 +16,6 @@
 package me.ishift.epicguard.common.data;
 
 import de.leonhard.storage.Json;
-import de.leonhard.storage.Yaml;
 
 import java.util.Collection;
 import java.util.HashSet;

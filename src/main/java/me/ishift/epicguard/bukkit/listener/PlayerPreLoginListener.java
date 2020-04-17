@@ -2,9 +2,9 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.util.ActionBarAPI;
-import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
+import me.ishift.epicguard.common.data.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

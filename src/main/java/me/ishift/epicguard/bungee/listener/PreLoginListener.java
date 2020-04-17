@@ -2,9 +2,9 @@ package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.bungee.EpicGuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
-import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
+import me.ishift.epicguard.common.data.config.Messages;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;

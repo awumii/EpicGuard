@@ -15,7 +15,6 @@
 
 package me.ishift.epicguard.common.data;
 
-import de.leonhard.storage.Yaml;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
