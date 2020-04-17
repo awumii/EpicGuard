@@ -17,9 +17,10 @@ package me.ishift.epicguard.bukkit;
 
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
+import me.ishift.epicguard.bukkit.inventory.MainInventory;
+import me.ishift.epicguard.bukkit.inventory.PlayersInventory;
 import me.ishift.epicguard.bukkit.listener.ConsoleCommandListener;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
-import me.ishift.epicguard.bukkit.listener.PlayerInventoryClickListener;
 import me.ishift.epicguard.bukkit.listener.PlayerJoinListener;
 import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
@@ -39,11 +40,13 @@ import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.Log4jFilter;
+import me.ishift.inventory.api.InventoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import sun.security.tools.keytool.Main;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -53,6 +56,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     private AttackManager attackManager;
     private UserManager userManager;
+    private InventoryManager inventoryManager;
     private List<Module> modules;
 
     @Override
@@ -71,12 +75,15 @@ public class EpicGuardBukkit extends JavaPlugin {
         this.modules.add(new NamespacedCommands());
         this.modules.add(new OperatorMechanics());
 
+        this.inventoryManager = new InventoryManager(this);
+        this.inventoryManager.addInventory(new MainInventory(this.attackManager));
+        this.inventoryManager.addInventory(new PlayersInventory(this.attackManager));
+
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(this.attackManager), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerJoinListener(), this);
         pm.registerEvents(new PlayerQuitListener(), this);
-        pm.registerEvents(new PlayerInventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
 
@@ -100,6 +107,10 @@ public class EpicGuardBukkit extends JavaPlugin {
             command.setTabCompleter(new GuardTabCompleter());
         }
         new Metrics(this, 5845);
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 
     public AttackManager getAttackManager() {
