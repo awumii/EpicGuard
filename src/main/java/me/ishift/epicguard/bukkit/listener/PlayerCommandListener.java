@@ -33,12 +33,10 @@ public class PlayerCommandListener implements Listener {
         final String[] args = cmd.split(" ");
 
         // Disabling vanilla operator mechanics
-        if (SpigotSettings.disableOperatorMechanics) {
-            if (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
-                event.setCancelled(true);
-                player.sendMessage(MessageHelper.color(Messages.operatorDisabled));
-                return;
-            }
+        if (SpigotSettings.disableOperatorMechanics && (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop"))) {
+            event.setCancelled(true);
+            player.sendMessage(MessageHelper.color(Messages.operatorDisabled));
+            return;
         }
 
         //
