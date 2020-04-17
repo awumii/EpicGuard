@@ -41,10 +41,6 @@ public class StorageManager {
         storage.load();
     }
 
-    public static void shutdown() {
-        storage.save();
-    }
-
     public static DataStorage getStorage() {
         return storage;
     }

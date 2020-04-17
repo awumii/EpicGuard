@@ -27,41 +27,34 @@ public class MainInventory extends ClickableInventory {
                 .setTitle("&cServer status.")
                 .addLore("&7See status of your server.")
                 .addLore("")
-                .addLore("&6Status:")
-                .addLore("  &7Attack&8: " + (attackManager.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
-                .addLore("  &7Connections&8: &c" + attackManager.getConnectPerSecond() + "/s")
+                .addLore(" &8» &7Attack&8: " + (attackManager.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
+                .addLore(" &8» &7Connections&8: &f" + attackManager.getConnectPerSecond() + "/s")
                 .addLore("")
-                .addLore("&6Storage manager:")
-                .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
-                .addLore("  &7Whitelisted IPs&8: &a" + StorageManager.getStorage().getWhitelist().size())
+                .addLore(" &8» &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
+                .addLore(" &8» &7Whitelisted IPs&8: &a" + StorageManager.getStorage().getWhitelist().size())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
-                .setTitle("&cPlugin Information")
+                .setTitle("&cAbout EpicGuard")
                 .addLore("&7Plugin author, version etc.")
                 .addLore("")
-                .addLore("&6Plugin:")
-                .addLore("  &7Name&8: &aEpicGuard")
-                .addLore("  &7Version&8: &e" + EpicGuardBukkit.getInstance().getDescription().getVersion())
-                .addLore("  &7Authors&8: &eiShift, rusekh")
-                .addLore("")
-                .addLore("&6Support:")
-                .addLore("  &7Dev's Discord&8: &ciShift#0524")
-                .addLore("  &7Support Server&8: &cdiscord.gg/VkfhFCv")
+                .addLore(" &8» &7Version&8: &e" + EpicGuardBukkit.getInstance().getDescription().getVersion())
+                .addLore(" &8» &7Authors&8: &eiShift, rusekh")
+                .addLore(" &8» &7Author's Discord&8: &ciShift#0524")
+                .addLore(" &8» &7Support Server&8: &cdiscord.gg/VkfhFCv")
                 .build();
 
         final ItemStack i3 = new ItemBuilder(Material.COMPASS)
                 .setTitle("&cPlayer management menu.")
                 .addLore("&7Get to know about your players.")
                 .addLore("")
-                .addLore("&7You can see &6IP + history, country, city &7etc.")
-                .addLore("&fLeft Click &7to show GUI with all players.")
+                .addLore(" &8» &7You can see &6IP + history, country, city &7etc.")
+                .addLore(" &8» &fLeft Click &7to show GUI with all players.")
                 .build();
 
         final ItemStack i4 = new ItemBuilder(Material.BARRIER)
                 .setTitle("&cComing soon...")
                 .addLore("")
-                .addLore("&7GUI will be reworked in the upcoming updates!")
                 .build();
 
         inventory.setItem(10, i1);
@@ -73,6 +66,7 @@ public class MainInventory extends ClickableInventory {
     @Override
     public void onClick(InventoryClickEvent event) {
         final Player player = (Player) event.getWhoClicked();
+        event.setCancelled(true);
         if (event.getSlot() == 14) {
             player.closeInventory();
             EpicGuardBukkit.getInstance().getInventoryManager().open("PLAYERS", player);
