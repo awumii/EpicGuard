@@ -13,22 +13,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.velocity;
+package me.ishift.epicguard.velocity.listener;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
-import me.ishift.epicguard.common.detection.Detection;
+import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
+    private final AttackManager attackManager;
+
+    public PreLoginListener(AttackManager attackManager) {
+        this.attackManager = attackManager;
+    }
+
     @Subscribe
     public void onPreLogin(PreLoginEvent event) {
         final InboundConnection connection = event.getConnection();
         final String address = connection.getRemoteAddress().getAddress().getHostAddress();
         final String name = event.getUsername();
 
-        final Detection detection = new Detection(address, name);
+        final Detection detection = this.attackManager.check(address, name);
         if (detection.isDetected()) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getMessage())));
         }

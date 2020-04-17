@@ -21,7 +21,7 @@ import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.SkullUtil;
 import me.ishift.epicguard.bukkit.util.UMaterial;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,6 +36,12 @@ public class GuardGui {
     public static final Inventory INVENTORY_MANAGEMENT = Bukkit.createInventory(null, 27, "EpicGuard | Management Menu");
     public static final Inventory INVENTORY_PLAYER = Bukkit.createInventory(null, 54, "EpicGuard | Player Manager");
 
+    private static AttackManager attackManager;
+
+    public GuardGui(AttackManager attackManager) {
+        GuardGui.attackManager = attackManager;
+    }
+
     /**
      * Opens main EpicGuard management GUI.
      *
@@ -47,8 +53,8 @@ public class GuardGui {
                 .addLore("&7See status of your server.")
                 .addLore("")
                 .addLore("&6Status:")
-                .addLore("  &7Attack&8: " + (AttackManager.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
-                .addLore("  &7Connections&8: &c" + AttackManager.getConnectPerSecond() + "/s")
+                .addLore("  &7Attack&8: " + (attackManager.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
+                .addLore("  &7Connections&8: &c" + attackManager.getConnectPerSecond() + "/s")
                 .addLore("")
                 .addLore("&6Storage manager:")
                 .addLore("  &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
@@ -106,8 +112,8 @@ public class GuardGui {
             lore.add(MessageHelper.color("  &7Name&8: &f" + player1.getName()));
             lore.add(MessageHelper.color("  &7UUID&8: &f" + player1.getUniqueId()));
             lore.add(MessageHelper.color("  &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
-            lore.add(MessageHelper.color("  &7Country&8: &f" + AttackManager.getGeoApi().getCountryCode(user.getAddress())));
-            lore.add(MessageHelper.color("  &7City&8: &f" + AttackManager.getGeoApi().getCity(user.getAddress())));
+            lore.add(MessageHelper.color("  &7Country&8: &f" + attackManager.getGeoApi().getCountryCode(user.getAddress())));
+            lore.add(MessageHelper.color("  &7City&8: &f" + attackManager.getGeoApi().getCity(user.getAddress())));
 
             final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
             INVENTORY_PLAYER.setItem(i, itemStack);

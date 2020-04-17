@@ -20,7 +20,7 @@ import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
-import me.ishift.epicguard.common.detection.AttackManager;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.util.MessageHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,6 +30,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class GuardCommand implements CommandExecutor {
+    private final AttackManager attackManager;
+
+    public GuardCommand(AttackManager attackManager) {
+        this.attackManager = attackManager;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String s, @NotNull String[] args) {
         final String version = EpicGuardBukkit.getInstance().getDescription().getVersion();
@@ -86,8 +92,8 @@ public class GuardCommand implements CommandExecutor {
             }
             send(sender, "&7Name: &f" + player.getName());
             send(sender, "&7UUID: &f" + player.getUniqueId());
-            send(sender, "&7Country: &f" + AttackManager.getGeoApi().getCountryCode(player.getAddress().getAddress().getHostAddress()));
-            send(sender, "&7City: &f" + AttackManager.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
+            send(sender, "&7Country: &f" + this.attackManager.getGeoApi().getCountryCode(player.getAddress().getAddress().getHostAddress()));
+            send(sender, "&7City: &f" + this.attackManager.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
             send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
             send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
         } else if (args[0].equalsIgnoreCase("whitelist")) {
