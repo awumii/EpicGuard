@@ -17,6 +17,7 @@ package me.ishift.epicguard.bukkit;
 
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
+import me.ishift.epicguard.bukkit.listener.ConsoleCommandListener;
 import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
 import me.ishift.epicguard.bukkit.listener.PlayerInventoryClickListener;
 import me.ishift.epicguard.bukkit.listener.PlayerJoinListener;
@@ -57,6 +58,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerInventoryClickListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
+        pm.registerEvents(new ConsoleCommandListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
         scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(), 0L, Configuration.checkConditionsDelay * 2L);

@@ -25,6 +25,7 @@ public class SpigotSettings {
     public static boolean customTabCompleteBypass;
 
     public static boolean disableOperatorMechanics;
+    public static boolean disableOperatorMechanicsConsole;
     public static boolean blockNamespacedCommands;
 
     public static void load() {
@@ -48,6 +49,7 @@ public class SpigotSettings {
         allowedCommandsBypass = config.getOrSetDefault("custom-tab-complete.bypass-permission", true);
 
         disableOperatorMechanics = config.getOrSetDefault("disable-vanilla-operator-mechanics", false);
+        disableOperatorMechanics = config.getOrSetDefault("disable-vanilla-operator-mechanics-in-console", false);
         blockNamespacedCommands = config.getOrSetDefault("block-namespaced-commands", false);
     }
 }
