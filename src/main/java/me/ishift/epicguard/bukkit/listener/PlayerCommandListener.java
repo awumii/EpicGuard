@@ -15,10 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.common.data.config.SpigotSettings;
-import me.ishift.epicguard.common.data.config.Messages;
-import me.ishift.epicguard.common.util.MessageHelper;
-import org.bukkit.Bukkit;
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,44 +26,12 @@ public class PlayerCommandListener implements Listener {
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
-        final String cmd = event.getMessage();
-        final String[] args = cmd.split(" ");
+        final String command = event.getMessage();
+        final String[] args = command.split(" ");
 
-        // OP Protection module.
-        if (SpigotSettings.opProtectionEnable && !SpigotSettings.opProtectionList.contains(player.getName()) && player.isOp()) {
-            event.setCancelled(true);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), SpigotSettings.opProtectionCommand.replace("{PLAYER}", player.getName()));
-            return;
-        }
-
-        // Disabling vanilla operator mechanics
-        if (SpigotSettings.disableOperatorMechanics && (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop"))) {
-            event.setCancelled(true);
-            player.sendMessage(MessageHelper.color(Messages.operatorDisabled));
-            return;
-        }
-
-        //
-        if (SpigotSettings.blockNamespacedCommands && cmd.contains(":")) {
-            event.setCancelled(true);
-            player.sendMessage(MessageHelper.color(Messages.namespacedDisabled));
-            return;
-        }
-
-        // Allowed Commands module.
-        if (SpigotSettings.allowedCommandsEnable && !SpigotSettings.allowedCommands.contains(args[0])) {
-            if (SpigotSettings.allowedCommandsBypass && player.hasPermission("epicguard.bypass.allowed-commands")) {
-                return;
-            }
-            event.setCancelled(true);
-            player.sendMessage(MessageHelper.color(Messages.notAllowedCommand));
-            return;
-        }
-
-        // Blocked Commands module.
-        if (SpigotSettings.blockedCommandsEnable && SpigotSettings.blockedCommands.contains(args[0])) {
-            event.setCancelled(true);
-            player.sendMessage(MessageHelper.color(Messages.prefix + Messages.blockedCommand));
-        }
+        EpicGuardBukkit.getInstance().getModules().stream()
+                .filter(module -> module.execute(player, command, args))
+                .map(module -> true)
+                .forEach(event::setCancelled);
     }
 }
