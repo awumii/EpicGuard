@@ -107,6 +107,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub EpicGuard Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/PolskiStevek/EpicGuard</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
