@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class GeoApi {
     private DatabaseReader countryReader;
     private DatabaseReader cityReader;
-    private Logger logger;
+    private final Logger logger;
 
     /**
      * Creating new GeoAPI instance.
@@ -56,7 +56,7 @@ public class GeoApi {
                     FileUtil.eraseFile(databaseAgeFile);
                     FileUtil.writeToFile(databaseAgeFile, String.valueOf(System.currentTimeMillis()));
                 }
-                countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
+                this.countryReader = new DatabaseReader.Builder(countryFile).withCache(new CHMCache()).build();
             }
 
             if (city) {
@@ -67,7 +67,7 @@ public class GeoApi {
                     FileUtil.eraseFile(databaseAgeFile);
                     FileUtil.writeToFile(databaseAgeFile, String.valueOf(System.currentTimeMillis()));
                 }
-                cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
+                this.cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,14 +92,14 @@ public class GeoApi {
 
     /**
      * @param host Host address of target
-     * @return ISO-Code of target's country. Returns "Unknown?" if not found.
+     * @return ISO-Code of target's country. or "Unknown?" if not found/database disabled.
      */
     public String getCountryCode(String host) {
-        final InetAddress address = getAddress(host);
+        final InetAddress address = this.getAddress(host);
 
-        if (address != null && getCountryReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+        if (address != null && this.getCountryReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
             try {
-                return getCountryReader().country(address).getCountry().getIsoCode();
+                return this.getCountryReader().country(address).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception e) {
                 this.logger.info("Can't find country for address: " + host);
             }
@@ -109,14 +109,14 @@ public class GeoApi {
 
     /**
      * @param host Host address of target
-     * @return Name of target's city. Returns "Unknown?" if not found.
+     * @return Name of target's city, or "Unknown?" if not found/database disabled.
      */
     public String getCity(String host) {
-        final InetAddress address = getAddress(host);
+        final InetAddress address = this.getAddress(host);
 
-        if (address != null && getCityReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+        if (address != null && this.getCityReader() != null && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
             try {
-                return getCityReader().city(address).getCity().getName();
+                return this.getCityReader().city(address).getCity().getName();
             } catch (IOException | GeoIp2Exception e) {
                 this.logger.info("Can't find city for address: " + host);
             }
@@ -125,17 +125,19 @@ public class GeoApi {
     }
 
     /**
-     * @return DatabaseReader object for city database. Can be null if database is disabled.
+     * @return DatabaseReader object for city database.
+     * Can be null if database is disabled.
      */
     public DatabaseReader getCityReader() {
-        return cityReader;
+        return this.cityReader;
     }
 
     /**
-     * @return DatabaseReader for country database. Can be null if database is disabled.
+     * @return DatabaseReader for country database.
+     * Can be null if database is disabled.
      */
     public DatabaseReader getCountryReader() {
-        return countryReader;
+        return this.countryReader;
     }
 
     /**
