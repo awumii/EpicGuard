@@ -47,9 +47,7 @@ public class AttackManager {
         if (Configuration.advancedProxyChecker) {
             this.proxyCheckers.addAll(Configuration.proxyCheckers);
         }
-        if (Configuration.countryEnabled) {
-            this.geoApi = new GeoApi("plugins/EpicGuard", true, Configuration.cityEnabled);
-        }
+        this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled);
     }
 
     public Detection check(String address, String nickname) {
