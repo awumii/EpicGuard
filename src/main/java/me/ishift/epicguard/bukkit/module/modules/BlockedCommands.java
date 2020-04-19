@@ -10,6 +10,9 @@ public class BlockedCommands implements Module {
     @Override
     public boolean execute(Player player, String command, String[] args) {
         if (SpigotSettings.blockedCommandsEnable && SpigotSettings.blockedCommands.contains(args[0])) {
+            if (SpigotSettings.blockedCommandsBypass && player.hasPermission("epicguard.bypass.blocked-commands")) {
+                return false;
+            }
             player.sendMessage(MessageHelper.color(Messages.prefix + Messages.blockedCommand));
             return true;
         }
