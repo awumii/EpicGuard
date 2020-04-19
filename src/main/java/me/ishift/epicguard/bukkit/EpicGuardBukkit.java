@@ -43,6 +43,7 @@ import me.ishift.epicguard.common.task.CounterResetTask;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import me.ishift.inventory.api.InventoryManager;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -110,6 +111,13 @@ public class EpicGuardBukkit extends JavaPlugin {
             command.setTabCompleter(new GuardTabCompleter());
         }
         new Metrics(this, 5845);
+
+        if (SpigotSettings.deopOnEnable) {
+            for (OfflinePlayer operator : Bukkit.getOperators()) {
+                operator.setOp(false);
+                this.getLogger().info("De-opped " + operator.getName() + ", because of the 'deop-on-enable' settings");
+            }
+        }
     }
 
     public InventoryManager getInventoryManager() {
