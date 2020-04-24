@@ -45,7 +45,7 @@ public class PlayerJoinListener implements Listener {
                 if (player.isOnline()) {
                     StorageManager.getStorage().whitelist(address);
                 }
-            }, Configuration.autoWhitelistTime * 20L);
+            }, Configuration.autoWhitelistTime);
         }
 
         if (StorageManager.getStorageType() == StorageType.FLAT) {
