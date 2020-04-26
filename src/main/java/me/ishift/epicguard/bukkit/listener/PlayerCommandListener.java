@@ -16,6 +16,7 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.common.data.config.SpigotSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +29,10 @@ public class PlayerCommandListener implements Listener {
         final Player player = event.getPlayer();
         final String command = event.getMessage();
         final String[] args = command.split(" ");
+
+        if (SpigotSettings.superAdminEnabled && SpigotSettings.superAdminList.contains(player.getName())) {
+            return;
+        }
 
         EpicGuardBukkit.getInstance().getModules().stream()
                 .filter(module -> module.execute(player, command, args))
