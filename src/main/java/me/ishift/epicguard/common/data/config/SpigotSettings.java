@@ -18,6 +18,7 @@ package me.ishift.epicguard.common.data.config;
 import de.leonhard.storage.Yaml;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SpigotSettings {
@@ -48,6 +49,9 @@ public class SpigotSettings {
     public static List<String> blockNamespacedCommandsWhitelist;
     public static boolean blockNamespacedCommandsBypass;
 
+    public static boolean superAdminEnabled;
+    public static List<String> superAdminList;
+
     public static void load() {
         final Yaml config = new Yaml("spigot.yml", "plugins/EpicGuard");
 
@@ -77,5 +81,8 @@ public class SpigotSettings {
         blockNamespacedCommandsWhitelistEnabled = config.getOrSetDefault("block-namespaced-commands.whitelist.enabled", false);
         blockNamespacedCommandsWhitelist = config.getOrSetDefault("block-namespaced-commands.whitelist.commands", Arrays.asList("/plugin:command1", "/plugin:command2"));
         blockNamespacedCommandsBypass = config.getOrSetDefault("block-namespaced-commands.bypass-permission", false);
+
+        superAdminEnabled = config.getOrSetDefault("super-admin.enabled", false);
+        superAdminList = config.getOrSetDefault("super-admin.list", Collections.singletonList("Owner"));
     }
 }
