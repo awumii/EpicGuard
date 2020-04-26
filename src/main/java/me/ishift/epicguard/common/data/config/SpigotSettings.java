@@ -44,6 +44,8 @@ public class SpigotSettings {
     public static boolean deopOnEnable;
 
     public static boolean blockNamespacedCommands;
+    public static boolean blockNamespacedCommandsWhitelistEnabled;
+    public static List<String> blockNamespacedCommandsWhitelist;
     public static boolean blockNamespacedCommandsBypass;
 
     public static void load() {
@@ -72,6 +74,8 @@ public class SpigotSettings {
         deopOnEnable = config.getOrSetDefault("deop-all-operators-on-startup", false);
 
         blockNamespacedCommands = config.getOrSetDefault("block-namespaced-commands.enabled", false);
+        blockNamespacedCommandsWhitelistEnabled = config.getOrSetDefault("block-namespaced-commands.whitelist.enabled", false);
+        blockNamespacedCommandsWhitelist = config.getOrSetDefault("block-namespaced-commands.whitelist.commands", Arrays.asList("/plugin:command1", "/plugin:command2"));
         blockNamespacedCommandsBypass = config.getOrSetDefault("block-namespaced-commands.bypass-permission", false);
     }
 }

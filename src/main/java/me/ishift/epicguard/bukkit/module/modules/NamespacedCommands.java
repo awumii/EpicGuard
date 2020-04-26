@@ -25,6 +25,9 @@ public class NamespacedCommands implements Module {
     @Override
     public boolean execute(Player player, String command, String[] args) {
         if (SpigotSettings.blockNamespacedCommands && command.contains(":")) {
+            if (SpigotSettings.blockNamespacedCommandsWhitelistEnabled && SpigotSettings.blockNamespacedCommandsWhitelist.stream().anyMatch(command::startsWith)) {
+                return false;
+            }
             if (SpigotSettings.blockNamespacedCommandsBypass && player.hasPermission("epicguard.bypass.namespaced-commands")) {
                 return false;
             }
