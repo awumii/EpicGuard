@@ -14,5 +14,3 @@ jobs:
           java-version: 1.8
       - name: Build with Maven
         run: mvn -U clean install
-      - name: Upload to GitHub Packages
-        run: mvn deploy
