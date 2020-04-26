@@ -33,6 +33,11 @@ public class TabCompletePacketListener extends PacketAdapter {
 
     @Override
     public void onPacketReceiving(PacketEvent event) {
+        final Player player = event.getPlayer();
+        if (SpigotSettings.superAdminEnabled && SpigotSettings.superAdminList.contains(player.getName())) {
+            return;
+        }
+
         // Blocking TabComplete
         if (SpigotSettings.tabCompleteBlock) {
             event.setCancelled(true);
@@ -40,7 +45,6 @@ public class TabCompletePacketListener extends PacketAdapter {
         }
 
         // Custom TabComplete.
-        final Player player = event.getPlayer();
         if (SpigotSettings.customTabCompleteBypass && player.hasPermission("epicguard.bypass.custom-tab-complete")) {
             return;
         }
