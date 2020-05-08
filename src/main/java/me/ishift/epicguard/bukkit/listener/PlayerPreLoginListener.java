@@ -17,7 +17,7 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.util.ActionBarAPI;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.common.data.config.Messages;
 import org.bukkit.Bukkit;

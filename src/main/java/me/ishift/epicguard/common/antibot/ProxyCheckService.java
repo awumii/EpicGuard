@@ -17,11 +17,11 @@ package me.ishift.epicguard.common.antibot;
 
 import java.util.List;
 
-public class ProxyChecker {
+public class ProxyCheckService {
     private final String url;
     private final List<String> contains;
 
-    public ProxyChecker(String url, List<String> contains) {
+    public ProxyCheckService(String url, List<String> contains) {
         this.url = url;
         this.contains = contains;
     }

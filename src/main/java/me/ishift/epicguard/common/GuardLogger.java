@@ -13,9 +13,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.logging;
+package me.ishift.epicguard.common;
 
-import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.util.DateUtil;
 import me.ishift.epicguard.common.util.FileUtil;
 

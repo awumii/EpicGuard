@@ -18,7 +18,7 @@ package me.ishift.epicguard.velocity.listener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.velocity.util.Utils;
 

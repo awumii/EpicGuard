@@ -18,7 +18,7 @@ package me.ishift.epicguard.bukkit.inventory;
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.UMaterial;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.inventory.api.InventorySize;
 import me.ishift.inventory.api.inventories.ClickableInventory;

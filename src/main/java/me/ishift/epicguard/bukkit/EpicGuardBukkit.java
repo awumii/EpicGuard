@@ -23,7 +23,7 @@ import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.module.Module;
 import me.ishift.epicguard.bukkit.module.modules.*;
 import me.ishift.epicguard.bukkit.util.Metrics;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;

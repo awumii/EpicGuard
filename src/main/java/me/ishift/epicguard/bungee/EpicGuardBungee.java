@@ -20,7 +20,7 @@ import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PostLoginListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
