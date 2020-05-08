@@ -13,15 +13,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.antibot.check.checks;
+package me.ishift.epicguard.common.antibot;
 
-import me.ishift.epicguard.common.antibot.check.Check;
-import me.ishift.epicguard.common.data.StorageManager;
-
-public class BlacklistCheck implements Check {
-
-    @Override
-    public boolean execute(String address, String nickname) {
-        return StorageManager.getStorage().getBlacklist().contains(address);
-    }
+public interface Check {
+    boolean execute(String address, String nickname);
 }
