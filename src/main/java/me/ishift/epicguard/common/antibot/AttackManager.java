@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.antibot;
 
-import me.ishift.epicguard.common.antibot.check.checks.*;
+import me.ishift.epicguard.common.antibot.checks.*;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
@@ -27,7 +27,7 @@ import java.util.HashSet;
 
 public class AttackManager {
     private final Collection<ProxyChecker> proxyCheckers;
-    private GeoApi geoApi;
+    private final GeoApi geoApi;
 
     private final BlacklistCheck blacklistCheck;
     private final GeographicalCheck geographicalCheck;

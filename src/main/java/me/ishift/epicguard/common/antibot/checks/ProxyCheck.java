@@ -13,11 +13,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.antibot.check.checks;
+package me.ishift.epicguard.common.antibot.checks;
 
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.antibot.ProxyChecker;
-import me.ishift.epicguard.common.antibot.check.Check;
+import me.ishift.epicguard.common.antibot.Check;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.util.URLHelper;
 

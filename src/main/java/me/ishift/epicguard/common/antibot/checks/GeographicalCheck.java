@@ -13,24 +13,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.antibot.check.checks;
+package me.ishift.epicguard.common.antibot.checks;
 
 import me.ishift.epicguard.common.antibot.AttackManager;
-import me.ishift.epicguard.common.antibot.check.Check;
-import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.antibot.Check;
 import me.ishift.epicguard.common.data.config.Configuration;
+import me.ishift.epicguard.common.types.GeoMode;
 
-public class ServerListCheck implements Check {
+public class GeographicalCheck implements Check {
     private final AttackManager attackManager;
 
-    public ServerListCheck(AttackManager attackManager) {
+    public GeographicalCheck(AttackManager attackManager) {
         this.attackManager = attackManager;
     }
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (Configuration.serverListCheck && this.attackManager.isUnderAttack()) {
-            return !StorageManager.getStorage().getPingData().contains(address);
+        if (this.attackManager.getGeoApi() == null) {
+            return false;
+        }
+
+        final String country = this.attackManager.getGeoApi().getCountryCode(address);
+        if (country.equals("Unknown?") || Configuration.countryMode == GeoMode.DISABLED) {
+            return false;
+        }
+        if (Configuration.countryMode == GeoMode.WHITELIST) {
+            return !Configuration.countryList.contains(country);
+        }
+        if (Configuration.countryMode == GeoMode.BLACKLIST) {
+            return Configuration.countryList.contains(country);
         }
         return false;
     }
