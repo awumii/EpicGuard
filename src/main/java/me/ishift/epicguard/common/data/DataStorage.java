@@ -28,13 +28,10 @@ public abstract class DataStorage {
     public Collection<String> blacklist;
     public Collection<String> whitelist;
 
+    /*
     public DataStorage() {
-        //this.config = new Yaml("mysql", "plugins/EpicGuard");
-        this.blacklist = new HashSet<>();
-        this.whitelist = new HashSet<>();
-        this.rejoinData = new HashSet<>();
-        this.pingData = new HashSet<>();
-    }
+        this.config = new Yaml("mysql", "plugins/EpicGuard");
+    }*/
 
     public void blacklist(String address) {
         this.blacklist.add(address);
@@ -46,19 +43,19 @@ public abstract class DataStorage {
     }
 
     public Collection<String> getPingData() {
-        return pingData;
+        return this.pingData;
     }
 
     public Collection<String> getRejoinData() {
-        return rejoinData;
+        return this.rejoinData;
     }
 
     public Collection<String> getBlacklist() {
-        return blacklist;
+        return this.blacklist;
     }
 
     public Collection<String> getWhitelist() {
-        return whitelist;
+        return this.whitelist;
     }
 
     public abstract void load();

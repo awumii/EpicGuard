@@ -21,6 +21,7 @@ import me.ishift.epicguard.bungee.listener.PostLoginListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.AttackManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterResetTask;
@@ -70,6 +71,11 @@ public class EpicGuardBungee extends Plugin {
             filter.setFilteredMessages(Configuration.filterValues);
             filter.registerFilter();
         }
+    }
+
+    @Override
+    public void onDisable() {
+        StorageManager.save();
     }
 
     public static EpicGuardBungee getInstance() {
