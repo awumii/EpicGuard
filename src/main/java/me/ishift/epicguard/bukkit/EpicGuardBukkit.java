@@ -24,6 +24,7 @@ import me.ishift.epicguard.bukkit.module.Module;
 import me.ishift.epicguard.bukkit.module.modules.*;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.AttackManager;
+import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;
@@ -99,6 +100,11 @@ public class EpicGuardBukkit extends JavaPlugin {
                 this.getLogger().info("De-opped " + operator.getName() + ", because of the 'deop-on-enable' settings");
             }
         }
+    }
+
+    @Override
+    public void onDisable() {
+        StorageManager.save();
     }
 
     public InventoryManager getInventoryManager() {

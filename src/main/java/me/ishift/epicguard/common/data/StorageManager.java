@@ -18,8 +18,9 @@ package me.ishift.epicguard.common.data;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
+// This class will be rewritten soon. It shouldn't contain static methods.
 public class StorageManager {
-    public static StorageType storageType;
+    private static StorageType storageType;
     private static DataStorage storage;
 
     public static void load() {
@@ -43,6 +44,10 @@ public class StorageManager {
 
     public static DataStorage getStorage() {
         return storage;
+    }
+
+    public static void save() {
+        storage.save();
     }
 
     public static StorageType getStorageType() {

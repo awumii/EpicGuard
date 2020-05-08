@@ -28,12 +28,16 @@ public class Flat extends DataStorage {
         this.storage = new Json("storage", "plugins/EpicGuard/data");
         this.blacklist = this.storage.getOrSetDefault("addresses.blacklist", new HashSet<>());
         this.whitelist = this.storage.getOrSetDefault("addresses.whitelist", new HashSet<>());
+        this.pingData = this.storage.getOrSetDefault("addresses.ping", new HashSet<>());
+        this.rejoinData = this.storage.getOrSetDefault("nicknames.reconnect", new HashSet<>());
     }
 
     @Override
     public void save() {
         this.storage.set("addresses.blacklist", this.blacklist);
         this.storage.set("addresses.whitelist", this.whitelist);
+        this.storage.set("addresses.ping", this.pingData);
+        this.storage.set("nicknames.reconnect", this.rejoinData);
     }
 
     public Json getFile() {
