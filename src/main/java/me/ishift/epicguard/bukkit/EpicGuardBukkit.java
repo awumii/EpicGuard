@@ -53,8 +53,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EpicGuardBukkit extends JavaPlugin {
-    private static EpicGuardBukkit epicGuardBukkit;
-
     private AttackManager attackManager;
     private UserManager userManager;
     private InventoryManager inventoryManager;
@@ -63,7 +61,6 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        epicGuardBukkit = this;
         this.saveDefaultConfig();
 
         this.attackManager = new AttackManager();
@@ -129,7 +126,7 @@ public class EpicGuardBukkit extends JavaPlugin {
     }
 
     public static EpicGuardBukkit getInstance() {
-        return epicGuardBukkit;
+        return JavaPlugin.getPlugin(EpicGuardBukkit.class);
     }
 
     public UserManager getUserManager() {
