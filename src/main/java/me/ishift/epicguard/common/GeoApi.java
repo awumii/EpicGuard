@@ -13,20 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.util;
+package me.ishift.epicguard.common;
 
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import me.ishift.epicguard.common.antibot.AttackManager;
-import me.ishift.epicguard.common.logging.GuardLogger;
+import me.ishift.epicguard.common.AttackManager;
+import me.ishift.epicguard.common.GuardLogger;
+import me.ishift.epicguard.common.util.Downloader;
+import me.ishift.epicguard.common.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class GeoApi {
     private DatabaseReader countryReader;

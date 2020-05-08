@@ -13,21 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.common.antibot;
+package me.ishift.epicguard.common;
 
+import me.ishift.epicguard.common.antibot.Detection;
+import me.ishift.epicguard.common.antibot.ProxyCheckService;
 import me.ishift.epicguard.common.antibot.checks.*;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
-import me.ishift.epicguard.common.logging.GuardLogger;
-import me.ishift.epicguard.common.util.GeoApi;
 import me.ishift.epicguard.common.util.LibraryLoader;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public class AttackManager {
-    private final Collection<ProxyChecker> proxyCheckers;
+    private final Collection<ProxyCheckService> proxyCheckServices;
     private final GeoApi geoApi;
     private final GuardLogger logger;
 
@@ -43,7 +43,7 @@ public class AttackManager {
     private boolean attackMode = false;
 
     public AttackManager() {
-        this.proxyCheckers = new HashSet<>();
+        this.proxyCheckServices = new HashSet<>();
         this.logger = new GuardLogger("EpicGuard", "plugins/EpicGuard", this);
         this.logger.info("Loading libraries...");
         LibraryLoader.init();
@@ -62,7 +62,7 @@ public class AttackManager {
         this.serverListCheck = new ServerListCheck(this);
 
         if (Configuration.advancedProxyChecker) {
-            this.proxyCheckers.addAll(Configuration.proxyCheckers);
+            this.proxyCheckServices.addAll(Configuration.proxyCheckServices);
         }
         this.logger.info("Initializing GeoApi...");
         this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled, this);
@@ -129,8 +129,8 @@ public class AttackManager {
         return this.totalBots;
     }
 
-    public Collection<ProxyChecker> getProxyCheckers() {
-        return this.proxyCheckers;
+    public Collection<ProxyCheckService> getProxyCheckServices() {
+        return this.proxyCheckServices;
     }
 
     public void setAttackMode(boolean bol) {

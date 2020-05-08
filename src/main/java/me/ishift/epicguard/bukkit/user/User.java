@@ -16,7 +16,7 @@
 package me.ishift.epicguard.bukkit.user;
 
 import de.leonhard.storage.Json;
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

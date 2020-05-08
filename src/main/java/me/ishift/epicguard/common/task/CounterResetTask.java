@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.common.task;
 
-import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.AttackManager;
 
 public class CounterResetTask implements Runnable {
     private final AttackManager attackManager;
