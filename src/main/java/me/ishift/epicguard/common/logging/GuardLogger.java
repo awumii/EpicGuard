@@ -15,61 +15,71 @@
 
 package me.ishift.epicguard.common.logging;
 
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.util.DateUtil;
 import me.ishift.epicguard.common.util.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class GuardLogger {
+    private final AttackManager attackManager;
     private final Logger logger;
-
-    public GuardLogger() {
-        this.logger = Logger.getLogger(GuardLogger.class.getName());
-        this.logger.setUseParentHandlers(false);
-
-        final ConsoleHandler handler = new ConsoleHandler();
-        handler.setFormatter(new LogFormatter());
-
-        this.logger.addHandler(handler);
-    }
+    private final String name;
+    private final String path;
 
     /**
-     * Logs message on the console and to the log file.
-     *
-     * @param message Log message.
+     * Creating new GuardLogger instance
+     * @param name Name of the Logger.
+     * @param path Path for the log files.
      */
-    public void info(String message) {
-        this.logger.info(message);
-        this.log(message);
+    public GuardLogger(String name, String path, AttackManager manager) {
+        this.logger = Logger.getLogger(name);
+        this.attackManager = manager;
+        this.name = name;
+        this.path = path;
+        final File logDir = new File(path + "/logs");
+
+        if (logDir.mkdirs()) {
+            this.info("Created log directory.");
+        }
     }
 
     /**
-     * Logs message only to the log file, not displayed in the console.
+     * Debug message will only be logged in file.
      *
      * @param message Log message.
      */
     public void debug(String message) {
-        this.log(message);
+        this.log(message, true);
     }
 
     /**
-     * Logs message to the log file.
+     * Info message will be logged in file and displayed in the console.
      *
      * @param message Log message.
      */
-    private void log(String message) {
-        final File dir = new File("plugins/EpicGuard/logs");
-        final File file = new File("plugins/EpicGuard/logs/" + DateUtil.getDate());
-        dir.mkdirs();
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void info(String message) {
+        this.log(message, false);
+    }
+
+    /**
+     * Method is private, use debug() or info().
+     *
+     * @param message Log message
+     * @param hide Should message be hidden in console (debug) or not.
+     */
+    private void log(String message, boolean hide) {
+        if (!hide) {
+            this.logger.info("[EpicGuard] " + message);
         }
 
-        FileUtil.writeToFile(file, "[" + DateUtil.getTime() + "] " + message);
+        // If there is fast bot attack then the cpu will 'explode' from the amount of written lines.
+        if (this.logger.getName().equals("EpicGuard") && this.attackManager.getConnectPerSecond() > 20) {
+            return;
+        }
+        final File file = new File(this.path + "/logs/" + this.name + "-" + DateUtil.getDate() + ".txt");
+        final String logMessage = "(" + DateUtil.getTime() + "/" + (hide ? "DEBUG" : "INFO") + ")" + message;
+        FileUtil.writeToFile(file, logMessage);
     }
 }

@@ -19,6 +19,7 @@ import me.ishift.epicguard.common.antibot.checks.*;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
+import me.ishift.epicguard.common.logging.GuardLogger;
 import me.ishift.epicguard.common.util.GeoApi;
 import me.ishift.epicguard.common.util.LibraryLoader;
 
@@ -28,6 +29,7 @@ import java.util.HashSet;
 public class AttackManager {
     private final Collection<ProxyChecker> proxyCheckers;
     private final GeoApi geoApi;
+    private final GuardLogger logger;
 
     private final BlacklistCheck blacklistCheck;
     private final GeographicalCheck geographicalCheck;
@@ -42,11 +44,16 @@ public class AttackManager {
 
     public AttackManager() {
         this.proxyCheckers = new HashSet<>();
+        this.logger = new GuardLogger("EpicGuard", "plugins/EpicGuard", this);
+        this.logger.info("Loading libraries...");
         LibraryLoader.init();
+        this.logger.info("Loading configuration...");
         Configuration.load();
         Messages.load();
+        this.logger.info("Loading storage...");
         StorageManager.load();
 
+        this.logger.info("Loading antibot checks...");
         this.blacklistCheck = new BlacklistCheck();
         this.geographicalCheck = new GeographicalCheck(this);
         this.nicknameCheck = new NicknameCheck();
@@ -57,7 +64,13 @@ public class AttackManager {
         if (Configuration.advancedProxyChecker) {
             this.proxyCheckers.addAll(Configuration.proxyCheckers);
         }
-        this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled);
+        this.logger.info("Initializing GeoApi...");
+        this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled, this);
+        this.logger.info("Startup completed!");
+    }
+
+    public GuardLogger getLogger() {
+        return this.logger;
     }
 
     public Detection check(String address, String nickname) {

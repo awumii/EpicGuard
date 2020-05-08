@@ -17,6 +17,7 @@ package me.ishift.epicguard.common.antibot;
 
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
+import me.ishift.epicguard.common.logging.GuardLogger;
 import me.ishift.epicguard.common.types.Reason;
 
 public class Detection {
@@ -38,9 +39,15 @@ public class Detection {
     }
 
     public void perform() {
+        final GuardLogger logger = this.attackManager.getLogger();
+        logger.debug(" ");
+        logger.debug("------- * ANTIBOT CHECK * -------");
+        logger.debug("Performing check on: " + this.nickname + " (" + this.address + ")");
+        logger.debug("Current CPS: " + this.attackManager.getConnectPerSecond() + " (Attack: " + this.attackManager.isUnderAttack() + ")");
         // Checking if player is whitelisted.
         if (StorageManager.getStorage().getWhitelist().contains(address)) {
             this.detected = false;
+            logger.debug("User is whitelisted, skipping check.");
             return;
         }
 
@@ -74,29 +81,28 @@ public class Detection {
         }
         else {
             this.detected = false;
+            logger.debug("User has been not detected.");
         }
 
         // Increasing bots if detection is positive.
         if (this.detected) {
             this.attackManager.increaseBots();
+            logger.debug("User has been detected for: " + this.reason);
         }
 
         // Blacklisting addres if it should be.
         if (this.blacklist) {
             StorageManager.getStorage().blacklist(this.address);
+            logger.debug("The user has been blacklisted.");
         }
     }
 
     public Reason getReason() {
-        return reason;
-    }
-
-    public void setReason(Reason reason) {
-        this.reason = reason;
+        return this.reason;
     }
 
     public boolean isBlacklist() {
-        return blacklist;
+        return this.blacklist;
     }
 
     public void setBlacklist(boolean blacklist) {
@@ -104,6 +110,6 @@ public class Detection {
     }
 
     public boolean isDetected() {
-        return detected;
+        return this.detected;
     }
 }
