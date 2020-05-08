@@ -41,9 +41,7 @@ public class FileUtil {
      */
     public static void writeToFile(File file, String message) {
         try {
-            if (!file.exists() || file.createNewFile()) {
-                return;
-            }
+            file.createNewFile();
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
             bufferedWriter.append(message);
             bufferedWriter.newLine();

@@ -18,6 +18,8 @@ package me.ishift.epicguard.common.util;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import me.ishift.epicguard.common.antibot.AttackManager;
+import me.ishift.epicguard.common.logging.GuardLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +31,7 @@ import java.util.logging.Logger;
 public class GeoApi {
     private DatabaseReader countryReader;
     private DatabaseReader cityReader;
-    private final Logger logger;
+    private final GuardLogger logger;
 
     /**
      * Creating new GeoAPI instance.
@@ -38,10 +40,10 @@ public class GeoApi {
      * @param country  Should country database be enabled/downloaded?
      * @param city     Should city database be enabled/downloaded?
      */
-    public GeoApi(String basePath, boolean country, boolean city) {
-        this.logger = Logger.getLogger("GeoAPI");
-        this.logger.info("[EpicGuard/GeoAPI] This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
-        this.logger.info("[EpicGuard/GeoAPI] By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
+    public GeoApi(String basePath, boolean country, boolean city, AttackManager manager) {
+        this.logger = manager.getLogger();
+        this.logger.info("This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com");
+        this.logger.info("By using this software, you agree to GeoLite2 EULA (https://www.maxmind.com/en/geolite2/eula)");
 
         final File countryFile = new File(basePath + "/data/GeoLite2-Country.mmdb");
         final File cityFile = new File(basePath + "/data/GeoLite2-City.mmdb");
@@ -50,7 +52,7 @@ public class GeoApi {
         try {
             if (country) {
                 if (!countryFile.exists() || isOutdated(databaseAgeFile)) {
-                    this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-Country.mmdb file...");
+                    this.logger.info("Downloading the GeoLite2-Country.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
 
                     FileUtil.eraseFile(databaseAgeFile);
@@ -61,7 +63,7 @@ public class GeoApi {
 
             if (city) {
                 if (!cityFile.exists() || isOutdated(databaseAgeFile)) {
-                    this.logger.info("[EpicGuard/GeoAPI] Downloading the GeoLite2-City.mmdb file...");
+                    this.logger.info("Downloading the GeoLite2-City.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityFile);
 
                     FileUtil.eraseFile(databaseAgeFile);
