@@ -47,9 +47,9 @@ public class AttackManager {
 
     public AttackManager() {
         this.proxyCheckers = new HashSet<>();
+        LibraryLoader.init();
         Configuration.load();
         Messages.load();
-        LibraryLoader.init();
         StorageManager.load();
 
         this.blacklistCheck = new BlacklistCheck();

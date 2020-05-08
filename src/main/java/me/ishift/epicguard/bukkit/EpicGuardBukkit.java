@@ -65,7 +65,6 @@ public class EpicGuardBukkit extends JavaPlugin {
     public void onEnable() {
         epicGuardBukkit = this;
         this.saveDefaultConfig();
-        SpigotSettings.load();
 
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
@@ -112,6 +111,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         }
         new Metrics(this, 5845);
 
+        SpigotSettings.load();
         if (SpigotSettings.deopOnEnable) {
             for (OfflinePlayer operator : Bukkit.getOperators()) {
                 operator.setOp(false);

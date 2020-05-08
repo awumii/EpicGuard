@@ -27,8 +27,8 @@ public class LibraryLoader {
      * Loads the required libraries for the EpicGuard.
      */
     public static void init() {
-        tryDownload("com.zaxxer.hikari.HikariDataSource", "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.2/HikariCP-3.4.2.jar", "HikariCP-3.4.2");
         tryDownload("com.mysql.jdbc.Driver", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar", "mysql-connector-java-8.0.19");
+        tryDownload("com.zaxxer.hikari.HikariDataSource", "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.2/HikariCP-3.4.2.jar", "HikariCP-3.4.2");
     }
 
     /**
@@ -41,7 +41,7 @@ public class LibraryLoader {
             Class.forName(className);
         } catch (ClassNotFoundException e) {
             final File dir = new File("plugins/EpicGuard/lib");
-            dir.mkdir();
+            dir.mkdirs();
             final File lib = new File("plugins/EpicGuard/lib/" + fileName + ".jar");
 
             if (!lib.exists()) {
@@ -63,7 +63,6 @@ public class LibraryLoader {
     public static void loadLibrary(File file) {
         try {
             final URL url = file.toURI().toURL();
-
             final URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
             final Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
