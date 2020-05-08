@@ -17,10 +17,9 @@ package me.ishift.epicguard.bukkit.listener;
 
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
+import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.data.StorageType;
 import me.ishift.epicguard.common.data.config.Configuration;
-import me.ishift.epicguard.common.data.storage.Flat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,14 +30,23 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.List;
 
 public class PlayerJoinListener implements Listener {
+    private final AttackManager attackManager;
+
+    public PlayerJoinListener(AttackManager attackManager) {
+        this.attackManager = attackManager;
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-
-        EpicGuardBukkit.getInstance().getUserManager().addUser(player);
-        final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player);
+        final User user = new User(player.getName(), this.attackManager);
         final String address = user.getAddress();
+
+        final List<String> history = user.getAddressHistory();
+        if (!history.contains(address)) {
+            history.add(address);
+        }
+        user.setAddressHistory(history);
 
         if (Configuration.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(EpicGuardBukkit.getInstance(), () -> {
@@ -46,16 +54,6 @@ public class PlayerJoinListener implements Listener {
                     StorageManager.getStorage().whitelist(address);
                 }
             }, Configuration.autoWhitelistTime);
-        }
-
-        if (StorageManager.getStorageType() == StorageType.FLAT) {
-            final Flat flat = (Flat) StorageManager.getStorage();
-            final List<String> history = flat.getFile().getStringList("address-history." + player.getName());
-            if (!history.contains(address)) {
-                history.add(address);
-            }
-            flat.getFile().set("address-history." + player.getName(), history);
-            user.setAddressHistory(history);
         }
     }
 }
