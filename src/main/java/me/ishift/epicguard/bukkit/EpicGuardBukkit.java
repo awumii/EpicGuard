@@ -19,21 +19,9 @@ import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.inventory.MainInventory;
 import me.ishift.epicguard.bukkit.inventory.PlayersInventory;
-import me.ishift.epicguard.bukkit.listener.ConsoleCommandListener;
-import me.ishift.epicguard.bukkit.listener.PlayerBuildListener;
-import me.ishift.epicguard.bukkit.listener.PlayerCommandListener;
-import me.ishift.epicguard.bukkit.listener.PlayerJoinListener;
-import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
-import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
-import me.ishift.epicguard.bukkit.listener.ServerListPingListener;
-import me.ishift.epicguard.bukkit.listener.TabCompletePacketListener;
+import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.module.Module;
-import me.ishift.epicguard.bukkit.module.modules.AllowedCommands;
-import me.ishift.epicguard.bukkit.module.modules.BlockedCommands;
-import me.ishift.epicguard.bukkit.module.modules.NamespacedCommands;
-import me.ishift.epicguard.bukkit.module.modules.OperatorMechanics;
-import me.ishift.epicguard.bukkit.module.modules.OperatorProtection;
-import me.ishift.epicguard.bukkit.user.UserManager;
+import me.ishift.epicguard.bukkit.module.modules.*;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
@@ -54,7 +42,6 @@ import java.util.List;
 
 public class EpicGuardBukkit extends JavaPlugin {
     private AttackManager attackManager;
-    private UserManager userManager;
     private InventoryManager inventoryManager;
     private OperatorProtection operatorProtection;
     private List<Module> modules;
@@ -62,9 +49,7 @@ public class EpicGuardBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-
         this.attackManager = new AttackManager();
-        this.userManager = new UserManager();
 
         this.operatorProtection = new OperatorProtection();
         this.modules = new LinkedList<>();
@@ -80,9 +65,8 @@ public class EpicGuardBukkit extends JavaPlugin {
 
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(this.attackManager), this);
+        pm.registerEvents(new PlayerJoinListener(this.attackManager), this);
         pm.registerEvents(new ServerListPingListener(), this);
-        pm.registerEvents(new PlayerJoinListener(), this);
-        pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
         pm.registerEvents(new PlayerBuildListener(), this);
@@ -127,10 +111,6 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     public static EpicGuardBukkit getInstance() {
         return JavaPlugin.getPlugin(EpicGuardBukkit.class);
-    }
-
-    public UserManager getUserManager() {
-        return userManager;
     }
 
     public List<Module> getModules() {

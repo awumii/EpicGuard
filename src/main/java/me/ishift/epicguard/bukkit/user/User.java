@@ -15,39 +15,88 @@
 
 package me.ishift.epicguard.bukkit.user;
 
+import de.leonhard.storage.Json;
+import me.ishift.epicguard.common.antibot.AttackManager;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class User {
-    private final String address;
-    private List<String> addressHistory;
-    private boolean notifications;
+    private final boolean exists;
+    private final String name;
+    private Json data;
 
-    public User(Player player) {
-        this.notifications = false;
-        this.address = player.getAddress().getAddress().getHostAddress();
-        this.addressHistory = new ArrayList<>();
+    /**
+     * @param name Nickname of the user.
+     * @param attackManager Instance of the AttackManager (needed for GeoIP query).
+     */
+    public User(String name, AttackManager attackManager) {
+        this.name = name;
+        final File file = new File("plugins/EpicGuard/data/users/" + name + ".json");
+        this.exists = file.exists();
+
+        final Player player = Bukkit.getPlayerExact(name);
+        if (player != null) {
+            this.data = new Json(name, "plugins/EpicGuard/data/users");
+
+            final String address = player.getAddress().getAddress().getHostAddress();
+            this.data.set("uuid", player.getUniqueId().toString());
+            this.data.set("address", address);
+            this.data.set("country", attackManager.getGeoApi().getCountryCode(address));
+            this.data.set("city", attackManager.getGeoApi().getCity(address));
+        }
+    }
+
+    public boolean exists() {
+        return this.exists;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUUID() {
+        return this.data.getString("uuid");
+    }
+
+    public boolean isOnline() {
+        return Bukkit.getPlayerExact(this.name) != null;
+    }
+
+    public OfflinePlayer getPlayer() {
+        return Bukkit.getOfflinePlayer(UUID.fromString(this.getUUID()));
+    }
+
+    public String getCountry() {
+        return this.data.getString("country");
+    }
+
+    public String getCity() {
+        return this.data.getString("city");
     }
 
     public List<String> getAddressHistory() {
-        return addressHistory;
+        return this.data.getOrSetDefault("address-history", new ArrayList<>());
     }
 
     public void setAddressHistory(List<String> addressHistory) {
-        this.addressHistory = addressHistory;
+        this.data.set("address-history", addressHistory);
     }
 
     public String getAddress() {
-        return this.address;
+        return this.data.getString("address");
     }
 
     public boolean isNotifications() {
-        return this.notifications;
+        return this.data.getOrSetDefault("notifications", false);
     }
 
     public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
+        this.data.set("notifications", notifications);
     }
 }

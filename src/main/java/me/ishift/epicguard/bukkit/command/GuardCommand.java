@@ -23,7 +23,6 @@ import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.util.MessageHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -74,7 +73,7 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, Messages.playerOnly);
                 return true;
             }
-            final User user = EpicGuardBukkit.getInstance().getUserManager().getUser((Player) sender);
+            final User user = new User(sender.getName(), this.attackManager);
             send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
             user.setNotifications(!user.isNotifications());
         } else if (args[0].equalsIgnoreCase("reload")) {
@@ -87,17 +86,30 @@ public class GuardCommand implements CommandExecutor {
                 send(sender, Messages.usage.replace("{USAGE}", s + " player <player>"));
                 return true;
             }
-            final Player player = Bukkit.getPlayer(args[1]);
-            if (player == null) {
+
+            final User user = new User(args[1], this.attackManager);
+            if (!user.exists()) {
                 send(sender, Messages.playerNotFound);
                 return true;
             }
-            send(sender, "&7Name: &f" + player.getName());
-            send(sender, "&7UUID: &f" + player.getUniqueId());
-            send(sender, "&7Country: &f" + this.attackManager.getGeoApi().getCountryCode(player.getAddress().getAddress().getHostAddress()));
-            send(sender, "&7City: &f" + this.attackManager.getGeoApi().getCity(player.getAddress().getAddress().getHostAddress()));
-            send(sender, "&7Host Adress: &f" + player.getAddress().getAddress().getHostName());
-            send(sender, "&7OP: " + (player.isOp() ? "&a&lYES" : "&c&lNO"));
+
+            sendNoPrefix(sender, "&8&m---------------------------------------------------");
+            sendNoPrefix(sender, "  &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
+            sendNoPrefix(sender, "");
+            sendNoPrefix(sender, " &7Name: &f" + user.getName());
+            sendNoPrefix(sender, " &7UUID: &f" + user.getUUID());
+            sendNoPrefix(sender, " &7Address: &f" + user.getAddress());
+            sendNoPrefix(sender, " &7Country: &f" + user.getCountry());
+            sendNoPrefix(sender, " &7City: &f" + user.getCity());
+            sendNoPrefix(sender, " &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
+            if (!user.getAddressHistory().isEmpty()) {
+                sendNoPrefix(sender, " ");
+                sendNoPrefix(sender, " &7IP History:");
+                for (String address : user.getAddressHistory()) {
+                    sendNoPrefix(sender, "  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""));
+                }
+            }
+            sendNoPrefix(sender, "&8&m---------------------------------------------------");
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length != 2) {
                 send(sender, Messages.usage.replace("{USAGE}", s + " whitelist <address>"));
@@ -120,7 +132,11 @@ public class GuardCommand implements CommandExecutor {
         return true;
     }
 
-    public static void send(CommandSender sender, String message) {
+    private void send(CommandSender sender, String message) {
         sender.sendMessage(MessageHelper.color(Messages.prefix + message));
+    }
+
+    private void sendNoPrefix(CommandSender sender, String message) {
+        sender.sendMessage(MessageHelper.color(message));
     }
 }

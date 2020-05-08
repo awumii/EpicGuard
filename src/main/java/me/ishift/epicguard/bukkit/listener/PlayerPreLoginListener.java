@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.util.ActionBarAPI;
 import me.ishift.epicguard.common.antibot.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
@@ -43,7 +43,7 @@ public class PlayerPreLoginListener implements Listener {
 
             Bukkit.getOnlinePlayers()
                     .stream()
-                    .filter(player -> EpicGuardBukkit.getInstance().getUserManager().getUser(player).isNotifications())
+                    .filter(player -> new User(name, this.attackManager).isNotifications())
                     .forEach(player -> ActionBarAPI.sendActionBar(player, Messages.prefix + " &7CPS: &c" + this.attackManager.getConnectPerSecond() + "/s &8| &6" + name + " &8[&e" + address + "&8] - &7" + detection.getReason()));
         }
     }

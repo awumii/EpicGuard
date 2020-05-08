@@ -44,14 +44,14 @@ public class PlayersInventory extends ClickableInventory {
     @Override
     public void onOpen(Player player, Inventory inventory) {
         int i = 0;
-        for (Player player1 : Bukkit.getOnlinePlayers()) {
+        for (Player entry : Bukkit.getOnlinePlayers()) {
             final List<String> lore = new ArrayList<>();
-            final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player1);
+            final User user = new User(entry.getName(), this.attackManager);
 
             lore.add("");
-            lore.add(MessageHelper.color(" &8» &7Name&8: &f" + player1.getName()));
-            lore.add(MessageHelper.color(" &8» &7UUID&8: &f" + player1.getUniqueId()));
-            lore.add(MessageHelper.color(" &8» &7OP&8: " + (player1.isOp() ? "&aYes" : "&cNo")));
+            lore.add(MessageHelper.color(" &8» &7Name&8: &f" + entry.getName()));
+            lore.add(MessageHelper.color(" &8» &7UUID&8: &f" + entry.getUniqueId()));
+            lore.add(MessageHelper.color(" &8» &7OP&8: " + (entry.isOp() ? "&aYes" : "&cNo")));
             lore.add(MessageHelper.color(" &8» &7Country&8: &f" + attackManager.getGeoApi().getCountryCode(user.getAddress())));
             lore.add(MessageHelper.color(" &8» &7City&8: &f" + attackManager.getGeoApi().getCity(user.getAddress())));
             lore.add("");
@@ -62,7 +62,7 @@ public class PlayersInventory extends ClickableInventory {
                 user.getAddressHistory().forEach(address -> lore.add(MessageHelper.color("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""))));
             }
 
-            final ItemStack itemStack = SkullUtil.getSkull(player1, (player1.isOp() ? "&c[OP] " : "&a") + player1.getName(), lore);
+            final ItemStack itemStack = SkullUtil.getSkull(entry, (entry.isOp() ? "&c[OP] " : "&a") + entry.getName(), lore);
             inventory.setItem(i, itemStack);
             i++;
         }
