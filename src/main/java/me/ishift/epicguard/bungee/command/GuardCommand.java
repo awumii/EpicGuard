@@ -33,15 +33,15 @@ public class GuardCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
             BungeeUtil.sendMessage(sender, "&8&m---------------------------------------------------");
-            BungeeUtil.sendMessage(sender, "  &6&lEpicGuard");
+            BungeeUtil.sendMessage(sender, "  &6&lEpicGuard &8(BungeeCord version)");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, "  &7Running version &f" + EpicGuardBungee.getInstance().getDescription().getVersion());
-            BungeeUtil.sendMessage(sender, "  &7Created by &fiShift &8© 2020");
+            BungeeUtil.sendMessage(sender, "&8» &7Running version &f" + EpicGuardBungee.getInstance().getDescription().getVersion());
+            BungeeUtil.sendMessage(sender, "&8» &7Created by &fiShift &8© 2020");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, " &7/guard status &8- &7Toggle antibot actionbar.");
-            BungeeUtil.sendMessage(sender, " &7/guard reload &8- &7Reload configuration and messages.");
-            BungeeUtil.sendMessage(sender, " &7/guard whitelist <adress> &8- &7Add specific adress to the whitelist.");
-            BungeeUtil.sendMessage(sender, " &7/guard blacklist <adress> &8- &7Add specific adress to the blacklist.");
+            BungeeUtil.sendMessage(sender, "&8» &7/guard status &8- &7Toggle antibot actionbar.");
+            BungeeUtil.sendMessage(sender, "&8» &7/guard reload &8- &7Reload configuration and messages.");
+            BungeeUtil.sendMessage(sender, "&8» &7/guard whitelist <adress> &8- &7Add specific adress to the whitelist.");
+            BungeeUtil.sendMessage(sender, "&8» &7/guard blacklist <adress> &8- &7Add specific adress to the blacklist.");
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, "&8&m---------------------------------------------------");
             return;

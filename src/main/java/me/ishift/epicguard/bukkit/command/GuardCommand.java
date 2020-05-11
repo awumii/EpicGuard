@@ -47,17 +47,17 @@ public class GuardCommand implements CommandExecutor {
 
         if (args.length == 0) {
             sender.sendMessage(MessageHelper.color("&8&m---------------------------------------------------"));
-            sender.sendMessage(MessageHelper.color("  &6&lEpicGuard"));
+            sender.sendMessage(MessageHelper.color("  &6&lEpicGuard &8(Spigot version)"));
             sender.sendMessage(MessageHelper.color(""));
-            sender.sendMessage(MessageHelper.color("  &7Running version &f" + version));
-            sender.sendMessage(MessageHelper.color("  &7Created by &fiShift and rusekh &8© 2020"));
+            sender.sendMessage(MessageHelper.color("&8» &7Running version &f" + version));
+            sender.sendMessage(MessageHelper.color("&8» &7Created by &fiShift and rusekh &8© 2020"));
             sender.sendMessage(MessageHelper.color(""));
-            sender.sendMessage(MessageHelper.color(" &7/guard &fmenu &7to open main plugin GUI."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &fstatus &7to toggle antibot notifications."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &freload &7to reload configuration and messages."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &fplayer <player> &7to see information about specific player."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &fwhitelist <adress> &7to add specific adress to the whitelist."));
-            sender.sendMessage(MessageHelper.color(" &7/guard &fblacklist <adress> &7to add specific adress to the blacklist."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &fmenu &7to open main plugin GUI."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &fstatus &7to toggle antibot notifications."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &freload &7to reload configuration and messages."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &fplayer <player> &7to see information about specific player."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &fwhitelist <adress> &7to add specific adress to the whitelist."));
+            sender.sendMessage(MessageHelper.color("&8» &7/guard &fblacklist <adress> &7to add specific adress to the blacklist."));
             sender.sendMessage(MessageHelper.color("&8&m---------------------------------------------------"));
             return true;
         }
@@ -94,17 +94,17 @@ public class GuardCommand implements CommandExecutor {
             }
 
             sendNoPrefix(sender, "&8&m---------------------------------------------------");
-            sendNoPrefix(sender, "  &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
+            sendNoPrefix(sender, "&8» &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
             sendNoPrefix(sender, "");
-            sendNoPrefix(sender, " &7Name: &f" + user.getName());
-            sendNoPrefix(sender, " &7UUID: &f" + user.getUUID());
-            sendNoPrefix(sender, " &7Address: &f" + user.getAddress());
-            sendNoPrefix(sender, " &7Country: &f" + user.getCountry());
-            sendNoPrefix(sender, " &7City: &f" + user.getCity());
-            sendNoPrefix(sender, " &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
+            sendNoPrefix(sender, "&8» &7Name: &f" + user.getName());
+            sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUUID());
+            sendNoPrefix(sender, "&8» &7Address: &f" + user.getAddress());
+            sendNoPrefix(sender, "&8» &7Country: &f" + user.getCountry());
+            sendNoPrefix(sender, "&8» &7City: &f" + user.getCity());
+            sendNoPrefix(sender, "&8» &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
             if (!user.getAddressHistory().isEmpty()) {
                 sendNoPrefix(sender, " ");
-                sendNoPrefix(sender, " &7IP History:");
+                sendNoPrefix(sender, "&8» &7IP History:");
                 for (String address : user.getAddressHistory()) {
                     sendNoPrefix(sender, "  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""));
                 }
