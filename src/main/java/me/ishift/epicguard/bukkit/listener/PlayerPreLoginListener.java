@@ -45,6 +45,10 @@ public class PlayerPreLoginListener implements Listener {
             final String message = Messages.prefix + " &7CPS: &c" + this.attackManager.getConnectPerSecond() + "/s &8| &6" + name + " &8[&e" + address + "&8] - &7" + detection.getReason();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 final User user = new User(name, this.attackManager);
+                if (user == null)
+                {
+                    return;
+                }
                 if (user.exists() && user.isNotifications()) {
                     ActionBarAPI.sendActionBar(player, message);
                 }
