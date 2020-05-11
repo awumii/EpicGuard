@@ -16,7 +16,7 @@
 package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
-import me.ishift.epicguard.common.antibot.ProxyCheckService;
+import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.types.GeoMode;
 
 import java.util.Collection;
@@ -50,7 +50,7 @@ public class Configuration {
     public static List<String> filterValues;
 
     public static boolean advancedProxyChecker;
-    public static Collection<ProxyCheckService> proxyCheckServices;
+    public static Collection<ProxyService> proxyServices;
 
     public static void load() {
         try {
@@ -83,13 +83,13 @@ public class Configuration {
             countryMode = GeoMode.valueOf(countryModeString);
 
             advancedProxyChecker = config.getBoolean("advanced-proxy-checker.enabled");
-            proxyCheckServices = new HashSet<>();
+            proxyServices = new HashSet<>();
             if (advancedProxyChecker) {
                 final String basePath = "advanced-proxy-checker.checkers";
                 config.getSection(basePath).singleLayerKeySet().stream().map(num -> basePath + "." + num).forEachOrdered(path -> {
                     final String url = config.getString(path + ".url");
                     final List<String> contains = config.getStringList(path + ".contains");
-                    proxyCheckServices.add(new ProxyCheckService(url, contains));
+                    proxyServices.add(new ProxyService(url, contains));
                 });
             }
         } catch (Exception e) {

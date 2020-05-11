@@ -30,6 +30,11 @@ public class Detection {
     private boolean blacklist;
     private Reason reason;
 
+    /**
+     * @param address Address of the user.
+     * @param nickname Nickname of the user.
+     * @param attackManager Instance of the AttackManager.
+     */
     public Detection(String address, String nickname, AttackManager attackManager) {
         this.attackManager = attackManager;
         this.address = address;
@@ -39,6 +44,31 @@ public class Detection {
         this.perform();
     }
 
+    /**
+     * @return Reason of the detection.
+     * Can be null if user is not detected.
+     */
+    public Reason getReason() {
+        return this.reason;
+    }
+
+    /**
+     * @return Should address be blacklisted.
+     */
+    public boolean isBlacklist() {
+        return this.blacklist;
+    }
+
+    /**
+     * @return True if detection is positive, or false if not.
+     */
+    public boolean isDetected() {
+        return this.detected;
+    }
+
+    /**
+     * Performing the checks.
+     */
     public void perform() {
         final GuardLogger logger = this.attackManager.getLogger();
         logger.debug(" ");
@@ -96,21 +126,5 @@ public class Detection {
             StorageManager.getStorage().blacklist(this.address);
             logger.debug("The user has been blacklisted.");
         }
-    }
-
-    public Reason getReason() {
-        return this.reason;
-    }
-
-    public boolean isBlacklist() {
-        return this.blacklist;
-    }
-
-    public void setBlacklist(boolean blacklist) {
-        this.blacklist = blacklist;
-    }
-
-    public boolean isDetected() {
-        return this.detected;
     }
 }

@@ -17,19 +17,34 @@ package me.ishift.epicguard.common.antibot;
 
 import java.util.List;
 
-public class ProxyCheckService {
+public class ProxyService {
     private final String url;
     private final List<String> contains;
 
-    public ProxyCheckService(String url, List<String> contains) {
+    /**
+     * This creates a new ProxyService which can be
+     * used to detect if user is using proxy/VPN.
+     *
+     * @param url URL of the service (request)
+     * @param contains Words which must be in the response to
+     * cause a positive proxy detection.
+     */
+    public ProxyService(String url, List<String> contains) {
         this.url = url;
         this.contains = contains;
     }
 
+    /**
+     * @return URL of the service.
+     */
     public String getUrl() {
         return this.url;
     }
 
+    /**
+     * @return Words which must be in the response to
+     * cause a positive proxy detection.
+     */
     public List<String> getContains() {
         return this.contains;
     }

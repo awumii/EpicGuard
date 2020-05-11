@@ -16,7 +16,7 @@
 package me.ishift.epicguard.common.antibot.checks;
 
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.antibot.ProxyCheckService;
+import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.Check;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.util.URLHelper;
@@ -39,15 +39,15 @@ public class ProxyCheck implements Check {
         }
 
         if (Configuration.advancedProxyChecker) {
-            for (ProxyCheckService proxyCheckService : this.attackManager.getProxyCheckServices()) {
-                final String url = proxyCheckService.getUrl().replace("{ADDRESS}", address);
+            for (ProxyService proxyService : this.attackManager.getProxyServices()) {
+                final String url = proxyService.getUrl().replace("{ADDRESS}", address);
                 final List<String> response = URLHelper.readLines(url);
 
                 if (response == null) {
                     return false;
                 }
                 for (String responseString : response) {
-                    for (String containsString : proxyCheckService.getContains()) {
+                    for (String containsString : proxyService.getContains()) {
                         if (responseString.contains(containsString)) {
                             return true;
                         }
