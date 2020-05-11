@@ -33,32 +33,57 @@ public abstract class DataStorage {
         this.config = new Yaml("mysql", "plugins/EpicGuard");
     }*/
 
+    /**
+     * @param address Blacklisting the specified address.
+     */
     public void blacklist(String address) {
         this.blacklist.add(address);
     }
 
+    /**
+     * @param address Whitelisting the specified address.
+     * It also removes it from blacklist.
+     */
     public void whitelist(String address) {
         this.blacklist.remove(address);
         this.whitelist.add(address);
     }
 
+    /**
+     * @return Addresses which completed the ServerListCheck.
+     */
     public Collection<String> getPingData() {
         return this.pingData;
     }
 
+    /**
+     * @return Nicknames which completed RejoinCheck.
+     */
     public Collection<String> getRejoinData() {
         return this.rejoinData;
     }
 
+    /**
+     * @return Blacklisted addresses.
+     */
     public Collection<String> getBlacklist() {
         return this.blacklist;
     }
 
+    /**
+     * @return Whitelisted addresses.
+     */
     public Collection<String> getWhitelist() {
         return this.whitelist;
     }
 
+    /**
+     * Method executed when storage is loading.
+     */
     public abstract void load();
 
+    /**
+     * Method executed when storage is saving.
+     */
     public abstract void save();
 }

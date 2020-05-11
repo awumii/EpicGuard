@@ -16,7 +16,7 @@
 package me.ishift.epicguard.common;
 
 import me.ishift.epicguard.common.antibot.Detection;
-import me.ishift.epicguard.common.antibot.ProxyCheckService;
+import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.checks.*;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class AttackManager {
-    private final Collection<ProxyCheckService> proxyCheckServices;
+    private final Collection<ProxyService> proxyServices;
     private final GeoApi geoApi;
     private final GuardLogger logger;
 
@@ -42,8 +42,13 @@ public class AttackManager {
     private int totalBots = 0;
     private boolean attackMode = false;
 
+    /**
+     * Creating new AttackManager object.
+     * AttackManager holds variables/objects which are used
+     * on the all platforms (Bukkit/Bungee/Velocity).
+     */
     public AttackManager() {
-        this.proxyCheckServices = new HashSet<>();
+        this.proxyServices = new HashSet<>();
         this.logger = new GuardLogger("EpicGuard", "plugins/EpicGuard", this);
         this.logger.info("Loading libraries...");
         LibraryLoader.init();
@@ -62,19 +67,101 @@ public class AttackManager {
         this.serverListCheck = new ServerListCheck(this);
 
         if (Configuration.advancedProxyChecker) {
-            this.proxyCheckServices.addAll(Configuration.proxyCheckServices);
+            this.proxyServices.addAll(Configuration.proxyServices);
         }
         this.logger.info("Initializing GeoApi...");
         this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled, this);
         this.logger.info("Startup completed!");
     }
 
+    /**
+     * @return Current instance of the GuardLogger.
+     */
     public GuardLogger getLogger() {
         return this.logger;
     }
 
+    /**
+     * Performing the bot-check.
+     *
+     * @param address Address of the user.
+     * @param nickname Nickname of the user.
+     * @return Detection object with prepared checks.
+     */
     public Detection check(String address, String nickname) {
         return new Detection(address, nickname, this);
+    }
+
+    /**
+     * @return Current instance of the GeoApi.
+     */
+    public GeoApi getGeoApi() {
+        return this.geoApi;
+    }
+
+    /**
+     * Increase connections per second by one.
+     */
+    public void increaseConnectPerSecond() {
+        this.connectPerSecond++;
+    }
+
+    /**
+     * @param i Amount of connections per second.
+     */
+    public void setConnectPerSecond(int i) {
+        this.connectPerSecond = i;
+    }
+
+    /**
+     * Increasing number of bots blocked during current bot-attack by one.
+     */
+    public void increaseBots() {
+        this.totalBots++;
+    }
+
+    /**
+     * @return True if server is under attack, or false if not.
+     */
+    public boolean isUnderAttack() {
+        return this.attackMode;
+    }
+
+    /**
+     * @return Amount of connections per second.
+     */
+    public int getConnectPerSecond() {
+        return this.connectPerSecond;
+    }
+
+    /**
+     * @return Amount of bots blocked during current bot-attack session.
+     */
+    public int getTotalBots() {
+        return this.totalBots;
+    }
+
+    /**
+     * @return Collection of the ProxyService.
+     */
+    public Collection<ProxyService> getProxyServices() {
+        return this.proxyServices;
+    }
+
+    /**
+     * @param bol Toggling the AttackMode.
+     */
+    public void setAttackMode(boolean bol) {
+        this.attackMode = bol;
+    }
+
+    /**
+     * Resetting antibot variables to the default values.
+     */
+    public void reset() {
+        this.attackMode = false;
+        this.totalBots = 0;
+        this.connectPerSecond = 0;
     }
 
     public BlacklistCheck getBlacklistCheck() {
@@ -99,46 +186,5 @@ public class AttackManager {
 
     public ServerListCheck getServerListCheck() {
         return serverListCheck;
-    }
-
-    public GeoApi getGeoApi() {
-        return this.geoApi;
-    }
-
-    public void increaseConnectPerSecond() {
-        this.connectPerSecond++;
-    }
-
-    public void setConnectPerSecond(int i) {
-        this.connectPerSecond = i;
-    }
-
-    public void increaseBots() {
-        this.totalBots++;
-    }
-
-    public boolean isUnderAttack() {
-        return this.attackMode;
-    }
-
-    public int getConnectPerSecond() {
-        return this.connectPerSecond;
-    }
-
-    public int getTotalBots() {
-        return this.totalBots;
-    }
-
-    public Collection<ProxyCheckService> getProxyCheckServices() {
-        return this.proxyCheckServices;
-    }
-
-    public void setAttackMode(boolean bol) {
-        this.attackMode = bol;
-    }
-
-    public void reset() {
-        this.attackMode = false;
-        this.totalBots = 0;
     }
 }

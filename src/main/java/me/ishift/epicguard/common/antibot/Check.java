@@ -16,5 +16,10 @@
 package me.ishift.epicguard.common.antibot;
 
 public interface Check {
+    /**
+     * @param address Address of target.
+     * @param nickname Nickname of target.
+     * @return true if detection is positive, or false if not.
+     */
     boolean execute(String address, String nickname);
 }
