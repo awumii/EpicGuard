@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit;
 
+import lombok.Getter;
 import me.ishift.epicguard.bukkit.command.GuardCommand;
 import me.ishift.epicguard.bukkit.command.GuardTabCompleter;
 import me.ishift.epicguard.bukkit.inventory.MainInventory;
@@ -41,6 +42,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
 public class EpicGuardBukkit extends JavaPlugin {
     private AttackManager attackManager;
     private InventoryManager inventoryManager;
@@ -107,23 +109,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         StorageManager.save();
     }
 
-    public InventoryManager getInventoryManager() {
-        return inventoryManager;
-    }
-
-    public AttackManager getAttackManager() {
-        return this.attackManager;
-    }
-
     public static EpicGuardBukkit getInstance() {
         return JavaPlugin.getPlugin(EpicGuardBukkit.class);
-    }
-
-    public List<Module> getModules() {
-        return modules;
-    }
-
-    public OperatorProtection getOperatorProtection() {
-        return operatorProtection;
     }
 }

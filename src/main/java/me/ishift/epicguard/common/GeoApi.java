@@ -55,7 +55,6 @@ public class GeoApi {
                 if (!countryFile.exists() || isOutdated(databaseAgeFile)) {
                     this.logger.info("Downloading the GeoLite2-Country.mmdb file...");
                     Downloader.download("https://github.com/PolskiStevek/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryFile);
-
                     FileUtil.eraseFile(databaseAgeFile);
                     FileUtil.writeToFile(databaseAgeFile, String.valueOf(System.currentTimeMillis()));
                 }
