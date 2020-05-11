@@ -15,9 +15,11 @@
 
 package me.ishift.epicguard.common.data;
 
+import lombok.Getter;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
+@Getter
 // This class will be rewritten soon. It shouldn't contain static methods.
 public class StorageManager {
     private static StorageType storageType;
@@ -50,7 +52,4 @@ public class StorageManager {
         storage.save();
     }
 
-    public static StorageType getStorageType() {
-        return storageType;
-    }
 }
