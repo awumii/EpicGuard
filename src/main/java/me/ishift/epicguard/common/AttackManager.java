@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.common;
 
+import lombok.Getter;
 import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.checks.*;
@@ -26,6 +27,7 @@ import me.ishift.epicguard.common.util.LibraryLoader;
 import java.util.Collection;
 import java.util.HashSet;
 
+@Getter
 public class AttackManager {
     private final Collection<ProxyService> proxyServices;
     private final GeoApi geoApi;
@@ -75,13 +77,6 @@ public class AttackManager {
     }
 
     /**
-     * @return Current instance of the GuardLogger.
-     */
-    public GuardLogger getLogger() {
-        return this.logger;
-    }
-
-    /**
      * Performing the bot-check.
      *
      * @param address Address of the user.
@@ -90,13 +85,6 @@ public class AttackManager {
      */
     public Detection check(String address, String nickname) {
         return new Detection(address, nickname, this);
-    }
-
-    /**
-     * @return Current instance of the GeoApi.
-     */
-    public GeoApi getGeoApi() {
-        return this.geoApi;
     }
 
     /**
@@ -121,34 +109,6 @@ public class AttackManager {
     }
 
     /**
-     * @return True if server is under attack, or false if not.
-     */
-    public boolean isUnderAttack() {
-        return this.attackMode;
-    }
-
-    /**
-     * @return Amount of connections per second.
-     */
-    public int getConnectPerSecond() {
-        return this.connectPerSecond;
-    }
-
-    /**
-     * @return Amount of bots blocked during current bot-attack session.
-     */
-    public int getTotalBots() {
-        return this.totalBots;
-    }
-
-    /**
-     * @return Collection of the ProxyService.
-     */
-    public Collection<ProxyService> getProxyServices() {
-        return this.proxyServices;
-    }
-
-    /**
      * @param bol Toggling the AttackMode.
      */
     public void setAttackMode(boolean bol) {
@@ -162,29 +122,5 @@ public class AttackManager {
         this.attackMode = false;
         this.totalBots = 0;
         this.connectPerSecond = 0;
-    }
-
-    public BlacklistCheck getBlacklistCheck() {
-        return blacklistCheck;
-    }
-
-    public GeographicalCheck getGeographicalCheck() {
-        return geographicalCheck;
-    }
-
-    public NicknameCheck getNicknameCheck() {
-        return nicknameCheck;
-    }
-
-    public ProxyCheck getProxyCheck() {
-        return proxyCheck;
-    }
-
-    public ReJoinCheck getReJoinCheck() {
-        return reJoinCheck;
-    }
-
-    public ServerListCheck getServerListCheck() {
-        return serverListCheck;
     }
 }

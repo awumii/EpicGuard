@@ -29,7 +29,7 @@ public class ServerListCheck implements Check {
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (Configuration.serverListCheck && this.attackManager.isUnderAttack()) {
+        if (Configuration.serverListCheck && this.attackManager.isAttackMode()) {
             return !StorageManager.getStorage().getPingData().contains(address);
         }
         return false;
