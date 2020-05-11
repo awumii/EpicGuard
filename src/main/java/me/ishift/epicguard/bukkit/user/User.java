@@ -40,10 +40,13 @@ public class User {
         final File file = new File("plugins/EpicGuard/data/users/" + name + ".json");
         this.exists = file.exists();
 
+        if (!this.exists) {
+            return;
+        }
+
+        this.data = new Json(name, "plugins/EpicGuard/data/users");
         final Player player = Bukkit.getPlayerExact(name);
         if (player != null) {
-            this.data = new Json(name, "plugins/EpicGuard/data/users");
-
             final String address = player.getAddress().getAddress().getHostAddress();
             this.data.set("uuid", player.getUniqueId().toString());
             this.data.set("address", address);
@@ -57,7 +60,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getUUID() {
