@@ -42,7 +42,7 @@ public class MainInventory extends ClickableInventory {
                 .setTitle("&cServer status.")
                 .addLore("&7See status of your server.")
                 .addLore("")
-                .addLore(" &8» &7Attack&8: " + (attackManager.isUnderAttack() ? "&cDetected!" : "&aNot detected."))
+                .addLore(" &8» &7Attack&8: " + (attackManager.isAttackMode() ? "&cDetected!" : "&aNot detected."))
                 .addLore(" &8» &7Connections&8: &f" + attackManager.getConnectPerSecond() + "/s")
                 .addLore("")
                 .addLore(" &8» &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())

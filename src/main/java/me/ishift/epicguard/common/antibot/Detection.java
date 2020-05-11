@@ -74,7 +74,7 @@ public class Detection {
         logger.debug(" ");
         logger.debug("------- * ANTIBOT CHECK * -------");
         logger.debug("Performing check on: " + this.nickname + " (" + this.address + ")");
-        logger.debug("Current CPS: " + this.attackManager.getConnectPerSecond() + " (Attack: " + this.attackManager.isUnderAttack() + ")");
+        logger.debug("Current CPS: " + this.attackManager.getConnectPerSecond() + " (Attack: " + this.attackManager.isAttackMode() + ")");
         // Checking if player is whitelisted.
         if (StorageManager.getStorage().getWhitelist().contains(address)) {
             this.detected = false;

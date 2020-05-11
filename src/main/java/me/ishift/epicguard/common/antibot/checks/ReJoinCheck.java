@@ -29,7 +29,7 @@ public class ReJoinCheck implements Check {
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (Configuration.rejoinCheck && this.attackManager.isUnderAttack() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
+        if (Configuration.rejoinCheck && this.attackManager.isAttackMode() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
             StorageManager.getStorage().getRejoinData().add(nickname);
             return true;
         }
