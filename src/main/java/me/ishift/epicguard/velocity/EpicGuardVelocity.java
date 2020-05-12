@@ -25,7 +25,8 @@ import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
-import me.ishift.epicguard.common.task.CounterResetTask;
+import me.ishift.epicguard.common.task.CounterTask;
+import me.ishift.epicguard.common.types.Platform;
 import me.ishift.epicguard.common.util.FileUtil;
 import me.ishift.epicguard.velocity.command.GuardCommand;
 import me.ishift.epicguard.velocity.listener.PreLoginListener;
@@ -50,7 +51,7 @@ public class EpicGuardVelocity {
         this.attackManager = new AttackManager();
 
         server.getScheduler().buildTask(this, new AttackToggleTask(this.attackManager)).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
-        server.getScheduler().buildTask(this, new CounterResetTask(this.attackManager)).repeat(1, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new CounterTask(this.attackManager)).repeat(1, TimeUnit.SECONDS).schedule();
 
         server.getEventManager().register(this, new PreLoginListener(this.attackManager));
         server.getCommandManager().register(new GuardCommand(this.attackManager), "guard", "epicguard", "ab", "antibot");

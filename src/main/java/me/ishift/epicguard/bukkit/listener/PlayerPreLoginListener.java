@@ -15,13 +15,8 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.user.User;
-import me.ishift.epicguard.bukkit.util.ActionBarAPI;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
-import me.ishift.epicguard.common.data.config.Messages;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -41,18 +36,6 @@ public class PlayerPreLoginListener implements Listener {
         final Detection detection = this.attackManager.check(address, name);
         if (detection.isDetected()) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getMessage());
-
-            final String message = Messages.prefix + " &7CPS: &c" + this.attackManager.getConnectPerSecond() + "/s &8| &6" + name + " &8[&e" + address + "&8] - &7" + detection.getReason();
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                final User user = new User(name, this.attackManager);
-                if (user == null)
-                {
-                    return;
-                }
-                if (user.exists() && user.isNotifications()) {
-                    ActionBarAPI.sendActionBar(player, message);
-                }
-            }
         }
     }
 }

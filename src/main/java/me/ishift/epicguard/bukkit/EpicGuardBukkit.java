@@ -29,7 +29,9 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;
-import me.ishift.epicguard.common.task.CounterResetTask;
+import me.ishift.epicguard.common.task.CounterTask;
+import me.ishift.epicguard.common.task.MonitorTask;
+import me.ishift.epicguard.common.types.Platform;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import me.ishift.inventory.api.InventoryManager;
 import org.bukkit.Bukkit;
@@ -75,8 +77,9 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerBuildListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.attackManager), 0L, Configuration.checkConditionsDelay * 2L);
-        scheduler.runTaskTimerAsynchronously(this, new CounterResetTask(this.attackManager), 0L, 20L);
+        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.attackManager), 20L, Configuration.checkConditionsDelay * 2L);
+        scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.attackManager), 20L, 20L);
+        scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.attackManager, Platform.BUKKIT), 20L, 5L);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
             new TabCompletePacketListener(this);
