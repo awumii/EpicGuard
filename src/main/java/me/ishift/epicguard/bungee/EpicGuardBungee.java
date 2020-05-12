@@ -17,13 +17,12 @@ package me.ishift.epicguard.bungee;
 
 import lombok.Getter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
-import me.ishift.epicguard.bungee.listener.PingListener;
-import me.ishift.epicguard.bungee.listener.PostLoginListener;
-import me.ishift.epicguard.bungee.listener.PreLoginListener;
+import me.ishift.epicguard.bungee.listener.*;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
+import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.MonitorTask;
@@ -49,6 +48,7 @@ public class EpicGuardBungee extends Plugin {
     public void onEnable() {
         epicGuardBungee = this;
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
+        SpigotSettings.load();
 
         this.attackManager = new AttackManager();
         this.statusPlayers = new HashSet<>();
@@ -57,6 +57,9 @@ public class EpicGuardBungee extends Plugin {
         pm.registerListener(this, new PreLoginListener(this.attackManager));
         pm.registerListener(this, new PostLoginListener());
         pm.registerListener(this, new PingListener());
+        pm.registerListener(this, new PlayerChatListener());
+        pm.registerListener(this, new PlayerTabListener());
+
         pm.registerCommand(this, new GuardCommand("guard"));
 
         this.getProxy().getScheduler().schedule(this, new AttackToggleTask(this.attackManager), 1L, Configuration.checkConditionsDelay, TimeUnit.SECONDS);
