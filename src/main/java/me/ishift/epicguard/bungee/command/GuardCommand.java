@@ -52,38 +52,44 @@ public class GuardCommand extends Command {
             return;
         }
 
-        if (args[0].equalsIgnoreCase("status")) {
-            final ProxiedPlayer player = (ProxiedPlayer) sender;
-            final boolean isEnabled = EpicGuardBungee.getInstance().getStatusPlayers().contains(player.getUniqueId());
+        switch (args[0].toLowerCase()) {
+            case "status":
+                final ProxiedPlayer player = (ProxiedPlayer) sender;
+                if (EpicGuardBungee.getInstance().getStatusPlayers().contains(player.getUniqueId())) {
+                    EpicGuardBungee.getInstance().getStatusPlayers().remove(player.getUniqueId());
+                    BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOff);
+                    return;
+                }
 
-            if (isEnabled) {
-                EpicGuardBungee.getInstance().getStatusPlayers().remove(player.getUniqueId());
-                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOff);
-                return;
-            }
-            EpicGuardBungee.getInstance().getStatusPlayers().add(player.getUniqueId());
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOn);
-        } else if (args[0].equalsIgnoreCase("reload")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
-            Configuration.load();
-        } else if (args[0].equalsIgnoreCase("whitelist")) {
-            if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard whitelist <adress>"));
-                return;
-            }
-            final String address = args[1];
-            StorageManager.getStorage().whitelist(address);
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
-        } else if (args[0].equalsIgnoreCase("blacklist")) {
-            if (args.length != 2) {
-                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard blacklist <adress>"));
-                return;
-            }
-            final String address = args[1];
-            StorageManager.getStorage().blacklist(address);
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address));
-        } else {
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.unknownCommand);
+                EpicGuardBungee.getInstance().getStatusPlayers().add(player.getUniqueId());
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOn);
+                break;
+            case "reload":
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.configReload);
+                Configuration.load();
+                break;
+            case "whitelist":
+                if (args.length != 2) {
+                    BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard whitelist <adress>"));
+                    return;
+                }
+
+                final String address = args[1];
+                StorageManager.getStorage().whitelist(address);
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
+                break;
+            case "blacklist":
+                if (args.length != 2) {
+                    BungeeUtil.sendMessage(sender, Messages.prefix + Messages.usage.replace("{USAGE}", " guard blacklist <adress>"));
+                    return;
+                }
+
+                final String address1 = args[1];
+                StorageManager.getStorage().blacklist(address1);
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address1));
+                break;
+            default:
+                BungeeUtil.sendMessage(sender, Messages.prefix + Messages.unknownCommand);
         }
     }
 }

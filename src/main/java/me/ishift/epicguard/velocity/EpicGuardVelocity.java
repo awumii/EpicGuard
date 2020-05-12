@@ -26,7 +26,6 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterTask;
-import me.ishift.epicguard.common.types.Platform;
 import me.ishift.epicguard.common.util.FileUtil;
 import me.ishift.epicguard.velocity.command.GuardCommand;
 import me.ishift.epicguard.velocity.listener.PreLoginListener;

@@ -16,8 +16,8 @@
 package me.ishift.epicguard.common.antibot.checks;
 
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.Check;
+import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.util.URLHelper;
 
