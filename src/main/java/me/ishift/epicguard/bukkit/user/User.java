@@ -29,7 +29,7 @@ import java.util.UUID;
 public class User {
     private final boolean exists;
     private final String name;
-    private Json data;
+    private final Json data;
 
     /**
      * @param name Nickname of the user.
@@ -39,10 +39,6 @@ public class User {
         this.name = name;
         final File file = new File("plugins/EpicGuard/data/users/" + name + ".json");
         this.exists = file.exists();
-
-        if (!this.exists) {
-            return;
-        }
 
         this.data = new Json(name, "plugins/EpicGuard/data/users");
         final Player player = Bukkit.getPlayerExact(name);

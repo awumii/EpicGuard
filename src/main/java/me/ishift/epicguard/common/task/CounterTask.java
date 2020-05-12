@@ -17,10 +17,10 @@ package me.ishift.epicguard.common.task;
 
 import me.ishift.epicguard.common.AttackManager;
 
-public class CounterResetTask implements Runnable {
+public class CounterTask implements Runnable {
     private final AttackManager attackManager;
 
-    public CounterResetTask(AttackManager attackManager) {
+    public CounterTask(AttackManager attackManager) {
         this.attackManager = attackManager;
     }
 

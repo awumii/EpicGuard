@@ -74,11 +74,11 @@ public class GuardLogger {
         }
 
         // If there is fast bot attack then the cpu will 'explode' from the amount of written lines.
-        if (this.logger.getName().equals("EpicGuard") && this.attackManager.getConnectPerSecond() > 20) {
+        if (this.logger.getName().equals("EpicGuard") && this.attackManager.getConnectPerSecond() > 10) {
             return;
         }
         final File file = new File(this.path + "/logs/" + this.name + "-" + DateUtil.getDate() + ".txt");
-        final String logMessage = "(" + DateUtil.getTime() + "/" + (hide ? "DEBUG" : "INFO") + ")" + message;
+        final String logMessage = "(" + DateUtil.getTime() + "/" + (hide ? "DEBUG" : "INFO") + ") " + message;
         FileUtil.writeToFile(file, logMessage);
     }
 }
