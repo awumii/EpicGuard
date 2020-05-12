@@ -62,72 +62,88 @@ public class GuardCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("menu")) {
-            if (!(sender instanceof Player)) {
-                send(sender, Messages.playerOnly);
-                return true;
-            }
-            EpicGuardBukkit.getInstance().getInventoryManager().open("MAIN", (Player) sender);
-        } else if (args[0].equalsIgnoreCase("status")) {
-            if (!(sender instanceof Player)) {
-                send(sender, Messages.playerOnly);
-                return true;
-            }
-            final User user = new User(sender.getName(), this.attackManager);
-            send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
-            user.setNotifications(!user.isNotifications());
-        } else if (args[0].equalsIgnoreCase("reload")) {
-            Configuration.load();
-            SpigotSettings.load();
-            Messages.load();
-            send(sender, Messages.configReload);
-        } else if (args[0].equalsIgnoreCase("player")) {
-            if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + " player <player>"));
-                return true;
-            }
-
-            final User user = new User(args[1], this.attackManager);
-            if (!user.exists()) {
-                send(sender, Messages.playerNotFound);
-                return true;
-            }
-
-            sendNoPrefix(sender, "&8&m---------------------------------------------------");
-            sendNoPrefix(sender, "&8» &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
-            sendNoPrefix(sender, "");
-            sendNoPrefix(sender, "&8» &7Name: &f" + user.getName());
-            sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUUID());
-            sendNoPrefix(sender, "&8» &7Address: &f" + user.getAddress());
-            sendNoPrefix(sender, "&8» &7Country: &f" + user.getCountry());
-            sendNoPrefix(sender, "&8» &7City: &f" + user.getCity());
-            sendNoPrefix(sender, "&8» &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
-            if (!user.getAddressHistory().isEmpty()) {
-                sendNoPrefix(sender, " ");
-                sendNoPrefix(sender, "&8» &7IP History:");
-                for (String address : user.getAddressHistory()) {
-                    sendNoPrefix(sender, "  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""));
+        switch (args[0].toLowerCase()) {
+            case "menu":
+                if (!(sender instanceof Player)) {
+                    send(sender, Messages.playerOnly);
+                    return true;
                 }
+
+                EpicGuardBukkit.getInstance().getInventoryManager().open("MAIN", (Player) sender);
+                break;
+            case "status": {
+                if (!(sender instanceof Player)) {
+                    send(sender, Messages.playerOnly);
+                    return true;
+                }
+
+                final User user = new User(sender.getName(), this.attackManager);
+                send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
+                user.setNotifications(!user.isNotifications());
+                break;
             }
-            sendNoPrefix(sender, "&8&m---------------------------------------------------");
-        } else if (args[0].equalsIgnoreCase("whitelist")) {
-            if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + " whitelist <address>"));
-                return true;
+            case "reload":
+                Configuration.load();
+                SpigotSettings.load();
+                Messages.load();
+                send(sender, Messages.configReload);
+                break;
+            case "player": {
+                if (args.length != 2) {
+                    send(sender, Messages.usage.replace("{USAGE}", s + " player <player>"));
+                    return true;
+                }
+
+                final User user = new User(args[1], this.attackManager);
+                if (!user.exists()) {
+                    send(sender, Messages.playerNotFound);
+                    return true;
+                }
+
+                sendNoPrefix(sender, "&8&m---------------------------------------------------");
+                sendNoPrefix(sender, "&8» &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
+                sendNoPrefix(sender, "");
+                sendNoPrefix(sender, "&8» &7Name: &f" + user.getName());
+                sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUUID());
+                sendNoPrefix(sender, "&8» &7Address: &f" + user.getAddress());
+                sendNoPrefix(sender, "&8» &7Country: &f" + user.getCountry());
+                sendNoPrefix(sender, "&8» &7City: &f" + user.getCity());
+                sendNoPrefix(sender, "&8» &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
+                if (!user.getAddressHistory().isEmpty()) {
+                    sendNoPrefix(sender, " ");
+                    sendNoPrefix(sender, "&8» &7IP History:");
+                    for (String address : user.getAddressHistory()) {
+                        sendNoPrefix(sender, "  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""));
+                    }
+                }
+                sendNoPrefix(sender, "&8&m---------------------------------------------------");
+                break;
             }
-            final String address = args[1];
-            StorageManager.getStorage().whitelist(address);
-            send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
-        } else if (args[0].equalsIgnoreCase("blacklist")) {
-            if (args.length != 2) {
-                send(sender, Messages.usage.replace("{USAGE}", s + " blacklist <address>"));
-                return true;
+            case "whitelist": {
+                if (args.length != 2) {
+                    send(sender, Messages.usage.replace("{USAGE}", s + " whitelist <address>"));
+                    return true;
+                }
+
+                final String address = args[1];
+                StorageManager.getStorage().whitelist(address);
+                send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
+                break;
             }
-            final String address = args[1];
-            StorageManager.getStorage().blacklist(address);
-            send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
-        } else {
-            send(sender, Messages.unknownCommand);
+            case "blacklist": {
+                if (args.length != 2) {
+                    send(sender, Messages.usage.replace("{USAGE}", s + " blacklist <address>"));
+                    return true;
+                }
+
+                final String address = args[1];
+                StorageManager.getStorage().blacklist(address);
+                send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
+                break;
+            }
+            default:
+                send(sender, Messages.unknownCommand);
+                break;
         }
         return true;
     }

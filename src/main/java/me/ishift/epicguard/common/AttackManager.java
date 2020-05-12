@@ -16,6 +16,7 @@
 package me.ishift.epicguard.common;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.checks.*;
@@ -40,8 +41,11 @@ public class AttackManager {
     private final ReJoinCheck reJoinCheck;
     private final ServerListCheck serverListCheck;
 
+    @Setter
     private int connectPerSecond = 0;
+    @Setter
     private int totalBots = 0;
+    @Setter
     private boolean attackMode = false;
 
     /**
@@ -95,32 +99,9 @@ public class AttackManager {
     }
 
     /**
-     * @param i Amount of connections per second.
-     */
-    public void setConnectPerSecond(int i) {
-        this.connectPerSecond = i;
-    }
-
-    /**
      * Increasing number of bots blocked during current bot-attack by one.
      */
     public void increaseBots() {
         this.totalBots++;
-    }
-
-    /**
-     * @param bol Toggling the AttackMode.
-     */
-    public void setAttackMode(boolean bol) {
-        this.attackMode = bol;
-    }
-
-    /**
-     * Resetting antibot variables to the default values.
-     */
-    public void reset() {
-        this.attackMode = false;
-        this.totalBots = 0;
-        this.connectPerSecond = 0;
     }
 }

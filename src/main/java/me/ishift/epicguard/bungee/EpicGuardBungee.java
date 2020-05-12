@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bungee;
 
+import lombok.Getter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.PingListener;
 import me.ishift.epicguard.bungee.listener.PostLoginListener;
@@ -37,6 +38,7 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@Getter
 public class EpicGuardBungee extends Plugin {
     private static EpicGuardBungee epicGuardBungee;
 
@@ -83,13 +85,5 @@ public class EpicGuardBungee extends Plugin {
 
     public static EpicGuardBungee getInstance() {
         return epicGuardBungee;
-    }
-
-    public AttackManager getAttackManager() {
-        return this.attackManager;
-    }
-
-    public Collection<UUID> getStatusPlayers() {
-        return this.statusPlayers;
     }
 }
