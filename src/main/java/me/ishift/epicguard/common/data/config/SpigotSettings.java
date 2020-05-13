@@ -54,6 +54,7 @@ public class SpigotSettings {
 
     public static void load() {
         final Yaml config = new Yaml("spigot.yml", "plugins/EpicGuard");
+        config.setHeader("Welcome to the Spigot-specific configuration of EpicGuard.", "These modules are still experimental", "Report the bugs in the GitHub issues.");
 
         tabCompleteBlock = config.getOrSetDefault("fully-block-tab-complete", false);
 
