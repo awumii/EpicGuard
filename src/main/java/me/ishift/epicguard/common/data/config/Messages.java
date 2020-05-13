@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Messages {
-    public static final Yaml FILE = new Yaml("messages_en_US", "plugins/EpicGuard");
     public static List<String> messageKickProxy;
     public static List<String> messageKickCountry;
     public static List<String> messagesKickServerList;
@@ -46,30 +45,34 @@ public class Messages {
     public static String operatorDisabled;
     public static String namespacedDisabled;
 
+    public static String monitorActionAttack;
+
     public static void load() {
-        prefix = FILE.getOrSetDefault("prefix", "&8[&6&lEpicGuard&8] &7");
+        final Yaml config = new Yaml("messages_en_US", "plugins/EpicGuard");
+        prefix = config.getOrSetDefault("prefix", "&8[&6&lEpicGuard&8] &7");
 
-        messageKickProxy = FILE.getOrSetDefault("kick-messages.proxy", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN."));
-        messageKickCountry = FILE.getOrSetDefault("kick-messages.country", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Country GeoDetection."));
-        messagesKickServerList = FILE.getOrSetDefault("kick-messages.server-list", Collections.singletonList("&8[&6EpicGuard&8] &cAdd our server to your &6server list&c, and then join again."));
-        messageKickBlacklist = FILE.getOrSetDefault("kick-messages.blacklist", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6IP Blacklist."));
-        messageKickVerify = FILE.getOrSetDefault("kick-messages.rejoin", Collections.singletonList("&8[&6EpicGuard&8] &cPlease join our server &6again &cto verify that you are not a bot."));
-        messageKickNamecontains = FILE.getOrSetDefault("kick-messages.namecontains", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6NameContains (Change nickname or contact server admin)"));
+        messageKickProxy = config.getOrSetDefault("kick-messages.proxy", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN."));
+        messageKickCountry = config.getOrSetDefault("kick-messages.country", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Country GeoDetection."));
+        messagesKickServerList = config.getOrSetDefault("kick-messages.server-list", Collections.singletonList("&8[&6EpicGuard&8] &cAdd our server to your &6server list&c, and then join again."));
+        messageKickBlacklist = config.getOrSetDefault("kick-messages.blacklist", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6IP Blacklist."));
+        messageKickVerify = config.getOrSetDefault("kick-messages.rejoin", Collections.singletonList("&8[&6EpicGuard&8] &cPlease join our server &6again &cto verify that you are not a bot."));
+        messageKickNamecontains = config.getOrSetDefault("kick-messages.namecontains", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6NameContains (Change nickname or contact server admin)"));
 
-        noPermission = FILE.getOrSetDefault("other.no-permission", "&cYou don't have permission to access this command!");
-        notAllowedCommand = FILE.getOrSetDefault("other.not-allowed-command", "&fUnknown command. Type '/help' for help.");
-        blockedCommand = FILE.getOrSetDefault("other.blocked-command", "&cThis command is not allowed!");
-        playerOnly = FILE.getOrSetDefault("other.player-only", "&cThis command is player-only!");
-        configReload = FILE.getOrSetDefault("other.config-reload", "&7Configuration has been &asuccesfully &7reloaded.");
-        usage = FILE.getOrSetDefault("other.usage", "&7Correct usage: &f/{USAGE}&7.");
-        playerNotFound = FILE.getOrSetDefault("other.player-not-found", "&cPlayer not found!");
-        blacklisted = FILE.getOrSetDefault("other.address-blacklisted", "&7Succesfully &cblacklisted &7address: &c{ADDRESS}");
-        whitelisted = FILE.getOrSetDefault("other.address-whitelisted", "&7Succesfully &awhitelisted &7address: &a{ADDRESS}");
-        unknownCommand = FILE.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
-        statusOn = FILE.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
-        statusOff = FILE.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
+        noPermission = config.getOrSetDefault("other.no-permission", "&cYou don't have permission to access this command!");
+        notAllowedCommand = config.getOrSetDefault("other.not-allowed-command", "&fUnknown command. Type '/help' for help.");
+        blockedCommand = config.getOrSetDefault("other.blocked-command", "&cThis command is not allowed!");
+        playerOnly = config.getOrSetDefault("other.player-only", "&cThis command is player-only!");
+        configReload = config.getOrSetDefault("other.config-reload", "&7Configuration has been &asuccesfully &7reloaded.");
+        usage = config.getOrSetDefault("other.usage", "&7Correct usage: &f/{USAGE}&7.");
+        playerNotFound = config.getOrSetDefault("other.player-not-found", "&cPlayer not found!");
+        blacklisted = config.getOrSetDefault("other.address-blacklisted", "&7Succesfully &cblacklisted &7address: &c{ADDRESS}");
+        whitelisted = config.getOrSetDefault("other.address-whitelisted", "&7Succesfully &awhitelisted &7address: &a{ADDRESS}");
+        unknownCommand = config.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
+        statusOn = config.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
+        statusOff = config.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
 
-        operatorDisabled = FILE.getOrSetDefault("other.operator-mechanics-disabled", "&cOperator mechanics has been disabled on this server.");
-        namespacedDisabled = FILE.getOrSetDefault("other.namespaced-disabled", "&cNamespaced commands (with ':' symbol) has been disabled on this server!.");
+        operatorDisabled = config.getOrSetDefault("other.operator-mechanics-disabled", "&cOperator mechanics has been disabled on this server.");
+        namespacedDisabled = config.getOrSetDefault("other.namespaced-disabled", "&cNamespaced commands (with ':' symbol) has been disabled on this server!.");
+        monitorActionAttack = config.getOrSetDefault("monitor.action-attack", "&cEpicGuard Monitor » &7Connections/s: &c{CPS}  &7Blocked: &e{BLOCKED}  &7Attack: {STATUS}");
     }
 }
