@@ -49,6 +49,7 @@ public class Messages {
 
     public static void load() {
         final Yaml config = new Yaml("messages_en_US", "plugins/EpicGuard");
+        config.setHeader("Welcome to the messages configuration of EpicGuard.", "You can customize some of the plugin parts here.", "More options will be added in the future.");
         prefix = config.getOrSetDefault("prefix", "&8[&6&lEpicGuard&8] &7");
 
         messageKickProxy = config.getOrSetDefault("kick-messages.proxy", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6Proxy/VPN."));

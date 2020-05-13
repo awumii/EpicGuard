@@ -18,6 +18,7 @@ public class BungeeSettings {
 
     public static void load() {
         final Yaml config = new Yaml("bungee.yml", "plugins/EpicGuard");
+        config.setHeader("Welcome to the BungeeCord-specific configuration of EpicGuard.", "These modules are still experimental", "Report the bugs in the GitHub issues.");
 
         tabCompleteBlock = config.getOrSetDefault("fully-block-tab-complete", false);
 
