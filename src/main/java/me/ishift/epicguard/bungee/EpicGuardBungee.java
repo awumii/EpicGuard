@@ -21,8 +21,8 @@ import me.ishift.epicguard.bungee.listener.*;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
+import me.ishift.epicguard.common.data.config.BungeeSettings;
 import me.ishift.epicguard.common.data.config.Configuration;
-import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.MonitorTask;
@@ -48,7 +48,7 @@ public class EpicGuardBungee extends Plugin {
     public void onEnable() {
         epicGuardBungee = this;
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
-        SpigotSettings.load();
+        BungeeSettings.load();
 
         this.attackManager = new AttackManager();
         this.statusPlayers = new HashSet<>();
