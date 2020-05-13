@@ -15,14 +15,12 @@
 
 package me.ishift.epicguard.common.task;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
 
+@AllArgsConstructor
 public class CounterTask implements Runnable {
     private final AttackManager attackManager;
-
-    public CounterTask(AttackManager attackManager) {
-        this.attackManager = attackManager;
-    }
 
     @Override
     public void run() {

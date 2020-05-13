@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.common.AttackManager;
@@ -29,12 +30,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
 
+@AllArgsConstructor
 public class PlayerJoinListener implements Listener {
     private final AttackManager attackManager;
-
-    public PlayerJoinListener(AttackManager attackManager) {
-        this.attackManager = attackManager;
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
