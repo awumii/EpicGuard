@@ -27,7 +27,7 @@ public class ConsoleCommandListener implements Listener {
     public void onConsoleCommand(ServerCommandEvent event) {
         final String cmd = event.getCommand();
 
-        if (SpigotSettings.disableOperatorMechanicsConsole && (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop"))) {
+        if (SpigotSettings.disableOperatorMechanicsConsole && (cmd.startsWith("op") || cmd.startsWith("deop") || cmd.startsWith("minecraft:op") || cmd.startsWith("minecraft:deop"))) {
             event.setCancelled(true);
             event.getSender().sendMessage(MessageHelper.color(Messages.operatorDisabled));
         }
