@@ -15,18 +15,16 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+@AllArgsConstructor
 public class PlayerPreLoginListener implements Listener {
     private final AttackManager attackManager;
-
-    public PlayerPreLoginListener(AttackManager attackManager) {
-        this.attackManager = attackManager;
-    }
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {

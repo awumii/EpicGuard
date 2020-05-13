@@ -15,15 +15,13 @@
 
 package me.ishift.epicguard.common.task;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 
+@AllArgsConstructor
 public class AttackToggleTask implements Runnable {
     private final AttackManager attackManager;
-
-    public AttackToggleTask(AttackManager attackManager) {
-        this.attackManager = attackManager;
-    }
 
     @Override
     public void run() {

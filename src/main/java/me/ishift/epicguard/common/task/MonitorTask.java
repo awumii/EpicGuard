@@ -1,19 +1,16 @@
 package me.ishift.epicguard.common.task;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bukkit.util.BukkitNotify;
 import me.ishift.epicguard.bungee.util.BungeeNotify;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.types.Platform;
 
+@AllArgsConstructor
 public class MonitorTask implements Runnable {
     private final AttackManager attackManager;
     private final Platform platform;
-
-    public MonitorTask(AttackManager attackManager, Platform platform) {
-        this.attackManager = attackManager;
-        this.platform = platform;
-    }
 
     @Override
     public void run() {

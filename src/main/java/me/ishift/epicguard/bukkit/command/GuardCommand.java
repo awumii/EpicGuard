@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.common.AttackManager;
@@ -29,12 +30,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 public class GuardCommand implements CommandExecutor {
     private final AttackManager attackManager;
-
-    public GuardCommand(AttackManager attackManager) {
-        this.attackManager = attackManager;
-    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String s, @NotNull String[] args) {
