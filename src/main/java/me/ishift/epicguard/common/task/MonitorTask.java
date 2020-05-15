@@ -9,17 +9,17 @@ import me.ishift.epicguard.common.types.Platform;
 
 @AllArgsConstructor
 public class MonitorTask implements Runnable {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
     private final Platform platform;
 
     @Override
     public void run() {
         final String message = Messages.monitorActionAttack
-                .replace("{CPS}", String.valueOf(this.attackManager.getConnectPerSecond()))
-                .replace("{BLOCKED}", String.valueOf(this.attackManager.getTotalBots()))
-                .replace("{STATUS}", this.attackManager.isAttackMode() ? "&a✔" : "&c✖");
+                .replace("{CPS}", String.valueOf(this.manager.getConnectPerSecond()))
+                .replace("{BLOCKED}", String.valueOf(this.manager.getTotalBots()))
+                .replace("{STATUS}", this.manager.isAttackMode() ? "&a✔" : "&c✖");
         if (this.platform == Platform.BUKKIT) {
-            BukkitNotify.notify(message, this.attackManager);
+            BukkitNotify.notify(message, this.manager);
         } else {
             BungeeNotify.notify(message);
         }

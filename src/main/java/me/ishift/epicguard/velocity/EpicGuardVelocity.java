@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "epicguard", name = "EpicGuard", version = "4.1.0",
         description = "Advanced server protection.", authors = {"iShift", "ruzekh"})
 public class EpicGuardVelocity {
-    private AttackManager attackManager;
+    private AttackManager manager;
     private final ProxyServer server;
 
     @Inject
@@ -47,13 +47,13 @@ public class EpicGuardVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         FileUtil.saveResource(new File("plugins/EpicGuard"), "config.yml");
-        this.attackManager = new AttackManager();
+        this.manager = new AttackManager();
 
-        server.getScheduler().buildTask(this, new AttackToggleTask(this.attackManager)).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
-        server.getScheduler().buildTask(this, new CounterTask(this.attackManager)).repeat(1, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new AttackToggleTask(this.manager)).repeat(Configuration.checkConditionsDelay, TimeUnit.SECONDS).schedule();
+        server.getScheduler().buildTask(this, new CounterTask(this.manager)).repeat(1, TimeUnit.SECONDS).schedule();
 
-        server.getEventManager().register(this, new PreLoginListener(this.attackManager));
-        server.getCommandManager().register(new GuardCommand(this.attackManager), "guard", "epicguard", "ab", "antibot");
+        server.getEventManager().register(this, new PreLoginListener(this.manager));
+        server.getCommandManager().register(new GuardCommand(this.manager), "guard", "epicguard", "ab", "antibot");
     }
 
     @Subscribe
@@ -62,6 +62,6 @@ public class EpicGuardVelocity {
     }
 
     public AttackManager getAttackManager() {
-        return this.attackManager;
+        return this.manager;
     }
 }

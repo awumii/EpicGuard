@@ -29,11 +29,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class MainInventory extends ClickableInventory {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public MainInventory(AttackManager attackManager) {
+    public MainInventory(AttackManager manager) {
         super("EpicGuard v" + EpicGuardBukkit.getInstance().getDescription().getVersion() + " (Main GUI)", "MAIN", InventorySize.NORMAL);
-        this.attackManager = attackManager;
+        this.manager = manager;
     }
 
     @Override
@@ -42,8 +42,8 @@ public class MainInventory extends ClickableInventory {
                 .setTitle("&cServer status.")
                 .addLore("&7See status of your server.")
                 .addLore("")
-                .addLore(" &8» &7Attack&8: " + (attackManager.isAttackMode() ? "&cDetected!" : "&aNot detected."))
-                .addLore(" &8» &7Connections&8: &f" + attackManager.getConnectPerSecond() + "/s")
+                .addLore(" &8» &7Attack&8: " + (manager.isAttackMode() ? "&cDetected!" : "&aNot detected."))
+                .addLore(" &8» &7Connections&8: &f" + manager.getConnectPerSecond() + "/s")
                 .addLore("")
                 .addLore(" &8» &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
                 .addLore(" &8» &7Whitelisted IPs&8: &a" + StorageManager.getStorage().getWhitelist().size())

@@ -23,10 +23,10 @@ import me.ishift.epicguard.velocity.util.Utils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class GuardCommand implements Command {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public GuardCommand(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public GuardCommand(AttackManager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class GuardCommand implements Command {
         Utils.send(source, "");
         Utils.send(source, "&c&l★ Attack Statistics.");
         Utils.send(source, "");
-        Utils.send(source, " &8» &7Connections: &6" + this.attackManager.getConnectPerSecond() + "/s");
-        Utils.send(source, " &8» &7Blocked bots: &6" + this.attackManager.getTotalBots() + "/s");
+        Utils.send(source, " &8» &7Connections: &6" + this.manager.getConnectPerSecond() + "/s");
+        Utils.send(source, " &8» &7Blocked bots: &6" + this.manager.getTotalBots() + "/s");
         Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getStorage().getBlacklist().size() + " IPs");
         Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getStorage().getWhitelist().size() + " IPs");
         Utils.send(source, "&8&m---------------------------------------");

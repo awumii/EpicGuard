@@ -25,10 +25,10 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class PreLoginListener implements Listener {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public PreLoginListener(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public PreLoginListener(AttackManager manager) {
+        this.manager = manager;
     }
 
     @EventHandler(priority = Byte.MAX_VALUE)
@@ -37,7 +37,7 @@ public class PreLoginListener implements Listener {
         final String address = connection.getAddress().getAddress().getHostAddress();
         final String name = connection.getName();
 
-        final Detection detection = this.attackManager.check(address, name);
+        final Detection detection = this.manager.check(address, name);
         if (detection.isDetected()) {
             final BaseComponent[] reason = TextComponent.fromLegacyText(detection.getReason().getMessage());
             event.setCancelled(true);

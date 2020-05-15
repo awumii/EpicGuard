@@ -23,10 +23,10 @@ import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public PreLoginListener(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public PreLoginListener(AttackManager manager) {
+        this.manager = manager;
     }
 
     @Subscribe
@@ -35,7 +35,7 @@ public class PreLoginListener {
         final String address = connection.getRemoteAddress().getAddress().getHostAddress();
         final String name = event.getUsername();
 
-        final Detection detection = this.attackManager.check(address, name);
+        final Detection detection = this.manager.check(address, name);
         if (detection.isDetected()) {
             event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getMessage())));
         }

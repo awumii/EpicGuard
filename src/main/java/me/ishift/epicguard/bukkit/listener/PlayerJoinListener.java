@@ -32,12 +32,13 @@ import java.util.List;
 
 @AllArgsConstructor
 public class PlayerJoinListener implements Listener {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final User user = new User(player.getName(), this.attackManager);
+        final User user = new User(player.getName(), this.manager);
+        user.create();
         final String address = user.getAddress();
 
         final List<String> history = user.getAddressHistory();

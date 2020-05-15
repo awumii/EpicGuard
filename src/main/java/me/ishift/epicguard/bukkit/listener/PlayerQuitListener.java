@@ -16,24 +16,18 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import lombok.AllArgsConstructor;
+import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.antibot.Detection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 @AllArgsConstructor
-public class PlayerPreLoginListener implements Listener {
+public class PlayerQuitListener implements Listener {
     private final AttackManager manager;
 
     @EventHandler
-    public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        final String address = event.getAddress().getHostAddress();
-        final String name = event.getName();
-
-        final Detection detection = this.manager.check(address, name);
-        if (detection.isDetected()) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getMessage());
-        }
+    public void onQuit(PlayerQuitEvent event) {
+        final User user = new User(event.getPlayer().getName(), this.manager);
     }
 }
