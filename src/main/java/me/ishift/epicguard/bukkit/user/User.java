@@ -19,10 +19,8 @@ import de.leonhard.storage.Json;
 import lombok.Getter;
 import lombok.Setter;
 import me.ishift.epicguard.common.AttackManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +28,6 @@ import java.util.List;
 @Setter
 public class User {
     private final AttackManager manager;
-    private final boolean existing;
-    private final String name;
     private Json data;
 
     private String uuid;
@@ -41,28 +37,16 @@ public class User {
     private List<String> addressHistory;
     private boolean notifications;
 
-    /**
-     * @param name Nickname of the user.
-     * @param manager Instance of the AttackManager (needed for GeoIP query).
-     */
-    public User(String name, AttackManager manager) {
+    public User(Player player, AttackManager manager) {
         this.manager = manager;
-        this.name = name;
-        final File file = new File("plugins/EpicGuard/data/users/" + name + ".json");
-        this.existing = file.exists();
-    }
+        this.data = new Json(player.getName(), "plugins/EpicGuard/data/users");
 
-    public void create() {
-        this.data = new Json(this.name, "plugins/EpicGuard/data/users");
-        final Player player = Bukkit.getPlayerExact(this.name);
-        if (player != null) {
-            final String address = player.getAddress().getAddress().getHostAddress();
-            this.addressHistory = this.data.getOrSetDefault("address-history", new ArrayList<>());
-            this.uuid = player.getUniqueId().toString();
-            this.address = address;
-            this.country = this.manager.getGeoApi().getCountryCode(address);
-            this.city = this.manager.getGeoApi().getCity(address);
-        }
+        final String address = player.getAddress().getAddress().getHostAddress();
+        this.addressHistory = this.data.getOrSetDefault("address-history", new ArrayList<>());
+        this.uuid = player.getUniqueId().toString();
+        this.address = address;
+        this.country = this.manager.getGeoApi().getCountryCode(address);
+        this.city = this.manager.getGeoApi().getCity(address);
     }
 
     public void save() {
@@ -72,9 +56,5 @@ public class User {
         this.data.set("city", this.city);
         this.data.set("address-history", this.addressHistory);
         this.data.set("notifications", this.notifications);
-    }
-
-    public Player getPlayer() {
-        return Bukkit.getPlayerExact(this.name);
     }
 }

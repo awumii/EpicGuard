@@ -19,7 +19,7 @@ public class MonitorTask implements Runnable {
                 .replace("{BLOCKED}", String.valueOf(this.manager.getTotalBots()))
                 .replace("{STATUS}", this.manager.isAttackMode() ? "&a✔" : "&c✖");
         if (this.platform == Platform.BUKKIT) {
-            BukkitNotify.notify(message, this.manager);
+            BukkitNotify.notify(message);
         } else {
             BungeeNotify.notify(message);
         }

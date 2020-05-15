@@ -15,16 +15,16 @@
 
 package me.ishift.epicguard.bukkit.util;
 
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
-import me.ishift.epicguard.common.AttackManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class BukkitNotify {
-    public static void notify(String message, AttackManager manager) {
+    public static void notify(String message) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            final User user = new User(player.getName(), manager);
-            if (user.isExisting() && user.isNotifications()) {
+            final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player);
+            if (user != null && user.isNotifications()) {
                 ActionBarAPI.sendActionBar(player, message);
             }
         }
