@@ -37,8 +37,8 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final User user = new User(player.getName(), this.manager);
-        user.create();
+        EpicGuardBukkit.getInstance().getUserManager().createUser(player);
+        final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player);
         final String address = user.getAddress();
 
         final List<String> history = user.getAddressHistory();

@@ -23,6 +23,7 @@ import me.ishift.epicguard.bukkit.inventory.PlayersInventory;
 import me.ishift.epicguard.bukkit.listener.*;
 import me.ishift.epicguard.bukkit.module.Module;
 import me.ishift.epicguard.bukkit.module.modules.*;
+import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
@@ -50,11 +51,13 @@ public class EpicGuardBukkit extends JavaPlugin {
     private InventoryManager inventoryManager;
     private OperatorProtection operatorProtection;
     private List<Module> modules;
+    private UserManager userManager;
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
         this.manager = new AttackManager();
+        this.userManager = new UserManager(this.manager);
 
         this.operatorProtection = new OperatorProtection();
         this.modules = new LinkedList<>();
@@ -71,7 +74,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(this.manager), this);
         pm.registerEvents(new PlayerJoinListener(this.manager), this);
-        pm.registerEvents(new PlayerQuitListener(this.manager), this);
+        pm.registerEvents(new PlayerQuitListener(), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);

@@ -16,18 +16,16 @@
 package me.ishift.epicguard.bukkit.listener;
 
 import lombok.AllArgsConstructor;
-import me.ishift.epicguard.bukkit.user.User;
-import me.ishift.epicguard.common.AttackManager;
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 @AllArgsConstructor
 public class PlayerQuitListener implements Listener {
-    private final AttackManager manager;
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        final User user = new User(event.getPlayer().getName(), this.manager);
+        EpicGuardBukkit.getInstance().getUserManager().removeUser(event.getPlayer());
     }
 }

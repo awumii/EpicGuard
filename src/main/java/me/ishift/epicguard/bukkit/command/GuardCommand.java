@@ -24,6 +24,7 @@ import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.util.MessageHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -75,7 +76,7 @@ public class GuardCommand implements CommandExecutor {
                     return true;
                 }
 
-                final User user = new User(sender.getName(), this.manager);
+                final User user = EpicGuardBukkit.getInstance().getUserManager().getUser((Player) sender);
                 send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
                 user.setNotifications(!user.isNotifications());
                 break;
@@ -92,21 +93,22 @@ public class GuardCommand implements CommandExecutor {
                     return true;
                 }
 
-                final User user = new User(args[1], this.manager);
-                if (!user.isExisting()) {
+                final Player arg = Bukkit.getPlayer(args[1]);
+                if (arg == null) {
                     send(sender, Messages.playerNotFound);
                     return true;
                 }
 
+                final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(arg);
                 sendNoPrefix(sender, "&8&m---------------------------------------------------");
-                sendNoPrefix(sender, "&8» &7Viewing data of " + (user.getPlayer() != null ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
+                sendNoPrefix(sender, "&8» &7Viewing data of user: &6" + args[1]);
                 sendNoPrefix(sender, "");
-                sendNoPrefix(sender, "&8» &7Name: &f" + user.getName());
+                sendNoPrefix(sender, "&8» &7Name: &f" + args[1]);
                 sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUuid());
                 sendNoPrefix(sender, "&8» &7Address: &f" + user.getAddress());
                 sendNoPrefix(sender, "&8» &7Country: &f" + user.getCountry());
                 sendNoPrefix(sender, "&8» &7City: &f" + user.getCity());
-                sendNoPrefix(sender, "&8» &7OP: " + (user.getPlayer().isOp() ? "&aYes" : "&cNo"));
+                sendNoPrefix(sender, "&8» &7OP: " + (arg.isOp() ? "&aYes" : "&cNo"));
                 if (!user.getAddressHistory().isEmpty()) {
                     sendNoPrefix(sender, " ");
                     sendNoPrefix(sender, "&8» &7IP History:");

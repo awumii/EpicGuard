@@ -46,7 +46,7 @@ public class PlayersInventory extends ClickableInventory {
         int i = 0;
         for (Player entry : Bukkit.getOnlinePlayers()) {
             final List<String> lore = new ArrayList<>();
-            final User user = new User(entry.getName(), this.manager);
+            final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(entry);
 
             lore.add("");
             lore.add(MessageHelper.color(" &8» &7Name&8: &f" + entry.getName()));
