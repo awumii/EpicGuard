@@ -21,19 +21,19 @@ import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.types.GeoMode;
 
 public class GeographicalCheck implements Check {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public GeographicalCheck(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public GeographicalCheck(AttackManager manager) {
+        this.manager = manager;
     }
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (this.attackManager.getGeoApi() == null) {
+        if (this.manager.getGeoApi() == null) {
             return false;
         }
 
-        final String country = this.attackManager.getGeoApi().getCountryCode(address);
+        final String country = this.manager.getGeoApi().getCountryCode(address);
         if (country.equals("Unknown?") || Configuration.countryMode == GeoMode.DISABLED) {
             return false;
         }

@@ -21,15 +21,15 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 
 public class ServerListCheck implements Check {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public ServerListCheck(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public ServerListCheck(AttackManager manager) {
+        this.manager = manager;
     }
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (Configuration.serverListCheck && this.attackManager.isAttackMode()) {
+        if (Configuration.serverListCheck && this.manager.isAttackMode()) {
             return !StorageManager.getStorage().getPingData().contains(address);
         }
         return false;

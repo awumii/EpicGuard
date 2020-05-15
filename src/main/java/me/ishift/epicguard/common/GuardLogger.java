@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 public class GuardLogger {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
     private final Logger logger;
     private final String name;
     private final String path;
@@ -34,7 +34,7 @@ public class GuardLogger {
      */
     public GuardLogger(String name, String path, AttackManager manager) {
         this.logger = Logger.getLogger(name);
-        this.attackManager = manager;
+        this.manager = manager;
         this.name = name;
         this.path = path;
         final File logDir = new File(path + "/logs");
@@ -74,7 +74,7 @@ public class GuardLogger {
         }
 
         // If there is fast bot attack then the cpu will 'explode' from the amount of written lines.
-        if (this.logger.getName().equals("EpicGuard") && this.attackManager.getConnectPerSecond() > 10) {
+        if (this.logger.getName().equals("EpicGuard") && this.manager.getConnectPerSecond() > 10) {
             return;
         }
         final File file = new File(this.path + "/logs/" + this.name + "-" + DateUtil.getDate() + ".txt");

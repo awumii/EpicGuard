@@ -21,13 +21,13 @@ import me.ishift.epicguard.common.data.config.Configuration;
 
 @AllArgsConstructor
 public class AttackToggleTask implements Runnable {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
     @Override
     public void run() {
-        if (this.attackManager.getConnectPerSecond() < Configuration.connectSpeed) {
-            this.attackManager.setAttackMode(false);
-            this.attackManager.setTotalBots(0);
+        if (this.manager.getConnectPerSecond() < Configuration.connectSpeed) {
+            this.manager.setAttackMode(false);
+            this.manager.setTotalBots(0);
         }
     }
 }

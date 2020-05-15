@@ -46,7 +46,7 @@ import java.util.List;
 
 @Getter
 public class EpicGuardBukkit extends JavaPlugin {
-    private AttackManager attackManager;
+    private AttackManager manager;
     private InventoryManager inventoryManager;
     private OperatorProtection operatorProtection;
     private List<Module> modules;
@@ -54,7 +54,7 @@ public class EpicGuardBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        this.attackManager = new AttackManager();
+        this.manager = new AttackManager();
 
         this.operatorProtection = new OperatorProtection();
         this.modules = new LinkedList<>();
@@ -65,21 +65,22 @@ public class EpicGuardBukkit extends JavaPlugin {
         this.modules.add(new OperatorMechanics());
 
         this.inventoryManager = new InventoryManager(this);
-        this.inventoryManager.addInventory(new MainInventory(this.attackManager));
-        this.inventoryManager.addInventory(new PlayersInventory(this.attackManager));
+        this.inventoryManager.addInventory(new MainInventory(this.manager));
+        this.inventoryManager.addInventory(new PlayersInventory(this.manager));
 
         final PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerPreLoginListener(this.attackManager), this);
-        pm.registerEvents(new PlayerJoinListener(this.attackManager), this);
+        pm.registerEvents(new PlayerPreLoginListener(this.manager), this);
+        pm.registerEvents(new PlayerJoinListener(this.manager), this);
+        pm.registerEvents(new PlayerQuitListener(this.manager), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
         pm.registerEvents(new PlayerBuildListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.attackManager), 20L, Configuration.checkConditionsDelay * 2L);
-        scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.attackManager), 20L, 20L);
-        scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.attackManager, Platform.BUKKIT), 20L, 5L);
+        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 2L);
+        scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.manager), 20L, 20L);
+        scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.manager, Platform.BUKKIT), 20L, 20L);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
             new TabCompletePacketListener(this);
@@ -93,7 +94,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
         final PluginCommand command = this.getCommand("guard");
         if (command != null) {
-            command.setExecutor(new GuardCommand(this.attackManager));
+            command.setExecutor(new GuardCommand(this.manager));
             command.setTabCompleter(new GuardTabCompleter());
         }
         new Metrics(this, 5845);

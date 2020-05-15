@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 public class GuardCommand implements CommandExecutor {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String s, @NotNull String[] args) {
@@ -75,7 +75,7 @@ public class GuardCommand implements CommandExecutor {
                     return true;
                 }
 
-                final User user = new User(sender.getName(), this.attackManager);
+                final User user = new User(sender.getName(), this.manager);
                 send(sender, (user.isNotifications() ? Messages.statusOff : Messages.statusOn));
                 user.setNotifications(!user.isNotifications());
                 break;
@@ -92,17 +92,17 @@ public class GuardCommand implements CommandExecutor {
                     return true;
                 }
 
-                final User user = new User(args[1], this.attackManager);
-                if (!user.exists()) {
+                final User user = new User(args[1], this.manager);
+                if (!user.isExisting()) {
                     send(sender, Messages.playerNotFound);
                     return true;
                 }
 
                 sendNoPrefix(sender, "&8&m---------------------------------------------------");
-                sendNoPrefix(sender, "&8» &7Viewing data of " + (user.isOnline() ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
+                sendNoPrefix(sender, "&8» &7Viewing data of " + (user.getPlayer() != null ? "&aonline" : "&coffline") + " &7user: &6" + args[1]);
                 sendNoPrefix(sender, "");
                 sendNoPrefix(sender, "&8» &7Name: &f" + user.getName());
-                sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUUID());
+                sendNoPrefix(sender, "&8» &7UUID: &f" + user.getUuid());
                 sendNoPrefix(sender, "&8» &7Address: &f" + user.getAddress());
                 sendNoPrefix(sender, "&8» &7Country: &f" + user.getCountry());
                 sendNoPrefix(sender, "&8» &7City: &f" + user.getCity());

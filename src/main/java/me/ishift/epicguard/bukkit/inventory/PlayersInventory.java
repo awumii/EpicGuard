@@ -34,11 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayersInventory extends ClickableInventory {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public PlayersInventory(AttackManager attackManager) {
+    public PlayersInventory(AttackManager manager) {
         super("EpicGuard v" + EpicGuardBukkit.getInstance().getDescription().getVersion() + " (Player Management)", "PLAYERS", InventorySize.BIGGEST);
-        this.attackManager = attackManager;
+        this.manager = manager;
     }
 
     @Override
@@ -46,14 +46,14 @@ public class PlayersInventory extends ClickableInventory {
         int i = 0;
         for (Player entry : Bukkit.getOnlinePlayers()) {
             final List<String> lore = new ArrayList<>();
-            final User user = new User(entry.getName(), this.attackManager);
+            final User user = new User(entry.getName(), this.manager);
 
             lore.add("");
             lore.add(MessageHelper.color(" &8» &7Name&8: &f" + entry.getName()));
             lore.add(MessageHelper.color(" &8» &7UUID&8: &f" + entry.getUniqueId()));
             lore.add(MessageHelper.color(" &8» &7OP&8: " + (entry.isOp() ? "&aYes" : "&cNo")));
-            lore.add(MessageHelper.color(" &8» &7Country&8: &f" + attackManager.getGeoApi().getCountryCode(user.getAddress())));
-            lore.add(MessageHelper.color(" &8» &7City&8: &f" + attackManager.getGeoApi().getCity(user.getAddress())));
+            lore.add(MessageHelper.color(" &8» &7Country&8: &f" + manager.getGeoApi().getCountryCode(user.getAddress())));
+            lore.add(MessageHelper.color(" &8» &7City&8: &f" + manager.getGeoApi().getCity(user.getAddress())));
             lore.add("");
 
             if (!user.getAddressHistory().isEmpty()) {

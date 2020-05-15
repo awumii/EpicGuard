@@ -85,7 +85,7 @@ public class GeoApi {
             try {
                 return this.countryReader.country(address).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception e) {
-                this.logger.info("Can't find country for address: " + host);
+                this.logger.debug("Can't find country for address: " + host);
             }
         }
         return "Unknown?";
@@ -102,7 +102,7 @@ public class GeoApi {
             try {
                 return this.cityReader.city(address).getCity().getName();
             } catch (IOException | GeoIp2Exception e) {
-                this.logger.info("Can't find city for address: " + host);
+                this.logger.debug("Can't find city for address: " + host);
             }
         }
         return "Unknown?";
@@ -116,7 +116,7 @@ public class GeoApi {
         try {
             return InetAddress.getByName(hostname);
         } catch (UnknownHostException e) {
-            this.logger.info("Can't resolve InetAddress from hostname: " + hostname);
+            this.logger.debug("Can't resolve InetAddress from hostname: " + hostname);
         }
         return null;
     }

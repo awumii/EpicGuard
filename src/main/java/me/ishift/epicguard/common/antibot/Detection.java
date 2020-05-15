@@ -22,7 +22,7 @@ import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.types.Reason;
 
 public class Detection {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
     private final String address;
     private final String nickname;
 
@@ -33,10 +33,10 @@ public class Detection {
     /**
      * @param address Address of the user.
      * @param nickname Nickname of the user.
-     * @param attackManager Instance of the AttackManager.
+     * @param manager Instance of the AttackManager.
      */
-    public Detection(String address, String nickname, AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public Detection(String address, String nickname, AttackManager manager) {
+        this.manager = manager;
         this.address = address;
         this.nickname = nickname;
         this.detected = true;
@@ -70,11 +70,11 @@ public class Detection {
      * Performing the checks.
      */
     public void perform() {
-        final GuardLogger logger = this.attackManager.getLogger();
+        final GuardLogger logger = this.manager.getLogger();
         logger.debug(" ");
         logger.debug("------- * ANTIBOT CHECK * -------");
         logger.debug("Performing check on: " + this.nickname + " (" + this.address + ")");
-        logger.debug("Current CPS: " + this.attackManager.getConnectPerSecond() + " (Attack: " + this.attackManager.isAttackMode() + ")");
+        logger.debug("Current CPS: " + this.manager.getConnectPerSecond() + " (Attack: " + this.manager.isAttackMode() + ")");
         // Checking if player is whitelisted.
         if (StorageManager.getStorage().getWhitelist().contains(address)) {
             this.detected = false;
@@ -83,30 +83,30 @@ public class Detection {
         }
 
         // Increasing CPS/activating attack mode.
-        this.attackManager.increaseConnectPerSecond();
-        if (this.attackManager.getConnectPerSecond() > Configuration.connectSpeed) {
-            this.attackManager.setAttackMode(true);
+        this.manager.increaseConnectPerSecond();
+        if (this.manager.getConnectPerSecond() > Configuration.connectSpeed) {
+            this.manager.setAttackMode(true);
         }
 
         // Performing checks.
-        if (this.attackManager.getBlacklistCheck().execute(address, nickname)) {
+        if (this.manager.getBlacklistCheck().execute(address, nickname)) {
             this.reason = Reason.BLACKLIST;
         }
-        else if (this.attackManager.getNicknameCheck().execute(address, nickname)) {
+        else if (this.manager.getNicknameCheck().execute(address, nickname)) {
             this.reason = Reason.NAME_CONTAINS;
             this.blacklist = true;
         }
-        else if (this.attackManager.getServerListCheck().execute(address, nickname)) {
+        else if (this.manager.getServerListCheck().execute(address, nickname)) {
             this.reason = Reason.SERVER_LIST;
         }
-        else if (this.attackManager.getReJoinCheck().execute(address, nickname)) {
+        else if (this.manager.getReJoinCheck().execute(address, nickname)) {
             this.reason = Reason.REJOIN;
         }
-        else if (this.attackManager.getGeographicalCheck().execute(address, nickname)) {
+        else if (this.manager.getGeographicalCheck().execute(address, nickname)) {
             this.reason = Reason.GEO;
             this.blacklist = true;
         }
-        else if (this.attackManager.getProxyCheck().execute(address, nickname)) {
+        else if (this.manager.getProxyCheck().execute(address, nickname)) {
             this.reason = Reason.PROXY;
             this.blacklist = true;
         }
@@ -117,7 +117,7 @@ public class Detection {
 
         // Increasing bots if detection is positive.
         if (this.detected) {
-            this.attackManager.increaseBots();
+            this.manager.increaseBots();
             logger.debug("User has been detected for: " + this.reason);
         }
 

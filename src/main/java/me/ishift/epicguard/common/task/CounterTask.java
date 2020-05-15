@@ -20,10 +20,10 @@ import me.ishift.epicguard.common.AttackManager;
 
 @AllArgsConstructor
 public class CounterTask implements Runnable {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
     @Override
     public void run() {
-        this.attackManager.setConnectPerSecond(0);
+        this.manager.setConnectPerSecond(0);
     }
 }

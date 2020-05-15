@@ -24,10 +24,10 @@ import me.ishift.epicguard.common.util.URLHelper;
 import java.util.List;
 
 public class ProxyCheck implements Check {
-    private final AttackManager attackManager;
+    private final AttackManager manager;
 
-    public ProxyCheck(AttackManager attackManager) {
-        this.attackManager = attackManager;
+    public ProxyCheck(AttackManager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ProxyCheck implements Check {
         }
 
         if (Configuration.advancedProxyChecker) {
-            for (ProxyService proxyService : this.attackManager.getProxyServices()) {
+            for (ProxyService proxyService : this.manager.getProxyServices()) {
                 final String url = proxyService.getUrl().replace("{ADDRESS}", address);
                 final List<String> response = URLHelper.readLines(url);
 
