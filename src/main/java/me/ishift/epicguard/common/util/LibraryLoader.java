@@ -25,10 +25,10 @@ import java.net.URLClassLoader;
 public class LibraryLoader {
     /**
      * Loads the required libraries for the EpicGuard.
+     * Only for proxies (Velocity and Bungee).
      */
     public static void init() {
         tryDownload("com.mysql.jdbc.Driver", "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar", "mysql-connector-java-8.0.19");
-        tryDownload("com.zaxxer.hikari.HikariDataSource", "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.2/HikariCP-3.4.2.jar", "HikariCP-3.4.2");
     }
 
     /**

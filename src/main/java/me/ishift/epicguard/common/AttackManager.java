@@ -55,7 +55,6 @@ public class AttackManager {
         this.proxyServices = new HashSet<>();
         this.logger = new GuardLogger("EpicGuard", "plugins/EpicGuard", this);
         this.logger.info("Loading libraries...");
-        LibraryLoader.init();
         this.logger.info("Loading configuration...");
         Configuration.load();
         Messages.load();

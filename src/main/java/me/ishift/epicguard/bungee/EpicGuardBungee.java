@@ -28,6 +28,7 @@ import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.MonitorTask;
 import me.ishift.epicguard.common.types.Platform;
 import me.ishift.epicguard.common.util.FileUtil;
+import me.ishift.epicguard.common.util.LibraryLoader;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -47,6 +48,7 @@ public class EpicGuardBungee extends Plugin {
     @Override
     public void onEnable() {
         epicGuardBungee = this;
+        LibraryLoader.init();
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
         BungeeSettings.load();
 
