@@ -17,12 +17,12 @@ package me.ishift.epicguard.common;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.ishift.epicguard.common.antibot.Detection;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.antibot.checks.*;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
+import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.common.util.LibraryLoader;
 
 import java.util.Collection;
@@ -41,12 +41,10 @@ public class AttackManager {
     private final ReJoinCheck reJoinCheck;
     private final ServerListCheck serverListCheck;
 
-    @Setter
-    private int connectPerSecond = 0;
-    @Setter
-    private int totalBots = 0;
-    @Setter
-    private boolean attackMode = false;
+    @Setter private int connectPerSecond;
+    @Setter private int detectionsPerSecond;
+    @Setter private int totalBots;
+    @Setter private boolean attackMode;
 
     /**
      * Creating new AttackManager object.
@@ -85,16 +83,79 @@ public class AttackManager {
      *
      * @param address Address of the user.
      * @param nickname Nickname of the user.
-     * @return Detection object with prepared checks.
+     * @return Reason enum if detected, null if not.
      */
-    public Detection check(String address, String nickname) {
-        return new Detection(address, nickname, this);
+    public Reason check(String address, String nickname) {
+        final Reason reason = this.performChecks(address, nickname);
+        if (reason == null) {
+            return null;
+        }
+
+        this.increaseBots();
+        if (reason.isBlacklist()) {
+            StorageManager.getStorage().blacklist(address);
+        }
+        return reason;
+    }
+
+    /**
+     * Performing the bot-check.
+     * This method performs the check for
+     * the detections. The method above
+     * need to be used in the listeners.
+     *
+     * @param address Address of the user.
+     * @param nickname Nickname of the user.
+     * @return Reason enum if detected, null if not.
+     */
+    private Reason performChecks(String address, String nickname) {
+        this.increaseConnectPerSecond();
+        if (StorageManager.getStorage().getWhitelist().contains(address)) {
+            return null;
+        }
+
+        /* After testing, looks like this check is useless.
+           for some reason, block are blocked better without this.
+           it may be restored in the future, so i have commented it for now.
+        if (this.isAttackMode()) {
+            return Reason.ATTACK;
+        }
+         */
+
+        if (this.getBlacklistCheck().execute(address, nickname)) {
+            return Reason.BLACKLIST;
+        }
+
+        if (this.getNicknameCheck().execute(address, nickname)) {
+            return Reason.NAME_CONTAINS;
+        }
+
+        if (this.getServerListCheck().execute(address, nickname)) {
+            return Reason.SERVER_LIST;
+        }
+
+        if (this.getReJoinCheck().execute(address, nickname)) {
+            return Reason.REJOIN;
+        }
+
+        if (this.getGeographicalCheck().execute(address, nickname)) {
+            return Reason.GEO;
+        }
+
+        if (this.getProxyCheck().execute(address, nickname)) {
+            return Reason.PROXY;
+        }
+        return null;
     }
 
     /**
      * Increase connections per second by one.
      */
     public void increaseConnectPerSecond() {
+        if (this.getConnectPerSecond() > Configuration.connectSpeed || this.getDetectionsPerSecond() > Configuration.detections) {
+            this.setAttackMode(true);
+        }
+
         this.connectPerSecond++;
     }
 
@@ -103,5 +164,6 @@ public class AttackManager {
      */
     public void increaseBots() {
         this.totalBots++;
+        this.detectionsPerSecond++;
     }
 }

@@ -20,6 +20,7 @@ import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.proxy.InboundConnection;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Detection;
+import me.ishift.epicguard.common.types.Reason;
 import me.ishift.epicguard.velocity.util.Utils;
 
 public class PreLoginListener {
@@ -35,9 +36,9 @@ public class PreLoginListener {
         final String address = connection.getRemoteAddress().getAddress().getHostAddress();
         final String name = event.getUsername();
 
-        final Detection detection = this.manager.check(address, name);
-        if (detection.isDetected()) {
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(detection.getReason().getMessage())));
+        final Reason reason = this.manager.check(address, name);
+        if (reason != null) {
+            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Utils.getComponent(reason.getMessage())));
         }
     }
 }

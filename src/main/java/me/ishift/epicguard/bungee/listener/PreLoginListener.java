@@ -16,8 +16,7 @@
 package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.antibot.Detection;
-import net.md_5.bungee.api.chat.BaseComponent;
+import me.ishift.epicguard.common.types.Reason;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
@@ -37,12 +36,10 @@ public class PreLoginListener implements Listener {
         final String address = connection.getAddress().getAddress().getHostAddress();
         final String name = connection.getName();
 
-        final Detection detection = this.manager.check(address, name);
-        if (detection.isDetected()) {
-            final BaseComponent[] reason = TextComponent.fromLegacyText(detection.getReason().getMessage());
+        final Reason reason = this.manager.check(address, name);
+        if (reason != null) {
             event.setCancelled(true);
-            event.setCancelReason(reason);
-            connection.disconnect(reason);
+            event.setCancelReason(TextComponent.fromLegacyText(reason.getMessage()));
         }
     }
 }

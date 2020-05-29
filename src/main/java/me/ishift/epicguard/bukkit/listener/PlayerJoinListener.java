@@ -36,6 +36,11 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
+        // Hiding join message from bots that may have bypassed.
+        if (this.manager.isAttackMode()) {
+            event.setJoinMessage(null);
+        }
+
         final Player player = event.getPlayer();
         EpicGuardBukkit.getInstance().getUserManager().createUser(player);
         final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(player);
