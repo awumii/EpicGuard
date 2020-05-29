@@ -74,16 +74,17 @@ public class EpicGuardBukkit extends JavaPlugin {
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(this.manager), this);
         pm.registerEvents(new PlayerJoinListener(this.manager), this);
-        pm.registerEvents(new PlayerQuitListener(), this);
+        pm.registerEvents(new PlayerQuitListener(this.manager), this);
         pm.registerEvents(new ServerListPingListener(), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
         pm.registerEvents(new PlayerBuildListener(), this);
+        pm.registerEvents(new PlayerChatListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 2L);
+        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 20L);
         scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.manager), 20L, 20L);
-        scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.manager, Platform.BUKKIT), 20L, 20L);
+        scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.manager, Platform.BUKKIT), 20L, 5L);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
             new TabCompletePacketListener(this);

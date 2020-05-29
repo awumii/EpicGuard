@@ -25,5 +25,6 @@ public class CounterTask implements Runnable {
     @Override
     public void run() {
         this.manager.setConnectPerSecond(0);
+        this.manager.setDetectionsPerSecond(0);
     }
 }

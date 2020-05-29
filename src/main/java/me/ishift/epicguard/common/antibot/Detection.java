@@ -40,7 +40,6 @@ public class Detection {
         this.address = address;
         this.nickname = nickname;
         this.detected = true;
-        this.blacklist = false;
         this.perform();
     }
 
@@ -70,61 +69,7 @@ public class Detection {
      * Performing the checks.
      */
     public void perform() {
-        final GuardLogger logger = this.manager.getLogger();
-        logger.debug(" ");
-        logger.debug("------- * ANTIBOT CHECK * -------");
-        logger.debug("Performing check on: " + this.nickname + " (" + this.address + ")");
-        logger.debug("Current CPS: " + this.manager.getConnectPerSecond() + " (Attack: " + this.manager.isAttackMode() + ")");
-        // Checking if player is whitelisted.
-        if (StorageManager.getStorage().getWhitelist().contains(address)) {
-            this.detected = false;
-            logger.debug("User is whitelisted, skipping check.");
-            return;
-        }
-
-        // Increasing CPS/activating attack mode.
         this.manager.increaseConnectPerSecond();
-        if (this.manager.getConnectPerSecond() > Configuration.connectSpeed) {
-            this.manager.setAttackMode(true);
-        }
-
-        // Performing checks.
-        if (this.manager.getBlacklistCheck().execute(address, nickname)) {
-            this.reason = Reason.BLACKLIST;
-        }
-        else if (this.manager.getNicknameCheck().execute(address, nickname)) {
-            this.reason = Reason.NAME_CONTAINS;
-            this.blacklist = true;
-        }
-        else if (this.manager.getServerListCheck().execute(address, nickname)) {
-            this.reason = Reason.SERVER_LIST;
-        }
-        else if (this.manager.getReJoinCheck().execute(address, nickname)) {
-            this.reason = Reason.REJOIN;
-        }
-        else if (this.manager.getGeographicalCheck().execute(address, nickname)) {
-            this.reason = Reason.GEO;
-            this.blacklist = true;
-        }
-        else if (this.manager.getProxyCheck().execute(address, nickname)) {
-            this.reason = Reason.PROXY;
-            this.blacklist = true;
-        }
-        else {
-            this.detected = false;
-            logger.debug("User has been not detected.");
-        }
-
-        // Increasing bots if detection is positive.
-        if (this.detected) {
-            this.manager.increaseBots();
-            logger.debug("User has been detected for: " + this.reason);
-        }
-
-        // Blacklisting addres if it should be.
-        if (this.blacklist) {
-            StorageManager.getStorage().blacklist(this.address);
-            logger.debug("The user has been blacklisted.");
-        }
+        this.detected = false;
     }
 }

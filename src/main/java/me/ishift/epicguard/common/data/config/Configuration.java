@@ -16,6 +16,7 @@
 package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
+import de.leonhard.storage.internal.settings.ConfigSettings;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.types.GeoMode;
 
@@ -26,6 +27,7 @@ import java.util.logging.Logger;
 
 public class Configuration {
     public static int connectSpeed;
+    public static int detections;
     public static int pingSpeed;
 
     public static long checkConditionsDelay;
@@ -57,6 +59,7 @@ public class Configuration {
             final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
 
             connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
+            detections = config.getInt("antibot.additional-protection.conditions.detections-per-second");
             pingSpeed = config.getInt("antibot.additional-protection.conditions.ping-per-second");
 
             checkConditionsDelay = config.getInt("antibot.additional-protection.check-conditions-delay");

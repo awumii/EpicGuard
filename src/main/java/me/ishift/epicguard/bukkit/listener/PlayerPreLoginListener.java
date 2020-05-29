@@ -17,7 +17,7 @@ package me.ishift.epicguard.bukkit.listener;
 
 import lombok.AllArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.antibot.Detection;
+import me.ishift.epicguard.common.types.Reason;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -31,9 +31,9 @@ public class PlayerPreLoginListener implements Listener {
         final String address = event.getAddress().getHostAddress();
         final String name = event.getName();
 
-        final Detection detection = this.manager.check(address, name);
-        if (detection.isDetected()) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, detection.getReason().getMessage());
+        final Reason reason = this.manager.check(address, name);
+        if (reason != null) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, reason.getMessage());
         }
     }
 }

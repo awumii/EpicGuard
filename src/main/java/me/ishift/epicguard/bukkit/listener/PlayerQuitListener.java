@@ -17,15 +17,21 @@ package me.ishift.epicguard.bukkit.listener;
 
 import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.common.AttackManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 @AllArgsConstructor
 public class PlayerQuitListener implements Listener {
+    private final AttackManager manager;
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        // Hiding quit message from bots that may have bypassed.
+        if (this.manager.isAttackMode()) {
+            event.setQuitMessage(null);
+        }
         EpicGuardBukkit.getInstance().getUserManager().removeUser(event.getPlayer());
     }
 }
