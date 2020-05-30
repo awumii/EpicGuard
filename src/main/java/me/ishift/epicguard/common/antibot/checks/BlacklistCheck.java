@@ -15,13 +15,17 @@
 
 package me.ishift.epicguard.common.antibot.checks;
 
+import lombok.AllArgsConstructor;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Check;
 import me.ishift.epicguard.common.data.StorageManager;
 
+@AllArgsConstructor
 public class BlacklistCheck implements Check {
+    private final AttackManager manager;
 
     @Override
     public boolean execute(String address, String nickname) {
-        return StorageManager.getStorage().getBlacklist().contains(address);
+        return this.manager.getStorageManager().getStorage().getBlacklist().contains(address);
     }
 }

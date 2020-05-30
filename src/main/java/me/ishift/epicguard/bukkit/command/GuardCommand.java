@@ -126,7 +126,7 @@ public class GuardCommand implements CommandExecutor {
                 }
 
                 final String address = args[1];
-                StorageManager.getStorage().whitelist(address);
+                this.manager.getStorageManager().getStorage().whitelist(address);
                 send(sender, Messages.whitelisted.replace("{ADDRESS}", address));
                 break;
             }
@@ -137,7 +137,7 @@ public class GuardCommand implements CommandExecutor {
                 }
 
                 final String address = args[1];
-                StorageManager.getStorage().blacklist(address);
+                this.manager.getStorageManager().getStorage().blacklist(address);
                 send(sender, Messages.blacklisted.replace("{ADDRESS}", address));
                 break;
             }

@@ -38,8 +38,8 @@ public class GuardCommand implements Command {
         Utils.send(source, "");
         Utils.send(source, " &8» &7Connections: &6" + this.manager.getConnectPerSecond() + "/s");
         Utils.send(source, " &8» &7Blocked bots: &6" + this.manager.getTotalBots() + "/s");
-        Utils.send(source, " &8» &7Blacklist size: &6" + StorageManager.getStorage().getBlacklist().size() + " IPs");
-        Utils.send(source, " &8» &7Whitelist size: &6" + StorageManager.getStorage().getWhitelist().size() + " IPs");
+        Utils.send(source, " &8» &7Blacklist size: &6" + this.manager.getStorageManager().getStorage().getBlacklist().size() + " IPs");
+        Utils.send(source, " &8» &7Whitelist size: &6" + this.manager.getStorageManager().getStorage().getWhitelist().size() + " IPs");
         Utils.send(source, "&8&m---------------------------------------");
     }
 }

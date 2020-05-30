@@ -75,7 +75,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerPreLoginListener(this.manager), this);
         pm.registerEvents(new PlayerJoinListener(this.manager), this);
         pm.registerEvents(new PlayerQuitListener(this.manager), this);
-        pm.registerEvents(new ServerListPingListener(), this);
+        pm.registerEvents(new ServerListPingListener(this.manager), this);
         pm.registerEvents(new PlayerCommandListener(), this);
         pm.registerEvents(new ConsoleCommandListener(), this);
         pm.registerEvents(new PlayerBuildListener(), this);
@@ -114,7 +114,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        StorageManager.save();
+        this.manager.getStorageManager().getStorage().save();
     }
 
     public static EpicGuardBukkit getInstance() {

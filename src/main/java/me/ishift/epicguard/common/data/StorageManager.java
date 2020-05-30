@@ -15,41 +15,48 @@
 
 package me.ishift.epicguard.common.data;
 
+import de.leonhard.storage.Yaml;
 import lombok.Getter;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
 @Getter
-// This class will be rewritten soon. It shouldn't contain static methods.
 public class StorageManager {
-    private static StorageType storageType;
-    private static DataStorage storage;
+    private final StorageType type;
+    private final DataStorage storage;
+    private final Yaml config;
 
-    public static void load() {
-        /* This will be enabled after MYSQL is finished.
+    private final String mysqlHost;
+    private final int mysqlPort;
+    private final String mysqlUser;
+    private final String mysqlDatabase;
+    private final String mysqlPassword;
+    private final boolean mysqlSSL;
+    private final int mysqlTimeout;
+    private final int mysqlPoolSize;
 
-        final Yaml config = new Yaml("storage_config", "plugins/EpicGuard");
-        config.setHeader("You can set this to FLAT or MYSQL.", "After setting this to MYSQL, more settings will appear.");
+    public StorageManager() {
+        this.config = new Yaml("storage", "plugins/EpicGuard");
+        this.config.setHeader("You can set the storage-mode to FLAT or MYSQL.", "After you set this to MySQL, restart the server.", "Currently, there is no option to transfer from FLAT to MYSQL");
 
-        final String storageTypeString = config.getOrSetDefault("storage-mode", "FLAT");
-        storageType = StorageType.valueOf(storageTypeString);
-        */
-        storageType = StorageType.FLAT;
+        final String storageTypeString = this.config.getOrSetDefault("storage-mode", "FLAT");
+        this.type = StorageType.valueOf(storageTypeString);
 
-        if (storageType == StorageType.FLAT) {
-            storage = new Flat();
+        mysqlPassword = config.getOrSetDefault("mysql.connection.password", "password");
+        mysqlUser = config.getOrSetDefault("mysql.connection.username", "admin");
+        mysqlHost = config.getOrSetDefault("mysql.connection.host", "localhost");
+        mysqlPort = config.getOrSetDefault("mysql.connection.port", 3306);
+        mysqlDatabase = config.getOrSetDefault("mysql.connection.database", "your-database");
+        mysqlSSL = config.getOrSetDefault("mysql.settings.use-ssl", true);
+        mysqlPoolSize = config.getOrSetDefault("mysql.settings.pool-size", 5);
+        mysqlTimeout = config.getOrSetDefault("mysql.settings.connection-timeout", 30000);
+
+        if (this.type == StorageType.FLAT) {
+            this.storage = new Flat();
         } else {
-            storage = new MySQL();
+            this.storage = new MySQL(this);
         }
-        storage.load();
-    }
 
-    public static DataStorage getStorage() {
-        return storage;
+        this.storage.load();
     }
-
-    public static void save() {
-        storage.save();
-    }
-
 }

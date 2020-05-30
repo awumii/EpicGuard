@@ -15,15 +15,19 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
+import lombok.AllArgsConstructor;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
+@AllArgsConstructor
 public class ServerListPingListener implements Listener {
+    private final AttackManager manager;
 
     @EventHandler
     public void onPing(ServerListPingEvent event) {
-        StorageManager.getStorage().getPingData().add(event.getAddress().getHostAddress());
+        this.manager.getStorageManager().getStorage().getPingData().add(event.getAddress().getHostAddress());
     }
 }

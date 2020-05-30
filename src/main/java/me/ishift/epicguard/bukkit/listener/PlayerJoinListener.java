@@ -55,7 +55,7 @@ public class PlayerJoinListener implements Listener {
         if (Configuration.autoWhitelist) {
             Bukkit.getScheduler().runTaskLater(EpicGuardBukkit.getInstance(), () -> {
                 if (player.isOnline()) {
-                    StorageManager.getStorage().whitelist(address);
+                    this.manager.getStorageManager().getStorage().whitelist(address);
                 }
             }, Configuration.autoWhitelistTime);
         }
