@@ -23,7 +23,6 @@ import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.types.Reason;
-import me.ishift.epicguard.common.util.LibraryLoader;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,6 +30,7 @@ import java.util.HashSet;
 @Getter
 public class AttackManager {
     private final Collection<ProxyService> proxyServices;
+    private final StorageManager storageManager;
     private final GeoApi geoApi;
     private final GuardLogger logger;
 
@@ -59,10 +59,10 @@ public class AttackManager {
         Configuration.load();
         Messages.load();
         this.logger.info("Loading storage...");
-        StorageManager.load();
+        this.storageManager = new StorageManager();
 
         this.logger.info("Loading antibot checks...");
-        this.blacklistCheck = new BlacklistCheck();
+        this.blacklistCheck = new BlacklistCheck(this);
         this.geographicalCheck = new GeographicalCheck(this);
         this.nicknameCheck = new NicknameCheck();
         this.proxyCheck = new ProxyCheck(this);
@@ -92,7 +92,7 @@ public class AttackManager {
 
         this.increaseBots();
         if (reason.isBlacklist()) {
-            StorageManager.getStorage().blacklist(address);
+            this.storageManager.getStorage().blacklist(address);
         }
         return reason;
     }
@@ -109,7 +109,7 @@ public class AttackManager {
      */
     private Reason performChecks(String address, String nickname) {
         this.increaseConnectPerSecond();
-        if (StorageManager.getStorage().getWhitelist().contains(address)) {
+        if (this.storageManager.getStorage().getWhitelist().contains(address)) {
             return null;
         }
 

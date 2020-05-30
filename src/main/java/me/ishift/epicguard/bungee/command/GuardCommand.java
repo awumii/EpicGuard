@@ -17,6 +17,7 @@ package me.ishift.epicguard.bungee.command;
 
 import me.ishift.epicguard.bungee.EpicGuardBungee;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
@@ -25,8 +26,11 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class GuardCommand extends Command {
-    public GuardCommand(String name) {
+    private AttackManager manager;
+
+    public GuardCommand(String name, AttackManager manager) {
         super(name);
+        this.manager = manager;
     }
 
     @Override
@@ -75,7 +79,7 @@ public class GuardCommand extends Command {
                 }
 
                 final String address = args[1];
-                StorageManager.getStorage().whitelist(address);
+                this.manager.getStorageManager().getStorage().whitelist(address);
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.whitelisted.replace("{ADDRESS}", address));
                 break;
             case "blacklist":
@@ -85,7 +89,7 @@ public class GuardCommand extends Command {
                 }
 
                 final String address1 = args[1];
-                StorageManager.getStorage().blacklist(address1);
+                this.manager.getStorageManager().getStorage().blacklist(address1);
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.blacklisted.replace("{ADDRESS}", address1));
                 break;
             default:

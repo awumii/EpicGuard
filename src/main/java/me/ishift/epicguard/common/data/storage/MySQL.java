@@ -17,52 +17,53 @@ package me.ishift.epicguard.common.data.storage;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import de.leonhard.storage.Yaml;
 import me.ishift.epicguard.common.data.DataStorage;
+import me.ishift.epicguard.common.data.StorageManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class MySQL extends DataStorage {
+    private final StorageManager manager;
     private HikariDataSource dataSource;
+
+    public MySQL(StorageManager manager) {
+        this.manager = manager;
+    }
 
     @Override
     public void load() {
         this.initConnection();
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_blacklist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_whitelist(`address` TEXT NOT NULL);");
-        this.executeUpdate("SELECT * FROM `epicguard_whitelist`");
-        this.executeUpdate("SELECT * FROM `epicguard_blacklist`");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_reconnectdata(`address` TEXT NOT NULL);");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_pingdata(`address` TEXT NOT NULL);");
+        this.setBlacklist(this.getList("epicguard_blacklist", "address"));
+        this.setWhitelist(this.getList("epicguard_whitelist", "address"));
+        this.setRejoinData(this.getList("epicguard_reconnectdata", "address"));
+        this.setPingData(this.getList("epicguard_pingdata", "address"));
     }
 
     @Override
     public void save() {
-        this.executeUpdate("INSERT INTO `epicguard_whitelist` (`address`) VALUES " + this.fromList(this.getWhitelist()));
-        this.executeUpdate("INSERT INTO `epicguard_blacklist` (`address`) VALUES " + this.fromList(this.getBlacklist()));
-        this.executeUpdate("SELECT * FROM `epicguard_whitelist`");
-        this.executeUpdate("SELECT * FROM `epicguard_blacklist`");
+        this.insertList("epicguard_blacklist", "address", this.getBlacklist());
+        this.insertList("epicguard_whitelist", "address", this.getWhitelist());
+        this.insertList("epicguard_reconnectdata", "address", this.getRejoinData());
+        this.insertList("epicguard_pingdata", "address", this.getPingData());
     }
 
     private void initConnection() {
-        final String mysqlPassword = config.getOrSetDefault("mysql.user.password", "password");
-        final String mysqlUser = config.getOrSetDefault("mysql.user.username", "admin");
-        final String mysqlHost = config.getOrSetDefault("mysql.connection.host", "127.0.0.1");
-        final int mysqlPort = config.getOrSetDefault("mysql.connection.port", 3306);
-        final String mysqlDatabase = config.getOrSetDefault("mysql.connection.database", "your-database");
-        final boolean mysqlSSL = config.getOrSetDefault("mysql.connection.use-ssl", true);
-        final int poolSize = config.getOrSetDefault("mysql.settings.pool-size", 5);
-        final int connectionTimeout = config.getOrSetDefault("mysql.settings.connection-timeout", 30000);
-
         final HikariConfig config = new HikariConfig();
         config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
-        config.setMaximumPoolSize(poolSize);
-        config.setConnectionTimeout(connectionTimeout);
-        config.setJdbcUrl("jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + mysqlDatabase + "?useSSL=" + mysqlSSL);
-        config.setUsername(mysqlUser);
-        config.setPassword(mysqlPassword);
+        config.setMaximumPoolSize(this.manager.getMysqlPoolSize());
+        config.setConnectionTimeout(this.manager.getMysqlTimeout());
+        config.setJdbcUrl("jdbc:mysql://" + this.manager.getMysqlHost() + ":" + this.manager.getMysqlPort() + "/" + this.manager.getMysqlDatabase() + "?useSSL=" + this.manager.isMysqlSSL());
+        config.setUsername(this.manager.getMysqlUser());
+        config.setPassword(this.manager.getMysqlPassword());
         config.addDataSourceProperty("cachePrepStmts", true);
         config.addDataSourceProperty("prepStmtCacheSize", 250);
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
@@ -71,9 +72,21 @@ public class MySQL extends DataStorage {
         this.dataSource = new HikariDataSource(config);
     }
 
+    public List<String> getList(String table, String column) {
+        final List<String> list = new ArrayList<>();
+        try {
+            final ResultSet result = this.executeQuery("SELECT * FROM `" + table + "`");
+            while(result.next()) {
+                list.add(result.getString(column));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
     private ResultSet executeQuery(String query) {
         try {
-            System.out.println("Executing query '" + query + "'.");
             final Connection connection = this.dataSource.getConnection();
             final Statement statement = connection.createStatement();
             return statement.executeQuery(query);
@@ -94,10 +107,14 @@ public class MySQL extends DataStorage {
         }
     }
 
+    public void insertList(String table, String column, Collection<String> list) {
+        this.executeUpdate("INSERT INTO `" + table + "` (`" + column + "`) VALUES " + this.fromList(list));
+    }
+
     private String fromList(Collection<String> list) {
         final StringJoiner joiner = new StringJoiner(", ");
-        for (String address : this.getWhitelist()) {
-            joiner.add("('" + address + "')");
+        for (String string : list) {
+            joiner.add("('" + string + "')");
         }
         return joiner.toString();
     }

@@ -29,8 +29,8 @@ public class ReJoinCheck implements Check {
 
     @Override
     public boolean execute(String address, String nickname) {
-        if (Configuration.rejoinCheck && this.manager.isAttackMode() && !StorageManager.getStorage().getRejoinData().contains(nickname)) {
-            StorageManager.getStorage().getRejoinData().add(nickname);
+        if (Configuration.rejoinCheck && this.manager.isAttackMode() && !this.manager.getStorageManager().getStorage().getRejoinData().contains(nickname)) {
+            this.manager.getStorageManager().getStorage().getRejoinData().add(nickname);
             return true;
         }
         return false;

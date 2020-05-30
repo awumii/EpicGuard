@@ -15,22 +15,18 @@
 
 package me.ishift.epicguard.common.data;
 
-import de.leonhard.storage.Yaml;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 public abstract class DataStorage {
-    public Yaml config;
-
-    public Collection<String> rejoinData;
-    public Collection<String> pingData;
-    public Collection<String> blacklist;
-    public Collection<String> whitelist;
-
-    /*
-    public DataStorage() {
-        this.config = new Yaml("mysql", "plugins/EpicGuard");
-    }*/
+    private Collection<String> rejoinData;
+    private Collection<String> pingData;
+    private Collection<String> blacklist;
+    private Collection<String> whitelist;
 
     /**
      * @param address Blacklisting the specified address.
@@ -46,34 +42,6 @@ public abstract class DataStorage {
     public void whitelist(String address) {
         this.blacklist.remove(address);
         this.whitelist.add(address);
-    }
-
-    /**
-     * @return Addresses which completed the ServerListCheck.
-     */
-    public Collection<String> getPingData() {
-        return this.pingData;
-    }
-
-    /**
-     * @return Nicknames which completed RejoinCheck.
-     */
-    public Collection<String> getRejoinData() {
-        return this.rejoinData;
-    }
-
-    /**
-     * @return Blacklisted addresses.
-     */
-    public Collection<String> getBlacklist() {
-        return this.blacklist;
-    }
-
-    /**
-     * @return Whitelisted addresses.
-     */
-    public Collection<String> getWhitelist() {
-        return this.whitelist;
     }
 
     /**

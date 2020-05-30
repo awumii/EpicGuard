@@ -60,7 +60,7 @@ public class EpicGuardVelocity {
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
-        StorageManager.save();
+        this.manager.getStorageManager().getStorage().save();
     }
 
     public AttackManager getAttackManager() {

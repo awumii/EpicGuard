@@ -30,7 +30,7 @@ public class ServerListCheck implements Check {
     @Override
     public boolean execute(String address, String nickname) {
         if (Configuration.serverListCheck && this.manager.isAttackMode()) {
-            return !StorageManager.getStorage().getPingData().contains(address);
+            return !this.manager.getStorageManager().getStorage().getPingData().contains(address);
         }
         return false;
     }

@@ -45,8 +45,8 @@ public class MainInventory extends ClickableInventory {
                 .addLore(" &8» &7Attack&8: " + (manager.isAttackMode() ? "&cDetected!" : "&aNot detected."))
                 .addLore(" &8» &7Connections&8: &f" + manager.getConnectPerSecond() + "/s")
                 .addLore("")
-                .addLore(" &8» &7Blacklisted IPs&8: &c" + StorageManager.getStorage().getBlacklist().size())
-                .addLore(" &8» &7Whitelisted IPs&8: &a" + StorageManager.getStorage().getWhitelist().size())
+                .addLore(" &8» &7Blacklisted IPs&8: &c" + this.manager.getStorageManager().getStorage().getBlacklist().size())
+                .addLore(" &8» &7Whitelisted IPs&8: &a" + this.manager.getStorageManager().getStorage().getWhitelist().size())
                 .build();
 
         final ItemStack i2 = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())

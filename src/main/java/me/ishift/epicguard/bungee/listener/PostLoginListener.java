@@ -15,7 +15,9 @@
 
 package me.ishift.epicguard.bungee.listener;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bungee.EpicGuardBungee;
+import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import net.md_5.bungee.api.ProxyServer;
@@ -26,7 +28,10 @@ import net.md_5.bungee.event.EventHandler;
 
 import java.util.concurrent.TimeUnit;
 
+@AllArgsConstructor
 public class PostLoginListener implements Listener {
+    private final AttackManager manager;
+
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         final ProxiedPlayer player = event.getPlayer();
@@ -34,7 +39,7 @@ public class PostLoginListener implements Listener {
         if (Configuration.autoWhitelist) {
             ProxyServer.getInstance().getScheduler().schedule(EpicGuardBungee.getInstance(), () -> {
                 if (player.isConnected()) {
-                    StorageManager.getStorage().whitelist(player.getAddress().getAddress().getHostAddress());
+                    this.manager.getStorageManager().getStorage().whitelist(player.getAddress().getAddress().getHostAddress());
                 }
             }, Configuration.autoWhitelistTime / 20, TimeUnit.SECONDS);
         }

@@ -15,14 +15,18 @@
 
 package me.ishift.epicguard.bungee.listener;
 
-import me.ishift.epicguard.common.data.StorageManager;
+import lombok.AllArgsConstructor;
+import me.ishift.epicguard.common.AttackManager;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
+@AllArgsConstructor
 public class PingListener implements Listener {
+    private final AttackManager manager;
+
     @EventHandler
     public void onProxyPing(ProxyPingEvent event) {
-        StorageManager.getStorage().getPingData().add(event.getConnection().getAddress().getAddress().getHostAddress());
+        this.manager.getStorageManager().getStorage().getPingData().add(event.getConnection().getAddress().getAddress().getHostAddress());
     }
 }
