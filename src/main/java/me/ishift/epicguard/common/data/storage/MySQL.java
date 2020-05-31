@@ -15,33 +15,30 @@
 
 package me.ishift.epicguard.common.data.storage;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import de.leonhard.storage.Yaml;
+import lombok.SneakyThrows;
 import me.ishift.epicguard.common.data.DataStorage;
 import me.ishift.epicguard.common.data.StorageManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class MySQL extends DataStorage {
-    private final StorageManager manager;
-    private HikariDataSource dataSource;
+    private final Connection connection;
 
+    @SneakyThrows
     public MySQL(StorageManager manager) {
-        this.manager = manager;
+        this.connection = DriverManager.getConnection("jdbc:mysql://" + manager.getHost() + ":" + manager.getPort() + "/" + manager.getDatabase() + "?useSSL=" + manager.isSsl(),
+                manager.getUser(),
+                manager.getPassword());
     }
 
     @Override
     public void load() {
-        this.initConnection();
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_blacklist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_whitelist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_reconnectdata(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_pingdata(`address` TEXT NOT NULL);");
+
         this.setBlacklist(this.getList("epicguard_blacklist", "address"));
         this.setWhitelist(this.getList("epicguard_whitelist", "address"));
         this.setRejoinData(this.getList("epicguard_reconnectdata", "address"));
@@ -56,28 +53,14 @@ public class MySQL extends DataStorage {
         this.insertList("epicguard_pingdata", "address", this.getPingData());
     }
 
-    private void initConnection() {
-        final HikariConfig config = new HikariConfig();
-        config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
-        config.setMaximumPoolSize(this.manager.getMysqlPoolSize());
-        config.setConnectionTimeout(this.manager.getMysqlTimeout());
-        config.setJdbcUrl("jdbc:mysql://" + this.manager.getMysqlHost() + ":" + this.manager.getMysqlPort() + "/" + this.manager.getMysqlDatabase() + "?useSSL=" + this.manager.isMysqlSSL());
-        config.setUsername(this.manager.getMysqlUser());
-        config.setPassword(this.manager.getMysqlPassword());
-        config.addDataSourceProperty("cachePrepStmts", true);
-        config.addDataSourceProperty("prepStmtCacheSize", 250);
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
-        config.addDataSourceProperty("useServerPrepStmts", true);
-
-        this.dataSource = new HikariDataSource(config);
-    }
-
     public List<String> getList(String table, String column) {
         final List<String> list = new ArrayList<>();
         try {
             final ResultSet result = this.executeQuery("SELECT * FROM `" + table + "`");
-            while(result.next()) {
-                list.add(result.getString(column));
+            if (result != null) {
+                while (result.next()) {
+                    list.add(result.getString(column));
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -87,8 +70,7 @@ public class MySQL extends DataStorage {
 
     private ResultSet executeQuery(String query) {
         try {
-            final Connection connection = this.dataSource.getConnection();
-            final Statement statement = connection.createStatement();
+            final PreparedStatement statement = this.connection.prepareStatement(query);
             return statement.executeQuery(query);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -98,8 +80,7 @@ public class MySQL extends DataStorage {
 
     private void executeUpdate(String query) {
         try {
-            final Connection connection = this.dataSource.getConnection();
-            final Statement statement = connection.createStatement();
+            final Statement statement = this.connection.createStatement();
             statement.executeUpdate(query);
             statement.close();
         } catch (Exception e) {
@@ -108,14 +89,15 @@ public class MySQL extends DataStorage {
     }
 
     public void insertList(String table, String column, Collection<String> list) {
-        this.executeUpdate("INSERT INTO `" + table + "` (`" + column + "`) VALUES " + this.fromList(list));
-    }
+        if (list.isEmpty()) {
+            return;
+        }
 
-    private String fromList(Collection<String> list) {
         final StringJoiner joiner = new StringJoiner(", ");
         for (String string : list) {
             joiner.add("('" + string + "')");
         }
-        return joiner.toString();
+        this.executeUpdate("TRUNCATE `" + table + "`"); // stupid fix i know, but without it there would be duplicates
+        this.executeUpdate("INSERT INTO `" + table + "` (`" + column + "`) VALUES " + joiner.toString());
     }
 }
