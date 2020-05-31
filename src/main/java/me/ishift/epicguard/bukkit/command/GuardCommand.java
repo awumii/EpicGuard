@@ -19,7 +19,6 @@ import lombok.AllArgsConstructor;
 import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
