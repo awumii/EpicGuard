@@ -82,7 +82,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerChatListener(), this);
 
         final BukkitScheduler scheduler = this.getServer().getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 20L);
+        scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 40L);
         scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.manager), 20L, 20L);
         scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.manager, Platform.BUKKIT), 20L, 5L);
 
@@ -114,7 +114,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.manager.getStorageManager().getStorage().save();
+        this.manager.getStorageManager().save();
     }
 
     public static EpicGuardBukkit getInstance() {

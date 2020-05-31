@@ -42,6 +42,10 @@ public class Messages {
     public static String unknownCommand;
     public static String statusOn;
     public static String statusOff;
+    public static String savingData;
+    public static String savedData;
+    public static String enabledAttackMode;
+    public static String disabledAttackMode;
 
     public static String operatorDisabled;
     public static String namespacedDisabled;
@@ -73,6 +77,10 @@ public class Messages {
         unknownCommand = config.getOrSetDefault("other.unknown-command", "&cCommand not found! Use &6/guard");
         statusOn = config.getOrSetDefault("other.status-on", "&7Attack status has been &aenabled.");
         statusOff = config.getOrSetDefault("other.status-off", "&7Attack status has been &cdisabled.");
+        savingData = config.getOrSetDefault("other.saving-data", "&7Data is saving...");
+        savedData = config.getOrSetDefault("other.saved-data", "&7Data saving completed!");
+        enabledAttackMode = config.getOrSetDefault("other.attack-mode-enabled", "&7Attack mode has been &aenabled&7!");
+        disabledAttackMode = config.getOrSetDefault("other.attack-mode-disabled", "&7Attack mode has been &cdisabled&7!");
 
         operatorDisabled = config.getOrSetDefault("other.operator-mechanics-disabled", "&cOperator mechanics has been disabled on this server.");
         namespacedDisabled = config.getOrSetDefault("other.namespaced-disabled", "&cNamespaced commands (with ':' symbol) has been disabled on this server!.");

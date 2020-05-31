@@ -25,6 +25,7 @@ import me.ishift.epicguard.common.util.MessageHelper;
 import me.ishift.inventory.api.InventorySize;
 import me.ishift.inventory.api.inventories.ClickableInventory;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -37,8 +38,13 @@ public class PlayersInventory extends ClickableInventory {
     private final AttackManager manager;
 
     public PlayersInventory(AttackManager manager) {
-        super("EpicGuard v" + EpicGuardBukkit.getInstance().getDescription().getVersion() + " (Player Management)", "PLAYERS", InventorySize.BIGGEST);
+        super("EpicGuard v" + EpicGuardBukkit.getInstance().getDescription().getVersion() + " (Players)", "PLAYERS", InventorySize.BIGGEST);
         this.manager = manager;
+    }
+
+    @Override
+    public boolean isRefreshable() {
+        return true;
     }
 
     @Override
@@ -49,16 +55,16 @@ public class PlayersInventory extends ClickableInventory {
             final User user = EpicGuardBukkit.getInstance().getUserManager().getUser(entry);
 
             lore.add("");
-            lore.add(MessageHelper.color(" &8» &7Name&8: &f" + entry.getName()));
-            lore.add(MessageHelper.color(" &8» &7UUID&8: &f" + entry.getUniqueId()));
-            lore.add(MessageHelper.color(" &8» &7OP&8: " + (entry.isOp() ? "&aYes" : "&cNo")));
-            lore.add(MessageHelper.color(" &8» &7Country&8: &f" + manager.getGeoApi().getCountryCode(user.getAddress())));
-            lore.add(MessageHelper.color(" &8» &7City&8: &f" + manager.getGeoApi().getCity(user.getAddress())));
-            lore.add("");
+            lore.add(MessageHelper.color("&8» &cBasic Information"));
+            lore.add(MessageHelper.color(" &8● &7Name&8: &f" + entry.getName()));
+            lore.add(MessageHelper.color(" &8● &7UUID&8: &f" + entry.getUniqueId()));
+            lore.add(MessageHelper.color(" &8● &7OP&8: " + (entry.isOp() ? "&2✔" : "&4✖")));
+            lore.add(MessageHelper.color(" &8● &7Country&8: &f" + manager.getGeoApi().getCountryCode(user.getAddress())));
+            lore.add(MessageHelper.color(" &8● &7City&8: &f" + manager.getGeoApi().getCity(user.getAddress())));
 
             if (!user.getAddressHistory().isEmpty()) {
                 lore.add("");
-                lore.add(MessageHelper.color(" &8» &7IP History:"));
+                lore.add(MessageHelper.color(" &8» &cAddress History:"));
                 user.getAddressHistory().forEach(address -> lore.add(MessageHelper.color("  &7- &f" + address + (user.getAddress().equals(address) ? " &8(&6Current&8)" : ""))));
             }
 
@@ -67,7 +73,7 @@ public class PlayersInventory extends ClickableInventory {
             i++;
         }
 
-        final ItemStack back = new ItemBuilder(UMaterial.FENCE_GATE.getMaterial()).setTitle("&cBack to main menu").addLore("&7Click to go back.").build();
+        final ItemStack back = new ItemBuilder(Material.ARROW).setTitle("&cMain menu").addLore("&8» &7Click to go back.").build();
         inventory.setItem(53, back);
     }
 

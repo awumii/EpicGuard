@@ -20,12 +20,17 @@ import lombok.Getter;
 import me.ishift.epicguard.common.data.storage.Flat;
 import me.ishift.epicguard.common.data.storage.MySQL;
 
+import java.util.Date;
+
 @Getter
 public class StorageManager {
     private final DataStorage storage;
     private final boolean mysql;
     private final Yaml config;
 
+    private Date lastSave;
+
+    // MySQL section
     private final String host;
     private final int port;
     private final boolean ssl;
@@ -52,6 +57,12 @@ public class StorageManager {
             this.storage = new Flat();
         }
 
+        this.lastSave = new Date(System.currentTimeMillis());
         this.storage.load();
+    }
+
+    public void save() {
+        this.storage.save();
+        this.lastSave = new Date(System.currentTimeMillis());
     }
 }
