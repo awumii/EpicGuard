@@ -22,39 +22,34 @@ import me.ishift.epicguard.common.data.storage.MySQL;
 
 @Getter
 public class StorageManager {
-    private final StorageType type;
     private final DataStorage storage;
+    private final boolean mysql;
     private final Yaml config;
 
-    private final String mysqlHost;
-    private final int mysqlPort;
-    private final String mysqlUser;
-    private final String mysqlDatabase;
-    private final String mysqlPassword;
-    private final boolean mysqlSSL;
-    private final int mysqlTimeout;
-    private final int mysqlPoolSize;
+    private final String host;
+    private final int port;
+    private final boolean ssl;
+    private final String user;
+    private final String database;
+    private final String password;
 
     public StorageManager() {
-        this.config = new Yaml("storage", "plugins/EpicGuard");
-        this.config.setHeader("You can set the storage-mode to FLAT or MYSQL.", "After you set this to MySQL, restart the server.", "Currently, there is no option to transfer from FLAT to MYSQL");
+        this.config = new Yaml("mysql", "plugins/EpicGuard");
+        this.config.setHeader("You can set the value 'enabled' to: ", "true - plugin will store data on the MySQL server.", "false - plugin will store data on the local file.", "After changing this value, restart the server.");
 
-        final String storageTypeString = this.config.getOrSetDefault("storage-mode", "FLAT");
-        this.type = StorageType.valueOf(storageTypeString);
+        this.mysql = this.config.getOrSetDefault("enabled", false);
 
-        mysqlPassword = config.getOrSetDefault("mysql.connection.password", "password");
-        mysqlUser = config.getOrSetDefault("mysql.connection.username", "admin");
-        mysqlHost = config.getOrSetDefault("mysql.connection.host", "localhost");
-        mysqlPort = config.getOrSetDefault("mysql.connection.port", 3306);
-        mysqlDatabase = config.getOrSetDefault("mysql.connection.database", "your-database");
-        mysqlSSL = config.getOrSetDefault("mysql.settings.use-ssl", true);
-        mysqlPoolSize = config.getOrSetDefault("mysql.settings.pool-size", 5);
-        mysqlTimeout = config.getOrSetDefault("mysql.settings.connection-timeout", 30000);
+        this.password = this.config.getOrSetDefault("mysql.password", "password");
+        this.user = this.config.getOrSetDefault("mysql.username", "admin");
+        this.database = this.config.getOrSetDefault("mysql.database", "database");
+        this.host = this.config.getOrSetDefault("mysql.host", "localhost");
+        this.port = this.config.getOrSetDefault("mysql.port", 3306);
+        this.ssl = this.config.getOrSetDefault("mysql.use-ssl", false);
 
-        if (this.type == StorageType.FLAT) {
-            this.storage = new Flat();
-        } else {
+        if (this.mysql) {
             this.storage = new MySQL(this);
+        } else {
+            this.storage = new Flat();
         }
 
         this.storage.load();
