@@ -64,7 +64,7 @@ public class EpicGuardBungee extends Plugin {
 
         pm.registerCommand(this, new GuardCommand("guard", this.manager));
 
-        this.getProxy().getScheduler().schedule(this, new AttackToggleTask(this.manager), 1L, Configuration.checkConditionsDelay, TimeUnit.SECONDS);
+        this.getProxy().getScheduler().schedule(this, new AttackToggleTask(this.manager), 1L, Configuration.checkConditionsDelay * 2, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new CounterTask(this.manager), 1L, 1L, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new MonitorTask(this.manager, Platform.BUNGEE), 1L, 200L, TimeUnit.MILLISECONDS);
 
@@ -85,7 +85,7 @@ public class EpicGuardBungee extends Plugin {
 
     @Override
     public void onDisable() {
-        this.manager.getStorageManager().getStorage().save();
+        this.manager.getStorageManager().save();
     }
 
     public static EpicGuardBungee getInstance() {

@@ -36,12 +36,12 @@ public class MySQL extends DataStorage {
     public void load() {
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_blacklist(`address` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_whitelist(`address` TEXT NOT NULL);");
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_reconnectdata(`address` TEXT NOT NULL);");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_reconnectdata(`nickname` TEXT NOT NULL);");
         this.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_pingdata(`address` TEXT NOT NULL);");
 
         this.setBlacklist(this.getList("epicguard_blacklist", "address"));
         this.setWhitelist(this.getList("epicguard_whitelist", "address"));
-        this.setRejoinData(this.getList("epicguard_reconnectdata", "address"));
+        this.setRejoinData(this.getList("epicguard_reconnectdata", "nickname"));
         this.setPingData(this.getList("epicguard_pingdata", "address"));
     }
 
