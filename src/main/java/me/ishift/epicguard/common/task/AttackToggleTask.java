@@ -25,7 +25,7 @@ public class AttackToggleTask implements Runnable {
 
     @Override
     public void run() {
-        if (this.manager.getConnectPerSecond() < Configuration.connectSpeed) {
+        if (this.manager.getConnectPerSecond() < Configuration.connectSpeed && this.manager.getDetectionsPerSecond() < Configuration.detections) {
             this.manager.setAttackMode(false);
             this.manager.setTotalBots(0);
         }

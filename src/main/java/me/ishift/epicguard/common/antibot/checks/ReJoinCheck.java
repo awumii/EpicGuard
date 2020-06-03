@@ -15,17 +15,15 @@
 
 package me.ishift.epicguard.common.antibot.checks;
 
+import lombok.AllArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.antibot.Check;
 import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 
+@AllArgsConstructor
 public class ReJoinCheck implements Check {
     private final AttackManager manager;
-
-    public ReJoinCheck(AttackManager manager) {
-        this.manager = manager;
-    }
 
     @Override
     public boolean execute(String address, String nickname) {

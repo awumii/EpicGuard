@@ -25,7 +25,7 @@ import me.ishift.epicguard.common.data.config.Messages;
 import me.ishift.epicguard.common.types.Reason;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedList;
 
 @Getter
 public class AttackManager {
@@ -52,7 +52,7 @@ public class AttackManager {
      * on the all platforms (Bukkit/Bungee/Velocity).
      */
     public AttackManager() {
-        this.proxyServices = new HashSet<>();
+        this.proxyServices = new LinkedList<>();
         this.logger = new GuardLogger("EpicGuard", "plugins/EpicGuard", this);
         this.logger.info("Loading libraries...");
         this.logger.info("Loading configuration...");
@@ -129,16 +129,16 @@ public class AttackManager {
             return Reason.NAME_CONTAINS;
         }
 
+        if (this.getGeographicalCheck().execute(address, nickname)) {
+            return Reason.GEO;
+        }
+
         if (this.getServerListCheck().execute(address, nickname)) {
             return Reason.SERVER_LIST;
         }
 
         if (this.getReJoinCheck().execute(address, nickname)) {
             return Reason.REJOIN;
-        }
-
-        if (this.getGeographicalCheck().execute(address, nickname)) {
-            return Reason.GEO;
         }
 
         if (this.getProxyCheck().execute(address, nickname)) {
