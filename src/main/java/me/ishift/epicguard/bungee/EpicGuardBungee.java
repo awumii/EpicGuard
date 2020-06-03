@@ -22,6 +22,7 @@ import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.BungeeSettings;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.task.CloudTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.MonitorTask;
 import me.ishift.epicguard.common.types.Platform;
@@ -30,6 +31,7 @@ import me.ishift.epicguard.common.util.LibraryLoader;
 import me.ishift.epicguard.common.util.Log4jFilter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+import net.md_5.bungee.api.scheduler.TaskScheduler;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,9 +55,11 @@ public class EpicGuardBungee extends Plugin {
 
         pm.registerCommand(this, new GuardCommand("guard", this));
 
-        this.getProxy().getScheduler().schedule(this, new AttackToggleTask(this.manager), 1L, Configuration.checkConditionsDelay * 2, TimeUnit.SECONDS);
-        this.getProxy().getScheduler().schedule(this, new CounterTask(this.manager), 1L, 1L, TimeUnit.SECONDS);
-        this.getProxy().getScheduler().schedule(this, new MonitorTask(this.manager, Platform.BUNGEE), 1L, 200L, TimeUnit.MILLISECONDS);
+        final TaskScheduler scheduler = this.getProxy().getScheduler();
+        scheduler.schedule(this, new AttackToggleTask(this.manager), 1L, Configuration.checkConditionsDelay * 2, TimeUnit.SECONDS);
+        scheduler.schedule(this, new CounterTask(this.manager), 1L, 1L, TimeUnit.SECONDS);
+        scheduler.schedule(this, new MonitorTask(this.manager, Platform.BUNGEE), 1L, 200L, TimeUnit.MILLISECONDS);
+        scheduler.schedule(this, new CloudTask(this.manager), 20L, 1L, TimeUnit.HOURS);
 
         new BungeeMetrics(this, 5956);
 

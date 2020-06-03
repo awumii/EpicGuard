@@ -26,10 +26,10 @@ import me.ishift.epicguard.bukkit.module.modules.*;
 import me.ishift.epicguard.bukkit.user.UserManager;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import me.ishift.epicguard.common.task.AttackToggleTask;
+import me.ishift.epicguard.common.task.CloudTask;
 import me.ishift.epicguard.common.task.CounterTask;
 import me.ishift.epicguard.common.task.MonitorTask;
 import me.ishift.epicguard.common.types.Platform;
@@ -85,6 +85,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         scheduler.runTaskTimerAsynchronously(this, new AttackToggleTask(this.manager), 20L, Configuration.checkConditionsDelay * 40L);
         scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.manager), 20L, 20L);
         scheduler.runTaskTimerAsynchronously(this, new MonitorTask(this.manager, Platform.BUKKIT), 20L, 5L);
+        scheduler.runTaskTimerAsynchronously(this, new CloudTask(this.manager), 20L, 3600L * 20L);
 
         if (pm.isPluginEnabled("ProtocolLib")) {
             new TabCompletePacketListener(this);
@@ -101,6 +102,7 @@ public class EpicGuardBukkit extends JavaPlugin {
             command.setExecutor(new GuardCommand(this.manager));
             command.setTabCompleter(new GuardTabCompleter());
         }
+
         new Metrics(this, 5845);
 
         SpigotSettings.load();

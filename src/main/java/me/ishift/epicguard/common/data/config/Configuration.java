@@ -16,7 +16,6 @@
 package me.ishift.epicguard.common.data.config;
 
 import de.leonhard.storage.Yaml;
-import de.leonhard.storage.internal.settings.ConfigSettings;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.types.GeoMode;
 

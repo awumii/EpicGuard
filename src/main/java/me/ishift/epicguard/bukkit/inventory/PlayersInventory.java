@@ -19,7 +19,6 @@ import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.bukkit.user.User;
 import me.ishift.epicguard.bukkit.util.ItemBuilder;
 import me.ishift.epicguard.bukkit.util.SkullUtil;
-import me.ishift.epicguard.bukkit.util.UMaterial;
 import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.util.MessageHelper;
 import me.ishift.inventory.api.InventorySize;
