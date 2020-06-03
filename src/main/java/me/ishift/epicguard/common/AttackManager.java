@@ -33,6 +33,7 @@ public class AttackManager {
     private final StorageManager storageManager;
     private final GeoApi geoApi;
     private final GuardLogger logger;
+    private final GuardCloud cloud;
 
     private final BlacklistCheck blacklistCheck;
     private final GeographicalCheck geographicalCheck;
@@ -74,6 +75,10 @@ public class AttackManager {
         }
         this.logger.info("Initializing GeoApi...");
         this.geoApi = new GeoApi("plugins/EpicGuard", Configuration.countryEnabled, Configuration.cityEnabled, this);
+
+        this.logger.info("Loading GuardCloud...");
+        this.cloud = new GuardCloud(this);
+
         this.logger.info("Startup completed!");
     }
 
@@ -123,6 +128,10 @@ public class AttackManager {
 
         if (this.getBlacklistCheck().execute(address, nickname)) {
             return Reason.BLACKLIST;
+        }
+
+        if (this.cloud.getBlacklist().contains(address)) {
+            return Reason.UNSAFE;
         }
 
         if (this.getNicknameCheck().execute(address, nickname)) {

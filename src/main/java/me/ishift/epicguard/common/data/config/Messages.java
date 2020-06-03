@@ -28,6 +28,7 @@ public class Messages {
     public static List<String> messageKickVerify;
     public static List<String> messageKickNamecontains;
     public static List<String> messageKickBotBehaviour;
+    public static List<String> messageKickUnsafe;
 
     public static String noPermission;
     public static String prefix;
@@ -64,6 +65,7 @@ public class Messages {
         messageKickVerify = config.getOrSetDefault("kick-messages.rejoin", Collections.singletonList("&8[&6EpicGuard&8] &cPlease join our server &6again &cto verify that you are not a bot."));
         messageKickNamecontains = config.getOrSetDefault("kick-messages.namecontains", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6NameContains (Change nickname or contact server admin)"));
         messageKickBotBehaviour = config.getOrSetDefault("kick-messages.bot-behaviour", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6BotBehaviour (Please join again)"));
+        messageKickUnsafe = config.getOrSetDefault("kick-messages.cloud-unsafe", Collections.singletonList("&8[&6EpicGuard&8] &cYou have been detected for: &6UnsafeAddress (Cloud)"));
 
         noPermission = config.getOrSetDefault("other.no-permission", "&cYou don't have permission to access this command!");
         notAllowedCommand = config.getOrSetDefault("other.not-allowed-command", "&fUnknown command. Type '/help' for help.");

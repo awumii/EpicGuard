@@ -29,6 +29,7 @@ public enum Reason {
     REJOIN(Messages.messageKickVerify, false),
     NAME_CONTAINS(Messages.messageKickNamecontains, true),
     BOT_BEHAVIOUR(Messages.messageKickBotBehaviour, false),
+    UNSAFE(Messages.messageKickUnsafe, true),
     ATTACK(Messages.messageKickBotBehaviour, false);
 
     private final List<String> message;

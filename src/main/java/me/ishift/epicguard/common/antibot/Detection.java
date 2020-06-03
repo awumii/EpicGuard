@@ -16,9 +16,6 @@
 package me.ishift.epicguard.common.antibot;
 
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.GuardLogger;
-import me.ishift.epicguard.common.data.StorageManager;
-import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.types.Reason;
 
 public class Detection {
