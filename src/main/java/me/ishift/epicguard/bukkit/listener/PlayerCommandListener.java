@@ -19,13 +19,18 @@ import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.common.data.config.SpigotSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class PlayerCommandListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onCommand(PlayerCommandPreprocessEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
         final Player player = event.getPlayer();
         final String command = event.getMessage();
         final String[] args = command.split(" ");
