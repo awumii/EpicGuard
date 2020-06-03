@@ -86,16 +86,6 @@ public class MainInventory extends ClickableInventory {
                 .addLore(" &8» &cClick to open the GUI.")
                 .build();
 
-        final ItemStack about = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
-                .setTitle("&6About EpicGuard.")
-                .addLore("")
-                .addLore(" &8● &7Version&8: &e" + EpicGuardBukkit.getInstance().getDescription().getVersion())
-                .addLore(" &8● &7Author&8: &eiShift")
-                .addLore(" &8● &7Support Server&8: &cdiscord.gg/VkfhFCv")
-                .addLore("")
-                .addLore(" &8» &cClick to join our discord.")
-                .build();
-
         final ItemStack server = new ItemBuilder(UMaterial.EXP_BOTTLE.getMaterial())
                 .setTitle("&6Server Information.")
                 .addLore("")
@@ -107,20 +97,43 @@ public class MainInventory extends ClickableInventory {
                 .addLore(" &8● &7Memory usage&8: &a" + MemoryHelper.getUsage() + "MB / " + MemoryHelper.getTotal() + "MB")
                 .build();
 
+        final ItemStack cloud = new ItemBuilder(Material.BEACON)
+                .setTitle("&6GuardCloud")
+                .addLore("")
+                .addLore(" &8● &bGuardCloud &7synchronizes the unsafe")
+                .addLore(" &8● &7addresses with your local blacklist,")
+                .addLore(" &8● &7detecting bots faster. Synchronization")
+                .addLore(" &8● &7is performed every &f1 hour&7.")
+                .addLore("")
+                .addLore(" &8● &7Status: " + (this.manager.getCloud().isWorking() ? "&aWorking!" : "&cConnection error!"))
+                .addLore(" &8● &7Unsafe addresses: &6" + this.manager.getCloud().getBlacklist().size())
+                .addLore("")
+                .addLore(" &8» &cClick to force the sync.")
+                .build();
+
         final ItemStack info = new ItemBuilder(Material.PAPER)
                 .setTitle("&6GUI info.")
                 .addLore("")
                 .addLore(" &8● &7This GUI is refreshed")
                 .addLore(" &8● &7every &f2 seconds&7!")
+                .build();
+
+        final ItemStack about = new ItemBuilder(UMaterial.BOOK_AND_QUILL.getMaterial())
+                .setTitle("&6About EpicGuard.")
                 .addLore("")
-                .addLore(" &8● &7Powered by &6InventoryAPI v1.5")
+                .addLore(" &8● &7Version&8: &e" + EpicGuardBukkit.getInstance().getDescription().getVersion())
+                .addLore(" &8● &7Author&8: &eiShift")
+                .addLore(" &8● &7Support Server&8: &cdiscord.gg/VkfhFCv")
+                .addLore("")
+                .addLore(" &8» &cClick to join our discord.")
                 .build();
 
         inventory.setItem(11, status);
         inventory.setItem(13, storage);
         inventory.setItem(15, players);
         inventory.setItem(21, server);
-        inventory.setItem(23, about);
+        inventory.setItem(23, cloud);
+        inventory.setItem(35, about);
         inventory.setItem(27, info);
     }
 
