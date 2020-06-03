@@ -15,12 +15,10 @@
 
 package me.ishift.epicguard.bungee;
 
-import lombok.Getter;
 import me.ishift.epicguard.bungee.command.GuardCommand;
 import me.ishift.epicguard.bungee.listener.*;
 import me.ishift.epicguard.bungee.util.BungeeMetrics;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.BungeeSettings;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.task.AttackToggleTask;
@@ -33,36 +31,27 @@ import me.ishift.epicguard.common.util.Log4jFilter;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@Getter
 public class EpicGuardBungee extends Plugin {
-    private static EpicGuardBungee epicGuardBungee;
-
     private AttackManager manager;
-    private Collection<UUID> statusPlayers;
 
     @Override
     public void onEnable() {
-        epicGuardBungee = this;
         LibraryLoader.init();
         FileUtil.saveResource(this.getDataFolder(), "config.yml");
         BungeeSettings.load();
 
         this.manager = new AttackManager();
-        this.statusPlayers = new HashSet<>();
 
         final PluginManager pm = this.getProxy().getPluginManager();
         pm.registerListener(this, new PreLoginListener(this.manager));
-        pm.registerListener(this, new PostLoginListener(this.manager));
+        pm.registerListener(this, new PostLoginListener(this.manager, this));
         pm.registerListener(this, new PingListener(this.manager));
         pm.registerListener(this, new PlayerChatListener());
         pm.registerListener(this, new PlayerTabListener());
 
-        pm.registerCommand(this, new GuardCommand("guard", this.manager));
+        pm.registerCommand(this, new GuardCommand("guard", this));
 
         this.getProxy().getScheduler().schedule(this, new AttackToggleTask(this.manager), 1L, Configuration.checkConditionsDelay * 2, TimeUnit.SECONDS);
         this.getProxy().getScheduler().schedule(this, new CounterTask(this.manager), 1L, 1L, TimeUnit.SECONDS);
@@ -88,7 +77,7 @@ public class EpicGuardBungee extends Plugin {
         this.manager.getStorageManager().save();
     }
 
-    public static EpicGuardBungee getInstance() {
-        return epicGuardBungee;
+    public AttackManager getManager() {
+        return this.manager;
     }
 }

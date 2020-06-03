@@ -15,16 +15,19 @@
 
 package me.ishift.epicguard.bungee.util;
 
-import me.ishift.epicguard.bungee.EpicGuardBungee;
+import lombok.Getter;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class BungeeNotify {
+    @Getter private static final List<UUID> users = new ArrayList<>();
+
     public static void notify(String message) {
-        for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-            if (EpicGuardBungee.getInstance().getStatusPlayers().contains(player.getUniqueId())) {
-                BungeeUtil.sendActionBar(player, message);
-            }
-        }
+        ProxyServer.getInstance().getPlayers().stream()
+                .filter(player -> users.contains(player.getUniqueId()))
+                .forEach(player -> BungeeUtil.sendActionBar(player, message));
     }
 }
