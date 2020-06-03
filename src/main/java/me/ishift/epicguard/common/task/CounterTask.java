@@ -15,16 +15,21 @@
 
 package me.ishift.epicguard.common.task;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.ishift.epicguard.common.AttackManager;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CounterTask implements Runnable {
     private final AttackManager manager;
+    private int lastCPS;
+    private int lastDPS;
 
     @Override
     public void run() {
-        this.manager.setConnectPerSecond(0);
-        this.manager.setDetectionsPerSecond(0);
+        this.manager.setConnectPerSecond(this.lastCPS);
+        this.manager.setDetectionsPerSecond(this.lastDPS);
+
+        this.lastCPS = 0;
+        this.lastDPS = 0;
     }
 }
