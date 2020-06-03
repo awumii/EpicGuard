@@ -16,9 +16,9 @@
 package me.ishift.epicguard.bungee.command;
 
 import me.ishift.epicguard.bungee.EpicGuardBungee;
+import me.ishift.epicguard.bungee.util.BungeeNotify;
 import me.ishift.epicguard.bungee.util.BungeeUtil;
 import me.ishift.epicguard.common.AttackManager;
-import me.ishift.epicguard.common.data.StorageManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import net.md_5.bungee.api.CommandSender;
@@ -26,11 +26,13 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class GuardCommand extends Command {
-    private AttackManager manager;
+    private final AttackManager manager;
+    private final EpicGuardBungee plugin;
 
-    public GuardCommand(String name, AttackManager manager) {
+    public GuardCommand(String name, EpicGuardBungee plugin) {
         super(name);
-        this.manager = manager;
+        this.manager = plugin.getManager();
+        this.plugin = plugin;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class GuardCommand extends Command {
             BungeeUtil.sendMessage(sender, "&8&m---------------------------------------------------");
             BungeeUtil.sendMessage(sender, "  &6&lEpicGuard &8(BungeeCord version)");
             BungeeUtil.sendMessage(sender, "");
-            BungeeUtil.sendMessage(sender, "&8» &7Running version &f" + EpicGuardBungee.getInstance().getDescription().getVersion());
+            BungeeUtil.sendMessage(sender, "&8» &7Running version &f" + this.plugin.getDescription().getVersion());
             BungeeUtil.sendMessage(sender, "&8» &7Created by &fiShift &8© 2020");
             BungeeUtil.sendMessage(sender, "");
             BungeeUtil.sendMessage(sender, "&8» &7/guard status &8- &7Toggle antibot actionbar.");
@@ -59,13 +61,13 @@ public class GuardCommand extends Command {
         switch (args[0].toLowerCase()) {
             case "status":
                 final ProxiedPlayer player = (ProxiedPlayer) sender;
-                if (EpicGuardBungee.getInstance().getStatusPlayers().contains(player.getUniqueId())) {
-                    EpicGuardBungee.getInstance().getStatusPlayers().remove(player.getUniqueId());
+                if (BungeeNotify.getUsers().contains(player.getUniqueId())) {
+                    BungeeNotify.getUsers().remove(player.getUniqueId());
                     BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOff);
                     return;
                 }
 
-                EpicGuardBungee.getInstance().getStatusPlayers().add(player.getUniqueId());
+                BungeeNotify.getUsers().add(player.getUniqueId());
                 BungeeUtil.sendMessage(sender, Messages.prefix + Messages.statusOn);
                 break;
             case "reload":

@@ -15,30 +15,13 @@
 
 package me.ishift.epicguard.bungee.util;
 
-import me.ishift.epicguard.bungee.EpicGuardBungee;
 import me.ishift.epicguard.common.util.MessageHelper;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.Title;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class BungeeUtil {
-    /**
-     * @param player   Target player.
-     * @param title    Title message.
-     * @param subtitle Subtitle message.
-     */
-    public static void sendTitle(ProxiedPlayer player, String title, String subtitle) {
-        final Title titleBuilder = EpicGuardBungee.getInstance().getProxy().createTitle()
-                .title(new TextComponent(MessageHelper.color(title)))
-                .subTitle(new TextComponent(MessageHelper.color(subtitle)))
-                .fadeIn(0)
-                .fadeOut(10)
-                .stay(10);
-        player.sendTitle(titleBuilder);
-    }
-
     /**
      * @param player  Target player.
      * @param message Message to be sent.

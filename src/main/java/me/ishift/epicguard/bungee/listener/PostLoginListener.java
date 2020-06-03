@@ -31,13 +31,14 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class PostLoginListener implements Listener {
     private final AttackManager manager;
+    private final EpicGuardBungee plugin;
 
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         final ProxiedPlayer player = event.getPlayer();
 
         if (Configuration.autoWhitelist) {
-            ProxyServer.getInstance().getScheduler().schedule(EpicGuardBungee.getInstance(), () -> {
+            ProxyServer.getInstance().getScheduler().schedule(this.plugin, () -> {
                 if (player.isConnected()) {
                     this.manager.getStorageManager().getStorage().whitelist(player.getAddress().getAddress().getHostAddress());
                 }
