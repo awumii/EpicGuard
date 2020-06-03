@@ -70,7 +70,7 @@ public class GeoApi {
                 this.cityReader = new DatabaseReader.Builder(cityFile).withCache(new CHMCache()).build();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            this.logger.info("Issue encountered while initializing the GeoIP databases. This is most likely no problem.");
         }
     }
 
