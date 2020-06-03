@@ -31,9 +31,10 @@ public class Downloader {
      * @throws IOException If file could not be created/deleted.
      */
     public static void download(String urlFrom, File file) throws IOException {
-        if (!file.exists()) {
-            file.createNewFile();
+        if (file.exists()) {
+            file.delete();
         }
+        file.createNewFile();
         final URLConnection connection = new URL(urlFrom).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
