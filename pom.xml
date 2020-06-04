@@ -6,7 +6,7 @@
 
     <groupId>me.ishift</groupId>
     <artifactId>EpicGuard</artifactId>
-    <version>4.2.5</version>
+    <version>4.2.6</version>
 
     <dependencies>
         <dependency>
@@ -102,18 +102,9 @@
         </repository>
     </repositories>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub EpicGuard Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/PolskiStevek/EpicGuard</url>
-        </repository>
-    </distributionManagement>
 
     <build>
         <plugins>

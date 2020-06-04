@@ -22,6 +22,7 @@ import me.ishift.epicguard.common.AttackManager;
 import me.ishift.epicguard.common.data.config.Configuration;
 import me.ishift.epicguard.common.data.config.Messages;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -30,7 +31,7 @@ public class GuardCommand extends Command {
     private final EpicGuardBungee plugin;
 
     public GuardCommand(String name, EpicGuardBungee plugin) {
-        super(name);
+        super(name, "epicguard.admin");
         this.manager = plugin.getManager();
         this.plugin = plugin;
     }
@@ -53,13 +54,13 @@ public class GuardCommand extends Command {
             return;
         }
 
-        if (sender instanceof ProxiedPlayer && !sender.getPermissions().contains("epicguard.admin")) {
-            BungeeUtil.sendMessage(sender, Messages.prefix + Messages.noPermission);
-            return;
-        }
-
         switch (args[0].toLowerCase()) {
             case "status":
+                if (!(sender instanceof ProxiedPlayer)) {
+                    sender.sendMessage(TextComponent.fromLegacyText("This command is only for players!"));
+                    return;
+                }
+
                 final ProxiedPlayer player = (ProxiedPlayer) sender;
                 if (BungeeNotify.getUsers().contains(player.getUniqueId())) {
                     BungeeNotify.getUsers().remove(player.getUniqueId());
