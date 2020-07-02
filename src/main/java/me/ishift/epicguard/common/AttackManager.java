@@ -41,6 +41,7 @@ public class AttackManager {
     private final ProxyCheck proxyCheck;
     private final ReJoinCheck reJoinCheck;
     private final ServerListCheck serverListCheck;
+    private final CityCheck cityCheck;
 
     @Setter private int connectPerSecond;
     @Setter private int detectionsPerSecond;
@@ -69,6 +70,7 @@ public class AttackManager {
         this.proxyCheck = new ProxyCheck(this);
         this.reJoinCheck = new ReJoinCheck(this);
         this.serverListCheck = new ServerListCheck(this);
+        this.cityCheck = new CityCheck(this);
 
         if (Configuration.advancedProxyChecker) {
             this.proxyServices.addAll(Configuration.proxyServices);
@@ -136,6 +138,10 @@ public class AttackManager {
 
         if (this.getNicknameCheck().execute(address, nickname)) {
             return Reason.NAME_CONTAINS;
+        }
+
+        if (this.getCityCheck().execute(address, nickname)) {
+            return Reason.GEO;
         }
 
         if (this.getGeographicalCheck().execute(address, nickname)) {

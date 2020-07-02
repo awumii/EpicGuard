@@ -15,10 +15,12 @@
 
 package me.ishift.epicguard.common.data.config;
 
+import de.leonhard.storage.Config;
 import de.leonhard.storage.Yaml;
 import me.ishift.epicguard.common.antibot.ProxyService;
 import me.ishift.epicguard.common.types.GeoMode;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,9 @@ public class Configuration {
 
     public static boolean simpleProxyCheck;
     public static String apiKey;
+
+    public static GeoMode cityMode;
+    public static List<String> cityList;
 
     public static List<String> countryList;
     public static GeoMode countryMode;
@@ -55,7 +60,10 @@ public class Configuration {
 
     public static void load() {
         try {
-            final Yaml config = new Yaml("config.yml", "plugins/EpicGuard");
+            final Config config = new Config("config.yml", "plugins/EpicGuard");
+
+            cityMode = GeoMode.valueOf(config.getOrSetDefault("geographical.country-check.mode", "DISABLED"));
+            cityList = config.getOrSetDefault("geographical.country-check.list", Arrays.asList("ExampleCity"));
 
             connectSpeed = config.getInt("antibot.additional-protection.conditions.connections-per-second");
             detections = config.getInt("antibot.additional-protection.conditions.detections-per-second");
