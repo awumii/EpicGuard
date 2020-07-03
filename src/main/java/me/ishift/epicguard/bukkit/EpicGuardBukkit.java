@@ -13,7 +13,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.epicGuard = new EpicGuard(this.getLogger());
+        this.epicGuard = new EpicGuard(this.getLogger(), new BukkitNotificator());
 
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(epicGuard), this);

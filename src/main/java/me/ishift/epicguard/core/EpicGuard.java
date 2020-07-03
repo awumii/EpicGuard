@@ -6,6 +6,7 @@ import me.ishift.epicguard.core.manager.GeoManager;
 import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.util.ConfigHelper;
 import me.ishift.epicguard.core.util.LogFilter;
+import me.ishift.epicguard.core.util.Notificator;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ public class EpicGuard {
     private final Logger logger;
     private final StorageManager storageManager;
     private final GeoManager geoManager;
+    private final Notificator notificator;
 
     private final PluginConfiguration config;
     private final MessagesConfiguration messages;
@@ -21,7 +23,8 @@ public class EpicGuard {
     private boolean attack;
     private int connectionPerSecond;
 
-    public EpicGuard(Logger logger) {
+    public EpicGuard(Logger logger, Notificator notificator) {
+        this.notificator = notificator;
         this.logger = logger;
         logger.info("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗");
         logger.info("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗");
@@ -68,6 +71,10 @@ public class EpicGuard {
 
     public MessagesConfiguration getMessages() {
         return this.messages;
+    }
+
+    public Notificator getNotificator() {
+        return this.notificator;
     }
 
     public GeoManager getGeoManager() {

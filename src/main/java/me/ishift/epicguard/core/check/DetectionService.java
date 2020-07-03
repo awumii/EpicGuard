@@ -1,6 +1,7 @@
 package me.ishift.epicguard.core.check;
 
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.check.impl.AttackCheck;
 import me.ishift.epicguard.core.check.impl.BlacklistCheck;
 import me.ishift.epicguard.core.check.impl.GeographicalCheck;
 
@@ -16,8 +17,9 @@ public abstract class DetectionService {
     public DetectionService(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
         this.checks = new ArrayList<>();
-        this.checks.add(new GeographicalCheck(epicGuard));
+        this.checks.add(new AttackCheck(epicGuard));
         this.checks.add(new BlacklistCheck(epicGuard));
+        this.checks.add(new GeographicalCheck(epicGuard));
     }
 
     public String getKickMessage() {
@@ -29,6 +31,10 @@ public abstract class DetectionService {
      */
     public boolean performCheck(String address, String nickname) {
         this.epicGuard.setConnectionPerSecond(this.epicGuard.getConnectionPerSecond() + 1);
+
+        if (this.epicGuard.getConnectionPerSecond() > this.epicGuard.getConfig().maxCps) {
+            this.epicGuard.setAttack(true);
+        }
 
         if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
             return false;
