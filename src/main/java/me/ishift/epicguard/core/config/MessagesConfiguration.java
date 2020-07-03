@@ -29,17 +29,15 @@ public class MessagesConfiguration {
     @CfgName("no-permission")
     public String noPermission = "&cYou don't have permission for this command!";
 
-    @CfgName("wrong-usage")
     public String usage = "&cCorrect usage: &6{USAGE}";
 
-    @CfgName("whitelisted")
     public String whitelisted = "&7Succesfully whitelisted address &a{IP}!";
 
-    @CfgName("blacklisted")
     public String blacklisted = "&7Succesfully whitelisted address &a{IP}!";
 
-    @CfgName("reload")
     public String reload = "&7Succesfully reloaded config and messages!";
+
+    public String notifications = "&7You have toggled your notifications!";
 
     @CfgName("kick-message-geo")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)

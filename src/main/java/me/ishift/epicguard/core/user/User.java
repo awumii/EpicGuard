@@ -5,7 +5,7 @@ import java.util.UUID;
 public class User {
     private final UUID uuid;
 
-    private boolean status;
+    private boolean notifications;
 
     public User(UUID uuid) {
         this.uuid = uuid;
@@ -15,11 +15,11 @@ public class User {
         return this.uuid;
     }
 
-    public boolean isStatus() {
-        return this.status;
+    public boolean isNotifications() {
+        return this.notifications;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
     }
 }
