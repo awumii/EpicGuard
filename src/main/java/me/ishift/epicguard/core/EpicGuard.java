@@ -7,8 +7,10 @@ import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.util.ConfigHelper;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 public class EpicGuard {
+    private final Logger logger;
     private final StorageManager storageManager;
     private final GeoManager geoManager;
 
@@ -18,7 +20,16 @@ public class EpicGuard {
     private boolean attack;
     private int connectionPerSecond;
 
-    public EpicGuard() {
+    public EpicGuard(Logger logger) {
+        this.logger = logger;
+        logger.info("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗");
+        logger.info("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗");
+        logger.info("█████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║");
+        logger.info("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║");
+        logger.info("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝");
+        logger.info("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝");
+        logger.info("EpicGuard v5-NEON is starting up...");
+
         File dataFolder = new File("plugins/EpicGuard");
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
@@ -31,6 +42,16 @@ public class EpicGuard {
 
         this.storageManager = new StorageManager();
         this.geoManager = new GeoManager(this);
+        logger.info("EpicGuard v5-NEON finished startup successfully.");
+    }
+
+    public void shutdown() {
+        logger.info("EpicGuard v5-NEON is shutting down...");
+        this.storageManager.save();
+    }
+
+    public Logger getLogger() {
+        return this.logger;
     }
 
     public Configuration getConfig() {

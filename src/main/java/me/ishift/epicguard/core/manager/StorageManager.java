@@ -14,8 +14,11 @@ public class StorageManager {
         this.data = new Json("data", "plugins/EpicGuard/data");
         this.blacklist = this.data.getOrSetDefault("blacklist", new ArrayList<>());
         this.whitelist = this.data.getOrSetDefault("whitelist", new ArrayList<>());
+    }
 
-        this.blacklist("127.0.0.1");
+    public void save() {
+        this.data.set("blacklist", this.blacklist);
+        this.data.set("whitelist", this.whitelist);
     }
 
     public Json getData() {

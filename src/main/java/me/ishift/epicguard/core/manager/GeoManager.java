@@ -19,14 +19,23 @@ public class GeoManager {
 
     public GeoManager(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
-        File countryDatabase = new File("plugins/EpicGuard/geo/GeoLite2-Country.mmdb");
-        File cityDatabase = new File("plugins/EpicGuard/geo/GeoLite2-Country.mmdb");
+        this.epicGuard.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
+
+        File dir = new File("plugins/EpicGuard/geo");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        File countryDatabase = new File(dir, "GeoLite2-Country.mmdb");
+        File cityDatabase = new File(dir, "GeoLite2-Country.mmdb");
 
         if (this.shouldDownload(countryDatabase)) {
+            this.epicGuard.getLogger().info("Your city database is outdated, starting download operation...");
             FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryDatabase);
         }
 
         if (this.shouldDownload(cityDatabase)) {
+            this.epicGuard.getLogger().info("Your country database is outdated, starting download operation...");
             FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityDatabase);
         }
 
