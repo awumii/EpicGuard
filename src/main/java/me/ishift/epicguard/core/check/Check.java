@@ -1,15 +1,25 @@
 package me.ishift.epicguard.core.check;
 
-import me.ishift.epicguard.core.Configuration;
+import me.ishift.epicguard.core.config.Configuration;
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.util.ChatUtils;
+
+import java.util.List;
 
 public abstract class Check {
     private final EpicGuard epicGuard;
     private final boolean blacklist;
+    private final String kickMessage;
 
-    public Check(EpicGuard epicGuard, boolean blacklist) {
+    public Check(EpicGuard epicGuard, boolean blacklist, List<String> kickMessage) {
         this.epicGuard = epicGuard;
         this.blacklist = blacklist;
+
+        StringBuilder builder = new StringBuilder();
+        for (String string : kickMessage) {
+            builder.append(ChatUtils.colored(string)).append("\n");
+        }
+        this.kickMessage = builder.toString();
     }
 
     public EpicGuard getEpicGuard() {
@@ -18,6 +28,10 @@ public abstract class Check {
 
     public Configuration getConfig() {
         return this.epicGuard.getConfig();
+    }
+
+    public String getKickMessage() {
+        return this.kickMessage;
     }
 
     public boolean shouldBlacklist() {
