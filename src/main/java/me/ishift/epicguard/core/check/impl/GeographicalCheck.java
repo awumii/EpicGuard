@@ -6,7 +6,7 @@ import me.ishift.epicguard.core.check.CheckMode;
 
 public class GeographicalCheck extends Check {
     public GeographicalCheck(EpicGuard epicGuard) {
-        super(epicGuard);
+        super(epicGuard, true);
     }
 
     private enum Type {
