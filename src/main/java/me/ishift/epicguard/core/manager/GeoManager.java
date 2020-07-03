@@ -27,15 +27,15 @@ public class GeoManager {
         }
 
         File countryDatabase = new File(dir, "GeoLite2-Country.mmdb");
-        File cityDatabase = new File(dir, "GeoLite2-Country.mmdb");
+        File cityDatabase = new File(dir, "GeoLite2-City.mmdb");
 
         if (this.shouldDownload(countryDatabase)) {
-            this.epicGuard.getLogger().info("Your city database is outdated, starting download operation...");
+            this.epicGuard.getLogger().info("Your country database is outdated, starting download operation...");
             FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryDatabase);
         }
 
         if (this.shouldDownload(cityDatabase)) {
-            this.epicGuard.getLogger().info("Your country database is outdated, starting download operation...");
+            this.epicGuard.getLogger().info("Your city database is outdated, starting download operation...");
             FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityDatabase);
         }
 
