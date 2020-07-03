@@ -6,16 +6,9 @@
 
     <groupId>me.ishift</groupId>
     <artifactId>EpicGuard</artifactId>
-    <version>4.2.7</version>
+    <version>5.0.0-NEON</version>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -62,6 +55,12 @@
             <version>1.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.diorite</groupId>
+            <artifactId>diorite-config-minimal</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -88,6 +87,12 @@
         <repository>
             <id>velocity</id>
             <url>https://repo.velocitypowered.com/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>panda-repository</id>
+            <name>Panda Repository</name>
+            <url>https://repo.panda-lang.org/</url>
         </repository>
     </repositories>
 

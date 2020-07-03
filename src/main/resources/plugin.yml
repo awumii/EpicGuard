@@ -1,23 +1,10 @@
-#
-#    ███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
-#    ██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
-#    █████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║
-#    ██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
-#    ███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
-#    ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝
-# Created by RushMC Team (iShift & ruzekh).
-# Important plugin section.
 name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bukkit.EpicGuardBukkit
-softdepend: [ProtocolLib]
 
-# Other information about plugin section.
-authors: [iShift, ruzekh]
+author: iShift
 website: https://www.spigotmc.org/resources/72369/
-description: Spigot & Bungee - Advanced server protection package!
 
-# Plugin commands section.
 commands:
   epicguard:
     description: Main plugin command.

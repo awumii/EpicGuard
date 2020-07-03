@@ -1,9 +1,6 @@
-# Important plugin section.
 name: EpicGuard
 version: '${project.version}'
 main: me.ishift.epicguard.bungee.EpicGuardBungee
 
-# Other information about plugin section.
 author: iShift
 website: https://www.spigotmc.org/resources/72369/
-description: Spigot & Bungee - Advanced server protection package!
