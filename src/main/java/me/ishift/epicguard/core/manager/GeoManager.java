@@ -47,7 +47,7 @@ public class GeoManager {
                     .build();
 
             this.cityReader = new DatabaseReader
-                    .Builder(countryDatabase)
+                    .Builder(cityDatabase)
                     .withCache(new CHMCache())
                     .build();
         } catch (IOException e) {
