@@ -11,6 +11,8 @@ public abstract class DetectionService {
     private final EpicGuard epicGuard;
     private final List<Check> checks;
 
+    private String kickMessage;
+
     public DetectionService(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
         this.checks = new ArrayList<>();
@@ -18,15 +20,26 @@ public abstract class DetectionService {
         this.checks.add(new BlacklistCheck(epicGuard));
     }
 
+    public String getKickMessage() {
+        return this.kickMessage;
+    }
+
     /**
      * Returns true if the detection is positive (player should be kicked)
      */
     public boolean performCheck(String address, String nickname) {
+        this.epicGuard.setConnectionPerSecond(this.epicGuard.getConnectionPerSecond() + 1);
+
+        if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
+            return false;
+        }
+
         for (Check check : this.checks) {
             if (check.check(address, nickname)) {
                 if (check.shouldBlacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
+                this.kickMessage = check.getKickMessage();
                 return true;
             }
         }

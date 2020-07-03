@@ -5,7 +5,7 @@ import me.ishift.epicguard.core.check.Check;
 
 public class BlacklistCheck extends Check {
     public BlacklistCheck(EpicGuard epicGuard) {
-        super(epicGuard, false);
+        super(epicGuard, false, epicGuard.getMessages().kickMessageBlacklist);
     }
 
     @Override

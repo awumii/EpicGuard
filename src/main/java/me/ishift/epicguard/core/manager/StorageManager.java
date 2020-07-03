@@ -8,10 +8,14 @@ import java.util.List;
 public class StorageManager {
     private final Json data;
     private final List<String> blacklist;
+    private final List<String> whitelist;
 
     public StorageManager() {
         this.data = new Json("data", "plugins/EpicGuard/data");
         this.blacklist = this.data.getOrSetDefault("blacklist", new ArrayList<>());
+        this.whitelist = this.data.getOrSetDefault("whitelist", new ArrayList<>());
+
+        this.blacklist("127.0.0.1");
     }
 
     public Json getData() {
@@ -26,5 +30,16 @@ public class StorageManager {
 
     public boolean isBlacklisted(String address) {
         return this.blacklist.contains(address);
+    }
+
+    public void whitelist(String address) {
+        this.blacklist.remove(address);
+        if (!this.whitelist.contains(address)) {
+            this.whitelist.add(address);
+        }
+    }
+
+    public boolean isWhitelisted(String address) {
+        return this.whitelist.contains(address);
     }
 }
