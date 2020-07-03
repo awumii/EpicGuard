@@ -1,9 +1,6 @@
 package me.ishift.epicguard.core.config;
 
-import org.diorite.cfg.annotations.CfgClass;
-import org.diorite.cfg.annotations.CfgCollectionStyle;
-import org.diorite.cfg.annotations.CfgComment;
-import org.diorite.cfg.annotations.CfgName;
+import org.diorite.cfg.annotations.*;
 import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
 
 import java.util.Arrays;
@@ -52,6 +49,17 @@ public class PluginConfiguration {
     @CfgName("city-blacklist")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+
+    @CfgComment(" ")
+    @CfgComment("╔════════════════════════════════════════════╗")
+    @CfgComment("║           Other AntiBot Checks             ║")
+    @CfgComment("╚════════════════════════════════════════════╝")
+    @CfgComment(" ")
+    @CfgComment("Recommended option!")
+    @CfgComment("Should every player (except if he is whitelisted)")
+    @CfgComment("be disconnected when there is an bot attack?")
+    @CfgName("attack-deny-join")
+    public boolean denyJoin = true;
 
     @CfgComment(" ")
     @CfgComment("╔════════════════════════════════════════════╗")
