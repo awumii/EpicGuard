@@ -11,8 +11,8 @@ public class CounterTask implements Runnable {
 
     @Override
     public void run() {
-        this.epicGuard.getNotificator().sendActionBar(
-                "&c&lEpicGuard &6&lNEON &8» &7Connections: &c" + this.epicGuard.getConnectionPerSecond() +
+        this.epicGuard.getNotificationManager().notify(
+                "&c&lEpicGuard &8» &7Connections: &c" + this.epicGuard.getConnectionPerSecond() +
                         "/s  &8░  &7Bot attack: " + (this.epicGuard.isAttack() ? "&4&l✖ Detected ✖" : "&2&l✔ Undetected ✔"));
         this.epicGuard.setConnectionPerSecond(0);
     }
