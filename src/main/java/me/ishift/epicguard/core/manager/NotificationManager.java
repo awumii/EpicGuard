@@ -15,7 +15,7 @@ public class NotificationManager {
 
     public void notify(String message) {
         for (User user : this.epicGuard.getUserManager().getUsers()) {
-            if (user.isStatus()) {
+            if (user.isNotifications()) {
                 this.notificator.sendActionBar(message, user.getUniqueId());
             }
         }

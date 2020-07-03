@@ -11,7 +11,8 @@ public class StorageManager {
     private final List<String> whitelist;
 
     public StorageManager() {
-        this.data = new Json("data", "plugins/EpicGuard/data");
+        this.data = new Json("storage", "plugins/EpicGuard/data");
+
         this.blacklist = this.data.getOrSetDefault("blacklist", new ArrayList<>());
         this.whitelist = this.data.getOrSetDefault("whitelist", new ArrayList<>());
     }
@@ -44,5 +45,13 @@ public class StorageManager {
 
     public boolean isWhitelisted(String address) {
         return this.whitelist.contains(address);
+    }
+
+    public List<String> getBlacklist() {
+        return this.blacklist;
+    }
+
+    public List<String> getWhitelist() {
+        return this.whitelist;
     }
 }
