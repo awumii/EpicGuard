@@ -69,4 +69,9 @@ public class PluginConfiguration {
             "logged in",
             "lost connection",
             "InitialHandler");
+
+    @CfgComment("How many connections per second must be made,")
+    @CfgComment("to activate attack mode temporally?")
+    @CfgName("max-cps")
+    public int maxCps = 6;
 }
