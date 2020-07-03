@@ -30,6 +30,7 @@ public class GeoManager {
         File cityDatabase = new File(dir, "GeoLite2-City.mmdb");
 
         if (this.shouldDownload(countryDatabase)) {
+            this.epicGuard.getStorageManager().getData().set("last-db-download", System.currentTimeMillis());
             this.epicGuard.getLogger().info("Your country database is outdated, starting download operation...");
             FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryDatabase);
         }

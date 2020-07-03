@@ -1,10 +1,11 @@
 package me.ishift.epicguard.core;
 
-import me.ishift.epicguard.core.config.Configuration;
+import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.manager.GeoManager;
 import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.util.ConfigHelper;
+import me.ishift.epicguard.core.util.LogFilter;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
 
-    private final Configuration config;
+    private final PluginConfiguration config;
     private final MessagesConfiguration messages;
 
     private boolean attack;
@@ -37,11 +38,18 @@ public class EpicGuard {
 
         File configurationFile = new File(dataFolder, "config.yml");
         File messagesFile = new File(dataFolder, "messages.yml");
-        this.config = ConfigHelper.loadConfig(configurationFile, Configuration.class);
+        this.config = ConfigHelper.loadConfig(configurationFile, PluginConfiguration.class);
         this.messages = ConfigHelper.loadConfig(messagesFile, MessagesConfiguration.class);
 
         this.storageManager = new StorageManager();
         this.geoManager = new GeoManager(this);
+
+        try {
+            new LogFilter(this.config.consoleFilter).register();
+        } catch (Exception e) {
+            logger.warning("LogFilter can't be enabled, because log4j is not found. If you are running on BungeeCord, consider waterfall.");
+        }
+
         logger.info("EpicGuard v5-NEON finished startup successfully.");
     }
 
@@ -54,7 +62,7 @@ public class EpicGuard {
         return this.logger;
     }
 
-    public Configuration getConfig() {
+    public PluginConfiguration getConfig() {
         return this.config;
     }
 

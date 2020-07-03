@@ -6,10 +6,11 @@ import org.diorite.cfg.annotations.CfgComment;
 import org.diorite.cfg.annotations.CfgName;
 import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@CfgClass(name = "Configuration")
+@CfgClass(name = "PluginConfiguration")
 @CfgDelegateDefault("{new}")
 @CfgComment("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗")
 @CfgComment("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗")
@@ -21,7 +22,7 @@ import java.util.List;
 @CfgComment("Created by iShift (Discord: iShift#0524)")
 @CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
 @CfgComment("Support Discord: https://discord.gg/VkfhFCv")
-public class Configuration {
+public class PluginConfiguration {
 
     @CfgComment(" ")
     @CfgComment("╔════════════════════════════════════════════╗")
@@ -51,4 +52,21 @@ public class Configuration {
     @CfgName("city-blacklist")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+
+    @CfgComment(" ")
+    @CfgComment("╔════════════════════════════════════════════╗")
+    @CfgComment("║              Other Settings                ║")
+    @CfgComment("╚════════════════════════════════════════════╝")
+    @CfgComment(" ")
+    @CfgComment("If log message contains one of these words, it will")
+    @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    @CfgName("console-filter")
+    public List<String> consoleFilter = Arrays.asList(
+            "GameProfile",
+            "Disconnected",
+            "UUID of player",
+            "logged in",
+            "lost connection",
+            "InitialHandler");
 }

@@ -1,6 +1,6 @@
 package me.ishift.epicguard.core.check;
 
-import me.ishift.epicguard.core.config.Configuration;
+import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.util.ChatUtils;
 
@@ -26,7 +26,7 @@ public abstract class Check {
         return this.epicGuard;
     }
 
-    public Configuration getConfig() {
+    public PluginConfiguration getConfig() {
         return this.epicGuard.getConfig();
     }
 
