@@ -26,7 +26,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.epicGuard), 20L, 20L);
-        scheduler.runTaskTimerAsynchronously(this, new AttackResetTask(this.epicGuard), 20L * 30L, 20L);
+        scheduler.runTaskTimerAsynchronously(this, new AttackResetTask(this.epicGuard), 20L * 20L, 20L);
 
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this.epicGuard));
     }
