@@ -3,6 +3,7 @@ package me.ishift.epicguard.bukkit.listener;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.DetectionService;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
