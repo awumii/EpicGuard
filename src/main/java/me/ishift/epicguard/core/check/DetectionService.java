@@ -4,6 +4,7 @@ import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.impl.AttackCheck;
 import me.ishift.epicguard.core.check.impl.BlacklistCheck;
 import me.ishift.epicguard.core.check.impl.GeographicalCheck;
+import me.ishift.epicguard.core.check.impl.ProxyCheck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public abstract class DetectionService {
         this.checks.add(new AttackCheck(epicGuard));
         this.checks.add(new BlacklistCheck(epicGuard));
         this.checks.add(new GeographicalCheck(epicGuard));
+        this.checks.add(new ProxyCheck(epicGuard));
     }
 
     public String getKickMessage() {

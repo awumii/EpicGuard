@@ -1,5 +1,6 @@
 package me.ishift.epicguard.bungee;
 
+import me.ishift.epicguard.bungee.listener.PreLoginListener;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.task.CounterTask;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -17,6 +18,8 @@ public class EpicGuardBungee extends Plugin {
         TaskScheduler scheduler = this.getProxy().getScheduler();
         scheduler.schedule(this, new CounterTask(this.epicGuard), 1L, TimeUnit.SECONDS);
         scheduler.schedule(this, new CounterTask(this.epicGuard), 20L, TimeUnit.SECONDS);
+
+        this.getProxy().getPluginManager().registerListener(this, new PreLoginListener(this.epicGuard));
     }
 
     @Override

@@ -27,8 +27,6 @@ public class GeographicalCheck extends Check {
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
                     return this.geoCheck(address, type);
-                } else {
-                    return false;
                 }
         }
         return false;
