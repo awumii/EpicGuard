@@ -1,5 +1,6 @@
 package me.ishift.epicguard.bungee;
 
+import me.ishift.epicguard.bungee.command.EpicGuardCommand;
 import me.ishift.epicguard.bungee.listener.DisconnectListener;
 import me.ishift.epicguard.bungee.listener.PostLoginListener;
 import me.ishift.epicguard.bungee.listener.PreLoginListener;
@@ -26,6 +27,8 @@ public class EpicGuardBungee extends Plugin {
         pm.registerListener(this, new PreLoginListener(this.epicGuard));
         pm.registerListener(this, new DisconnectListener(this.epicGuard));
         pm.registerListener(this, new PostLoginListener(this, this.epicGuard));
+
+        pm.registerCommand(this, new EpicGuardCommand(this.epicGuard));
     }
 
     @Override

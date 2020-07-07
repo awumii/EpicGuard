@@ -1,24 +1,24 @@
-package me.ishift.epicguard.bukkit.command;
+package me.ishift.epicguard.bungee.command;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.user.User;
 import me.ishift.epicguard.core.util.ChatUtils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.plugin.Command;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-public class EpicGuardCommand implements CommandExecutor {
+public class EpicGuardCommand extends Command {
     private final EpicGuard epicGuard;
 
     public EpicGuardCommand(EpicGuard epicGuard) {
+        super("epicguard", "epicguard.admin", "guard", "eg", "ab", "antibot");
         this.epicGuard = epicGuard;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
@@ -31,12 +31,12 @@ public class EpicGuardCommand implements CommandExecutor {
             send(sender, "&6/guard whitelist <address> &7- whitelist an address.");
             send(sender, "&6/guard blacklist <address> &7- blacklist an address.");
             send(sender, "&8&m--------------------------------------");
-            return true;
+            return;
         }
 
         if (!sender.hasPermission("epicguard.admin")) {
-            send(sender, config.noPermission);
-            return true;
+            send(sender, prefix + config.noPermission);
+            return;
         }
 
         switch (args[0]) {
@@ -56,7 +56,7 @@ public class EpicGuardCommand implements CommandExecutor {
             case "whitelist":
                 if (args.length != 2) {
                     send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <address>"));
-                    return true;
+                    return;
                 }
                 send(sender, prefix + config.whitelisted.replace("{IP}", args[1]));
                 this.epicGuard.getStorageManager().whitelist(args[1]);
@@ -64,16 +64,15 @@ public class EpicGuardCommand implements CommandExecutor {
             case "blacklist":
                 if (args.length != 2) {
                     send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <address>"));
-                    return true;
+                    return;
                 }
                 send(sender, prefix + config.blacklisted.replace("{IP}", args[1]));
                 this.epicGuard.getStorageManager().blacklist(args[1]);
                 break;
         }
-        return true;
     }
 
     private void send(CommandSender sender, String message) {
-        sender.sendMessage(ChatUtils.colored(message));
+        sender.sendMessage(TextComponent.fromLegacyText(ChatUtils.colored(message)));
     }
 }
