@@ -12,7 +12,7 @@ public class ProxyCheck extends Check {
 
     @Override
     public boolean check(String address, String nickname) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheckMode);
+        CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
         String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
 
         switch (mode) {
