@@ -90,10 +90,10 @@ public class PluginConfiguration {
 
     @CfgComment("Time in seconds the player must be online")
     @CfgComment("to be considered as legitimate player.")
-    @CfgComment("Set to -1 to disable this option")
+    @CfgComment("Set to a huge number to disable this option")
     @CfgComment("DEFAULT: 240 (4 minutes)")
-    @CfgName("auto-whitelist")
-    public int autoWhitelist = 280;
+    @CfgName("auto-whitelist-time")
+    public int autoWhitelistTime = 240;
 
     @CfgComment("How many connections per second must be made,")
     @CfgComment("to activate attack mode temporally?")
