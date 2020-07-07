@@ -6,8 +6,8 @@ import me.ishift.epicguard.core.user.User;
 import me.ishift.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import org.bukkit.entity.Player;
 
 public class EpicGuardCommand extends Command {
     private final EpicGuard epicGuard;
@@ -34,18 +34,14 @@ public class EpicGuardCommand extends Command {
             return;
         }
 
-        if (!sender.hasPermission("epicguard.admin")) {
-            send(sender, prefix + config.noPermission);
-            return;
-        }
-
         switch (args[0]) {
             case "stats":
                 send(sender, prefix + "&7Blacklisted addresses: &6" + this.epicGuard.getStorageManager().getBlacklist().size());
                 send(sender, prefix + "&7Whitelisted addresses: &6" + this.epicGuard.getStorageManager().getWhitelist().size());
                 break;
             case "notifications":
-                User user = this.epicGuard.getUserManager().getUser(((Player) sender).getUniqueId());
+                ProxiedPlayer player = (ProxiedPlayer) sender;
+                User user = this.epicGuard.getUserManager().getUser((player.getUniqueId()));
                 user.setNotifications(!user.isNotifications());
                 send(sender, prefix + config.notifications);
                 break;
