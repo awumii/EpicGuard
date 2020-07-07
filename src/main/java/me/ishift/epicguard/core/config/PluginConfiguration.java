@@ -27,10 +27,10 @@ public class PluginConfiguration {
     @CfgComment("╚════════════════════════════════════════════╝")
     @CfgComment(" ")
     @CfgComment("Country check will filter countries your players can connect from.")
-    @CfgComment("Check mode will define, when this check will work.")
     @CfgComment("NEVER - check is disabled.")
     @CfgComment("ALWAYS - check will perform on every player.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
+    @CfgComment("Default: NEVER (You SHOULD change this!)")
     @CfgName("country-check-mode")
     public String countryCheckMode = "NEVER";
 
@@ -55,17 +55,50 @@ public class PluginConfiguration {
     @CfgComment("║           Other AntiBot Checks             ║")
     @CfgComment("╚════════════════════════════════════════════╝")
     @CfgComment(" ")
+
+    @CfgComment("Proxy check will define if user is connecting from Proxy/VPN.")
+    @CfgComment("Change this option to save performance or increase accuracy")
+    @CfgComment("NEVER - check is disabled.")
+    @CfgComment("ALWAYS - check will perform on every player.")
+    @CfgComment("ATTACK - check will perform only during bot attack.")
+    @CfgComment("Default: ALWAYS")
+    @CfgName("country-check-mode")
+    public String proxyCheckMode = "ALWAYS";
+
+    @CfgComment("Recommended option!")
+    @CfgComment("Register an account here: https://proxycheck.io/dashboard")
+    @CfgComment("And get your FREE api key.")
+    @CfgComment("It will give you more queries/24h")
+    @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
+    @CfgName("proxy-check-key")
+    public String proxyCheckKey = "put_your_key_here";
+
     @CfgComment("Recommended option!")
     @CfgComment("Should every player (except if he is whitelisted)")
     @CfgComment("be disconnected when there is an bot attack?")
+    @CfgComment("DEFAULT: true")
     @CfgName("attack-deny-join")
     public boolean denyJoin = true;
+
+    @CfgComment("Time in seconds the player must be online")
+    @CfgComment("to be considered as legitimate player.")
+    @CfgComment("Set to -1 to disable this option")
+    @CfgComment("DEFAULT: 240 (4 minutes)")
+    @CfgName("auto-whitelist")
+    public int autoWhitelist = 280;
+
+    @CfgComment("How many connections per second must be made,")
+    @CfgComment("to activate attack mode temporally?")
+    @CfgName("max-cps")
+    public int maxCps = 6;
 
     @CfgComment(" ")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║              Other Settings                ║")
     @CfgComment("╚════════════════════════════════════════════╝")
     @CfgComment(" ")
+    @CfgComment("")
+
     @CfgComment("If log message contains one of these words, it will")
     @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
@@ -77,9 +110,4 @@ public class PluginConfiguration {
             "logged in",
             "lost connection",
             "InitialHandler");
-
-    @CfgComment("How many connections per second must be made,")
-    @CfgComment("to activate attack mode temporally?")
-    @CfgName("max-cps")
-    public int maxCps = 6;
 }

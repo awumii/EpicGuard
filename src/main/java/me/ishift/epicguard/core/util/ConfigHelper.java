@@ -76,6 +76,5 @@ public final class ConfigHelper {
         return null;
     }
 
-    private ConfigHelper() {
-    }
+    private ConfigHelper() {}
 }
