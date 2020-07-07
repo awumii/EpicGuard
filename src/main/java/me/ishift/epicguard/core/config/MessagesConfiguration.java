@@ -69,10 +69,17 @@ public class MessagesConfiguration {
             "&7You have been kicked by our &aantibot protection&7.",
             "&7Details: &cServer is under attack, please wait some seconds before joining.");
 
-    @CfgName("kick-message-blacklist")
+    @CfgName("kick-message-proxy")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageProxy = Arrays.asList(
             "&8[&2EpicGuard&8]",
             "&7You have been kicked by our &aantibot protection&7.",
             "&7Details: &cYou are using VPN or Proxy.");
+
+    @CfgName("kick-message-reconnect")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    public List<String> kickMessageReconnect = Arrays.asList(
+            "&8[&2EpicGuard&8]",
+            "&7You have been kicked by our &aantibot protection&7.",
+            "&7Details: &cPlease join the server again.");
 }

@@ -17,7 +17,7 @@ public class GeographicalCheck extends Check {
     @Override
     public boolean check(String address, String nickname) {
         Type type = Type.valueOf(this.getConfig().countryCheckType);
-        CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheckMode);
+        CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
 
         switch (mode) {
             case NEVER:

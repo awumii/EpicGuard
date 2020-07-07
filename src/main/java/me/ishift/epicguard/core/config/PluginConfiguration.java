@@ -32,7 +32,7 @@ public class PluginConfiguration {
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: NEVER (You SHOULD change this!)")
     @CfgName("country-check-mode")
-    public String countryCheckMode = "NEVER";
+    public String countryCheck = "NEVER";
 
     @CfgComment("This will define if country-check should be blacklist or whitelist.")
     @CfgComment("BLACKLIST - countries below are blocked")
@@ -62,8 +62,8 @@ public class PluginConfiguration {
     @CfgComment("ALWAYS - check will perform on every player.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: ALWAYS")
-    @CfgName("country-check-mode")
-    public String proxyCheckMode = "ALWAYS";
+    @CfgName("country-check")
+    public String proxyCheck = "ALWAYS";
 
     @CfgComment("Recommended option!")
     @CfgComment("Register an account here: https://proxycheck.io/dashboard")
@@ -73,9 +73,17 @@ public class PluginConfiguration {
     @CfgName("proxy-check-key")
     public String proxyCheckKey = "put_your_key_here";
 
-    @CfgComment("Recommended option!")
-    @CfgComment("Should every player (except if he is whitelisted)")
+    @CfgComment("Reconnect check will force users to join the server again.")
+    @CfgComment("NEVER - check is disabled.")
+    @CfgComment("ALWAYS - check will perform on every player.")
+    @CfgComment("ATTACK - check will perform only during bot attack.")
+    @CfgComment("Default: ATTACK")
+    @CfgName("reconnect-check")
+    public String reconnectCheck = "ATTACK";
+
+    @CfgComment("Should every user (except if he is whitelisted)")
     @CfgComment("be disconnected when there is an bot attack?")
+    @CfgComment("Enable for better protection, disable to allow NEW players during attack.")
     @CfgComment("DEFAULT: true")
     @CfgName("attack-deny-join")
     public boolean denyJoin = true;
