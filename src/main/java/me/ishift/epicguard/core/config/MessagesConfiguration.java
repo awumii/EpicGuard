@@ -18,10 +18,8 @@ import java.util.List;
 @CfgComment("Created by iShift (Discord: iShift#0524)")
 @CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
 @CfgComment("Support Discord: https://discord.gg/VkfhFCv")
-@CfgComment(" ")
 public class MessagesConfiguration {
 
-    @CfgComment("Prefix of all messages sent by the plugin.")
     @CfgName("prefix")
     @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
     public String prefix = "&8[&2EpicGuard&8] &7";

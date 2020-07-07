@@ -21,7 +21,7 @@ public class GeoManager {
         this.epicGuard = epicGuard;
         this.epicGuard.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
-        File dir = new File("plugins/EpicGuard/geo");
+        File dir = new File("plugins/EpicGuard/data");
         if (!dir.exists()) {
             dir.mkdir();
         }

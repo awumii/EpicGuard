@@ -62,7 +62,7 @@ public class PluginConfiguration {
     @CfgComment("ALWAYS - check will perform on every player.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: ALWAYS")
-    @CfgName("country-check")
+    @CfgName("proxy-check")
     public String proxyCheck = "ALWAYS";
 
     @CfgComment("Recommended option!")
