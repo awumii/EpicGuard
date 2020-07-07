@@ -39,6 +39,15 @@ public class MessagesConfiguration {
 
     public String notifications = "&7You have toggled your notifications!";
 
+    @CfgName("command-not-in-allowed")
+    public String notAllowedCommand = "&fUnknown command. Type '/help' for help.";
+
+    @CfgName("blocked-command")
+    public String blockedCommand = "&cThis command has been blocked.";
+
+    @CfgName("operator-disabled")
+    public String operatorDisabled = "&cOperator mechanics has been disabled on this server.";
+
     @CfgName("kick-message-geo")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageGeo = Arrays.asList(
