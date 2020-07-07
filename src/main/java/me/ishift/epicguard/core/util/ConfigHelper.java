@@ -1,8 +1,8 @@
 package me.ishift.epicguard.core.util;
 
-import org.apache.commons.lang.Validate;
 import org.diorite.cfg.system.Template;
 import org.diorite.cfg.system.TemplateCreator;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import java.io.File;
 import java.io.IOException;

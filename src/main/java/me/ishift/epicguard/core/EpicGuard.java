@@ -34,7 +34,7 @@ public class EpicGuard {
         logger.info("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║");
         logger.info("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝");
         logger.info("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝");
-        logger.info("EpicGuard v5-NEON is starting up...");
+        logger.info("EpicGuard v5 is starting up...");
 
         this.reloadConfig();
         this.storageManager = new StorageManager();
@@ -48,7 +48,7 @@ public class EpicGuard {
             logger.warning("LogFilter can't be enabled, because log4j is not found. If you are running on BungeeCord, consider a switch to Waterfall.");
         }
 
-        logger.info("EpicGuard v5-NEON finished startup successfully.");
+        logger.info("EpicGuard v5 finished startup successfully.");
     }
 
     public void shutdown() {
@@ -56,7 +56,7 @@ public class EpicGuard {
     }
 
     public String getVersion() {
-        return "5.0.0-NEON";
+        return "5.0.0";
     }
 
     public void reloadConfig() {
