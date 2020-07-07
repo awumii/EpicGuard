@@ -11,7 +11,7 @@ public class PlayerPreLoginListener extends DetectionService implements Listener
         super(epicGuard);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         String address = event.getAddress().getHostAddress();
         String nickname = event.getName();
