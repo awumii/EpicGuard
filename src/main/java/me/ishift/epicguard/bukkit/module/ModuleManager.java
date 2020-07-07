@@ -1,10 +1,9 @@
 package me.ishift.epicguard.bukkit.module;
 
-import de.leonhard.storage.Yaml;
+import de.leonhard.storage.Config;
 import me.ishift.epicguard.bukkit.module.modules.*;
 import me.ishift.epicguard.core.EpicGuard;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ModuleManager {
     public List<String> superAdminList;
 
     public ModuleManager(EpicGuard epicGuard) {
-        Yaml config = new Yaml("spigot.yml", "plugins/EpicGuard");
+        Config config = new Config("spigot.yml", "plugins/EpicGuard");
         config.setHeader("If you don't know what these settings do, feel free to ask in the discord server.");
 
         //tabCompleteBlock = config.getOrSetDefault("fully-block-tab-complete", false);
