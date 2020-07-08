@@ -31,7 +31,7 @@ public class MessagesConfiguration {
 
     public String whitelisted = "&7Succesfully whitelisted address &a{IP}!";
 
-    public String blacklisted = "&7Succesfully whitelisted address &a{IP}!";
+    public String blacklisted = "&7Succesfully blacklisted address &a{IP}!";
 
     public String reload = "&7Succesfully reloaded config and messages!";
 
@@ -60,7 +60,7 @@ public class MessagesConfiguration {
             "&7You have been kicked by our &aantibot protection&7.",
             "&7Details: &cYour IP address is blacklisted on this server.");
 
-    @CfgName("kick-message-blacklist")
+    @CfgName("kick-message-attack")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageAttack = Arrays.asList(
             "&8[&2EpicGuard&8]",
