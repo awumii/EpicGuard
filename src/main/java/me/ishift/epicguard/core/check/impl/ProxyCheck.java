@@ -19,10 +19,10 @@ public class ProxyCheck extends Check {
             case NEVER:
                 return false;
             case ALWAYS:
-                return URLUtils.readLines(url).contains("yes");
+                return URLUtils.readString(url).contains("yes");
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return URLUtils.readLines(url).contains("yes");
+                    return URLUtils.readString(url).contains("yes");
                 }
         }
         return false;
