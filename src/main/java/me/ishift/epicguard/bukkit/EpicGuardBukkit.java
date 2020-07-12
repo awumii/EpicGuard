@@ -7,6 +7,7 @@ import me.ishift.epicguard.bukkit.listener.PlayerPreLoginListener;
 import me.ishift.epicguard.bukkit.listener.PlayerQuitListener;
 import me.ishift.epicguard.bukkit.module.ModuleManager;
 import me.ishift.epicguard.bukkit.module.ModuleTask;
+import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.task.AttackResetTask;
 import me.ishift.epicguard.core.task.CounterTask;
@@ -36,6 +37,8 @@ public class EpicGuardBukkit extends JavaPlugin {
         scheduler.runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
 
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this.epicGuard));
+
+        new Metrics(this, 5845);
     }
 
     @Override
