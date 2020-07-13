@@ -24,11 +24,11 @@ public class EpicGuardCommand extends Command {
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
             send(sender, "&8&m---------------------------------------------------");
-            send(sender, "  &6&lEpicGuard &8(Spigot version)");
+            send(sender, "  &6&lEpicGuard &8(BungeeCord version)");
             send(sender, "  &7Version: &f" + this.epicGuard.getVersion());
             if (UpdateChecker.isAvailable()) {
                 send(sender, "");
-                send(sender, "  &7Update available: &c&n" + UpdateChecker.getRemoteVersion());
+                send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
                 send(sender, "  &c&ohttps://www.spigotmc.org/resources/72369/");
             }
             send(sender, "");
@@ -44,12 +44,17 @@ public class EpicGuardCommand extends Command {
         switch (args[0]) {
             case "stats":
                 send(sender, "&8&m---------------------------------------------------");
-                send(sender, "  &6&lEpicGuard &8- &7Statistics)");
+                send(sender, "  &6&lEpicGuard &7(Statistics)");
+                send(sender, "  &7Version: &f" + this.epicGuard.getVersion());
+                if (UpdateChecker.isAvailable()) {
+                    send(sender, "");
+                    send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
+                    send(sender, "  &c&ohttps://www.spigotmc.org/resources/72369/");
+                }
                 send(sender, "");
-                send(sender, prefix + "&7Blacklisted IPs: &6" + this.epicGuard.getStorageManager().getBlacklist().size());
-                send(sender, prefix + "&7Whitelisted IPs: &6" + this.epicGuard.getStorageManager().getWhitelist().size());
-                send(sender, "");
-                send(sender, " &8• &7Connections/s: &6" + this.epicGuard.getConnectionPerSecond());
+                send(sender, " &8• &7Blacklisted IPs: &c&l" + this.epicGuard.getStorageManager().getBlacklist().size());
+                send(sender, " &8• &7Whitelisted IPs: &a&l" + this.epicGuard.getStorageManager().getWhitelist().size());
+                send(sender, " &8• &7Connections: &6&l" + this.epicGuard.getConnectionPerSecond() + "/s");
                 send(sender, "");
                 send(sender, "&8&m---------------------------------------------------");
                 break;

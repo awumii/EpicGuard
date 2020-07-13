@@ -37,7 +37,7 @@ public class GeoManager {
 
         if (this.shouldDownload(cityDatabase)) {
             this.epicGuard.getLogger().info("Your city database is outdated, starting download operation...");
-            //FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityDatabase);
+            FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityDatabase);
         }
 
         try {
