@@ -4,35 +4,31 @@ import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
 
+import java.util.List;
+
 public class GeographicalCheck extends Check {
     public GeographicalCheck(EpicGuard epicGuard) {
-        super(epicGuard, true, epicGuard.getMessages().kickMessageGeo);
-    }
-
-    private enum Type {
-        BLACKLIST,
-        WHITELIST
+        super(epicGuard);
     }
 
     @Override
     public boolean check(String address, String nickname) {
-        Type type = Type.valueOf(this.getConfig().countryCheckType);
         CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.geoCheck(address, type);
+                return this.geoCheck(address);
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return this.geoCheck(address, type);
+                    return this.geoCheck(address);
                 }
         }
         return false;
     }
 
-    private boolean geoCheck(String address, Type type) {
+    private boolean geoCheck(String address) {
         String country = this.getEpicGuard().getGeoManager().getCountryCode(address);
         String city = this.getEpicGuard().getGeoManager().getCity(address);
 
@@ -40,10 +36,20 @@ public class GeographicalCheck extends Check {
             return true;
         }
 
-        if (type == Type.WHITELIST) {
+        if (this.getConfig().countryCheckType.equals("WHITELIST")) {
             return !this.getConfig().countryCheckValues.contains(country);
         } else {
             return this.getConfig().countryCheckValues.contains(country);
         }
+    }
+
+    @Override
+    public List<String> getKickMessage() {
+        return this.getEpicGuard().getMessages().kickMessageGeo;
+    }
+
+    @Override
+    public boolean blacklistUser() {
+        return true;
     }
 }

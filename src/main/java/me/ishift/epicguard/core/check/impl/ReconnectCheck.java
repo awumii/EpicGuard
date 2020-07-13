@@ -6,13 +6,13 @@ import me.ishift.epicguard.core.check.CheckMode;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class ReconnectCheck extends Check {
-    private final Collection<String> addresses;
+    private final Collection<String> addresses = new HashSet<>();
 
     public ReconnectCheck(EpicGuard epicGuard) {
-        super(epicGuard, false, epicGuard.getMessages().kickMessageReconnect);
-        this.addresses = new HashSet<>();
+        super(epicGuard);
     }
 
     @Override
@@ -37,6 +37,16 @@ public class ReconnectCheck extends Check {
             this.addresses.add(address);
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public List<String> getKickMessage() {
+        return this.getEpicGuard().getMessages().kickMessageReconnect;
+    }
+
+    @Override
+    public boolean blacklistUser() {
         return false;
     }
 }
