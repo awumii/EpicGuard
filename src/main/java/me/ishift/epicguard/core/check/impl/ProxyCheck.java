@@ -5,9 +5,11 @@ import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
 import me.ishift.epicguard.core.util.URLUtils;
 
+import java.util.List;
+
 public class ProxyCheck extends Check {
     public ProxyCheck(EpicGuard epicGuard) {
-        super(epicGuard, true, epicGuard.getMessages().kickMessageProxy);
+        super(epicGuard);
     }
 
     @Override
@@ -26,5 +28,15 @@ public class ProxyCheck extends Check {
                 }
         }
         return false;
+    }
+
+    @Override
+    public List<String> getKickMessage() {
+        return this.getEpicGuard().getMessages().kickMessageProxy;
+    }
+
+    @Override
+    public boolean blacklistUser() {
+        return true;
     }
 }

@@ -8,18 +8,9 @@ import java.util.List;
 
 public abstract class Check {
     private final EpicGuard epicGuard;
-    private final boolean blacklist;
-    private final String kickMessage;
 
-    public Check(EpicGuard epicGuard, boolean blacklist, List<String> kickMessage) {
+    public Check(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
-        this.blacklist = blacklist;
-
-        StringBuilder builder = new StringBuilder();
-        for (String string : kickMessage) {
-            builder.append(ChatUtils.colored(string)).append("\n");
-        }
-        this.kickMessage = builder.toString();
     }
 
     public EpicGuard getEpicGuard() {
@@ -30,13 +21,9 @@ public abstract class Check {
         return this.epicGuard.getConfig();
     }
 
-    public String getKickMessage() {
-        return this.kickMessage;
-    }
+    public abstract List<String> getKickMessage();
 
-    public boolean shouldBlacklist() {
-        return this.blacklist;
-    }
+    public abstract boolean blacklistUser();
 
     /**
      * @return true if detection is positive (detected as bot).

@@ -2,6 +2,7 @@ package me.ishift.epicguard.core.check;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.impl.*;
+import me.ishift.epicguard.core.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,15 @@ public abstract class DetectionService {
 
         for (Check check : this.checks) {
             if (check.check(address, nickname)) {
-                if (check.shouldBlacklist()) {
+                if (check.blacklistUser()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
-                this.kickMessage = check.getKickMessage();
+
+                StringBuilder builder = new StringBuilder();
+                for (String string : check.getKickMessage()) {
+                    builder.append(ChatUtils.colored(string)).append("\n");
+                }
+                this.kickMessage = builder.toString();
                 return true;
             }
         }
