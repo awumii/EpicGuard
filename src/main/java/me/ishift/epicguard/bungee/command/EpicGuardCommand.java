@@ -4,6 +4,7 @@ import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.user.User;
 import me.ishift.epicguard.core.util.ChatUtils;
+import me.ishift.epicguard.core.util.UpdateChecker;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -25,6 +26,11 @@ public class EpicGuardCommand extends Command {
             send(sender, "&8&m---------------------------------------------------");
             send(sender, "  &6&lEpicGuard &8(Spigot version)");
             send(sender, "  &7Version: &f" + this.epicGuard.getVersion());
+            if (UpdateChecker.isAvailable()) {
+                send(sender, "");
+                send(sender, "  &7Update available: &c&n" + UpdateChecker.getRemoteVersion());
+                send(sender, "  &c&ohttps://www.spigotmc.org/resources/72369/");
+            }
             send(sender, "");
             send(sender, " &8• &b/guard stats &7- show plugin statistics.");
             send(sender, " &8• &b/guard notifications &7- enable actionbar notifications.");

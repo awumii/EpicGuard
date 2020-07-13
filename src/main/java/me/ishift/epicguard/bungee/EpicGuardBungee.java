@@ -8,6 +8,7 @@ import me.ishift.epicguard.bungee.util.Metrics;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.task.AttackResetTask;
 import me.ishift.epicguard.core.task.CounterTask;
+import me.ishift.epicguard.core.task.UpdateCheckerTask;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.api.scheduler.TaskScheduler;
@@ -23,7 +24,8 @@ public class EpicGuardBungee extends Plugin {
 
         TaskScheduler scheduler = this.getProxy().getScheduler();
         scheduler.schedule(this, new CounterTask(this.epicGuard), 1L, 1L, TimeUnit.SECONDS);
-        scheduler.schedule(this, new AttackResetTask(this.epicGuard), 20L, 20L, TimeUnit.SECONDS);
+        scheduler.schedule(this, new AttackResetTask(this.epicGuard), 1L, 20L, TimeUnit.SECONDS);
+        scheduler.schedule(this, new UpdateCheckerTask(this.epicGuard), 1L, 1800L, TimeUnit.SECONDS); // 30 minutes
 
         PluginManager pm = this.getProxy().getPluginManager();
         pm.registerListener(this, new PreLoginListener(this.epicGuard));
