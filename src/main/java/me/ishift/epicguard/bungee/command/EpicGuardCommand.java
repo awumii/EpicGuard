@@ -22,22 +22,30 @@ public class EpicGuardCommand extends Command {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
-            send(sender, "&8&m----------(&4&l EPICGUARD &8&m)----------");
-            send(sender, "&7Current version: &c" + this.epicGuard.getVersion());
+            send(sender, "&8&m---------------------------------------------------");
+            send(sender, "  &6&lEpicGuard &8(Spigot version)");
+            send(sender, "  &7Version: &f" + this.epicGuard.getVersion());
             send(sender, "");
-            send(sender, "&6/guard stats &7- show plugin statistics.");
-            send(sender, "&6/guard notifications &7- enable actionbar notifications.");
-            send(sender, "&6/guard reload &7- reload config and messages.");
-            send(sender, "&6/guard whitelist <address> &7- whitelist an address.");
-            send(sender, "&6/guard blacklist <address> &7- blacklist an address.");
-            send(sender, "&8&m--------------------------------------");
+            send(sender, " &8• &b/guard stats &7- show plugin statistics.");
+            send(sender, " &8• &b/guard notifications &7- enable actionbar notifications.");
+            send(sender, " &8• &b/guard reload &7- reload config and messages.");
+            send(sender, " &8• &b/guard whitelist <address> &7- whitelist an address.");
+            send(sender, " &8• &b/guard blacklist <address> &7- blacklist an address.");
+            send(sender, "&8&m---------------------------------------------------");
             return;
         }
 
         switch (args[0]) {
             case "stats":
-                send(sender, prefix + "&7Blacklisted addresses: &6" + this.epicGuard.getStorageManager().getBlacklist().size());
-                send(sender, prefix + "&7Whitelisted addresses: &6" + this.epicGuard.getStorageManager().getWhitelist().size());
+                send(sender, "&8&m---------------------------------------------------");
+                send(sender, "  &6&lEpicGuard &8- &7Statistics)");
+                send(sender, "");
+                send(sender, prefix + "&7Blacklisted IPs: &6" + this.epicGuard.getStorageManager().getBlacklist().size());
+                send(sender, prefix + "&7Whitelisted IPs: &6" + this.epicGuard.getStorageManager().getWhitelist().size());
+                send(sender, "");
+                send(sender, " &8• &7Connections/s: &6" + this.epicGuard.getConnectionPerSecond());
+                send(sender, "");
+                send(sender, "&8&m---------------------------------------------------");
                 break;
             case "notifications":
                 ProxiedPlayer player = (ProxiedPlayer) sender;
