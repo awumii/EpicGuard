@@ -73,6 +73,11 @@ public class PluginConfiguration {
     @CfgName("proxy-check-key")
     public String proxyCheckKey = "put_your_key_here";
 
+    @CfgComment("How many accounts can be used")
+    @CfgComment("per one ip address?")
+    @CfgName("max-accounts-per-ip")
+    public int accountLimit = 3;
+
     @CfgComment("Reconnect check will force users to join the server again.")
     @CfgComment("NEVER - check is disabled.")
     @CfgComment("ALWAYS - check will perform on every player.")

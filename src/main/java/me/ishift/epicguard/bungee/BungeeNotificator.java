@@ -11,6 +11,6 @@ import java.util.UUID;
 public class BungeeNotificator implements Notificator {
     @Override
     public void sendActionBar(String message, UUID target) {
-        ProxyServer.getInstance().getPlayer(target).sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
+        ProxyServer.getInstance().getPlayer(target).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
     }
 }

@@ -80,4 +80,11 @@ public class MessagesConfiguration {
             "&8[&2EpicGuard&8]",
             "&7You have been kicked by our &aantibot protection&7.",
             "&7Details: &cPlease join the server again.");
+
+    @CfgName("kick-message-account-limit")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    public List<String> kickMessageAccountLimit = Arrays.asList(
+            "&8[&2EpicGuard&8]",
+            "&7You have been kicked by our &aantibot protection&7.",
+            "&7Details: &cYou have too many accounts on your IP address.");
 }
