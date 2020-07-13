@@ -19,6 +19,7 @@ public abstract class DetectionService {
         this.checks.add(new BlacklistCheck(epicGuard));
         this.checks.add(new GeographicalCheck(epicGuard));
         this.checks.add(new ReconnectCheck(epicGuard));
+        this.checks.add(new AccountLimitCheck(epicGuard));
         this.checks.add(new ProxyCheck(epicGuard));
     }
 
