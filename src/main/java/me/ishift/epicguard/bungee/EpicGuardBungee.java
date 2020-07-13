@@ -22,8 +22,8 @@ public class EpicGuardBungee extends Plugin {
         this.epicGuard = new EpicGuard(this.getLogger(), new BungeeNotificator());
 
         TaskScheduler scheduler = this.getProxy().getScheduler();
-        scheduler.schedule(this, new CounterTask(this.epicGuard), 1L, TimeUnit.SECONDS);
-        scheduler.schedule(this, new AttackResetTask(this.epicGuard), 20L, TimeUnit.SECONDS);
+        scheduler.schedule(this, new CounterTask(this.epicGuard), 1L, 1L, TimeUnit.SECONDS);
+        scheduler.schedule(this, new AttackResetTask(this.epicGuard), 20L, 20L, TimeUnit.SECONDS);
 
         PluginManager pm = this.getProxy().getPluginManager();
         pm.registerListener(this, new PreLoginListener(this.epicGuard));

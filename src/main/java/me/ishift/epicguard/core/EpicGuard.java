@@ -56,7 +56,7 @@ public class EpicGuard {
     }
 
     public String getVersion() {
-        return "5.0.0";
+        return "5.0.2";
     }
 
     public void reloadConfig() {
