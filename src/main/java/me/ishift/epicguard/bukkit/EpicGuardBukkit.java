@@ -9,13 +9,9 @@ import me.ishift.epicguard.bukkit.module.ModuleManager;
 import me.ishift.epicguard.bukkit.module.ModuleTask;
 import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.core.EpicGuard;
-import me.ishift.epicguard.core.task.AttackResetTask;
-import me.ishift.epicguard.core.task.CounterTask;
-import me.ishift.epicguard.core.task.UpdateCheckerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class EpicGuardBukkit extends JavaPlugin {
     private EpicGuard epicGuard;
@@ -23,7 +19,7 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.epicGuard = new EpicGuard(this.getLogger(), new BukkitNotificator());
+        this.epicGuard = new EpicGuard(new BukkitMethods(this));
         this.moduleManager = new ModuleManager(this.epicGuard);
 
         PluginManager pm = Bukkit.getPluginManager();
@@ -32,11 +28,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new PlayerJoinListener(this, epicGuard), this);
         pm.registerEvents(new CommandListener(this), this);
 
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, new CounterTask(this.epicGuard), 20L, 20L);
-        scheduler.runTaskTimerAsynchronously(this, new AttackResetTask(this.epicGuard), 20L, 20L * 20L);
-        scheduler.runTaskTimerAsynchronously(this, new UpdateCheckerTask(this.epicGuard), 20L, 1800L * 20L); // 30 minutes
-        scheduler.runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
+        Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
 
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this.epicGuard));
 

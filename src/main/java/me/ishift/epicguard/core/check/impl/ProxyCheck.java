@@ -7,11 +7,12 @@ import me.ishift.epicguard.core.util.URLUtils;
 
 import java.util.List;
 
-public class ProxyCheck extends Check {
+public class ProxyCheck extends Check implements Runnable {
     private int requests;
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
+        epicGuard.getMethodInterface().scheduleAsyncTask(this, 86400L); //24 hours
     }
 
     @Override
@@ -43,6 +44,11 @@ public class ProxyCheck extends Check {
 
         this.requests++;
         return URLUtils.readString(url).contains("yes");
+    }
+
+    @Override
+    public void run() {
+        this.requests = 0;
     }
 
     @Override

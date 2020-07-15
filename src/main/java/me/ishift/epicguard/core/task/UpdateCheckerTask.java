@@ -15,7 +15,8 @@ public class UpdateCheckerTask implements Runnable {
         UpdateChecker.checkForUpdates(this.epicGuard);
 
         if (UpdateChecker.isAvailable()) {
-            this.epicGuard.getLogger().info("New update is available");
+            this.epicGuard.getLogger().info("New update is available: " + UpdateChecker.getRemoteVersion());
+            this.epicGuard.getLogger().info("Download it here: https://www.spigotmc.org/resources/72369/");
         }
     }
 }
