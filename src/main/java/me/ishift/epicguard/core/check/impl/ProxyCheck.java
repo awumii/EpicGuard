@@ -8,6 +8,8 @@ import me.ishift.epicguard.core.util.URLUtils;
 import java.util.List;
 
 public class ProxyCheck extends Check {
+    private int requests;
+
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
@@ -15,19 +17,32 @@ public class ProxyCheck extends Check {
     @Override
     public boolean check(String address, String nickname) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
-        String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return URLUtils.readString(url).contains("yes");
+                return this.proxyCheck(address);
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return URLUtils.readString(url).contains("yes");
+                    return this.proxyCheck(address);
                 }
         }
         return false;
+    }
+
+    private boolean proxyCheck(String address) {
+        if (this.requests > this.getConfig().requestLimit) {
+            return false;
+        }
+
+        String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
+        if (!this.getConfig().customProxyCheck.equals("disabled")) {
+            url = this.getConfig().customProxyCheck.replace("%ip%", address);
+        }
+
+        this.requests++;
+        return URLUtils.readString(url).contains("yes");
     }
 
     @Override

@@ -112,6 +112,18 @@ public class PluginConfiguration {
     @CfgComment(" ")
     @CfgComment("")
 
+    @CfgComment("If you want to use other proxy/vpn checker")
+    @CfgComment("than default (proxycheck.io), you can set it here.")
+    @CfgComment("Available placeholders: %ip%")
+    @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
+    @CfgName("custom-proxy-check-url")
+    public String customProxyCheck = "disabled";
+
+    @CfgComment("Limit of requests sent by the proxy/vpn checker.")
+    @CfgComment("Default (1000) is limit for proxycheck.io with free key.")
+    @CfgComment("request-limit")
+    public int requestLimit = 1000;
+
     @CfgComment("If log message contains one of these words, it will")
     @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)

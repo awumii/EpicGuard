@@ -8,11 +8,12 @@ public class Account {
     private final List<String> nicknames;
 
     public Account(EpicGuard epicGuard, String address, String nickname) {
-        this.nicknames = epicGuard.getStorageManager().getData().getStringList("account-limiter." + address);
+        String ip = address.replace(".", "@");
+        this.nicknames = epicGuard.getStorageManager().getData().getStringList("account-limiter." + ip);
         if (!this.nicknames.contains(nickname)) {
             this.nicknames.add(nickname);
         }
-        epicGuard.getStorageManager().getData().set("account-limiter." + address, this.nicknames);
+        epicGuard.getStorageManager().getData().set("account-limiter." + ip, this.nicknames);
     }
 
     public List<String> getNicknames() {
