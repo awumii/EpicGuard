@@ -35,7 +35,7 @@ public class BungeeMethods implements MethodInterface {
 
     @Override
     public void scheduleSyncTask(Runnable task, long seconds) {
-        this.plugin.getProxy().getScheduler().schedule(this.plugin, task, seconds, TimeUnit.SECONDS);
+        this.plugin.getProxy().getScheduler().schedule(this.plugin, task, seconds, seconds, TimeUnit.SECONDS);
     }
 
     @Override
