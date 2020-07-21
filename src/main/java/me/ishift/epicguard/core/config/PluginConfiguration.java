@@ -135,4 +135,8 @@ public class PluginConfiguration {
             "logged in",
             "lost connection",
             "InitialHandler");
+
+    @CfgComment("Set to false to disable update checker.")
+    @CfgName("update-checker")
+    public boolean updateChecker = true;
 }

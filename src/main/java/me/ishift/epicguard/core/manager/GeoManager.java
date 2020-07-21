@@ -21,13 +21,8 @@ public class GeoManager {
         this.epicGuard = epicGuard;
         this.epicGuard.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
-        File dir = new File("plugins/EpicGuard/data");
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-        File countryDatabase = new File(dir, "GeoLite2-Country.mmdb");
-        File cityDatabase = new File(dir, "GeoLite2-City.mmdb");
+        File countryDatabase = new File("plugins/EpicGuard/data", "GeoLite2-Country.mmdb");
+        File cityDatabase = new File("plugins/EpicGuard/data", "GeoLite2-City.mmdb");
 
         if (this.shouldDownload(countryDatabase)) {
             this.epicGuard.getStorageManager().getData().set("last-db-download", System.currentTimeMillis());

@@ -8,6 +8,10 @@ public final class UpdateChecker {
     private static boolean available;
 
     public static void checkForUpdates(EpicGuard epicGuard) {
+        if (!epicGuard.getConfig().updateChecker) {
+            return;
+        }
+
         remoteVersion = URLUtils.readString(CHECK_URL);
         int latest = Integer.parseInt(remoteVersion.replace(".", ""));
         int current = Integer.parseInt(epicGuard.getMethodInterface().getVersion().replace(".", ""));
