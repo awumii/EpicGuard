@@ -33,13 +33,6 @@ public class EpicGuard {
     public EpicGuard(MethodInterface methodInterface) {
         this.methodInterface = methodInterface;
         this.logger = methodInterface.getLogger();
-
-        logger.info("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗");
-        logger.info("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗");
-        logger.info("█████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║");
-        logger.info("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║");
-        logger.info("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝");
-        logger.info("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝");
         logger.info("EpicGuard v5 is starting up...");
 
         this.reloadConfig();
