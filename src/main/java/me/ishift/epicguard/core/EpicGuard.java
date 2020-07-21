@@ -14,7 +14,6 @@ import me.ishift.epicguard.core.util.LogFilter;
 import me.ishift.epicguard.core.util.MethodInterface;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class EpicGuard {
@@ -50,9 +49,10 @@ public class EpicGuard {
         this.geoManager = new GeoManager(this);
 
         try {
+            Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
             new LogFilter(this.config.consoleFilter).register();
-        } catch (Exception e) {
-            logger.warning("LogFilter can't be enabled, because log4j is not found. If you are running on BungeeCord, consider a switch to Waterfall.");
+        } catch (ClassNotFoundException e) {
+            logger.warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
         this.methodInterface.scheduleAsyncTask(new CounterTask(this), 1L);
