@@ -20,10 +20,10 @@ public class ServerListCheck extends Check {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.getStorage().getPingCache().contains(user.getAddress());
+                return !this.getStorage().getPingCache().contains(user.getAddress());
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return this.getStorage().getPingCache().contains(user.getAddress());
+                    return !this.getStorage().getPingCache().contains(user.getAddress());
                 }
         }
         return false;
