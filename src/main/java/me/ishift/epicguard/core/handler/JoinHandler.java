@@ -5,10 +5,10 @@ import me.ishift.epicguard.core.user.User;
 
 import java.util.UUID;
 
-public class ConnectionHandler {
+public class JoinHandler {
     private final EpicGuard epicGuard;
 
-    public ConnectionHandler(EpicGuard epicGuard) {
+    public JoinHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
     }
 
