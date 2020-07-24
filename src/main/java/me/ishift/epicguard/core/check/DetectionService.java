@@ -2,6 +2,7 @@ package me.ishift.epicguard.core.check;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.impl.*;
+import me.ishift.epicguard.core.user.BotUser;
 import me.ishift.epicguard.core.util.ChatUtils;
 
 import java.util.ArrayList;
@@ -42,8 +43,9 @@ public abstract class DetectionService {
             return false;
         }
 
+        BotUser user = new BotUser(address, nickname);
         for (Check check : this.checks) {
-            if (check.check(address, nickname)) {
+            if (check.check(user)) {
                 if (check.blacklistUser()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }

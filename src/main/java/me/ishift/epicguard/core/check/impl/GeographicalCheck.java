@@ -3,6 +3,7 @@ package me.ishift.epicguard.core.check.impl;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
+import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.List;
 
@@ -12,17 +13,17 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public boolean check(String address, String nickname) {
+    public boolean check(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.geoCheck(address);
+                return this.geoCheck(user.getAddress());
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return this.geoCheck(address);
+                    return this.geoCheck(user.getAddress());
                 }
         }
         return false;

@@ -43,5 +43,6 @@ public final class URLUtils {
         return list;
     }
 
-    private URLUtils() {}
+    private URLUtils() {
+    }
 }

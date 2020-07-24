@@ -1,4 +1,6 @@
-package me.ishift.epicguard.core.user;
+package me.ishift.epicguard.core.manager;
+
+import me.ishift.epicguard.core.user.User;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,11 +15,11 @@ public class UserManager {
     }
 
     public User getUser(UUID uuid) {
-        return this.userMap.get(uuid);
-    }
-
-    public void addUser(UUID uuid) {
-        this.userMap.put(uuid, new User(uuid));
+        User user = this.userMap.get(uuid);
+        if (user == null) {
+            return this.userMap.put(uuid, new User(uuid));
+        }
+        return user;
     }
 
     public void removeUser(UUID uuid) {

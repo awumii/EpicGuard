@@ -22,7 +22,6 @@ public class PostLoginListener implements Listener {
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
-        this.epicGuard.getUserManager().addUser(player.getUniqueId());
 
         ProxyServer.getInstance().getScheduler().schedule(this.plugin, () -> {
             if (player.isConnected()) {

@@ -3,6 +3,7 @@ package me.ishift.epicguard.core.check.impl;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
+import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,17 +17,17 @@ public class ReconnectCheck extends Check {
     }
 
     @Override
-    public boolean check(String address, String nickname) {
+    public boolean check(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().reconnectCheck);
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.reconnectCheck(address);
+                return this.reconnectCheck(user.getAddress());
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return this.reconnectCheck(address);
+                    return this.reconnectCheck(user.getAddress());
                 }
         }
         return false;

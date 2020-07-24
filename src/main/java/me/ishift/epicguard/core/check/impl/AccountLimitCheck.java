@@ -2,7 +2,7 @@ package me.ishift.epicguard.core.check.impl;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
-import me.ishift.epicguard.core.user.Account;
+import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.List;
 
@@ -12,9 +12,8 @@ public class AccountLimitCheck extends Check {
     }
 
     @Override
-    public boolean check(String address, String nickname) {
-        Account account = new Account(this.getEpicGuard(), address, nickname);
-        return account.getNicknames().size() > this.getConfig().accountLimit;
+    public boolean check(BotUser user) {
+        return user.getNicknames().size() > this.getConfig().accountLimit;
     }
 
     @Override

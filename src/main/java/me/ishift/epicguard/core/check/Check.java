@@ -1,8 +1,8 @@
 package me.ishift.epicguard.core.check;
 
-import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.EpicGuard;
-import me.ishift.epicguard.core.util.ChatUtils;
+import me.ishift.epicguard.core.config.PluginConfiguration;
+import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.List;
 
@@ -28,5 +28,5 @@ public abstract class Check {
     /**
      * @return true if detection is positive (detected as bot).
      */
-    public abstract boolean check(String address, String nickname);
+    public abstract boolean check(BotUser user);
 }

@@ -1,6 +1,7 @@
 package me.ishift.epicguard.core.task;
 
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.user.User;
 
 public class CounterTask implements Runnable {
     private final EpicGuard epicGuard;
@@ -11,9 +12,12 @@ public class CounterTask implements Runnable {
 
     @Override
     public void run() {
-        this.epicGuard.getNotificationManager().notify(
-                "&c&lEpicGuard &8» &7Connections: &c" + this.epicGuard.getConnectionPerSecond() +
-                        "/s  &8░  &7Bot attack: " + (this.epicGuard.isAttack() ? "&4&l✖ Detected ✖" : "&2&l✔ Undetected ✔"));
+        for (User user : this.epicGuard.getUserManager().getUsers()) {
+            if (user.isNotifications()) {
+                this.epicGuard.getMethodInterface().sendActionBar("&c&lEpicGuard &8» &7Connections: &c" + this.epicGuard.getConnectionPerSecond() +
+                        "/s  &8░  &7Bot attack: " + (this.epicGuard.isAttack() ? "&4&l✖ Detected ✖" : "&2&l✔ Undetected ✔"), user.getUniqueId());
+            }
+        }
         this.epicGuard.setConnectionPerSecond(0);
     }
 }

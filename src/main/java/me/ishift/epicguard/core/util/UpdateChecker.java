@@ -27,5 +27,6 @@ public final class UpdateChecker {
         return remoteVersion;
     }
 
-    private UpdateChecker() {}
+    private UpdateChecker() {
+    }
 }

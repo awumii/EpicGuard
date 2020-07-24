@@ -2,6 +2,7 @@ package me.ishift.epicguard.core.check.impl;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
+import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public boolean check(String address, String nickname) {
-        return this.getEpicGuard().getStorageManager().isBlacklisted(address);
+    public boolean check(BotUser user) {
+        return this.getEpicGuard().getStorageManager().isBlacklisted(user.getAddress());
     }
 
     @Override
