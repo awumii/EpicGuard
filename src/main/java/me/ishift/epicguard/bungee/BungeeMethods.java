@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bungee;
 
 import me.ishift.epicguard.core.util.ChatUtils;
-import me.ishift.epicguard.core.util.MethodInterface;
+import me.ishift.epicguard.core.MethodInterface;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -34,13 +34,12 @@ public class BungeeMethods implements MethodInterface {
     }
 
     @Override
-    public void scheduleSyncTask(Runnable task, long seconds) {
-        this.plugin.getProxy().getScheduler().schedule(this.plugin, task, seconds, seconds, TimeUnit.SECONDS);
+    public void runTaskLater(Runnable task, long seconds) {
+        this.plugin.getProxy().getScheduler().schedule(this.plugin, task, seconds, TimeUnit.SECONDS);
     }
 
     @Override
-    public void scheduleAsyncTask(Runnable task, long seconds) {
-        // There are no async repeating tasks in BungeeCord
-        this.scheduleSyncTask(task, seconds);
+    public void scheduleTask(Runnable task, long seconds) {
+        this.plugin.getProxy().getScheduler().schedule(this.plugin, task, seconds, seconds, TimeUnit.SECONDS);
     }
 }

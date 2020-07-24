@@ -1,4 +1,4 @@
-package me.ishift.epicguard.core.util;
+package me.ishift.epicguard.core;
 
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -10,7 +10,7 @@ public interface MethodInterface {
 
     String getVersion();
 
-    void scheduleSyncTask(Runnable task, long seconds);
+    void runTaskLater(Runnable task, long seconds);
 
-    void scheduleAsyncTask(Runnable task, long seconds);
+    void scheduleTask(Runnable task, long seconds);
 }

@@ -13,7 +13,7 @@ public class ProxyCheck extends Check implements Runnable {
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        epicGuard.getMethodInterface().scheduleAsyncTask(this, 86400L); //24 hours
+        epicGuard.getMethodInterface().scheduleTask(this, 86400L); //24 hours
     }
 
     @Override
@@ -53,12 +53,12 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public List<String> reason() {
         return this.getEpicGuard().getMessages().kickMessageProxy;
     }
 
     @Override
-    public boolean blacklistUser() {
+    public boolean blacklist() {
         return true;
     }
 }

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class User {
     private final UUID uuid;
-
     private boolean notifications;
 
     public User(UUID uuid) {

@@ -1,6 +1,8 @@
-package me.ishift.epicguard.core.check;
+package me.ishift.epicguard.core.handler;
 
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.check.Check;
+import me.ishift.epicguard.core.check.CheckResult;
 import me.ishift.epicguard.core.check.impl.*;
 import me.ishift.epicguard.core.user.BotUser;
 import me.ishift.epicguard.core.util.ChatUtils;
@@ -8,15 +10,13 @@ import me.ishift.epicguard.core.util.ChatUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DetectionService {
+public class DetectionHandler {
+    private final List<Check> checks = new ArrayList<>();
     private final EpicGuard epicGuard;
-    private final List<Check> checks;
 
-    private String kickMessage;
-
-    public DetectionService(EpicGuard epicGuard) {
+    public DetectionHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
-        this.checks = new ArrayList<>();
+
         this.checks.add(new AttackCheck(epicGuard));
         this.checks.add(new BlacklistCheck(epicGuard));
         this.checks.add(new GeographicalCheck(epicGuard));
@@ -25,39 +25,30 @@ public abstract class DetectionService {
         this.checks.add(new ProxyCheck(epicGuard));
     }
 
-    public String getKickMessage() {
-        return this.kickMessage;
-    }
-
-    /**
-     * Returns true if the detection is positive (player should be kicked)
-     */
-    public boolean performCheck(String address, String nickname) {
-        this.epicGuard.setConnectionPerSecond(this.epicGuard.getConnectionPerSecond() + 1);
-
+    public CheckResult handle(String address, String nickname) {
+        this.epicGuard.addConnectionPerSecond();
         if (this.epicGuard.getConnectionPerSecond() > this.epicGuard.getConfig().maxCps) {
             this.epicGuard.setAttack(true);
         }
 
         if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
-            return false;
+            return CheckResult.undetected();
         }
 
         BotUser user = new BotUser(address, nickname);
         for (Check check : this.checks) {
             if (check.check(user)) {
-                if (check.blacklistUser()) {
+                if (check.blacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
 
-                StringBuilder builder = new StringBuilder();
-                for (String string : check.getKickMessage()) {
-                    builder.append(ChatUtils.colored(string)).append("\n");
+                StringBuilder reason = new StringBuilder();
+                for (String string : check.reason()) {
+                    reason.append(ChatUtils.colored(string)).append("\n");
                 }
-                this.kickMessage = builder.toString();
-                return true;
+                return new CheckResult(true, reason.toString());
             }
         }
-        return false;
+        return CheckResult.undetected();
     }
 }

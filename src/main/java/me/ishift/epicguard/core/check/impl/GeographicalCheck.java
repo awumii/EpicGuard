@@ -45,12 +45,12 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public List<String> reason() {
         return this.getEpicGuard().getMessages().kickMessageGeo;
     }
 
     @Override
-    public boolean blacklistUser() {
+    public boolean blacklist() {
         return true;
     }
 }

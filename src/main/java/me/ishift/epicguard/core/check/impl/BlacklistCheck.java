@@ -17,12 +17,12 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public List<String> reason() {
         return this.getEpicGuard().getMessages().kickMessageBlacklist;
     }
 
     @Override
-    public boolean blacklistUser() {
+    public boolean blacklist() {
         return false;
     }
 }

@@ -21,9 +21,9 @@ public abstract class Check {
         return this.epicGuard.getConfig();
     }
 
-    public abstract List<String> getKickMessage();
+    public abstract List<String> reason();
 
-    public abstract boolean blacklistUser();
+    public abstract boolean blacklist();
 
     /**
      * @return true if detection is positive (detected as bot).

@@ -17,12 +17,12 @@ public class AccountLimitCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public List<String> reason() {
         return this.getEpicGuard().getMessages().kickMessageAccountLimit;
     }
 
     @Override
-    public boolean blacklistUser() {
+    public boolean blacklist() {
         return true;
     }
 }

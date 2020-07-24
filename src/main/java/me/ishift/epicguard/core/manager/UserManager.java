@@ -15,11 +15,11 @@ public class UserManager {
     }
 
     public User getUser(UUID uuid) {
-        User user = this.userMap.get(uuid);
-        if (user == null) {
-            return this.userMap.put(uuid, new User(uuid));
-        }
-        return user;
+        return this.userMap.get(uuid);
+    }
+
+    public void addUser(UUID uuid) {
+        this.userMap.put(uuid, new User(uuid));
     }
 
     public void removeUser(UUID uuid) {
