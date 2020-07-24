@@ -18,7 +18,7 @@ public class AccountLimitCheck extends Check {
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageAccountLimit;
+        return this.getMessages().kickMessageAccountLimit;
     }
 
     @Override

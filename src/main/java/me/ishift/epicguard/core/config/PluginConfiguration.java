@@ -28,7 +28,7 @@ public class PluginConfiguration {
     @CfgComment(" ")
     @CfgComment("Country check will filter countries your players can connect from.")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player.")
+    @CfgComment("ALWAYS - check will perform on every player always.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: NEVER (You SHOULD change this!)")
     @CfgName("country-check-mode")
@@ -59,7 +59,7 @@ public class PluginConfiguration {
     @CfgComment("Proxy check will define if user is connecting from Proxy/VPN.")
     @CfgComment("Change this option to save performance or increase accuracy")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player.")
+    @CfgComment("ALWAYS - check will perform on every player always.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: ALWAYS")
     @CfgName("proxy-check")
@@ -80,11 +80,20 @@ public class PluginConfiguration {
 
     @CfgComment("Reconnect check will force users to join the server again.")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player.")
+    @CfgComment("ALWAYS - check will perform on every player always.")
     @CfgComment("ATTACK - check will perform only during bot attack.")
     @CfgComment("Default: ATTACK")
     @CfgName("reconnect-check")
     public String reconnectCheck = "ATTACK";
+
+    @CfgComment("Server-list check will force users to add your server.")
+    @CfgComment("to their server list (and pinging it) before joining.")
+    @CfgComment("NEVER - check is disabled.")
+    @CfgComment("ALWAYS - check will perform on every player always.")
+    @CfgComment("ATTACK - check will perform only during bot attack.")
+    @CfgComment("Default: ATTACK")
+    @CfgName("server-list-check")
+    public String serverListCheck = "ATTACK";
 
     @CfgComment("Should every user (except if he is whitelisted)")
     @CfgComment("be disconnected when there is an bot attack?")

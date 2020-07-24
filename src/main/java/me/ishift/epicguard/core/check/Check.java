@@ -1,7 +1,9 @@
 package me.ishift.epicguard.core.check;
 
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.config.PluginConfiguration;
+import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.List;
@@ -19,6 +21,18 @@ public abstract class Check {
 
     public PluginConfiguration getConfig() {
         return this.epicGuard.getConfig();
+    }
+
+    public MessagesConfiguration getMessages() {
+        return this.epicGuard.getMessages();
+    }
+
+    public StorageManager getStorage() {
+        return this.epicGuard.getStorageManager();
+    }
+
+    public boolean isAttack() {
+        return this.epicGuard.isAttack();
     }
 
     public abstract List<String> reason();

@@ -26,7 +26,7 @@ public class ReconnectCheck extends Check {
             case ALWAYS:
                 return this.reconnectCheck(user.getAddress());
             case ATTACK:
-                if (this.getEpicGuard().isAttack()) {
+                if (this.isAttack()) {
                     return this.reconnectCheck(user.getAddress());
                 }
         }
@@ -43,7 +43,7 @@ public class ReconnectCheck extends Check {
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageReconnect;
+        return this.getMessages().kickMessageReconnect;
     }
 
     @Override

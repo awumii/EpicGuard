@@ -3,12 +3,16 @@ package me.ishift.epicguard.core.manager;
 import de.leonhard.storage.Json;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class StorageManager {
     private final Json data;
     private final List<String> blacklist;
     private final List<String> whitelist;
+
+    private final Collection<String> pingCache = new HashSet<>();
 
     public StorageManager() {
         this.data = new Json("storage", "plugins/EpicGuard/data");
@@ -53,5 +57,9 @@ public class StorageManager {
 
     public List<String> getWhitelist() {
         return this.whitelist;
+    }
+
+    public Collection<String> getPingCache() {
+        return this.pingCache;
     }
 }

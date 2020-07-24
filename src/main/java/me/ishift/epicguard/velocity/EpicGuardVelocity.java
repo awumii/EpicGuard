@@ -12,6 +12,7 @@ import me.ishift.epicguard.velocity.command.EpicGuardCommand;
 import me.ishift.epicguard.velocity.listener.DisconnectListener;
 import me.ishift.epicguard.velocity.listener.PostLoginListener;
 import me.ishift.epicguard.velocity.listener.PreLoginListener;
+import me.ishift.epicguard.velocity.listener.ServerPingListener;
 
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ public class EpicGuardVelocity {
         manager.register(this, new PostLoginListener(this.epicGuard));
         manager.register(this, new PreLoginListener(this.epicGuard));
         manager.register(this, new DisconnectListener(this.epicGuard));
+        manager.register(this, new ServerPingListener(this.epicGuard));
     }
 
     @Subscribe
