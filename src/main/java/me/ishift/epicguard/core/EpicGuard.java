@@ -107,6 +107,10 @@ public class EpicGuard {
         return this.connectionPerSecond;
     }
 
+    public void resetConnections() {
+        this.connectionPerSecond = 0;
+    }
+
     public void addConnectionPerSecond() {
         this.connectionPerSecond =+1;
     }

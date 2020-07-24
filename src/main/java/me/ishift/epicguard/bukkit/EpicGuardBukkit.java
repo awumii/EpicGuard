@@ -23,15 +23,13 @@ public class EpicGuardBukkit extends JavaPlugin {
         this.moduleManager = new ModuleManager(this.epicGuard);
 
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerPreLoginListener(epicGuard), this);
-        pm.registerEvents(new PlayerQuitListener(epicGuard), this);
-        pm.registerEvents(new PlayerJoinListener(this, epicGuard), this);
+        pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
+        pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
+        pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
         pm.registerEvents(new CommandListener(this), this);
 
         Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
-
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this.epicGuard));
-
         new Metrics(this, 5845);
     }
 

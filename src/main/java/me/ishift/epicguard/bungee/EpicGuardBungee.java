@@ -19,8 +19,7 @@ public class EpicGuardBungee extends Plugin {
         PluginManager pm = this.getProxy().getPluginManager();
         pm.registerListener(this, new PreLoginListener(this.epicGuard));
         pm.registerListener(this, new DisconnectListener(this.epicGuard));
-        pm.registerListener(this, new PostLoginListener(this, this.epicGuard));
-
+        pm.registerListener(this, new PostLoginListener(this.epicGuard));
         pm.registerCommand(this, new EpicGuardCommand(this.epicGuard));
 
         new Metrics(this, 5956);
