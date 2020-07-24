@@ -13,12 +13,12 @@ public class AttackCheck extends Check {
 
     @Override
     public boolean check(BotUser user) {
-        return this.getEpicGuard().isAttack() && this.getConfig().denyJoin;
+        return this.isAttack() && this.getConfig().denyJoin;
     }
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageAttack;
+        return this.getMessages().kickMessageAttack;
     }
 
     @Override

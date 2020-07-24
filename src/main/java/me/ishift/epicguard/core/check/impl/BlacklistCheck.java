@@ -13,12 +13,12 @@ public class BlacklistCheck extends Check {
 
     @Override
     public boolean check(BotUser user) {
-        return this.getEpicGuard().getStorageManager().isBlacklisted(user.getAddress());
+        return this.getStorage().isBlacklisted(user.getAddress());
     }
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageBlacklist;
+        return this.getMessages().kickMessageBlacklist;
     }
 
     @Override

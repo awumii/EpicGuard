@@ -22,7 +22,7 @@ public class GeographicalCheck extends Check {
             case ALWAYS:
                 return this.geoCheck(user.getAddress());
             case ATTACK:
-                if (this.getEpicGuard().isAttack()) {
+                if (this.isAttack()) {
                     return this.geoCheck(user.getAddress());
                 }
         }
@@ -46,7 +46,7 @@ public class GeographicalCheck extends Check {
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageGeo;
+        return this.getMessages().kickMessageGeo;
     }
 
     @Override

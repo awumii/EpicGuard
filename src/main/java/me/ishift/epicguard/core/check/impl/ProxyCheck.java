@@ -26,7 +26,7 @@ public class ProxyCheck extends Check implements Runnable {
             case ALWAYS:
                 return this.proxyCheck(user.getAddress());
             case ATTACK:
-                if (this.getEpicGuard().isAttack()) {
+                if (this.isAttack()) {
                     return this.proxyCheck(user.getAddress());
                 }
         }
@@ -54,7 +54,7 @@ public class ProxyCheck extends Check implements Runnable {
 
     @Override
     public List<String> reason() {
-        return this.getEpicGuard().getMessages().kickMessageProxy;
+        return this.getMessages().kickMessageProxy;
     }
 
     @Override
