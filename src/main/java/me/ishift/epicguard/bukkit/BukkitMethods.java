@@ -17,7 +17,7 @@ public class BukkitMethods implements MethodInterface {
 
     @Override
     public void sendActionBar(String message, UUID target) {
-        Reflections.sendActionBar(Bukkit.getPlayer(target), message + "  &8░  &7TPS: &6" + Reflections.getTPS());
+        Reflections.sendActionBar(Bukkit.getPlayer(target), message);
     }
 
     @Override
