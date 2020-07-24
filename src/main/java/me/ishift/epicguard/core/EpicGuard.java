@@ -1,14 +1,13 @@
 package me.ishift.epicguard.core;
 
-import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
+import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.manager.GeoManager;
-import me.ishift.epicguard.core.manager.NotificationManager;
 import me.ishift.epicguard.core.manager.StorageManager;
+import me.ishift.epicguard.core.manager.UserManager;
 import me.ishift.epicguard.core.task.AttackResetTask;
 import me.ishift.epicguard.core.task.CounterTask;
 import me.ishift.epicguard.core.task.UpdateCheckerTask;
-import me.ishift.epicguard.core.user.UserManager;
 import me.ishift.epicguard.core.util.ConfigHelper;
 import me.ishift.epicguard.core.util.LogFilter;
 import me.ishift.epicguard.core.util.MethodInterface;
@@ -21,7 +20,6 @@ public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
     private final UserManager userManager;
-    private final NotificationManager notificationManager;
     private final MethodInterface methodInterface;
 
     private PluginConfiguration config;
@@ -38,7 +36,6 @@ public class EpicGuard {
         this.reloadConfig();
         this.storageManager = new StorageManager();
         this.userManager = new UserManager();
-        this.notificationManager = new NotificationManager(this);
         this.geoManager = new GeoManager(this);
 
         try {
@@ -85,10 +82,6 @@ public class EpicGuard {
 
     public MessagesConfiguration getMessages() {
         return this.messages;
-    }
-
-    public NotificationManager getNotificationManager() {
-        return this.notificationManager;
     }
 
     public UserManager getUserManager() {

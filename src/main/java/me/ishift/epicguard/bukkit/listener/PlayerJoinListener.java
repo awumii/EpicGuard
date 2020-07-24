@@ -20,7 +20,6 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        this.epicGuard.getUserManager().addUser(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
             if (player.isOnline()) {

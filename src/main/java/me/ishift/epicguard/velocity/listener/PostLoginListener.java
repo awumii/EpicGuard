@@ -20,7 +20,6 @@ public class PostLoginListener {
     @Subscribe
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
-        this.epicGuard.getUserManager().addUser(player.getUniqueId());
 
         this.plugin.getServer().getScheduler().buildTask(this.plugin, () -> {
             if (player.isActive()) {

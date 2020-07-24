@@ -3,6 +3,7 @@ package me.ishift.epicguard.core.check.impl;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
+import me.ishift.epicguard.core.user.BotUser;
 import me.ishift.epicguard.core.util.URLUtils;
 
 import java.util.List;
@@ -16,17 +17,17 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public boolean check(String address, String nickname) {
+    public boolean check(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.proxyCheck(address);
+                return this.proxyCheck(user.getAddress());
             case ATTACK:
                 if (this.getEpicGuard().isAttack()) {
-                    return this.proxyCheck(address);
+                    return this.proxyCheck(user.getAddress());
                 }
         }
         return false;

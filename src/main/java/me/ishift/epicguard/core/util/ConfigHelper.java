@@ -60,12 +60,6 @@ public final class ConfigHelper {
         return config;
     }
 
-    public static String configToString(Object config) {
-        @SuppressWarnings("unchecked")
-        Template<Object> template = TemplateCreator.getTemplate((Class<Object>) config.getClass());
-        return template.dumpAsString(config);
-    }
-
     private static Constructor<?> getConstructor(Class<?> clazz, Class<?>... arguments) {
         for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
             if (Arrays.equals(constructor.getParameterTypes(), arguments)) {
@@ -76,5 +70,6 @@ public final class ConfigHelper {
         return null;
     }
 
-    private ConfigHelper() {}
+    private ConfigHelper() {
+    }
 }

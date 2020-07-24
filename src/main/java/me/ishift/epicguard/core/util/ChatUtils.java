@@ -7,5 +7,6 @@ public final class ChatUtils {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    private ChatUtils() {}
+    private ChatUtils() {
+    }
 }
