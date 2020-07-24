@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class EpicGuardVelocity {
     private final ProxyServer server;
     private final Logger logger;
-
     private EpicGuard epicGuard;
 
     @Inject
@@ -34,9 +33,9 @@ public class EpicGuardVelocity {
         this.server.getCommandManager().register(new EpicGuardCommand(this.epicGuard), "epicguard", "guard");
 
         EventManager manager = this.getServer().getEventManager();
-        manager.register(this, new PostLoginListener(this, epicGuard));
-        manager.register(this, new PreLoginListener(epicGuard));
-        manager.register(this, new DisconnectListener(epicGuard));
+        manager.register(this, new PostLoginListener(this.epicGuard));
+        manager.register(this, new PreLoginListener(this.epicGuard));
+        manager.register(this, new DisconnectListener(this.epicGuard));
     }
 
     @Subscribe

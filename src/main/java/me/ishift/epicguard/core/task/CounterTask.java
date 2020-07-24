@@ -18,6 +18,6 @@ public class CounterTask implements Runnable {
                         "/s  &8░  &7Bot attack: " + (this.epicGuard.isAttack() ? "&4&l✖ Detected ✖" : "&2&l✔ Undetected ✔"), user.getUniqueId());
             }
         }
-        this.epicGuard.setConnectionPerSecond(0);
+        this.epicGuard.resetConnections();
     }
 }
