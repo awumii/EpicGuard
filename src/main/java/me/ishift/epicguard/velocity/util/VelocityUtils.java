@@ -5,7 +5,7 @@ import net.kyori.text.TextComponent;
 
 public class VelocityUtils {
     public static String color(String message) {
-        // Is there something similar to Bukkit & Bungee - ChatColor.translateAlternateColorCodes()?
+        // Is there something similar to Bukkit & Bungee - ChatColor.translateAlternateColorCodes() ?
         return message.replace("&", "§");
     }
 

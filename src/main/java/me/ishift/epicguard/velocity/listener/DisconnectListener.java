@@ -4,17 +4,16 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.handler.DisconnectHandler;
 
-public class DisconnectListener {
-    private final EpicGuard epicGuard;
-
+public class DisconnectListener extends DisconnectHandler {
     public DisconnectListener(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
+        super(epicGuard);
     }
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
         Player player = event.getPlayer();
-        this.epicGuard.getUserManager().removeUser(player.getUniqueId());
+        this.handle(player.getUniqueId());
     }
 }

@@ -41,12 +41,7 @@ public class DetectionHandler {
                 if (check.blacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
-
-                StringBuilder reason = new StringBuilder();
-                for (String string : check.reason()) {
-                    reason.append(ChatUtils.colored(string)).append("\n");
-                }
-                return new CheckResult(true, reason.toString());
+                return new CheckResult(true, check.reason());
             }
         }
         return CheckResult.undetected();
