@@ -10,7 +10,6 @@ import me.ishift.epicguard.core.task.CounterTask;
 import me.ishift.epicguard.core.task.UpdateCheckerTask;
 import me.ishift.epicguard.core.util.ConfigHelper;
 import me.ishift.epicguard.core.util.LogFilter;
-import me.ishift.epicguard.core.util.MethodInterface;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -45,9 +44,9 @@ public class EpicGuard {
             logger.warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
-        this.methodInterface.scheduleAsyncTask(new CounterTask(this), 1L);
-        this.methodInterface.scheduleAsyncTask(new AttackResetTask(this), 30L);
-        this.methodInterface.scheduleAsyncTask(new UpdateCheckerTask(this), 1800L);
+        this.methodInterface.scheduleTask(new CounterTask(this), 1L);
+        this.methodInterface.scheduleTask(new AttackResetTask(this), 30L);
+        this.methodInterface.scheduleTask(new UpdateCheckerTask(this), 1800L);
 
         logger.info("EpicGuard v5 finished startup successfully.");
     }
@@ -108,7 +107,7 @@ public class EpicGuard {
         return this.connectionPerSecond;
     }
 
-    public void setConnectionPerSecond(int connectionPerSecond) {
-        this.connectionPerSecond = connectionPerSecond;
+    public void addConnectionPerSecond() {
+        this.connectionPerSecond =+1;
     }
 }

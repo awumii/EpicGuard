@@ -42,12 +42,12 @@ public class ReconnectCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public List<String> reason() {
         return this.getEpicGuard().getMessages().kickMessageReconnect;
     }
 
     @Override
-    public boolean blacklistUser() {
+    public boolean blacklist() {
         return false;
     }
 }

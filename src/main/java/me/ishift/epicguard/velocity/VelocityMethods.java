@@ -3,7 +3,7 @@ package me.ishift.epicguard.velocity;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.util.MessagePosition;
-import me.ishift.epicguard.core.util.MethodInterface;
+import me.ishift.epicguard.core.MethodInterface;
 import me.ishift.epicguard.velocity.util.VelocityUtils;
 import net.kyori.text.TextComponent;
 
@@ -43,16 +43,18 @@ public class VelocityMethods implements MethodInterface {
     }
 
     @Override
-    public void scheduleSyncTask(Runnable task, long seconds) {
+    public void runTaskLater(Runnable task, long seconds) {
         this.plugin.getServer().getScheduler()
                 .buildTask(this.plugin, task)
-                .repeat(seconds, TimeUnit.SECONDS)
+                .delay(seconds, TimeUnit.SECONDS)
                 .schedule();
     }
 
     @Override
-    public void scheduleAsyncTask(Runnable task, long seconds) {
-        // There are no async tasks in Velocity.
-        this.scheduleSyncTask(task, seconds);
+    public void scheduleTask(Runnable task, long seconds) {
+        this.plugin.getServer().getScheduler()
+                .buildTask(this.plugin, task)
+                .repeat(seconds, TimeUnit.SECONDS)
+                .schedule();
     }
 }

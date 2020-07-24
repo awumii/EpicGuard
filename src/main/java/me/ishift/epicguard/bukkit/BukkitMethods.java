@@ -1,7 +1,7 @@
 package me.ishift.epicguard.bukkit;
 
 import me.ishift.epicguard.bukkit.util.Reflections;
-import me.ishift.epicguard.core.util.MethodInterface;
+import me.ishift.epicguard.core.MethodInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,12 +31,12 @@ public class BukkitMethods implements MethodInterface {
     }
 
     @Override
-    public void scheduleSyncTask(Runnable task, long seconds) {
-        Bukkit.getScheduler().runTaskTimer(this.plugin, task, 20L, seconds * 20L);
+    public void runTaskLater(Runnable task, long seconds) {
+        Bukkit.getScheduler().runTaskLater(this.plugin, task, seconds * 20L);
     }
 
     @Override
-    public void scheduleAsyncTask(Runnable task, long seconds) {
+    public void scheduleTask(Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.plugin, task, 20L, seconds * 20L);
     }
 }
