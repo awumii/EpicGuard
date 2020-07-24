@@ -9,22 +9,6 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 
 public final class Reflections {
-    public static String getTPS() {
-        try {
-            DecimalFormat format = new DecimalFormat("##.##");
-            Object serverInstance;
-            Field tpsField;
-            serverInstance = Reflections.getNMSClass("MinecraftServer").getMethod("getServer").invoke(null);
-            tpsField = serverInstance.getClass().getField("recentTps");
-
-            double[] tps = ((double[]) tpsField.get(serverInstance));
-            return format.format(tps[0]);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "20.0";
-    }
-
     public static void sendActionBar(Player player, String message) {
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit." + getVersion() + ".entity.CraftPlayer");
@@ -65,18 +49,7 @@ public final class Reflections {
         return version.substring(version.lastIndexOf(".") + 1);
     }
 
-    public static void sendPacket(Player player, Object packet) {
-        try {
-            Object handle = player.getClass().getMethod("getHandle").invoke(player);
-            Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-            playerConnection.getClass().getMethod("sendPacket", getNMSClass("Packet")).invoke(playerConnection, packet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Class<?> getNMSClass(final String name) {
-        //String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             return Class.forName("net.minecraft.server." + getVersion() + "." + name);
         } catch (ClassNotFoundException e) {
