@@ -15,6 +15,7 @@
 
 package me.ishift.epicguard.bukkit.command;
 
+import me.ishift.epicguard.bukkit.EpicGuardBukkit;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.user.User;
@@ -27,9 +28,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class EpicGuardCommand implements CommandExecutor {
+    private final EpicGuardBukkit plugin;
     private final EpicGuard epicGuard;
 
-    public EpicGuardCommand(EpicGuard epicGuard) {
+    public EpicGuardCommand(EpicGuardBukkit plugin, EpicGuard epicGuard) {
+        this.plugin = plugin;
         this.epicGuard = epicGuard;
     }
 
@@ -86,6 +89,7 @@ public class EpicGuardCommand implements CommandExecutor {
             case "reload":
                 send(sender, prefix + config.reload);
                 this.epicGuard.reloadConfig();
+                this.plugin.getModuleManager().load();
                 break;
             case "whitelist":
                 if (args.length != 2) {

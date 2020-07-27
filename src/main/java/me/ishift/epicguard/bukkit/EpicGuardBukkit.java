@@ -42,7 +42,7 @@ public class EpicGuardBukkit extends JavaPlugin {
         pm.registerEvents(new CommandListener(this), this);
 
         Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
-        this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this.epicGuard));
+        this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this, this.epicGuard));
         new Metrics(this, 5845);
     }
 

@@ -17,7 +17,6 @@ package me.ishift.epicguard.bungee.listener;
 
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.handler.DisconnectHandler;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;

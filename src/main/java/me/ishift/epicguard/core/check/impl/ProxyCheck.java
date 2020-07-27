@@ -22,13 +22,14 @@ import me.ishift.epicguard.core.user.BotUser;
 import me.ishift.epicguard.core.util.URLUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ProxyCheck extends Check implements Runnable {
     private int requests;
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        epicGuard.getMethodInterface().scheduleTask(this, 86400L); //24 hours
+        epicGuard.getMethodInterface().scheduleTask(this, TimeUnit.HOURS.toSeconds(24));
     }
 
     @Override

@@ -68,9 +68,7 @@ public class EpicGuard {
 
     public void reloadConfig() {
         File dataFolder = new File("plugins/EpicGuard");
-        if (!dataFolder.exists()) {
-            dataFolder.mkdir();
-        }
+        dataFolder.mkdir();
 
         File configurationFile = new File(dataFolder, "config.yml");
         File messagesFile = new File(dataFolder, "messages.yml");
