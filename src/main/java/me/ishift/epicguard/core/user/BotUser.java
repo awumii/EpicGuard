@@ -32,10 +32,6 @@ public class BotUser {
         return this.address;
     }
 
-    public String getNickname() {
-        return this.nickname;
-    }
-
     public List<String> getNicknames() {
         String ip = address.replace(".", "@");
         Json data = new Json("storage", "plugins/EpicGuard/data");
