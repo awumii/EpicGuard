@@ -21,7 +21,6 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
 
 public final class Reflections {
     public static void sendActionBar(Player player, String message) {

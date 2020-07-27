@@ -20,7 +20,6 @@ import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckResult;
 import me.ishift.epicguard.core.check.impl.*;
 import me.ishift.epicguard.core.user.BotUser;
-import me.ishift.epicguard.core.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
