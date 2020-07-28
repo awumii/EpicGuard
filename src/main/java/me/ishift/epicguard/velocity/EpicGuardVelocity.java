@@ -31,7 +31,7 @@ import me.ishift.epicguard.velocity.listener.ServerPingListener;
 
 import java.util.logging.Logger;
 
-@Plugin(id = "epicguard", name = "EpicGuard", version = "5.1.1")
+@Plugin(id = "epicguard", name = "EpicGuard", version = "5.1.3")
 public class EpicGuardVelocity {
     private final ProxyServer server;
     private final Logger logger;
