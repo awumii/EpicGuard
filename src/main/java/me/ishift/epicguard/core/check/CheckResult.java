@@ -35,7 +35,7 @@ public class CheckResult {
     public String getKickMessage() {
         StringBuilder reason = new StringBuilder();
         for (String string : this.kickMessage) {
-            reason.append(ChatUtils.colored(string)).append("\n");
+            reason.append(ChatUtils.coloredLegacy(string)).append("\n");
         }
         return reason.toString();
     }

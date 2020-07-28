@@ -61,6 +61,15 @@ public class MessagesConfiguration {
     @CfgName("operator-disabled")
     public String operatorDisabled = "&cOperator mechanics has been disabled on this server.";
 
+    @CfgName("actionbar-monitor")
+    public String monitor = "&cEpicGuard &8» &6%cps% &7connections/s &8| %status%";
+
+    @CfgName("actionbar-no-attack")
+    public String noAttack = "&7No attack...";
+
+    @CfgName("actionbar-attack")
+    public String attack = "&cAttack detected!";
+
     @CfgName("kick-message-geo")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageGeo = Arrays.asList(

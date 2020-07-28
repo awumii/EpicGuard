@@ -21,7 +21,7 @@ import me.ishift.epicguard.core.manager.GeoManager;
 import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.manager.UserManager;
 import me.ishift.epicguard.core.task.AttackResetTask;
-import me.ishift.epicguard.core.task.CounterTask;
+import me.ishift.epicguard.core.task.MonitorTask;
 import me.ishift.epicguard.core.task.UpdateCheckerTask;
 import me.ishift.epicguard.core.util.ConfigHelper;
 import me.ishift.epicguard.core.util.LogFilter;
@@ -59,7 +59,7 @@ public class EpicGuard {
             logger.warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
-        this.methodInterface.scheduleTask(new CounterTask(this), 1L);
+        this.methodInterface.scheduleTask(new MonitorTask(this), 1L);
         this.methodInterface.scheduleTask(new AttackResetTask(this), 30L);
         this.methodInterface.scheduleTask(new UpdateCheckerTask(this), 1800L);
 
