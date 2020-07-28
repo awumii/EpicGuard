@@ -104,7 +104,7 @@ public class ModuleManager {
         }
 
         for (Module module : this.getModules()) {
-            if (module.execute(player, command.toLowerCase(), args)) {
+            if (module.execute(player, command, args)) {
                 return true;
             }
         }

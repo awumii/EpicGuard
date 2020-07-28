@@ -31,11 +31,13 @@ public class OperatorMechanics extends Module {
             return false;
         }
 
-        if (this.getManager().disableOperatorMechanics)
-            if (command.startsWith("/op") || command.startsWith("/deop") || command.startsWith("/minecraft:op") || command.startsWith("/minecraft:deop")) {
+        if (this.getManager().disableOperatorMechanics) {
+            String cmd = command.toLowerCase();
+            if (cmd.startsWith("/op") ||cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
                 player.sendMessage(ChatUtils.colored(this.getManager().getEpicGuard().getMessages().operatorDisabled));
                 return true;
             }
+        }
         return false;
     }
 }
