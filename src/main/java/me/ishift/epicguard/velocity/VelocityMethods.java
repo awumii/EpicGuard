@@ -41,6 +41,11 @@ public class VelocityMethods implements MethodInterface {
     }
 
     @Override
+    public String format(String message) {
+        return VelocityUtils.color(message);
+    }
+
+    @Override
     public Logger getLogger() {
         return this.plugin.getLogger();
     }
