@@ -19,7 +19,7 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.util.MessagePosition;
 import me.ishift.epicguard.core.MethodInterface;
-import me.ishift.epicguard.velocity.util.VelocityUtils;
+import me.ishift.epicguard.core.util.ChatUtils;
 import net.kyori.text.TextComponent;
 
 import java.util.Optional;
@@ -37,12 +37,7 @@ public class VelocityMethods implements MethodInterface {
     @Override
     public void sendActionBar(String message, UUID target) {
         Optional<Player> playerOptional = this.plugin.getServer().getPlayer(target);
-        playerOptional.ifPresent(player -> player.sendMessage(TextComponent.of(VelocityUtils.color(message)), MessagePosition.ACTION_BAR));
-    }
-
-    @Override
-    public String format(String message) {
-        return VelocityUtils.color(message);
+        playerOptional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.coloredLegacy(message)), MessagePosition.ACTION_BAR));
     }
 
     @Override

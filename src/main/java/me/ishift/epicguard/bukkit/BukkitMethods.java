@@ -17,7 +17,6 @@ package me.ishift.epicguard.bukkit;
 
 import me.ishift.epicguard.bukkit.util.Reflections;
 import me.ishift.epicguard.core.MethodInterface;
-import me.ishift.epicguard.core.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,11 +33,6 @@ public class BukkitMethods implements MethodInterface {
     @Override
     public void sendActionBar(String message, UUID target) {
         Reflections.sendActionBar(Bukkit.getPlayer(target), message);
-    }
-
-    @Override
-    public String format(String message) {
-        return ChatUtils.colored(message);
     }
 
     @Override

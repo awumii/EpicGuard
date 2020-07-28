@@ -39,11 +39,6 @@ public class BungeeMethods implements MethodInterface {
     }
 
     @Override
-    public String format(String message) {
-        return ChatUtils.colored(message);
-    }
-
-    @Override
     public Logger getLogger() {
         return this.plugin.getLogger();
     }

@@ -21,8 +21,6 @@ import java.util.logging.Logger;
 public interface MethodInterface {
     void sendActionBar(String message, UUID target);
 
-    String format(String message);
-
     Logger getLogger();
 
     String getVersion();

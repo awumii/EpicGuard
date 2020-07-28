@@ -22,6 +22,10 @@ public final class ChatUtils {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
+    public static String coloredLegacy(String message) {
+        return message.replace("&", "§"); // Method compatible with Velocity.
+    }
+
     private ChatUtils() {
     }
 }
