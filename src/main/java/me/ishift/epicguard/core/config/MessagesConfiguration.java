@@ -37,7 +37,7 @@ public class MessagesConfiguration {
 
     @CfgName("prefix")
     @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
-    public String prefix = "&8[&2EpicGuard&8] &7";
+    public String prefix = "&cEpicGuard &8» &7";
 
     @CfgName("no-permission")
     public String noPermission = "&cYou don't have permission for this command!";
@@ -73,56 +73,48 @@ public class MessagesConfiguration {
     @CfgName("kick-message-geo")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageGeo = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYour country/city is not allowed on this server.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYour country/city is not allowed on this server.");
 
     @CfgName("kick-message-blacklist")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageBlacklist = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYour IP address is blacklisted on this server.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYour IP address is blacklisted on this server.");
 
     @CfgName("kick-message-attack")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageAttack = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cServer is under attack, please wait some seconds before joining.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cServer is under attack, please wait some seconds before joining.");
 
     @CfgName("kick-message-proxy")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageProxy = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYou are using VPN or Proxy.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYou are using VPN or Proxy.");
 
     @CfgName("kick-message-reconnect")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageReconnect = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cPlease join the server again.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cJoin the server again.");
 
     @CfgName("kick-message-account-limit")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageAccountLimit = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYou have too many accounts on your IP address.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYou have too many accounts on your IP address.");
 
     @CfgName("kick-message-server-list")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageServerList = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYou must add our server to your servers list to verify yourself.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYou must add our server to your servers list to verify yourself.");
 
     @CfgName("kick-message-rate-limit")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageRateLimit = Arrays.asList(
-            "&8[&2EpicGuard&8]",
-            "&7You have been kicked by our &aantibot protection&7.",
-            "&7Details: &cYou must wait some seconds between joining again.");
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYou must wait some seconds between joining again.");
 }
