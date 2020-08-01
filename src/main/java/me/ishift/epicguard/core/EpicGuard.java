@@ -17,6 +17,7 @@ package me.ishift.epicguard.core;
 
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.config.PluginConfiguration;
+import me.ishift.epicguard.core.manager.CooldownManager;
 import me.ishift.epicguard.core.manager.GeoManager;
 import me.ishift.epicguard.core.manager.StorageManager;
 import me.ishift.epicguard.core.manager.UserManager;
@@ -34,6 +35,7 @@ public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
     private final UserManager userManager;
+    private final CooldownManager cooldownManager;
     private final MethodInterface methodInterface;
 
     private PluginConfiguration config;
@@ -50,6 +52,7 @@ public class EpicGuard {
         this.reloadConfig();
         this.storageManager = new StorageManager();
         this.userManager = new UserManager();
+        this.cooldownManager = new CooldownManager();
         this.geoManager = new GeoManager(this);
 
         try {
@@ -60,7 +63,7 @@ public class EpicGuard {
         }
 
         this.methodInterface.scheduleTask(new MonitorTask(this), 1L);
-        this.methodInterface.scheduleTask(new AttackResetTask(this), 30L);
+        this.methodInterface.scheduleTask(new AttackResetTask(this), 40L);
         this.methodInterface.scheduleTask(new UpdateCheckerTask(this), 1800L);
 
         logger.info("EpicGuard v5 finished startup successfully.");
@@ -106,6 +109,10 @@ public class EpicGuard {
 
     public StorageManager getStorageManager() {
         return this.storageManager;
+    }
+
+    public CooldownManager getCooldownManager() {
+        return this.cooldownManager;
     }
 
     public boolean isAttack() {

@@ -37,6 +37,7 @@ public class DetectionHandler {
         this.checks.add(new ServerListCheck(epicGuard));
         this.checks.add(new ReconnectCheck(epicGuard));
         this.checks.add(new AccountLimitCheck(epicGuard));
+        this.checks.add(new RateLimitCheck(epicGuard));
         this.checks.add(new ProxyCheck(epicGuard));
     }
 

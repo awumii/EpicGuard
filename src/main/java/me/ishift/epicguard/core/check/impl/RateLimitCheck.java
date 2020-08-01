@@ -19,61 +19,48 @@ import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
 import me.ishift.epicguard.core.user.BotUser;
-import me.ishift.epicguard.core.util.URLUtils;
+import me.ishift.epicguard.core.util.Cooldown;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class ProxyCheck extends Check implements Runnable {
-    private int requests;
-
-    public ProxyCheck(EpicGuard epicGuard) {
+public class RateLimitCheck extends Check {
+    public RateLimitCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        epicGuard.getMethodInterface().scheduleTask(this, TimeUnit.HOURS.toSeconds(24));
     }
 
     @Override
     public boolean check(BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
+        CheckMode mode = CheckMode.valueOf(this.getConfig().rateLimitCheck);
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.proxyCheck(user.getAddress());
+                return this.rateLimitCheck(user);
             case ATTACK:
                 if (this.isAttack()) {
-                    return this.proxyCheck(user.getAddress());
+                    return this.rateLimitCheck(user);
                 }
         }
         return false;
     }
 
-    private boolean proxyCheck(String address) {
-        if (this.requests > this.getConfig().requestLimit) {
-            return false;
+    private boolean rateLimitCheck(BotUser user) {
+        Cooldown cooldown = new Cooldown(user.getAddress(), 10);
+        if (this.getEpicGuard().getCooldownManager().hasCooldown(user.getAddress())) {
+            return true;
         }
 
-        String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
-        if (!this.getConfig().customProxyCheck.equals("disabled")) {
-            url = this.getConfig().customProxyCheck.replace("%ip%", address);
-        }
-
-        this.requests++;
-        return URLUtils.readString(url).contains("yes");
-    }
-
-    @Override
-    public void run() {
-        this.requests = 0;
+        this.getEpicGuard().getCooldownManager().add(cooldown);
+        return false;
     }
 
     @Override
     public List<String> reason() {
-        return this.getMessages().kickMessageProxy;
+        return this.getMessages().kickMessageRateLimit;
     }
 
     @Override
     public boolean blacklist() {
-        return true;
+        return false;
     }
 }
