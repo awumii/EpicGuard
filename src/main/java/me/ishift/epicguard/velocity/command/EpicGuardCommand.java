@@ -73,7 +73,7 @@ public class EpicGuardCommand implements Command {
                 break;
             case "notifications":
                 Player player = (Player) sender;
-                User user = this.epicGuard.getUserManager().getUser((player.getUniqueId()));
+                User user = this.epicGuard.getUserManager().getUser(player.getUniqueId());
                 user.setNotifications(!user.isNotifications());
                 send(sender, prefix + config.notifications);
                 break;
@@ -97,6 +97,8 @@ public class EpicGuardCommand implements Command {
                 send(sender, prefix + config.blacklisted.replace("{IP}", args[1]));
                 this.epicGuard.getStorageManager().blacklist(args[1]);
                 break;
+            default:
+                send(sender, config.unknown);
         }
     }
 

@@ -56,6 +56,8 @@ public class MessagesConfiguration {
 
     public String notifications = "&7You have toggled your notifications!";
 
+    public String unknown = "&cCommand not found. Use /guard for help.";
+
     @CfgName("command-not-in-allowed")
     public String notAllowedCommand = "&fUnknown command. Type '/help' for help.";
 

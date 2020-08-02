@@ -107,6 +107,8 @@ public class EpicGuardCommand implements CommandExecutor {
                 send(sender, prefix + config.blacklisted.replace("{IP}", args[1]));
                 this.epicGuard.getStorageManager().blacklist(args[1]);
                 break;
+            default:
+                send(sender, config.unknown);
         }
         return true;
     }
