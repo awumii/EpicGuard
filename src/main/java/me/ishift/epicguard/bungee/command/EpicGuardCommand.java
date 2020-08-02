@@ -99,6 +99,8 @@ public class EpicGuardCommand extends Command {
                 send(sender, prefix + config.blacklisted.replace("{IP}", args[1]));
                 this.epicGuard.getStorageManager().blacklist(args[1]);
                 break;
+            default:
+                send(sender, config.unknown);
         }
     }
 
