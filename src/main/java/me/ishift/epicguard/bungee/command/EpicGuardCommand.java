@@ -75,7 +75,7 @@ public class EpicGuardCommand extends Command {
                 break;
             case "notifications":
                 ProxiedPlayer player = (ProxiedPlayer) sender;
-                User user = this.epicGuard.getUserManager().getUser((player.getUniqueId()));
+                User user = this.epicGuard.getUserManager().getUser(player.getUniqueId());
                 user.setNotifications(!user.isNotifications());
                 send(sender, prefix + config.notifications);
                 break;

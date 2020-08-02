@@ -34,10 +34,11 @@ public final class FileUtils {
             URLConnection connection = new URL(urlFrom).openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
-            ReadableByteChannel rbc = Channels.newChannel(connection.getInputStream());
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            fos.close();
+            ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
+            FileOutputStream out = new FileOutputStream(file);
+            out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+            out.close();
+            channel.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
