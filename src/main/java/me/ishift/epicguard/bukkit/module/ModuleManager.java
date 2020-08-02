@@ -16,7 +16,11 @@
 package me.ishift.epicguard.bukkit.module;
 
 import de.leonhard.storage.Config;
-import me.ishift.epicguard.bukkit.module.modules.*;
+import me.ishift.epicguard.bukkit.module.modules.AllowedCommands;
+import me.ishift.epicguard.bukkit.module.modules.BlockedCommands;
+import me.ishift.epicguard.bukkit.module.modules.NamespacedCommands;
+import me.ishift.epicguard.bukkit.module.modules.OperatorMechanics;
+import me.ishift.epicguard.bukkit.module.modules.OperatorProtection;
 import me.ishift.epicguard.core.EpicGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

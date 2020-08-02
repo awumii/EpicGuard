@@ -15,8 +15,8 @@
 
 package me.ishift.epicguard.bungee;
 
-import me.ishift.epicguard.core.util.ChatUtils;
 import me.ishift.epicguard.core.MethodInterface;
+import me.ishift.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;

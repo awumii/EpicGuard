@@ -33,7 +33,7 @@ public class OperatorMechanics extends Module {
 
         if (this.getManager().disableOperatorMechanics) {
             String cmd = command.toLowerCase();
-            if (cmd.startsWith("/op") ||cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
+            if (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
                 player.sendMessage(ChatUtils.colored(this.getManager().getEpicGuard().getMessages().operatorDisabled));
                 return true;
             }
