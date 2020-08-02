@@ -15,7 +15,11 @@
 
 package me.ishift.epicguard.core.config;
 
-import org.diorite.cfg.annotations.*;
+import org.diorite.cfg.annotations.CfgClass;
+import org.diorite.cfg.annotations.CfgCollectionStyle;
+import org.diorite.cfg.annotations.CfgComment;
+import org.diorite.cfg.annotations.CfgName;
+import org.diorite.cfg.annotations.CfgStringStyle;
 import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
 
 import java.util.Arrays;

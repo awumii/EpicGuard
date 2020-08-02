@@ -18,7 +18,14 @@ package me.ishift.epicguard.core.handler;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckResult;
-import me.ishift.epicguard.core.check.impl.*;
+import me.ishift.epicguard.core.check.impl.AccountLimitCheck;
+import me.ishift.epicguard.core.check.impl.AttackCheck;
+import me.ishift.epicguard.core.check.impl.BlacklistCheck;
+import me.ishift.epicguard.core.check.impl.GeographicalCheck;
+import me.ishift.epicguard.core.check.impl.ProxyCheck;
+import me.ishift.epicguard.core.check.impl.RateLimitCheck;
+import me.ishift.epicguard.core.check.impl.ReconnectCheck;
+import me.ishift.epicguard.core.check.impl.ServerListCheck;
 import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.ArrayList;
