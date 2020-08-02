@@ -28,6 +28,6 @@ public class ServerPingListener extends PingHandler implements Listener {
 
     @EventHandler
     public void onPing(ProxyPingEvent event) {
-        this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
+        this.handle(event.getConnection().getVirtualHost().getAddress().getHostAddress());
     }
 }

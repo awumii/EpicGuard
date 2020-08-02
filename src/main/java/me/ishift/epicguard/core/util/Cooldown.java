@@ -37,7 +37,7 @@ public class Cooldown {
     }
 
     public long getRemaining() {
-        long time = (this.time + this.duration) - System.currentTimeMillis();
+        long time = this.time + this.duration - System.currentTimeMillis();
         return TimeUnit.MILLISECONDS.toSeconds(time);
     }
 }
