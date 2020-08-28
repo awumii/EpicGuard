@@ -1,6 +1,0 @@
-name: EpicGuard
-version: '${project.version}'
-main: me.ishift.epicguard.bungee.EpicGuardBungee
-
-author: iShift
-website: https://www.spigotmc.org/resources/72369/
