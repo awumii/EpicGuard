@@ -18,7 +18,7 @@ package me.ishift.epicguard.core;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public interface MethodInterface {
+public interface PlatformPlugin {
     void sendActionBar(String message, UUID target);
 
     Logger getLogger();

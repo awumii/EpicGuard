@@ -24,18 +24,22 @@ import me.ishift.epicguard.bukkit.listener.ServerPingListener;
 import me.ishift.epicguard.bukkit.module.ModuleManager;
 import me.ishift.epicguard.bukkit.module.ModuleTask;
 import me.ishift.epicguard.bukkit.util.Metrics;
+import me.ishift.epicguard.bukkit.util.Reflections;
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.PlatformPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class EpicGuardBukkit extends JavaPlugin {
+import java.util.UUID;
+
+public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     private EpicGuard epicGuard;
     private ModuleManager moduleManager;
 
     @Override
     public void onEnable() {
-        this.epicGuard = new EpicGuard(new BukkitMethods(this));
+        this.epicGuard = new EpicGuard(this);
         this.moduleManager = new ModuleManager(this.epicGuard);
 
         PluginManager pm = Bukkit.getPluginManager();
@@ -57,5 +61,25 @@ public class EpicGuardBukkit extends JavaPlugin {
 
     public ModuleManager getModuleManager() {
         return this.moduleManager;
+    }
+
+    @Override
+    public void sendActionBar(String message, UUID target) {
+        Reflections.sendActionBar(Bukkit.getPlayer(target), message);
+    }
+
+    @Override
+    public String getVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
+    public void runTaskLater(Runnable task, long seconds) {
+        Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
+    }
+
+    @Override
+    public void scheduleTask(Runnable task, long seconds) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
     }
 }

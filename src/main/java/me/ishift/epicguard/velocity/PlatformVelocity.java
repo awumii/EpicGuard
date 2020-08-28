@@ -21,31 +21,40 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.util.MessagePosition;
 import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.PlatformPlugin;
+import me.ishift.epicguard.core.util.ChatUtils;
 import me.ishift.epicguard.velocity.command.EpicGuardCommand;
 import me.ishift.epicguard.velocity.listener.DisconnectListener;
 import me.ishift.epicguard.velocity.listener.PostLoginListener;
 import me.ishift.epicguard.velocity.listener.PreLoginListener;
 import me.ishift.epicguard.velocity.listener.ServerPingListener;
+import net.kyori.text.TextComponent;
 
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @Plugin(id = "epicguard", name = "EpicGuard", version = "5.1.3")
-public class EpicGuardVelocity {
+public class PlatformVelocity implements PlatformPlugin {
     private final ProxyServer server;
     private final Logger logger;
     private EpicGuard epicGuard;
 
     @Inject
-    public EpicGuardVelocity(ProxyServer server, Logger logger) {
+    public PlatformVelocity(ProxyServer server, Logger logger) {
         this.server = server;
         this.logger = logger;
     }
 
     @Subscribe
     public void onEnable(ProxyInitializeEvent e) {
-        this.epicGuard = new EpicGuard(new VelocityMethods(this));
+        this.epicGuard = new EpicGuard(this);
         this.server.getCommandManager().register(new EpicGuardCommand(this.epicGuard), "epicguard", "guard");
 
         EventManager manager = this.getServer().getEventManager();
@@ -60,11 +69,46 @@ public class EpicGuardVelocity {
         this.epicGuard.shutdown();
     }
 
+    public ProxyServer getServer() {
+        return this.server;
+    }
+
+    @Override
+    public void sendActionBar(String message, UUID target) {
+        Optional<Player> optional = this.getServer().getPlayer(target);
+        optional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.coloredLegacy(message)), MessagePosition.ACTION_BAR));
+    }
+
+    @Override
     public Logger getLogger() {
         return this.logger;
     }
 
-    public ProxyServer getServer() {
-        return this.server;
+    @Override
+    public String getVersion() {
+        Optional<PluginContainer> container = this.getServer().getPluginManager().getPlugin("epicguard");
+        if (container.isPresent()) {
+            Optional<String> version = container.get().getDescription().getVersion();
+            if (version.isPresent()) {
+                return version.get();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void runTaskLater(Runnable task, long seconds) {
+        this.getServer().getScheduler()
+                .buildTask(this, task)
+                .delay(seconds, TimeUnit.SECONDS)
+                .schedule();
+    }
+
+    @Override
+    public void scheduleTask(Runnable task, long seconds) {
+        this.getServer().getScheduler()
+                .buildTask(this, task)
+                .repeat(seconds, TimeUnit.SECONDS)
+                .schedule();
     }
 }

@@ -30,7 +30,7 @@ public class JoinHandler {
     public void handle(UUID uuid, String address) {
         this.epicGuard.getUserManager().addUser(uuid);
 
-        this.epicGuard.getMethodInterface().runTaskLater(() -> {
+        this.epicGuard.getPlugin().runTaskLater(() -> {
             User user = epicGuard.getUserManager().getUser(uuid);
             if (user != null) {
                 epicGuard.getStorageManager().whitelist(address);

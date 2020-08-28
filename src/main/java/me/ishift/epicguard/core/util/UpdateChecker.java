@@ -29,7 +29,7 @@ public final class UpdateChecker {
 
         remoteVersion = URLUtils.readString(CHECK_URL);
         int latest = Integer.parseInt(remoteVersion.replace(".", ""));
-        int current = Integer.parseInt(epicGuard.getMethodInterface().getVersion().replace(".", ""));
+        int current = Integer.parseInt(epicGuard.getPlugin().getVersion().replace(".", ""));
 
         available = latest > current;
     }
