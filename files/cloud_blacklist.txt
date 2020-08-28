@@ -1,1 +1,0 @@
-DEPRECATED (this file is existing only for backwards compatibility with 4.x versions)
