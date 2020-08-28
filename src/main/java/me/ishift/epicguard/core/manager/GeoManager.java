@@ -20,11 +20,15 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.util.FileUtils;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.utils.IOUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
+import java.util.zip.GZIPInputStream;
 
 public class GeoManager {
     private final EpicGuard epicGuard;
@@ -36,21 +40,16 @@ public class GeoManager {
         this.epicGuard = epicGuard;
         this.epicGuard.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
-        File countryDatabase = new File("plugins/EpicGuard/data", "GeoLite2-Country.mmdb");
-        File cityDatabase = new File("plugins/EpicGuard/data", "GeoLite2-City.mmdb");
-
-        if (this.shouldDownload(countryDatabase)) {
-            this.epicGuard.getStorageManager().getData().set("last-db-download", System.currentTimeMillis());
-            this.epicGuard.getLogger().info("Your country database is outdated, starting download operation...");
-            FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-Country.mmdb", countryDatabase);
-        }
-
-        if (this.shouldDownload(cityDatabase)) {
-            this.epicGuard.getLogger().info("Your city database is outdated, starting download operation...");
-            FileUtils.downloadFile("https://github.com/xishift/EpicGuard/raw/master/files/GeoLite2-City.mmdb", cityDatabase);
-        }
+        String parent = "plugins/EpicGuard/data";
+        File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
+        File cityDatabase = new File(parent, "GeoLite2-City.mmdb");
+        File countryArchive = new File(parent, "GeoLite2-Country.tar.gz");
+        File cityArchive = new File(parent, "GeoLite2-City.tar.gz");
 
         try {
+            this.downloadDatabase(countryDatabase, countryArchive, "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=LARAgQo3Fw7W9ZMS&suffix=tar.gz");
+            this.downloadDatabase(cityDatabase, cityArchive, "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=LARAgQo3Fw7W9ZMS&suffix=tar.gz");
+
             this.countryReader = new DatabaseReader
                     .Builder(countryDatabase)
                     .withCache(new CHMCache())
@@ -65,9 +64,29 @@ public class GeoManager {
         }
     }
 
-    public String getCountryCode(String host) {
-        final InetAddress address = this.getAddress(host);
+    private void downloadDatabase(File database, File archive, String url) throws IOException {
+        if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
+            // Database does not exist or is outdated, and need to be downloaded.
+            this.epicGuard.getLogger().info("Downloading the GeoIP database file: " + database.getName());
+            FileUtils.downloadFile(url, archive);
 
+            TarArchiveInputStream tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
+            TarArchiveEntry entry = tarInput.getNextTarEntry();
+            while (entry != null) {
+                // Extracting the database (.mmdb) database we are looking for.
+                if (entry.getName().endsWith(database.getName())) {
+                    IOUtils.copy(tarInput, new FileOutputStream(database));
+                }
+                entry = tarInput.getNextTarEntry();
+            }
+            // Closing InputStream and removing archive file.
+            tarInput.close();
+            archive.delete();
+        }
+    }
+
+    public String getCountryCode(String host) {
+        InetAddress address = this.getAddress(host);
         if (address != null && this.countryReader != null) {
             try {
                 return this.countryReader.country(address).getCountry().getIsoCode();
@@ -79,8 +98,7 @@ public class GeoManager {
     }
 
     public String getCity(String host) {
-        final InetAddress address = this.getAddress(host);
-
+        InetAddress address = this.getAddress(host);
         if (address != null && this.cityReader != null) {
             try {
                 return this.cityReader.city(address).getCity().getName();
@@ -98,10 +116,5 @@ public class GeoManager {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private boolean shouldDownload(File file) {
-        long lastDownload = this.epicGuard.getStorageManager().getData().getLong("last-db-download");
-        return !file.exists() || (System.currentTimeMillis() - lastDownload) > 604800000;
     }
 }
