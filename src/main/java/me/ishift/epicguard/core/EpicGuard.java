@@ -36,7 +36,7 @@ public class EpicGuard {
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
-    private final MethodInterface methodInterface;
+    private final PlatformPlugin plugin;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
@@ -44,9 +44,9 @@ public class EpicGuard {
     private boolean attack;
     private int connectionPerSecond;
 
-    public EpicGuard(MethodInterface methodInterface) {
-        this.methodInterface = methodInterface;
-        this.logger = methodInterface.getLogger();
+    public EpicGuard(PlatformPlugin plugin) {
+        this.plugin = plugin;
+        this.logger = plugin.getLogger();
         logger.info("EpicGuard v5 is starting up...");
 
         this.reloadConfig();
@@ -62,9 +62,9 @@ public class EpicGuard {
             logger.warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
-        this.methodInterface.scheduleTask(new MonitorTask(this), 1L);
-        this.methodInterface.scheduleTask(new AttackResetTask(this), 40L);
-        this.methodInterface.scheduleTask(new UpdateCheckerTask(this), 1800L);
+        this.plugin.scheduleTask(new MonitorTask(this), 1L);
+        this.plugin.scheduleTask(new AttackResetTask(this), 40L);
+        this.plugin.scheduleTask(new UpdateCheckerTask(this), 1800L);
 
         logger.info("EpicGuard v5 finished startup successfully.");
     }
@@ -83,8 +83,8 @@ public class EpicGuard {
         this.storageManager.save();
     }
 
-    public MethodInterface getMethodInterface() {
-        return this.methodInterface;
+    public PlatformPlugin getPlugin() {
+        return this.plugin;
     }
 
     public Logger getLogger() {

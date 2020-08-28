@@ -29,7 +29,7 @@ public class ProxyCheck extends Check implements Runnable {
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        epicGuard.getMethodInterface().scheduleTask(this, TimeUnit.HOURS.toSeconds(24));
+        epicGuard.getPlugin().scheduleTask(this, TimeUnit.HOURS.toSeconds(24));
     }
 
     @Override

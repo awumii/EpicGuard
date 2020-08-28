@@ -15,14 +15,14 @@
 
 package me.ishift.epicguard.bukkit.module;
 
-import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.bukkit.PlatformBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ModuleTask implements Runnable {
-    private final EpicGuardBukkit plugin;
+    private final PlatformBukkit plugin;
 
-    public ModuleTask(EpicGuardBukkit plugin) {
+    public ModuleTask(PlatformBukkit plugin) {
         this.plugin = plugin;
     }
 

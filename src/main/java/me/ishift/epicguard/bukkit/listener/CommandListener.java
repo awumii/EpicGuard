@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.listener;
 
-import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.bukkit.PlatformBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,9 +24,9 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
 public class CommandListener implements Listener {
-    private final EpicGuardBukkit plugin;
+    private final PlatformBukkit plugin;
 
-    public CommandListener(EpicGuardBukkit plugin) {
+    public CommandListener(PlatformBukkit plugin) {
         this.plugin = plugin;
     }
 

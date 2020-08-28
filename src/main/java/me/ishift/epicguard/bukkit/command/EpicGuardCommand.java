@@ -15,7 +15,7 @@
 
 package me.ishift.epicguard.bukkit.command;
 
-import me.ishift.epicguard.bukkit.EpicGuardBukkit;
+import me.ishift.epicguard.bukkit.PlatformBukkit;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.user.User;
@@ -28,10 +28,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class EpicGuardCommand implements CommandExecutor {
-    private final EpicGuardBukkit plugin;
+    private final PlatformBukkit plugin;
     private final EpicGuard epicGuard;
 
-    public EpicGuardCommand(EpicGuardBukkit plugin, EpicGuard epicGuard) {
+    public EpicGuardCommand(PlatformBukkit plugin, EpicGuard epicGuard) {
         this.plugin = plugin;
         this.epicGuard = epicGuard;
     }
@@ -43,7 +43,7 @@ public class EpicGuardCommand implements CommandExecutor {
         if (args.length < 1) {
             send(sender, "&8&m---------------------------------------------------");
             send(sender, "  &6&lEpicGuard &8(Spigot version)");
-            send(sender, "  &7Version: &f" + this.epicGuard.getMethodInterface().getVersion());
+            send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
             if (UpdateChecker.isAvailable()) {
                 send(sender, "");
                 send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
@@ -68,7 +68,7 @@ public class EpicGuardCommand implements CommandExecutor {
             case "stats":
                 send(sender, "&8&m---------------------------------------------------");
                 send(sender, "  &6&lEpicGuard &7(Statistics)");
-                send(sender, "  &7Version: &f" + this.epicGuard.getMethodInterface().getVersion());
+                send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
                 if (UpdateChecker.isAvailable()) {
                     send(sender, "");
                     send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());

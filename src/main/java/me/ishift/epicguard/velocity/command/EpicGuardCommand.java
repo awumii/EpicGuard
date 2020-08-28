@@ -38,7 +38,7 @@ public class EpicGuardCommand implements Command {
         if (args.length < 1) {
             send(sender, "&8&m---------------------------------------------------");
             send(sender, "  &6&lEpicGuard &8(Velocity version)");
-            send(sender, "  &7Version: &f" + this.epicGuard.getMethodInterface().getVersion());
+            send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
             if (UpdateChecker.isAvailable()) {
                 send(sender, "");
                 send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
@@ -58,7 +58,7 @@ public class EpicGuardCommand implements Command {
             case "stats":
                 send(sender, "&8&m---------------------------------------------------");
                 send(sender, "  &6&lEpicGuard &7(Statistics)");
-                send(sender, "  &7Version: &f" + this.epicGuard.getMethodInterface().getVersion());
+                send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
                 if (UpdateChecker.isAvailable()) {
                     send(sender, "");
                     send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
