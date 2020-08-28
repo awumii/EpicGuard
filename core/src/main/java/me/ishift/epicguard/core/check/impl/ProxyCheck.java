@@ -68,12 +68,12 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public List<String> reason() {
+    public List<String> getKickMessage() {
         return this.getMessages().kickMessageProxy;
     }
 
     @Override
-    public boolean blacklist() {
+    public boolean shouldBlacklist() {
         return true;
     }
 }

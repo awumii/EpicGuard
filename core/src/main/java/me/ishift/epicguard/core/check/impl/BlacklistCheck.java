@@ -32,12 +32,12 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public List<String> reason() {
+    public List<String> getKickMessage() {
         return this.getMessages().kickMessageBlacklist;
     }
 
     @Override
-    public boolean blacklist() {
+    public boolean shouldBlacklist() {
         return false;
     }
 }

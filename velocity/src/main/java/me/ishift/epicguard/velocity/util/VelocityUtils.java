@@ -13,20 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package velocity.listener;
+package me.ishift.epicguard.velocity.util;
 
-import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.proxy.ProxyPingEvent;
-import me.ishift.epicguard.core.EpicGuard;
-import me.ishift.epicguard.core.handler.PingHandler;
+import com.velocitypowered.api.command.CommandSource;
+import me.ishift.epicguard.core.util.ChatUtils;
+import net.kyori.text.TextComponent;
 
-public class ServerPingListener extends PingHandler {
-    public ServerPingListener(EpicGuard epicGuard) {
-        super(epicGuard);
+public class VelocityUtils {
+    public static TextComponent getTextComponent(String string) {
+        return TextComponent.of(ChatUtils.coloredLegacy(string));
     }
 
-    @Subscribe
-    public void onPing(ProxyPingEvent event) {
-        this.handle(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
+    public static void sendMessage(CommandSource source, String message) {
+        source.sendMessage(getTextComponent(message));
     }
 }

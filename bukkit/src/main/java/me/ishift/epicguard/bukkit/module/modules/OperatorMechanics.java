@@ -26,13 +26,13 @@ public class OperatorMechanics extends Module {
     }
 
     @Override
-    public boolean execute(Player player, String command, String[] args) {
-        if (command == null || args == null) {
+    public boolean execute(Player player, String[] args) {
+        if (args == null) {
             return false;
         }
 
         if (this.getManager().disableOperatorMechanics) {
-            String cmd = command.toLowerCase();
+            String cmd = args[0].toLowerCase();
             if (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {
                 player.sendMessage(ChatUtils.colored(this.getManager().getEpicGuard().getMessages().operatorDisabled));
                 return true;

@@ -57,12 +57,12 @@ public class ReconnectCheck extends Check {
     }
 
     @Override
-    public List<String> reason() {
+    public List<String> getKickMessage() {
         return this.getMessages().kickMessageReconnect;
     }
 
     @Override
-    public boolean blacklist() {
+    public boolean shouldBlacklist() {
         return false;
     }
 }

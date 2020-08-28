@@ -24,10 +24,15 @@ import me.ishift.epicguard.core.util.UpdateChecker;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class EpicGuardCommand implements CommandExecutor {
+import java.util.Arrays;
+import java.util.List;
+
+public class EpicGuardCommand implements CommandExecutor, TabCompleter {
     private final PlatformBukkit plugin;
     private final EpicGuard epicGuard;
 
@@ -115,5 +120,13 @@ public class EpicGuardCommand implements CommandExecutor {
 
     private void send(CommandSender sender, String message) {
         sender.sendMessage(ChatUtils.colored(message));
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if (args.length < 1) {
+            return Arrays.asList("stats", "notifications", "reload", "whitelist", "blacklist");
+        }
+        return null;
     }
 }

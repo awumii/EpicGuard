@@ -24,8 +24,11 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class EpicGuardCommand extends Command {
+import java.util.Arrays;
+
+public class EpicGuardCommand extends Command implements TabExecutor {
     private final EpicGuard epicGuard;
 
     public EpicGuardCommand(EpicGuard epicGuard) {
@@ -106,5 +109,13 @@ public class EpicGuardCommand extends Command {
 
     private void send(CommandSender sender, String message) {
         sender.sendMessage(TextComponent.fromLegacyText(ChatUtils.colored(message)));
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender commandSender, String[] args) {
+        if (args.length < 1) {
+            return Arrays.asList("stats", "notifications", "reload", "whitelist", "blacklist");
+        }
+        return null;
     }
 }

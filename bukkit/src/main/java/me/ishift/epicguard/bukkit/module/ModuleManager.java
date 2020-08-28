@@ -102,13 +102,13 @@ public class ModuleManager {
         superAdminList = config.getOrSetDefault("super-admin.list", Collections.singletonList("Owner"));
     }
 
-    public boolean check(Player player, String command, String[] args) {
+    public boolean check(Player player, String[] args) {
         if (this.superAdminEnabled && this.superAdminList.contains(player.getName())) {
             return false;
         }
 
         for (Module module : this.getModules()) {
-            if (module.execute(player, command, args)) {
+            if (module.execute(player, args)) {
                 return true;
             }
         }
