@@ -16,32 +16,28 @@
 package me.ishift.epicguard.core.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public final class FileUtils {
-    public static void downloadFile(String urlFrom, File file) {
-        try {
-            if (file.exists()) {
-                file.delete();
-            }
-            file.createNewFile();
+    public static void downloadFile(String urlFrom, File file) throws IOException {
+        file.delete();
+        file.createNewFile();
 
-            URLConnection connection = new URL(urlFrom).openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+        URLConnection connection = new URL(urlFrom).openConnection();
+        connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
-            ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
-            FileOutputStream out = new FileOutputStream(file);
-            out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
-            out.close();
-            channel.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
+        FileOutputStream out = new FileOutputStream(file);
+        out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+        out.close();
+        channel.close();
     }
 
     private FileUtils() {
