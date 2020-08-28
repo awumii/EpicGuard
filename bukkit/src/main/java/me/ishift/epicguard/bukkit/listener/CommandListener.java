@@ -40,7 +40,7 @@ public class CommandListener implements Listener {
         String command = event.getMessage();
         String[] args = command.split(" ");
 
-        if (this.plugin.getModuleManager().check(player, command, args)) {
+        if (this.plugin.getModuleManager().check(player, args)) {
             event.setCancelled(true);
         }
     }

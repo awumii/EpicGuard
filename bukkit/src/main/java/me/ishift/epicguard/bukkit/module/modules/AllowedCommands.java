@@ -19,6 +19,7 @@ import me.ishift.epicguard.bukkit.module.Module;
 import me.ishift.epicguard.bukkit.module.ModuleManager;
 import me.ishift.epicguard.core.util.ChatUtils;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class AllowedCommands extends Module {
     public AllowedCommands(ModuleManager manager) {
@@ -26,8 +27,8 @@ public class AllowedCommands extends Module {
     }
 
     @Override
-    public boolean execute(Player player, String command, String[] args) {
-        if (command == null || args == null) {
+    public boolean execute(Player player, @Nullable String[] args) {
+        if (args == null) {
             return false;
         }
 

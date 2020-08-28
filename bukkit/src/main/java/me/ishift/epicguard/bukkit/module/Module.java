@@ -28,5 +28,5 @@ public abstract class Module {
         return this.manager;
     }
 
-    public abstract boolean execute(Player player, String command, String[] args);
+    public abstract boolean execute(Player player, String[] args);
 }

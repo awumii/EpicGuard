@@ -26,7 +26,7 @@ public class OperatorProtection extends Module {
     }
 
     @Override
-    public boolean execute(Player player, String command, String[] args) {
+    public boolean execute(Player player, String[] args) {
         if (this.getManager().opProtectionEnable && !this.getManager().opProtectionList.contains(player.getName()) && player.isOp()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), this.getManager().opProtectionCommand.replace("{PLAYER}", player.getName()));
             return true;

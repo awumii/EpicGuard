@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package velocity.command;
+package me.ishift.epicguard.velocity.command;
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
@@ -22,7 +22,7 @@ import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.user.User;
 import me.ishift.epicguard.core.util.UpdateChecker;
-import velocity.util.VelocityUtils;
+import me.ishift.epicguard.velocity.util.VelocityUtils;
 
 public class EpicGuardCommand implements Command {
     private final EpicGuard epicGuard;

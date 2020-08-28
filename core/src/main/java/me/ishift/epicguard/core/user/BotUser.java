@@ -33,14 +33,13 @@ public class BotUser {
     }
 
     public List<String> getNicknames() {
-        String ip = address.replace(".", "@");
         Json data = new Json("storage", "plugins/EpicGuard/data");
-        List<String> nicknames = data.getStringList("account-limiter." + ip);
+        List<String> nicknames = data.getStringList("account-limiter." + this.address);
 
         if (!nicknames.contains(this.nickname)) {
             nicknames.add(this.nickname);
         }
-        data.set("account-limiter." + ip, nicknames);
+        data.set("account-limiter." + this.address, nicknames);
         return nicknames;
     }
 }

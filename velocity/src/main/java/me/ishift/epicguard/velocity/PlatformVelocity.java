@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package velocity;
+package me.ishift.epicguard.velocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.EventManager;
@@ -28,11 +28,11 @@ import com.velocitypowered.api.util.MessagePosition;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.PlatformPlugin;
 import me.ishift.epicguard.core.util.ChatUtils;
-import velocity.command.EpicGuardCommand;
-import velocity.listener.DisconnectListener;
-import velocity.listener.PostLoginListener;
-import velocity.listener.PreLoginListener;
-import velocity.listener.ServerPingListener;
+import me.ishift.epicguard.velocity.command.EpicGuardCommand;
+import me.ishift.epicguard.velocity.listener.DisconnectListener;
+import me.ishift.epicguard.velocity.listener.PostLoginListener;
+import me.ishift.epicguard.velocity.listener.PreLoginListener;
+import me.ishift.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.text.TextComponent;
 
 import java.util.Optional;
@@ -86,7 +86,7 @@ public class PlatformVelocity implements PlatformPlugin {
 
     @Override
     public String getVersion() {
-        Optional<PluginContainer> container = this.getServer().getPluginManager().getPlugin("epicguard");
+        Optional<PluginContainer> container = this.getServer().getPluginManager().fromInstance(this);
         if (container.isPresent()) {
             Optional<String> version = container.get().getDescription().getVersion();
             if (version.isPresent()) {

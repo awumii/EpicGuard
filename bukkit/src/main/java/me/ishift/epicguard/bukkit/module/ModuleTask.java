@@ -30,7 +30,7 @@ public class ModuleTask implements Runnable {
     public void run() {
         // This will check if player has operator, even before he executes any command.
         for (Player player : Bukkit.getOnlinePlayers()) {
-            this.plugin.getModuleManager().check(player, null, null);
+            this.plugin.getModuleManager().check(player, null);
         }
     }
 }

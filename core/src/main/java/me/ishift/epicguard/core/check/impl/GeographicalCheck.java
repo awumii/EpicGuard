@@ -60,12 +60,12 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public List<String> reason() {
+    public List<String> getKickMessage() {
         return this.getMessages().kickMessageGeo;
     }
 
     @Override
-    public boolean blacklist() {
+    public boolean shouldBlacklist() {
         return true;
     }
 }

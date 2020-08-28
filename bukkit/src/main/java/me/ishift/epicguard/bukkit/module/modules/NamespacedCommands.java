@@ -19,6 +19,7 @@ import me.ishift.epicguard.bukkit.module.Module;
 import me.ishift.epicguard.bukkit.module.ModuleManager;
 import me.ishift.epicguard.core.util.ChatUtils;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class NamespacedCommands extends Module {
     public NamespacedCommands(ModuleManager manager) {
@@ -26,13 +27,13 @@ public class NamespacedCommands extends Module {
     }
 
     @Override
-    public boolean execute(Player player, String command, String[] args) {
-        if (command == null || args == null) {
+    public boolean execute(Player player, String[] args) {
+        if (args == null) {
             return false;
         }
 
-        if (this.getManager().blockNamespacedCommands && command.contains(":")) {
-            if (this.getManager().blockNamespacedCommandsWhitelistEnabled && this.getManager().blockNamespacedCommandsWhitelist.stream().anyMatch(command::startsWith)) {
+        if (this.getManager().blockNamespacedCommands && args[0].contains(":")) {
+            if (this.getManager().blockNamespacedCommandsWhitelistEnabled && this.getManager().blockNamespacedCommandsWhitelist.stream().anyMatch(args[0]::startsWith)) {
                 return false;
             }
 

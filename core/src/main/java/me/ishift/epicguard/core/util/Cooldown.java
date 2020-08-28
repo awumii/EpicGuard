@@ -35,9 +35,4 @@ public class Cooldown {
     public boolean hasExpired() {
         return System.currentTimeMillis() > this.time + this.duration;
     }
-
-    public long getRemaining() {
-        long time = this.time + this.duration - System.currentTimeMillis();
-        return TimeUnit.MILLISECONDS.toSeconds(time);
-    }
 }

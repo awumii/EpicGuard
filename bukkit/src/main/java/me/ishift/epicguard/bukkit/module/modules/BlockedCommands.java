@@ -26,8 +26,8 @@ public class BlockedCommands extends Module {
     }
 
     @Override
-    public boolean execute(Player player, String command, String[] args) {
-        if (command == null || args == null) {
+    public boolean execute(Player player, String[] args) {
+        if (args == null) {
             return false;
         }
 

@@ -61,10 +61,10 @@ public class DetectionHandler {
         BotUser user = new BotUser(address, nickname);
         for (Check check : this.checks) {
             if (check.check(user)) {
-                if (check.blacklist()) {
+                if (check.shouldBlacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
-                return new CheckResult(true, check.reason());
+                return new CheckResult(true, check.getKickMessage());
             }
         }
         return CheckResult.undetected();

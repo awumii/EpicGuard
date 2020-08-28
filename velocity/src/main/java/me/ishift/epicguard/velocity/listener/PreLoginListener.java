@@ -13,14 +13,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package velocity.listener;
+package me.ishift.epicguard.velocity.listener;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.CheckResult;
 import me.ishift.epicguard.core.handler.DetectionHandler;
-import velocity.util.VelocityUtils;
+import me.ishift.epicguard.velocity.util.VelocityUtils;
 import net.kyori.text.Component;
 
 public class PreLoginListener extends DetectionHandler {

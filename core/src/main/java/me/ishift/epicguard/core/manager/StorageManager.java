@@ -27,11 +27,12 @@ public class StorageManager {
     private final List<String> blacklist;
     private final List<String> whitelist;
 
-    private final Collection<String> pingCache = new HashSet<>();
+    private final Collection<String> pingCache;
 
     public StorageManager() {
         this.data = new Json("storage", "plugins/EpicGuard/data");
 
+        this.pingCache = new HashSet<>();
         this.blacklist = this.data.getOrSetDefault("blacklist", new ArrayList<>());
         this.whitelist = this.data.getOrSetDefault("whitelist", new ArrayList<>());
     }
@@ -39,10 +40,6 @@ public class StorageManager {
     public void save() {
         this.data.set("blacklist", this.blacklist);
         this.data.set("whitelist", this.whitelist);
-    }
-
-    public Json getData() {
-        return this.data;
     }
 
     public void blacklist(String address) {

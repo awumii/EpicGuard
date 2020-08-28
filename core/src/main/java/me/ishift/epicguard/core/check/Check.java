@@ -50,9 +50,9 @@ public abstract class Check {
         return this.epicGuard.isAttack();
     }
 
-    public abstract List<String> reason();
+    public abstract List<String> getKickMessage();
 
-    public abstract boolean blacklist();
+    public abstract boolean shouldBlacklist();
 
     /**
      * @return true if detection is positive (detected as bot).

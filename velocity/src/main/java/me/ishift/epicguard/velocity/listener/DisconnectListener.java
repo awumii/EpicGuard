@@ -13,18 +13,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package velocity.util;
+package me.ishift.epicguard.velocity.listener;
 
-import com.velocitypowered.api.command.CommandSource;
-import me.ishift.epicguard.core.util.ChatUtils;
-import net.kyori.text.TextComponent;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.proxy.Player;
+import me.ishift.epicguard.core.EpicGuard;
+import me.ishift.epicguard.core.handler.DisconnectHandler;
 
-public class VelocityUtils {
-    public static TextComponent getTextComponent(String string) {
-        return TextComponent.of(ChatUtils.coloredLegacy(string));
+public class DisconnectListener extends DisconnectHandler {
+    public DisconnectListener(EpicGuard epicGuard) {
+        super(epicGuard);
     }
 
-    public static void sendMessage(CommandSource source, String message) {
-        source.sendMessage(getTextComponent(message));
+    @Subscribe
+    public void onDisconnect(DisconnectEvent event) {
+        Player player = event.getPlayer();
+        this.handle(player.getUniqueId());
     }
 }
