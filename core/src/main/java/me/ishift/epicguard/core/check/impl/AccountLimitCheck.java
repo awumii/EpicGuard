@@ -28,7 +28,7 @@ public class AccountLimitCheck extends Check {
 
     @Override
     public boolean check(BotUser user) {
-        return user.getNicknames().size() > this.getConfig().accountLimit;
+        return this.getEpicGuard().getStorageManager().getAccounts(user).size() > this.getConfig().accountLimit;
     }
 
     @Override

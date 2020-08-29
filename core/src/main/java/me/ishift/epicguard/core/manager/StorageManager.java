@@ -16,30 +16,43 @@
 package me.ishift.epicguard.core.manager;
 
 import de.leonhard.storage.Json;
+import me.ishift.epicguard.core.user.BotUser;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class StorageManager {
     private final Json data;
-    private final List<String> blacklist;
-    private final List<String> whitelist;
-
+    private final Collection<String> blacklist;
+    private final Collection<String> whitelist;
     private final Collection<String> pingCache;
+    private final Map<String, List<String>> accountMap;
 
     public StorageManager() {
         this.data = new Json("storage", "plugins/EpicGuard/data");
-
         this.pingCache = new HashSet<>();
-        this.blacklist = this.data.getOrSetDefault("blacklist", new ArrayList<>());
-        this.whitelist = this.data.getOrSetDefault("whitelist", new ArrayList<>());
+        this.accountMap = this.data.getOrSetDefault("account-limiter", new HashMap<>());
+        this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
+        this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
     }
 
     public void save() {
         this.data.set("blacklist", this.blacklist);
         this.data.set("whitelist", this.whitelist);
+        this.data.set("account-limiter", this.accountMap);
+    }
+
+    /**
+     * Retrieves a list of nicknames used by specified IP Address.
+     * If a nickname used currently by this address is not in the map, it will be added.
+     */
+    public List<String> getAccounts(BotUser user) {
+        List<String> nicknames = this.accountMap.getOrDefault(user.getAddress(), new ArrayList<>());
+        if (!nicknames.contains(user.getNickname())) {
+            nicknames.add(user.getNickname());
+        }
+
+        this.accountMap.put(user.getAddress(), nicknames);
+        return nicknames;
     }
 
     public void blacklist(String address) {
@@ -63,11 +76,11 @@ public class StorageManager {
         return this.whitelist.contains(address);
     }
 
-    public List<String> getBlacklist() {
+    public Collection<String> getBlacklist() {
         return this.blacklist;
     }
 
-    public List<String> getWhitelist() {
+    public Collection<String> getWhitelist() {
         return this.whitelist;
     }
 
