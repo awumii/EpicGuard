@@ -15,10 +15,6 @@
 
 package me.ishift.epicguard.core.user;
 
-import de.leonhard.storage.Json;
-
-import java.util.List;
-
 public class BotUser {
     private final String address;
     private final String nickname;
@@ -32,14 +28,7 @@ public class BotUser {
         return this.address;
     }
 
-    public List<String> getNicknames() {
-        Json data = new Json("storage", "plugins/EpicGuard/data");
-        List<String> nicknames = data.getStringList("account-limiter." + this.address);
-
-        if (!nicknames.contains(this.nickname)) {
-            nicknames.add(this.nickname);
-        }
-        data.set("account-limiter." + this.address, nicknames);
-        return nicknames;
+    public String getNickname() {
+        return this.nickname;
     }
 }
