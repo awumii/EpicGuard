@@ -62,13 +62,4 @@ public final class Reflections {
         String version = Bukkit.getServer().getClass().getPackage().getName();
         return version.substring(version.lastIndexOf(".") + 1);
     }
-
-    public static Class<?> getNMSClass(final String name) {
-        try {
-            return Class.forName("net.minecraft.server." + getVersion() + "." + name);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

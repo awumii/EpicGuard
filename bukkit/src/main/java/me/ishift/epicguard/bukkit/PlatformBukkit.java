@@ -27,7 +27,11 @@ import me.ishift.epicguard.bukkit.util.Metrics;
 import me.ishift.epicguard.bukkit.util.Reflections;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.PlatformPlugin;
+import me.ishift.epicguard.core.util.ChatUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -65,7 +69,12 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
 
     @Override
     public void sendActionBar(String message, UUID target) {
-        Reflections.sendActionBar(Bukkit.getPlayer(target), message);
+        Player player = Bukkit.getPlayer(target);
+        if (Reflections.getVersion().startsWith("v1_16")) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
+        } else {
+            Reflections.sendActionBar(player, message); // backwards compatibility
+        }
     }
 
     @Override
