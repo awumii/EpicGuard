@@ -74,6 +74,6 @@ public class ProxyCheck extends Check implements Runnable {
 
     @Override
     public boolean shouldBlacklist() {
-        return true;
+        return this.getConfig().proxyCheckBlacklist;
     }
 }

@@ -30,7 +30,7 @@ public class StorageManager {
     public StorageManager() {
         this.data = new Json("storage", "plugins/EpicGuard/data");
         this.pingCache = new HashSet<>();
-        this.accountMap = this.data.getOrSetDefault("account-limiter", new HashMap<>());
+        this.accountMap = this.data.getOrSetDefault("account-data", new HashMap<>());
         this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
         this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
     }
@@ -38,7 +38,7 @@ public class StorageManager {
     public void save() {
         this.data.set("blacklist", this.blacklist);
         this.data.set("whitelist", this.whitelist);
-        this.data.set("account-limiter", this.accountMap);
+        this.data.set("account-data", this.accountMap);
     }
 
     /**
