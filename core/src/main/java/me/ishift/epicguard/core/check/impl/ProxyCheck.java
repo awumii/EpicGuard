@@ -15,11 +15,15 @@
 
 package me.ishift.epicguard.core.check.impl;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import me.ishift.epicguard.core.EpicGuard;
 import me.ishift.epicguard.core.check.Check;
 import me.ishift.epicguard.core.check.CheckMode;
 import me.ishift.epicguard.core.user.BotUser;
 import me.ishift.epicguard.core.util.URLUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,9 +31,19 @@ import java.util.concurrent.TimeUnit;
 public class ProxyCheck extends Check implements Runnable {
     private int requests;
 
+    private final LoadingCache<String, Boolean> detections = CacheBuilder.newBuilder()
+            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, Boolean>() {
+                @Override
+                public Boolean load(@NotNull String address) {
+                    return proxyCheck(address);
+                }
+            });
+
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        epicGuard.getPlugin().scheduleTask(this, TimeUnit.HOURS.toSeconds(24));
+        // This request limiter should be rewritten
+        epicGuard.getPlugin().scheduleTask(this, 1L);
     }
 
     @Override
@@ -39,10 +53,10 @@ public class ProxyCheck extends Check implements Runnable {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.proxyCheck(user.getAddress());
+                return this.detections.getUnchecked(user.getAddress());
             case ATTACK:
                 if (this.isAttack()) {
-                    return this.proxyCheck(user.getAddress());
+                    return this.detections.getUnchecked(user.getAddress());
                 }
         }
         return false;
