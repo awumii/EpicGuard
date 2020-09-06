@@ -33,7 +33,7 @@ public class PreLoginListener extends DetectionHandler implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPreLogin(PreLoginEvent event) {
         PendingConnection connection = event.getConnection();
-        String address = connection.getVirtualHost().getAddress().getHostAddress();
+        String address = connection.getAddress().getAddress().getHostAddress();
         String nickname = connection.getName();
 
         CheckResult result = this.handle(address, nickname);
