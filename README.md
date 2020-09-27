@@ -2,7 +2,7 @@
 
 <img align="right" src="https://i.imgur.com/3oehYSw.jpg" height="200" width="200">
 
-EpicGuard is a bot protection plugin for minecraft servers, supporting bukkit, bungeecord and velocity enviroments. Highly configurable and customizable.
+EpicGuard is a bot protection plugin for minecraft servers, supporting bukkit, bungeecord and velocity environments. Highly configurable and customizable.
 
 ## Some features
  * All checks can be configured as you want, you can make them checking every time, only during an attack or disable some of them completely.
