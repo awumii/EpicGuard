@@ -1,9 +1,10 @@
 name: EpicGuard
 version: '${project.version}'
-main: me.ishift.epicguard.bukkit.PlatformBukkit
+main: me.xneox.epicguard.bukkit.PlatformBukkit
 
-author: iShift
+author: xNeox
 website: https://www.spigotmc.org/resources/72369/
+description: Simple but effective bot protection system.
 
 commands:
   epicguard:

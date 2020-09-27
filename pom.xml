@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.ishift</groupId>
+    <groupId>me.xneox</groupId>
     <artifactId>EpicGuard</artifactId>
     <version>5.1.6</version>
     <packaging>pom</packaging>
@@ -50,7 +50,7 @@
                     <relocations>
                         <relocation>
                             <pattern>com.fasterxml</pattern>
-                            <shadedPattern>me.ishift.epicguard.lib</shadedPattern>
+                            <shadedPattern>me.xneox.epicguard.lib</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
