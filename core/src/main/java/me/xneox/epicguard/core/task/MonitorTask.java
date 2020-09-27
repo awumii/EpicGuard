@@ -30,14 +30,14 @@ public class MonitorTask implements Runnable {
     public void run() {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String monitor = config.monitor
-                .replace("%cps%", String.valueOf(this.epicGuard.getConnectionPerSecond()))
-                .replace("%status%", this.epicGuard.isAttack() ? config.attack : config.noAttack);
+                .replace("%cps%", String.valueOf(this.epicGuard.getAttackManager().getCPS()))
+                .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.attack : config.noAttack);
 
         for (User user : this.epicGuard.getUserManager().getUsers()) {
             if (user.isNotifications()) {
                 this.epicGuard.getPlugin().sendActionBar(monitor, user.getUniqueId());
             }
         }
-        this.epicGuard.resetConnections();
+        this.epicGuard.getAttackManager().resetCPS();
     }
 }

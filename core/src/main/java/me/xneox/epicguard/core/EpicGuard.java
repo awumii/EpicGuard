@@ -17,6 +17,7 @@ package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
+import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.CooldownManager;
 import me.xneox.epicguard.core.manager.GeoManager;
 import me.xneox.epicguard.core.storage.StorageFactory;
@@ -37,13 +38,11 @@ public class EpicGuard {
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
+    private final AttackManager attackManager;
     private final PlatformPlugin plugin;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
-
-    private boolean attack;
-    private int connectionPerSecond;
 
     public EpicGuard(PlatformPlugin plugin) {
         this.plugin = plugin;
@@ -54,6 +53,7 @@ public class EpicGuard {
         this.storageSystem = storageFactory.createStorage(this.config.storageType);
         this.storageSystem.load();
 
+        this.attackManager = new AttackManager();
         this.userManager = new UserManager();
         this.cooldownManager = new CooldownManager();
         this.geoManager = new GeoManager(this);
@@ -87,54 +87,38 @@ public class EpicGuard {
     }
 
     public PlatformPlugin getPlugin() {
-        return this.plugin;
+        return plugin;
     }
 
     public Logger getLogger() {
-        return this.logger;
+        return logger;
     }
 
     public PluginConfiguration getConfig() {
-        return this.config;
+        return config;
     }
 
     public MessagesConfiguration getMessages() {
-        return this.messages;
+        return messages;
     }
 
     public UserManager getUserManager() {
-        return this.userManager;
+        return userManager;
     }
 
     public GeoManager getGeoManager() {
-        return this.geoManager;
+        return geoManager;
     }
 
     public StorageSystem getStorageManager() {
-        return this.storageSystem;
+        return storageSystem;
     }
 
     public CooldownManager getCooldownManager() {
-        return this.cooldownManager;
+        return cooldownManager;
     }
 
-    public boolean isAttack() {
-        return this.attack;
-    }
-
-    public void setAttack(boolean attack) {
-        this.attack = attack;
-    }
-
-    public int getConnectionPerSecond() {
-        return this.connectionPerSecond;
-    }
-
-    public void resetConnections() {
-        this.connectionPerSecond = 0;
-    }
-
-    public void addConnectionPerSecond() {
-        this.connectionPerSecond++;
+    public AttackManager getAttackManager() {
+        return attackManager;
     }
 }

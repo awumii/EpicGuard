@@ -47,7 +47,7 @@ public abstract class Check {
     }
 
     public boolean isAttack() {
-        return this.epicGuard.isAttack();
+        return this.epicGuard.getAttackManager().isAttack();
     }
 
     public abstract List<String> getKickMessage();

@@ -38,20 +38,20 @@ public class DetectionHandler {
     public DetectionHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
 
-        this.checks.add(new AttackCheck(epicGuard));
-        this.checks.add(new BlacklistCheck(epicGuard));
-        this.checks.add(new GeographicalCheck(epicGuard));
-        this.checks.add(new ServerListCheck(epicGuard));
-        this.checks.add(new ReconnectCheck(epicGuard));
-        this.checks.add(new AccountLimitCheck(epicGuard));
-        this.checks.add(new RateLimitCheck(epicGuard));
-        this.checks.add(new ProxyCheck(epicGuard));
+        checks.add(new AttackCheck(epicGuard));
+        checks.add(new BlacklistCheck(epicGuard));
+        checks.add(new GeographicalCheck(epicGuard));
+        checks.add(new ServerListCheck(epicGuard));
+        checks.add(new ReconnectCheck(epicGuard));
+        checks.add(new AccountLimitCheck(epicGuard));
+        checks.add(new RateLimitCheck(epicGuard));
+        checks.add(new ProxyCheck(epicGuard));
     }
 
     public CheckResult handle(String address, String nickname) {
-        this.epicGuard.addConnectionPerSecond();
-        if (this.epicGuard.getConnectionPerSecond() > this.epicGuard.getConfig().maxCps) {
-            this.epicGuard.setAttack(true);
+        this.epicGuard.getAttackManager().incrementCPS();
+        if (this.epicGuard.getAttackManager().getCPS() > this.epicGuard.getConfig().maxCps) {
+            this.epicGuard.getAttackManager().setAttack(true);
         }
 
         if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
