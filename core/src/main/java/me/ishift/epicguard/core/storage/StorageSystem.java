@@ -13,33 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.ishift.epicguard.core.manager;
+package me.ishift.epicguard.core.storage;
 
-import de.leonhard.storage.Json;
 import me.ishift.epicguard.core.user.BotUser;
 
 import java.util.*;
 
-public class StorageManager {
-    private final Json data;
-    private final Collection<String> blacklist;
-    private final Collection<String> whitelist;
-    private final Collection<String> pingCache;
-    private final Map<String, List<String>> accountMap;
+public abstract class StorageSystem {
+    protected Collection<String> pingCache = new HashSet<>();
 
-    public StorageManager() {
-        this.data = new Json("storage", "plugins/EpicGuard/data");
-        this.pingCache = new HashSet<>();
-        this.accountMap = this.data.getOrSetDefault("account-data", new HashMap<>());
-        this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
-        this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
-    }
-
-    public void save() {
-        this.data.set("blacklist", this.blacklist);
-        this.data.set("whitelist", this.whitelist);
-        this.data.set("account-data", this.accountMap);
-    }
+    protected Collection<String> blacklist;
+    protected Collection<String> whitelist;
+    protected Map<String, List<String>> accountMap;
 
     /**
      * Retrieves a list of nicknames used by specified IP Address.
@@ -87,4 +72,8 @@ public class StorageManager {
     public Collection<String> getPingCache() {
         return this.pingCache;
     }
+
+    public abstract void load();
+
+    public abstract void save();
 }

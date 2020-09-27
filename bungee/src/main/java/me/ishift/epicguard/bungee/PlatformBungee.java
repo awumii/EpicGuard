@@ -48,7 +48,8 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
 
         pm.registerCommand(this, new EpicGuardCommand(this.epicGuard));
 
-        new Metrics(this, 5956);
+        Metrics metrics = new Metrics(this, 5956);
+        metrics.addCustomChart(new Metrics.SimplePie("storage_type", () -> epicGuard.getConfig().storageType));
     }
 
     @Override

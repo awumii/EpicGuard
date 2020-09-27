@@ -26,6 +26,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.diorite.cfg.annotations.CfgCollectionStyle.*;
+import static org.diorite.cfg.annotations.CfgStringStyle.*;
+
 @CfgClass(name = "PluginConfiguration")
 @CfgDelegateDefault("{new}")
 @CfgComment("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗")
@@ -34,17 +37,34 @@ import java.util.List;
 @CfgComment("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║")
 @CfgComment("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝")
 @CfgComment("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝")
-@CfgComment("You are running EpicGuard V5-NEON")
-@CfgComment("Created by iShift (Discord: iShift#0524)")
+@CfgComment("Created by xNeox (Discord: xNeox#0524)")
 @CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
 @CfgComment("Support Discord: https://discord.gg/VkfhFCv")
 public class PluginConfiguration {
-
     @CfgComment(" ")
+    @CfgComment("╔════════════════════════════════════════════╗")
+    @CfgComment("║           Storage Settings                 ║")
+    @CfgComment("╚════════════════════════════════════════════╝")
+    @CfgComment(" ")
+
+    @CfgComment("Select where the plugin should store data.")
+    @CfgComment("Migration is not supported, after changing current data will be lost.")
+    @CfgComment("After changing, restart the server (reload is not supported).")
+    @CfgComment("* FLAT")
+    @CfgComment("* MYSQL")
+    @CfgName("storage-mode")
+    public String storageType = "FLAT";
+
+    @CfgComment("Configure these values if you selected 'MYSQL' as storage-mode above.")
+    @CfgComment("It is recommended to enable 'useSSL' if your database is not located at localhost.")
+    @CfgComment("After changing, restart the server (reload is not supported).")
+    public MySQLSettings mysql = new MySQLSettings("localhost", 3306, "database", "user", "password", false);
+
+    @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║           Geographical Checks              ║")
     @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment(" ")
+    @CfgComment("")
     @CfgComment("Country check will filter countries your players can connect from.")
     @CfgComment("NEVER - check is disabled.")
     @CfgComment("ALWAYS - check will perform on every player always.")
@@ -61,19 +81,19 @@ public class PluginConfiguration {
 
     @CfgComment("List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/")
     @CfgName("country-check-countries")
-    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> countryCheckValues = Collections.singletonList("US");
 
     @CfgComment("If some player's city is listed here, he will be blacklisted.")
     @CfgName("city-blacklist")
-    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
 
-    @CfgComment(" ")
+    @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║           Other AntiBot Checks             ║")
     @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment(" ")
+    @CfgComment("")
 
     @CfgComment("Proxy check will define if user is connecting from Proxy/VPN.")
     @CfgComment("Change this option to save performance or increase accuracy")
@@ -96,7 +116,7 @@ public class PluginConfiguration {
     @CfgComment("Register an account here: https://proxycheck.io/dashboard")
     @CfgComment("And get your FREE api key.")
     @CfgComment("It will give you more queries/24h")
-    @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
+    @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
     @CfgName("proxy-check-key")
     public String proxyCheckKey = "put_your_key_here";
 
@@ -155,17 +175,16 @@ public class PluginConfiguration {
     @CfgName("max-cps")
     public int maxCps = 6;
 
-    @CfgComment(" ")
+    @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║              Other Settings                ║")
     @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment(" ")
     @CfgComment("")
 
     @CfgComment("If you want to use other proxy/vpn checker")
     @CfgComment("than default (proxycheck.io), you can set it here.")
     @CfgComment("Available placeholders: %ip%")
-    @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
+    @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
     @CfgName("custom-proxy-check-url")
     public String customProxyCheck = "disabled";
 
@@ -176,7 +195,7 @@ public class PluginConfiguration {
 
     @CfgComment("If log message contains one of these words, it will")
     @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
-    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
     @CfgName("console-filter")
     public List<String> consoleFilter = Arrays.asList(
             "GameProfile",
@@ -189,4 +208,31 @@ public class PluginConfiguration {
     @CfgComment("Set to false to disable update checker.")
     @CfgName("update-checker")
     public boolean updateChecker = true;
+
+    public static class MySQLSettings {
+        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
+        public String address;
+
+        public int port;
+
+        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
+        public String database;
+
+        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
+        public String user;
+
+        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
+        public String password;
+
+        public boolean useSSL;
+
+        public MySQLSettings(String address, int port, String database, String user, String password, boolean useSSL) {
+            this.address = address;
+            this.port = port;
+            this.database = database;
+            this.user = user;
+            this.password = password;
+            this.useSSL = useSSL;
+        }
+    }
 }

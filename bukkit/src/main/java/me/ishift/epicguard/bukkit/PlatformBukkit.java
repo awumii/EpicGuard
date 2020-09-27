@@ -36,6 +36,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     private EpicGuard epicGuard;
@@ -55,7 +56,9 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
 
         Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this, this.epicGuard));
-        new Metrics(this, 5845);
+
+        Metrics metrics = new Metrics(this, 5845);
+        metrics.addCustomChart(new Metrics.SimplePie("storage_type", () -> epicGuard.getConfig().storageType));
     }
 
     @Override
