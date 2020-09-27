@@ -1,6 +1,7 @@
 name: EpicGuard
 version: '${project.version}'
-main: me.ishift.epicguard.bungee.PlatformBungee
+main: me.xneox.epicguard.bungee.PlatformBungee
 
-author: iShift
+author: xNeox
 website: https://www.spigotmc.org/resources/72369/
+description: Simple but effective bot protection system.
