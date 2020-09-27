@@ -19,7 +19,8 @@ import me.ishift.epicguard.core.config.MessagesConfiguration;
 import me.ishift.epicguard.core.config.PluginConfiguration;
 import me.ishift.epicguard.core.manager.CooldownManager;
 import me.ishift.epicguard.core.manager.GeoManager;
-import me.ishift.epicguard.core.manager.StorageManager;
+import me.ishift.epicguard.core.storage.StorageFactory;
+import me.ishift.epicguard.core.storage.StorageSystem;
 import me.ishift.epicguard.core.manager.UserManager;
 import me.ishift.epicguard.core.task.AttackResetTask;
 import me.ishift.epicguard.core.task.MonitorTask;
@@ -32,7 +33,7 @@ import java.util.logging.Logger;
 
 public class EpicGuard {
     private final Logger logger;
-    private final StorageManager storageManager;
+    private final StorageSystem storageSystem;
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
@@ -47,10 +48,12 @@ public class EpicGuard {
     public EpicGuard(PlatformPlugin plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        logger.info("EpicGuard v5 is starting up...");
-
         this.reloadConfig();
-        this.storageManager = new StorageManager();
+
+        StorageFactory storageFactory = new StorageFactory(this);
+        this.storageSystem = storageFactory.createStorage(this.config.storageType);
+        this.storageSystem.load();
+
         this.userManager = new UserManager();
         this.cooldownManager = new CooldownManager();
         this.geoManager = new GeoManager(this);
@@ -80,7 +83,7 @@ public class EpicGuard {
     }
 
     public void shutdown() {
-        this.storageManager.save();
+        this.storageSystem.save();
     }
 
     public PlatformPlugin getPlugin() {
@@ -107,8 +110,8 @@ public class EpicGuard {
         return this.geoManager;
     }
 
-    public StorageManager getStorageManager() {
-        return this.storageManager;
+    public StorageSystem getStorageManager() {
+        return this.storageSystem;
     }
 
     public CooldownManager getCooldownManager() {
