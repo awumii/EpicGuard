@@ -1,6 +1,7 @@
 package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.manager.GeoManager;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class EpicGuardAPI {
      * @return An instance of {@link GeoManager}.
      */
     public static GeoManager getGeoManager() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return epicGuard.getGeoManager();
     }
 
@@ -26,6 +28,7 @@ public class EpicGuardAPI {
      * @return true if server is under attack, false if not.
      */
     public static boolean isUnderAttack() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return epicGuard.getAttackManager().isAttack();
     }
 
@@ -33,6 +36,7 @@ public class EpicGuardAPI {
      * @return An immutable Collection which contains whitelisted addresses.
      */
     public static Collection<String> getWhitelist() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return Collections.unmodifiableCollection(epicGuard.getStorageManager().getWhitelist());
     }
 
@@ -40,6 +44,7 @@ public class EpicGuardAPI {
      * @return An immutable Collection which contains blacklisted addresses.
      */
     public static Collection<String> getBlacklist() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return Collections.unmodifiableCollection(epicGuard.getStorageManager().getWhitelist());
     }
 
@@ -47,6 +52,7 @@ public class EpicGuardAPI {
      * @return Current connections per second.
      */
     public static int getCPS() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return epicGuard.getAttackManager().getCPS();
     }
 
@@ -54,6 +60,7 @@ public class EpicGuardAPI {
      * @return Amount of connections made to the server from the time of startup.
      */
     public static int getTotalConnections() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return epicGuard.getAttackManager().getTotalBots();
     }
 
@@ -63,6 +70,7 @@ public class EpicGuardAPI {
      * @param address Address to be blacklisted.
      */
     public static void blacklist(String address) {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         epicGuard.getStorageManager().blacklist(address);
     }
 
@@ -73,6 +81,7 @@ public class EpicGuardAPI {
      * @param address Address to be blacklisted.
      */
     public static void whitelist(String address) {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         epicGuard.getStorageManager().whitelist(address);
     }
 
@@ -81,6 +90,7 @@ public class EpicGuardAPI {
      * It is recommended to use methods in this class instead.
      */
     public static EpicGuard getInstance() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         return epicGuard;
     }
 
