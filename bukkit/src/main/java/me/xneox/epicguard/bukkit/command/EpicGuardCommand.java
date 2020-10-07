@@ -82,7 +82,8 @@ public class EpicGuardCommand implements CommandExecutor, TabCompleter {
                 send(sender, "");
                 send(sender, " &8• &7Blacklisted IPs: &c&l" + this.epicGuard.getStorageManager().getBlacklist().size());
                 send(sender, " &8• &7Whitelisted IPs: &a&l" + this.epicGuard.getStorageManager().getWhitelist().size());
-                send(sender, " &8• &7Connections: &6&l" + this.epicGuard.getConnectionPerSecond() + "/s");
+                send(sender, " &8• &7Connections: &6&l" + this.epicGuard.getAttackManager().getCPS() + "/s");
+                send(sender, " &8• &7Total connections: &6&l" + this.epicGuard.getAttackManager().getTotalBots() + "/s");
                 send(sender, "");
                 send(sender, "&8&m---------------------------------------------------");
                 break;
