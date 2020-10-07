@@ -17,7 +17,6 @@ package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckResult;
 import me.xneox.epicguard.core.check.impl.AccountLimitCheck;
 import me.xneox.epicguard.core.check.impl.AttackCheck;
 import me.xneox.epicguard.core.check.impl.BlacklistCheck;
@@ -27,9 +26,11 @@ import me.xneox.epicguard.core.check.impl.RateLimitCheck;
 import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DetectionHandler {
     private final List<Check> checks = new ArrayList<>();
@@ -48,25 +49,25 @@ public class DetectionHandler {
         checks.add(new ProxyCheck(epicGuard));
     }
 
-    public CheckResult handle(String address, String nickname) {
+    public Optional<String> handle(String address, String nickname) {
         this.epicGuard.getAttackManager().incrementCPS();
         if (this.epicGuard.getAttackManager().getCPS() > this.epicGuard.getConfig().maxCps) {
             this.epicGuard.getAttackManager().setAttack(true);
         }
 
         if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
-            return CheckResult.undetected();
+            return Optional.empty();
         }
 
         BotUser user = new BotUser(address, nickname);
         for (Check check : this.checks) {
-            if (check.check(user)) {
+            if (check.handle(user)) {
                 if (check.shouldBlacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
-                return new CheckResult(true, check.getKickMessage());
+                return Optional.of(ChatUtils.buildString(check.getKickMessage()));
             }
         }
-        return CheckResult.undetected();
+        return Optional.empty();
     }
 }

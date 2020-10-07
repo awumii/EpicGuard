@@ -33,10 +33,6 @@ public class PreLoginListener extends DetectionHandler {
         String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
         String nickname = event.getUsername();
 
-        CheckResult result = this.handle(address, nickname);
-        if (result.isDetected()) {
-            Component reason = VelocityUtils.getTextComponent(result.getKickMessage());
-            event.setResult(PreLoginEvent.PreLoginComponentResult.denied(reason));
-        }
+        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(VelocityUtils.getTextComponent(result))));
     }
 }

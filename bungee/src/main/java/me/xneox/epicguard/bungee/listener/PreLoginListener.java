@@ -16,7 +16,6 @@
 package me.xneox.epicguard.bungee.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.CheckResult;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -36,10 +35,9 @@ public class PreLoginListener extends DetectionHandler implements Listener {
         String address = connection.getAddress().getAddress().getHostAddress();
         String nickname = connection.getName();
 
-        CheckResult result = this.handle(address, nickname);
-        if (result.isDetected()) {
+        this.handle(address, nickname).ifPresent(result -> {
             event.setCancelled(true);
-            event.setCancelReason(TextComponent.fromLegacyText(result.getKickMessage()));
-        }
+            event.setCancelReason(TextComponent.fromLegacyText(result));
+        });
     }
 }

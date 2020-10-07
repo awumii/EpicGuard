@@ -20,16 +20,10 @@ import me.xneox.epicguard.core.util.ChatUtils;
 import java.util.List;
 
 public class CheckResult {
-    private final boolean detected;
     private final List<String> kickMessage;
 
-    public CheckResult(boolean detected, List<String> kickMessage) {
-        this.detected = detected;
+    public CheckResult(List<String> kickMessage) {
         this.kickMessage = kickMessage;
-    }
-
-    public boolean isDetected() {
-        return this.detected;
     }
 
     public String getKickMessage() {
@@ -38,9 +32,5 @@ public class CheckResult {
             reason.append(ChatUtils.coloredLegacy(string)).append("\n");
         }
         return reason.toString();
-    }
-
-    public static CheckResult undetected() {
-        return new CheckResult(false, null);
     }
 }

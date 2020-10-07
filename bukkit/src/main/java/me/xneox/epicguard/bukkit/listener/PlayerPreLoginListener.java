@@ -16,7 +16,6 @@
 package me.xneox.epicguard.bukkit.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.CheckResult;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,9 +32,6 @@ public class PlayerPreLoginListener extends DetectionHandler implements Listener
         String address = event.getAddress().getHostAddress();
         String nickname = event.getName();
 
-        CheckResult result = this.handle(address, nickname);
-        if (result.isDetected()) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, result.getKickMessage());
-        }
+        this.handle(address, nickname).ifPresent(result -> event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, result));
     }
 }

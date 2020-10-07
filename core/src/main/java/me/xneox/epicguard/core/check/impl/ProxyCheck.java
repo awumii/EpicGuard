@@ -47,7 +47,7 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public boolean check(BotUser user) {
+    public boolean handle(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
         switch (mode) {
             case NEVER:
