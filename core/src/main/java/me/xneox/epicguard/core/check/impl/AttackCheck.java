@@ -27,7 +27,7 @@ public class AttackCheck extends Check {
     }
 
     @Override
-    public boolean check(BotUser user) {
+    public boolean handle(BotUser user) {
         return this.isAttack() && this.getConfig().denyJoin;
     }
 

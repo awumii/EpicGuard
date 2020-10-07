@@ -28,7 +28,7 @@ public class ServerListCheck extends Check {
     }
 
     @Override
-    public boolean check(BotUser user) {
+    public boolean handle(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().serverListCheck);
 
         switch (mode) {

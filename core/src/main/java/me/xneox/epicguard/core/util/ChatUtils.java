@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.util;
 
+import java.util.List;
+
 public final class ChatUtils {
     public static String colored(String message) {
         // import unavailable...
@@ -24,6 +26,12 @@ public final class ChatUtils {
 
     public static String coloredLegacy(String message) {
         return message.replace("&", "§"); // Method compatible with Velocity.
+    }
+
+    public static String buildString(List<String> list) {
+        StringBuilder builder = new StringBuilder();
+        list.forEach(s -> builder.append(ChatUtils.coloredLegacy(s)).append("\n"));
+        return builder.toString();
     }
 
     private ChatUtils() {

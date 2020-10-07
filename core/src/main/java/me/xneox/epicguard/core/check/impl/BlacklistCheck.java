@@ -27,7 +27,7 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public boolean check(BotUser user) {
+    public boolean handle(BotUser user) {
         return this.getStorage().isBlacklisted(user.getAddress());
     }
 

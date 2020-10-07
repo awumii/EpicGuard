@@ -29,7 +29,7 @@ public class RateLimitCheck extends Check {
     }
 
     @Override
-    public boolean check(BotUser user) {
+    public boolean handle(BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().rateLimitCheck);
         switch (mode) {
             case NEVER:

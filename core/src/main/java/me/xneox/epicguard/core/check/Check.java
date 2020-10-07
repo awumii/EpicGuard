@@ -57,5 +57,5 @@ public abstract class Check {
     /**
      * @return true if detection is positive (detected as bot).
      */
-    public abstract boolean check(BotUser user);
+    public abstract boolean handle(BotUser user);
 }
