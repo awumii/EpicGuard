@@ -89,11 +89,10 @@ public class MySQL extends StorageSystem {
         Collection<String> list = new HashSet<>();
         try {
             ResultSet result = this.executeQuery("SELECT * FROM `" + table + "`");
-            if (result != null) {
-                while (result.next()) {
-                    list.add(result.getString(column));
-                }
+            while (result.next()) {
+                list.add(result.getString(column));
             }
+            result.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -109,6 +108,7 @@ public class MySQL extends StorageSystem {
         for (String string : list) {
             joiner.add("('" + string + "')");
         }
-        this.executeUpdate("INSERT IGNORE INTO `" + table + "` (`" + column + "`) VALUES " + joiner.toString());
+         this.executeUpdate("TRUNCATE `" + table + "`");
+        this.executeUpdate("INSERT INTO `" + table + "` (`" + column + "`) VALUES " + joiner.toString());
     }
 }
