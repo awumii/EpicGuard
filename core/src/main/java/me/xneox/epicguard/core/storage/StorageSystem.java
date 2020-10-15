@@ -51,7 +51,6 @@ public abstract class StorageSystem {
     }
 
     public void whitelist(String address) {
-        this.blacklist.remove(address);
         if (!this.whitelist.contains(address)) {
             this.whitelist.add(address);
         }

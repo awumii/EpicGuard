@@ -27,16 +27,6 @@ import java.util.List;
 
 @CfgClass(name = "MessagesConfiguration")
 @CfgDelegateDefault("{new}")
-@CfgComment("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗")
-@CfgComment("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗")
-@CfgComment("█████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║")
-@CfgComment("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║")
-@CfgComment("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝")
-@CfgComment("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝")
-@CfgComment("You are running EpicGuard V5-NEON")
-@CfgComment("Created by iShift (Discord: iShift#0524)")
-@CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
-@CfgComment("Support Discord: https://discord.gg/VkfhFCv")
 public class MessagesConfiguration {
 
     @CfgName("prefix")
@@ -50,7 +40,25 @@ public class MessagesConfiguration {
 
     public String whitelisted = "&7Succesfully whitelisted address &a{IP}!";
 
-    public String blacklisted = "&7Succesfully blacklisted address &a{IP}!";
+    @CfgName("un-whitelisted")
+    public String unWhitelisted = "&7Succesfully removed address &a{IP} &7from the whitelist!";
+
+    public String blacklisted = "&7Succesfully blacklisted address &c{IP}!";
+
+    @CfgName("un-blacklisted")
+    public String unBlacklisted = "&7Succesfully removed address &c{IP} &7from the blacklist!";
+
+    @CfgName("already-whitelisted")
+    public String alreadyWhitelisted = "&cThe address &f{IP} &cis already whitelisted!";
+
+    @CfgName("already-blacklisted")
+    public String alreadyBlacklisted = "&cThe address &f{IP} &cis already blacklisted!";
+
+    @CfgName("not-in-whitelist")
+    public String notWhitelisted = "&cThe address &f{IP} &cis not in whitelist!";
+
+    @CfgName("not-in-blacklist")
+    public String notBlacklisted = "&cThe address &f{IP} &cis not in the blacklist!";
 
     public String reload = "&7Succesfully reloaded config and messages!";
 
