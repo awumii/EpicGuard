@@ -40,7 +40,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-@Plugin(id = "epicguard", name = "EpicGuard", version = "5.1.6")
+@Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.0")
 public class PlatformVelocity implements PlatformPlugin {
     private final ProxyServer server;
     private final Logger logger;
