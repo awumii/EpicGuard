@@ -18,10 +18,8 @@ package me.xneox.epicguard.velocity.listener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.CheckResult;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import me.xneox.epicguard.velocity.util.VelocityUtils;
-import net.kyori.text.Component;
 
 public class PreLoginListener extends DetectionHandler {
     public PreLoginListener(EpicGuard epicGuard) {
