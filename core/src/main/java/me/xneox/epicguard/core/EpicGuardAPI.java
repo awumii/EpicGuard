@@ -83,6 +83,7 @@ public class EpicGuardAPI {
     public static void whitelist(String address) {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         epicGuard.getStorageManager().whitelist(address);
+        epicGuard.getStorageManager().getBlacklist().remove(address);
     }
 
     /**

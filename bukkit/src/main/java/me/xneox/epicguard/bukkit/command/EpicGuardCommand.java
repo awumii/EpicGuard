@@ -58,8 +58,8 @@ public class EpicGuardCommand implements CommandExecutor, TabCompleter {
             send(sender, " &8• &b/guard stats &7- show plugin statistics.");
             send(sender, " &8• &b/guard notifications &7- enable actionbar notifications.");
             send(sender, " &8• &b/guard reload &7- reload config and messages.");
-            send(sender, " &8• &b/guard whitelist <address> &7- whitelist an address.");
-            send(sender, " &8• &b/guard blacklist <address> &7- blacklist an address.");
+            send(sender, " &8• &b/guard whitelist <add/remove> <address> &7- whitelist an address.");
+            send(sender, " &8• &b/guard blacklist <add/remove> <address> &7- blacklist an address.");
             send(sender, "&8&m---------------------------------------------------");
             return true;
         }
@@ -98,20 +98,48 @@ public class EpicGuardCommand implements CommandExecutor, TabCompleter {
                 this.plugin.getModuleManager().load();
                 break;
             case "whitelist":
-                if (args.length != 2) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <address>"));
+                if (args.length != 3) {
+                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <add/remove> <address>"));
                     return true;
                 }
-                send(sender, prefix + config.whitelisted.replace("{IP}", args[1]));
-                this.epicGuard.getStorageManager().whitelist(args[1]);
+
+                if (args[1].equalsIgnoreCase("add")) {
+                    if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
+                        send(sender, prefix + config.alreadyWhitelisted.replace("{IP}", args[2]));
+                    } else {
+                        send(sender, prefix + config.whitelisted.replace("{IP}", args[2]));
+                        this.epicGuard.getStorageManager().whitelist(args[2]);
+                    }
+                } else if (args[1].equalsIgnoreCase("remove")) {
+                    if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
+                        send(sender, prefix + config.unWhitelisted.replace("{IP}", args[2]));
+                        this.epicGuard.getStorageManager().getWhitelist().remove(args[2]);
+                    } else {
+                        send(sender, prefix + config.notWhitelisted.replace("{IP}", args[2]));
+                    }
+                }
                 break;
             case "blacklist":
-                if (args.length != 2) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <address>"));
+                if (args.length != 3) {
+                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <add/remove> <address>"));
                     return true;
                 }
-                send(sender, prefix + config.blacklisted.replace("{IP}", args[1]));
-                this.epicGuard.getStorageManager().blacklist(args[1]);
+
+                if (args[1].equalsIgnoreCase("add")) {
+                    if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
+                        send(sender, prefix + config.alreadyBlacklisted.replace("{IP}", args[2]));
+                    } else {
+                        send(sender, prefix + config.blacklisted.replace("{IP}", args[2]));
+                        this.epicGuard.getStorageManager().blacklist(args[2]);
+                    }
+                } else if (args[1].equalsIgnoreCase("remove")) {
+                    if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
+                        send(sender, prefix + config.unBlacklisted.replace("{IP}", args[2]));
+                        this.epicGuard.getStorageManager().getBlacklist().remove(args[2]);
+                    } else {
+                        send(sender, prefix + config.notBlacklisted.replace("{IP}", args[2]));
+                    }
+                }
                 break;
             default:
                 send(sender, config.unknown);
