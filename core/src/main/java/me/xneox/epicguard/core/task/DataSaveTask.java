@@ -13,35 +13,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.manager;
+package me.xneox.epicguard.core.task;
 
-public class AttackManager {
-    private boolean attack;
-    private int connectionPerSecond;
-    private int totalBots;
+import me.xneox.epicguard.core.EpicGuard;
 
-    public boolean isAttack() {
-        return this.attack;
+public class DataSaveTask implements Runnable {
+    private final EpicGuard epicGuard;
+
+    public DataSaveTask(EpicGuard epicGuard) {
+        this.epicGuard = epicGuard;
     }
 
-    public void setAttack(boolean attack) {
-        this.attack = attack;
-    }
-
-    public int getCPS() {
-        return this.connectionPerSecond;
-    }
-
-    public void resetCPS() {
-        this.connectionPerSecond = 0;
-    }
-
-    public void incrementCPS() {
-        this.connectionPerSecond++;
-        this.totalBots++;
-    }
-
-    public int getTotalBots() {
-        return this.totalBots;
+    @Override
+    public void run() {
+        this.epicGuard.getLogger().info("Auto-Saving data...");
+        this.epicGuard.getStorageManager().save();
     }
 }

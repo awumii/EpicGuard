@@ -24,12 +24,14 @@ import me.xneox.epicguard.core.storage.StorageFactory;
 import me.xneox.epicguard.core.storage.StorageSystem;
 import me.xneox.epicguard.core.manager.UserManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
+import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigHelper;
 import me.xneox.epicguard.core.util.LogFilter;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class EpicGuard {
@@ -68,6 +70,7 @@ public class EpicGuard {
         this.plugin.scheduleTask(new MonitorTask(this), 1L);
         this.plugin.scheduleTask(new AttackResetTask(this), 40L);
         this.plugin.scheduleTask(new UpdateCheckerTask(this), 1800L);
+        this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.SECONDS.toMinutes(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
         logger.info("EpicGuard v5 finished startup successfully.");

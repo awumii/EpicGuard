@@ -56,9 +56,13 @@ public class PluginConfiguration {
     public String storageType = "FLAT";
 
     @CfgComment("Configure these values if you selected 'MYSQL' as storage-mode above.")
-    @CfgComment("It is recommended to enable 'useSSL' if your database is not located at localhost.")
     @CfgComment("After changing, restart the server (reload is not supported).")
+    @CfgName("mysql")
     public MySQLSettings mysql = new MySQLSettings("localhost", 3306, "database", "user", "password", false);
+
+    @CfgComment("Time in minutes before auto-saving data.")
+    @CfgName("autosave-interval")
+    public long autoSaveInterval = 10L;
 
     @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
@@ -225,6 +229,9 @@ public class PluginConfiguration {
         public String password;
 
         public boolean useSSL;
+
+        public MySQLSettings() {
+        }
 
         public MySQLSettings(String address, int port, String database, String user, String password, boolean useSSL) {
             this.address = address;
