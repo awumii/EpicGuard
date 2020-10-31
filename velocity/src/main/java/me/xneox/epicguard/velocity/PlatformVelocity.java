@@ -34,7 +34,9 @@ import me.xneox.epicguard.velocity.listener.PostLoginListener;
 import me.xneox.epicguard.velocity.listener.PreLoginListener;
 import me.xneox.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.text.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -43,13 +45,11 @@ import java.util.logging.Logger;
 @Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.0")
 public class PlatformVelocity implements PlatformPlugin {
     private final ProxyServer server;
-    private final Logger logger;
     private EpicGuard epicGuard;
 
     @Inject
-    public PlatformVelocity(ProxyServer server, Logger logger) {
+    public PlatformVelocity(ProxyServer server) {
         this.server = server;
-        this.logger = logger;
     }
 
     @Subscribe
@@ -74,14 +74,9 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(String message, UUID target) {
+    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
         Optional<Player> optional = this.getServer().getPlayer(target);
-        optional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.coloredLegacy(message)), MessagePosition.ACTION_BAR));
-    }
-
-    @Override
-    public Logger getLogger() {
-        return this.logger;
+        optional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.colored(message)), MessagePosition.ACTION_BAR));
     }
 
     @Override
@@ -97,7 +92,7 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         this.getServer().getScheduler()
                 .buildTask(this, task)
                 .delay(seconds, TimeUnit.SECONDS)
@@ -105,7 +100,7 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void scheduleTask(Runnable task, long seconds) {
+    public void scheduleTask(@Nonnull Runnable task, long seconds) {
         this.getServer().getScheduler()
                 .buildTask(this, task)
                 .repeat(seconds, TimeUnit.SECONDS)

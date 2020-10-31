@@ -34,7 +34,7 @@ public class MonitorTask implements Runnable {
                 .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.attack : config.noAttack);
 
         for (User user : this.epicGuard.getUserManager().getUsers()) {
-            if (user.isNotifications()) {
+            if (user.hasNotifications()) {
                 this.epicGuard.getPlugin().sendActionBar(monitor, user.getUniqueId());
             }
         }

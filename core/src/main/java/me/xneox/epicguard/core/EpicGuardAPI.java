@@ -18,6 +18,7 @@ package me.xneox.epicguard.core;
 import me.xneox.epicguard.core.manager.GeoManager;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -84,8 +85,10 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public static void blacklist(String address) {
+    public static void blacklist(@Nonnull String address) {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
+        Validate.notNull(address, "Address cannot be null!");
+
         epicGuard.getStorageManager().blacklist(address);
     }
 
@@ -95,8 +98,10 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public static void whitelist(String address) {
+    public static void whitelist(@Nonnull String address) {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
+        Validate.notNull(address, "Address cannot be null!");
+
         epicGuard.getStorageManager().whitelist(address);
         epicGuard.getStorageManager().getBlacklist().remove(address);
     }

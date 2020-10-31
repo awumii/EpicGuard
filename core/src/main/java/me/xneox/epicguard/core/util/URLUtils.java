@@ -15,6 +15,10 @@
 
 package me.xneox.epicguard.core.util;
 
+import org.diorite.libs.org.apache.commons.lang3.Validate;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,25 +30,29 @@ import java.util.List;
 import java.util.Scanner;
 
 public final class URLUtils {
-    public static String readString(String requestURL) {
+    @Nullable
+    public static String readString(String url) {
+        Validate.notNull(url, "URL cannot be null!");
         try {
-            final URLConnection connection = new URL(requestURL).openConnection();
+            final URLConnection connection = new URL(url).openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
             try (Scanner scanner = new Scanner(connection.getInputStream(), StandardCharsets.UTF_8.toString())) {
                 scanner.useDelimiter("\\A");
                 return scanner.hasNext() ? scanner.next() : "";
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.error("Could not read content of " + url, ex);
         }
-        return requestURL;
+        return null;
     }
 
-    public static List<String> readLines(String from) {
+    @Nullable
+    public static List<String> readLines(@Nonnull String url) {
+        Validate.notNull(url, "URL cannot be null!");
         List<String> list = new ArrayList<>();
         try {
-            URLConnection connection = new URL(from).openConnection();
+            URLConnection connection = new URL(url).openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -52,12 +60,11 @@ public final class URLUtils {
                 list.add(reader.readLine());
             }
             reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.error("Could not read content (as list) of " + url, ex);
         }
-        return list;
+        return null;
     }
 
-    private URLUtils() {
-    }
+    private URLUtils() {}
 }

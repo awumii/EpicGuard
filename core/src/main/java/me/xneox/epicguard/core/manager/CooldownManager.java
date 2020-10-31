@@ -16,19 +16,24 @@
 package me.xneox.epicguard.core.manager;
 
 import me.xneox.epicguard.core.util.Cooldown;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CooldownManager {
     private final Map<String, Cooldown> cooldowns = new HashMap<>();
 
-    public void add(Cooldown cooldown) {
+    public void add(@NonNull Cooldown cooldown) {
+        Validate.notNull(cooldown, "Cooldown cannot be null!");
         String id = cooldown.getId();
         cooldowns.put(id, cooldown);
     }
 
-    public boolean hasCooldown(String id) {
+    public boolean hasCooldown(@Nonnull String id) {
+        Validate.notNull(id, "Cooldown ID cannot be null!");
         Cooldown cooldown = cooldowns.get(id);
         if (cooldown == null) {
             return false;

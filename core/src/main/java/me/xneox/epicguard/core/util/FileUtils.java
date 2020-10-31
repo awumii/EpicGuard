@@ -15,18 +15,22 @@
 
 package me.xneox.epicguard.core.util;
 
+import org.diorite.libs.org.apache.commons.lang3.Validate;
+
+import javax.annotation.Nonnull;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public final class FileUtils {
-    public static void downloadFile(String urlFrom, File file) throws IOException {
+    public static void downloadFile(@Nonnull String urlFrom, @Nonnull File file) throws IOException {
+        Validate.notNull(urlFrom, "Download URL cannot be null!");
+        Validate.notNull(urlFrom, "Target file cannot be null!");
+
         file.delete();
         file.createNewFile();
 

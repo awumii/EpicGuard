@@ -19,7 +19,9 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.BotUser;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class GeographicalCheck extends Check {
@@ -28,7 +30,7 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public boolean handle(BotUser user) {
+    public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
 
         switch (mode) {
@@ -60,7 +62,7 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public @NotNull List<String> getKickMessage() {
         return this.getMessages().kickMessageGeo;
     }
 

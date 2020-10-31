@@ -17,7 +17,9 @@ package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.User;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class JoinHandler {
@@ -27,9 +29,11 @@ public class JoinHandler {
         this.epicGuard = epicGuard;
     }
 
-    public void handle(UUID uuid, String address) {
-        this.epicGuard.getUserManager().addUser(uuid);
+    public void handle(@Nonnull UUID uuid, @Nonnull String address) {
+        Validate.notNull(uuid, "UUID cannot be null!");
+        Validate.notNull(address, "Address cannot be null!");
 
+        this.epicGuard.getUserManager().addUser(uuid);
         this.epicGuard.getPlugin().runTaskLater(() -> {
             User user = epicGuard.getUserManager().getUser(uuid);
             if (user != null) {

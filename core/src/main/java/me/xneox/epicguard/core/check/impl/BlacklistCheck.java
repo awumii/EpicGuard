@@ -18,7 +18,9 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.BotUser;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlacklistCheck extends Check {
@@ -27,12 +29,12 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public boolean handle(BotUser user) {
+    public boolean handle(@Nonnull BotUser user) {
         return this.getStorage().isBlacklisted(user.getAddress());
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public @NotNull List<String> getKickMessage() {
         return this.getMessages().kickMessageBlacklist;
     }
 

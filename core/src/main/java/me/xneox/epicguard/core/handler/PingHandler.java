@@ -16,6 +16,8 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 public class PingHandler {
     private final EpicGuard epicGuard;
@@ -24,7 +26,8 @@ public class PingHandler {
         this.epicGuard = epicGuard;
     }
 
-    public void handle(String address) {
+    public void handle(@NonNull String address) {
+        Validate.notNull(address, "Address cannot be null!");
         this.epicGuard.getStorageManager().getPingCache().add(address);
     }
 }

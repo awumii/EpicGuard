@@ -27,7 +27,9 @@ import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.util.ChatUtils;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +51,11 @@ public class DetectionHandler {
         checks.add(new ProxyCheck(epicGuard));
     }
 
-    public Optional<String> handle(String address, String nickname) {
+    @Nonnull
+    public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
+        Validate.notNull(address, "Address cannot be null!");
+        Validate.notNull(nickname, "Nickname cannot be null!");
+
         this.epicGuard.getAttackManager().incrementCPS();
         if (this.epicGuard.getAttackManager().getCPS() > this.epicGuard.getConfig().maxCps) {
             this.epicGuard.getAttackManager().setAttack(true);

@@ -21,7 +21,7 @@ import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.core.util.UpdateChecker;
+import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.velocity.util.VelocityUtils;
 
 public class EpicGuardCommand implements Command {
@@ -39,9 +39,9 @@ public class EpicGuardCommand implements Command {
             send(sender, "&8&m---------------------------------------------------");
             send(sender, "  &6&lEpicGuard &8(Velocity version)");
             send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
-            if (UpdateChecker.isAvailable()) {
+            if (VersionUtils.isAvailable()) {
                 send(sender, "");
-                send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
+                send(sender, "  &7New version is available: &c&n" + VersionUtils.getRemoteVersion());
                 send(sender, "  &c&ohttps://www.spigotmc.org/resources/72369/");
             }
             send(sender, "");
@@ -59,9 +59,9 @@ public class EpicGuardCommand implements Command {
                 send(sender, "&8&m---------------------------------------------------");
                 send(sender, "  &6&lEpicGuard &7(Statistics)");
                 send(sender, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
-                if (UpdateChecker.isAvailable()) {
+                if (VersionUtils.isAvailable()) {
                     send(sender, "");
-                    send(sender, "  &7New version is available: &c&n" + UpdateChecker.getRemoteVersion());
+                    send(sender, "  &7New version is available: &c&n" + VersionUtils.getRemoteVersion());
                     send(sender, "  &c&ohttps://www.spigotmc.org/resources/72369/");
                 }
                 send(sender, "");
@@ -75,7 +75,7 @@ public class EpicGuardCommand implements Command {
             case "notifications":
                 Player player = (Player) sender;
                 User user = this.epicGuard.getUserManager().getUser(player.getUniqueId());
-                user.setNotifications(!user.isNotifications());
+                user.setNotifications(!user.hasNotifications());
                 send(sender, prefix + config.notifications);
                 break;
             case "reload":

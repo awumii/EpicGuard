@@ -19,21 +19,14 @@ import java.util.List;
 
 public final class ChatUtils {
     public static String colored(String message) {
-        // import unavailable...
-        //return ChatColor.translateAlternateColorCodes('&', message);
-        return coloredLegacy(message);
-    }
-
-    public static String coloredLegacy(String message) {
-        return message.replace("&", "§"); // Method compatible with Velocity.
+        return message.replace("&", "§");
     }
 
     public static String buildString(List<String> list) {
         StringBuilder builder = new StringBuilder();
-        list.forEach(s -> builder.append(ChatUtils.coloredLegacy(s)).append("\n"));
+        list.forEach(s -> builder.append(ChatUtils.colored(s)).append("\n"));
         return builder.toString();
     }
 
-    private ChatUtils() {
-    }
+    private ChatUtils() {}
 }

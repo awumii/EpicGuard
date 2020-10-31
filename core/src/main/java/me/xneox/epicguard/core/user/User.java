@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.user;
 
+import com.google.common.base.Objects;
+
 import java.util.UUID;
 
 public class User {
@@ -29,11 +31,25 @@ public class User {
         return this.uuid;
     }
 
-    public boolean isNotifications() {
+    public boolean hasNotifications() {
         return this.notifications;
     }
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return hasNotifications() == user.hasNotifications() &&
+                Objects.equal(uuid, user.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(uuid, hasNotifications());
     }
 }

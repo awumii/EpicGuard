@@ -13,24 +13,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.storage;
+package me.xneox.epicguard.core.manager;
 
+import de.leonhard.storage.Json;
 import me.xneox.epicguard.core.user.BotUser;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
-public abstract class StorageSystem {
-    protected Collection<String> pingCache = new HashSet<>();
+public class StorageManager {
+    private final Json data;
 
-    protected Collection<String> blacklist;
-    protected Collection<String> whitelist;
-    protected Map<String, List<String>> accountMap;
+    private final Collection<String> pingCache = new HashSet<>();
+    private final Map<String, List<String>> accountMap;
+    private final Collection<String> blacklist;
+    private final Collection<String> whitelist;
+
+    public StorageManager() {
+        this.data = new Json("storage", "plugins/EpicGuard/data");
+
+        this.accountMap = this.data.getOrSetDefault("account-data", new HashMap<>());
+        this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
+        this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
+    }
+
+    public void save() {
+        this.data.set("blacklist", this.blacklist);
+        this.data.set("whitelist", this.whitelist);
+        this.data.set("account-data", this.accountMap);
+    }
 
     /**
      * Retrieves a list of nicknames used by specified IP Address.
      * If a nickname used currently by this address is not in the map, it will be added.
      */
-    public List<String> getAccounts(BotUser user) {
+    @Nonnull
+    public List<String> getAccounts(@Nonnull BotUser user) {
+        Validate.notNull(user, "BotUser cannot be null!");
         List<String> nicknames = this.accountMap.getOrDefault(user.getAddress(), new ArrayList<>());
         if (!nicknames.contains(user.getNickname())) {
             nicknames.add(user.getNickname());
@@ -40,7 +61,8 @@ public abstract class StorageSystem {
         return nicknames;
     }
 
-    public void blacklist(String address) {
+    public void blacklist(@Nonnull String address) {
+        Validate.notNull(address, "Address cannot be null!");
         if (!this.blacklist.contains(address)) {
             this.blacklist.add(address);
         }
@@ -50,7 +72,8 @@ public abstract class StorageSystem {
         return this.blacklist.contains(address);
     }
 
-    public void whitelist(String address) {
+    public void whitelist(@Nonnull String address) {
+        Validate.notNull(address, "Address cannot be null!");
         if (!this.whitelist.contains(address)) {
             this.whitelist.add(address);
         }
@@ -60,19 +83,18 @@ public abstract class StorageSystem {
         return this.whitelist.contains(address);
     }
 
+    @Nonnull
     public Collection<String> getBlacklist() {
         return this.blacklist;
     }
 
+    @Nonnull
     public Collection<String> getWhitelist() {
         return this.whitelist;
     }
 
+    @NonNull
     public Collection<String> getPingCache() {
         return this.pingCache;
     }
-
-    public abstract void load();
-
-    public abstract void save();
 }

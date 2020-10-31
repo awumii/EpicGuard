@@ -25,6 +25,7 @@ import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.util.URLUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +48,7 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public boolean handle(BotUser user) {
+    public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
         switch (mode) {
             case NEVER:
@@ -82,7 +83,7 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public @NotNull List<String> getKickMessage() {
         return this.getMessages().kickMessageProxy;
     }
 

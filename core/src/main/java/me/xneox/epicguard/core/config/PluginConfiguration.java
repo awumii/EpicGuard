@@ -41,29 +41,6 @@ import static org.diorite.cfg.annotations.CfgStringStyle.*;
 @CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
 @CfgComment("Support Discord: https://discord.gg/VkfhFCv")
 public class PluginConfiguration {
-    @CfgComment(" ")
-    @CfgComment("╔════════════════════════════════════════════╗")
-    @CfgComment("║           Storage Settings                 ║")
-    @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment(" ")
-
-    @CfgComment("Select where the plugin should store data.")
-    @CfgComment("Migration is not supported, after changing current data will be lost.")
-    @CfgComment("After changing, restart the server (reload is not supported).")
-    @CfgComment("* FLAT")
-    @CfgComment("* MYSQL")
-    @CfgName("storage-mode")
-    public String storageType = "FLAT";
-
-    @CfgComment("Configure these values if you selected 'MYSQL' as storage-mode above.")
-    @CfgComment("After changing, restart the server (reload is not supported).")
-    @CfgName("mysql")
-    public MySQLSettings mysql = new MySQLSettings("localhost", 3306, "database", "user", "password", false);
-
-    @CfgComment("Time in minutes before auto-saving data.")
-    @CfgName("autosave-interval")
-    public long autoSaveInterval = 10L;
-
     @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║           Geographical Checks              ║")
@@ -213,33 +190,7 @@ public class PluginConfiguration {
     @CfgName("update-checker")
     public boolean updateChecker = true;
 
-    public static class MySQLSettings {
-        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-        public String address;
-
-        public int port;
-
-        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-        public String database;
-
-        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-        public String user;
-
-        @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-        public String password;
-
-        public boolean useSSL;
-
-        public MySQLSettings() {
-        }
-
-        public MySQLSettings(String address, int port, String database, String user, String password, boolean useSSL) {
-            this.address = address;
-            this.port = port;
-            this.database = database;
-            this.user = user;
-            this.password = password;
-            this.useSSL = useSSL;
-        }
-    }
+    @CfgComment("Time in minutes before auto-saving data.")
+    @CfgName("autosave-interval")
+    public long autoSaveInterval = 10L;
 }

@@ -16,7 +16,9 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class DisconnectHandler {
@@ -26,7 +28,8 @@ public class DisconnectHandler {
         this.epicGuard = epicGuard;
     }
 
-    public void handle(UUID uuid) {
+    public void handle(@Nonnull UUID uuid) {
+        Validate.notNull(uuid, "UUID cannot be null!");
         this.epicGuard.getUserManager().removeUser(uuid);
     }
 }

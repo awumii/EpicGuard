@@ -17,9 +17,9 @@ package me.xneox.epicguard.core.util;
 
 import me.xneox.epicguard.core.EpicGuard;
 
-// this class needs to be rewritten...
-public final class UpdateChecker {
+public final class VersionUtils {
     private static final String CHECK_URL = "https://api.spigotmc.org/legacy/update.php?resource=72369";
+
     private static String remoteVersion;
     private static boolean available;
 
@@ -29,10 +29,7 @@ public final class UpdateChecker {
         }
 
         remoteVersion = URLUtils.readString(CHECK_URL);
-        int latest = Integer.parseInt(remoteVersion.replace(".", ""));
-        int current = Integer.parseInt(epicGuard.getPlugin().getVersion().replace(".", ""));
-
-        available = latest > current;
+        available = !epicGuard.getPlugin().getVersion().equals(remoteVersion);
     }
 
     public static boolean isAvailable() {
@@ -43,6 +40,6 @@ public final class UpdateChecker {
         return remoteVersion;
     }
 
-    private UpdateChecker() {
+    private VersionUtils() {
     }
 }

@@ -17,6 +17,7 @@ package me.xneox.epicguard.core.manager;
 
 import me.xneox.epicguard.core.user.User;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
