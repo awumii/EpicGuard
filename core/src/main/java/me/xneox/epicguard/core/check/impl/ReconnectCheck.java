@@ -19,45 +19,47 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.BotUser;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 public class ReconnectCheck extends Check {
-    private final Collection<String> addresses = new HashSet<>();
+    private final Collection<BotUser> botUserCache = new HashSet<>();
 
     public ReconnectCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(BotUser user) {
+    public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().reconnectCheck);
 
         switch (mode) {
             case NEVER:
                 return false;
             case ALWAYS:
-                return this.reconnectCheck(user.getAddress());
+                return this.reconnectCheck(user);
             case ATTACK:
                 if (this.isAttack()) {
-                    return this.reconnectCheck(user.getAddress());
+                    return this.reconnectCheck(user);
                 }
         }
         return false;
     }
 
-    private boolean reconnectCheck(String address) {
-        if (!this.addresses.contains(address)) {
-            this.addresses.add(address);
+    private boolean reconnectCheck(BotUser botUser) {
+        if (!this.botUserCache.contains(botUser)) {
+            this.botUserCache.add(botUser);
             return true;
         }
         return false;
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public @NotNull List<String> getKickMessage() {
         return this.getMessages().kickMessageReconnect;
     }
 
