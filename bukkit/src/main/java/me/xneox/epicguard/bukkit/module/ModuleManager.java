@@ -16,11 +16,7 @@
 package me.xneox.epicguard.bukkit.module;
 
 import de.leonhard.storage.Config;
-import me.xneox.epicguard.bukkit.module.modules.AllowedCommands;
-import me.xneox.epicguard.bukkit.module.modules.BlockedCommands;
-import me.xneox.epicguard.bukkit.module.modules.NamespacedCommands;
-import me.xneox.epicguard.bukkit.module.modules.OperatorMechanics;
-import me.xneox.epicguard.bukkit.module.modules.OperatorProtection;
+import me.xneox.epicguard.bukkit.module.modules.*;
 import me.xneox.epicguard.core.EpicGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

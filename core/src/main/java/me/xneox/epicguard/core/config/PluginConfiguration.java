@@ -15,19 +15,15 @@
 
 package me.xneox.epicguard.core.config;
 
-import org.diorite.cfg.annotations.CfgClass;
-import org.diorite.cfg.annotations.CfgCollectionStyle;
-import org.diorite.cfg.annotations.CfgComment;
-import org.diorite.cfg.annotations.CfgName;
-import org.diorite.cfg.annotations.CfgStringStyle;
+import org.diorite.cfg.annotations.*;
 import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.diorite.cfg.annotations.CfgCollectionStyle.*;
-import static org.diorite.cfg.annotations.CfgStringStyle.*;
+import static org.diorite.cfg.annotations.CfgCollectionStyle.CollectionStyle;
+import static org.diorite.cfg.annotations.CfgStringStyle.StringStyle;
 
 @CfgClass(name = "PluginConfiguration")
 @CfgDelegateDefault("{new}")

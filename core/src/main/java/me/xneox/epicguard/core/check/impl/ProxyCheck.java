@@ -23,7 +23,6 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.util.URLUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ProxyCheck extends Check implements Runnable {
             .expireAfterWrite(10, TimeUnit.MINUTES)
             .build(new CacheLoader<String, Boolean>() {
                 @Override
-                public Boolean load(@NotNull String address) {
+                public Boolean load(@Nonnull String address) {
                     return proxyCheck(address);
                 }
             });
@@ -83,7 +82,7 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     @Override
-    public @NotNull List<String> getKickMessage() {
+    public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageProxy;
     }
 

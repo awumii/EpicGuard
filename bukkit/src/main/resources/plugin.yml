@@ -9,4 +9,5 @@ description: Simple but effective bot protection system.
 commands:
   epicguard:
     description: Main plugin command.
+    permission: epicguard.admin
     aliases: [ab, guard, eg, antibot]

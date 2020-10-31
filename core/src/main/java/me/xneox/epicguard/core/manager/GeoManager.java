@@ -15,20 +15,22 @@
 
 package me.xneox.epicguard.core.manager;
 
-import me.xneox.epicguard.core.util.FileUtils;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import me.xneox.epicguard.core.util.FileUtils;
 import me.xneox.epicguard.core.util.Logger;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
@@ -104,7 +106,7 @@ public class GeoManager {
     }
 
     @Nonnull
-    public String getCity(@NonNull String address) {
+    public String getCity(@Nonnull String address) {
         Validate.notNull(address, "Address cannot be null!");
         InetAddress inetAddress = this.getInetAddress(address);
         if (inetAddress != null && this.cityReader != null) {
@@ -118,7 +120,7 @@ public class GeoManager {
     }
 
     @Nullable
-    public InetAddress getInetAddress(@NonNull String address) {
+    public InetAddress getInetAddress(@Nonnull String address) {
         Validate.notNull(address, "Address cannot be null!");
         try {
             return InetAddress.getByName(address);

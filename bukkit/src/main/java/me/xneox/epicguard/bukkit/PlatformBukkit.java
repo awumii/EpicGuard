@@ -15,29 +15,26 @@
 
 package me.xneox.epicguard.bukkit;
 
-import me.xneox.epicguard.bukkit.command.EpicGuardCommand;
-import me.xneox.epicguard.bukkit.listener.CommandListener;
-import me.xneox.epicguard.bukkit.listener.PlayerJoinListener;
-import me.xneox.epicguard.bukkit.listener.PlayerPreLoginListener;
-import me.xneox.epicguard.bukkit.listener.PlayerQuitListener;
-import me.xneox.epicguard.bukkit.listener.ServerPingListener;
+import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.bukkit.module.ModuleManager;
 import me.xneox.epicguard.bukkit.module.ModuleTask;
 import me.xneox.epicguard.bukkit.util.Metrics;
 import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.command.CommandSubject;
+import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     private EpicGuard epicGuard;
@@ -55,9 +52,14 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
         pm.registerEvents(new ServerPingListener(this.epicGuard), this);
         pm.registerEvents(new CommandListener(this), this);
 
-        Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
-        this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this, this.epicGuard));
+        PluginCommand command = this.getCommand("epicguard");
+        if (command != null) {
+            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new EpicGuardCommand(this.epicGuard));
+            command.setExecutor(cmdExecutor);
+            command.setTabCompleter(cmdExecutor);
+        }
 
+        Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
         new Metrics(this, 5845);
     }
 
@@ -71,12 +73,21 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
-        Player player = Bukkit.getPlayer(target);
+    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+        Player player = Bukkit.getPlayer(user.getUUID());
         if (Reflections.getVersion().startsWith("v1_16")) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
         } else {
             Reflections.sendActionBar(player, message); // backwards compatibility
+        }
+    }
+
+    @Override
+    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject subject) {
+        if (subject.isConsole()) {
+            Bukkit.getConsoleSender().sendMessage(message);
+        } else {
+            Bukkit.getPlayer(subject.getUUID()).sendMessage(message);
         }
     }
 
@@ -86,7 +97,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(@NotNull Runnable task, long seconds) {
+    public void runTaskLater(@Nonnull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
     }
 

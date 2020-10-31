@@ -35,7 +35,7 @@ public class MonitorTask implements Runnable {
 
         for (User user : this.epicGuard.getUserManager().getUsers()) {
             if (user.hasNotifications()) {
-                this.epicGuard.getPlugin().sendActionBar(monitor, user.getUniqueId());
+                this.epicGuard.getPlugin().sendActionBar(monitor, user);
             }
         }
         this.epicGuard.getAttackManager().resetCPS();

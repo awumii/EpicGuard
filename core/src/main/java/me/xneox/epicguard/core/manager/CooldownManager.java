@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core.manager;
 
 import me.xneox.epicguard.core.util.Cooldown;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -26,7 +25,7 @@ import java.util.Map;
 public class CooldownManager {
     private final Map<String, Cooldown> cooldowns = new HashMap<>();
 
-    public void add(@NonNull Cooldown cooldown) {
+    public void add(@Nonnull Cooldown cooldown) {
         Validate.notNull(cooldown, "Cooldown cannot be null!");
         String id = cooldown.getId();
         cooldowns.put(id, cooldown);

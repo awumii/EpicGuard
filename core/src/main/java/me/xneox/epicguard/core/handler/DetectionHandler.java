@@ -17,14 +17,7 @@ package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.impl.AccountLimitCheck;
-import me.xneox.epicguard.core.check.impl.AttackCheck;
-import me.xneox.epicguard.core.check.impl.BlacklistCheck;
-import me.xneox.epicguard.core.check.impl.GeographicalCheck;
-import me.xneox.epicguard.core.check.impl.ProxyCheck;
-import me.xneox.epicguard.core.check.impl.RateLimitCheck;
-import me.xneox.epicguard.core.check.impl.ReconnectCheck;
-import me.xneox.epicguard.core.check.impl.ServerListCheck;
+import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;

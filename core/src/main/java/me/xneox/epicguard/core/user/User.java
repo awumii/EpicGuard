@@ -27,7 +27,7 @@ public class User {
         this.uuid = uuid;
     }
 
-    public UUID getUniqueId() {
+    public UUID getUUID() {
         return this.uuid;
     }
 

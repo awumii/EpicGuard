@@ -21,7 +21,7 @@ import net.kyori.text.TextComponent;
 
 public class VelocityUtils {
     public static TextComponent getTextComponent(String string) {
-        return TextComponent.of(ChatUtils.coloredLegacy(string));
+        return TextComponent.of(ChatUtils.colored(string));
     }
 
     public static void sendMessage(CommandSource source, String message) {

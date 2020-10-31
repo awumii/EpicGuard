@@ -17,7 +17,6 @@ package me.xneox.epicguard.core.manager;
 
 import de.leonhard.storage.Json;
 import me.xneox.epicguard.core.user.BotUser;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -93,7 +92,7 @@ public class StorageManager {
         return this.whitelist;
     }
 
-    @NonNull
+    @Nonnull
     public Collection<String> getPingCache() {
         return this.pingCache;
     }
