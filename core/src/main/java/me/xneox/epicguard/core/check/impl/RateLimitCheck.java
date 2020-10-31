@@ -20,7 +20,9 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.util.Cooldown;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class RateLimitCheck extends Check {
@@ -29,7 +31,7 @@ public class RateLimitCheck extends Check {
     }
 
     @Override
-    public boolean handle(BotUser user) {
+    public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().rateLimitCheck);
         switch (mode) {
             case NEVER:
@@ -55,7 +57,7 @@ public class RateLimitCheck extends Check {
     }
 
     @Override
-    public List<String> getKickMessage() {
+    public @NotNull List<String> getKickMessage() {
         return this.getMessages().kickMessageRateLimit;
     }
 

@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.user;
 
+import com.google.common.base.Objects;
+
 public class BotUser {
     private final String address;
     private final String nickname;
@@ -30,5 +32,19 @@ public class BotUser {
 
     public String getNickname() {
         return this.nickname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BotUser botUser = (BotUser) o;
+        return Objects.equal(getAddress(), botUser.getAddress()) &&
+                Objects.equal(getNickname(), botUser.getNickname());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getAddress(), getNickname());
     }
 }

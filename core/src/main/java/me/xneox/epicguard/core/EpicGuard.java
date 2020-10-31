@@ -20,8 +20,7 @@ import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.CooldownManager;
 import me.xneox.epicguard.core.manager.GeoManager;
-import me.xneox.epicguard.core.storage.StorageFactory;
-import me.xneox.epicguard.core.storage.StorageSystem;
+import me.xneox.epicguard.core.manager.StorageManager;
 import me.xneox.epicguard.core.manager.UserManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
@@ -29,14 +28,13 @@ import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigHelper;
 import me.xneox.epicguard.core.util.LogFilter;
+import me.xneox.epicguard.core.util.Logger;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class EpicGuard {
-    private final Logger logger;
-    private final StorageSystem storageSystem;
+    private final StorageManager storageManager;
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
@@ -48,23 +46,19 @@ public class EpicGuard {
 
     public EpicGuard(PlatformPlugin plugin) {
         this.plugin = plugin;
-        this.logger = plugin.getLogger();
         this.reloadConfig();
 
-        StorageFactory storageFactory = new StorageFactory(this);
-        this.storageSystem = storageFactory.createStorage(this.config.storageType);
-        this.storageSystem.load();
-
+        this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
         this.cooldownManager = new CooldownManager();
-        this.geoManager = new GeoManager(this);
+        this.geoManager = new GeoManager();
 
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
             new LogFilter(this.config.consoleFilter).register();
         } catch (ClassNotFoundException e) {
-            logger.warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
+            Logger.warn("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
         this.plugin.scheduleTask(new MonitorTask(this), 1L);
@@ -73,7 +67,7 @@ public class EpicGuard {
         this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.SECONDS.toMinutes(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
-        logger.info("EpicGuard v5 finished startup successfully.");
+        Logger.log("EpicGuard v5 finished startup successfully.");
     }
 
     public void reloadConfig() {
@@ -87,15 +81,11 @@ public class EpicGuard {
     }
 
     public void shutdown() {
-        this.storageSystem.save();
+        this.storageManager.save();
     }
 
     public PlatformPlugin getPlugin() {
         return plugin;
-    }
-
-    public Logger getLogger() {
-        return logger;
     }
 
     public PluginConfiguration getConfig() {
@@ -114,8 +104,8 @@ public class EpicGuard {
         return geoManager;
     }
 
-    public StorageSystem getStorageManager() {
-        return storageSystem;
+    public StorageManager getStorageManager() {
+        return storageManager;
     }
 
     public CooldownManager getCooldownManager() {

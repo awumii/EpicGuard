@@ -34,7 +34,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
@@ -56,8 +58,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
         this.getCommand("epicguard").setExecutor(new EpicGuardCommand(this, this.epicGuard));
 
-        Metrics metrics = new Metrics(this, 5845);
-        metrics.addCustomChart(new Metrics.SimplePie("storage_type", () -> epicGuard.getConfig().storageType));
+        new Metrics(this, 5845);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(String message, UUID target) {
+    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
         Player player = Bukkit.getPlayer(target);
         if (Reflections.getVersion().startsWith("v1_16")) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
@@ -85,12 +86,12 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
     }
 
     @Override
-    public void scheduleTask(Runnable task, long seconds) {
+    public void scheduleTask(@Nonnull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
     }
 }

@@ -15,17 +15,15 @@
 
 package me.xneox.epicguard.core;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public interface PlatformPlugin {
-    void sendActionBar(String message, UUID target);
-
-    Logger getLogger();
+    void sendActionBar(@Nonnull String message, @Nonnull UUID target);
 
     String getVersion();
 
-    void runTaskLater(Runnable task, long seconds);
+    void runTaskLater(@Nonnull Runnable task, long seconds);
 
-    void scheduleTask(Runnable task, long seconds);
+    void scheduleTask(@Nonnull Runnable task, long seconds);
 }

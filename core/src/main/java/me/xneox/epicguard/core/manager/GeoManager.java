@@ -15,15 +15,19 @@
 
 package me.xneox.epicguard.core.manager;
 
-import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.FileUtils;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import me.xneox.epicguard.core.util.Logger;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -31,14 +35,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
 public class GeoManager {
-    private final EpicGuard epicGuard;
-
     private DatabaseReader countryReader;
     private DatabaseReader cityReader;
 
-    public GeoManager(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
-        this.epicGuard.getLogger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
+    public GeoManager() {
+        Logger.log("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
         String parent = "plugins/EpicGuard/data";
         File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
@@ -59,15 +60,19 @@ public class GeoManager {
                     .Builder(cityDatabase)
                     .withCache(new CHMCache())
                     .build();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.error("Can't initialize GeoIP databases.", ex);
         }
     }
 
-    private void downloadDatabase(File database, File archive, String url) throws IOException {
+    private void downloadDatabase(@Nonnull File database, @Nonnull File archive, @Nonnull String url) throws IOException {
+        Validate.notNull(database, "Database file cannot be null!");
+        Validate.notNull(archive, "Archive file cannot be null!");
+        Validate.notNull(url, "Download URL cannot be null!");
+
         if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
             // Database does not exist or is outdated, and need to be downloaded.
-            this.epicGuard.getLogger().info("Downloading the GeoIP database file: " + database.getName());
+            Logger.log("Downloading the GeoIP database file: " + database.getName());
             FileUtils.downloadFile(url, archive);
 
             TarArchiveInputStream tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
@@ -85,35 +90,40 @@ public class GeoManager {
         }
     }
 
-    public String getCountryCode(String host) {
-        InetAddress address = this.getAddress(host);
-        if (address != null && this.countryReader != null) {
+    @Nonnull
+    public String getCountryCode(@Nonnull String address) {
+        InetAddress inetAddress = this.getInetAddress(address);
+        if (inetAddress != null && this.countryReader != null) {
             try {
-                return this.countryReader.country(address).getCountry().getIsoCode();
-            } catch (IOException | GeoIp2Exception e) {
-                e.printStackTrace();
+                return this.countryReader.country(inetAddress).getCountry().getIsoCode();
+            } catch (IOException | GeoIp2Exception ex) {
+                Logger.error("Can't find country for " + address, ex);
             }
         }
         return "unknown";
     }
 
-    public String getCity(String host) {
-        InetAddress address = this.getAddress(host);
-        if (address != null && this.cityReader != null) {
+    @Nonnull
+    public String getCity(@NonNull String address) {
+        Validate.notNull(address, "Address cannot be null!");
+        InetAddress inetAddress = this.getInetAddress(address);
+        if (inetAddress != null && this.cityReader != null) {
             try {
-                return this.cityReader.city(address).getCity().getName();
-            } catch (IOException | GeoIp2Exception e) {
-                e.printStackTrace();
+                return this.cityReader.city(inetAddress).getCity().getName();
+            } catch (IOException | GeoIp2Exception ex) {
+                Logger.error("Can't find city for " + address, ex);
             }
         }
         return "unknown";
     }
 
-    public InetAddress getAddress(String hostname) {
+    @Nullable
+    public InetAddress getInetAddress(@NonNull String address) {
+        Validate.notNull(address, "Address cannot be null!");
         try {
-            return InetAddress.getByName(hostname);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+            return InetAddress.getByName(address);
+        } catch (UnknownHostException ex) {
+            Logger.error("Can't resolve InetAddress for " + address, ex);
         }
         return null;
     }

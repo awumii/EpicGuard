@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.task;
 
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.util.Logger;
 
 public class DataSaveTask implements Runnable {
     private final EpicGuard epicGuard;
@@ -26,7 +27,7 @@ public class DataSaveTask implements Runnable {
 
     @Override
     public void run() {
-        this.epicGuard.getLogger().info("Auto-Saving data...");
+        Logger.log("Auto-Saving data...");
         this.epicGuard.getStorageManager().save();
     }
 }

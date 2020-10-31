@@ -16,7 +16,8 @@
 package me.xneox.epicguard.core.task;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.util.UpdateChecker;
+import me.xneox.epicguard.core.util.Logger;
+import me.xneox.epicguard.core.util.VersionUtils;
 
 public class UpdateCheckerTask implements Runnable {
     private final EpicGuard epicGuard;
@@ -27,10 +28,10 @@ public class UpdateCheckerTask implements Runnable {
 
     @Override
     public void run() {
-        UpdateChecker.checkForUpdates(this.epicGuard);
-        if (UpdateChecker.isAvailable()) {
-            this.epicGuard.getLogger().info("New update is available: " + UpdateChecker.getRemoteVersion());
-            this.epicGuard.getLogger().info("Download it here: https://www.spigotmc.org/resources/72369/");
+        VersionUtils.checkForUpdates(this.epicGuard);
+        if (VersionUtils.isAvailable()) {
+            Logger.log("A new version is available: " + VersionUtils.getRemoteVersion() +
+                    " (you are still on " + this.epicGuard.getPlugin().getVersion() + ")");
         }
     }
 }

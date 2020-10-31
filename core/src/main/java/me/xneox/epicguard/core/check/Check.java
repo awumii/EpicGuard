@@ -18,9 +18,10 @@ package me.xneox.epicguard.core.check;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
-import me.xneox.epicguard.core.storage.StorageSystem;
+import me.xneox.epicguard.core.manager.StorageManager;
 import me.xneox.epicguard.core.user.BotUser;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class Check {
@@ -30,19 +31,23 @@ public abstract class Check {
         this.epicGuard = epicGuard;
     }
 
+    @Nonnull
     public EpicGuard getEpicGuard() {
         return this.epicGuard;
     }
 
+    @Nonnull
     public PluginConfiguration getConfig() {
         return this.epicGuard.getConfig();
     }
 
+    @Nonnull
     public MessagesConfiguration getMessages() {
         return this.epicGuard.getMessages();
     }
 
-    public StorageSystem getStorage() {
+    @Nonnull
+    public StorageManager getStorage() {
         return this.epicGuard.getStorageManager();
     }
 
@@ -50,12 +55,14 @@ public abstract class Check {
         return this.epicGuard.getAttackManager().isAttack();
     }
 
+    @Nonnull
     public abstract List<String> getKickMessage();
 
     public abstract boolean shouldBlacklist();
 
     /**
      * @return true if detection is positive (detected as bot).
+     * @param user An {@link BotUser} object with the information about the user.
      */
-    public abstract boolean handle(BotUser user);
+    public abstract boolean handle(@Nonnull BotUser user);
 }

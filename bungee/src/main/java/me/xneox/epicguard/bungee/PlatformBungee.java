@@ -29,7 +29,9 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -48,8 +50,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
 
         pm.registerCommand(this, new EpicGuardCommand(this.epicGuard));
 
-        Metrics metrics = new Metrics(this, 5956);
-        metrics.addCustomChart(new Metrics.SimplePie("storage_type", () -> epicGuard.getConfig().storageType));
+        new Metrics(this, 5956);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(String message, UUID target) {
+    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
         ProxyServer.getInstance().getPlayer(target).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
     }
 
@@ -68,12 +69,12 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, TimeUnit.SECONDS);
     }
 
     @Override
-    public void scheduleTask(Runnable task, long seconds) {
+    public void scheduleTask(@Nonnull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
     }
 }
