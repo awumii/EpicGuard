@@ -18,7 +18,6 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.BotUser;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -34,7 +33,7 @@ public class AttackCheck extends Check {
     }
 
     @Override
-    public @NotNull List<String> getKickMessage() {
+    public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageAttack;
     }
 

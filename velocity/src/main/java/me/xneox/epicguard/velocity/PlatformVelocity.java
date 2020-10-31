@@ -27,20 +27,19 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.util.MessagePosition;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.command.CommandSubject;
+import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
-import me.xneox.epicguard.velocity.command.EpicGuardCommand;
 import me.xneox.epicguard.velocity.listener.DisconnectListener;
 import me.xneox.epicguard.velocity.listener.PostLoginListener;
 import me.xneox.epicguard.velocity.listener.PreLoginListener;
 import me.xneox.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.text.TextComponent;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 @Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.0")
 public class PlatformVelocity implements PlatformPlugin {
@@ -55,7 +54,7 @@ public class PlatformVelocity implements PlatformPlugin {
     @Subscribe
     public void onEnable(ProxyInitializeEvent e) {
         this.epicGuard = new EpicGuard(this);
-        this.server.getCommandManager().register(new EpicGuardCommand(this.epicGuard), "epicguard", "guard");
+        this.server.getCommandManager().register(new VelocityCommandExecutor(new EpicGuardCommand(this.epicGuard)), "epicguard", "guard");
 
         EventManager manager = this.getServer().getEventManager();
         manager.register(this, new PostLoginListener(this.epicGuard));
@@ -74,9 +73,19 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
-        Optional<Player> optional = this.getServer().getPlayer(target);
+    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+        Optional<Player> optional = this.getServer().getPlayer(user.getUUID());
         optional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.colored(message)), MessagePosition.ACTION_BAR));
+    }
+
+    @Override
+    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject subject) {
+        if (subject.isConsole()) {
+            this.getServer().getConsoleCommandSource().sendMessage(TextComponent.of(message));
+        } else {
+            Optional<Player> optional = this.getServer().getPlayer(subject.getUUID());
+            optional.ifPresent(player -> player.sendMessage(TextComponent.of(message)));
+        }
     }
 
     @Override
@@ -92,7 +101,7 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(@NotNull Runnable task, long seconds) {
+    public void runTaskLater(@Nonnull Runnable task, long seconds) {
         this.getServer().getScheduler()
                 .buildTask(this, task)
                 .delay(seconds, TimeUnit.SECONDS)

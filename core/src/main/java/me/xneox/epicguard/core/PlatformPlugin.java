@@ -15,11 +15,15 @@
 
 package me.xneox.epicguard.core;
 
+import me.xneox.epicguard.core.command.CommandSubject;
+import me.xneox.epicguard.core.user.User;
+
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public interface PlatformPlugin {
-    void sendActionBar(@Nonnull String message, @Nonnull UUID target);
+    void sendActionBar(@Nonnull String message, @Nonnull User user);
+
+    void sendMessage(@Nonnull String message, @Nonnull CommandSubject user);
 
     String getVersion();
 

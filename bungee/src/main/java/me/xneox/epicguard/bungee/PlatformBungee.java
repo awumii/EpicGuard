@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.bungee;
 
-import me.xneox.epicguard.bungee.command.EpicGuardCommand;
 import me.xneox.epicguard.bungee.listener.DisconnectListener;
 import me.xneox.epicguard.bungee.listener.PostLoginListener;
 import me.xneox.epicguard.bungee.listener.PreLoginListener;
@@ -23,16 +22,17 @@ import me.xneox.epicguard.bungee.listener.ServerPingListener;
 import me.xneox.epicguard.bungee.util.Metrics;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.command.CommandSubject;
+import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class PlatformBungee extends Plugin implements PlatformPlugin {
@@ -47,8 +47,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
         pm.registerListener(this, new DisconnectListener(this.epicGuard));
         pm.registerListener(this, new PostLoginListener(this.epicGuard));
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
-
-        pm.registerCommand(this, new EpicGuardCommand(this.epicGuard));
+        pm.registerCommand(this, new BungeeCommandExecutor(new EpicGuardCommand(this.epicGuard)));
 
         new Metrics(this, 5956);
     }
@@ -59,8 +58,17 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull UUID target) {
-        ProxyServer.getInstance().getPlayer(target).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
+    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+        ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
+    }
+
+    @Override
+    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject user) {
+        if (user.isConsole()) {
+            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(message));
+        } else {
+            ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(new TextComponent(message));
+        }
     }
 
     @Override
@@ -69,7 +77,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     }
 
     @Override
-    public void runTaskLater(@NotNull Runnable task, long seconds) {
+    public void runTaskLater(@Nonnull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, TimeUnit.SECONDS);
     }
 
