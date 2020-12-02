@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class EpicGuardCommand {
     private final EpicGuard epicGuard;
@@ -26,41 +27,28 @@ public class EpicGuardCommand {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
-            send(subject, "&8&m---------------------------------------------------");
-            send(subject, "  &6&lEpicGuard &8(BungeeCord version)");
-            send(subject, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
-            if (VersionUtils.isAvailable()) {
-                send(subject, "");
-                send(subject, "  &7New version is available: &c&n" + VersionUtils.getRemoteVersion());
-                send(subject, "  &c&ohttps://www.spigotmc.org/resources/72369/");
-            }
             send(subject, "");
-            send(subject, " &8• &b/guard stats &7- show plugin statistics.");
-            send(subject, " &8• &b/guard notifications &7- enable actionbar notifications.");
-            send(subject, " &8• &b/guard reload &7- reload config and messages.");
-            send(subject, " &8• &b/guard whitelist <add/remove> <address> &7- whitelist an address.");
-            send(subject, " &8• &b/guard blacklist <add/remove> <address> &7- blacklist an address.");
-            send(subject, "&8&m---------------------------------------------------");
+            send(subject, " &c&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Command List");
+            send(subject, "");
+            send(subject, "  &7/guard stats &8- &7show plugin statistics.");
+            send(subject, "  &7/guard notifications &8- &7enable actionbar notifications.");
+            send(subject, "  &7/guard reload &8- &7reload config and messages.");
+            send(subject, "  &7/guard whitelist &8<&7add&7/&7remove&8> &8<&7address&8> &8- &7whitelist/unwhitelist an address.");
+            send(subject, "  &7/guard blacklist &8<&7add&7/&7remove&8> &8<&7address&8> &8- &7blacklist/unblacklist an address.");
+            send(subject, "");
             return;
         }
 
         switch (args[0]) {
             case "stats":
-                send(subject, "&8&m---------------------------------------------------");
-                send(subject, "  &6&lEpicGuard &7(Statistics)");
-                send(subject, "  &7Version: &f" + this.epicGuard.getPlugin().getVersion());
-                if (VersionUtils.isAvailable()) {
-                    send(subject, "");
-                    send(subject, "  &7New version is available: &c&n" + VersionUtils.getRemoteVersion());
-                    send(subject, "  &c&ohttps://www.spigotmc.org/resources/72369/");
-                }
                 send(subject, "");
-                send(subject, " &8• &7Blacklisted IPs: &c&l" + this.epicGuard.getStorageManager().getBlacklist().size());
-                send(subject, " &8• &7Whitelisted IPs: &a&l" + this.epicGuard.getStorageManager().getWhitelist().size());
-                send(subject, " &8• &7Connections: &6&l" + this.epicGuard.getAttackManager().getCPS() + "/s");
-                send(subject, " &8• &7Total connections: &6&l" + this.epicGuard.getAttackManager().getTotalBots() + "/s");
+                send(subject, " &c&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
                 send(subject, "");
-                send(subject, "&8&m---------------------------------------------------");
+                send(subject, "  &7Blacklisted IPs: &c" + this.epicGuard.getStorageManager().getBlacklist().size());
+                send(subject, "  &7Whitelisted IPs: &a" + this.epicGuard.getStorageManager().getWhitelist().size());
+                send(subject, "  &7Connections: &b" + this.epicGuard.getAttackManager().getCPS() + "/s");
+                send(subject, "  &7Total connections: &b" + this.epicGuard.getAttackManager().getTotalBots());
+                send(subject, "");
                 break;
             case "notifications":
                 if (subject.isConsole()) {
@@ -129,7 +117,6 @@ public class EpicGuardCommand {
         Validate.notNull(args, "Command arguments cannot be null!");
         Validate.notNull(args, "Command subject cannot be null!");
 
-        // else if hell ahead, but this is still readable
         if (args.length == 0) {
             return Arrays.asList("stats", "notifications", "reload", "whitelist", "blacklist");
         } else if (args[0].equalsIgnoreCase("whitelist")) {
@@ -145,7 +132,7 @@ public class EpicGuardCommand {
                 return this.epicGuard.getStorageManager().getBlacklist();
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     private void send(CommandSubject subject, String message) {

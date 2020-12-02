@@ -28,9 +28,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ProxyCheck extends Check implements Runnable {
-    private int requests;
-
+public class ProxyCheck extends Check {
     private final LoadingCache<String, Boolean> detections = CacheBuilder.newBuilder()
             .expireAfterWrite(10, TimeUnit.MINUTES)
             .build(new CacheLoader<String, Boolean>() {
@@ -42,8 +40,6 @@ public class ProxyCheck extends Check implements Runnable {
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
-        // This request limiter should be rewritten
-        epicGuard.getPlugin().scheduleTask(this, 1L);
     }
 
     @Override
@@ -63,22 +59,13 @@ public class ProxyCheck extends Check implements Runnable {
     }
 
     private boolean proxyCheck(String address) {
-        if (this.requests > this.getConfig().requestLimit) {
-            return false;
-        }
-
         String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
         if (!this.getConfig().customProxyCheck.equals("disabled")) {
             url = this.getConfig().customProxyCheck.replace("%ip%", address);
         }
 
-        this.requests++;
-        return URLUtils.readString(url).contains("yes");
-    }
-
-    @Override
-    public void run() {
-        this.requests = 0;
+        String response = URLUtils.readString(url);
+        return response != null && response.contains("yes");
     }
 
     @Override
