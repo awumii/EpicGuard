@@ -26,7 +26,7 @@ public class ServerPingListener extends PingHandler implements Listener {
         super(epicGuard);
     }
 
-    @EventHandler
+    @EventHandler(priority = Byte.MIN_VALUE)
     public void onPing(ProxyPingEvent event) {
         this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
     }

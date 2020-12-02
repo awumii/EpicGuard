@@ -16,6 +16,8 @@
 package me.xneox.epicguard.velocity;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -24,7 +26,6 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.util.MessagePosition;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
@@ -35,7 +36,7 @@ import me.xneox.epicguard.velocity.listener.DisconnectListener;
 import me.xneox.epicguard.velocity.listener.PostLoginListener;
 import me.xneox.epicguard.velocity.listener.PreLoginListener;
 import me.xneox.epicguard.velocity.listener.ServerPingListener;
-import net.kyori.text.TextComponent;
+import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -54,13 +55,19 @@ public class PlatformVelocity implements PlatformPlugin {
     @Subscribe
     public void onEnable(ProxyInitializeEvent e) {
         this.epicGuard = new EpicGuard(this);
-        this.server.getCommandManager().register(new VelocityCommandExecutor(new EpicGuardCommand(this.epicGuard)), "epicguard", "guard");
 
-        EventManager manager = this.getServer().getEventManager();
-        manager.register(this, new PostLoginListener(this.epicGuard));
-        manager.register(this, new PreLoginListener(this.epicGuard));
-        manager.register(this, new DisconnectListener(this.epicGuard));
-        manager.register(this, new ServerPingListener(this.epicGuard));
+        CommandManager commandManager = this.server.getCommandManager();
+        CommandMeta meta = commandManager.metaBuilder("epicguard")
+                .aliases("guard")
+                .build();
+
+        commandManager.register(meta, new VelocityCommandExecutor(new EpicGuardCommand(this.epicGuard)));
+
+        EventManager eventManager = this.getServer().getEventManager();
+        eventManager.register(this, new PostLoginListener(this.epicGuard));
+        eventManager.register(this, new PreLoginListener(this.epicGuard));
+        eventManager.register(this, new DisconnectListener(this.epicGuard));
+        eventManager.register(this, new ServerPingListener(this.epicGuard));
     }
 
     @Subscribe
@@ -75,16 +82,16 @@ public class PlatformVelocity implements PlatformPlugin {
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
         Optional<Player> optional = this.getServer().getPlayer(user.getUUID());
-        optional.ifPresent(player -> player.sendMessage(TextComponent.of(ChatUtils.colored(message)), MessagePosition.ACTION_BAR));
+        optional.ifPresent(player -> player.sendActionBar(Component.text(ChatUtils.colored(message))));
     }
 
     @Override
     public void sendMessage(@Nonnull String message, @Nonnull CommandSubject subject) {
         if (subject.isConsole()) {
-            this.getServer().getConsoleCommandSource().sendMessage(TextComponent.of(message));
+            this.getServer().getConsoleCommandSource().sendMessage(Component.text(message));
         } else {
             Optional<Player> optional = this.getServer().getPlayer(subject.getUUID());
-            optional.ifPresent(player -> player.sendMessage(TextComponent.of(message)));
+            optional.ifPresent(player -> player.sendMessage(Component.text(message)));
         }
     }
 
