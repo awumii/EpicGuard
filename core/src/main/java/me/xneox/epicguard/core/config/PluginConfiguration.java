@@ -165,11 +165,6 @@ public class PluginConfiguration {
     @CfgName("custom-proxy-check-url")
     public String customProxyCheck = "disabled";
 
-    @CfgComment("Limit of requests sent by the proxy/vpn checker.")
-    @CfgComment("Default (1000) is limit for proxycheck.io with free key.")
-    @CfgComment("request-limit")
-    public int requestLimit = 1000;
-
     @CfgComment("If log message contains one of these words, it will")
     @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
     @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
