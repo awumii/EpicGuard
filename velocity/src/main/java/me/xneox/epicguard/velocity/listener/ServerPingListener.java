@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.velocity.listener;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import me.xneox.epicguard.core.EpicGuard;
@@ -25,7 +26,7 @@ public class ServerPingListener extends PingHandler {
         super(epicGuard);
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onPing(ProxyPingEvent event) {
         this.handle(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
     }

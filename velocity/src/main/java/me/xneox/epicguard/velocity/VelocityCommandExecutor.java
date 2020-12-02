@@ -1,15 +1,14 @@
 package me.xneox.epicguard.velocity;
 
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
-public class VelocityCommandExecutor implements Command {
+public class VelocityCommandExecutor implements SimpleCommand {
     private final EpicGuardCommand command;
 
     public VelocityCommandExecutor(EpicGuardCommand command) {
@@ -17,7 +16,10 @@ public class VelocityCommandExecutor implements Command {
     }
 
     @Override
-    public void execute(CommandSource source, @Nonnull String[] args) {
+    public void execute(Invocation invocation) {
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
+
         CommandSubject subject = new CommandSubject();
         if (source instanceof Player) {
             subject.setUUID(((Player) source).getUniqueId());
@@ -27,12 +29,12 @@ public class VelocityCommandExecutor implements Command {
     }
 
     @Override
-    public List<String> suggest(CommandSource source, @Nonnull String[] currentArgs) {
-        return (List<String>) this.command.onTabComplete(currentArgs);
+    public List<String> suggest(Invocation invocation) {
+        return (List<String>) this.command.onTabComplete(invocation.arguments());
     }
 
     @Override
-    public boolean hasPermission(CommandSource source, @Nonnull String[] args) {
-        return source.hasPermission("epicguard.admin");
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("epicguard.admin");
     }
 }

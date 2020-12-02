@@ -15,22 +15,23 @@
 
 package me.xneox.epicguard.velocity.listener;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
-import me.xneox.epicguard.velocity.util.VelocityUtils;
+import net.kyori.adventure.text.Component;
 
 public class PreLoginListener extends DetectionHandler {
     public PreLoginListener(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onPreLogin(PreLoginEvent event) {
         String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
         String nickname = event.getUsername();
 
-        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(VelocityUtils.getTextComponent(result))));
+        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Component.text(result))));
     }
 }

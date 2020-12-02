@@ -29,7 +29,7 @@ public class PreLoginListener extends DetectionHandler implements Listener {
         super(epicGuard);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = Byte.MIN_VALUE)
     public void onPreLogin(PreLoginEvent event) {
         PendingConnection connection = event.getConnection();
         String address = connection.getAddress().getAddress().getHostAddress();
