@@ -6,7 +6,7 @@ public class CommandSubject {
     private UUID uuid;
 
     public boolean isConsole() {
-        return this.uuid != null;
+        return this.uuid == null;
     }
 
     public void setUUID(UUID uuid) {

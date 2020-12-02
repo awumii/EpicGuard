@@ -22,7 +22,7 @@ public class BungeeCommandExecutor extends Command implements TabExecutor {
             subject.setUUID(((ProxiedPlayer) sender).getUniqueId());
         }
 
-        this.command.onCommand(args, new CommandSubject());
+        this.command.onCommand(args, subject);
     }
 
     @Override
