@@ -71,7 +71,7 @@ public class ModuleManager {
 
     public void load() {
         Config config = new Config("spigot.yml", "plugins/EpicGuard");
-        config.setHeader("If you don't know what these settings do, feel free to ask in the discord server.");
+        config.setHeader("See https://github.com/xxneox/EpicGuard/wiki/Spigot-Configuration");
 
         allowedCommands = config.getOrSetDefault("allowed-commands.list", Arrays.asList("/example", "/example2"));
         allowedCommandsBypass = config.getOrSetDefault("allowed-commands.bypass-permission", true);

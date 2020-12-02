@@ -60,7 +60,7 @@ public class EpicGuard {
         this.plugin.scheduleTask(new MonitorTask(this), 1L);
         this.plugin.scheduleTask(new AttackResetTask(this), 40L);
         this.plugin.scheduleTask(new UpdateCheckerTask(this), 1800L);
-        this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.SECONDS.toMinutes(this.config.autoSaveInterval));
+        this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
         Logger.log("EpicGuard v5 finished startup successfully.");
