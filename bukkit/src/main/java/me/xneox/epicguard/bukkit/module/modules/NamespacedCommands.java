@@ -27,10 +27,7 @@ public class NamespacedCommands extends Module {
 
     @Override
     public boolean execute(Player player, String[] args) {
-        if (args == null) {
-            return false;
-        }
-
+        if (args == null) return false;
         if (this.getManager().blockNamespacedCommands && args[0].contains(":")) {
             if (this.getManager().blockNamespacedCommandsWhitelistEnabled && this.getManager().blockNamespacedCommandsWhitelist.stream().anyMatch(args[0]::startsWith)) {
                 return false;

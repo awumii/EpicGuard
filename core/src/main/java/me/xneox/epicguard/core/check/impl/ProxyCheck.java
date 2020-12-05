@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -29,14 +30,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ProxyCheck extends Check {
-    private final LoadingCache<String, Boolean> detections = CacheBuilder.newBuilder()
+    private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
             .expireAfterWrite(10, TimeUnit.MINUTES)
-            .build(new CacheLoader<String, Boolean>() {
-                @Override
-                public Boolean load(@Nonnull String address) {
-                    return proxyCheck(address);
-                }
-            });
+            .build();
 
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
@@ -45,27 +41,24 @@ public class ProxyCheck extends Check {
     @Override
     public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
-        switch (mode) {
-            case NEVER:
-                return false;
-            case ALWAYS:
-                return this.detections.getUnchecked(user.getAddress());
-            case ATTACK:
-                if (this.isAttack()) {
-                    return this.detections.getUnchecked(user.getAddress());
-                }
-        }
-        return false;
+        return this.assertCheck(mode, this.isProxy(user.getAddress()));
     }
 
-    private boolean proxyCheck(String address) {
-        String url = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
-        if (!this.getConfig().customProxyCheck.equals("disabled")) {
-            url = this.getConfig().customProxyCheck.replace("%ip%", address);
-        }
+    private boolean isProxy(String address) {
+        return this.detectionMap.asMap().computeIfAbsent(address, addr -> {
+            String apiUrl;
 
-        String response = URLUtils.readString(url);
-        return response != null && response.contains("yes");
+            if (this.getConfig().customProxyCheck.equals("disabled")) {
+                // Use the default API service - proxycheck.io.
+                apiUrl = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
+            } else {
+                // Use the custom API service.
+                apiUrl = this.getConfig().customProxyCheck.replace("%ip%", address);
+            }
+
+            String response = URLUtils.readString(apiUrl);
+            return response != null && response.contains("yes");
+        });
     }
 
     @Override

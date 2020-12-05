@@ -27,10 +27,7 @@ public class OperatorMechanics extends Module {
 
     @Override
     public boolean execute(Player player, String[] args) {
-        if (args == null) {
-            return false;
-        }
-
+        if (args == null) return false;
         if (this.getManager().disableOperatorMechanics) {
             String cmd = args[0].toLowerCase();
             if (cmd.startsWith("/op") || cmd.startsWith("/deop") || cmd.startsWith("/minecraft:op") || cmd.startsWith("/minecraft:deop")) {

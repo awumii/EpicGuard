@@ -28,10 +28,7 @@ public class AllowedCommands extends Module {
 
     @Override
     public boolean execute(Player player, @Nullable String[] args) {
-        if (args == null) {
-            return false;
-        }
-
+        if (args == null) return false;
         if (this.getManager().allowedCommandsEnable && !this.getManager().allowedCommands.contains(args[0])) {
             if (this.getManager().allowedCommandsBypass && player.hasPermission("epicguard.bypass.allowed-commands")) {
                 return false;

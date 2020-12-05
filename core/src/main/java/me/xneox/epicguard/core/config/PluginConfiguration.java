@@ -43,10 +43,10 @@ public class PluginConfiguration {
     @CfgComment("╚════════════════════════════════════════════╝")
     @CfgComment("")
     @CfgComment("Country check will filter countries your players can connect from.")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
-    @CfgComment("ATTACK - check will perform only during bot attack.")
-    @CfgComment("Default: NEVER (You SHOULD change this!)")
+    @CfgComment("NEVER (default) - check is disabled.")
+    @CfgComment("ALWAYS - check will be always performed.")
+    @CfgComment("ATTACK - check will be performed only during bot-attack.")
+    @CfgComment("It is reccomended to ENABLE AND SETUP this check!")
     @CfgName("country-check-mode")
     public String countryCheck = "NEVER";
 
@@ -75,9 +75,8 @@ public class PluginConfiguration {
     @CfgComment("Proxy check will define if user is connecting from Proxy/VPN.")
     @CfgComment("Change this option to save performance or increase accuracy")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
-    @CfgComment("ATTACK - check will perform only during bot attack.")
-    @CfgComment("Default: ALWAYS")
+    @CfgComment("ALWAYS (default) - check will be always performed.")
+    @CfgComment("ATTACK - check will be performed only during bot-attack.")
     @CfgName("proxy-check")
     public String proxyCheck = "ALWAYS";
 
@@ -85,14 +84,17 @@ public class PluginConfiguration {
     @CfgComment("have their IP address blacklisted?")
     @CfgComment("Disable if you want to allow users who")
     @CfgComment("joined with VPN to join again after disabling it.")
-    @CfgComment("Enable to improve performance.")
+    @CfgComment("Enable to improve performance (default: true)")
     @CfgName("blacklist-vpn-proxy-users")
     public boolean proxyCheckBlacklist = true;
 
     @CfgComment("Recommended option!")
     @CfgComment("Register an account here: https://proxycheck.io/dashboard")
     @CfgComment("And get your FREE api key.")
-    @CfgComment("It will give you more queries/24h")
+    @CfgComment("Without key - 100 requests/24h")
+    @CfgComment("With key - 1000 requests/24h")
+    @CfgComment("Alternatively, you can set your own service")
+    @CfgComment("at the botton of this configuration.")
     @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
     @CfgName("proxy-check-key")
     public String proxyCheckKey = "put_your_key_here";
@@ -104,18 +106,16 @@ public class PluginConfiguration {
 
     @CfgComment("Reconnect check will force users to join the server again.")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
-    @CfgComment("ATTACK - check will perform only during bot attack.")
-    @CfgComment("Default: ATTACK")
+    @CfgComment("ALWAYS - check will be always performed.")
+    @CfgComment("ATTACK (default) - check will be performed only during bot-attack.")
     @CfgName("reconnect-check")
     public String reconnectCheck = "ATTACK";
 
     @CfgComment("Server-list check will force users to add your server.")
     @CfgComment("to their server list (and pinging it) before joining.")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
-    @CfgComment("ATTACK - check will perform only during bot attack.")
-    @CfgComment("Default: ATTACK")
+    @CfgComment("ALWAYS - check will be always performed.")
+    @CfgComment("ATTACK (default) - check will be performed only during bot-attack.")
     @CfgName("server-list-check")
     public String serverListCheck = "ATTACK";
 
@@ -126,10 +126,14 @@ public class PluginConfiguration {
     @CfgName("attack-deny-join")
     public boolean denyJoin = true;
 
+    @CfgComment("Shoud the auto-whitelist feature be enabled?")
+    @CfgComment("Whitelisted players are exempt from every check.")
+    @CfgName("auto-whitelist")
+    public boolean autoWhitelist = true;
+
     @CfgComment("Time in seconds the player must be online")
-    @CfgComment("to be considered as legitimate player.")
-    @CfgComment("Set to a huge number to disable this option")
-    @CfgComment("DEFAULT: 240 (4 minutes)")
+    @CfgComment("to be added to the EpicGuard's whitelist.")
+    @CfgComment("Default: 240 (4 minutes)")
     @CfgName("auto-whitelist-time")
     public int autoWhitelistTime = 240;
 

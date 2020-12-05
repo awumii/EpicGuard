@@ -31,18 +31,7 @@ public class ServerListCheck extends Check {
     @Override
     public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().serverListCheck);
-
-        switch (mode) {
-            case NEVER:
-                return false;
-            case ALWAYS:
-                return !this.getStorage().getPingCache().contains(user.getAddress());
-            case ATTACK:
-                if (this.isAttack()) {
-                    return !this.getStorage().getPingCache().contains(user.getAddress());
-                }
-        }
-        return false;
+        return this.assertCheck(mode, !this.getStorage().getPingCache().contains(user.getAddress()));
     }
 
     @Override

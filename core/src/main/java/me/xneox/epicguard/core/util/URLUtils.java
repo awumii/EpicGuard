@@ -47,24 +47,5 @@ public final class URLUtils {
         return null;
     }
 
-    @Nullable
-    public static List<String> readLines(@Nonnull String url) {
-        Validate.notNull(url, "URL cannot be null!");
-        List<String> list = new ArrayList<>();
-        try {
-            URLConnection connection = new URL(url).openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.0");
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while (reader.readLine() != null) {
-                list.add(reader.readLine());
-            }
-            reader.close();
-        } catch (IOException ex) {
-            Logger.error("Could not read content (as list) of " + url, ex);
-        }
-        return null;
-    }
-
     private URLUtils() {}
 }
