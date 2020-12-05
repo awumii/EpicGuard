@@ -32,20 +32,10 @@ public class RateLimitCheck extends Check {
     @Override
     public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().rateLimitCheck);
-        switch (mode) {
-            case NEVER:
-                return false;
-            case ALWAYS:
-                return this.rateLimitCheck(user);
-            case ATTACK:
-                if (this.isAttack()) {
-                    return this.rateLimitCheck(user);
-                }
-        }
-        return false;
+        return this.assertCheck(mode, this.hasCooldown(user));
     }
 
-    private boolean rateLimitCheck(BotUser user) {
+    private boolean hasCooldown(BotUser user) {
         Cooldown cooldown = new Cooldown(user.getAddress(), this.getConfig().rateLimit);
         if (this.getEpicGuard().getCooldownManager().hasCooldown(user.getAddress())) {
             return true;

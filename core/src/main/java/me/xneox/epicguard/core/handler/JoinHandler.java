@@ -34,11 +34,14 @@ public class JoinHandler {
         Validate.notNull(address, "Address cannot be null!");
 
         this.epicGuard.getUserManager().addUser(uuid);
-        this.epicGuard.getPlugin().runTaskLater(() -> {
-            User user = epicGuard.getUserManager().getUser(uuid);
-            if (user != null) {
-                epicGuard.getStorageManager().whitelist(address);
-            }
-        }, this.epicGuard.getConfig().autoWhitelistTime);
+
+        if (this.epicGuard.getConfig().autoWhitelist) {
+            this.epicGuard.getPlugin().runTaskLater(() -> {
+                User user = this.epicGuard.getUserManager().getUser(uuid);
+                if (user != null) {
+                    this.epicGuard.getStorageManager().whitelist(address);
+                }
+            }, this.epicGuard.getConfig().autoWhitelistTime);
+        }
     }
 }

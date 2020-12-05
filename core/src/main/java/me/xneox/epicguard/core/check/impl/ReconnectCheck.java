@@ -35,21 +35,10 @@ public class ReconnectCheck extends Check {
     @Override
     public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().reconnectCheck);
-
-        switch (mode) {
-            case NEVER:
-                return false;
-            case ALWAYS:
-                return this.reconnectCheck(user);
-            case ATTACK:
-                if (this.isAttack()) {
-                    return this.reconnectCheck(user);
-                }
-        }
-        return false;
+        return this.assertCheck(mode, needsReconnect(user));
     }
 
-    private boolean reconnectCheck(BotUser botUser) {
+    private boolean needsReconnect(BotUser botUser) {
         if (!this.botUserCache.contains(botUser)) {
             this.botUserCache.add(botUser);
             return true;

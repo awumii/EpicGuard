@@ -31,21 +31,10 @@ public class GeographicalCheck extends Check {
     @Override
     public boolean handle(@Nonnull BotUser user) {
         CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
-
-        switch (mode) {
-            case NEVER:
-                return false;
-            case ALWAYS:
-                return this.geoCheck(user.getAddress());
-            case ATTACK:
-                if (this.isAttack()) {
-                    return this.geoCheck(user.getAddress());
-                }
-        }
-        return false;
+        return this.assertCheck(mode, this.isUnallowed(user.getAddress()));
     }
 
-    private boolean geoCheck(String address) {
+    private boolean isUnallowed(String address) {
         String country = this.getEpicGuard().getGeoManager().getCountryCode(address);
         String city = this.getEpicGuard().getGeoManager().getCity(address);
 

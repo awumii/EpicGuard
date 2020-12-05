@@ -27,10 +27,7 @@ public class BlockedCommands extends Module {
 
     @Override
     public boolean execute(Player player, String[] args) {
-        if (args == null) {
-            return false;
-        }
-
+        if (args == null) return false;
         if (this.getManager().blockedCommandsEnable && this.getManager().blockedCommands.contains(args[0])) {
             if (this.getManager().blockedCommandsBypass && player.hasPermission("epicguard.bypass.blocked-commands")) {
                 return false;

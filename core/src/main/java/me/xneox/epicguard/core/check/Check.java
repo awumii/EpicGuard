@@ -20,6 +20,7 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.manager.StorageManager;
 import me.xneox.epicguard.core.user.BotUser;
+import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -29,6 +30,13 @@ public abstract class Check {
 
     public Check(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
+    }
+
+    public boolean assertCheck(CheckMode mode, boolean expression) {
+        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
+            return expression;
+        }
+        return false;
     }
 
     @Nonnull
@@ -49,10 +57,6 @@ public abstract class Check {
     @Nonnull
     public StorageManager getStorage() {
         return this.epicGuard.getStorageManager();
-    }
-
-    public boolean isAttack() {
-        return this.epicGuard.getAttackManager().isAttack();
     }
 
     @Nonnull

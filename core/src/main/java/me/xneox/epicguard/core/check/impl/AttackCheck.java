@@ -29,7 +29,7 @@ public class AttackCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        return this.isAttack() && this.getConfig().denyJoin;
+        return this.getEpicGuard().getAttackManager().isAttack() && this.getConfig().denyJoin;
     }
 
     @Override

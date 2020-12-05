@@ -102,17 +102,7 @@ public class ModuleManager {
         if (this.superAdminEnabled && this.superAdminList.contains(player.getName())) {
             return false;
         }
-
-        for (Module module : this.getModules()) {
-            if (module.execute(player, args)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Module> getModules() {
-        return this.modules;
+        return this.modules.stream().anyMatch(module -> module.execute(player, args));
     }
 
     public EpicGuard getEpicGuard() {

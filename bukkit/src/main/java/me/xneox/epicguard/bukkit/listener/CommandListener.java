@@ -32,15 +32,12 @@ public class CommandListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         Player player = event.getPlayer();
         String command = event.getMessage();
         String[] args = command.split(" ");
 
         if (this.plugin.getModuleManager().check(player, args)) {
+            this.plugin.getLogger().info("Player " + player.getName() + " tried to run: " + command);
             event.setCancelled(true);
         }
     }
