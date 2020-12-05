@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.util;
 
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.check.CheckMode;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -26,10 +28,14 @@ import org.apache.logging.log4j.message.Message;
 import java.util.List;
 
 public class LogFilter extends AbstractFilter {
+    private final EpicGuard epicGuard;
     private final List<String> messages;
+    private final CheckMode mode;
 
-    public LogFilter(List<String> messages) {
-        this.messages = messages;
+    public LogFilter(EpicGuard epicGuard) {
+        this.epicGuard = epicGuard;
+        this.messages = epicGuard.getConfig().consoleFilter;
+        this.mode = CheckMode.valueOf(epicGuard.getConfig().consoleFilterMode);
     }
 
     public void register() {
@@ -58,9 +64,11 @@ public class LogFilter extends AbstractFilter {
     }
 
     private Result isLoggable(String message) {
-        for (String string : this.messages) {
-            if (message.contains(string)) {
-                return Result.DENY;
+        if (this.mode == CheckMode.ALWAYS || this.mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
+            for (String string : this.messages) {
+                if (message.contains(string)) {
+                    return Result.DENY;
+                }
             }
         }
         return Result.NEUTRAL;
