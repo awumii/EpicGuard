@@ -137,8 +137,7 @@ public class PluginConfiguration {
     @CfgComment("before joining the server again (configurable below).")
     @CfgComment("NEVER - check is disabled.")
     @CfgComment("ALWAYS - check will perform on every player always.")
-    @CfgComment("ATTACK - check will perform only during bot attack.")
-    @CfgComment("Default: ATTACK")
+    @CfgComment("ATTACK (default) - check will perform only during bot attack.")
     @CfgName("rate-limit-check")
     public String rateLimitCheck = "ALWAYS";
 
@@ -164,6 +163,13 @@ public class PluginConfiguration {
     @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
     @CfgName("custom-proxy-check-url")
     public String customProxyCheck = "disabled";
+
+    @CfgComment("Change when the console-filter should be active.")
+    @CfgComment("ALWAYS (default) - always filter console messages")
+    @CfgComment("ATTACK - only filter console messages when there is an active attack")
+    @CfgComment("NEVER - completely disable the console-filter feature.")
+    @CfgName("console-filter-mode")
+    public String consoleFilterMode = "ALWAYS";
 
     @CfgComment("If log message contains one of these words, it will")
     @CfgComment("be hidden. This can save a lot of CPU on big attacks.")

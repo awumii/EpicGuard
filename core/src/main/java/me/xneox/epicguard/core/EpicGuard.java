@@ -52,7 +52,7 @@ public class EpicGuard {
 
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
-            new LogFilter(this.config.consoleFilter).register();
+            new LogFilter(this).register();
         } catch (ClassNotFoundException e) {
             Logger.warn("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
