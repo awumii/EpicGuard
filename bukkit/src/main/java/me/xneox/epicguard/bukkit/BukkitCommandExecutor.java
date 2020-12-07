@@ -26,7 +26,7 @@ public class BukkitCommandExecutor implements CommandExecutor, TabExecutor {
             subject.setUUID(((Player) sender).getUniqueId());
         }
 
-        this.command.onCommand(args, new CommandSubject());
+        this.command.onCommand(args, subject);
         return true;
     }
 
