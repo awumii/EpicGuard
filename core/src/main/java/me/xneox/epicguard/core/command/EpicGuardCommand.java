@@ -27,28 +27,26 @@ public class EpicGuardCommand {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
-            send(subject, "");
-            send(subject, " &c&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Command List");
-            send(subject, "");
-            send(subject, "  &7/guard stats &8- &7show plugin statistics.");
-            send(subject, "  &7/guard notifications &8- &7enable actionbar notifications.");
-            send(subject, "  &7/guard reload &8- &7reload config and messages.");
-            send(subject, "  &7/guard whitelist &8<&7add&7/&7remove&8> &8<&7address&8> &8- &7whitelist/unwhitelist an address.");
-            send(subject, "  &7/guard blacklist &8<&7add&7/&7remove&8> &8<&7address&8> &8- &7blacklist/unblacklist an address.");
-            send(subject, "");
+            send(subject, "&3&m--&8&m------------------------------------------&3&m--");
+            send(subject, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Command List");
+            send(subject, "&e/guard stats &b- &7show plugin statistics.");
+            send(subject, "&e/guard notifications &b- &7enable actionbar notifications.");
+            send(subject, "&e/guard reload &b- &7reload config and messages.");
+            send(subject, "&e/guard whitelist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7whitelist/unwhitelist an address.");
+            send(subject, "&e/guard blacklist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7blacklist/unblacklist an address.");
+            send(subject, "&3&m--&8&m------------------------------------------&3&m--");
             return;
         }
 
         switch (args[0]) {
             case "stats":
-                send(subject, "");
-                send(subject, " &c&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
-                send(subject, "");
-                send(subject, "  &7Blacklisted IPs: &c" + this.epicGuard.getStorageManager().getBlacklist().size());
-                send(subject, "  &7Whitelisted IPs: &a" + this.epicGuard.getStorageManager().getWhitelist().size());
-                send(subject, "  &7Connections: &b" + this.epicGuard.getAttackManager().getCPS() + "/s");
-                send(subject, "  &7Total connections: &b" + this.epicGuard.getAttackManager().getTotalBots());
-                send(subject, "");
+                send(subject, "&3&m--&8&m------------------------------------------&3&m--");
+                send(subject, " &6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
+                send(subject, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getBlacklist().size());
+                send(subject, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getWhitelist().size());
+                send(subject, "&eConnections: &7" + this.epicGuard.getAttackManager().getCPS() + "/s");
+                send(subject, "&eTotal connections: &7" + this.epicGuard.getAttackManager().getTotalBots());
+                send(subject, "&3&m--&8&m------------------------------------------&3&m--");
                 break;
             case "notifications":
                 if (subject.isConsole()) {
