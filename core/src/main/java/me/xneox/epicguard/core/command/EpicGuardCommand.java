@@ -41,7 +41,7 @@ public class EpicGuardCommand {
         switch (args[0]) {
             case "stats":
                 send(subject, "&3&m--&8&m------------------------------------------&3&m--");
-                send(subject, " &6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
+                send(subject, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
                 send(subject, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getBlacklist().size());
                 send(subject, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getWhitelist().size());
                 send(subject, "&eConnections: &7" + this.epicGuard.getAttackManager().getCPS() + "/s");
