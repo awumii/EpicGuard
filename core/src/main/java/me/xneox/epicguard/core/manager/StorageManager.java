@@ -17,7 +17,6 @@ package me.xneox.epicguard.core.manager;
 
 import de.leonhard.storage.Json;
 import me.xneox.epicguard.core.user.BotUser;
-import me.xneox.epicguard.core.util.Logger;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;

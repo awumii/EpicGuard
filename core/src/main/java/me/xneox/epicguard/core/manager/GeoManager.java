@@ -18,8 +18,8 @@ package me.xneox.epicguard.core.manager;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.util.FileUtils;
-import me.xneox.epicguard.core.util.Logger;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
@@ -37,11 +37,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
 public class GeoManager {
+    private final GuardLogger logger;
+
     private DatabaseReader countryReader;
     private DatabaseReader cityReader;
 
-    public GeoManager() {
-        Logger.log("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
+    public GeoManager(GuardLogger logger) {
+        this.logger = logger;
+        logger.log("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
         String parent = "plugins/EpicGuard/data";
         File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
@@ -63,7 +66,7 @@ public class GeoManager {
                     .withCache(new CHMCache())
                     .build();
         } catch (IOException ex) {
-            Logger.error("Can't initialize GeoIP databases.", ex);
+            logger.warning("Couldn't download or initialize the GeoIP databases, please check your internet connection. Geographic features will be disabled.");
         }
     }
 
@@ -74,9 +77,10 @@ public class GeoManager {
 
         if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
             // Database does not exist or is outdated, and need to be downloaded.
-            Logger.log("Downloading the GeoIP database file: " + database.getName());
+            logger.log("Downloading the GeoIP database file: " + database.getName());
             FileUtils.downloadFile(url, archive);
 
+            logger.log("Extracting the database from the tar archive...");
             TarArchiveInputStream tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
             TarArchiveEntry entry = tarInput.getNextTarEntry();
             while (entry != null) {
@@ -89,6 +93,7 @@ public class GeoManager {
             // Closing InputStream and removing archive file.
             tarInput.close();
             archive.delete();
+            logger.log("Database (" + database.getName() + ") has been extracted succesfuly.");
         }
     }
 
@@ -99,7 +104,7 @@ public class GeoManager {
             try {
                 return this.countryReader.country(inetAddress).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
-                Logger.error("Can't find country for " + address, ex);
+                logger.warning("Couldn't find the country for the address: " + address);
             }
         }
         return "unknown";
@@ -113,7 +118,7 @@ public class GeoManager {
             try {
                 return this.cityReader.city(inetAddress).getCity().getName();
             } catch (IOException | GeoIp2Exception ex) {
-                Logger.error("Can't find city for " + address, ex);
+                logger.warning("Couldn't find the city for the address: " + address);
             }
         }
         return "unknown";
@@ -125,7 +130,7 @@ public class GeoManager {
         try {
             return InetAddress.getByName(address);
         } catch (UnknownHostException ex) {
-            Logger.error("Can't resolve InetAddress for " + address, ex);
+            logger.warning("Couldn't resolve the InetAddress for the host: " + address);
         }
         return null;
     }

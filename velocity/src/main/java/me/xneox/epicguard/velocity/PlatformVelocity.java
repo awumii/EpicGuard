@@ -30,6 +30,8 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.logging.GuardLogger;
+import me.xneox.epicguard.core.logging.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import me.xneox.epicguard.velocity.listener.DisconnectListener;
@@ -37,6 +39,7 @@ import me.xneox.epicguard.velocity.listener.PostLoginListener;
 import me.xneox.epicguard.velocity.listener.PreLoginListener;
 import me.xneox.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.adventure.text.Component;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -45,11 +48,14 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.1")
 public class PlatformVelocity implements PlatformPlugin {
     private final ProxyServer server;
+    private final GuardLogger logger;
+
     private EpicGuard epicGuard;
 
     @Inject
-    public PlatformVelocity(ProxyServer server) {
+    public PlatformVelocity(ProxyServer server, Logger logger) {
         this.server = server;
+        this.logger = new SLF4JLogger(logger);
     }
 
     @Subscribe
@@ -73,6 +79,11 @@ public class PlatformVelocity implements PlatformPlugin {
     @Subscribe
     public void onDisable(ProxyShutdownEvent e) {
         this.epicGuard.shutdown();
+    }
+
+    @Override
+    public GuardLogger getGuardLogger() {
+        return this.logger;
     }
 
     public ProxyServer getServer() {

@@ -21,9 +21,11 @@ import me.xneox.epicguard.bukkit.module.ModuleTask;
 import me.xneox.epicguard.bukkit.util.Metrics;
 import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.logging.LoggerJava;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -39,9 +41,11 @@ import javax.annotation.Nonnull;
 public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     private EpicGuard epicGuard;
     private ModuleManager moduleManager;
+    private GuardLogger logger;
 
     @Override
     public void onEnable() {
+        this.logger = new LoggerJava(this.getLogger());
         this.epicGuard = new EpicGuard(this);
         this.moduleManager = new ModuleManager(this.epicGuard);
 
@@ -70,6 +74,11 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
 
     public ModuleManager getModuleManager() {
         return this.moduleManager;
+    }
+
+    @Override
+    public GuardLogger getGuardLogger() {
+        return this.logger;
     }
 
     @Override

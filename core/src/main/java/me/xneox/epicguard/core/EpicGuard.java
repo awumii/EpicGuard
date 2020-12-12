@@ -17,6 +17,7 @@ package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
+import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.manager.*;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
@@ -24,7 +25,6 @@ import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigHelper;
 import me.xneox.epicguard.core.util.LogFilter;
-import me.xneox.epicguard.core.util.Logger;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -42,19 +42,21 @@ public class EpicGuard {
 
     public EpicGuard(PlatformPlugin plugin) {
         this.plugin = plugin;
+
+        getLogger().log("Loading configuration...");
         this.reloadConfig();
 
         this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
         this.cooldownManager = new CooldownManager();
-        this.geoManager = new GeoManager();
+        this.geoManager = new GeoManager(this.getLogger());
 
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
             new LogFilter(this).register();
         } catch (ClassNotFoundException e) {
-            Logger.warn("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
+            getLogger().warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
         this.plugin.scheduleTask(new MonitorTask(this), 1L);
@@ -63,7 +65,7 @@ public class EpicGuard {
         this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
-        Logger.log("EpicGuard v5 finished startup successfully.");
+        getLogger().log("EpicGuard v5 finished startup successfully.");
     }
 
     public void reloadConfig() {
@@ -78,6 +80,10 @@ public class EpicGuard {
 
     public void shutdown() {
         this.storageManager.save();
+    }
+
+    public GuardLogger getLogger() {
+        return this.plugin.getGuardLogger();
     }
 
     public PlatformPlugin getPlugin() {
