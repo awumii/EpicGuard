@@ -45,15 +45,15 @@ public class ProxyCheck extends Check {
     }
 
     private boolean isProxy(String address) {
-        return this.detectionMap.asMap().computeIfAbsent(address, addr -> {
+        return this.detectionMap.asMap().computeIfAbsent(address, ip -> {
             String apiUrl;
 
             if (this.getConfig().customProxyCheck.equals("disabled")) {
                 // Use the default API service - proxycheck.io.
-                apiUrl = "http://proxycheck.io/v2/" + address + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
+                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
             } else {
                 // Use the custom API service.
-                apiUrl = this.getConfig().customProxyCheck.replace("%ip%", address);
+                apiUrl = this.getConfig().customProxyCheck.replace("%ip%", ip);
             }
 
             String response = URLUtils.readString(apiUrl);

@@ -16,33 +16,30 @@
 package me.xneox.epicguard.core.util;
 
 import org.diorite.libs.org.apache.commons.lang3.Validate;
-
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public final class URLUtils {
+    private static final Logger LOGGER = Logger.getLogger(URLUtils.class.getName());
+
     @Nullable
     public static String readString(String url) {
         Validate.notNull(url, "URL cannot be null!");
-        try {
-            final URLConnection connection = new URL(url).openConnection();
-            connection.addRequestProperty("User-Agent", "Mozilla/4.0");
 
+        try {
+            URLConnection connection = new URL(url).openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.0");
             try (Scanner scanner = new Scanner(connection.getInputStream(), StandardCharsets.UTF_8.toString())) {
                 scanner.useDelimiter("\\A");
                 return scanner.hasNext() ? scanner.next() : "";
             }
-        } catch (IOException ex) {
-            Logger.error("Could not read content of " + url, ex);
+        } catch (IOException e) {
+            LOGGER.warning("Couldn't read the content of: " + url + " (" + e.getMessage() + "). Please check your internet connection.");
         }
         return null;
     }

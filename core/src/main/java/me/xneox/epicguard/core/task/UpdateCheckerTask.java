@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core.task;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.util.Logger;
 import me.xneox.epicguard.core.util.VersionUtils;
 
 public class UpdateCheckerTask implements Runnable {
@@ -30,7 +29,7 @@ public class UpdateCheckerTask implements Runnable {
     public void run() {
         VersionUtils.checkForUpdates(this.epicGuard);
         if (VersionUtils.isAvailable()) {
-            Logger.log("A new version is available: " + VersionUtils.getRemoteVersion() +
+            this.epicGuard.getLogger().log("A new version is available: " + VersionUtils.getRemoteVersion() +
                     " (you are still on " + this.epicGuard.getPlugin().getVersion() + ")");
         }
     }

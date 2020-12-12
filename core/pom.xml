@@ -59,6 +59,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.diorite</groupId>
             <artifactId>diorite-config-minimal</artifactId>
             <version>1.2</version>

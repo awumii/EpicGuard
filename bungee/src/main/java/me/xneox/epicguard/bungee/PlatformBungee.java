@@ -24,6 +24,9 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.logging.GuardLogger;
+import me.xneox.epicguard.core.logging.LoggerJava;
+import me.xneox.epicguard.core.logging.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -37,9 +40,17 @@ import java.util.concurrent.TimeUnit;
 
 public class PlatformBungee extends Plugin implements PlatformPlugin {
     private EpicGuard epicGuard;
+    private GuardLogger logger;
 
     @Override
     public void onEnable() {
+        try {
+            Class.forName("org.slf4j.Logger");
+            //this.logger = new SLF4JLogger(this.getSLF4JLogger());
+        } catch (ClassNotFoundException e) {
+            this.logger = new LoggerJava(this.getLogger());
+        }
+
         this.epicGuard = new EpicGuard(this);
 
         PluginManager pm = this.getProxy().getPluginManager();
@@ -55,6 +66,11 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     @Override
     public void onDisable() {
         this.epicGuard.shutdown();
+    }
+
+    @Override
+    public GuardLogger getGuardLogger() {
+        return this.logger;
     }
 
     @Override
