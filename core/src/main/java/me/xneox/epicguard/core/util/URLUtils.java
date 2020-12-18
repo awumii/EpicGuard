@@ -34,6 +34,9 @@ public final class URLUtils {
         try {
             URLConnection connection = new URL(url).openConnection();
             connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            
             try (Scanner scanner = new Scanner(connection.getInputStream(), StandardCharsets.UTF_8.toString())) {
                 scanner.useDelimiter("\\A");
                 return scanner.hasNext() ? scanner.next() : "";
