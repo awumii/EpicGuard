@@ -65,9 +65,4 @@ public class ProxyCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageProxy;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return this.getConfig().proxyCheckBlacklist;
-    }
 }

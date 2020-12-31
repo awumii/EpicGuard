@@ -50,9 +50,4 @@ public class ReconnectCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageReconnect;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return false;
-    }
 }

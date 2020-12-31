@@ -36,9 +36,4 @@ public class AccountLimitCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageAccountLimit;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return true;
-    }
 }

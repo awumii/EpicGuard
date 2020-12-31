@@ -62,8 +62,6 @@ public abstract class Check {
     @Nonnull
     public abstract List<String> getKickMessage();
 
-    public abstract boolean shouldBlacklist();
-
     /**
      * @return true if detection is positive (detected as bot).
      * @param user An {@link BotUser} object with the information about the user.

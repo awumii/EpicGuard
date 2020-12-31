@@ -80,14 +80,6 @@ public class PluginConfiguration {
     @CfgName("proxy-check")
     public String proxyCheck = "ALWAYS";
 
-    @CfgComment("Should users detected for VPN/Proxy")
-    @CfgComment("have their IP address blacklisted?")
-    @CfgComment("Disable if you want to allow users who")
-    @CfgComment("joined with VPN to join again after disabling it.")
-    @CfgComment("Enable to improve performance (default: true)")
-    @CfgName("blacklist-vpn-proxy-users")
-    public boolean proxyCheckBlacklist = true;
-
     @CfgComment("Recommended option!")
     @CfgComment("Register an account here: https://proxycheck.io/dashboard")
     @CfgComment("And get your FREE api key.")
