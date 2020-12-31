@@ -61,12 +61,9 @@ public class DetectionHandler {
         BotUser user = new BotUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
-                if (check.shouldBlacklist()) {
-                    this.epicGuard.getStorageManager().blacklist(address);
-                }
                 if (this.epicGuard.getConfig().debug) {
                     this.epicGuard.getLogger().log("(Debug) " + nickname + "/" + address + " detected by " +
-                            check.getClass().getSimpleName() + "[blacklisted: " + check.shouldBlacklist() + "]");
+                            check.getClass().getSimpleName());
                 }
                 return Optional.of(ChatUtils.buildString(check.getKickMessage()));
             }

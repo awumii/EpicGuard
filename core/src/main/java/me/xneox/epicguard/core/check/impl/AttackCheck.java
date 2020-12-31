@@ -36,9 +36,4 @@ public class AttackCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageAttack;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return false;
-    }
 }

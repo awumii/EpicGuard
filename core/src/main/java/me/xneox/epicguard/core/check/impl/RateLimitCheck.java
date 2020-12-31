@@ -49,9 +49,4 @@ public class RateLimitCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageRateLimit;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return false;
-    }
 }

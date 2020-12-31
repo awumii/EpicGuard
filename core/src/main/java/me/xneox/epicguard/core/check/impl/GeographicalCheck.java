@@ -53,9 +53,4 @@ public class GeographicalCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageGeo;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return true;
-    }
 }

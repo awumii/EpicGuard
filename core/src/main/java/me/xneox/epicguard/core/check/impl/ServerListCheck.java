@@ -38,9 +38,4 @@ public class ServerListCheck extends Check {
     public @Nonnull List<String> getKickMessage() {
         return this.getMessages().kickMessageServerList;
     }
-
-    @Override
-    public boolean shouldBlacklist() {
-        return false;
-    }
 }
