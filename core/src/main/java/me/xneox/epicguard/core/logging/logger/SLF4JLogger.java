@@ -1,5 +1,6 @@
-package me.xneox.epicguard.core.logging;
+package me.xneox.epicguard.core.logging.logger;
 
+import me.xneox.epicguard.core.logging.GuardLogger;
 import org.slf4j.Logger;
 
 /**

@@ -64,6 +64,10 @@ public class DetectionHandler {
                 if (check.shouldBlacklist()) {
                     this.epicGuard.getStorageManager().blacklist(address);
                 }
+                if (this.epicGuard.getConfig().debug) {
+                    this.epicGuard.getLogger().log("(Debug) " + nickname + "/" + address + " detected by " +
+                            check.getClass().getSimpleName() + "[blacklisted: " + check.shouldBlacklist() + "]");
+                }
                 return Optional.of(ChatUtils.buildString(check.getKickMessage()));
             }
         }

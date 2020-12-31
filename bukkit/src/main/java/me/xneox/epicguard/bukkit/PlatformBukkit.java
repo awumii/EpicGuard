@@ -25,7 +25,7 @@ import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
-import me.xneox.epicguard.core.logging.LoggerJava;
+import me.xneox.epicguard.core.logging.logger.JavaLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -45,7 +45,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
 
     @Override
     public void onEnable() {
-        this.logger = new LoggerJava(this.getLogger());
+        this.logger = new JavaLogger(this.getLogger());
         this.epicGuard = new EpicGuard(this);
         this.moduleManager = new ModuleManager(this.epicGuard);
 

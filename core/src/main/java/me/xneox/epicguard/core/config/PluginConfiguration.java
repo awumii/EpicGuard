@@ -194,4 +194,7 @@ public class PluginConfiguration {
     @CfgComment("Time in minutes before auto-saving data.")
     @CfgName("autosave-interval")
     public long autoSaveInterval = 10L;
+
+    @CfgComment("Enabling this will log positive bot detections in the console.")
+    public boolean debug;
 }

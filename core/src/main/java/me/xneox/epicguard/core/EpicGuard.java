@@ -24,7 +24,7 @@ import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigHelper;
-import me.xneox.epicguard.core.util.LogFilter;
+import me.xneox.epicguard.core.logging.LogFilter;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
