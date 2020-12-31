@@ -160,6 +160,10 @@ public class PluginConfiguration {
     @CfgName("custom-proxy-check-url")
     public String customProxyCheck = "disabled";
 
+    @CfgComment("How long in minutes responses from proxy check should be cached?")
+    @CfgName("proxy-check-cache-duration")
+    public int proxyCheckCacheDuration = 30;
+
     @CfgComment("Change when the console-filter should be active.")
     @CfgComment("ALWAYS (default) - always filter console messages")
     @CfgComment("ATTACK - only filter console messages when there is an active attack")

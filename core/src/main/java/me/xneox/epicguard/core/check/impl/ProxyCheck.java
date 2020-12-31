@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ProxyCheck extends Check {
     private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
-            .expireAfterWrite(10, TimeUnit.MINUTES)
+            .expireAfterWrite(this.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
             .build();
 
     public ProxyCheck(EpicGuard epicGuard) {
