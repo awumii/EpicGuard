@@ -44,7 +44,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.1")
+@Plugin(id = "epicguard", name = "EpicGuard", version = "5.2.2")
 public class PlatformVelocity implements PlatformPlugin {
     private final ProxyServer server;
     private final GuardLogger logger;
