@@ -25,8 +25,8 @@ import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.command.EpicGuardCommand;
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.LoggerJava;
-import me.xneox.epicguard.core.logging.SLF4JLogger;
+import me.xneox.epicguard.core.logging.logger.JavaLogger;
+import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -44,11 +44,12 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
 
     @Override
     public void onEnable() {
+        // Logging support for both BungeeCord and Waterfall(+forks).
         try {
             Class.forName("org.slf4j.Logger");
-            //this.logger = new SLF4JLogger(this.getSLF4JLogger());
+            this.logger = new SLF4JLogger(this.getSLF4JLogger());
         } catch (ClassNotFoundException e) {
-            this.logger = new LoggerJava(this.getLogger());
+            this.logger = new JavaLogger(this.getLogger());
         }
 
         this.epicGuard = new EpicGuard(this);

@@ -76,6 +76,7 @@ public class StorageManager {
         if (!this.whitelist.contains(address)) {
             this.whitelist.add(address);
         }
+        this.blacklist.remove(address);
     }
 
     public boolean isWhitelisted(String address) {
