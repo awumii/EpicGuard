@@ -36,11 +36,11 @@ public class RateLimitCheck extends Check {
     }
 
     private boolean hasCooldown(BotUser user) {
-        Cooldown cooldown = new Cooldown(user.getAddress(), this.getConfig().rateLimit);
         if (this.getEpicGuard().getCooldownManager().hasCooldown(user.getAddress())) {
             return true;
         }
 
+        Cooldown cooldown = new Cooldown(user.getAddress(), this.getConfig().rateLimit);
         this.getEpicGuard().getCooldownManager().add(cooldown);
         return false;
     }

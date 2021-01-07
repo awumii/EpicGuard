@@ -27,13 +27,12 @@ public class CooldownManager {
 
     public void add(@Nonnull Cooldown cooldown) {
         Validate.notNull(cooldown, "Cooldown cannot be null!");
-        String id = cooldown.getId();
-        cooldowns.put(id, cooldown);
+        this.cooldowns.putIfAbsent(cooldown.getId(), cooldown);
     }
 
     public boolean hasCooldown(@Nonnull String id) {
         Validate.notNull(id, "Cooldown ID cannot be null!");
-        Cooldown cooldown = cooldowns.get(id);
+        Cooldown cooldown = this.cooldowns.get(id);
         if (cooldown == null) {
             return false;
         }
