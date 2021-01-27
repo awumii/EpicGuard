@@ -22,6 +22,11 @@ import org.diorite.libs.org.apache.commons.lang3.Validate;
 import javax.annotation.Nonnull;
 import java.util.*;
 
+/**
+ * This class manages the EpicGuard's storage.
+ *
+ * TODO: Other storage implementations than just JSON.
+ */
 public class StorageManager {
     private final Json data;
 

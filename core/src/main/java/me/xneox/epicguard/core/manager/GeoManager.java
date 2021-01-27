@@ -70,6 +70,7 @@ public class GeoManager {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void downloadDatabase(@Nonnull File database, @Nonnull File archive, @Nonnull String url) throws IOException {
         Validate.notNull(database, "Database file cannot be null!");
         Validate.notNull(archive, "Archive file cannot be null!");

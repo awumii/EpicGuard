@@ -1,7 +1,14 @@
 package me.xneox.epicguard.core.command;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
+/**
+ * Holds UUID of the player who executed the /epicguard command.
+ * UUID can be null if command is executed from the console.
+ *
+ * NOTE: Temporary solution for the multi-platform command system...
+ */
 public class CommandSubject {
     private UUID uuid;
 
@@ -13,6 +20,7 @@ public class CommandSubject {
         this.uuid = uuid;
     }
 
+    @Nullable
     public UUID getUUID() {
         return this.uuid;
     }

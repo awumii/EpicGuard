@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Handler for PreLogin listeners.
+ * Most important handler, should be called as soon as possible, and asynchronously.
+ */
 public class DetectionHandler {
     private final List<Check> checks = new ArrayList<>();
     private final EpicGuard epicGuard;

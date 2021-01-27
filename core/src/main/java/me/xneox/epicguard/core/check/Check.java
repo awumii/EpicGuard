@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class Check {
-    private final EpicGuard epicGuard;
+    protected final EpicGuard epicGuard;
 
     public Check(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
@@ -37,26 +37,6 @@ public abstract class Check {
             return expression;
         }
         return false;
-    }
-
-    @Nonnull
-    public EpicGuard getEpicGuard() {
-        return this.epicGuard;
-    }
-
-    @Nonnull
-    public PluginConfiguration getConfig() {
-        return this.epicGuard.getConfig();
-    }
-
-    @Nonnull
-    public MessagesConfiguration getMessages() {
-        return this.epicGuard.getMessages();
-    }
-
-    @Nonnull
-    public StorageManager getStorage() {
-        return this.epicGuard.getStorageManager();
     }
 
     @Nonnull

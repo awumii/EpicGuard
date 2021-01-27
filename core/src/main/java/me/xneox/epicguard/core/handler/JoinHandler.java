@@ -22,6 +22,10 @@ import org.diorite.libs.org.apache.commons.lang3.Validate;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
+/**
+ * Handler for the PlayerJoin or PostLogin listeners
+ * Used for the auto-whitelist feature.
+ */
 public class JoinHandler {
     private final EpicGuard epicGuard;
 
@@ -33,11 +37,9 @@ public class JoinHandler {
         Validate.notNull(uuid, "UUID cannot be null!");
         Validate.notNull(address, "Address cannot be null!");
 
-        this.epicGuard.getUserManager().addUser(uuid);
-
         if (this.epicGuard.getConfig().autoWhitelist) {
             this.epicGuard.getPlugin().runTaskLater(() -> {
-                User user = this.epicGuard.getUserManager().getUser(uuid);
+                User user = this.epicGuard.getUserManager().getOrCreate(uuid);
                 if (user != null) {
                     this.epicGuard.getStorageManager().whitelist(address);
                 }

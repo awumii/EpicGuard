@@ -30,27 +30,27 @@ public class GeographicalCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().countryCheck);
-        return this.assertCheck(mode, this.isUnallowed(user.getAddress()));
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().countryCheck);
+        return this.assertCheck(mode, this.isRestricted(user.getAddress()));
     }
 
-    private boolean isUnallowed(String address) {
-        String country = this.getEpicGuard().getGeoManager().getCountryCode(address);
-        String city = this.getEpicGuard().getGeoManager().getCity(address);
+    private boolean isRestricted(String address) {
+        String country = this.epicGuard.getGeoManager().getCountryCode(address);
+        String city = this.epicGuard.getGeoManager().getCity(address);
 
-        if (this.getConfig().cityBlacklist.contains(city)) {
+        if (this.epicGuard.getConfig().cityBlacklist.contains(city)) {
             return true;
         }
 
-        if (this.getConfig().countryCheckType.equals("WHITELIST")) {
-            return !this.getConfig().countryCheckValues.contains(country);
+        if (this.epicGuard.getConfig().countryCheckType.equals("WHITELIST")) {
+            return !this.epicGuard.getConfig().countryCheckValues.contains(country);
         } else {
-            return this.getConfig().countryCheckValues.contains(country);
+            return this.epicGuard.getConfig().countryCheckValues.contains(country);
         }
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageGeo;
+        return this.epicGuard.getMessages().kickMessageGeo;
     }
 }

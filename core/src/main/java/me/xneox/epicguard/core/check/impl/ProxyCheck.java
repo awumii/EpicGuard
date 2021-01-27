@@ -17,8 +17,6 @@ package me.xneox.epicguard.core.check.impl;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
@@ -31,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ProxyCheck extends Check {
     private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
-            .expireAfterWrite(this.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
+            .expireAfterWrite(this.epicGuard.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
             .build();
 
     public ProxyCheck(EpicGuard epicGuard) {
@@ -40,7 +38,7 @@ public class ProxyCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().proxyCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().proxyCheck);
         return this.assertCheck(mode, this.isProxy(user.getAddress()));
     }
 
@@ -48,12 +46,12 @@ public class ProxyCheck extends Check {
         return this.detectionMap.asMap().computeIfAbsent(address, ip -> {
             String apiUrl;
 
-            if (this.getConfig().customProxyCheck.equals("disabled")) {
+            if (this.epicGuard.getConfig().customProxyCheck.equals("disabled")) {
                 // Use the default API service - proxycheck.io.
-                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.getConfig().proxyCheckKey + "&vpn=1";
+                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.epicGuard.getConfig().proxyCheckKey + "&vpn=1";
             } else {
                 // Use the custom API service.
-                apiUrl = this.getConfig().customProxyCheck.replace("%ip%", ip);
+                apiUrl = this.epicGuard.getConfig().customProxyCheck.replace("%ip%", ip);
             }
 
             String response = URLUtils.readString(apiUrl);
@@ -63,6 +61,6 @@ public class ProxyCheck extends Check {
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageProxy;
+        return this.epicGuard.getMessages().kickMessageProxy;
     }
 }

@@ -19,6 +19,9 @@ import com.google.common.base.Objects;
 
 import java.util.UUID;
 
+/**
+ * Represents an player who is currently connected to the server.
+ */
 public class User {
     private final UUID uuid;
     private boolean notifications;

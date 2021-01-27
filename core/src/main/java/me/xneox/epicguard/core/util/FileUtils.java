@@ -27,6 +27,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public final class FileUtils {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void downloadFile(@Nonnull String urlFrom, @Nonnull File file) throws IOException {
         Validate.notNull(urlFrom, "Download URL cannot be null!");
         Validate.notNull(urlFrom, "Target file cannot be null!");
@@ -36,10 +37,13 @@ public final class FileUtils {
 
         URLConnection connection = new URL(urlFrom).openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
 
         ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
         FileOutputStream out = new FileOutputStream(file);
         out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+
         out.close();
         channel.close();
     }

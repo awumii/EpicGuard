@@ -21,6 +21,10 @@ import org.diorite.libs.org.apache.commons.lang3.Validate;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
+/**
+ * Handler for the PlayerQuit/Disconnect listeners.
+ * Used for removing the {@link me.xneox.epicguard.core.user.User} instance.
+ */
 public class DisconnectHandler {
     private final EpicGuard epicGuard;
 

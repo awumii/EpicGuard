@@ -20,6 +20,10 @@ import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Handler for the ServerListPing listeners.
+ * Used for the {@link me.xneox.epicguard.core.check.impl.ServerListCheck}.
+ */
 public class PingHandler {
     private final EpicGuard epicGuard;
 
