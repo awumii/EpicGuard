@@ -17,9 +17,11 @@ package me.xneox.epicguard.core.check.impl;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.BotUser;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 
 public class AccountLimitCheck extends Check {
@@ -29,7 +31,10 @@ public class AccountLimitCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        return this.getEpicGuard().getStorageManager().getAccounts(user).size() > this.getConfig().accountLimit;
+        CheckMode mode = CheckMode.valueOf(this.getConfig().accountLimitCheck);
+
+        List<String> accounts = this.getEpicGuard().getStorageManager().getAccounts(user);
+        return this.assertCheck(mode, !accounts.contains(user.getNickname()) && accounts.size() >= this.getConfig().accountLimit);
     }
 
     @Override

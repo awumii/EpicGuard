@@ -68,6 +68,8 @@ public class DetectionHandler {
                 return Optional.of(ChatUtils.buildString(check.getKickMessage()));
             }
         }
+
+        this.epicGuard.getStorageManager().updateAccounts(user);
         return Optional.empty();
     }
 }

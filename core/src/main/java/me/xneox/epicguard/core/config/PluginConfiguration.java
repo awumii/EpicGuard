@@ -91,8 +91,15 @@ public class PluginConfiguration {
     @CfgName("proxy-check-key")
     public String proxyCheckKey = "put_your_key_here";
 
-    @CfgComment("How many accounts can be used")
-    @CfgComment("per one ip address?")
+    @CfgComment("This check will limit how many accounts")
+    @CfgComment("(different nicknames) can be used by one IP address")
+    @CfgComment("NEVER - check is disabled.")
+    @CfgComment("ALWAYS (default) - check will be always performed.")
+    @CfgComment("ATTACK - check will be performed only during bot-attack.")
+    @CfgName("account-limit-check")
+    public String accountLimitCheck = "ALWAYS";
+
+    @CfgComment("Limit of accounts per one IP address.")
     @CfgName("max-accounts-per-ip")
     public int accountLimit = 3;
 

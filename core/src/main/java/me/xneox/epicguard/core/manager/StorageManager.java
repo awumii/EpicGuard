@@ -46,18 +46,26 @@ public class StorageManager {
 
     /**
      * Retrieves a list of nicknames used by specified IP Address.
-     * If a nickname used currently by this address is not in the map, it will be added.
      */
     @Nonnull
     public List<String> getAccounts(@Nonnull BotUser user) {
         Validate.notNull(user, "BotUser cannot be null!");
-        List<String> nicknames = this.accountMap.getOrDefault(user.getAddress(), new ArrayList<>());
-        if (!nicknames.contains(user.getNickname())) {
-            nicknames.add(user.getNickname());
+        return this.accountMap.getOrDefault(user.getAddress(), new ArrayList<>());
+    }
+
+
+    /**
+     * If the user's address is not in the accountMap, it will be added.
+     */
+    public void updateAccounts(@Nonnull BotUser user) {
+        Validate.notNull(user, "BotUser cannot be null!");
+
+        List<String> accounts = this.getAccounts(user);
+        if (!accounts.contains(user.getNickname())) {
+            accounts.add(user.getNickname());
         }
 
-        this.accountMap.put(user.getAddress(), nicknames);
-        return nicknames;
+        this.accountMap.put(user.getAddress(), accounts);
     }
 
     public void blacklist(@Nonnull String address) {
