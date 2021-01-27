@@ -34,7 +34,7 @@ public class ReconnectCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().reconnectCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().reconnectCheck);
         return this.assertCheck(mode, needsReconnect(user));
     }
 
@@ -48,6 +48,6 @@ public class ReconnectCheck extends Check {
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageReconnect;
+        return this.epicGuard.getMessages().kickMessageReconnect;
     }
 }

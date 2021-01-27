@@ -29,12 +29,8 @@ public class UserManager {
         return this.userMap.values();
     }
 
-    public User getUser(UUID uuid) {
-        return this.userMap.get(uuid);
-    }
-
-    public void addUser(UUID uuid) {
-        this.userMap.put(uuid, new User(uuid));
+    public User getOrCreate(UUID uuid) {
+        return this.userMap.computeIfAbsent(uuid, User::new);
     }
 
     public void removeUser(UUID uuid) {

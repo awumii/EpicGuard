@@ -31,14 +31,14 @@ public class AccountLimitCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().accountLimitCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().accountLimitCheck);
 
-        List<String> accounts = this.getEpicGuard().getStorageManager().getAccounts(user);
-        return this.assertCheck(mode, !accounts.contains(user.getNickname()) && accounts.size() >= this.getConfig().accountLimit);
+        List<String> accounts = this.epicGuard.getStorageManager().getAccounts(user);
+        return this.assertCheck(mode, !accounts.contains(user.getNickname()) && accounts.size() >= this.epicGuard.getConfig().accountLimit);
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageAccountLimit;
+        return this.epicGuard.getMessages().kickMessageAccountLimit;
     }
 }

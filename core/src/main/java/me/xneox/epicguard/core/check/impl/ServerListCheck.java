@@ -30,12 +30,12 @@ public class ServerListCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().serverListCheck);
-        return this.assertCheck(mode, !this.getStorage().getPingCache().contains(user.getAddress()));
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().serverListCheck);
+        return this.assertCheck(mode, !this.epicGuard.getStorageManager().getPingCache().contains(user.getAddress()));
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageServerList;
+        return this.epicGuard.getMessages().kickMessageServerList;
     }
 }

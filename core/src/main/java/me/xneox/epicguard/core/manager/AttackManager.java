@@ -15,6 +15,9 @@
 
 package me.xneox.epicguard.core.manager;
 
+/**
+ * This class holds variables related to the current server attack status.
+ */
 public class AttackManager {
     private boolean attack;
     private int connectionPerSecond;

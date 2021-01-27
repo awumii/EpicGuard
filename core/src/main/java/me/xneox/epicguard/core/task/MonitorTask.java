@@ -19,6 +19,9 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.User;
 
+/**
+ * This task displays current attack status on the actionbar of users who enabled them.
+ */
 public class MonitorTask implements Runnable {
     private final EpicGuard epicGuard;
 
@@ -33,11 +36,10 @@ public class MonitorTask implements Runnable {
                 .replace("%cps%", String.valueOf(this.epicGuard.getAttackManager().getCPS()))
                 .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.attack : config.noAttack);
 
-        for (User user : this.epicGuard.getUserManager().getUsers()) {
-            if (user.hasNotifications()) {
-                this.epicGuard.getPlugin().sendActionBar(monitor, user);
-            }
-        }
+        this.epicGuard.getUserManager().getUsers().stream()
+                .filter(User::hasNotifications)
+                .forEach(user -> this.epicGuard.getPlugin().sendActionBar(monitor, user));
+
         this.epicGuard.getAttackManager().resetCPS();
     }
 }

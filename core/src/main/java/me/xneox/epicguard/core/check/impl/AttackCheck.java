@@ -29,11 +29,11 @@ public class AttackCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        return this.getEpicGuard().getAttackManager().isAttack() && this.getConfig().denyJoin;
+        return this.epicGuard.getAttackManager().isAttack() && this.epicGuard.getConfig().denyJoin;
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageAttack;
+        return this.epicGuard.getMessages().kickMessageAttack;
     }
 }

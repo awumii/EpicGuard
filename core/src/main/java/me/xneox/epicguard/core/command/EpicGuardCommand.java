@@ -4,7 +4,6 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
-import me.xneox.epicguard.core.util.VersionUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -52,7 +51,7 @@ public class EpicGuardCommand {
                 if (subject.isConsole()) {
                     send(subject, "You are not a player!");
                 } else {
-                    User user = this.epicGuard.getUserManager().getUser(subject.getUUID());
+                    User user = this.epicGuard.getUserManager().getOrCreate(subject.getUUID());
                     user.setNotifications(!user.hasNotifications());
                     send(subject, prefix + config.notifications);
                 }

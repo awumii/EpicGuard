@@ -17,6 +17,10 @@ package me.xneox.epicguard.core.user;
 
 import com.google.common.base.Objects;
 
+/**
+ * This class holds address and nickname of the user,
+ * who is currently being checked (or cached) by the antibot checks.
+ */
 public class BotUser {
     private final String address;
     private final String nickname;

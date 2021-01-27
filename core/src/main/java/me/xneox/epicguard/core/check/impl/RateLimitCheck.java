@@ -31,22 +31,22 @@ public class RateLimitCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        CheckMode mode = CheckMode.valueOf(this.getConfig().rateLimitCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().rateLimitCheck);
         return this.assertCheck(mode, this.hasCooldown(user));
     }
 
     private boolean hasCooldown(BotUser user) {
-        if (this.getEpicGuard().getCooldownManager().hasCooldown(user.getAddress())) {
+        if (this.epicGuard.getCooldownManager().hasCooldown(user.getAddress())) {
             return true;
         }
 
-        Cooldown cooldown = new Cooldown(user.getAddress(), this.getConfig().rateLimit);
-        this.getEpicGuard().getCooldownManager().add(cooldown);
+        Cooldown cooldown = new Cooldown(user.getAddress(), this.epicGuard.getConfig().rateLimit);
+        this.epicGuard.getCooldownManager().add(cooldown);
         return false;
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.getMessages().kickMessageRateLimit;
+        return this.epicGuard.getMessages().kickMessageRateLimit;
     }
 }
