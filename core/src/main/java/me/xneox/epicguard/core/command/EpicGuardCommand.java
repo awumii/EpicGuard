@@ -1,7 +1,9 @@
 package me.xneox.epicguard.core.command;
 
+import com.google.common.net.InetAddresses;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
+import me.xneox.epicguard.core.user.BotUser;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
@@ -11,6 +13,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class EpicGuardCommand {
     private final EpicGuard epicGuard;
@@ -19,6 +22,7 @@ public class EpicGuardCommand {
         this.epicGuard = epicGuard;
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void onCommand(@Nonnull String[] args, @Nonnull CommandSubject subject) {
         Validate.notNull(args, "Command arguments cannot be null!");
         Validate.notNull(args, "Command subject cannot be null!");
@@ -31,6 +35,7 @@ public class EpicGuardCommand {
             send(subject, "&e/guard stats &b- &7show plugin statistics.");
             send(subject, "&e/guard notifications &b- &7enable actionbar notifications.");
             send(subject, "&e/guard reload &b- &7reload config and messages.");
+            send(subject, "&e/guard analyze <address> &b- &7see details about the specified address.");
             send(subject, "&e/guard whitelist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7whitelist/unwhitelist an address.");
             send(subject, "&e/guard blacklist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7blacklist/unblacklist an address.");
             send(subject, "&3&m--&8&m------------------------------------------&3&m--");
@@ -104,8 +109,45 @@ public class EpicGuardCommand {
                     }
                 }
                 break;
+            case "analyze":
+                if (args.length != 2) {
+                    send(subject, prefix + config.usage.replace("{USAGE}", "/guard analyze <address>"));
+                    return;
+                }
+
+                String address = null;
+                if (InetAddresses.isInetAddress(args[1])) {
+                    address = args[1];
+                } else {
+                    String possibleAddress = this.epicGuard.getStorageManager().findByNickname(args[1]);
+                    if (possibleAddress != null) {
+                        address = possibleAddress;
+                    }
+                }
+
+                if (address == null) {
+                    send(subject, prefix + config.analysisFailed);
+                    return;
+                }
+
+                send(subject, "&3&m--&8&m------------------------------------------&3&m--");
+                send(subject, "&6&lEpicGuard Analysis of " + address);
+                send(subject, "&eCountry: &7" + this.epicGuard.getGeoManager().getCountryCode(address));
+                send(subject, "&eCity: &7" + this.epicGuard.getGeoManager().getCity(address));
+                send(subject, "");
+                send(subject, "&eWhitelisted: &7" + (this.epicGuard.getStorageManager().isWhitelisted(address) ? "&a&l✔" : "&c&l✖"));
+                send(subject, "&eBlacklisted: &7" + (this.epicGuard.getStorageManager().isBlacklisted(address) ? "&a&l✔" : "&c&l✖"));
+                send(subject, "");
+
+                List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new BotUser(address, null));
+                send(subject, "&eSeen nicknames (" + accounts.size() + "): &7" + String.join(", ", accounts));
+
+                send(subject, "");
+                send(subject, "&eMore details: &7&nhttps://proxycheck.io/threats/" + address);
+                send(subject, "&3&m--&8&m------------------------------------------&3&m--");
+                break;
             default:
-                send(subject, config.unknown);
+                send(subject, prefix + config.unknown);
         }
     }
 
@@ -115,7 +157,7 @@ public class EpicGuardCommand {
         Validate.notNull(args, "Command subject cannot be null!");
 
         if (args.length == 0) {
-            return Arrays.asList("stats", "notifications", "reload", "whitelist", "blacklist");
+            return Arrays.asList("stats", "notifications", "analyze", "reload", "whitelist", "blacklist");
         } else if (args[0].equalsIgnoreCase("whitelist")) {
             if (args.length == 1) {
                 return Arrays.asList("add", "remove");

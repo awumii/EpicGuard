@@ -20,6 +20,7 @@ import me.xneox.epicguard.core.user.BotUser;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -73,6 +74,19 @@ public class StorageManager {
         this.accountMap.put(user.getAddress(), accounts);
     }
 
+    /**
+     * Searches for the last used address of the specified nickname.
+     * Returns null if not found.
+     */
+    @Nullable
+    public String findByNickname(String nickname) {
+        return this.accountMap.entrySet().stream()
+                .filter(entry -> entry.getValue().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
     public void blacklist(@Nonnull String address) {
         Validate.notNull(address, "Address cannot be null!");
         if (!this.blacklist.contains(address)) {
@@ -109,5 +123,10 @@ public class StorageManager {
     @Nonnull
     public Collection<String> getPingCache() {
         return this.pingCache;
+    }
+
+    @Nonnull
+    public Map<String, List<String>> getAccountMap() {
+        return accountMap;
     }
 }
