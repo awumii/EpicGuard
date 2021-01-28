@@ -74,6 +74,9 @@ public class MessagesConfiguration {
     @CfgName("operator-disabled")
     public String operatorDisabled = "&cOperator mechanics has been disabled on this server.";
 
+    @CfgName("analysis-failed")
+    public String analysisFailed = "&cCould not find address for this nickname, or provided address is invalid.";
+
     @CfgName("actionbar-monitor")
     public String monitor = "&cEpicGuard &8» &6%cps% &7connections/s &8| %status%";
 
