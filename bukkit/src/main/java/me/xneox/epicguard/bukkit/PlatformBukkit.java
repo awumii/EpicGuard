@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.bukkit;
 
+import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
 import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.bukkit.module.ModuleManager;
 import me.xneox.epicguard.bukkit.module.ModuleTask;
@@ -23,8 +24,7 @@ import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.PlatformPlugin;
-import me.xneox.epicguard.core.command.CommandSubject;
-import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.logger.JavaLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
@@ -58,7 +58,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
 
         PluginCommand command = this.getCommand("epicguard");
         if (command != null) {
-            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new EpicGuardCommand(this.epicGuard));
+            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new CommandExecutor(this.epicGuard));
             command.setExecutor(cmdExecutor);
             command.setTabCompleter(cmdExecutor);
         }
@@ -88,15 +88,6 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
         } else {
             Reflections.sendActionBar(player, message); // backwards compatibility
-        }
-    }
-
-    @Override
-    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject subject) {
-        if (subject.isConsole()) {
-            Bukkit.getConsoleSender().sendMessage(message);
-        } else {
-            Bukkit.getPlayer(subject.getUUID()).sendMessage(message);
         }
     }
 
