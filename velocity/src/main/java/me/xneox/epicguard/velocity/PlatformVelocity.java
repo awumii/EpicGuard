@@ -27,12 +27,12 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
-import me.xneox.epicguard.core.command.CommandSubject;
-import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
+import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.DisconnectListener;
 import me.xneox.epicguard.velocity.listener.PostLoginListener;
 import me.xneox.epicguard.velocity.listener.PreLoginListener;
@@ -66,7 +66,7 @@ public class PlatformVelocity implements PlatformPlugin {
                 .aliases("guard")
                 .build();
 
-        commandManager.register(meta, new VelocityCommandExecutor(new EpicGuardCommand(this.epicGuard)));
+        commandManager.register(meta, new VelocityCommandExecutor(new CommandExecutor(this.epicGuard)));
 
         EventManager eventManager = this.getServer().getEventManager();
         eventManager.register(this, new PostLoginListener(this.epicGuard));
@@ -94,15 +94,6 @@ public class PlatformVelocity implements PlatformPlugin {
         this.getServer().getPlayer(user.getUUID()).ifPresent(player -> {
             player.sendActionBar(Component.text(ChatUtils.colored(message)));
         });
-    }
-
-    @Override
-    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject subject) {
-        if (subject.isConsole()) {
-            this.getServer().getConsoleCommandSource().sendMessage(Component.text(message));
-        } else {
-            this.getServer().getPlayer(subject.getUUID()).ifPresent(player -> player.sendMessage(Component.text(message)));
-        }
     }
 
     @Override

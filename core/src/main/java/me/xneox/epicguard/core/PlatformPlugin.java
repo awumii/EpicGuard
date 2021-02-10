@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.core;
 
-import me.xneox.epicguard.core.command.CommandSubject;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.user.User;
 
@@ -25,8 +24,6 @@ public interface PlatformPlugin {
     GuardLogger getGuardLogger();
 
     void sendActionBar(@Nonnull String message, @Nonnull User user);
-
-    void sendMessage(@Nonnull String message, @Nonnull CommandSubject user);
 
     String getVersion();
 

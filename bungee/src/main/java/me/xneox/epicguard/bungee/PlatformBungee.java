@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.bungee;
 
+import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
 import me.xneox.epicguard.bungee.listener.DisconnectListener;
 import me.xneox.epicguard.bungee.listener.PostLoginListener;
 import me.xneox.epicguard.bungee.listener.PreLoginListener;
@@ -22,8 +23,7 @@ import me.xneox.epicguard.bungee.listener.ServerPingListener;
 import me.xneox.epicguard.bungee.util.Metrics;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
-import me.xneox.epicguard.core.command.CommandSubject;
-import me.xneox.epicguard.core.command.EpicGuardCommand;
+import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.logger.JavaLogger;
 import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
@@ -59,7 +59,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
         pm.registerListener(this, new DisconnectListener(this.epicGuard));
         pm.registerListener(this, new PostLoginListener(this.epicGuard));
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
-        pm.registerCommand(this, new BungeeCommandExecutor(new EpicGuardCommand(this.epicGuard)));
+        pm.registerCommand(this, new BungeeCommandExecutor(new CommandExecutor(this.epicGuard)));
 
         new Metrics(this, 5956);
     }
@@ -77,15 +77,6 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
         ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
-    }
-
-    @Override
-    public void sendMessage(@Nonnull String message, @Nonnull CommandSubject user) {
-        if (user.isConsole()) {
-            ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(message));
-        } else {
-            ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(new TextComponent(message));
-        }
     }
 
     @Override
