@@ -33,20 +33,32 @@ public class StorageManager {
 
     private final Collection<String> pingCache = new HashSet<>();
     private final Map<String, List<String>> accountMap;
+
     private final Collection<String> blacklist;
     private final Collection<String> whitelist;
+
+    private final Collection<String> nameBlacklist;
+    private final Collection<String> nameWhitelist;
 
     public StorageManager() {
         this.data = new Json("storage", "plugins/EpicGuard/data");
 
         this.accountMap = this.data.getOrSetDefault("account-data", new HashMap<>());
+
         this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
         this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
+
+        this.nameBlacklist = this.data.getOrSetDefault("name-blacklist", new HashSet<>());
+        this.nameWhitelist = this.data.getOrSetDefault("name-whitelist", new HashSet<>());
     }
 
     public void save() {
         this.data.set("blacklist", this.blacklist);
         this.data.set("whitelist", this.whitelist);
+
+        this.data.set("name-blacklist", this.nameBlacklist);
+        this.data.set("name-whitelist", this.nameWhitelist);
+
         this.data.set("account-data", this.accountMap);
     }
 
@@ -87,27 +99,46 @@ public class StorageManager {
                 .orElse(null);
     }
 
-    public void blacklist(@Nonnull String address) {
-        Validate.notNull(address, "Address cannot be null!");
-        if (!this.blacklist.contains(address)) {
-            this.blacklist.add(address);
+    public void blacklist(@Nonnull String argument) {
+        Validate.notNull(argument, "Argument cannot be null!");
+
+        if (InetAddresses.isInetAddress(argument)) {
+            if (!this.blacklist.contains(argument)) {
+                this.blacklist.add(argument);
+            }
+        } else {
+            if (!this.nameBlacklist.contains(argument)) {
+                this.nameBlacklist.add(argument);
+            }
         }
     }
 
-    public boolean isBlacklisted(String address) {
-        return this.blacklist.contains(address);
-    }
+    public void whitelist(@Nonnull String argument) {
+        Validate.notNull(argument, "Argument cannot be null!");
 
-    public void whitelist(@Nonnull String address) {
-        Validate.notNull(address, "Address cannot be null!");
-        if (!this.whitelist.contains(address)) {
-            this.whitelist.add(address);
+        if (InetAddresses.isInetAddress(argument)) {
+            if (!this.whitelist.contains(argument)) {
+                this.whitelist.add(argument);
+            }
+        } else {
+            if (!this.nameWhitelist.contains(argument)) {
+                this.nameWhitelist.add(argument);
+            }
         }
-        this.blacklist.remove(address);
     }
 
-    public boolean isWhitelisted(String address) {
-        return this.whitelist.contains(address);
+    public boolean isBlacklisted(String argument) {
+        if (InetAddresses.isInetAddress(argument)) {
+            return this.blacklist.contains(argument);
+        }
+        return this.nameBlacklist.contains(argument);
+    }
+
+    public boolean isWhitelisted(String argument) {
+        if (InetAddresses.isInetAddress(argument)) {
+            return this.whitelist.contains(argument);
+        }
+        return this.nameWhitelist.contains(argument);
     }
 
     @Nonnull
