@@ -37,27 +37,29 @@ public class MessagesConfiguration {
 
     public String usage = "&cCorrect usage: &6{USAGE}";
 
-    public String whitelisted = "&7Succesfully whitelisted address &a{IP}!";
+    @CfgName("command-whitelist-add")
+    public String whitelisted = "&7The user &a{USER} &7has been added to the whitelist.";
 
-    @CfgName("un-whitelisted")
-    public String unWhitelisted = "&7Succesfully removed address &a{IP} &7from the whitelist!";
+    @CfgName("command-whitelist-remove")
+    public String unWhitelisted = "The user &6{USER} &7has been removed from the whitelist";
 
-    public String blacklisted = "&7Succesfully blacklisted address &c{IP}!";
+    @CfgName("command-blacklist-add")
+    public String blacklisted = "&7The user &c{USER} &7has been added to the blacklist.";
 
-    @CfgName("un-blacklisted")
-    public String unBlacklisted = "&7Succesfully removed address &c{IP} &7from the blacklist!";
+    @CfgName("command-blacklist-remove")
+    public String unBlacklisted = "&7The user &6{USER} &7has been removed from the whitelist.";
 
-    @CfgName("already-whitelisted")
-    public String alreadyWhitelisted = "&cThe address &f{IP} &cis already whitelisted!";
+    @CfgName("command-whitelist-already")
+    public String alreadyWhitelisted = "&cThe user &6{USER} &cis already whitelisted!";
 
-    @CfgName("already-blacklisted")
-    public String alreadyBlacklisted = "&cThe address &f{IP} &cis already blacklisted!";
+    @CfgName("command-blacklist-already")
+    public String alreadyBlacklisted = "&cThe user &6{USER} &cis already blacklisted!";
 
-    @CfgName("not-in-whitelist")
-    public String notWhitelisted = "&cThe address &f{IP} &cis not in whitelist!";
+    @CfgName("command-whitelist-not")
+    public String notWhitelisted = "&cThe user &6{USER} &cis not in whitelist!";
 
-    @CfgName("not-in-blacklist")
-    public String notBlacklisted = "&cThe address &f{IP} &cis not in the blacklist!";
+    @CfgName("command-blacklist-not")
+    public String notBlacklisted = "&cThe user &6{USER} &cis not in the blacklist!";
 
     public String reload = "&7Succesfully reloaded config and messages!";
 

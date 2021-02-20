@@ -58,7 +58,7 @@ public class DetectionHandler {
             this.epicGuard.getAttackManager().setAttack(true);
         }
 
-        if (this.epicGuard.getStorageManager().isWhitelisted(address)) {
+        if (this.epicGuard.getStorageManager().isWhitelisted(address) || this.epicGuard.getStorageManager().isWhitelisted(nickname)) {
             return Optional.empty();
         }
 

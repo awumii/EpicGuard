@@ -35,9 +35,9 @@ public class CommandExecutor {
             send(sender, "&e/guard stats &b- &7show plugin statistics.");
             send(sender, "&e/guard notifications &b- &7enable actionbar notifications.");
             send(sender, "&e/guard reload &b- &7reload config and messages.");
-            send(sender, "&e/guard analyze <address> &b- &7see details about the specified address.");
-            send(sender, "&e/guard whitelist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7whitelist/unwhitelist an address.");
-            send(sender, "&e/guard blacklist &8<&7add&7/&7remove&8> &8<&7address&8> &b- &7blacklist/unblacklist an address.");
+            send(sender, "&e/guard analyze <nickname/address> &b- &7see details about the specified address.");
+            send(sender, "&e/guard whitelist &8<&7add&7/&7remove&8> &8<&7nickname/address&8> &b- &7whitelist/unwhitelist an address or nickname.");
+            send(sender, "&e/guard blacklist &8<&7add&7/&7remove&8> &8<&7nickname/address&8> &b- &7blacklist/unblacklist an address or nickname.");
             send(sender, "&3&m--&8&m------------------------------------------&3&m--");
             return;
         }
@@ -67,51 +67,51 @@ public class CommandExecutor {
                 break;
             case "whitelist":
                 if (args.length != 3) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <add/remove> <address>"));
+                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <add/remove> <nickname/address>"));
                     return;
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
                     if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
-                        send(sender, prefix + config.alreadyWhitelisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.alreadyWhitelisted.replace("{USER}", args[2]));
                     } else {
-                        send(sender, prefix + config.whitelisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.whitelisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().whitelist(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
-                        send(sender, prefix + config.unWhitelisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.unWhitelisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().getWhitelist().remove(args[2]);
                     } else {
-                        send(sender, prefix + config.notWhitelisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.notWhitelisted.replace("{USER}", args[2]));
                     }
                 }
                 break;
             case "blacklist":
                 if (args.length != 3) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <add/remove> <address>"));
+                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <add/remove> <nickname/address>"));
                     return;
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
                     if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
-                        send(sender, prefix + config.alreadyBlacklisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.alreadyBlacklisted.replace("{USER}", args[2]));
                     } else {
-                        send(sender, prefix + config.blacklisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.blacklisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().blacklist(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
-                        send(sender, prefix + config.unBlacklisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.unBlacklisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().getBlacklist().remove(args[2]);
                     } else {
-                        send(sender, prefix + config.notBlacklisted.replace("{IP}", args[2]));
+                        send(sender, prefix + config.notBlacklisted.replace("{USER}", args[2]));
                     }
                 }
                 break;
             case "analyze":
                 if (args.length != 2) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard analyze <address>"));
+                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard analyze <nickname/address>"));
                     return;
                 }
 
