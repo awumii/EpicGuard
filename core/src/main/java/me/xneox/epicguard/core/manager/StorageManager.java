@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core.manager;
 
+import com.google.common.net.InetAddresses;
 import de.leonhard.storage.Json;
 import me.xneox.epicguard.core.user.BotUser;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
@@ -28,6 +29,7 @@ import java.util.*;
  *
  * TODO: Other storage implementations than just JSON.
  */
+@SuppressWarnings("UnstableApiUsage")
 public class StorageManager {
     private final Json data;
 
