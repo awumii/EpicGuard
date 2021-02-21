@@ -125,11 +125,6 @@ public class PluginConfiguration {
     @CfgName("attack-deny-join")
     public boolean denyJoin = true;
 
-    @CfgComment("Shoud the auto-whitelist feature be enabled?")
-    @CfgComment("Whitelisted players are exempt from every check.")
-    @CfgName("auto-whitelist")
-    public boolean autoWhitelist = true;
-
     @CfgComment("Time in seconds the player must be online")
     @CfgComment("to be added to the EpicGuard's whitelist.")
     @CfgComment("Default: 240 (4 minutes)")
@@ -149,16 +144,34 @@ public class PluginConfiguration {
     @CfgName("rate-limit-seconds")
     public int rateLimit = 10;
 
-    @CfgComment("How many connections per second must be made,")
-    @CfgComment("to activate attack mode temporally?")
-    @CfgName("max-cps")
-    public int maxCps = 6;
+    @CfgComment("Nickname-check will block players if their nickname matches")
+    @CfgComment("the regex expression set in the 'nickname-check-expression'.")
+    @CfgComment("NEVER - check is disabled.")
+    @CfgComment("ALWAYS - check will perform on every player always.")
+    @CfgComment("ATTACK (default) - check will perform only during bot attack.")
+    @CfgName("nickname-check")
+    public String nicknameCheck = "ALWAYS";
+
+    @CfgComment("Default value will check if the nickname contains 'bot' or 'mcspam'.")
+    @CfgComment("You can use https://regex101.com/ for making and testing your own expression.")
+    @CfgName("nickname-check-expression")
+    public String nicknameCheckExpression = "(?i).*(bot|mcspam).*";
 
     @CfgComment("")
     @CfgComment("╔════════════════════════════════════════════╗")
     @CfgComment("║              Other Settings                ║")
     @CfgComment("╚════════════════════════════════════════════╝")
     @CfgComment("")
+
+    @CfgComment("How many connections per second must be made,")
+    @CfgComment("to activate attack mode temporally?")
+    @CfgName("max-cps")
+    public int maxCps = 6;
+
+    @CfgComment("Shoud the auto-whitelist feature be enabled?")
+    @CfgComment("Whitelisted players are exempt from every check.")
+    @CfgName("auto-whitelist")
+    public boolean autoWhitelist = true;
 
     @CfgComment("If you want to use other proxy/vpn checker")
     @CfgComment("than default (proxycheck.io), you can set it here.")

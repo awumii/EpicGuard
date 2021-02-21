@@ -135,4 +135,10 @@ public class MessagesConfiguration {
     public List<String> kickMessageRateLimit = Arrays.asList(
             "&8» &7You have been kicked by &bAntiBot Protection&7:",
             "&8» &cYou must wait some seconds between joining again.");
+
+    @CfgName("kick-message-nickname")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    public List<String> kickMessageNickname = Arrays.asList(
+            "&8» &7You have been kicked by &bAntiBot Protection&7:",
+            "&8» &cYou nickname contains illegal characters.");
 }
