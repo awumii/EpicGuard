@@ -64,8 +64,43 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
                         <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>org.apache</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>org.diorite</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>com.google</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
                             <pattern>com.fasterxml</pattern>
-                            <shadedPattern>me.xneox.epicguard.lib</shadedPattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>com.maxmind</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>org.apache</pattern>
+                            <shadedPattern>libs</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>de.leonhard.storage</pattern>
+                            <shadedPattern>libs</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

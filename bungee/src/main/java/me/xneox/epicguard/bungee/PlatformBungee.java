@@ -20,7 +20,6 @@ import me.xneox.epicguard.bungee.listener.DisconnectListener;
 import me.xneox.epicguard.bungee.listener.PostLoginListener;
 import me.xneox.epicguard.bungee.listener.PreLoginListener;
 import me.xneox.epicguard.bungee.listener.ServerPingListener;
-import me.xneox.epicguard.bungee.util.Metrics;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandExecutor;
@@ -34,6 +33,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
+import org.bstats.bungeecord.Metrics;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
