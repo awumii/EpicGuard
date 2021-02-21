@@ -101,9 +101,7 @@ public class StorageManager {
                 .orElse(null);
     }
 
-    public void blacklist(@Nonnull String argument) {
-        Validate.notNull(argument, "Argument cannot be null!");
-
+    public void blacklist(String argument) {
         if (InetAddresses.isInetAddress(argument)) {
             if (!this.blacklist.contains(argument)) {
                 this.blacklist.add(argument);
@@ -115,9 +113,7 @@ public class StorageManager {
         }
     }
 
-    public void whitelist(@Nonnull String argument) {
-        Validate.notNull(argument, "Argument cannot be null!");
-
+    public void whitelist(String argument) {
         if (InetAddresses.isInetAddress(argument)) {
             if (!this.whitelist.contains(argument)) {
                 this.whitelist.add(argument);
@@ -141,6 +137,22 @@ public class StorageManager {
             return this.whitelist.contains(argument);
         }
         return this.nameWhitelist.contains(argument);
+    }
+
+    public void removeFromBlacklist(String argument) {
+        if (InetAddresses.isInetAddress(argument)) {
+            this.blacklist.remove(argument);
+        } else {
+            this.nameBlacklist.remove(argument);
+        }
+    }
+
+    public void removeFromWhitelist(String argument) {
+        if (InetAddresses.isInetAddress(argument)) {
+            this.whitelist.remove(argument);
+        } else {
+            this.nameWhitelist.remove(argument);
+        }
     }
 
     @Nonnull

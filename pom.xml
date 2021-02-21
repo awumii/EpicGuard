@@ -69,17 +69,7 @@
                         </relocation>
 
                         <relocation>
-                            <pattern>org.apache</pattern>
-                            <shadedPattern>libs</shadedPattern>
-                        </relocation>
-
-                        <relocation>
                             <pattern>org.diorite</pattern>
-                            <shadedPattern>libs</shadedPattern>
-                        </relocation>
-
-                        <relocation>
-                            <pattern>com.google</pattern>
                             <shadedPattern>libs</shadedPattern>
                         </relocation>
 
@@ -90,11 +80,6 @@
 
                         <relocation>
                             <pattern>com.maxmind</pattern>
-                            <shadedPattern>libs</shadedPattern>
-                        </relocation>
-
-                        <relocation>
-                            <pattern>org.apache</pattern>
                             <shadedPattern>libs</shadedPattern>
                         </relocation>
 

@@ -29,7 +29,8 @@ public class BlacklistCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull BotUser user) {
-        return this.epicGuard.getStorageManager().isBlacklisted(user.getAddress());
+        return this.epicGuard.getStorageManager().isBlacklisted(user.getAddress())
+                || this.epicGuard.getStorageManager().isBlacklisted(user.getNickname());
     }
 
     @Override

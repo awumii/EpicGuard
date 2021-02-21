@@ -47,7 +47,7 @@ public class MessagesConfiguration {
     public String blacklisted = "&7The user &c{USER} &7has been added to the blacklist.";
 
     @CfgName("command-blacklist-remove")
-    public String unBlacklisted = "&7The user &6{USER} &7has been removed from the whitelist.";
+    public String unBlacklisted = "&7The user &6{USER} &7has been removed from the blacklist.";
 
     @CfgName("command-whitelist-already")
     public String alreadyWhitelisted = "&cThe user &6{USER} &cis already whitelisted!";
@@ -98,7 +98,7 @@ public class MessagesConfiguration {
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
     public List<String> kickMessageBlacklist = Arrays.asList(
             "&8» &7You have been kicked by &bAntiBot Protection&7:",
-            "&8» &cYour IP address is blacklisted on this server.");
+            "&8» &cYou have been blacklisted on this server.");
 
     @CfgName("kick-message-attack")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
