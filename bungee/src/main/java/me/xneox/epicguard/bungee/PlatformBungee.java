@@ -46,7 +46,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     public void onEnable() {
         // Logging support for both BungeeCord and Waterfall(+forks).
         try {
-            Class.forName("org.slf4j.Logger");
+            Class.forName("io.github.waterfallmc.waterfall.log4j.WaterfallLogger");
             this.logger = new SLF4JLogger(this.getSLF4JLogger());
         } catch (ClassNotFoundException e) {
             this.logger = new JavaLogger(this.getLogger());
