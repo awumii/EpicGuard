@@ -37,13 +37,23 @@ public class JoinHandler {
         Validate.notNull(uuid, "UUID cannot be null!");
         Validate.notNull(address, "Address cannot be null!");
 
+        User user = this.epicGuard.getUserManager().getOrCreate(uuid);
+        // Schedule a delayed task to whitelist the player.
         if (this.epicGuard.getConfig().autoWhitelist) {
             this.epicGuard.getPlugin().runTaskLater(() -> {
-                User user = this.epicGuard.getUserManager().getOrCreate(uuid);
                 if (user != null) {
                     this.epicGuard.getStorageManager().whitelist(address);
                 }
             }, this.epicGuard.getConfig().autoWhitelistTime);
+        }
+
+        // Schedule a delayed task to check if the player has sent the Settings packet.
+        if (this.epicGuard.getConfig().settingsCheck) {
+            this.epicGuard.getPlugin().runTaskLater(() -> {
+                if (user != null && !user.hasChangedSettings()) {
+                    this.epicGuard.getPlugin().disconnectUser(user, this.epicGuard.getMessages().kickMessageSettings);
+                }
+            }, this.epicGuard.getConfig().settingsCheckDelay);
         }
     }
 }

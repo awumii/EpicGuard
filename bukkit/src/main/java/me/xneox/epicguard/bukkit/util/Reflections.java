@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+// Legacy class needed for use on older server versions.
 public final class Reflections {
     public static void sendActionBar(Player player, String message) {
         try {

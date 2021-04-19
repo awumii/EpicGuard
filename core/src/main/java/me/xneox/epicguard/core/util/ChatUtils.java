@@ -19,7 +19,7 @@ import java.util.List;
 
 public final class ChatUtils {
     public static String colored(String message) {
-        return message.replace("&", "§");
+        return message.replace("&", "§"); //TODO: Use Adventure/Bungee for this...
     }
 
     public static String buildString(List<String> list) {

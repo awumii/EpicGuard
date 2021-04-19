@@ -13,23 +13,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core;
+package me.xneox.epicguard.core.handler;
 
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.EpicGuard;
 
-import javax.annotation.Nonnull;
+import java.util.UUID;
 
-public interface PlatformPlugin {
-    GuardLogger getGuardLogger();
+public class SettingsHandler {
+    private final EpicGuard epicGuard;
 
-    void sendActionBar(@Nonnull String message, @Nonnull User user);
+    public SettingsHandler(EpicGuard epicGuard) {
+        this.epicGuard = epicGuard;
+    }
 
-    void disconnectUser(@Nonnull User user, @Nonnull String message);
-
-    String getVersion();
-
-    void runTaskLater(@Nonnull Runnable task, long seconds);
-
-    void scheduleTask(@Nonnull Runnable task, long seconds);
+    public void handle(UUID uuid) {
+        this.epicGuard.getUserManager().getOrCreate(uuid).setSettingsChanged(true);
+    }
 }

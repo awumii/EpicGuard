@@ -32,9 +32,6 @@ public class MessagesConfiguration {
     @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
     public String prefix = "&cEpicGuard &8» &7";
 
-    @CfgName("no-permission")
-    public String noPermission = "&cYou don't have permission for this command!";
-
     public String usage = "&cCorrect usage: &6{USAGE}";
 
     @CfgName("command-whitelist-add")
@@ -87,6 +84,9 @@ public class MessagesConfiguration {
 
     @CfgName("actionbar-attack")
     public String attack = "&cAttack detected!";
+
+    @CfgName("kick-message-settings")
+    public String kickMessageSettings = "&cBot-like behaviour detected, please join the server again.";
 
     @CfgName("kick-message-geo")
     @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)

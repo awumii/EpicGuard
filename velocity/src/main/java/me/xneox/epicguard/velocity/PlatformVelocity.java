@@ -33,12 +33,10 @@ import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
-import me.xneox.epicguard.velocity.listener.DisconnectListener;
-import me.xneox.epicguard.velocity.listener.PostLoginListener;
-import me.xneox.epicguard.velocity.listener.PreLoginListener;
-import me.xneox.epicguard.velocity.listener.ServerPingListener;
+import me.xneox.epicguard.velocity.listener.*;
 import net.kyori.adventure.text.Component;
 import org.bstats.velocity.Metrics;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -76,6 +74,7 @@ public class PlatformVelocity implements PlatformPlugin {
         eventManager.register(this, new PreLoginListener(this.epicGuard));
         eventManager.register(this, new DisconnectListener(this.epicGuard));
         eventManager.register(this, new ServerPingListener(this.epicGuard));
+        eventManager.register(this, new PlayerSettingsListener(this.epicGuard));
 
         this.metricsFactory.make(this, 10417);
     }
@@ -96,9 +95,12 @@ public class PlatformVelocity implements PlatformPlugin {
 
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> {
-            player.sendActionBar(Component.text(ChatUtils.colored(message)));
-        });
+        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(Component.text(ChatUtils.colored(message))));
+    }
+
+    @Override
+    public void disconnectUser(@NotNull User user, @NotNull String message) {
+        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(Component.text(ChatUtils.colored(message))));
     }
 
     @Override

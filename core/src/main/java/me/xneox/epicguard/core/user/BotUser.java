@@ -51,12 +51,4 @@ public class BotUser {
     public int hashCode() {
         return Objects.hashCode(getAddress(), getNickname());
     }
-
-    @Override
-    public String toString() {
-        return "BotUser{" +
-                "address='" + address + '\'' +
-                ", nickname='" + nickname + '\'' +
-                '}';
-    }
 }

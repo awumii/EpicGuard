@@ -16,10 +16,7 @@
 package me.xneox.epicguard.bungee;
 
 import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
-import me.xneox.epicguard.bungee.listener.DisconnectListener;
-import me.xneox.epicguard.bungee.listener.PostLoginListener;
-import me.xneox.epicguard.bungee.listener.PreLoginListener;
-import me.xneox.epicguard.bungee.listener.ServerPingListener;
+import me.xneox.epicguard.bungee.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.PlatformPlugin;
 import me.xneox.epicguard.core.command.CommandExecutor;
@@ -34,6 +31,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +57,8 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
         pm.registerListener(this, new DisconnectListener(this.epicGuard));
         pm.registerListener(this, new PostLoginListener(this.epicGuard));
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
+        pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
+
         pm.registerCommand(this, new BungeeCommandExecutor(new CommandExecutor(this.epicGuard)));
 
         new Metrics(this, 5956);
@@ -77,6 +77,11 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
         ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
+    }
+
+    @Override
+    public void disconnectUser(@NotNull User user, @Nonnull String message) {
+        ProxyServer.getInstance().getPlayer(user.getUUID()).disconnect(new TextComponent(ChatUtils.colored(message)));
     }
 
     @Override
