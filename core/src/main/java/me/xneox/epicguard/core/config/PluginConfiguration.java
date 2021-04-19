@@ -134,7 +134,7 @@ public class PluginConfiguration {
     @CfgComment("Rate-limit check will force users to wait some seconds.")
     @CfgComment("before joining the server again (configurable below).")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
+    @CfgComment("ALWAYS - check will always perform on every player.")
     @CfgComment("ATTACK (default) - check will perform only during bot attack.")
     @CfgName("rate-limit-check")
     public String rateLimitCheck = "ALWAYS";
@@ -144,10 +144,21 @@ public class PluginConfiguration {
     @CfgName("rate-limit-seconds")
     public int rateLimit = 10;
 
+    @CfgComment("When a player joins the server, he will send the Settings packet.")
+    @CfgComment("Some bots skip sending this packet, this check will try to detect that.")
+    @CfgName("settings-check")
+    public boolean settingsCheck = true;
+
+    @CfgComment("After how many seconds after the player has joined,")
+    @CfgComment("should we check if he sent the Settings packet? (in seconds)")
+    @CfgComment("Increase for faster detection, decrease if detecting players with bad internet connection.")
+    @CfgName("settings-check-delay")
+    public int settingsCheckDelay = 5;
+
     @CfgComment("Nickname-check will block players if their nickname matches")
     @CfgComment("the regex expression set in the 'nickname-check-expression'.")
     @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will perform on every player always.")
+    @CfgComment("ALWAYS - check will always perform on every player.")
     @CfgComment("ATTACK (default) - check will perform only during bot attack.")
     @CfgName("nickname-check")
     public String nicknameCheck = "ALWAYS";

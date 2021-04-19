@@ -13,23 +13,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core;
+package me.xneox.epicguard.velocity.listener;
 
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.user.User;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.player.PlayerSettingsChangedEvent;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.handler.SettingsHandler;
 
-import javax.annotation.Nonnull;
+public class PlayerSettingsListener extends SettingsHandler {
+    public PlayerSettingsListener(EpicGuard epicGuard) {
+        super(epicGuard);
+    }
 
-public interface PlatformPlugin {
-    GuardLogger getGuardLogger();
-
-    void sendActionBar(@Nonnull String message, @Nonnull User user);
-
-    void disconnectUser(@Nonnull User user, @Nonnull String message);
-
-    String getVersion();
-
-    void runTaskLater(@Nonnull Runnable task, long seconds);
-
-    void scheduleTask(@Nonnull Runnable task, long seconds);
+    @Subscribe
+    public void onPostLogin(PlayerSettingsChangedEvent event) {
+        this.handle(event.getPlayer().getUniqueId());
+    }
 }

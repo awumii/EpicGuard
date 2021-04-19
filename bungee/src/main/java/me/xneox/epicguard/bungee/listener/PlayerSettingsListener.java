@@ -13,23 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core;
+package me.xneox.epicguard.bungee.listener;
 
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.handler.SettingsHandler;
+import net.md_5.bungee.api.event.SettingsChangedEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
-import javax.annotation.Nonnull;
+public class PlayerSettingsListener extends SettingsHandler implements Listener {
+    public PlayerSettingsListener(EpicGuard epicGuard) {
+        super(epicGuard);
+    }
 
-public interface PlatformPlugin {
-    GuardLogger getGuardLogger();
-
-    void sendActionBar(@Nonnull String message, @Nonnull User user);
-
-    void disconnectUser(@Nonnull User user, @Nonnull String message);
-
-    String getVersion();
-
-    void runTaskLater(@Nonnull Runnable task, long seconds);
-
-    void scheduleTask(@Nonnull Runnable task, long seconds);
+    @EventHandler
+    public void onSettingsChanged(SettingsChangedEvent event) {
+        this.handle(event.getPlayer().getUniqueId());
+    }
 }

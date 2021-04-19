@@ -25,17 +25,26 @@ import java.util.UUID;
 public class User {
     private final UUID uuid;
     private boolean notifications;
+    private boolean settingsChanged;
 
     public User(UUID uuid) {
         this.uuid = uuid;
     }
 
     public UUID getUUID() {
-        return this.uuid;
+        return uuid;
     }
 
     public boolean hasNotifications() {
-        return this.notifications;
+        return notifications;
+    }
+
+    public boolean hasChangedSettings() {
+        return settingsChanged;
+    }
+
+    public void setSettingsChanged(boolean settingsChanged) {
+        this.settingsChanged = settingsChanged;
     }
 
     public void setNotifications(boolean notifications) {

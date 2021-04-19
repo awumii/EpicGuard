@@ -35,6 +35,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -54,6 +55,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
         pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
         pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
         pm.registerEvents(new ServerPingListener(this.epicGuard), this);
+        pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
         pm.registerEvents(new CommandListener(this), this);
 
         PluginCommand command = this.getCommand("epicguard");
@@ -89,6 +91,11 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
         } else {
             Reflections.sendActionBar(player, message); // backwards compatibility
         }
+    }
+
+    @Override
+    public void disconnectUser(@NotNull User user, @NotNull String message) {
+        Bukkit.getPlayer(user.getUUID()).kickPlayer(ChatUtils.colored(message));
     }
 
     @Override
