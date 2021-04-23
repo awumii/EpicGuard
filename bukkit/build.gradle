@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
+    implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+}
