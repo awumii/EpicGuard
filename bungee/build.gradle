@@ -15,5 +15,6 @@ dependencies {
     implementation project(':core')
 
     implementation 'org.bstats:bstats-bungeecord:2.2.1'
-    implementation 'io.github.waterfallmc:waterfall-api:1.16-R0.4-SNAPSHOT'
+    compileOnly 'io.github.waterfallmc:waterfall-api:1.16-R0.4-SNAPSHOT'
+    compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
 }

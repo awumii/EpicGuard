@@ -1,0 +1,9 @@
+{
+  "id":"epicguard",
+  "name":"EpicGuard",
+  "version":"${projectVersion}",
+  "authors":["xNeox"],
+  "description": "Bot protection system for Minecraft servers.",
+  "dependencies": [],
+  "main":"me.xneox.epicguard.velocity.PlatformVelocity"
+}

@@ -35,12 +35,12 @@ public class EpicGuard {
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
     private final AttackManager attackManager;
-    private final PlatformPlugin plugin;
+    private final Platform plugin;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
 
-    public EpicGuard(PlatformPlugin plugin) {
+    public EpicGuard(Platform plugin) {
         this.plugin = plugin;
 
         getLogger().log("Loading configuration...");
@@ -86,7 +86,7 @@ public class EpicGuard {
         return this.plugin.getGuardLogger();
     }
 
-    public PlatformPlugin getPlugin() {
+    public Platform getPlugin() {
         return plugin;
     }
 

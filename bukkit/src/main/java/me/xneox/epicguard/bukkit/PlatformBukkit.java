@@ -22,7 +22,7 @@ import me.xneox.epicguard.bukkit.module.ModuleTask;
 import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.logger.JavaLogger;
 import me.xneox.epicguard.core.user.User;
@@ -35,11 +35,10 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
-public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
+public class PlatformBukkit extends JavaPlugin implements Platform {
     private EpicGuard epicGuard;
     private ModuleManager moduleManager;
     private GuardLogger logger;
@@ -94,7 +93,7 @@ public class PlatformBukkit extends JavaPlugin implements PlatformPlugin {
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @NotNull String message) {
+    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
         Bukkit.getPlayer(user.getUUID()).kickPlayer(ChatUtils.colored(message));
     }
 
