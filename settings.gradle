@@ -1,0 +1,6 @@
+rootProject.name = 'EpicGuard'
+include 'core'
+include 'velocity'
+include 'bungee'
+include 'bukkit'
+

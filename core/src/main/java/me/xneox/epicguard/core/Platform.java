@@ -20,7 +20,7 @@ import me.xneox.epicguard.core.user.User;
 
 import javax.annotation.Nonnull;
 
-public interface PlatformPlugin {
+public interface Platform {
     GuardLogger getGuardLogger();
 
     void sendActionBar(@Nonnull String message, @Nonnull User user);

@@ -4,6 +4,17 @@
 
 EpicGuard is a bot protection plugin for minecraft servers, supporting bukkit, bungeecord and velocity environments. Highly configurable and customizable.
 
+## Building
+After cloning the repository, run the following command in the repository root:
+```
+./gradlew
+```
+Or, if you are on Windows:
+```
+gradlew.bat
+```
+The final jar file will be located in `build/libs/EpicGuard-<version>-all.jar`
+
 ## Some features
  * All checks can be configured as you want, you can make them checking every time, only during an attack or disable some of them completely.
  * Compatible with Spigot, PaperSpigot (and other forks), BungeeCord, Waterfall (and other forks), and Velocity.

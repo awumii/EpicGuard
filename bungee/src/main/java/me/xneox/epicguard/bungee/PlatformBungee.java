@@ -18,7 +18,7 @@ package me.xneox.epicguard.bungee;
 import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
 import me.xneox.epicguard.bungee.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.logger.JavaLogger;
@@ -31,12 +31,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
-import org.jetbrains.annotations.NotNull;
+
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
-public class PlatformBungee extends Plugin implements PlatformPlugin {
+public class PlatformBungee extends Plugin implements Platform {
     private EpicGuard epicGuard;
     private GuardLogger logger;
 
@@ -80,7 +80,7 @@ public class PlatformBungee extends Plugin implements PlatformPlugin {
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @Nonnull String message) {
+    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
         ProxyServer.getInstance().getPlayer(user.getUUID()).disconnect(new TextComponent(ChatUtils.colored(message)));
     }
 
