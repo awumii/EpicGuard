@@ -23,6 +23,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
+/**
+ * The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
+ */
 public class CommandListener implements Listener {
     private final PlatformBukkit plugin;
 

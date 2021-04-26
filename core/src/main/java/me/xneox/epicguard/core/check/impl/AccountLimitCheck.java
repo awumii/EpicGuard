@@ -18,19 +18,22 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This check will limit how many accounts can be created on one address.
+ * TODO: Fix this buggy mess. Sometimes working perfectly and sometimes not at all.
+ */
 public class AccountLimitCheck extends Check {
     public AccountLimitCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().accountLimitCheck);
 
         List<String> accounts = this.epicGuard.getStorageManager().getAccounts(user);

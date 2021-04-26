@@ -17,7 +17,7 @@ package me.xneox.epicguard.core.manager;
 
 import com.google.common.net.InetAddresses;
 import de.leonhard.storage.Json;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 /**
- * This class manages the EpicGuard's storage.
+ * This class manages the stored data and some global cache.
  *
  * TODO: Other storage implementations than just JSON.
  */
@@ -68,7 +68,7 @@ public class StorageManager {
      * Retrieves a list of nicknames used by specified IP Address.
      */
     @Nonnull
-    public List<String> getAccounts(@Nonnull BotUser user) {
+    public List<String> getAccounts(@Nonnull PendingUser user) {
         Validate.notNull(user, "BotUser cannot be null!");
         return this.accountMap.getOrDefault(user.getAddress(), new ArrayList<>());
     }
@@ -77,7 +77,7 @@ public class StorageManager {
     /**
      * If the user's address is not in the accountMap, it will be added.
      */
-    public void updateAccounts(@Nonnull BotUser user) {
+    public void updateAccounts(@Nonnull PendingUser user) {
         Validate.notNull(user, "BotUser cannot be null!");
 
         List<String> accounts = this.getAccounts(user);
@@ -101,59 +101,79 @@ public class StorageManager {
                 .orElse(null);
     }
 
-    public void blacklist(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            if (!this.blacklist.contains(argument)) {
-                this.blacklist.add(argument);
+    /**
+     * @param value The user's address or nickname.
+     */
+    public void blacklist(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            if (!this.blacklist.contains(value)) {
+                this.blacklist.add(value);
             }
         } else {
-            if (!this.nameBlacklist.contains(argument)) {
-                this.nameBlacklist.add(argument);
-            }
-        }
-    }
-
-    public void whitelist(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            if (!this.whitelist.contains(argument)) {
-                this.whitelist.add(argument);
-            }
-        } else {
-            if (!this.nameWhitelist.contains(argument)) {
-                this.nameWhitelist.add(argument);
+            if (!this.nameBlacklist.contains(value)) {
+                this.nameBlacklist.add(value);
             }
         }
     }
 
-    public boolean isBlacklisted(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            return this.blacklist.contains(argument);
-        }
-        return this.nameBlacklist.contains(argument);
-    }
-
-    public boolean isWhitelisted(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            return this.whitelist.contains(argument);
-        }
-        return this.nameWhitelist.contains(argument);
-    }
-
-    public void removeFromBlacklist(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            this.blacklist.remove(argument);
+    /**
+     * @param value The user's address or nickname.
+     */
+    public void whitelist(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            if (!this.whitelist.contains(value)) {
+                this.whitelist.add(value);
+            }
         } else {
-            this.nameBlacklist.remove(argument);
+            if (!this.nameWhitelist.contains(value)) {
+                this.nameWhitelist.add(value);
+            }
         }
     }
 
-    public void removeFromWhitelist(String argument) {
-        if (InetAddresses.isInetAddress(argument)) {
-            this.whitelist.remove(argument);
+    /**
+     * @param value The user's address or nickname.
+     */
+    public boolean isBlacklisted(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            return this.blacklist.contains(value);
+        }
+        return this.nameBlacklist.contains(value);
+    }
+
+    /**
+     * @param value The user's address or nickname.
+     */
+    public boolean isWhitelisted(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            return this.whitelist.contains(value);
+        }
+        return this.nameWhitelist.contains(value);
+    }
+
+    /**
+     * @param value The user's address or nickname.
+     */
+    public void removeFromBlacklist(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            this.blacklist.remove(value);
         } else {
-            this.nameWhitelist.remove(argument);
+            this.nameBlacklist.remove(value);
         }
     }
+
+    /**
+     * @param value The user's address or nickname.
+     */
+    public void removeFromWhitelist(String value) {
+        if (InetAddresses.isInetAddress(value)) {
+            this.whitelist.remove(value);
+        } else {
+            this.nameWhitelist.remove(value);
+        }
+    }
+
+    // Yes, the same comment is repeated 6 TIMES. I had no other idea lol
 
     @Nonnull
     public Collection<String> getBlacklist() {
@@ -168,10 +188,5 @@ public class StorageManager {
     @Nonnull
     public Collection<String> getPingCache() {
         return this.pingCache;
-    }
-
-    @Nonnull
-    public Map<String, List<String>> getAccountMap() {
-        return accountMap;
     }
 }

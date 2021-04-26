@@ -17,6 +17,9 @@ package me.xneox.epicguard.bukkit.module;
 
 import org.bukkit.entity.Player;
 
+/**
+ * The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
+ */
 public abstract class Module {
     private final ModuleManager manager;
 

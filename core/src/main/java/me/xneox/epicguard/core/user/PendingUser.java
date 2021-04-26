@@ -21,11 +21,11 @@ import com.google.common.base.Objects;
  * This class holds address and nickname of the user,
  * who is currently being checked (or cached) by the antibot checks.
  */
-public class BotUser {
+public class PendingUser {
     private final String address;
     private final String nickname;
 
-    public BotUser(String address, String nickname) {
+    public PendingUser(String address, String nickname) {
         this.address = address;
         this.nickname = nickname;
     }
@@ -42,9 +42,9 @@ public class BotUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BotUser botUser = (BotUser) o;
-        return Objects.equal(getAddress(), botUser.getAddress()) &&
-                Objects.equal(getNickname(), botUser.getNickname());
+        PendingUser pendingUser = (PendingUser) o;
+        return Objects.equal(getAddress(), pendingUser.getAddress()) &&
+                Objects.equal(getNickname(), pendingUser.getNickname());
     }
 
     @Override

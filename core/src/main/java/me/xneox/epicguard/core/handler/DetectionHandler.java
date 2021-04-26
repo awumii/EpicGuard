@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.handler;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
@@ -30,6 +30,8 @@ import java.util.Optional;
 /**
  * Handler for PreLogin listeners.
  * Most important handler, should be called as soon as possible, and asynchronously.
+ *
+ * It performs every antibot check (except SettingsCheck).
  */
 public class DetectionHandler {
     private final List<Check> checks = new ArrayList<>();
@@ -54,27 +56,33 @@ public class DetectionHandler {
         Validate.notNull(address, "Address cannot be null!");
         Validate.notNull(nickname, "Nickname cannot be null!");
 
-        this.epicGuard.getAttackManager().incrementCPS();
-        if (this.epicGuard.getAttackManager().getCPS() > this.epicGuard.getConfig().maxCps) {
-            this.epicGuard.getAttackManager().setAttack(true);
+        // Increment the connections per second and check if it's bigger than max-cps in config.
+        if (this.epicGuard.getAttackManager().incrementCPS() > this.epicGuard.getConfig().maxCps) {
+            this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
         }
 
+        // Check if the user is whitelisted, if yes, return empty result (undetected).
         if (this.epicGuard.getStorageManager().isWhitelisted(address)
                 || this.epicGuard.getStorageManager().isWhitelisted(nickname)) {
             return Optional.empty();
         }
 
-        BotUser user = new BotUser(address, nickname);
+        // Performing all checks, we are using PendingUser
+        PendingUser user = new PendingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
                 if (this.epicGuard.getConfig().debug) {
                     this.epicGuard.getLogger().log("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }
+
+                // Positive detection, kicking the player!
                 return Optional.of(ChatUtils.buildString(check.getKickMessage()));
             }
         }
 
+        // Checks finished with no detection, the player is considered legitimate and is allowed to join the server
+        // Also we update his account nickname history.
         this.epicGuard.getStorageManager().updateAccounts(user);
         return Optional.empty();
     }

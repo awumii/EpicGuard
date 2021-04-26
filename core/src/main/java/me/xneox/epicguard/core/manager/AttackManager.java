@@ -15,13 +15,14 @@
 
 package me.xneox.epicguard.core.manager;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * This class holds variables related to the current server attack status.
  */
 public class AttackManager {
+    private final AtomicInteger connectionPerSecond = new AtomicInteger();
     private boolean attack;
-    private int connectionPerSecond;
-    private int totalBots;
 
     public boolean isAttack() {
         return this.attack;
@@ -32,19 +33,14 @@ public class AttackManager {
     }
 
     public int getCPS() {
-        return this.connectionPerSecond;
+        return this.connectionPerSecond.get();
     }
 
     public void resetCPS() {
-        this.connectionPerSecond = 0;
+        this.connectionPerSecond.set(0);
     }
 
-    public void incrementCPS() {
-        this.connectionPerSecond++;
-        this.totalBots++;
-    }
-
-    public int getTotalBots() {
-        return this.totalBots;
+    public int incrementCPS() {
+        return this.connectionPerSecond.incrementAndGet();
     }
 }

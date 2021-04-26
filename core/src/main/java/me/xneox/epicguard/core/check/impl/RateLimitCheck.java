@@ -18,24 +18,28 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.util.Cooldown;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * This check will limit how fast the user can connect again to the server.
+ * TODO: Remove this, because most platforms already has this feature.
+ */
 public class RateLimitCheck extends Check {
     public RateLimitCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().rateLimitCheck);
         return this.assertCheck(mode, this.hasCooldown(user));
     }
 
-    private boolean hasCooldown(BotUser user) {
+    private boolean hasCooldown(PendingUser user) {
         if (this.epicGuard.getCooldownManager().hasCooldown(user.getAddress())) {
             return true;
         }

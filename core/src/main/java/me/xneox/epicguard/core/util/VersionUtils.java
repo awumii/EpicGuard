@@ -29,7 +29,7 @@ public final class VersionUtils {
         }
 
         remoteVersion = URLUtils.readString(CHECK_URL);
-        available = !epicGuard.getPlugin().getVersion().equals(remoteVersion);
+        available = !epicGuard.getPlatform().getVersion().equals(remoteVersion);
     }
 
     public static boolean isAvailable() {

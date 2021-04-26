@@ -26,9 +26,9 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandExecutor;
+import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
+import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
@@ -64,7 +64,7 @@ public class PlatformVelocity implements Platform {
                 .aliases("guard")
                 .build();
 
-        commandManager.register(meta, new VelocityCommandExecutor(new CommandExecutor(this.epicGuard)));
+        commandManager.register(meta, new VelocityCommandExecutor(new CommandHandler(this.epicGuard)));
 
         EventManager eventManager = this.getServer().getEventManager();
         eventManager.register(this, new PostLoginListener(this.epicGuard));

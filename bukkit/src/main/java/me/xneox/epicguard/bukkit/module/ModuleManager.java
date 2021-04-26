@@ -26,6 +26,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
+ */
 public class ModuleManager {
     private final List<Module> modules;
     private final EpicGuard epicGuard;

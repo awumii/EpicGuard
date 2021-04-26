@@ -20,16 +20,54 @@ import me.xneox.epicguard.core.user.User;
 
 import javax.annotation.Nonnull;
 
+/**
+ * This is the most important part of the EpicGuard's platform implementation.
+ * The main class of every platform has to implement this interface.
+ */
 public interface Platform {
+    /**
+     * There are already two implementations of this logger, meant to be used as a wrapper around
+     * your platform's logging system.
+     * {@link me.xneox.epicguard.core.logging.impl.SLF4JLogger} and {@link me.xneox.epicguard.core.logging.impl.JavaLogger}
+     *
+     * @return An implementation of the {@link GuardLogger} compatible with your platform.
+     */
     GuardLogger getGuardLogger();
 
-    void sendActionBar(@Nonnull String message, @Nonnull User user);
-
-    void disconnectUser(@Nonnull User user, @Nonnull String message);
-
+    /**
+     * @return Version of the plugin.
+     */
     String getVersion();
 
+    /**
+     * Send an action bar message to the specified user (find the player using User#getUUID).
+     *
+     * @param message Message to be sent.
+     * @param user The user the message has to be sent to.
+     */
+    void sendActionBar(@Nonnull String message, @Nonnull User user);
+
+    /**
+     * Kicks the user from the server with a specified message (find the player using User#getUUID).
+     *
+     * @param user The user to be kicked.
+     * @param message The kick message.
+     */
+    void disconnectUser(@Nonnull User user, @Nonnull String message);
+
+    /**
+     * Schedules a task to be run asynchronously after the specified time (in seconds).
+     *
+     * @param task The task to be scheduled.
+     * @param seconds Delay in seconds after the task should be ran.
+     */
     void runTaskLater(@Nonnull Runnable task, long seconds);
 
+    /**
+     * Schedules a task to be run asynchronously repeatedly with fixed delay (in seconds).
+     *
+     * @param task The task to be scheduled.
+     * @param seconds Delay in seconds between each runs of the task.
+     */
     void scheduleTask(@Nonnull Runnable task, long seconds);
 }

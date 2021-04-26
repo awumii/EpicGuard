@@ -23,8 +23,8 @@ import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandExecutor;
-import me.xneox.epicguard.core.logging.logger.JavaLogger;
+import me.xneox.epicguard.core.command.CommandHandler;
+import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -47,6 +47,8 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
     public void onEnable() {
         this.logger = new JavaLogger(this.getLogger());
         this.epicGuard = new EpicGuard(this);
+
+        // The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
         this.moduleManager = new ModuleManager(this.epicGuard);
 
         PluginManager pm = Bukkit.getPluginManager();
@@ -59,7 +61,7 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
 
         PluginCommand command = this.getCommand("epicguard");
         if (command != null) {
-            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new CommandExecutor(this.epicGuard));
+            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new CommandHandler(this.epicGuard));
             command.setExecutor(cmdExecutor);
             command.setTabCompleter(cmdExecutor);
         }
@@ -85,10 +87,13 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
         Player player = Bukkit.getPlayer(user.getUUID());
+
+        // Ugly backwards compatibility.
+        // The reflection method has stopped working in 1.16, and the new method is incompatible with 1.8
         if (Reflections.getVersion().startsWith("v1_16")) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
         } else {
-            Reflections.sendActionBar(player, message); // backwards compatibility
+            Reflections.sendActionBar(player, message);
         }
     }
 

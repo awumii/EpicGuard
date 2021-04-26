@@ -35,13 +35,14 @@ public class EpicGuard {
     private final UserManager userManager;
     private final CooldownManager cooldownManager;
     private final AttackManager attackManager;
-    private final Platform plugin;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
 
-    public EpicGuard(Platform plugin) {
-        this.plugin = plugin;
+    private final Platform platform;
+
+    public EpicGuard(Platform platform) {
+        this.platform = platform;
 
         getLogger().log("Loading configuration...");
         this.reloadConfig();
@@ -59,10 +60,10 @@ public class EpicGuard {
             getLogger().warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
         }
 
-        this.plugin.scheduleTask(new MonitorTask(this), 1L);
-        this.plugin.scheduleTask(new AttackResetTask(this), 40L);
-        this.plugin.scheduleTask(new UpdateCheckerTask(this), 1800L);
-        this.plugin.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
+        this.platform.scheduleTask(new MonitorTask(this), 1L);
+        this.platform.scheduleTask(new AttackResetTask(this), 40L);
+        this.platform.scheduleTask(new UpdateCheckerTask(this), 1800L);
+        this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
         getLogger().log("EpicGuard v5 finished startup successfully.");
@@ -83,11 +84,11 @@ public class EpicGuard {
     }
 
     public GuardLogger getLogger() {
-        return this.plugin.getGuardLogger();
+        return this.platform.getGuardLogger();
     }
 
-    public Platform getPlugin() {
-        return plugin;
+    public Platform getPlatform() {
+        return platform;
     }
 
     public PluginConfiguration getConfig() {

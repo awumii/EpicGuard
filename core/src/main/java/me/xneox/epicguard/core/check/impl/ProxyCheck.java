@@ -20,13 +20,17 @@ import com.google.common.cache.CacheBuilder;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.util.URLUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This will check if the user is using a VPN or a proxy.
+ * TODO: Rewrite this, to only use custom proxy checking services, and allow multiple ones at time.
+ */
 public class ProxyCheck extends Check {
     private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
             .expireAfterWrite(this.epicGuard.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
@@ -37,7 +41,7 @@ public class ProxyCheck extends Check {
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().proxyCheck);
         return this.assertCheck(mode, this.isProxy(user.getAddress()));
     }

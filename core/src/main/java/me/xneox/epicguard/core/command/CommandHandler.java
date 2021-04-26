@@ -3,7 +3,7 @@ package me.xneox.epicguard.core.command;
 import com.google.common.net.InetAddresses;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
@@ -15,15 +15,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandExecutor {
+/**
+ * This class is a platform-independent command handler.
+ * See {@link Sender}.
+ */
+public class CommandHandler {
     private final EpicGuard epicGuard;
 
-    public CommandExecutor(EpicGuard epicGuard) {
+    public CommandHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
     }
 
     @SuppressWarnings("UnstableApiUsage")
-    public void onCommand(@Nonnull String[] args, @Nonnull Sender<?> sender) {
+    public void handle(@Nonnull String[] args, @Nonnull Sender<?> sender) {
         Validate.notNull(args, "Command arguments cannot be null!");
         Validate.notNull(args, "Command subject cannot be null!");
 
@@ -31,7 +35,7 @@ public class CommandExecutor {
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
             send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-            send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Command List");
+            send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlatform().getVersion() + "&7) &8- &7Command List");
             send(sender, "&e/guard stats &b- &7show plugin statistics.");
             send(sender, "&e/guard notifications &b- &7enable actionbar notifications.");
             send(sender, "&e/guard reload &b- &7reload config and messages.");
@@ -45,11 +49,10 @@ public class CommandExecutor {
         switch (args[0]) {
             case "stats":
                 send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-                send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlugin().getVersion() + "&7) &8- &7Statistics");
+                send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlatform().getVersion() + "&7) &8- &7Statistics");
                 send(sender, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getBlacklist().size());
                 send(sender, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getWhitelist().size());
                 send(sender, "&eConnections: &7" + this.epicGuard.getAttackManager().getCPS() + "/s");
-                send(sender, "&eTotal connections: &7" + this.epicGuard.getAttackManager().getTotalBots());
                 send(sender, "&3&m--&8&m------------------------------------------&3&m--");
                 break;
             case "notifications":
@@ -139,7 +142,7 @@ public class CommandExecutor {
                 send(sender, "&eBlacklisted: &7" + (this.epicGuard.getStorageManager().isBlacklisted(address) ? "&a&l✔" : "&c&l✖"));
                 send(sender, "");
 
-                List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new BotUser(address, null));
+                List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new PendingUser(address, null));
                 send(sender, "&eSeen nicknames (" + accounts.size() + "): &7" + String.join(", ", accounts));
 
                 send(sender, "");

@@ -24,7 +24,7 @@ import java.util.UUID;
 
 /**
  * Handler for the PlayerJoin or PostLogin listeners
- * Used for the auto-whitelist feature.
+ * Used for the auto-whitelist feature, and for SettingsCheck.
  */
 public class JoinHandler {
     private final EpicGuard epicGuard;
@@ -38,9 +38,10 @@ public class JoinHandler {
         Validate.notNull(address, "Address cannot be null!");
 
         User user = this.epicGuard.getUserManager().getOrCreate(uuid);
+
         // Schedule a delayed task to whitelist the player.
         if (this.epicGuard.getConfig().autoWhitelist) {
-            this.epicGuard.getPlugin().runTaskLater(() -> {
+            this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null) {
                     this.epicGuard.getStorageManager().whitelist(address);
                 }
@@ -49,9 +50,9 @@ public class JoinHandler {
 
         // Schedule a delayed task to check if the player has sent the Settings packet.
         if (this.epicGuard.getConfig().settingsCheck) {
-            this.epicGuard.getPlugin().runTaskLater(() -> {
+            this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null && !user.hasChangedSettings()) {
-                    this.epicGuard.getPlugin().disconnectUser(user, this.epicGuard.getMessages().kickMessageSettings);
+                    this.epicGuard.getPlatform().disconnectUser(user, this.epicGuard.getMessages().kickMessageSettings);
                 }
             }, this.epicGuard.getConfig().settingsCheckDelay);
         }

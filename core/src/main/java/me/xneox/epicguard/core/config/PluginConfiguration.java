@@ -25,6 +25,9 @@ import java.util.List;
 import static org.diorite.cfg.annotations.CfgCollectionStyle.CollectionStyle;
 import static org.diorite.cfg.annotations.CfgStringStyle.StringStyle;
 
+// TODO: Move to Configurate.
+// TODO: Refactor this for the 6.0 major update.
+
 @CfgClass(name = "PluginConfiguration")
 @CfgDelegateDefault("{new}")
 @CfgComment("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗")

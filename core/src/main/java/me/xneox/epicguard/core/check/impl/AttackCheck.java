@@ -17,18 +17,21 @@ package me.xneox.epicguard.core.check.impl;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * This check will deny any connection if the attack mode is active.
+ */
 public class AttackCheck extends Check {
     public AttackCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         return this.epicGuard.getAttackManager().isAttack() && this.epicGuard.getConfig().denyJoin;
     }
 
