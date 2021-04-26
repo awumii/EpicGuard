@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+
+defaultTasks 'clean', 'shadowJar', 'build'
+
+allprojects {
+    group = 'me.xneox'
+    version = '5.3.0'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    // Fix encoding on windows...
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "com.github.johnrengelman.shadow"
+
+    processResources {
+        expand projectVersion: project.version
+    }
+
+    repositories {
+        mavenCentral()
+
+        maven {
+            url = 'https://repo.maven.apache.org/maven2/'
+        }
+
+        maven {
+            url = 'https://jitpack.io'
+        }
+
+        maven {
+            url = 'https://repo.panda-lang.org/'
+        }
+    }
+
+    dependencies {
+        // Shaded dependencies.
+        implementation 'com.maxmind.geoip2:geoip2:2.15.0'
+        implementation 'org.apache.commons:commons-compress:1.20'
+        implementation 'com.google.guava:guava:30.1.1-jre'
+        implementation 'com.github.simplix-softworks:SimplixStorage:3.2.2'
+        implementation 'org.diorite:diorite-config-minimal:1.2'
+
+        // Provided dependencies.
+        compileOnly 'org.apache.logging.log4j:log4j-core:2.14.1'
+        compileOnly 'org.slf4j:slf4j-api:1.7.30'
+    }
+
+    shadowJar {
+        minimize()
+
+        relocate 'org.bstats', 'epicguard.bstats'
+        relocate 'org.diorite', 'epicguard.diorite'
+        relocate 'com.fasterxml', 'epicguard.fasterxml'
+        relocate 'com.maxmind', 'epicguard.maxmind'
+        relocate 'de.leonhard.storage', 'epicguard.storage'
+        relocate 'com.google', 'epicguard.google'
+
+        exclude 'mozilla/'
+    }
+}
+
+// Include all platforms in one jar.
+dependencies {
+    compile project(path: ':core', configuration: 'shadow')
+    compile project(path: ':bukkit', configuration: 'shadow')
+    compile project(path: ':bungee', configuration: 'shadow')
+    compile project(path: ':velocity', configuration: 'shadow')
+}

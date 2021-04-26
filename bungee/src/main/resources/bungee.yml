@@ -1,7 +1,7 @@
 name: EpicGuard
-version: '${project.version}'
+version: '${projectVersion}'
 main: me.xneox.epicguard.bungee.PlatformBungee
 
 author: xNeox
 website: https://www.spigotmc.org/resources/72369/
-description: Simple but effective bot protection system.
+description: Bot protection system for Minecraft servers.

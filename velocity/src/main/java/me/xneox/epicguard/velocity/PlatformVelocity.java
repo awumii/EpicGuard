@@ -22,11 +22,10 @@ import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
-import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.PlatformPlugin;
+import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
@@ -36,15 +35,13 @@ import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import net.kyori.adventure.text.Component;
 import org.bstats.velocity.Metrics;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
+import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "epicguard", name = "EpicGuard", version = "5.3.0")
-public class PlatformVelocity implements PlatformPlugin {
+public class PlatformVelocity implements Platform {
     private final ProxyServer server;
     private final GuardLogger logger;
     private final Metrics.Factory metricsFactory;
@@ -99,7 +96,7 @@ public class PlatformVelocity implements PlatformPlugin {
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @NotNull String message) {
+    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
         this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(Component.text(ChatUtils.colored(message))));
     }
 
