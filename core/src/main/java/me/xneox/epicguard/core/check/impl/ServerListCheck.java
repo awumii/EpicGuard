@@ -18,18 +18,21 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * This will check if the user has pinged the server (added it to their server list).
+ */
 public class ServerListCheck extends Check {
     public ServerListCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().serverListCheck);
         return this.assertCheck(mode, !this.epicGuard.getStorageManager().getPingCache().contains(user.getAddress()));
     }

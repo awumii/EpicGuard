@@ -36,6 +36,10 @@ import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * This class manages the GeoLite2's databases, downloads and updates them if needed.
+ * It also contains methods for easy database access.
+ */
 public class GeoManager {
     private final GuardLogger logger;
 

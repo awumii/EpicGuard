@@ -17,18 +17,21 @@ package me.xneox.epicguard.core.check.impl;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.user.BotUser;
+import me.xneox.epicguard.core.user.PendingUser;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * This will just check if the user is blacklisted.
+ */
 public class BlacklistCheck extends Check {
     public BlacklistCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@Nonnull BotUser user) {
+    public boolean handle(@Nonnull PendingUser user) {
         return this.epicGuard.getStorageManager().isBlacklisted(user.getAddress())
                 || this.epicGuard.getStorageManager().isBlacklisted(user.getNickname());
     }

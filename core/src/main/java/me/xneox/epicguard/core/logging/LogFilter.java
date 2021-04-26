@@ -27,6 +27,10 @@ import org.apache.logging.log4j.message.Message;
 
 import java.util.List;
 
+/**
+ * This class will register a Log4J filter.
+ * Filtered messages can be configured in the configuration.
+ */
 public class LogFilter extends AbstractFilter {
     private final EpicGuard epicGuard;
     private final List<String> messages;

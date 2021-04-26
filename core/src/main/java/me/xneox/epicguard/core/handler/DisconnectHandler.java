@@ -23,7 +23,7 @@ import java.util.UUID;
 
 /**
  * Handler for the PlayerQuit/Disconnect listeners.
- * Used for removing the {@link me.xneox.epicguard.core.user.User} instance.
+ * Used for removing the {@link me.xneox.epicguard.core.user.User} instance from cache.
  */
 public class DisconnectHandler {
     private final EpicGuard epicGuard;

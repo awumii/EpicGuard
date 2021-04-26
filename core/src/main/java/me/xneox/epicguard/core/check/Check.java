@@ -16,11 +16,7 @@
 package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.config.MessagesConfiguration;
-import me.xneox.epicguard.core.config.PluginConfiguration;
-import me.xneox.epicguard.core.manager.StorageManager;
-import me.xneox.epicguard.core.user.BotUser;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
+import me.xneox.epicguard.core.user.PendingUser;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -32,6 +28,18 @@ public abstract class Check {
         this.epicGuard = epicGuard;
     }
 
+    /**
+     * It will check the {@link CheckMode} configuration of the current check,
+     * and assert the following behaviour:
+     *
+     * If the mode is ALWAYS, it will return the value of the specified expression.
+     * If the mode is ATTACK, it will return the value of the expression ONLY if there's an attack.
+     * If the mode is NEVER, it will return false.
+     *
+     * @param mode The configured mode of this check.
+     * @param expression The expression
+     * @return The return value is based on the check's behaviour. True means positive detection, false means negative.
+     */
     public boolean assertCheck(CheckMode mode, boolean expression) {
         if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
             return expression;
@@ -43,8 +51,11 @@ public abstract class Check {
     public abstract List<String> getKickMessage();
 
     /**
+     * This method contains the entire behaviour on the check.
+     * When returning a value, use the assertCheck() method found above.
+     *
      * @return true if detection is positive (detected as bot).
-     * @param user An {@link BotUser} object with the information about the user.
+     * @param user An {@link PendingUser} object with the information about the user.
      */
-    public abstract boolean handle(@Nonnull BotUser user);
+    public abstract boolean handle(@Nonnull PendingUser user);
 }

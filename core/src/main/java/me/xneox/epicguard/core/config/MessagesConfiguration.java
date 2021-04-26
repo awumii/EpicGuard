@@ -24,6 +24,8 @@ import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO: Move to Configurate.
+
 @CfgClass(name = "MessagesConfiguration")
 @CfgDelegateDefault("{new}")
 public class MessagesConfiguration {

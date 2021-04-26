@@ -19,6 +19,11 @@ import me.xneox.epicguard.core.EpicGuard;
 
 import java.util.UUID;
 
+/**
+ * If the user has sent the Settings packet, it will be marked on their {@link me.xneox.epicguard.core.user.User}
+ * object.
+ * This packet is sent after joining the server by the vanilla client.
+ */
 public class SettingsHandler {
     private final EpicGuard epicGuard;
 

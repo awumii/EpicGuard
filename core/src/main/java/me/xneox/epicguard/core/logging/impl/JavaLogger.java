@@ -1,11 +1,11 @@
-package me.xneox.epicguard.core.logging.logger;
+package me.xneox.epicguard.core.logging.impl;
 
 import me.xneox.epicguard.core.logging.GuardLogger;
 
 import java.util.logging.Logger;
 
 /**
- * GuardLogger implementation for platforms using the {@link java.util.logging.Logger}
+ * GuardLogger implementation and a wrapper around the {@link java.util.logging.Logger}
  */
 public class JavaLogger implements GuardLogger {
     private final Logger logger;

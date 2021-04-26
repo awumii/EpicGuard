@@ -22,6 +22,7 @@ public final class ChatUtils {
         return message.replace("&", "§"); //TODO: Use Adventure/Bungee for this...
     }
 
+    // This method creates one, multiline and colored string from every string in the provided list.
     public static String buildString(List<String> list) {
         StringBuilder builder = new StringBuilder();
         list.forEach(s -> builder.append(ChatUtils.colored(s)).append("\n"));

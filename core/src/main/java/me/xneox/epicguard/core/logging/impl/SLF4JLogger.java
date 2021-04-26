@@ -1,10 +1,10 @@
-package me.xneox.epicguard.core.logging.logger;
+package me.xneox.epicguard.core.logging.impl;
 
 import me.xneox.epicguard.core.logging.GuardLogger;
 import org.slf4j.Logger;
 
 /**
- * GuardLogger implementation for platforms using the {@link org.slf4j.Logger}
+ * GuardLogger implementation and a wrapper around the {@link org.slf4j.Logger}
  */
 public class SLF4JLogger implements GuardLogger {
     private final Logger logger;

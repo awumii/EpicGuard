@@ -19,10 +19,10 @@ import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
 import me.xneox.epicguard.bungee.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandExecutor;
+import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.logger.JavaLogger;
-import me.xneox.epicguard.core.logging.logger.SLF4JLogger;
+import me.xneox.epicguard.core.logging.impl.JavaLogger;
+import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -42,7 +42,8 @@ public class PlatformBungee extends Plugin implements Platform {
 
     @Override
     public void onEnable() {
-        // Logging support for both BungeeCord and Waterfall(+forks).
+        // Waterfall uses Log4J so we can utilize it for better compatibility.
+        // This will fall back to the java logger, for example when using BungeeCord.
         try {
             Class.forName("io.github.waterfallmc.waterfall.log4j.WaterfallLogger");
             this.logger = new SLF4JLogger(this.getSLF4JLogger());
@@ -59,7 +60,7 @@ public class PlatformBungee extends Plugin implements Platform {
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
         pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
-        pm.registerCommand(this, new BungeeCommandExecutor(new CommandExecutor(this.epicGuard)));
+        pm.registerCommand(this, new BungeeCommandExecutor(new CommandHandler(this.epicGuard)));
 
         new Metrics(this, 5956);
     }

@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class manages the active cooldowns.
+ */
 public class CooldownManager {
     private final Map<String, Cooldown> cooldowns = new HashMap<>();
 

@@ -17,8 +17,10 @@ package me.xneox.epicguard.bukkit.module;
 
 import me.xneox.epicguard.bukkit.PlatformBukkit;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
+/**
+ * The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
+ */
 public class ModuleTask implements Runnable {
     private final PlatformBukkit plugin;
 

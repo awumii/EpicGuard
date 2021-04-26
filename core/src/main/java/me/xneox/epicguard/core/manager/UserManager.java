@@ -18,12 +18,15 @@ package me.xneox.epicguard.core.manager;
 import me.xneox.epicguard.core.user.User;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This manager will cache the {@link User} object's of the currently online players.
+ */
 public class UserManager {
-    private final Map<UUID, User> userMap = new HashMap<>();
+    private final Map<UUID, User> userMap = new ConcurrentHashMap<>();
 
     public Collection<User> getUsers() {
         return this.userMap.values();

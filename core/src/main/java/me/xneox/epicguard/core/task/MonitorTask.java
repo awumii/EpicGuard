@@ -38,8 +38,9 @@ public class MonitorTask implements Runnable {
 
         this.epicGuard.getUserManager().getUsers().stream()
                 .filter(User::hasNotifications)
-                .forEach(user -> this.epicGuard.getPlugin().sendActionBar(monitor, user));
+                .forEach(user -> this.epicGuard.getPlatform().sendActionBar(monitor, user));
 
+        // Because this task is repeating every second, we can reset the connections/s counter.
         this.epicGuard.getAttackManager().resetCPS();
     }
 }

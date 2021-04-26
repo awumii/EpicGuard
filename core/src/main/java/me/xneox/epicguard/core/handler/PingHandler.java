@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Handler for the ServerListPing listeners.
- * Used for the {@link me.xneox.epicguard.core.check.impl.ServerListCheck}.
+ * Used for the ServerListCheck to verify if the user has pinged the server (added it to their list).
  */
 public class PingHandler {
     private final EpicGuard epicGuard;
