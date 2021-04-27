@@ -36,8 +36,8 @@ public class StorageManager {
     private final Collection<String> pingCache = new HashSet<>();
     private final Map<String, List<String>> accountMap;
 
-    private final Collection<String> blacklist;
-    private final Collection<String> whitelist;
+    private final Collection<String> addressBlacklist;
+    private final Collection<String> addressWhitelist;
 
     private final Collection<String> nameBlacklist;
     private final Collection<String> nameWhitelist;
@@ -47,16 +47,16 @@ public class StorageManager {
 
         this.accountMap = this.data.getOrSetDefault("account-data", new HashMap<>());
 
-        this.blacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
-        this.whitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
+        this.addressBlacklist = this.data.getOrSetDefault("blacklist", new HashSet<>());
+        this.addressWhitelist = this.data.getOrSetDefault("whitelist", new HashSet<>());
 
         this.nameBlacklist = this.data.getOrSetDefault("name-blacklist", new HashSet<>());
         this.nameWhitelist = this.data.getOrSetDefault("name-whitelist", new HashSet<>());
     }
 
     public void save() {
-        this.data.set("blacklist", this.blacklist);
-        this.data.set("whitelist", this.whitelist);
+        this.data.set("blacklist", this.addressBlacklist);
+        this.data.set("whitelist", this.addressWhitelist);
 
         this.data.set("name-blacklist", this.nameBlacklist);
         this.data.set("name-whitelist", this.nameWhitelist);
@@ -106,8 +106,8 @@ public class StorageManager {
      */
     public void blacklist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            if (!this.blacklist.contains(value)) {
-                this.blacklist.add(value);
+            if (!this.addressBlacklist.contains(value)) {
+                this.addressBlacklist.add(value);
             }
         } else {
             if (!this.nameBlacklist.contains(value)) {
@@ -121,8 +121,8 @@ public class StorageManager {
      */
     public void whitelist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            if (!this.whitelist.contains(value)) {
-                this.whitelist.add(value);
+            if (!this.addressWhitelist.contains(value)) {
+                this.addressWhitelist.add(value);
             }
         } else {
             if (!this.nameWhitelist.contains(value)) {
@@ -136,7 +136,7 @@ public class StorageManager {
      */
     public boolean isBlacklisted(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            return this.blacklist.contains(value);
+            return this.addressBlacklist.contains(value);
         }
         return this.nameBlacklist.contains(value);
     }
@@ -146,7 +146,7 @@ public class StorageManager {
      */
     public boolean isWhitelisted(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            return this.whitelist.contains(value);
+            return this.addressWhitelist.contains(value);
         }
         return this.nameWhitelist.contains(value);
     }
@@ -156,7 +156,7 @@ public class StorageManager {
      */
     public void removeFromBlacklist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.blacklist.remove(value);
+            this.addressBlacklist.remove(value);
         } else {
             this.nameBlacklist.remove(value);
         }
@@ -167,7 +167,7 @@ public class StorageManager {
      */
     public void removeFromWhitelist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.whitelist.remove(value);
+            this.addressWhitelist.remove(value);
         } else {
             this.nameWhitelist.remove(value);
         }
@@ -176,13 +176,23 @@ public class StorageManager {
     // Yes, the same comment is repeated 6 TIMES. I had no other idea lol
 
     @Nonnull
-    public Collection<String> getBlacklist() {
-        return this.blacklist;
+    public Collection<String> getAddressBlacklist() {
+        return this.addressBlacklist;
     }
 
     @Nonnull
-    public Collection<String> getWhitelist() {
-        return this.whitelist;
+    public Collection<String> getAddressWhitelist() {
+        return this.addressWhitelist;
+    }
+
+    @Nonnull
+    public Collection<String> getNameBlacklist() {
+        return nameBlacklist;
+    }
+
+    @Nonnull
+    public Collection<String> getNameWhitelist() {
+        return nameWhitelist;
     }
 
     @Nonnull

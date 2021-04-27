@@ -51,33 +51,41 @@ public class EpicGuardAPI {
     /**
      * @return An immutable Collection which contains whitelisted addresses.
      */
-    public static Collection<String> getWhitelist() {
+    public static Collection<String> getWhitelistedAddresses() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getAddressWhitelist());
     }
 
     /**
      * @return An immutable Collection which contains blacklisted addresses.
      */
-    public static Collection<String> getBlacklist() {
+    public static Collection<String> getBlacklistedAddresses() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getAddressWhitelist());
+    }
+
+    /**
+     * @return An immutable Collection which contains whitelisted nicknames.
+     */
+    public static Collection<String> getWhitelistedNicknames() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getNameWhitelist());
+    }
+
+    /**
+     * @return An immutable Collection which contains blacklisted nicknames.
+     */
+    public static Collection<String> getBlacklistedNicknames() {
+        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getNameBlacklist());
     }
 
     /**
      * @return Current connections per second.
      */
-    public static int getCPS() {
+    public static int getConnectionsPerSecond() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return epicGuard.getAttackManager().getCPS();
-    }
-
-    /**
-     * @return Amount of connections made to the server from the time of startup.
-     */
-    public static int getTotalConnections() {
-        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return epicGuard.getAttackManager().getTotalBots();
+        return epicGuard.getAttackManager().getConnectionCounter();
     }
 
     /**
@@ -85,7 +93,7 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public static void blacklist(@Nonnull String address) {
+    public static void blacklistAddress(@Nonnull String address) {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         Validate.notNull(address, "Address cannot be null!");
 
@@ -98,16 +106,16 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public static void whitelist(@Nonnull String address) {
+    public static void whitelistAddress(@Nonnull String address) {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         Validate.notNull(address, "Address cannot be null!");
 
         epicGuard.getStorageManager().whitelist(address);
-        epicGuard.getStorageManager().getBlacklist().remove(address);
+        epicGuard.getStorageManager().getAddressBlacklist().remove(address);
     }
 
     /**
-     * @return Instance of {@link EpicGuard} class, which holds all managers.
+     * @return Instance of the {@link EpicGuard} core class.
      * It is recommended to use methods in this class instead.
      */
     public static EpicGuard getInstance() {
@@ -116,7 +124,7 @@ public class EpicGuardAPI {
     }
 
     /**
-     * This method is used during initalization to set an instance.
+     * This method is used during initialization to set an instance.
      * Can't be used twice.
      *
      * @param instance Instance of {@link EpicGuard} class.
@@ -125,7 +133,7 @@ public class EpicGuardAPI {
         if (epicGuard == null) {
             epicGuard = instance;
         } else {
-            throw new IllegalStateException("Instance already set.");
+            throw new UnsupportedOperationException("Instance already set.");
         }
     }
 }

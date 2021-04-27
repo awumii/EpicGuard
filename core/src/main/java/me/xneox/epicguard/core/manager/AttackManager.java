@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * This class holds variables related to the current server attack status.
  */
 public class AttackManager {
-    private final AtomicInteger connectionPerSecond = new AtomicInteger();
+    private final AtomicInteger connectionCounter = new AtomicInteger();
     private boolean attack;
 
     public boolean isAttack() {
@@ -32,15 +32,15 @@ public class AttackManager {
         this.attack = attack;
     }
 
-    public int getCPS() {
-        return this.connectionPerSecond.get();
+    public int getConnectionCounter() {
+        return this.connectionCounter.get();
     }
 
-    public void resetCPS() {
-        this.connectionPerSecond.set(0);
+    public void resetConnectionCounter() {
+        this.connectionCounter.set(0);
     }
 
-    public int incrementCPS() {
-        return this.connectionPerSecond.incrementAndGet();
+    public int incrementConnectionCounter() {
+        return this.connectionCounter.incrementAndGet();
     }
 }

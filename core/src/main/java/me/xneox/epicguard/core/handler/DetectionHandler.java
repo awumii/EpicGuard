@@ -57,7 +57,7 @@ public class DetectionHandler {
         Validate.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementCPS() > this.epicGuard.getConfig().maxCps) {
+        if (this.epicGuard.getAttackManager().incrementConnectionCounter() > this.epicGuard.getConfig().maxCps) {
             this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
         }
 
