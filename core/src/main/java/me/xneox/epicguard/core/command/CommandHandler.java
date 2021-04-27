@@ -50,9 +50,9 @@ public class CommandHandler {
             case "stats":
                 send(sender, "&3&m--&8&m------------------------------------------&3&m--");
                 send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlatform().getVersion() + "&7) &8- &7Statistics");
-                send(sender, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getBlacklist().size());
-                send(sender, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getWhitelist().size());
-                send(sender, "&eConnections: &7" + this.epicGuard.getAttackManager().getCPS() + "/s");
+                send(sender, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getAddressBlacklist().size());
+                send(sender, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getAddressWhitelist().size());
+                send(sender, "&eConnections: &7" + this.epicGuard.getAttackManager().getConnectionCounter() + "/s");
                 send(sender, "&3&m--&8&m------------------------------------------&3&m--");
                 break;
             case "notifications":
@@ -165,13 +165,13 @@ public class CommandHandler {
             if (args.length == 1) {
                 return Arrays.asList("add", "remove");
             } else if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getWhitelist();
+                return this.epicGuard.getStorageManager().getAddressWhitelist();
             }
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length == 1) {
                 return Arrays.asList("add", "remove");
             } else if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getBlacklist();
+                return this.epicGuard.getStorageManager().getAddressBlacklist();
             }
         }
         return Collections.emptyList();

@@ -29,7 +29,7 @@ public class AttackResetTask implements Runnable {
 
     @Override
     public void run() {
-        if (this.epicGuard.getAttackManager().getCPS() < this.epicGuard.getConfig().maxCps) {
+        if (this.epicGuard.getAttackManager().getConnectionCounter() < this.epicGuard.getConfig().maxCps) {
             this.epicGuard.getAttackManager().setAttack(false);
         }
     }
