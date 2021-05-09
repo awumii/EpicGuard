@@ -147,22 +147,28 @@ public class CommandHandler {
         Validate.notNull(args, "Command arguments cannot be null!");
         Validate.notNull(args, "Command subject cannot be null!");
 
-        if (args.length == 0) {
-            return Arrays.asList("stats", "notifications", "analyze", "reload", "whitelist", "blacklist");
-        } else if (args[0].equalsIgnoreCase("whitelist")) {
-            if (args.length == 1) {
+        if (args.length == 1) {
+            return Arrays.asList("stats", "status", "analyze", "reload", "whitelist", "blacklist");
+        }
+
+        if (args[0].equalsIgnoreCase("whitelist")) {
+            if (args.length == 2) {
                 return Arrays.asList("add", "remove");
-            } else if (args[1].equalsIgnoreCase("remove")) {
+            }
+
+            if (args[1].equalsIgnoreCase("remove")) {
                 return this.epicGuard.getStorageManager().getAddressWhitelist();
             }
         } else if (args[0].equalsIgnoreCase("blacklist")) {
-            if (args.length == 1) {
+            if (args.length == 2) {
                 return Arrays.asList("add", "remove");
-            } else if (args[1].equalsIgnoreCase("remove")) {
+            }
+
+            if (args[1].equalsIgnoreCase("remove")) {
                 return this.epicGuard.getStorageManager().getAddressBlacklist();
             }
         }
-        return Collections.emptyList();
+        return null;
     }
 
     private void send(Sender<?> sender, String message) {
