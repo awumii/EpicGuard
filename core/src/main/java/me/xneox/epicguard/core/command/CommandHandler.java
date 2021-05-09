@@ -34,34 +34,25 @@ public class CommandHandler {
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
-            send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-            send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlatform().getVersion() + "&7) &8- &7Command List");
-            send(sender, "&e/guard stats &b- &7show plugin statistics.");
-            send(sender, "&e/guard notifications &b- &7enable actionbar notifications.");
-            send(sender, "&e/guard reload &b- &7reload config and messages.");
-            send(sender, "&e/guard analyze <nickname/address> &b- &7see details about the specified address.");
-            send(sender, "&e/guard whitelist &8<&7add&7/&7remove&8> &8<&7nickname/address&8> &b- &7whitelist/unwhitelist an address or nickname.");
-            send(sender, "&e/guard blacklist &8<&7add&7/&7remove&8> &8<&7nickname/address&8> &b- &7blacklist/unblacklist an address or nickname.");
-            send(sender, "&3&m--&8&m------------------------------------------&3&m--");
+            for (String line : config.mainCommand) {
+                send(sender, line
+                        .replace("{VERSION}", this.epicGuard.getPlatform().getVersion())
+                        .replace("{BLACKLISTED}", String.valueOf(this.epicGuard.getStorageManager().getAddressBlacklist().size()))
+                        .replace("{WHITELISTED}", String.valueOf(this.epicGuard.getStorageManager().getAddressWhitelist().size()))
+                        .replace("{CPS}", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
+                        .replace("{ATTACK}", this.epicGuard.getAttackManager().isAttack() ? "&a&l✔" : "&c&l✖"));
+            }
             return;
         }
 
         switch (args[0]) {
-            case "stats":
-                send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-                send(sender, "&6&lEpicGuard &7(&f" + this.epicGuard.getPlatform().getVersion() + "&7) &8- &7Statistics");
-                send(sender, "&eBlacklisted IPs: &7" + this.epicGuard.getStorageManager().getAddressBlacklist().size());
-                send(sender, "&eWhitelisted IPs: &7" + this.epicGuard.getStorageManager().getAddressWhitelist().size());
-                send(sender, "&eConnections: &7" + this.epicGuard.getAttackManager().getConnectionCounter() + "/s");
-                send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-                break;
-            case "notifications":
+            case "status":
                 if (sender.isPlayer()) {
                     User user = this.epicGuard.getUserManager().getOrCreate(sender.getUUID());
                     user.setNotifications(!user.hasNotifications());
                     send(sender, prefix + config.notifications);
                 } else {
-                    send(sender, "You are not a player!");
+                    send(sender, "This command can't be run in console.");
                 }
                 break;
             case "reload":
@@ -133,21 +124,18 @@ public class CommandHandler {
                     return;
                 }
 
-                send(sender, "&3&m--&8&m------------------------------------------&3&m--");
-                send(sender, "&6&lEpicGuard Analysis of " + address);
-                send(sender, "&eCountry: &7" + this.epicGuard.getGeoManager().getCountryCode(address));
-                send(sender, "&eCity: &7" + this.epicGuard.getGeoManager().getCity(address));
-                send(sender, "");
-                send(sender, "&eWhitelisted: &7" + (this.epicGuard.getStorageManager().isWhitelisted(address) ? "&a&l✔" : "&c&l✖"));
-                send(sender, "&eBlacklisted: &7" + (this.epicGuard.getStorageManager().isBlacklisted(address) ? "&a&l✔" : "&c&l✖"));
-                send(sender, "");
-
                 List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new PendingUser(address, null));
-                send(sender, "&eSeen nicknames (" + accounts.size() + "): &7" + String.join(", ", accounts));
 
-                send(sender, "");
-                send(sender, "&eMore details: &7&nhttps://proxycheck.io/threats/" + address);
-                send(sender, "&3&m--&8&m------------------------------------------&3&m--");
+                for (String line : config.analyzeCommand) {
+                    send(sender, line
+                            .replace("{ADDRESS}", address)
+                            .replace("{COUNTRY}", this.epicGuard.getGeoManager().getCountryCode(address))
+                            .replace("{CITY}", this.epicGuard.getGeoManager().getCity(address))
+                            .replace("{WHITELISTED}", this.epicGuard.getStorageManager().isWhitelisted(address) ? "&a✔" : "&c✖")
+                            .replace("{BLACKLISTED}", this.epicGuard.getStorageManager().isBlacklisted(address) ? "&a✔" : "&c✖")
+                            .replace("{ACCOUNT-AMOUNT}", String.valueOf(accounts.size()))
+                            .replace("{NICKNAMES}", String.join(", ", accounts)));
+                }
                 break;
             default:
                 send(sender, prefix + config.unknown);
