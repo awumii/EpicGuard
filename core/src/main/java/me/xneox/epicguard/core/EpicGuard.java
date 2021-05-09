@@ -33,7 +33,6 @@ public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
     private final UserManager userManager;
-    private final CooldownManager cooldownManager;
     private final AttackManager attackManager;
 
     private PluginConfiguration config;
@@ -50,7 +49,6 @@ public class EpicGuard {
         this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
-        this.cooldownManager = new CooldownManager();
         this.geoManager = new GeoManager(this.getLogger());
 
         try {
@@ -109,10 +107,6 @@ public class EpicGuard {
 
     public StorageManager getStorageManager() {
         return storageManager;
-    }
-
-    public CooldownManager getCooldownManager() {
-        return cooldownManager;
     }
 
     public AttackManager getAttackManager() {

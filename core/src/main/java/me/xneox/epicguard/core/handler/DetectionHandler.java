@@ -46,7 +46,6 @@ public class DetectionHandler {
         checks.add(new ServerListCheck(epicGuard));
         checks.add(new ReconnectCheck(epicGuard));
         checks.add(new AccountLimitCheck(epicGuard));
-        checks.add(new RateLimitCheck(epicGuard));
         checks.add(new NicknameCheck(epicGuard));
         checks.add(new ProxyCheck(epicGuard));
     }

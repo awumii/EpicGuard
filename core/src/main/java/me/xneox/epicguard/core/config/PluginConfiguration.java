@@ -134,19 +134,6 @@ public class PluginConfiguration {
     @CfgName("auto-whitelist-time")
     public int autoWhitelistTime = 240;
 
-    @CfgComment("Rate-limit check will force users to wait some seconds.")
-    @CfgComment("before joining the server again (configurable below).")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will always perform on every player.")
-    @CfgComment("ATTACK (default) - check will perform only during bot attack.")
-    @CfgName("rate-limit-check")
-    public String rateLimitCheck = "ALWAYS";
-
-    @CfgComment("How many seconds users will need to wait")
-    @CfgComment("between joining the server again? (See check above).")
-    @CfgName("rate-limit-seconds")
-    public int rateLimit = 10;
-
     @CfgComment("When a player joins the server, he will send the Settings packet.")
     @CfgComment("Some bots skip sending this packet, this check will try to detect that.")
     @CfgName("settings-check")
