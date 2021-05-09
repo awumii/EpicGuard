@@ -3,16 +3,14 @@ plugins {
 }
 
 repositories {
-    maven {
-        url = 'https://nexus.velocitypowered.com/repository/maven-public/'
-    }
+    maven { url = 'https://nexus.velocitypowered.com/repository/maven-public/' }
 }
 
 dependencies {
     implementation project(':core')
 
     implementation 'org.bstats:bstats-velocity:2.2.1'
-    compileOnly 'com.velocitypowered:velocity-api:1.1.5'
 
+    compileOnly 'com.velocitypowered:velocity-api:1.1.5'
     annotationProcessor 'com.velocitypowered:velocity-api:1.1.5'
 }
