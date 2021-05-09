@@ -29,8 +29,9 @@ public class UpdateCheckerTask implements Runnable {
     public void run() {
         VersionUtils.checkForUpdates(this.epicGuard);
         if (VersionUtils.isAvailable()) {
-            this.epicGuard.getLogger().log("A new version is available: " + VersionUtils.getRemoteVersion() +
-                    " (you are still on " + this.epicGuard.getPlatform().getVersion() + ")");
+            this.epicGuard.getLogger().log(this.epicGuard.getMessages().updateAvailable
+                    .replace("{NEWVER}", VersionUtils.getRemoteVersion())
+                    .replace("{OLDVER}", this.epicGuard.getPlatform().getVersion()));
         }
     }
 }

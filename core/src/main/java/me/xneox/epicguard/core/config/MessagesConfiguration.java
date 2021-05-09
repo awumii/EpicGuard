@@ -30,9 +30,47 @@ import java.util.List;
 @CfgDelegateDefault("{new}")
 public class MessagesConfiguration {
 
+    @CfgName("main-command")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    public List<String> mainCommand = Arrays.asList(
+            "",
+            " &6EpicGuard Protection System &8- &7Running version &f{VERSION}",
+            "",
+            " &8▸ &7Under attack: {ATTACK}",
+            " &8▸ &7Connections: &e{CPS}/s",
+            " &8▸ &7Blacklisted IPs: &e{BLACKLISTED}",
+            " &8▸ &7Whitelisted IPs: &e{WHITELISTED}",
+            "",
+            " &8/&fguard status &8- &7Toggle attack status on actionbar.",
+            " &8/&fguard reload &8- &7Reload config and messages.",
+            " &8/&fguard analyze <nick/address> &8- &7Perform detailed analysis on specified user.",
+            " &8/&fguard whitelist <add/remove> <nick/address> &8- &7whitelist/unwhitelist an address or nickname.",
+            "");
+
+    @CfgName("analyze-command")
+    @CfgCollectionStyle(CfgCollectionStyle.CollectionStyle.ALWAYS_NEW_LINE)
+    public List<String> analyzeCommand = Arrays.asList(
+            "",
+            " &6EpicGuard Analysis System &8- &7Results for &f{ADDRESS}",
+            "",
+            " &eGeographic Data:",
+            "  &8▸ &7Country: &f{COUNTRY}",
+            "  &8▸ &7City: &f{CITY}",
+            "",
+            " &eKnown Accounts&6 ({ACCOUNT-AMOUNT}):",
+            "  &8▸ &f{NICKNAMES}",
+            "",
+            " &eOther Data:",
+            "  &8▸ &7Whitelisted: {WHITELISTED}",
+            "  &8▸ &7Blacklisted: {BLACKLISTED}",
+            "");
+
+    @CfgName("update-available")
+    public String updateAvailable = "A new update is available: {NEWVER} (You are still on {OLDVER})";
+
     @CfgName("prefix")
     @CfgStringStyle(CfgStringStyle.StringStyle.ALWAYS_QUOTED)
-    public String prefix = "&cEpicGuard &8» &7";
+    public String prefix = " &cEpicGuard &8▸ &7";
 
     public String usage = "&cCorrect usage: &6{USAGE}";
 
