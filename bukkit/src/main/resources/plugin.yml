@@ -1,6 +1,7 @@
 name: EpicGuard
 version: '${projectVersion}'
 main: me.xneox.epicguard.bukkit.PlatformBukkit
+api-version: 1.13
 
 author: xNeox
 website: https://www.spigotmc.org/resources/72369/
