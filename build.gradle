@@ -53,12 +53,12 @@ subprojects {
     shadowJar {
         minimize()
 
-        relocate 'org.bstats', 'epicguard.bstats'
-        relocate 'org.diorite', 'epicguard.diorite'
-        relocate 'com.fasterxml', 'epicguard.fasterxml'
-        relocate 'com.maxmind', 'epicguard.maxmind'
-        relocate 'de.leonhard.storage', 'epicguard.storage'
-        relocate 'com.google', 'epicguard.google'
+        relocate 'org.bstats', 'me.xneox.epicguard.libs.bstats'
+        relocate 'org.diorite', 'me.xneox.epicguard.libs.diorite'
+        relocate 'com.fasterxml', 'me.xneox.epicguard.libs.fasterxml'
+        relocate 'com.maxmind', 'me.xneox.epicguard.libs.maxmind'
+        relocate 'de.leonhard.storage', 'me.xneox.epicguard.libs.storage'
+        relocate 'com.google.common', 'me.xneox.epicguard.libs.google.common'
 
         exclude 'mozilla/'
     }
