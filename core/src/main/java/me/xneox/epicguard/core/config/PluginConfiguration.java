@@ -181,6 +181,12 @@ public class PluginConfiguration {
     @CfgName("custom-proxy-check-url")
     public String customProxyCheck = "disabled";
 
+    @CfgComment("If the proxy checker service reponse contains")
+    @CfgComment("one of these strings, it will be considered as positive detection.")
+    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
+    @CfgName("proxy-check-response-contains")
+    public List<String> proxyCheckResponseContains = Arrays.asList("yes", "proxy", "vpn", "1");
+
     @CfgComment("How long in minutes responses from proxy check should be cached?")
     @CfgName("proxy-check-cache-duration")
     public int proxyCheckCacheDuration = 30;

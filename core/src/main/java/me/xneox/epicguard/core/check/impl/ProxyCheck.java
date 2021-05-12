@@ -59,7 +59,7 @@ public class ProxyCheck extends Check {
             }
 
             String response = URLUtils.readString(apiUrl);
-            return response != null && response.contains("yes");
+            return response != null && this.epicGuard.getConfig().proxyCheckResponseContains.stream().anyMatch(response::contains);
         });
     }
 
