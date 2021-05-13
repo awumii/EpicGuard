@@ -3,7 +3,7 @@ package me.xneox.epicguard.velocity.command;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.command.Sender;
-import net.kyori.adventure.text.Component;
+import me.xneox.epicguard.velocity.AdventureUtils;
 
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ public class VelocitySender extends Sender<CommandSource> {
 
     @Override
     public void sendMessage(String message) {
-        this.sender.sendMessage(Component.text(message));
+        this.sender.sendMessage(AdventureUtils.createComponent(message));
     }
 
     @Override

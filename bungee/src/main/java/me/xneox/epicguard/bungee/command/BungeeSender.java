@@ -1,5 +1,6 @@
 package me.xneox.epicguard.bungee.command;
 
+import me.xneox.epicguard.bungee.BungeeUtils;
 import me.xneox.epicguard.core.command.Sender;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -14,7 +15,7 @@ public class BungeeSender extends Sender<CommandSender> {
 
     @Override
     public void sendMessage(String message) {
-        this.sender.sendMessage(TextComponent.fromLegacyText(message));
+        this.sender.sendMessage(BungeeUtils.createComponent(message));
     }
 
     @Override

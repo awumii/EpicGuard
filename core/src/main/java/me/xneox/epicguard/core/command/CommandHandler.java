@@ -5,7 +5,6 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -34,7 +33,7 @@ public class CommandHandler {
         String prefix = this.epicGuard.getMessages().prefix;
         if (args.length < 1) {
             for (String line : config.mainCommand) {
-                send(sender, line
+                sender.sendMessage(line
                         .replace("{VERSION}", this.epicGuard.getPlatform().getVersion())
                         .replace("{BLACKLISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressBlacklist().size()))
                         .replace("{WHITELISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressWhitelist().size()))
@@ -49,62 +48,62 @@ public class CommandHandler {
                 if (sender.isPlayer()) {
                     User user = this.epicGuard.getUserManager().getOrCreate(sender.getUUID());
                     user.setNotifications(!user.hasNotifications());
-                    send(sender, prefix + config.notifications);
+                    sender.sendMessage(prefix + config.notifications);
                 } else {
-                    send(sender, "This command can't be run in console.");
+                    sender.sendMessage("This command can't be run in console.");
                 }
                 break;
             case "reload":
-                send(sender, prefix + config.reload);
+                sender.sendMessage(prefix + config.reload);
                 this.epicGuard.reloadConfig();
                 break;
             case "whitelist":
                 if (args.length != 3) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard whitelist <add/remove> <nickname/address>"));
+                    sender.sendMessage(prefix + config.usage.replace("{USAGE}", "/guard whitelist <add/remove> <nickname/address>"));
                     return;
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
                     if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
-                        send(sender, prefix + config.alreadyWhitelisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.alreadyWhitelisted.replace("{USER}", args[2]));
                     } else {
-                        send(sender, prefix + config.whitelisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.whitelisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().whitelist(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
-                        send(sender, prefix + config.unWhitelisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.unWhitelisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().removeFromWhitelist(args[2]);
                     } else {
-                        send(sender, prefix + config.notWhitelisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.notWhitelisted.replace("{USER}", args[2]));
                     }
                 }
                 break;
             case "blacklist":
                 if (args.length != 3) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard blacklist <add/remove> <nickname/address>"));
+                    sender.sendMessage(prefix + config.usage.replace("{USAGE}", "/guard blacklist <add/remove> <nickname/address>"));
                     return;
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
                     if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
-                        send(sender, prefix + config.alreadyBlacklisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.alreadyBlacklisted.replace("{USER}", args[2]));
                     } else {
-                        send(sender, prefix + config.blacklisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.blacklisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().blacklist(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
-                        send(sender, prefix + config.unBlacklisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.unBlacklisted.replace("{USER}", args[2]));
                         this.epicGuard.getStorageManager().removeFromBlacklist(args[2]);
                     } else {
-                        send(sender, prefix + config.notBlacklisted.replace("{USER}", args[2]));
+                        sender.sendMessage(prefix + config.notBlacklisted.replace("{USER}", args[2]));
                     }
                 }
                 break;
             case "analyze":
                 if (args.length != 2) {
-                    send(sender, prefix + config.usage.replace("{USAGE}", "/guard analyze <nickname/address>"));
+                    sender.sendMessage(prefix + config.usage.replace("{USAGE}", "/guard analyze <nickname/address>"));
                     return;
                 }
 
@@ -119,14 +118,14 @@ public class CommandHandler {
                 }
 
                 if (address == null) {
-                    send(sender, prefix + config.analysisFailed);
+                    sender.sendMessage(prefix + config.analysisFailed);
                     return;
                 }
 
                 List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new PendingUser(address, null));
 
                 for (String line : config.analyzeCommand) {
-                    send(sender, line
+                    sender.sendMessage(line
                             .replace("{ADDRESS}", address)
                             .replace("{COUNTRY}", this.epicGuard.getGeoManager().getCountryCode(address))
                             .replace("{CITY}", this.epicGuard.getGeoManager().getCity(address))
@@ -137,7 +136,7 @@ public class CommandHandler {
                 }
                 break;
             default:
-                send(sender, prefix + config.unknown);
+                sender.sendMessage(prefix + config.unknown);
         }
     }
 
@@ -168,9 +167,5 @@ public class CommandHandler {
             }
         }
         return null;
-    }
-
-    private void send(Sender<?> sender, String message) {
-        sender.sendMessage(ChatUtils.colored(message));
     }
 }

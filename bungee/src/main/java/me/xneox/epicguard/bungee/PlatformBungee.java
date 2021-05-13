@@ -24,10 +24,8 @@ import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.core.util.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
@@ -77,12 +75,12 @@ public class PlatformBungee extends Plugin implements Platform {
 
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatUtils.colored(message)));
+        ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        ProxyServer.getInstance().getPlayer(user.getUUID()).disconnect(new TextComponent(ChatUtils.colored(message)));
+        ProxyServer.getInstance().getPlayer(user.getUUID()).disconnect(BungeeUtils.createComponent(message));
     }
 
     @Override

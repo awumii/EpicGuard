@@ -1,5 +1,6 @@
 package me.xneox.epicguard.bukkit.command;
 
+import me.xneox.epicguard.bukkit.util.ChatUtils;
 import me.xneox.epicguard.core.command.Sender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,7 +14,7 @@ public class BukkitSender extends Sender<CommandSender> {
 
     @Override
     public void sendMessage(String message) {
-        this.sender.sendMessage(message);
+        this.sender.sendMessage(ChatUtils.colored(message));
     }
 
     @Override
