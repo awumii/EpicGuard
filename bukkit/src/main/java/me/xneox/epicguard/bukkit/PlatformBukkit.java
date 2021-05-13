@@ -20,7 +20,6 @@ import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.bukkit.module.ModuleManager;
 import me.xneox.epicguard.bukkit.module.ModuleTask;
 import me.xneox.epicguard.bukkit.util.ChatUtils;
-import me.xneox.epicguard.bukkit.util.Reflections;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.Platform;
@@ -87,19 +86,17 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
         Player player = Bukkit.getPlayer(user.getUUID());
-
-        // Ugly backwards compatibility.
-        // The reflection method has stopped working in 1.16, and the new method is incompatible with 1.8
-        if (Reflections.getVersion().startsWith("v1_16")) {
+        if (player != null) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
-        } else {
-            Reflections.sendActionBar(player, message);
         }
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        Bukkit.getPlayer(user.getUUID()).kickPlayer(ChatUtils.colored(message));
+        Player player = Bukkit.getPlayer(user.getUUID());
+        if (player != null) {
+            player.kickPlayer(ChatUtils.colored(message));
+        }
     }
 
     @Override
