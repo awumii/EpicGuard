@@ -19,6 +19,7 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.manager.*;
+import me.xneox.epicguard.core.storage.StorageManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
@@ -78,7 +79,7 @@ public class EpicGuard {
     }
 
     public void shutdown() {
-        this.storageManager.save();
+        this.storageManager.getProvider().save();
     }
 
     public GuardLogger getLogger() {
