@@ -17,7 +17,7 @@ package me.xneox.epicguard.bukkit.module.modules;
 
 import me.xneox.epicguard.bukkit.module.Module;
 import me.xneox.epicguard.bukkit.module.ModuleManager;
-import me.xneox.epicguard.core.util.ChatUtils;
+import me.xneox.epicguard.bukkit.util.ChatUtils;
 import org.bukkit.entity.Player;
 
 public class BlockedCommands extends Module {

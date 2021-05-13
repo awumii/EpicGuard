@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.bukkit.util;
 
-import me.xneox.epicguard.core.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

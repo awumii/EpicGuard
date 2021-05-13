@@ -53,7 +53,7 @@ public class EpicGuardAPI {
      */
     public static Collection<String> getWhitelistedAddresses() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getAddressWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getAddressWhitelist());
     }
 
     /**
@@ -61,7 +61,7 @@ public class EpicGuardAPI {
      */
     public static Collection<String> getBlacklistedAddresses() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getAddressWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getAddressWhitelist());
     }
 
     /**
@@ -69,7 +69,7 @@ public class EpicGuardAPI {
      */
     public static Collection<String> getWhitelistedNicknames() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getNameWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getNameWhitelist());
     }
 
     /**
@@ -77,7 +77,7 @@ public class EpicGuardAPI {
      */
     public static Collection<String> getBlacklistedNicknames() {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getNameBlacklist());
+        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getNameBlacklist());
     }
 
     /**
@@ -111,7 +111,7 @@ public class EpicGuardAPI {
         Validate.notNull(address, "Address cannot be null!");
 
         epicGuard.getStorageManager().whitelist(address);
-        epicGuard.getStorageManager().getAddressBlacklist().remove(address);
+        epicGuard.getStorageManager().getProvider().getAddressBlacklist().remove(address);
     }
 
     /**

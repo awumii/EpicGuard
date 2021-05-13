@@ -19,7 +19,6 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.PendingUser;
-import me.xneox.epicguard.core.util.ChatUtils;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
@@ -76,7 +75,11 @@ public class DetectionHandler {
                 }
 
                 // Positive detection, kicking the player!
-                return Optional.of(ChatUtils.buildString(check.getKickMessage()));
+                // Also, the kick message is a list so we need to convert it to a string.
+
+                StringBuilder builder = new StringBuilder();
+                check.getKickMessage().forEach(line -> builder.append(line).append("\n"));
+                return Optional.of(builder.toString());
             }
         }
 

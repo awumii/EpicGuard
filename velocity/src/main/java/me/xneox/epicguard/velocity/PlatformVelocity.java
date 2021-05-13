@@ -30,10 +30,8 @@ import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.core.util.ChatUtils;
 import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
-import net.kyori.adventure.text.Component;
 import org.bstats.velocity.Metrics;
 
 import org.slf4j.Logger;
@@ -92,12 +90,12 @@ public class PlatformVelocity implements Platform {
 
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(Component.text(ChatUtils.colored(message))));
+        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(Component.text(ChatUtils.colored(message))));
+        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
     }
 
     @Override
