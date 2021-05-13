@@ -220,4 +220,13 @@ public class PluginConfiguration {
 
     @CfgComment("Enabling this will log positive bot detections in the console.")
     public boolean debug;
+
+    @CfgComment("")
+    @CfgComment("╔════════════════════════════════════════════╗")
+    @CfgComment("║           Storage Settings                 ║")
+    @CfgComment("╚════════════════════════════════════════════╝")
+    @CfgComment("")
+    @CfgComment("Available storage methods: JSON")
+    @CfgName("storage-method")
+    public String storageMethod = "JSON";
 }

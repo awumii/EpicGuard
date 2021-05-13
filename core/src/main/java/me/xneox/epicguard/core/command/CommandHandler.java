@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,10 +36,10 @@ public class CommandHandler {
             for (String line : config.mainCommand) {
                 send(sender, line
                         .replace("{VERSION}", this.epicGuard.getPlatform().getVersion())
-                        .replace("{BLACKLISTED}", String.valueOf(this.epicGuard.getStorageManager().getAddressBlacklist().size()))
-                        .replace("{WHITELISTED}", String.valueOf(this.epicGuard.getStorageManager().getAddressWhitelist().size()))
+                        .replace("{BLACKLISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressBlacklist().size()))
+                        .replace("{WHITELISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressWhitelist().size()))
                         .replace("{CPS}", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
-                        .replace("{ATTACK}", this.epicGuard.getAttackManager().isAttack() ? "&a&l✔" : "&c&l✖"));
+                        .replace("{ATTACK}", this.epicGuard.getAttackManager().isAttack() ? "&a✔" : "&c✖"));
             }
             return;
         }
@@ -157,7 +156,7 @@ public class CommandHandler {
             }
 
             if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getAddressWhitelist();
+                return this.epicGuard.getStorageManager().getProvider().getAddressWhitelist();
             }
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length == 2) {
@@ -165,7 +164,7 @@ public class CommandHandler {
             }
 
             if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getAddressBlacklist();
+                return this.epicGuard.getStorageManager().getProvider().getAddressBlacklist();
             }
         }
         return null;
