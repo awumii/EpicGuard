@@ -30,6 +30,6 @@ public class PlayerJoinListener extends JoinHandler implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
+        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress(), player.getName());
     }
 }

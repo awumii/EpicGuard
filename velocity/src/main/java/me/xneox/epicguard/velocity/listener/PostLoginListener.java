@@ -29,6 +29,6 @@ public class PostLoginListener extends JoinHandler {
     @Subscribe
     public void onPostLogin(PostLoginEvent event) {
         Player player = event.getPlayer();
-        this.handle(player.getUniqueId(), player.getRemoteAddress().getAddress().getHostAddress());
+        this.handle(player.getUniqueId(), player.getRemoteAddress().getAddress().getHostAddress(), player.getUsername());
     }
 }

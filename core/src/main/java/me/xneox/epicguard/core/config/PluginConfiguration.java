@@ -128,12 +128,6 @@ public class PluginConfiguration {
     @CfgName("attack-deny-join")
     public boolean denyJoin = true;
 
-    @CfgComment("Time in seconds the player must be online")
-    @CfgComment("to be added to the EpicGuard's whitelist.")
-    @CfgComment("Default: 240 (4 minutes)")
-    @CfgName("auto-whitelist-time")
-    public int autoWhitelistTime = 240;
-
     @CfgComment("When a player joins the server, he will send the Settings packet.")
     @CfgComment("Some bots skip sending this packet, this check will try to detect that.")
     @CfgName("settings-check")
@@ -169,10 +163,20 @@ public class PluginConfiguration {
     @CfgName("max-cps")
     public int maxCps = 6;
 
-    @CfgComment("Shoud the auto-whitelist feature be enabled?")
-    @CfgComment("Whitelisted players are exempt from every check.")
-    @CfgName("auto-whitelist")
-    public boolean autoWhitelist = true;
+    @CfgComment("If a player is online for long enough (see option below)")
+    @CfgComment("He will be added to the whitelist, and be exempt from every future detections.")
+    @CfgComment("ADDRESS - Will only whitelist the user's IP address.")
+    @CfgComment("NICKNAME - Will only whitelist the user's nickname.")
+    @CfgComment("BOTH - Will whitelist the user's IP address AND nickname")
+    @CfgComment("DISABLED - Will disable this feature")
+    @CfgName("auto-whitelist-mode")
+    public String autoWhitelist = "BOTH";
+
+    @CfgComment("Time in seconds the player must be online")
+    @CfgComment("to be added to the EpicGuard's whitelist.")
+    @CfgComment("Default: 240 (4 minutes)")
+    @CfgName("auto-whitelist-time")
+    public int autoWhitelistTime = 240;
 
     @CfgComment("If you want to use other proxy/vpn checker")
     @CfgComment("than default (proxycheck.io), you can set it here.")

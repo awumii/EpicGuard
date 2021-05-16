@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.check.WhitelistMode;
 import me.xneox.epicguard.core.user.User;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
@@ -33,17 +34,24 @@ public class JoinHandler {
         this.epicGuard = epicGuard;
     }
 
-    public void handle(@Nonnull UUID uuid, @Nonnull String address) {
+    public void handle(@Nonnull UUID uuid, @Nonnull String address, @Nonnull String nickname) {
         Validate.notNull(uuid, "UUID cannot be null!");
         Validate.notNull(address, "Address cannot be null!");
 
         User user = this.epicGuard.getUserManager().getOrCreate(uuid);
 
         // Schedule a delayed task to whitelist the player.
-        if (this.epicGuard.getConfig().autoWhitelist) {
+        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.getConfig().autoWhitelist);
+        if (mode != WhitelistMode.DISABLED) {
             this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null) {
-                    this.epicGuard.getStorageManager().whitelistPut(address);
+                    if (mode == WhitelistMode.BOTH || mode == WhitelistMode.ADDRESS) {
+                        this.epicGuard.getStorageManager().whitelistPut(address);
+                    }
+
+                    if (mode == WhitelistMode.BOTH || mode == WhitelistMode.NICKNAME) {
+                        this.epicGuard.getStorageManager().whitelistPut(nickname);
+                    }
                 }
             }, this.epicGuard.getConfig().autoWhitelistTime);
         }

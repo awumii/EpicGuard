@@ -35,8 +35,10 @@ public class CommandHandler {
             for (String line : config.mainCommand) {
                 sender.sendMessage(line
                         .replace("{VERSION}", this.epicGuard.getPlatform().getVersion())
-                        .replace("{BLACKLISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressBlacklist().size()))
-                        .replace("{WHITELISTED}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressWhitelist().size()))
+                        .replace("{BLACKLISTED-IPS}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressBlacklist().size()))
+                        .replace("{WHITELISTED-IPS}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressWhitelist().size()))
+                        .replace("{BLACKLISTED-NAMES}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getNameBlacklist().size()))
+                        .replace("{WHITELISTED-NAMES}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getNameWhitelist().size()))
                         .replace("{CPS}", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
                         .replace("{ATTACK}", this.epicGuard.getAttackManager().isAttack() ? "&a✔" : "&c✖"));
             }

@@ -30,6 +30,6 @@ public class PostLoginListener extends JoinHandler implements Listener {
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
-        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
+        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress(), player.getName());
     }
 }
