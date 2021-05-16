@@ -17,9 +17,6 @@ package me.xneox.epicguard.bukkit;
 
 import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
 import me.xneox.epicguard.bukkit.listener.*;
-import me.xneox.epicguard.bukkit.module.ModuleManager;
-import me.xneox.epicguard.bukkit.module.ModuleTask;
-import me.xneox.epicguard.bukkit.util.ChatUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.Platform;
@@ -39,7 +36,6 @@ import javax.annotation.Nonnull;
 
 public class PlatformBukkit extends JavaPlugin implements Platform {
     private EpicGuard epicGuard;
-    private ModuleManager moduleManager;
     private GuardLogger logger;
 
     @Override
@@ -47,16 +43,12 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
         this.logger = new JavaLogger(this.getLogger());
         this.epicGuard = new EpicGuard(this);
 
-        // The module system is deprecated and will be removed in the 6.0 release, and instead moved to a different project.
-        this.moduleManager = new ModuleManager(this.epicGuard);
-
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
         pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
         pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
         pm.registerEvents(new ServerPingListener(this.epicGuard), this);
         pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
-        pm.registerEvents(new CommandListener(this), this);
 
         PluginCommand command = this.getCommand("epicguard");
         if (command != null) {
@@ -65,17 +57,12 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
             command.setTabCompleter(cmdExecutor);
         }
 
-        Bukkit.getScheduler().runTaskTimer(this, new ModuleTask(this), 20L * 5L, 20L);
         new Metrics(this, 5845);
     }
 
     @Override
     public void onDisable() {
         this.epicGuard.shutdown();
-    }
-
-    public ModuleManager getModuleManager() {
-        return this.moduleManager;
     }
 
     @Override

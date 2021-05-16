@@ -1,6 +1,6 @@
 package me.xneox.epicguard.bukkit.command;
 
-import me.xneox.epicguard.bukkit.util.ChatUtils;
+import me.xneox.epicguard.bukkit.ChatUtils;
 import me.xneox.epicguard.core.command.Sender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

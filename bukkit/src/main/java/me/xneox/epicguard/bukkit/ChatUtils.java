@@ -1,4 +1,4 @@
-package me.xneox.epicguard.bukkit.util;
+package me.xneox.epicguard.bukkit;
 
 import org.bukkit.ChatColor;
 
