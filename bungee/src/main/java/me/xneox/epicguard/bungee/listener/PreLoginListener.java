@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.bungee.listener;
 
+import me.xneox.epicguard.bungee.BungeeUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -37,7 +38,7 @@ public class PreLoginListener extends DetectionHandler implements Listener {
 
         this.handle(address, nickname).ifPresent(result -> {
             event.setCancelled(true);
-            event.setCancelReason(TextComponent.fromLegacyText(result));
+            event.setCancelReason(BungeeUtils.createComponent(result));
         });
     }
 }

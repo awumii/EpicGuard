@@ -20,6 +20,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
+import me.xneox.epicguard.velocity.AdventureUtils;
 import net.kyori.adventure.text.Component;
 
 public class PreLoginListener extends DetectionHandler {
@@ -32,6 +33,6 @@ public class PreLoginListener extends DetectionHandler {
         String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
         String nickname = event.getUsername();
 
-        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(Component.text(result))));
+        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(AdventureUtils.createComponent(result))));
     }
 }

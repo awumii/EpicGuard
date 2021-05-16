@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.bukkit.listener;
 
+import me.xneox.epicguard.bukkit.ChatUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import org.bukkit.event.EventHandler;
@@ -32,6 +33,6 @@ public class PlayerPreLoginListener extends DetectionHandler implements Listener
         String address = event.getAddress().getHostAddress();
         String nickname = event.getName();
 
-        this.handle(address, nickname).ifPresent(result -> event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, result));
+        this.handle(address, nickname).ifPresent(result -> event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtils.colored(result)));
     }
 }
