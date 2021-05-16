@@ -38,6 +38,7 @@ public class StorageManager {
 
     public StorageManager() {
         this.provider = new JsonStorageProvider();
+        this.provider.load();
     }
 
     public StorageProvider getProvider() {
@@ -72,7 +73,7 @@ public class StorageManager {
      * Returns null if not found.
      */
     @Nullable
-    public String findByNickname(String nickname) {
+    public String findByNickname(@Nonnull String nickname) {
         return this.provider.getAccountMap().entrySet().stream()
                 .filter(entry -> entry.getValue().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
                 .findFirst()
@@ -80,27 +81,19 @@ public class StorageManager {
                 .orElse(null);
     }
 
-    public void blacklist(String value) {
+    public void blacklistPut(@Nonnull String value) {
         if (InetAddresses.isInetAddress(value)) {
-            if (!this.provider.getAddressBlacklist().contains(value)) {
-                this.provider.getAddressBlacklist().add(value);
-            }
+            this.provider.getAddressBlacklist().add(value);
         } else {
-            if (!this.provider.getNameBlacklist().contains(value)) {
-                this.provider.getNameBlacklist().add(value);
-            }
+            this.provider.getNameBlacklist().add(value);
         }
     }
 
-    public void whitelist(String value) {
+    public void whitelistPut(@Nonnull String value) {
         if (InetAddresses.isInetAddress(value)) {
-            if (!this.provider.getAddressWhitelist().contains(value)) {
-                this.provider.getAddressWhitelist().add(value);
-            }
+            this.provider.getAddressWhitelist().add(value);
         } else {
-            if (!this.provider.getNameWhitelist().contains(value)) {
-                this.provider.getNameWhitelist().add(value);
-            }
+            this.provider.getNameWhitelist().add(value);
         }
     }
 

@@ -29,6 +29,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
+import org.jetbrains.annotations.NotNull;
 
 
 import javax.annotation.Nonnull;
@@ -69,7 +70,7 @@ public class PlatformBungee extends Plugin implements Platform {
     }
 
     @Override
-    public GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger getGuardLogger() {
         return this.logger;
     }
 

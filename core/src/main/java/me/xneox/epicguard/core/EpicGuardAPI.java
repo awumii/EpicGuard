@@ -97,7 +97,7 @@ public class EpicGuardAPI {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         Validate.notNull(address, "Address cannot be null!");
 
-        epicGuard.getStorageManager().blacklist(address);
+        epicGuard.getStorageManager().blacklistPut(address);
     }
 
     /**
@@ -110,7 +110,7 @@ public class EpicGuardAPI {
         Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because it has been not initialized yet.");
         Validate.notNull(address, "Address cannot be null!");
 
-        epicGuard.getStorageManager().whitelist(address);
+        epicGuard.getStorageManager().whitelistPut(address);
         epicGuard.getStorageManager().getProvider().getAddressBlacklist().remove(address);
     }
 

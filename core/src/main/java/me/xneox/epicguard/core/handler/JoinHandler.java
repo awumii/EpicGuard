@@ -43,7 +43,7 @@ public class JoinHandler {
         if (this.epicGuard.getConfig().autoWhitelist) {
             this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null) {
-                    this.epicGuard.getStorageManager().whitelist(address);
+                    this.epicGuard.getStorageManager().whitelistPut(address);
                 }
             }, this.epicGuard.getConfig().autoWhitelistTime);
         }

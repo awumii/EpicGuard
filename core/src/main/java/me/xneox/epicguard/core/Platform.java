@@ -32,6 +32,7 @@ public interface Platform {
      *
      * @return An implementation of the {@link GuardLogger} compatible with your platform.
      */
+    @Nonnull
     GuardLogger getGuardLogger();
 
     /**

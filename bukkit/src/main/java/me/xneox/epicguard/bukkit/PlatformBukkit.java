@@ -31,6 +31,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -66,7 +67,7 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger getGuardLogger() {
         return this.logger;
     }
 

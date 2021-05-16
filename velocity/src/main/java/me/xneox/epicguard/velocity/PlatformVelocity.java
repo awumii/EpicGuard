@@ -34,6 +34,7 @@ import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import org.bstats.velocity.Metrics;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -80,7 +81,7 @@ public class PlatformVelocity implements Platform {
     }
 
     @Override
-    public GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger getGuardLogger() {
         return this.logger;
     }
 
