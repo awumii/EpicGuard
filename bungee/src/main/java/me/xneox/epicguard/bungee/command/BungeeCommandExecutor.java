@@ -1,14 +1,14 @@
 package me.xneox.epicguard.bungee.command;
 
-import me.xneox.epicguard.core.command.CommandHandler;
+import me.xneox.epicguard.core.command.GuardCommandExecutor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 public class BungeeCommandExecutor extends Command implements TabExecutor {
-    private final CommandHandler command;
+    private final GuardCommandExecutor command; // why bungee... why Command is an abstract class?
 
-    public BungeeCommandExecutor(CommandHandler command) {
+    public BungeeCommandExecutor(GuardCommandExecutor command) {
         super("epicguard", "epicguard.admin", "guard", "eg", "ab", "antibot");
         this.command = command;
     }

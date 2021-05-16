@@ -17,6 +17,7 @@ package me.xneox.epicguard.core.user;
 
 import com.google.common.base.Objects;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 /**
@@ -31,14 +32,24 @@ public class User {
         this.uuid = uuid;
     }
 
+    /**
+     * @return The user's UUID.
+     */
+    @Nonnull
     public UUID getUUID() {
         return uuid;
     }
 
+    /**
+     * @return Whenever the user has enabled the status notifications.
+     */
     public boolean hasNotifications() {
         return notifications;
     }
 
+    /**
+     * @return Whenever the user has sent the Settings packet at least once.
+     */
     public boolean hasChangedSettings() {
         return settingsChanged;
     }

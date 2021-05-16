@@ -1,5 +1,6 @@
 package me.xneox.epicguard.core.command;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -21,5 +22,6 @@ public abstract class Sender<C> {
 
     public abstract boolean isPlayer();
 
+    @Nullable
     public abstract UUID getUUID();
 }

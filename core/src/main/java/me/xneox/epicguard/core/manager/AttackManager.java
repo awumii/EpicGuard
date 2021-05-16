@@ -24,6 +24,12 @@ public class AttackManager {
     private final AtomicInteger connectionCounter = new AtomicInteger();
     private boolean attack;
 
+    /**
+     * Attack-mode is a special temporary state, that indicates that the server is under attack.
+     * It triggers when connection counter is above the threshold.
+     *
+     * @return State of the attack-mode
+     */
     public boolean isAttack() {
         return this.attack;
     }
@@ -40,6 +46,11 @@ public class AttackManager {
         this.connectionCounter.set(0);
     }
 
+    /**
+     * Increments the connection per second counter, and returns it's current value
+     *
+     * @return Current connections per second.
+     */
     public int incrementConnectionCounter() {
         return this.connectionCounter.incrementAndGet();
     }

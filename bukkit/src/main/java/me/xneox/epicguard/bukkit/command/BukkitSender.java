@@ -4,6 +4,7 @@ import me.xneox.epicguard.bukkit.ChatUtils;
 import me.xneox.epicguard.core.command.Sender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class BukkitSender extends Sender<CommandSender> {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessage(@NotNull String message) {
         this.sender.sendMessage(ChatUtils.colored(message));
     }
 

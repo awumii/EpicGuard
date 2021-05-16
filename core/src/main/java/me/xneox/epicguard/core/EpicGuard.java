@@ -60,8 +60,8 @@ public class EpicGuard {
         }
 
         this.platform.scheduleTask(new MonitorTask(this), 1L);
-        this.platform.scheduleTask(new AttackResetTask(this), 40L);
         this.platform.scheduleTask(new UpdateCheckerTask(this), 1800L);
+        this.platform.scheduleTask(new AttackResetTask(this), this.config.attackResetInterval);
         this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);

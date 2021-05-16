@@ -15,12 +15,11 @@
 
 package me.xneox.epicguard.bukkit;
 
-import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
+import me.xneox.epicguard.bukkit.command.BukkitGuardCommandExecutor;
 import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.user.User;
 import net.md_5.bungee.api.ChatMessageType;
@@ -53,12 +52,13 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
 
         PluginCommand command = this.getCommand("epicguard");
         if (command != null) {
-            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(new CommandHandler(this.epicGuard));
+            BukkitGuardCommandExecutor cmdExecutor = new BukkitGuardCommandExecutor(this.epicGuard);
             command.setExecutor(cmdExecutor);
             command.setTabCompleter(cmdExecutor);
         }
 
         new Metrics(this, 5845);
+        ChatUtils.unsupportedVersionWarn(this.logger);
     }
 
     @Override

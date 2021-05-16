@@ -22,9 +22,7 @@ import me.xneox.epicguard.core.user.PendingUser;
 import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Handler for PreLogin listeners.
@@ -33,7 +31,7 @@ import java.util.Optional;
  * It performs every antibot check (except SettingsCheck).
  */
 public class DetectionHandler {
-    private final List<Check> checks = new ArrayList<>();
+    private final Collection<Check> checks = new HashSet<>();
     private final EpicGuard epicGuard;
 
     public DetectionHandler(EpicGuard epicGuard) {
@@ -55,7 +53,7 @@ public class DetectionHandler {
         Validate.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementConnectionCounter() > this.epicGuard.getConfig().maxCps) {
+        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().maxCps) {
             this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
         }
 

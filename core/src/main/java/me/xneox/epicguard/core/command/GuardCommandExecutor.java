@@ -17,10 +17,10 @@ import java.util.List;
  * This class is a platform-independent command handler.
  * See {@link Sender}.
  */
-public class CommandHandler {
+public class GuardCommandExecutor {
     private final EpicGuard epicGuard;
 
-    public CommandHandler(EpicGuard epicGuard) {
+    public GuardCommandExecutor(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
     }
 

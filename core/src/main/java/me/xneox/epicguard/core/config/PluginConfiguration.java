@@ -163,6 +163,12 @@ public class PluginConfiguration {
     @CfgName("max-cps")
     public int maxCps = 6;
 
+    @CfgComment("How often (in seconds) the plugin should check if amount of connections")
+    @CfgComment("is slower than specified threshold (see max-cps) and disable attack mode?")
+    @CfgComment("(!) Requires restart to apply.")
+    @CfgName("attack-reset-interval")
+    public long attackResetInterval = 80L;
+
     @CfgComment("If a player is online for long enough (see option below)")
     @CfgComment("He will be added to the whitelist, and be exempt from every future detections.")
     @CfgComment("ADDRESS - Will only whitelist the user's IP address.")
@@ -193,7 +199,7 @@ public class PluginConfiguration {
 
     @CfgComment("How long in minutes responses from proxy check should be cached?")
     @CfgName("proxy-check-cache-duration")
-    public int proxyCheckCacheDuration = 30;
+    public int proxyCheckCacheDuration = 10;
 
     @CfgComment("Change when the console-filter should be active.")
     @CfgComment("ALWAYS (default) - always filter console messages")
@@ -219,6 +225,7 @@ public class PluginConfiguration {
     public boolean updateChecker = true;
 
     @CfgComment("Time in minutes before auto-saving data.")
+    @CfgComment("(!) Requires restart to apply.")
     @CfgName("autosave-interval")
     public long autoSaveInterval = 10L;
 

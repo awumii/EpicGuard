@@ -26,11 +26,10 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
+import me.xneox.epicguard.velocity.command.VelocityGuardCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import org.bstats.velocity.Metrics;
 
@@ -63,9 +62,9 @@ public class PlatformVelocity implements Platform {
                 .aliases("guard")
                 .build();
 
-        commandManager.register(meta, new VelocityCommandExecutor(new CommandHandler(this.epicGuard)));
+        commandManager.register(meta, new VelocityGuardCommandExecutor(this.epicGuard));
 
-        EventManager eventManager = this.getServer().getEventManager();
+        EventManager eventManager = this.server.getEventManager();
         eventManager.register(this, new PostLoginListener(this.epicGuard));
         eventManager.register(this, new PreLoginListener(this.epicGuard));
         eventManager.register(this, new DisconnectListener(this.epicGuard));
@@ -85,23 +84,19 @@ public class PlatformVelocity implements Platform {
         return this.logger;
     }
 
-    public ProxyServer getServer() {
-        return this.server;
-    }
-
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
+        this.server.getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        this.getServer().getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
+        this.server.getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
     }
 
     @Override
     public String getVersion() {
-        Optional<PluginContainer> container = this.getServer().getPluginManager().fromInstance(this);
+        Optional<PluginContainer> container = this.server.getPluginManager().fromInstance(this);
         if (container.isPresent()) {
             Optional<String> version = container.get().getDescription().getVersion();
             if (version.isPresent()) {
@@ -113,7 +108,7 @@ public class PlatformVelocity implements Platform {
 
     @Override
     public void runTaskLater(@Nonnull Runnable task, long seconds) {
-        this.getServer().getScheduler()
+        this.server.getScheduler()
                 .buildTask(this, task)
                 .delay(seconds, TimeUnit.SECONDS)
                 .schedule();
@@ -121,7 +116,7 @@ public class PlatformVelocity implements Platform {
 
     @Override
     public void scheduleTask(@Nonnull Runnable task, long seconds) {
-        this.getServer().getScheduler()
+        this.server.getScheduler()
                 .buildTask(this, task)
                 .repeat(seconds, TimeUnit.SECONDS)
                 .schedule();
