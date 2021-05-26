@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
-public class PlatformBukkit extends JavaPlugin implements Platform {
+public class EpicGuardBukkit extends JavaPlugin implements Platform {
     private EpicGuard epicGuard;
     private GuardLogger logger;
 
@@ -58,7 +58,7 @@ public class PlatformBukkit extends JavaPlugin implements Platform {
         }
 
         new Metrics(this, 5845);
-        ChatUtils.unsupportedVersionWarn(this.logger);
+        ChatUtils.checkUnsupportedVersion(this.logger);
     }
 
     @Override

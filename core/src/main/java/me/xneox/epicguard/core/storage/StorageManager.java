@@ -111,7 +111,7 @@ public class StorageManager {
         return this.provider.getNameWhitelist().contains(value);
     }
 
-    public void removeFromBlacklist(String value) {
+    public void removeBlacklist(String value) {
         if (InetAddresses.isInetAddress(value)) {
             this.provider.getAddressBlacklist().remove(value);
         } else {
@@ -119,7 +119,7 @@ public class StorageManager {
         }
     }
 
-    public void removeFromWhitelist(String value) {
+    public void removeWhitelist(String value) {
         if (InetAddresses.isInetAddress(value)) {
             this.provider.getAddressWhitelist().remove(value);
         } else {

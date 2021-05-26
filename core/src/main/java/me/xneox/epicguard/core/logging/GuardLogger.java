@@ -7,7 +7,7 @@ package me.xneox.epicguard.core.logging;
  *  {@link me.xneox.epicguard.core.logging.impl.SLF4JLogger} for {@link org.slf4j.Logger}
  */
 public interface GuardLogger {
-    void log(String message);
+    void info(String message);
 
     void warning(String message);
 }

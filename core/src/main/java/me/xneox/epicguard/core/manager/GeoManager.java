@@ -48,7 +48,7 @@ public class GeoManager {
 
     public GeoManager(GuardLogger logger) {
         this.logger = logger;
-        logger.log("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
+        logger.info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
         String parent = "plugins/EpicGuard/data";
         File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
@@ -82,10 +82,10 @@ public class GeoManager {
 
         if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
             // Database does not exist or is outdated, and need to be downloaded.
-            logger.log("Downloading the GeoIP database file: " + database.getName());
+            logger.info("Downloading the GeoIP database file: " + database.getName());
             FileUtils.downloadFile(url, archive);
 
-            logger.log("Extracting the database from the tar archive...");
+            logger.info("Extracting the database from the tar archive...");
             TarArchiveInputStream tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
             TarArchiveEntry entry = tarInput.getNextTarEntry();
             while (entry != null) {
@@ -98,7 +98,7 @@ public class GeoManager {
             // Closing InputStream and removing archive file.
             tarInput.close();
             archive.delete();
-            logger.log("Database (" + database.getName() + ") has been extracted succesfuly.");
+            logger.info("Database (" + database.getName() + ") has been extracted succesfuly.");
         }
     }
 

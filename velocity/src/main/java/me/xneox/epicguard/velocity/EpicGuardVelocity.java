@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
         version = "{version}",
         description = "Bot protection system for Minecraft servers.",
         authors = "xNeox")
-public class PlatformVelocity implements Platform {
+public class EpicGuardVelocity implements Platform {
     private final ProxyServer server;
     private final GuardLogger logger;
     private final Metrics.Factory metricsFactory;
@@ -54,7 +54,7 @@ public class PlatformVelocity implements Platform {
     private EpicGuard epicGuard;
 
     @Inject
-    public PlatformVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
+    public EpicGuardVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = new SLF4JLogger(logger);
         this.metricsFactory = metricsFactory;

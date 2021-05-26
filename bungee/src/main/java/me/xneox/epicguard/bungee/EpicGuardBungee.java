@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
-public class PlatformBungee extends Plugin implements Platform {
+public class EpicGuardBungee extends Plugin implements Platform {
     private EpicGuard epicGuard;
     private GuardLogger logger;
 

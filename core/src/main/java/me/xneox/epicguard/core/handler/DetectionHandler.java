@@ -47,6 +47,13 @@ public class DetectionHandler {
         checks.add(new ProxyCheck(epicGuard));
     }
 
+    /**
+     * Handling the incoming connection, and returning an optional disconnect message.
+     *
+     * @param address Address of the connecting user.
+     * @param nickname Nickname of the connecting user.
+     * @return Disconnect message, or an empty Optional if undetected.
+     */
     @Nonnull
     public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
         Validate.notNull(address, "Address cannot be null!");
@@ -68,7 +75,7 @@ public class DetectionHandler {
         for (Check check : this.checks) {
             if (check.handle(user)) {
                 if (this.epicGuard.getConfig().debug) {
-                    this.epicGuard.getLogger().log("(Debug) " + nickname + "/" + address + " detected by " +
+                    this.epicGuard.getLogger().info("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }
 

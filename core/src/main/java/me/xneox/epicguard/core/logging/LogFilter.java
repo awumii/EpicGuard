@@ -33,13 +33,9 @@ import java.util.List;
  */
 public class LogFilter extends AbstractFilter {
     private final EpicGuard epicGuard;
-    private final List<String> messages;
-    private final CheckMode mode;
 
     public LogFilter(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
-        this.messages = epicGuard.getConfig().consoleFilter;
-        this.mode = CheckMode.valueOf(epicGuard.getConfig().consoleFilterMode);
     }
 
     public void register() {
@@ -68,8 +64,9 @@ public class LogFilter extends AbstractFilter {
     }
 
     private Result isLoggable(String message) {
-        if (this.mode == CheckMode.ALWAYS || this.mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
-            for (String string : this.messages) {
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().consoleFilterMode);
+        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
+            for (String string : this.epicGuard.getConfig().consoleFilter) {
                 if (message.contains(string)) {
                     return Result.DENY;
                 }

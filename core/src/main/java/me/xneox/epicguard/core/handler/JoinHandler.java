@@ -34,6 +34,13 @@ public class JoinHandler {
         this.epicGuard = epicGuard;
     }
 
+    /**
+     * Handling the player who just have joined to the server.
+     *
+     * @param uuid UUID of the online player.
+     * @param address Address of the online player.
+     * @param nickname Nickname of the online player.
+     */
     public void handle(@Nonnull UUID uuid, @Nonnull String address, @Nonnull String nickname) {
         Validate.notNull(uuid, "UUID cannot be null!");
         Validate.notNull(address, "Address cannot be null!");

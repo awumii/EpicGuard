@@ -44,28 +44,32 @@ public class EpicGuard {
     public EpicGuard(Platform platform) {
         this.platform = platform;
 
-        getLogger().log("Loading configuration...");
+        getLogger().info("Loading configuration...");
         this.reloadConfig();
 
+        getLogger().info("Initializing managers...");
         this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
         this.geoManager = new GeoManager(this.getLogger());
 
+        getLogger().info("Initializing LogFilter...");
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
             new LogFilter(this).register();
         } catch (ClassNotFoundException e) {
-            getLogger().warning("LogFilter can't be enabled, because log4j is not found. If you want to use this feature, switch to Waterfall/Travertine.");
+            getLogger().warning("LogFilter can't be enabled, because log4j is not found.");
+            getLogger().warning("If you want to use this feature, switch to Waterfall/Travertine."); // This can only occur on bungeecord.
         }
 
+        getLogger().info("Scheduling tasks...");
         this.platform.scheduleTask(new MonitorTask(this), 1L);
         this.platform.scheduleTask(new UpdateCheckerTask(this), 1800L);
         this.platform.scheduleTask(new AttackResetTask(this), this.config.attackResetInterval);
         this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
 
         EpicGuardAPI.setInstance(this);
-        getLogger().log("EpicGuard v5 finished startup successfully.");
+        getLogger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.getVersion());
     }
 
     public void reloadConfig() {

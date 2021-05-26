@@ -31,6 +31,11 @@ public class PingHandler {
         this.epicGuard = epicGuard;
     }
 
+    /**
+     * Handling the user who just pinged the server.
+     *
+     * @param address Address of the pinger.
+     */
     public void handle(@Nonnull String address) {
         Validate.notNull(address, "Address cannot be null!");
         this.epicGuard.getStorageManager().getPingCache().add(address);

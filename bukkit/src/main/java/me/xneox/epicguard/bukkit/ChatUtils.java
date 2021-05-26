@@ -9,12 +9,12 @@ public final class ChatUtils {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    // hehe
-    public static void unsupportedVersionWarn(GuardLogger logger) {
+    public static void checkUnsupportedVersion(GuardLogger logger) {
         if (Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].startsWith("v1_8")) {
-            logger.warning("You are running on an ancient version of Minecraft.");
-            logger.warning("1.8 has several security issues already fixed in newer versions.");
-            logger.warning("No support will be provided whatsoever.");
+            logger.warning(" WARNING - YOU ARE RUNNING ON AN OUTDATED");
+            logger.warning(" AND UNSUPPORTED VERSION OF MINECRAFT (1.8).");
+            logger.warning(" Please update to the latest server software.");
+            logger.warning(" No support will be provided for any issues.");
         }
     }
 

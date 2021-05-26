@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.command.Sender;
 import me.xneox.epicguard.velocity.AdventureUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class VelocitySender extends Sender<CommandSource> {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void sendMessage(@NotNull String message) {
         this.sender.sendMessage(AdventureUtils.createComponent(message));
     }
 

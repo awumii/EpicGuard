@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 /**
  * This is the most important part of the EpicGuard's platform implementation.
  * The main class of every platform has to implement this interface.
+ *
+ * The first thing the platforms has to do is to initialize the logger.
  */
 public interface Platform {
     /**

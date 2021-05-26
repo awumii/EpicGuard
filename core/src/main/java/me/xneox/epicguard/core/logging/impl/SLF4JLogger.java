@@ -14,7 +14,7 @@ public class SLF4JLogger implements GuardLogger {
     }
 
     @Override
-    public void log(String message) {
+    public void info(String message) {
         this.logger.info(message);
     }
 

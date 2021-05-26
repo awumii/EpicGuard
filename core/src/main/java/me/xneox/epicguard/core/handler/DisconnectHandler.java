@@ -32,6 +32,11 @@ public class DisconnectHandler {
         this.epicGuard = epicGuard;
     }
 
+    /**
+     * Handling the player who has been online but quit the server.
+     *
+     * @param uuid UUID of the (offline) player.
+     */
     public void handle(@Nonnull UUID uuid) {
         Validate.notNull(uuid, "UUID cannot be null!");
         this.epicGuard.getUserManager().removeUser(uuid);

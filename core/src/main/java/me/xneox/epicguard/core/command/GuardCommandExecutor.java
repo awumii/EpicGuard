@@ -75,7 +75,7 @@ public class GuardCommandExecutor {
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
                         sender.sendMessage(prefix + config.unWhitelisted.replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().removeFromWhitelist(args[2]);
+                        this.epicGuard.getStorageManager().removeWhitelist(args[2]);
                     } else {
                         sender.sendMessage(prefix + config.notWhitelisted.replace("{USER}", args[2]));
                     }
@@ -97,7 +97,7 @@ public class GuardCommandExecutor {
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
                         sender.sendMessage(prefix + config.unBlacklisted.replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().removeFromBlacklist(args[2]);
+                        this.epicGuard.getStorageManager().removeBlacklist(args[2]);
                     } else {
                         sender.sendMessage(prefix + config.notBlacklisted.replace("{USER}", args[2]));
                     }
