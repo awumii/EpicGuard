@@ -22,6 +22,7 @@ import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
+import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
@@ -39,6 +40,12 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+@Plugin(
+        id = "epicguard",
+        name = "EpicGuard",
+        version = "{version}",
+        description = "Bot protection system for Minecraft servers.",
+        authors = "xNeox")
 public class PlatformVelocity implements Platform {
     private final ProxyServer server;
     private final GuardLogger logger;
