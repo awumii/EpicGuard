@@ -24,8 +24,10 @@ import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
-import me.xneox.epicguard.core.util.ConfigHelper;
 import me.xneox.epicguard.core.logging.LogFilter;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.objectmapping.ObjectMapper;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +47,7 @@ public class EpicGuard {
         this.platform = platform;
 
         getLogger().info("Loading configuration...");
-        this.reloadConfig();
+        this.loadConfigurations();
 
         getLogger().info("Initializing managers...");
         this.storageManager = new StorageManager();
@@ -72,16 +74,37 @@ public class EpicGuard {
         getLogger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.getVersion());
     }
 
-    public void reloadConfig() {
+    /**
+     * Loads the configuration and messages.
+     */
+    public void loadConfigurations() {
         File dataFolder = new File("plugins/EpicGuard");
         dataFolder.mkdir();
 
         File configurationFile = new File(dataFolder, "config.yml");
         File messagesFile = new File(dataFolder, "messages.yml");
-        this.config = ConfigHelper.loadConfig(configurationFile, PluginConfiguration.class);
-        this.messages = ConfigHelper.loadConfig(messagesFile, MessagesConfiguration.class);
+
+        this.config = loadConfig(configurationFile, PluginConfiguration.class);
+        this.messages = loadConfig(messagesFile, MessagesConfiguration.class);
     }
 
+    private <C> C loadConfig(File file, Class<C> implementation) {
+        YamlConfigurationLoader messagesLoader = YamlConfigurationLoader.builder()
+                .file(file)
+                .build();
+        try {
+            return ObjectMapper.factory().get(implementation).load(messagesLoader.load());
+        } catch (ConfigurateException e) {
+            getLogger().warning("Could not load " + file.getName());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * Safely shut down the plugin, saving the data.
+     */
     public void shutdown() {
         this.storageManager.getProvider().save();
     }

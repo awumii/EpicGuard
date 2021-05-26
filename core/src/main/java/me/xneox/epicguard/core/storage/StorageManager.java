@@ -16,11 +16,9 @@
 package me.xneox.epicguard.core.storage;
 
 import com.google.common.net.InetAddresses;
-import de.leonhard.storage.Json;
-import me.xneox.epicguard.core.EpicGuard;
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.storage.impl.JsonStorageProvider;
 import me.xneox.epicguard.core.user.PendingUser;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,7 +48,7 @@ public class StorageManager {
      */
     @Nonnull
     public List<String> getAccounts(@Nonnull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
+        Valid.notNull(user, "BotUser cannot be null!");
         return this.provider.getAccountMap().getOrDefault(user.getAddress(), new ArrayList<>());
     }
 
@@ -58,7 +56,7 @@ public class StorageManager {
      * If the user's address is not in the accountMap, it will be added.
      */
     public void updateAccounts(@Nonnull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
+        Valid.notNull(user, "BotUser cannot be null!");
 
         List<String> accounts = this.getAccounts(user);
         if (!accounts.contains(user.getNickname())) {

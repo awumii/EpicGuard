@@ -15,229 +15,103 @@
 
 package me.xneox.epicguard.core.config;
 
-import org.diorite.cfg.annotations.*;
-import org.diorite.cfg.annotations.defaults.CfgDelegateDefault;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.diorite.cfg.annotations.CfgCollectionStyle.CollectionStyle;
-import static org.diorite.cfg.annotations.CfgStringStyle.StringStyle;
-
-// TODO: Move to Configurate.
-// TODO: Refactor this for the 6.0 major update.
-
-@CfgClass(name = "PluginConfiguration")
-@CfgDelegateDefault("{new}")
-@CfgComment("███████╗██████╗ ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗")
-@CfgComment("██╔════╝██╔══██╗██║██╔════╝██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗")
-@CfgComment("█████╗  ██████╔╝██║██║     ██║  ███╗██║   ██║███████║██████╔╝██║  ██║")
-@CfgComment("██╔══╝  ██╔═══╝ ██║██║     ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║")
-@CfgComment("███████╗██║     ██║╚██████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝")
-@CfgComment("╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝")
-@CfgComment("Created by xNeox (Discord: xNeox#0524)")
-@CfgComment("SpigotMC: https://www.spigotmc.org/resources/72369/")
-@CfgComment("Support Discord: https://discord.gg/VkfhFCv")
+@ConfigSerializable
 public class PluginConfiguration {
-    @CfgComment("")
-    @CfgComment("╔════════════════════════════════════════════╗")
-    @CfgComment("║           Geographical Checks              ║")
-    @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment("")
-    @CfgComment("Country check will filter countries your players can connect from.")
-    @CfgComment("NEVER (default) - check is disabled.")
-    @CfgComment("ALWAYS - check will be always performed.")
-    @CfgComment("ATTACK - check will be performed only during bot-attack.")
-    @CfgComment("It is reccomended to ENABLE AND SETUP this check!")
-    @CfgName("country-check-mode")
-    public String countryCheck = "NEVER";
 
-    @CfgComment("This will define if country-check should be blacklist or whitelist.")
-    @CfgComment("BLACKLIST - countries below are blocked")
-    @CfgComment("WHITELIST - only countries below are allowed")
-    @CfgName("country-check-type")
-    public String countryCheckType = "BLACKLIST";
+    // Config sections
+    public CountryCheck countryCheck = new CountryCheck();
+    public ProxyCheck proxyCheck = new ProxyCheck();
+    public AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
+    public SettingsCheck settingsCheck = new SettingsCheck();
+    public NicknameCheck nicknameCheck = new NicknameCheck();
+    public ConsoleFilter consoleFilter = new ConsoleFilter();
+    public AutoWhitelist autoWhitelist = new AutoWhitelist();
 
-    @CfgComment("List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/")
-    @CfgName("country-check-countries")
-    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
-    public List<String> countryCheckValues = Collections.singletonList("US");
+    @ConfigSerializable
+    public static final class CountryCheck {
+        public String checkMode = "NEVER";
+        public String checkType = "BLACKLIST";
+        public List<String> countries = Collections.singletonList("US");
+        public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+    }
 
-    @CfgComment("If some player's city is listed here, he will be blacklisted.")
-    @CfgName("city-blacklist")
-    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
-    public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+    @ConfigSerializable
+    public static final class ProxyCheck {
+        public String checkMode = "ALWAYS";
+        public String proxyCheckKey = "put_your_key_here";
+        public String customProxyCheckUrl = "disabled";
+        public List<String> responseContains = Arrays.asList("yes", "proxy", "vpn", "1");
 
-    @CfgComment("")
-    @CfgComment("╔════════════════════════════════════════════╗")
-    @CfgComment("║           Other AntiBot Checks             ║")
-    @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment("")
+        @Comment("How long in SECONDS responses from proxy check should be cached?")
+        public int cacheDuration = 120;
+    }
 
-    @CfgComment("Proxy check will define if user is connecting from Proxy/VPN.")
-    @CfgComment("Change this option to save performance or increase accuracy")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS (default) - check will be always performed.")
-    @CfgComment("ATTACK - check will be performed only during bot-attack.")
-    @CfgName("proxy-check")
-    public String proxyCheck = "ALWAYS";
+    @ConfigSerializable
+    public static final class AccountLimitCheck {
+        public String checkMode = "ALWAYS";
+        public int accountLimit = 3;
+    }
 
-    @CfgComment("Recommended option!")
-    @CfgComment("Register an account here: https://proxycheck.io/dashboard")
-    @CfgComment("And get your FREE api key.")
-    @CfgComment("Without key - 100 requests/24h")
-    @CfgComment("With key - 1000 requests/24h")
-    @CfgComment("Alternatively, you can set your own service")
-    @CfgComment("at the botton of this configuration.")
-    @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-    @CfgName("proxy-check-key")
-    public String proxyCheckKey = "put_your_key_here";
+    @ConfigSerializable
+    public static final class SettingsCheck {
+        public boolean enabled = true;
+        public int checkDelay = 5;
+    }
 
-    @CfgComment("This check will limit how many accounts")
-    @CfgComment("(different nicknames) can be used by one IP address")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS (default) - check will be always performed.")
-    @CfgComment("ATTACK - check will be performed only during bot-attack.")
-    @CfgName("account-limit-check")
-    public String accountLimitCheck = "ALWAYS";
+    @ConfigSerializable
+    public static final class NicknameCheck {
+        public String nicknameCheck = "ALWAYS";
+        public String nicknameCheckExpression = "(?i).*(bot|mcspam).*";
+    }
 
-    @CfgComment("Limit of accounts per one IP address.")
-    @CfgName("max-accounts-per-ip")
-    public int accountLimit = 3;
+    @ConfigSerializable
+    public static final class ConsoleFilter {
+        public String filterMode = "ALWAYS";
 
-    @CfgComment("Reconnect check will force users to join the server again.")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will be always performed.")
-    @CfgComment("ATTACK (default) - check will be performed only during bot-attack.")
-    @CfgName("reconnect-check")
-    public String reconnectCheck = "ATTACK";
+        @Comment("If log message contains one of these words, it will\n" +
+                "be hidden. This can save a lot of CPU on big attacks.")
+        public List<String> filterMessages = Arrays.asList(
+                "GameProfile",
+                "Disconnected",
+                "UUID of player",
+                "logged in",
+                "lost connection",
+                "InitialHandler");
+    }
 
-    @CfgComment("Server-list check will force users to add your server.")
-    @CfgComment("to their server list (and pinging it) before joining.")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will be always performed.")
-    @CfgComment("ATTACK (default) - check will be performed only during bot-attack.")
-    @CfgName("server-list-check")
-    public String serverListCheck = "ATTACK";
+    @ConfigSerializable
+    public static final class AutoWhitelist {
+        public String mode = "COMBINED";
+        public int autoWhitelistTime = 240;
+    }
 
-    @CfgComment("Should every user (except if he is whitelisted)")
-    @CfgComment("be disconnected when there is an bot attack?")
-    @CfgComment("Enable for better protection, disable to allow NEW players during attack.")
-    @CfgComment("DEFAULT: true")
-    @CfgName("attack-deny-join")
-    public boolean denyJoin = true;
+    public String reconnectCheckMode = "ATTACK";
 
-    @CfgComment("When a player joins the server, he will send the Settings packet.")
-    @CfgComment("Some bots skip sending this packet, this check will try to detect that.")
-    @CfgName("settings-check")
-    public boolean settingsCheck = true;
+    public String serverListCheckMode = "ATTACK";
 
-    @CfgComment("After how many seconds after the player has joined,")
-    @CfgComment("should we check if he sent the Settings packet? (in seconds)")
-    @CfgComment("Increase for faster detection, decrease if detecting players with bad internet connection.")
-    @CfgName("settings-check-delay")
-    public int settingsCheckDelay = 5;
+    public boolean lockdownOnAttack = true;
 
-    @CfgComment("Nickname-check will block players if their nickname matches")
-    @CfgComment("the regex expression set in the 'nickname-check-expression'.")
-    @CfgComment("NEVER - check is disabled.")
-    @CfgComment("ALWAYS - check will always perform on every player.")
-    @CfgComment("ATTACK (default) - check will perform only during bot attack.")
-    @CfgName("nickname-check")
-    public String nicknameCheck = "ALWAYS";
+    public int attackConnectionThreshold = 6;
 
-    @CfgComment("Default value will check if the nickname contains 'bot' or 'mcspam'.")
-    @CfgComment("You can use https://regex101.com/ for making and testing your own expression.")
-    @CfgName("nickname-check-expression")
-    public String nicknameCheckExpression = "(?i).*(bot|mcspam).*";
-
-    @CfgComment("")
-    @CfgComment("╔════════════════════════════════════════════╗")
-    @CfgComment("║              Other Settings                ║")
-    @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment("")
-
-    @CfgComment("How many connections per second must be made,")
-    @CfgComment("to activate attack mode temporally?")
-    @CfgName("max-cps")
-    public int maxCps = 6;
-
-    @CfgComment("How often (in seconds) the plugin should check if amount of connections")
-    @CfgComment("is slower than specified threshold (see max-cps) and disable attack mode?")
-    @CfgComment("(!) Requires restart to apply.")
-    @CfgName("attack-reset-interval")
     public long attackResetInterval = 80L;
 
-    @CfgComment("If a player is online for long enough (see option below)")
-    @CfgComment("He will be added to the whitelist, and be exempt from every future detections.")
-    @CfgComment("ADDRESS - Will only whitelist the user's IP address.")
-    @CfgComment("NICKNAME - Will only whitelist the user's nickname.")
-    @CfgComment("BOTH - Will whitelist the user's IP address AND nickname")
-    @CfgComment("DISABLED - Will disable this feature")
-    @CfgName("auto-whitelist-mode")
-    public String autoWhitelist = "BOTH";
-
-    @CfgComment("Time in seconds the player must be online")
-    @CfgComment("to be added to the EpicGuard's whitelist.")
-    @CfgComment("Default: 240 (4 minutes)")
-    @CfgName("auto-whitelist-time")
-    public int autoWhitelistTime = 240;
-
-    @CfgComment("If you want to use other proxy/vpn checker")
-    @CfgComment("than default (proxycheck.io), you can set it here.")
-    @CfgComment("Available placeholders: %ip%")
-    @CfgStringStyle(StringStyle.ALWAYS_QUOTED)
-    @CfgName("custom-proxy-check-url")
-    public String customProxyCheck = "disabled";
-
-    @CfgComment("If the proxy checker service reponse contains")
-    @CfgComment("one of these strings, it will be considered as positive detection.")
-    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
-    @CfgName("proxy-check-response-contains")
-    public List<String> proxyCheckResponseContains = Arrays.asList("yes", "proxy", "vpn", "1");
-
-    @CfgComment("How long in minutes responses from proxy check should be cached?")
-    @CfgName("proxy-check-cache-duration")
-    public int proxyCheckCacheDuration = 10;
-
-    @CfgComment("Change when the console-filter should be active.")
-    @CfgComment("ALWAYS (default) - always filter console messages")
-    @CfgComment("ATTACK - only filter console messages when there is an active attack")
-    @CfgComment("NEVER - completely disable the console-filter feature.")
-    @CfgName("console-filter-mode")
-    public String consoleFilterMode = "ALWAYS";
-
-    @CfgComment("If log message contains one of these words, it will")
-    @CfgComment("be hidden. This can save a lot of CPU on big attacks.")
-    @CfgCollectionStyle(CollectionStyle.ALWAYS_NEW_LINE)
-    @CfgName("console-filter")
-    public List<String> consoleFilter = Arrays.asList(
-            "GameProfile",
-            "Disconnected",
-            "UUID of player",
-            "logged in",
-            "lost connection",
-            "InitialHandler");
-
-    @CfgComment("Set to false to disable update checker.")
-    @CfgName("update-checker")
+    @Comment("Set to false to disable update checker.")
     public boolean updateChecker = true;
 
-    @CfgComment("Time in minutes before auto-saving data.")
-    @CfgComment("(!) Requires restart to apply.")
-    @CfgName("autosave-interval")
+    @Comment("Time in minutes before auto-saving data.\n" +
+            "(!) Requires restart to apply.")
     public long autoSaveInterval = 10L;
 
-    @CfgComment("Enabling this will log positive bot detections in the console.")
+    @Comment("Enabling this will log positive bot detections in the console.")
     public boolean debug;
 
-    @CfgComment("")
-    @CfgComment("╔════════════════════════════════════════════╗")
-    @CfgComment("║           Storage Settings                 ║")
-    @CfgComment("╚════════════════════════════════════════════╝")
-    @CfgComment("")
-    @CfgComment("Available storage methods: JSON")
-    @CfgName("storage-method")
+    @Comment("Currently only JSON.")
     public String storageMethod = "JSON";
 }

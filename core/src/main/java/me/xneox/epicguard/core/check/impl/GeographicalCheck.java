@@ -33,7 +33,7 @@ public class GeographicalCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().countryCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().checkMode);
         return this.assertCheck(mode, this.isRestricted(user.getAddress()));
     }
 
@@ -45,10 +45,10 @@ public class GeographicalCheck extends Check {
             return true;
         }
 
-        if (this.epicGuard.getConfig().countryCheckType.equals("WHITELIST")) {
-            return !this.epicGuard.getConfig().countryCheckValues.contains(country);
+        if (this.epicGuard.getConfig().checkType.equals("WHITELIST")) {
+            return !this.epicGuard.getConfig().countries.contains(country);
         } else {
-            return this.epicGuard.getConfig().countryCheckValues.contains(country);
+            return this.epicGuard.getConfig().countries.contains(country);
         }
     }
 

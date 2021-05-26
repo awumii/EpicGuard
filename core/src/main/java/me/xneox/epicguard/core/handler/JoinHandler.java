@@ -15,10 +15,10 @@
 
 package me.xneox.epicguard.core.handler;
 
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.WhitelistMode;
 import me.xneox.epicguard.core.user.User;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -42,8 +42,8 @@ public class JoinHandler {
      * @param nickname Nickname of the online player.
      */
     public void handle(@Nonnull UUID uuid, @Nonnull String address, @Nonnull String nickname) {
-        Validate.notNull(uuid, "UUID cannot be null!");
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(uuid, "UUID cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
 
         User user = this.epicGuard.getUserManager().getOrCreate(uuid);
 

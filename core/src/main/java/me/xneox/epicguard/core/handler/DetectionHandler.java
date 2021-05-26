@@ -15,11 +15,11 @@
 
 package me.xneox.epicguard.core.handler;
 
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.PendingUser;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -56,11 +56,11 @@ public class DetectionHandler {
      */
     @Nonnull
     public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
-        Validate.notNull(address, "Address cannot be null!");
-        Validate.notNull(nickname, "Nickname cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
+        Valid.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().maxCps) {
+        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().attackConnectionThreshold) {
             this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
         }
 

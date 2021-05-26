@@ -1,11 +1,11 @@
 package me.xneox.epicguard.core.command;
 
 import com.google.common.net.InetAddresses;
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.user.User;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,8 +26,8 @@ public class GuardCommandExecutor {
 
     @SuppressWarnings("UnstableApiUsage")
     public void handle(@Nonnull String[] args, @Nonnull Sender<?> sender) {
-        Validate.notNull(args, "Command arguments cannot be null!");
-        Validate.notNull(args, "Command subject cannot be null!");
+        Valid.notNull(args, "Command arguments cannot be null!");
+        Valid.notNull(args, "Command subject cannot be null!");
 
         MessagesConfiguration config = this.epicGuard.getMessages();
         String prefix = this.epicGuard.getMessages().prefix;
@@ -57,7 +57,7 @@ public class GuardCommandExecutor {
                 break;
             case "reload":
                 sender.sendMessage(prefix + config.reload);
-                this.epicGuard.reloadConfig();
+                this.epicGuard.loadConfigurations();
                 break;
             case "whitelist":
                 if (args.length != 3) {
@@ -144,8 +144,8 @@ public class GuardCommandExecutor {
 
     @Nullable
     public Collection<String> onTabComplete(@Nonnull String[] args) {
-        Validate.notNull(args, "Command arguments cannot be null!");
-        Validate.notNull(args, "Command subject cannot be null!");
+        Valid.notNull(args, "Command arguments cannot be null!");
+        Valid.notNull(args, "Command subject cannot be null!");
 
         if (args.length == 1) {
             return Arrays.asList("stats", "status", "analyze", "reload", "whitelist", "blacklist");

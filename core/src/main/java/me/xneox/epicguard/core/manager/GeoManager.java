@@ -18,12 +18,12 @@ package me.xneox.epicguard.core.manager;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.util.FileUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -76,9 +76,9 @@ public class GeoManager {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void downloadDatabase(@Nonnull File database, @Nonnull File archive, @Nonnull String url) throws IOException {
-        Validate.notNull(database, "Database file cannot be null!");
-        Validate.notNull(archive, "Archive file cannot be null!");
-        Validate.notNull(url, "Download URL cannot be null!");
+        Valid.notNull(database, "Database file cannot be null!");
+        Valid.notNull(archive, "Archive file cannot be null!");
+        Valid.notNull(url, "Download URL cannot be null!");
 
         if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
             // Database does not exist or is outdated, and need to be downloaded.
@@ -117,7 +117,7 @@ public class GeoManager {
 
     @Nonnull
     public String getCity(@Nonnull String address) {
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
         InetAddress inetAddress = this.getInetAddress(address);
         if (inetAddress != null && this.cityReader != null) {
             try {
@@ -131,7 +131,7 @@ public class GeoManager {
 
     @Nullable
     public InetAddress getInetAddress(@Nonnull String address) {
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
         try {
             return InetAddress.getByName(address);
         } catch (UnknownHostException ex) {

@@ -15,8 +15,8 @@
 
 package me.xneox.epicguard.core;
 
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.manager.GeoManager;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -100,7 +100,7 @@ public final class EpicGuardAPI {
      */
     public static void blacklistAddress(@Nonnull String address) {
         validateInstance();
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
 
         epicGuard.getStorageManager().blacklistPut(address);
     }
@@ -113,7 +113,7 @@ public final class EpicGuardAPI {
      */
     public static void whitelistAddress(@Nonnull String address) {
         validateInstance();
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
 
         epicGuard.getStorageManager().whitelistPut(address);
         epicGuard.getStorageManager().getProvider().getAddressBlacklist().remove(address);
@@ -133,7 +133,7 @@ public final class EpicGuardAPI {
      * Checks if the EpicGuard has been initialized already.
      */
     private static void validateInstance() {
-        Validate.notNull(epicGuard, "Can't acces EpicGuardAPI because the plugin is not initialized. Have you set is as dependency?.");
+        Valid.notNull(epicGuard, "Can't acces EpicGuardAPI because the plugin is not initialized. Have you set is as dependency?.");
     }
 
     /**
