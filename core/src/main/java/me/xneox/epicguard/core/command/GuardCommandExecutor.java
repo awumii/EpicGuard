@@ -29,19 +29,19 @@ public class GuardCommandExecutor {
         Valid.notNull(args, "Command arguments cannot be null!");
         Valid.notNull(args, "Command subject cannot be null!");
 
-        MessagesConfiguration.Command config = this.epicGuard.getMessages().command();
-        String prefix = this.epicGuard.getMessages().command().prefix();
+        MessagesConfiguration.Command config = this.epicGuard.messages().command();
+        String prefix = this.epicGuard.messages().command().prefix();
 
         if (args.length < 1) {
             for (String line : config.mainCommand()) {
                 sender.sendMessage(line
-                        .replace("{VERSION}", this.epicGuard.getPlatform().getVersion())
-                        .replace("{BLACKLISTED-IPS}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressBlacklist().size()))
-                        .replace("{WHITELISTED-IPS}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getAddressWhitelist().size()))
-                        .replace("{BLACKLISTED-NAMES}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getNameBlacklist().size()))
-                        .replace("{WHITELISTED-NAMES}", String.valueOf(this.epicGuard.getStorageManager().getProvider().getNameWhitelist().size()))
-                        .replace("{CPS}", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
-                        .replace("{ATTACK}", this.epicGuard.getAttackManager().isAttack() ? "&a✔" : "&c✖"));
+                        .replace("{VERSION}", this.epicGuard.platform().version())
+                        .replace("{BLACKLISTED-IPS}", String.valueOf(this.epicGuard.storageManager().provider().addressBlacklist().size()))
+                        .replace("{WHITELISTED-IPS}", String.valueOf(this.epicGuard.storageManager().provider().addressWhitelist().size()))
+                        .replace("{BLACKLISTED-NAMES}", String.valueOf(this.epicGuard.storageManager().provider().nameBlacklist().size()))
+                        .replace("{WHITELISTED-NAMES}", String.valueOf(this.epicGuard.storageManager().provider().nameWhitelist().size()))
+                        .replace("{CPS}", String.valueOf(this.epicGuard.attackManager().connectionCounter()))
+                        .replace("{ATTACK}", this.epicGuard.attackManager().isAttack() ? "&a✔" : "&c✖"));
             }
             return;
         }
@@ -49,8 +49,8 @@ public class GuardCommandExecutor {
         switch (args[0]) {
             case "status":
                 if (sender.isPlayer()) {
-                    User user = this.epicGuard.getUserManager().getOrCreate(sender.getUUID());
-                    user.setNotifications(!user.hasNotifications());
+                    User user = this.epicGuard.userManager().getOrCreate(sender.uuid());
+                    user.notifications(!user.notifications());
                     sender.sendMessage(prefix + config.toggleStatus());
                 } else {
                     sender.sendMessage("This command can't be run in console.");
@@ -67,16 +67,16 @@ public class GuardCommandExecutor {
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
-                    if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
+                    if (this.epicGuard.storageManager().isWhitelisted(args[2])) {
                         sender.sendMessage(prefix + config.alreadyWhitelisted().replace("{USER}", args[2]));
                     } else {
                         sender.sendMessage(prefix + config.whitelistAdd().replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().whitelistPut(args[2]);
+                        this.epicGuard.storageManager().whitelistPut(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
-                    if (this.epicGuard.getStorageManager().isWhitelisted(args[2])) {
+                    if (this.epicGuard.storageManager().isWhitelisted(args[2])) {
                         sender.sendMessage(prefix + config.whitelistRemove().replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().removeWhitelist(args[2]);
+                        this.epicGuard.storageManager().removeWhitelist(args[2]);
                     } else {
                         sender.sendMessage(prefix + config.notWhitelisted().replace("{USER}", args[2]));
                     }
@@ -89,16 +89,16 @@ public class GuardCommandExecutor {
                 }
 
                 if (args[1].equalsIgnoreCase("add")) {
-                    if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
+                    if (this.epicGuard.storageManager().isBlacklisted(args[2])) {
                         sender.sendMessage(prefix + config.alreadyBlacklisted().replace("{USER}", args[2]));
                     } else {
                         sender.sendMessage(prefix + config.blacklistAdd().replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().blacklistPut(args[2]);
+                        this.epicGuard.storageManager().blacklistPut(args[2]);
                     }
                 } else if (args[1].equalsIgnoreCase("remove")) {
-                    if (this.epicGuard.getStorageManager().isBlacklisted(args[2])) {
+                    if (this.epicGuard.storageManager().isBlacklisted(args[2])) {
                         sender.sendMessage(prefix + config.blacklistRemove().replace("{USER}", args[2]));
-                        this.epicGuard.getStorageManager().removeBlacklist(args[2]);
+                        this.epicGuard.storageManager().removeBlacklist(args[2]);
                     } else {
                         sender.sendMessage(prefix + config.notBlacklisted().replace("{USER}", args[2]));
                     }
@@ -114,7 +114,7 @@ public class GuardCommandExecutor {
                 if (InetAddresses.isInetAddress(args[1])) {
                     address = args[1];
                 } else {
-                    String possibleAddress = this.epicGuard.getStorageManager().findByNickname(args[1]);
+                    String possibleAddress = this.epicGuard.storageManager().findByNickname(args[1]);
                     if (possibleAddress != null) {
                         address = possibleAddress;
                     }
@@ -125,15 +125,15 @@ public class GuardCommandExecutor {
                     return;
                 }
 
-                List<String> accounts = this.epicGuard.getStorageManager().getAccounts(new PendingUser(address, null));
+                List<String> accounts = this.epicGuard.storageManager().accounts(new PendingUser(address, null));
 
                 for (String line : config.analyzeCommand()) {
                     sender.sendMessage(line
                             .replace("{ADDRESS}", address)
-                            .replace("{COUNTRY}", this.epicGuard.getGeoManager().getCountryCode(address))
-                            .replace("{CITY}", this.epicGuard.getGeoManager().getCity(address))
-                            .replace("{WHITELISTED}", this.epicGuard.getStorageManager().isWhitelisted(address) ? "&a✔" : "&c✖")
-                            .replace("{BLACKLISTED}", this.epicGuard.getStorageManager().isBlacklisted(address) ? "&a✔" : "&c✖")
+                            .replace("{COUNTRY}", this.epicGuard.geoManager().countryCode(address))
+                            .replace("{CITY}", this.epicGuard.geoManager().city(address))
+                            .replace("{WHITELISTED}", this.epicGuard.storageManager().isWhitelisted(address) ? "&a✔" : "&c✖")
+                            .replace("{BLACKLISTED}", this.epicGuard.storageManager().isBlacklisted(address) ? "&a✔" : "&c✖")
                             .replace("{ACCOUNT-AMOUNT}", String.valueOf(accounts.size()))
                             .replace("{NICKNAMES}", String.join(", ", accounts)));
                 }
@@ -158,7 +158,7 @@ public class GuardCommandExecutor {
             }
 
             if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getProvider().getAddressWhitelist();
+                return this.epicGuard.storageManager().provider().addressWhitelist();
             }
         } else if (args[0].equalsIgnoreCase("blacklist")) {
             if (args.length == 2) {
@@ -166,7 +166,7 @@ public class GuardCommandExecutor {
             }
 
             if (args[1].equalsIgnoreCase("remove")) {
-                return this.epicGuard.getStorageManager().getProvider().getAddressBlacklist();
+                return this.epicGuard.storageManager().provider().addressBlacklist();
             }
         }
         return null;

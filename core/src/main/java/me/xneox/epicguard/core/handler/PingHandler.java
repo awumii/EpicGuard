@@ -38,6 +38,6 @@ public class PingHandler {
      */
     public void handle(@Nonnull String address) {
         Valid.notNull(address, "Address cannot be null!");
-        this.epicGuard.getStorageManager().getPingCache().add(address);
+        this.epicGuard.storageManager().pingCache().add(address);
     }
 }

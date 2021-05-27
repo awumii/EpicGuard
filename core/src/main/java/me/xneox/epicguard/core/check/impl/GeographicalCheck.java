@@ -33,27 +33,27 @@ public class GeographicalCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().geographical().checkMode());
-        return this.assertCheck(mode, this.isRestricted(user.getAddress()));
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().geographical().checkMode());
+        return this.assertCheck(mode, this.isRestricted(user.address()));
     }
 
     private boolean isRestricted(String address) {
-        String country = this.epicGuard.getGeoManager().getCountryCode(address);
-        String city = this.epicGuard.getGeoManager().getCity(address);
+        String country = this.epicGuard.geoManager().countryCode(address);
+        String city = this.epicGuard.geoManager().city(address);
 
-        if (this.epicGuard.getConfig().geographical().cityBlacklist().contains(city)) {
+        if (this.epicGuard.config().geographical().cityBlacklist().contains(city)) {
             return true;
         }
 
-        if (this.epicGuard.getConfig().geographical().checkType().equals("WHITELIST")) {
-            return !this.epicGuard.getConfig().geographical().countries().contains(country);
+        if (this.epicGuard.config().geographical().checkType().equals("WHITELIST")) {
+            return !this.epicGuard.config().geographical().countries().contains(country);
         } else {
-            return this.epicGuard.getConfig().geographical().countries().contains(country);
+            return this.epicGuard.config().geographical().countries().contains(country);
         }
     }
 
     @Override
-    public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect().geographical();
+    public @Nonnull List<String> kickMessage() {
+        return this.epicGuard.messages().disconnect().geographical();
     }
 }

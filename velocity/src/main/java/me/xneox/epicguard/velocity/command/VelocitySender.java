@@ -24,7 +24,7 @@ public class VelocitySender extends Sender<CommandSource> {
     }
 
     @Override
-    public UUID getUUID() {
+    public UUID uuid() {
         return this.isPlayer() ? ((Player) this.sender).getUniqueId() : null;
     }
 }

@@ -67,13 +67,18 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public @NotNull GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger logger() {
         return this.logger;
     }
 
     @Override
+    public String version() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        Player player = Bukkit.getPlayer(user.getUUID());
+        Player player = Bukkit.getPlayer(user.uuid());
         if (player != null) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
         }
@@ -81,15 +86,10 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        Player player = Bukkit.getPlayer(user.getUUID());
+        Player player = Bukkit.getPlayer(user.uuid());
         if (player != null) {
             player.kickPlayer(ChatUtils.colored(message));
         }
-    }
-
-    @Override
-    public String getVersion() {
-        return this.getDescription().getVersion();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void scheduleTask(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
     }
 }

@@ -34,14 +34,14 @@ public class AccountLimitCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().accountLimitCheck().checkMode());
-        List<String> accounts = this.epicGuard.getStorageManager().getAccounts(user);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().accountLimitCheck().checkMode());
+        List<String> accounts = this.epicGuard.storageManager().accounts(user);
 
-        return this.assertCheck(mode, !accounts.contains(user.getNickname()) && accounts.size() >= this.epicGuard.getConfig().accountLimitCheck().accountLimit());
+        return this.assertCheck(mode, !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
     }
 
     @Override
-    public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect().accountLimit();
+    public @Nonnull List<String> kickMessage() {
+        return this.epicGuard.messages().disconnect().accountLimit();
     }
 }

@@ -39,6 +39,6 @@ public class DisconnectHandler {
      */
     public void handle(@Nonnull UUID uuid) {
         Valid.notNull(uuid, "UUID cannot be null!");
-        this.epicGuard.getUserManager().removeUser(uuid);
+        this.epicGuard.userManager().removeUser(uuid);
     }
 }

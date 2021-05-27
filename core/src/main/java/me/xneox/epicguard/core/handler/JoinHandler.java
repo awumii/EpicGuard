@@ -46,31 +46,31 @@ public class JoinHandler {
         Valid.notNull(uuid, "UUID cannot be null!");
         Valid.notNull(address, "Address cannot be null!");
 
-        User user = this.epicGuard.getUserManager().getOrCreate(uuid);
+        User user = this.epicGuard.userManager().getOrCreate(uuid);
 
         // Schedule a delayed task to whitelist the player.
-        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.getConfig().autoWhitelist().mode());
+        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.config().autoWhitelist().mode());
         if (mode != WhitelistMode.DISABLED) {
-            this.epicGuard.getPlatform().runTaskLater(() -> {
+            this.epicGuard.platform().runTaskLater(() -> {
                 if (user != null) {
                     if (mode == WhitelistMode.MIXED || mode == WhitelistMode.ADDRESS) {
-                        this.epicGuard.getStorageManager().whitelistPut(address);
+                        this.epicGuard.storageManager().whitelistPut(address);
                     }
 
                     if (mode == WhitelistMode.MIXED || mode == WhitelistMode.NICKNAME) {
-                        this.epicGuard.getStorageManager().whitelistPut(nickname);
+                        this.epicGuard.storageManager().whitelistPut(nickname);
                     }
                 }
-            }, this.epicGuard.getConfig().autoWhitelist().timeOnline());
+            }, this.epicGuard.config().autoWhitelist().timeOnline());
         }
 
         // Schedule a delayed task to check if the player has sent the Settings packet.
-        if (this.epicGuard.getConfig().settingsCheck().enabled()) {
-            this.epicGuard.getPlatform().runTaskLater(() -> {
-                if (user != null && !user.hasChangedSettings()) {
-                    this.epicGuard.getPlatform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.getMessages().disconnect().settingsPacket()));
+        if (this.epicGuard.config().settingsCheck().enabled()) {
+            this.epicGuard.platform().runTaskLater(() -> {
+                if (user != null && !user.settingsChanged()) {
+                    this.epicGuard.platform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.messages().disconnect().settingsPacket()));
                 }
-            }, this.epicGuard.getConfig().settingsCheck().delay());
+            }, this.epicGuard.config().settingsCheck().delay());
         }
     }
 }

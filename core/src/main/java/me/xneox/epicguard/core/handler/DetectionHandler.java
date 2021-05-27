@@ -61,13 +61,13 @@ public class DetectionHandler {
         Valid.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().attackConnectionThreshold()) {
-            this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
+        if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().attackConnectionThreshold()) {
+            this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
         }
 
         // Check if the user is whitelisted, if yes, return empty result (undetected).
-        if (this.epicGuard.getStorageManager().isWhitelisted(address)
-                || this.epicGuard.getStorageManager().isWhitelisted(nickname)) {
+        if (this.epicGuard.storageManager().isWhitelisted(address)
+                || this.epicGuard.storageManager().isWhitelisted(nickname)) {
             return Optional.empty();
         }
 
@@ -75,19 +75,19 @@ public class DetectionHandler {
         PendingUser user = new PendingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
-                if (this.epicGuard.getConfig().debug()) {
-                    this.epicGuard.getLogger().info("(Debug) " + nickname + "/" + address + " detected by " +
+                if (this.epicGuard.config().debug()) {
+                    this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }
 
                 // Positive detection, kicking the player!
-                return Optional.of(StringUtils.buildMultilineString(check.getKickMessage()));
+                return Optional.of(StringUtils.buildMultilineString(check.kickMessage()));
             }
         }
 
         // Checks finished with no detection, the player is considered legitimate and is allowed to join the server
         // Also we update his account nickname history.
-        this.epicGuard.getStorageManager().updateAccounts(user);
+        this.epicGuard.storageManager().updateAccounts(user);
         return Optional.empty();
     }
 }

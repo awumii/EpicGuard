@@ -32,12 +32,12 @@ public class BlacklistCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        return this.epicGuard.getStorageManager().isBlacklisted(user.getAddress())
-                || this.epicGuard.getStorageManager().isBlacklisted(user.getNickname());
+        return this.epicGuard.storageManager().isBlacklisted(user.address())
+                || this.epicGuard.storageManager().isBlacklisted(user.nickname());
     }
 
     @Override
-    public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect().blacklisted();
+    public @Nonnull List<String> kickMessage() {
+        return this.epicGuard.messages().disconnect().blacklisted();
     }
 }

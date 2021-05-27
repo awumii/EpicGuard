@@ -41,6 +41,6 @@ public class SettingsHandler {
      */
     public void handle(@Nonnull UUID uuid) {
         Valid.notNull(uuid, "UUID cannot be null!");
-        this.epicGuard.getUserManager().getOrCreate(uuid).setSettingsChanged(true);
+        this.epicGuard.userManager().getOrCreate(uuid).settingsChanged(true);
     }
 }

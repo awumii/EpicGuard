@@ -103,8 +103,8 @@ public class GeoManager {
     }
 
     @Nonnull
-    public String getCountryCode(@Nonnull String address) {
-        InetAddress inetAddress = this.getInetAddress(address);
+    public String countryCode(@Nonnull String address) {
+        InetAddress inetAddress = this.parseAddress(address);
         if (inetAddress != null && this.countryReader != null) {
             try {
                 return this.countryReader.country(inetAddress).getCountry().getIsoCode();
@@ -116,9 +116,9 @@ public class GeoManager {
     }
 
     @Nonnull
-    public String getCity(@Nonnull String address) {
+    public String city(@Nonnull String address) {
         Valid.notNull(address, "Address cannot be null!");
-        InetAddress inetAddress = this.getInetAddress(address);
+        InetAddress inetAddress = this.parseAddress(address);
         if (inetAddress != null && this.cityReader != null) {
             try {
                 return this.cityReader.city(inetAddress).getCity().getName();
@@ -130,7 +130,7 @@ public class GeoManager {
     }
 
     @Nullable
-    public InetAddress getInetAddress(@Nonnull String address) {
+    public InetAddress parseAddress(@Nonnull String address) {
         Valid.notNull(address, "Address cannot be null!");
         try {
             return InetAddress.getByName(address);

@@ -38,7 +38,7 @@ public final class EpicGuardAPI {
     @Nonnull
     public static GeoManager getGeoManager() {
         validateInstance();
-        return epicGuard.getGeoManager();
+        return epicGuard.geoManager();
     }
 
     /**
@@ -46,7 +46,7 @@ public final class EpicGuardAPI {
      */
     public static boolean isUnderAttack() {
         validateInstance();
-        return epicGuard.getAttackManager().isAttack();
+        return epicGuard.attackManager().isAttack();
     }
 
     /**
@@ -55,7 +55,7 @@ public final class EpicGuardAPI {
     @Nonnull
     public static Collection<String> getWhitelistedAddresses() {
         validateInstance();
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getAddressWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.storageManager().provider().addressWhitelist());
     }
 
     /**
@@ -64,7 +64,7 @@ public final class EpicGuardAPI {
     @Nonnull
     public static Collection<String> getBlacklistedAddresses() {
         validateInstance();
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getAddressWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.storageManager().provider().addressWhitelist());
     }
 
     /**
@@ -73,7 +73,7 @@ public final class EpicGuardAPI {
     @Nonnull
     public static Collection<String> getWhitelistedNicknames() {
         validateInstance();
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getNameWhitelist());
+        return Collections.unmodifiableCollection(epicGuard.storageManager().provider().nameWhitelist());
     }
 
     /**
@@ -82,7 +82,7 @@ public final class EpicGuardAPI {
     @Nonnull
     public static Collection<String> getBlacklistedNicknames() {
         validateInstance();
-        return Collections.unmodifiableCollection(epicGuard.getStorageManager().getProvider().getNameBlacklist());
+        return Collections.unmodifiableCollection(epicGuard.storageManager().provider().nameBlacklist());
     }
 
     /**
@@ -90,7 +90,7 @@ public final class EpicGuardAPI {
      */
     public static int getConnectionsPerSecond() {
         validateInstance();
-        return epicGuard.getAttackManager().getConnectionCounter();
+        return epicGuard.attackManager().connectionCounter();
     }
 
     /**
@@ -102,7 +102,7 @@ public final class EpicGuardAPI {
         validateInstance();
         Valid.notNull(address, "Address cannot be null!");
 
-        epicGuard.getStorageManager().blacklistPut(address);
+        epicGuard.storageManager().blacklistPut(address);
     }
 
     /**
@@ -115,8 +115,8 @@ public final class EpicGuardAPI {
         validateInstance();
         Valid.notNull(address, "Address cannot be null!");
 
-        epicGuard.getStorageManager().whitelistPut(address);
-        epicGuard.getStorageManager().getProvider().getAddressBlacklist().remove(address);
+        epicGuard.storageManager().whitelistPut(address);
+        epicGuard.storageManager().provider().addressBlacklist().remove(address);
     }
 
     /**

@@ -29,8 +29,8 @@ public class AttackResetTask implements Runnable {
 
     @Override
     public void run() {
-        if (this.epicGuard.getAttackManager().getConnectionCounter() < this.epicGuard.getConfig().attackConnectionThreshold()) {
-            this.epicGuard.getAttackManager().setAttack(false);
+        if (this.epicGuard.attackManager().connectionCounter() < this.epicGuard.config().attackConnectionThreshold()) {
+            this.epicGuard.attackManager().attack(false);
         }
     }
 }
