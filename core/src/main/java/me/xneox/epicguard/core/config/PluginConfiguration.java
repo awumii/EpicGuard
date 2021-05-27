@@ -36,9 +36,21 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class Geographical {
+        @Comment("Country check will filter countries/cities your players can connect from.\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
         private final String checkMode = "NEVER";
+
+        @Comment("This will define if the 'countries' list should be a blacklist or a whitelist.\n" +
+                "BLACKLIST - countries below are blocked\n" +
+                "WHITELIST - only countries below are allowed")
         private final String checkType = "BLACKLIST";
+
+        @Comment("List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/")
         private final List<String> countries = Collections.singletonList("US");
+
+        @Comment("If a player tries to connect from city listed here, he will be blocked.")
         private final List<String> cityBlacklist = Collections.singletonList("ExampleCity");
 
         public String checkMode() {
@@ -60,12 +72,27 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class ProxyCheck {
+        @Comment("Detect users who are connecting using proxies or VPNs.\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
+
+        @Comment("You can get your free API key after registering on https://proxycheck.io/dashboard\n" +
+                "Without a key, there will be a limit of 100 requests per 24 hours.")
         private final String proxyCheckKey = "put_your_key_here";
+
+        @Comment("If you want to use other proxy checking service, set it's URL here.\n" +
+                "You can use the %ip% placeholder.")
         private final String customProxyCheckUrl = "disabled";
+
+        @Comment("If the proxy checker service reponse contains one of\n" +
+                "these strings, it will be considered as a positive detection.")
         private final List<String> responseContains = Arrays.asList("yes", "proxy", "vpn", "1");
 
-        @Comment("How long in SECONDS responses from proxy check should be cached?")
+        @Comment("How long in SECONDS responses from proxy check should be cached?\n" +
+                "Higher value increases performance, but keep in mind that if user\n" +
+                "disables their VPN but the cache hasn't expired yet, he will still be detected.")
         private final int cacheDuration = 120;
 
         public String checkMode() {
@@ -91,7 +118,13 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class AccountLimitCheck {
+        @Comment("This check will limit how many accounts can be registered from single IP address\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
+
+        @Comment("Limit of accounts per one IP address.")
         private final int accountLimit = 3;
 
         public String checkMode() {
@@ -105,7 +138,12 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class SettingsCheck {
+        @Comment("Every vanilla client sends the Settings packet shortly after joining.\n" +
+                "Some bots doesn't do this, and this check will try to detect that.")
         private final boolean enabled = true;
+
+        @Comment("Delay in seconds after which we check if the player has already sent this packet.\n" +
+                "Increase for faster detection, decrease if detecting players with bad internet connection")
         private final int delay = 5;
 
         public boolean enabled() {
@@ -119,7 +157,12 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class NicknameCheck {
+        @Comment("Nickname-check will block players if their nickname matches\n"
+                + "the regex expression set below.")
         private final String checkMode = "ALWAYS";
+
+        @Comment("Default value will check if the nickname contains 'bot' or 'mcspam'.\n" +
+                "You can use https://regex101.com/ for making and testing your own expression.")
         private final String expression = "(?i).*(bot|mcspam).*";
 
         public String checkMode() {
@@ -133,6 +176,10 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class ConsoleFilter {
+        @Comment("Change when the console-filter should be active.\n" +
+                "NEVER - feature is disabled.\n" +
+                "ATTACK - feature will work only during bot-attack.\n" +
+                "ALWAYS - feature will always work.")
         private final String filterMode = "ALWAYS";
 
         @Comment("If log message contains one of these words, it will\n" +
@@ -156,7 +203,16 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class AutoWhitelist {
+        @Comment("If a player is online for long enough (see option below)\n" +
+                "He will be added to the whitelist, and be exempt from every future detections" +
+                "ADDRESS - Only whitelist the user's IP address.\n" +
+                "NICKNAME - Only whitelist the user's nickname.\n" +
+                "MIXED - Whitelist the user's IP address AND nickname.\n" +
+                "DISABLED - Disable this feature")
         private final String mode = "MIXED";
+
+        @Comment("Time in seconds the player must be online\n" +
+                "to be added to the EpicGuard's whitelist.")
         private final int timeOnline = 240;
 
         public String mode() {
@@ -168,14 +224,32 @@ public class PluginConfiguration {
         }
     }
 
+    @Comment("ReconnectCheck will force new users to join the server again.\n" +
+            "NEVER - check is disabled.\n" +
+            "ATTACK - check will be performed only during bot-attack.\n" +
+            "ALWAYS - check will be always performed.")
     private final String reconnectCheckMode = "ATTACK";
 
+    @Comment("Server-list check will force users to add your server\n" +
+            "to their server list (send a ping) before joining\n" +
+            "NEVER - check is disabled.\n" +
+            "ATTACK - check will be performed only during bot-attack.\n" +
+            "ALWAYS - check will be always performed.")
     private final String serverListCheckMode = "ATTACK";
 
+    @Comment("Should every user (except if he is whitelisted)\n" + "" +
+            "be disconnected when there is an bot attack?\n" +
+            "true - Better protection and HUGE performance boost\n" +
+            "false - Allow NEW players connecting during attack.")
     private final boolean lockdownOnAttack = true;
 
+    @Comment("How many connections per second must be made,\n" +
+            "to activate the attack mode temporally?")
     private final int attackConnectionThreshold = 6;
 
+    @Comment("How often (in seconds) the plugin should check if amount of connections\n" +
+            "is slower than 'attack-connection-treshold' and disable attack mode?\n" +
+            "(!) Requires restart to apply.")
     private final long attackResetInterval = 80L;
 
     @Comment("Set to false to disable update checker.")
