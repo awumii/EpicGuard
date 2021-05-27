@@ -20,6 +20,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.util.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -37,7 +38,7 @@ public class DetectionHandler {
     public DetectionHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
 
-        checks.add(new AttackCheck(epicGuard));
+        checks.add(new LockdownCheck(epicGuard));
         checks.add(new BlacklistCheck(epicGuard));
         checks.add(new GeographicalCheck(epicGuard));
         checks.add(new ServerListCheck(epicGuard));
@@ -80,11 +81,7 @@ public class DetectionHandler {
                 }
 
                 // Positive detection, kicking the player!
-                // Also, the kick message is a list so we need to convert it to a string.
-
-                StringBuilder builder = new StringBuilder();
-                check.getKickMessage().forEach(line -> builder.append(line).append("\n"));
-                return Optional.of(builder.toString());
+                return Optional.of(StringUtils.buildMultilineString(check.getKickMessage()));
             }
         }
 

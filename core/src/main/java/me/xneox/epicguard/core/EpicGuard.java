@@ -25,9 +25,7 @@ import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.logging.LogFilter;
-import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.objectmapping.ObjectMapper;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import me.xneox.epicguard.core.util.ConfigUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -81,26 +79,12 @@ public class EpicGuard {
         File dataFolder = new File("plugins/EpicGuard");
         dataFolder.mkdir();
 
-        File configurationFile = new File(dataFolder, "config.yml");
-        File messagesFile = new File(dataFolder, "messages.yml");
+        File configurationFile = new File(dataFolder, "settings.conf");
+        File messagesFile = new File(dataFolder, "messages.conf");
 
-        this.config = loadConfig(configurationFile, PluginConfiguration.class);
-        this.messages = loadConfig(messagesFile, MessagesConfiguration.class);
+        this.config = ConfigUtils.loadConfig(configurationFile, PluginConfiguration.class);
+        this.messages = ConfigUtils.loadConfig(messagesFile, MessagesConfiguration.class);
     }
-
-    private <C> C loadConfig(File file, Class<C> implementation) {
-        YamlConfigurationLoader messagesLoader = YamlConfigurationLoader.builder()
-                .file(file)
-                .build();
-        try {
-            return ObjectMapper.factory().get(implementation).load(messagesLoader.load());
-        } catch (ConfigurateException e) {
-            getLogger().warning("Could not load " + file.getName());
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     /**
      * Safely shut down the plugin, saving the data.

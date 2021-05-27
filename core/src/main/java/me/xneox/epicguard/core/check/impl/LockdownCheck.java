@@ -25,18 +25,18 @@ import java.util.List;
 /**
  * This check will deny any connection if the attack mode is active.
  */
-public class AttackCheck extends Check {
-    public AttackCheck(EpicGuard epicGuard) {
+public class LockdownCheck extends Check {
+    public LockdownCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        return this.epicGuard.getAttackManager().isAttack() && this.epicGuard.getConfig().denyJoin;
+        return this.epicGuard.getAttackManager().isAttack() && this.epicGuard.getConfig().lockdownOnAttack;
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().kickMessageAttack;
+        return this.epicGuard.getMessages().disconnect.attackLockdown;
     }
 }

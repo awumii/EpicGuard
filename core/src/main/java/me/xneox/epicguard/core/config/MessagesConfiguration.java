@@ -41,6 +41,8 @@ public class MessagesConfiguration {
 
         public String usage = "&cCorrect usage: &6{USAGE}";
 
+        public String unknownCommand = "&cUnknown command, use &6/epicguard &cfor available commands.";
+
         public String whitelistAdd = "&7The user &a{USER} &7has been added to the whitelist.";
 
         public String whitelistRemove = "The user &6{USER} &7has been removed from the whitelist";

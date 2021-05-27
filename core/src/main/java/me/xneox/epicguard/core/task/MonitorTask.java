@@ -32,9 +32,9 @@ public class MonitorTask implements Runnable {
     @Override
     public void run() {
         MessagesConfiguration config = this.epicGuard.getMessages();
-        String monitor = config.monitor
+        String monitor = config.actionbarMonitor
                 .replace("%cps%", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
-                .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.attack : config.noAttack);
+                .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.actionbarAttack : config.actionbarNoAttack);
 
         this.epicGuard.getUserManager().getUsers().stream()
                 .filter(User::hasNotifications)

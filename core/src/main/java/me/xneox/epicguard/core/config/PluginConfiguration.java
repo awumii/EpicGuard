@@ -26,7 +26,7 @@ import java.util.List;
 public class PluginConfiguration {
 
     // Config sections
-    public CountryCheck countryCheck = new CountryCheck();
+    public Geographical geographical = new Geographical();
     public ProxyCheck proxyCheck = new ProxyCheck();
     public AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
     public SettingsCheck settingsCheck = new SettingsCheck();
@@ -35,7 +35,7 @@ public class PluginConfiguration {
     public AutoWhitelist autoWhitelist = new AutoWhitelist();
 
     @ConfigSerializable
-    public static final class CountryCheck {
+    public static final class Geographical {
         public String checkMode = "NEVER";
         public String checkType = "BLACKLIST";
         public List<String> countries = Collections.singletonList("US");
@@ -67,8 +67,8 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class NicknameCheck {
-        public String nicknameCheck = "ALWAYS";
-        public String nicknameCheckExpression = "(?i).*(bot|mcspam).*";
+        public String checkMode = "ALWAYS";
+        public String expression = "(?i).*(bot|mcspam).*";
     }
 
     @ConfigSerializable
@@ -88,8 +88,8 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class AutoWhitelist {
-        public String mode = "COMBINED";
-        public int autoWhitelistTime = 240;
+        public String mode = "MIXED";
+        public int timeOnline = 240;
     }
 
     public String reconnectCheckMode = "ATTACK";

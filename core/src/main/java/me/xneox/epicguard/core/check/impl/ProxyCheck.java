@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ProxyCheck extends Check {
     private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
-            .expireAfterWrite(this.epicGuard.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
+            .expireAfterWrite(this.epicGuard.getConfig().proxyCheck.cacheDuration, TimeUnit.SECONDS)
             .build();
 
     public ProxyCheck(EpicGuard epicGuard) {
@@ -42,7 +42,7 @@ public class ProxyCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().proxyCheck);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().proxyCheck.checkMode);
         return this.assertCheck(mode, this.isProxy(user.getAddress()));
     }
 
@@ -50,21 +50,21 @@ public class ProxyCheck extends Check {
         return this.detectionMap.asMap().computeIfAbsent(address, ip -> {
             String apiUrl;
 
-            if (this.epicGuard.getConfig().customProxyCheck.equals("disabled")) {
+            if (this.epicGuard.getConfig().proxyCheck.customProxyCheckUrl.equals("disabled")) {
                 // Use the default API service - proxycheck.io.
-                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.epicGuard.getConfig().proxyCheckKey + "&vpn=1";
+                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.epicGuard.getConfig().proxyCheck.proxyCheckKey + "&vpn=1";
             } else {
                 // Use the custom API service.
-                apiUrl = this.epicGuard.getConfig().customProxyCheck.replace("%ip%", ip);
+                apiUrl = this.epicGuard.getConfig().proxyCheck.customProxyCheckUrl.replace("%ip%", ip);
             }
 
             String response = URLUtils.readString(apiUrl);
-            return response != null && this.epicGuard.getConfig().proxyCheckResponseContains.stream().anyMatch(response::contains);
+            return response != null && this.epicGuard.getConfig().proxyCheck.responseContains.stream().anyMatch(response::contains);
         });
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().kickMessageProxy;
+        return this.epicGuard.getMessages().disconnect.proxy;
     }
 }
