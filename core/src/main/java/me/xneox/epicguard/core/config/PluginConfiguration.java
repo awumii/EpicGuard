@@ -26,92 +26,225 @@ import java.util.List;
 public class PluginConfiguration {
 
     // Config sections
-    public Geographical geographical = new Geographical();
-    public ProxyCheck proxyCheck = new ProxyCheck();
-    public AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
-    public SettingsCheck settingsCheck = new SettingsCheck();
-    public NicknameCheck nicknameCheck = new NicknameCheck();
-    public ConsoleFilter consoleFilter = new ConsoleFilter();
-    public AutoWhitelist autoWhitelist = new AutoWhitelist();
+    private final Geographical geographical = new Geographical();
+    private final ProxyCheck proxyCheck = new ProxyCheck();
+    private final AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
+    private final SettingsCheck settingsCheck = new SettingsCheck();
+    private final NicknameCheck nicknameCheck = new NicknameCheck();
+    private final ConsoleFilter consoleFilter = new ConsoleFilter();
+    private final AutoWhitelist autoWhitelist = new AutoWhitelist();
 
     @ConfigSerializable
     public static final class Geographical {
-        public String checkMode = "NEVER";
-        public String checkType = "BLACKLIST";
-        public List<String> countries = Collections.singletonList("US");
-        public List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+        private final String checkMode = "NEVER";
+        private final String checkType = "BLACKLIST";
+        private final List<String> countries = Collections.singletonList("US");
+        private final List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+
+        public String checkMode() {
+            return this.checkMode;
+        }
+
+        public String checkType() {
+            return this.checkType;
+        }
+
+        public List<String> countries() {
+            return this.countries;
+        }
+
+        public List<String> cityBlacklist() {
+            return this.cityBlacklist;
+        }
     }
 
     @ConfigSerializable
     public static final class ProxyCheck {
-        public String checkMode = "ALWAYS";
-        public String proxyCheckKey = "put_your_key_here";
-        public String customProxyCheckUrl = "disabled";
-        public List<String> responseContains = Arrays.asList("yes", "proxy", "vpn", "1");
+        private final String checkMode = "ALWAYS";
+        private final String proxyCheckKey = "put_your_key_here";
+        private final String customProxyCheckUrl = "disabled";
+        private final List<String> responseContains = Arrays.asList("yes", "proxy", "vpn", "1");
 
         @Comment("How long in SECONDS responses from proxy check should be cached?")
-        public int cacheDuration = 120;
+        private final int cacheDuration = 120;
+
+        public String checkMode() {
+            return this.checkMode;
+        }
+
+        public String proxyCheckKey() {
+            return this.proxyCheckKey;
+        }
+
+        public String customProxyCheckUrl() {
+            return this.customProxyCheckUrl;
+        }
+
+        public List<String> responseContains() {
+            return this.responseContains;
+        }
+
+        public int cacheDuration() {
+            return this.cacheDuration;
+        }
     }
 
     @ConfigSerializable
     public static final class AccountLimitCheck {
-        public String checkMode = "ALWAYS";
-        public int accountLimit = 3;
+        private final String checkMode = "ALWAYS";
+        private final int accountLimit = 3;
+
+        public String checkMode() {
+            return this.checkMode;
+        }
+
+        public int accountLimit() {
+            return this.accountLimit;
+        }
     }
 
     @ConfigSerializable
     public static final class SettingsCheck {
-        public boolean enabled = true;
-        public int checkDelay = 5;
+        private final boolean enabled = true;
+        private final int delay = 5;
+
+        public boolean enabled() {
+            return this.enabled;
+        }
+
+        public int delay() {
+            return this.delay;
+        }
     }
 
     @ConfigSerializable
     public static final class NicknameCheck {
-        public String checkMode = "ALWAYS";
-        public String expression = "(?i).*(bot|mcspam).*";
+        private final String checkMode = "ALWAYS";
+        private final String expression = "(?i).*(bot|mcspam).*";
+
+        public String checkMode() {
+            return this.checkMode;
+        }
+
+        public String expression() {
+            return this.expression;
+        }
     }
 
     @ConfigSerializable
     public static final class ConsoleFilter {
-        public String filterMode = "ALWAYS";
+        private final String filterMode = "ALWAYS";
 
         @Comment("If log message contains one of these words, it will\n" +
                 "be hidden. This can save a lot of CPU on big attacks.")
-        public List<String> filterMessages = Arrays.asList(
+        private final List<String> filterMessages = Arrays.asList(
                 "GameProfile",
                 "Disconnected",
                 "UUID of player",
                 "logged in",
                 "lost connection",
                 "InitialHandler");
+
+        public String filterMode() {
+            return this.filterMode;
+        }
+
+        public List<String> filterMessages() {
+            return this.filterMessages;
+        }
     }
 
     @ConfigSerializable
     public static final class AutoWhitelist {
-        public String mode = "MIXED";
-        public int timeOnline = 240;
+        private final String mode = "MIXED";
+        private final int timeOnline = 240;
+
+        public String mode() {
+            return this.mode;
+        }
+
+        public int timeOnline() {
+            return this.timeOnline;
+        }
     }
 
-    public String reconnectCheckMode = "ATTACK";
+    private final String reconnectCheckMode = "ATTACK";
 
-    public String serverListCheckMode = "ATTACK";
+    private final String serverListCheckMode = "ATTACK";
 
-    public boolean lockdownOnAttack = true;
+    private final boolean lockdownOnAttack = true;
 
-    public int attackConnectionThreshold = 6;
+    private final int attackConnectionThreshold = 6;
 
-    public long attackResetInterval = 80L;
+    private final long attackResetInterval = 80L;
 
     @Comment("Set to false to disable update checker.")
-    public boolean updateChecker = true;
+    private final boolean updateChecker = true;
 
     @Comment("Time in minutes before auto-saving data.\n" +
             "(!) Requires restart to apply.")
-    public long autoSaveInterval = 10L;
+    private final long autoSaveInterval = 10L;
 
     @Comment("Enabling this will log positive bot detections in the console.")
-    public boolean debug;
+    private boolean debug;
 
-    @Comment("Currently only JSON.")
-    public String storageMethod = "JSON";
+    public Geographical geographical() {
+        return this.geographical;
+    }
+
+    public ProxyCheck proxyCheck() {
+        return this.proxyCheck;
+    }
+
+    public AccountLimitCheck accountLimitCheck() {
+        return this.accountLimitCheck;
+    }
+
+    public SettingsCheck settingsCheck() {
+        return this.settingsCheck;
+    }
+
+    public NicknameCheck nicknameCheck() {
+        return this.nicknameCheck;
+    }
+
+    public ConsoleFilter consoleFilter() {
+        return this.consoleFilter;
+    }
+
+    public AutoWhitelist autoWhitelist() {
+        return this.autoWhitelist;
+    }
+
+    public String reconnectCheckMode() {
+        return this.reconnectCheckMode;
+    }
+
+    public String serverListCheckMode() {
+        return this.serverListCheckMode;
+    }
+
+    public boolean lockdownOnAttack() {
+        return this.lockdownOnAttack;
+    }
+
+    public int attackConnectionThreshold() {
+        return this.attackConnectionThreshold;
+    }
+
+    public long attackResetInterval() {
+        return this.attackResetInterval;
+    }
+
+    public boolean updateChecker() {
+        return this.updateChecker;
+    }
+
+    public long autoSaveInterval() {
+        return this.autoSaveInterval;
+    }
+
+    public boolean debug() {
+        return this.debug;
+    }
 }

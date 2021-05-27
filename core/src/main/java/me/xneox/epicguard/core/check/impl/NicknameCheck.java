@@ -19,13 +19,13 @@ public class NicknameCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().nicknameCheck.checkMode);
-        return this.assertCheck(mode, user.getNickname().matches(this.epicGuard.getConfig().nicknameCheck.expression));
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().nicknameCheck().checkMode());
+        return this.assertCheck(mode, user.getNickname().matches(this.epicGuard.getConfig().nicknameCheck().expression()));
     }
 
     @Nonnull
     @Override
     public List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect.nickname;
+        return this.epicGuard.getMessages().disconnect().nickname();
     }
 }

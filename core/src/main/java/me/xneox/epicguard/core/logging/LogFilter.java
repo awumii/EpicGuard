@@ -64,9 +64,9 @@ public class LogFilter extends AbstractFilter {
     }
 
     private Result isLoggable(String message) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().consoleFilter.filterMode);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().consoleFilter().filterMode());
         if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
-            for (String string : this.epicGuard.getConfig().consoleFilter.filterMessages) {
+            for (String string : this.epicGuard.getConfig().consoleFilter().filterMessages()) {
                 if (message.contains(string)) {
                     return Result.DENY;
                 }

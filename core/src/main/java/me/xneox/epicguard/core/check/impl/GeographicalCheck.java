@@ -33,7 +33,7 @@ public class GeographicalCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().geographical.checkMode);
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().geographical().checkMode());
         return this.assertCheck(mode, this.isRestricted(user.getAddress()));
     }
 
@@ -41,19 +41,19 @@ public class GeographicalCheck extends Check {
         String country = this.epicGuard.getGeoManager().getCountryCode(address);
         String city = this.epicGuard.getGeoManager().getCity(address);
 
-        if (this.epicGuard.getConfig().geographical.cityBlacklist.contains(city)) {
+        if (this.epicGuard.getConfig().geographical().cityBlacklist().contains(city)) {
             return true;
         }
 
-        if (this.epicGuard.getConfig().geographical.checkType.equals("WHITELIST")) {
-            return !this.epicGuard.getConfig().geographical.countries.contains(country);
+        if (this.epicGuard.getConfig().geographical().checkType().equals("WHITELIST")) {
+            return !this.epicGuard.getConfig().geographical().countries().contains(country);
         } else {
-            return this.epicGuard.getConfig().geographical.countries.contains(country);
+            return this.epicGuard.getConfig().geographical().countries().contains(country);
         }
     }
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect.geographical;
+        return this.epicGuard.getMessages().disconnect().geographical();
     }
 }

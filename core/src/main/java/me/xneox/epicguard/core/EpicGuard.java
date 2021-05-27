@@ -65,8 +65,8 @@ public class EpicGuard {
         getLogger().info("Scheduling tasks...");
         this.platform.scheduleTask(new MonitorTask(this), 1L);
         this.platform.scheduleTask(new UpdateCheckerTask(this), 1800L);
-        this.platform.scheduleTask(new AttackResetTask(this), this.config.attackResetInterval);
-        this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
+        this.platform.scheduleTask(new AttackResetTask(this), this.config.attackResetInterval());
+        this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval()));
 
         EpicGuardAPI.setInstance(this);
         getLogger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.getVersion());

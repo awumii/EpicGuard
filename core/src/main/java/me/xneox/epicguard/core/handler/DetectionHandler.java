@@ -61,7 +61,7 @@ public class DetectionHandler {
         Valid.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().attackConnectionThreshold) {
+        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().attackConnectionThreshold()) {
             this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
         }
 
@@ -75,7 +75,7 @@ public class DetectionHandler {
         PendingUser user = new PendingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
-                if (this.epicGuard.getConfig().debug) {
+                if (this.epicGuard.getConfig().debug()) {
                     this.epicGuard.getLogger().info("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }

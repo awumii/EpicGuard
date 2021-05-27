@@ -49,7 +49,7 @@ public class JoinHandler {
         User user = this.epicGuard.getUserManager().getOrCreate(uuid);
 
         // Schedule a delayed task to whitelist the player.
-        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.getConfig().autoWhitelist.mode);
+        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.getConfig().autoWhitelist().mode());
         if (mode != WhitelistMode.DISABLED) {
             this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null) {
@@ -61,16 +61,16 @@ public class JoinHandler {
                         this.epicGuard.getStorageManager().whitelistPut(nickname);
                     }
                 }
-            }, this.epicGuard.getConfig().autoWhitelist.timeOnline);
+            }, this.epicGuard.getConfig().autoWhitelist().timeOnline());
         }
 
         // Schedule a delayed task to check if the player has sent the Settings packet.
-        if (this.epicGuard.getConfig().settingsCheck.enabled) {
+        if (this.epicGuard.getConfig().settingsCheck().enabled()) {
             this.epicGuard.getPlatform().runTaskLater(() -> {
                 if (user != null && !user.hasChangedSettings()) {
-                    this.epicGuard.getPlatform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.getMessages().disconnect.settingsPacket));
+                    this.epicGuard.getPlatform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.getMessages().disconnect().settingsPacket()));
                 }
-            }, this.epicGuard.getConfig().settingsCheck.checkDelay);
+            }, this.epicGuard.getConfig().settingsCheck().delay());
         }
     }
 }

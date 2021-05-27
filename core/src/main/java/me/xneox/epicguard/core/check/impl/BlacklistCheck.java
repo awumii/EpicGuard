@@ -38,6 +38,6 @@ public class BlacklistCheck extends Check {
 
     @Override
     public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().disconnect.blacklisted;
+        return this.epicGuard.getMessages().disconnect().blacklisted();
     }
 }
