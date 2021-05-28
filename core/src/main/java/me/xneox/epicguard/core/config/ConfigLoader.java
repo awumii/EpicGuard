@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.config;
 
+import me.xneox.epicguard.core.proxy.ProxyService;
+import me.xneox.epicguard.core.proxy.ProxyServiceSerializer;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
@@ -30,6 +32,7 @@ public class ConfigLoader<C> {
 
     public ConfigLoader(@Nonnull File file, @Nonnull Class<C> implementation) {
         this.loader = YamlConfigurationLoader.builder()
+                .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE)))
                 .file(file)
                 .build();
 

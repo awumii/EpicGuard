@@ -19,6 +19,7 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.manager.*;
+import me.xneox.epicguard.core.proxy.ProxyManager;
 import me.xneox.epicguard.core.storage.StorageManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
@@ -35,6 +36,7 @@ public class EpicGuard {
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final AttackManager attackManager;
+    private final ProxyManager proxyManager;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
@@ -51,6 +53,7 @@ public class EpicGuard {
         this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
+        this.proxyManager = new ProxyManager(this);
         this.geoManager = new GeoManager(this.logger());
 
         logger().info("Initializing LogFilter...");
@@ -123,5 +126,9 @@ public class EpicGuard {
 
     public AttackManager attackManager() {
         return this.attackManager;
+    }
+
+    public ProxyManager proxyManager() {
+        return this.proxyManager;
     }
 }

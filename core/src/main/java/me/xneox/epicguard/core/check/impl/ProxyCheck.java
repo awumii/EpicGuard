@@ -15,27 +15,18 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.PendingUser;
-import me.xneox.epicguard.core.util.URLUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This will check if the user is using a VPN or a proxy.
- * TODO: Rewrite this, to only use custom proxy checking services, and allow multiple ones at time.
  */
 public class ProxyCheck extends Check {
-    private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
-            .expireAfterWrite(this.epicGuard.config().proxyCheck().cacheDuration(), TimeUnit.SECONDS)
-            .build();
-
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
@@ -43,24 +34,7 @@ public class ProxyCheck extends Check {
     @Override
     public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().proxyCheck().checkMode());
-        return this.assertCheck(mode, this.isProxy(user.address()));
-    }
-
-    private boolean isProxy(String address) {
-        return this.detectionMap.asMap().computeIfAbsent(address, ip -> {
-            String apiUrl;
-
-            if (this.epicGuard.config().proxyCheck().customProxyCheckUrl().equals("disabled")) {
-                // Use the default API service - proxycheck.io.
-                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.epicGuard.config().proxyCheck().proxyCheckKey() + "&vpn=1";
-            } else {
-                // Use the custom API service.
-                apiUrl = this.epicGuard.config().proxyCheck().customProxyCheckUrl().replace("%ip%", ip);
-            }
-
-            String response = URLUtils.readString(apiUrl);
-            return response != null && this.epicGuard.config().proxyCheck().responseContains().stream().anyMatch(response::contains);
-        });
+        return this.assertCheck(mode, this.epicGuard.proxyManager().isProxy(user.address()));
     }
 
     @Override

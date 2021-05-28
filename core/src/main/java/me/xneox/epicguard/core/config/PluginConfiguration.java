@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core.config;
 
+import me.xneox.epicguard.core.proxy.ProxyService;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 
@@ -78,17 +79,11 @@ public class PluginConfiguration {
                 "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
 
-        @Comment("You can get your free API key after registering on https://proxycheck.io/dashboard\n" +
-                "Without a key, there will be a limit of 100 requests per 24 hours.")
-        private final String proxyCheckKey = "put_your_key_here";
-
-        @Comment("If you want to use other proxy checking service, set it's URL here.\n" +
-                "You can use the %ip% placeholder.")
-        private final String customProxyCheckUrl = "disabled";
-
-        @Comment("If the proxy checker service reponse contains one of\n" +
-                "these strings, it will be considered as a positive detection.")
-        private final List<String> responseContains = Arrays.asList("yes", "proxy", "vpn", "1");
+        @Comment("You can set as many proxy checking services as you want here.\n" +
+                "If you're not familiar with regex, see https://regexr.com/\n" +
+                "For example, (yes|proxy) will check if the response contains either 'yes' or 'proxy'")
+        private final List<ProxyService> services = Collections.singletonList(
+                new ProxyService("https://proxycheck.io/v2/{IP}?key=YOUR_KEY&risk=1&vpn=1", "(yes|proxy)"));
 
         @Comment("How long in SECONDS responses from proxy check should be cached?\n" +
                 "Higher value increases performance, but keep in mind that if user\n" +
@@ -99,16 +94,8 @@ public class PluginConfiguration {
             return this.checkMode;
         }
 
-        public String proxyCheckKey() {
-            return this.proxyCheckKey;
-        }
-
-        public String customProxyCheckUrl() {
-            return this.customProxyCheckUrl;
-        }
-
-        public List<String> responseContains() {
-            return this.responseContains;
+        public List<ProxyService> services() {
+            return this.services;
         }
 
         public int cacheDuration() {
