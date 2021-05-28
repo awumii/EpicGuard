@@ -22,4 +22,9 @@ public class SLF4JLogger implements GuardLogger {
     public void warning(String message) {
         this.logger.warn(message);
     }
+
+    @Override
+    public void error(String message) {
+        this.logger.error(message);
+    }
 }

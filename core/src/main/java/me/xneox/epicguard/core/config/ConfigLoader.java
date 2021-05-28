@@ -19,19 +19,19 @@ import me.xneox.epicguard.core.proxy.ProxyService;
 import me.xneox.epicguard.core.proxy.ProxyServiceSerializer;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import javax.annotation.Nonnull;
 import java.io.File;
 
 public class ConfigLoader<C> {
-    private final YamlConfigurationLoader loader;
+    private final HoconConfigurationLoader loader;
     private ObjectMapper<C> mapper;
 
     public ConfigLoader(@Nonnull File file, @Nonnull Class<C> implementation) {
-        this.loader = YamlConfigurationLoader.builder()
+        this.loader = HoconConfigurationLoader.builder()
                 .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE)))
                 .file(file)
                 .build();

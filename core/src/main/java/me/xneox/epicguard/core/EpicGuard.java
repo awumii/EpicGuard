@@ -31,6 +31,9 @@ import me.xneox.epicguard.core.util.ConfigUtils;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The main, core class of EpicGuard.
+ */
 public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
@@ -68,10 +71,11 @@ public class EpicGuard {
         logger().info("Scheduling tasks...");
         this.platform.runTaskRepeating(new MonitorTask(this), 1L);
         this.platform.runTaskRepeating(new UpdateCheckerTask(this), 1800L);
-        this.platform.runTaskRepeating(new AttackResetTask(this), this.config.attackResetInterval());
-        this.platform.runTaskRepeating(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval()));
+        this.platform.runTaskRepeating(new AttackResetTask(this), this.config.misc().attackResetInterval());
+        this.platform.runTaskRepeating(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
-        EpicGuardAPI.setInstance(this);
+        EpicGuardAPI.INSTANCE.setInstance(this);
+        checkOutdatedJava();
         logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
     }
 
@@ -94,6 +98,18 @@ public class EpicGuard {
      */
     public void shutdown() {
         this.storageManager.provider().save();
+    }
+
+    private void checkOutdatedJava() {
+        // Java 8 support will be dropped soon.
+        String javaVer = System.getProperty("java.version");
+        if (javaVer.startsWith("1.8")) {
+            logger().error("*******************************************************");
+            logger().error("YOU ARE RUNNING ON AN OUTDATED VERSION OF JAVA (" + javaVer + ")");
+            logger().error("Support for this version will be dropped soon, it is recommended to update to Java 16.");
+            logger().error("It that's not possible, update to at least Java 11.");
+            logger().error("*******************************************************");
+        }
     }
 
     public GuardLogger logger() {

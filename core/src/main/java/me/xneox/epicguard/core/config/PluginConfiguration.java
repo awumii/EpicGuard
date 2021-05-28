@@ -34,6 +34,7 @@ public class PluginConfiguration {
     private final NicknameCheck nicknameCheck = new NicknameCheck();
     private final ConsoleFilter consoleFilter = new ConsoleFilter();
     private final AutoWhitelist autoWhitelist = new AutoWhitelist();
+    private final Misc misc = new Misc();
 
     @ConfigSerializable
     public static final class Geographical {
@@ -49,10 +50,10 @@ public class PluginConfiguration {
         private final String checkType = "BLACKLIST";
 
         @Comment("List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/")
-        private final List<String> countries = Collections.singletonList("US");
+        private final List<String> countries = Arrays.asList("US", "DE");
 
         @Comment("If a player tries to connect from city listed here, he will be blocked.")
-        private final List<String> cityBlacklist = Collections.singletonList("ExampleCity");
+        private final List<String> cityBlacklist = Arrays.asList("ExampleCity", "AnotherCity");
 
         public String checkMode() {
             return this.checkMode;
@@ -112,14 +113,14 @@ public class PluginConfiguration {
         private final String checkMode = "ALWAYS";
 
         @Comment("Limit of accounts per one IP address.")
-        private final int accountLimit = 3;
+        private final int limit = 3;
 
         public String checkMode() {
             return this.checkMode;
         }
 
         public int accountLimit() {
-            return this.accountLimit;
+            return this.limit;
         }
     }
 
@@ -145,7 +146,10 @@ public class PluginConfiguration {
     @ConfigSerializable
     public static final class NicknameCheck {
         @Comment("Nickname-check will block players if their nickname matches\n"
-                + "the regex expression set below.")
+                + "the regex expression set below.\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
 
         @Comment("Default value will check if the nickname contains 'bot' or 'mcspam'.\n" +
@@ -167,7 +171,7 @@ public class PluginConfiguration {
                 "NEVER - feature is disabled.\n" +
                 "ATTACK - feature will work only during bot-attack.\n" +
                 "ALWAYS - feature will always work.")
-        private final String filterMode = "ALWAYS";
+        private final String filterMode = "ATTACK";
 
         @Comment("If log message contains one of these words, it will\n" +
                 "be hidden. This can save a lot of CPU on big attacks.")
@@ -211,43 +215,78 @@ public class PluginConfiguration {
         }
     }
 
-    @Comment("ReconnectCheck will force new users to join the server again.\n" +
-            "NEVER - check is disabled.\n" +
-            "ATTACK - check will be performed only during bot-attack.\n" +
-            "ALWAYS - check will be always performed.")
-    private final String reconnectCheckMode = "ATTACK";
+    @ConfigSerializable
+    public static final class Misc {
+        @Comment("ReconnectCheck will force new users to join the server again.\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
+        private final String reconnectCheckMode = "ATTACK";
 
-    @Comment("Server-list check will force users to add your server\n" +
-            "to their server list (send a ping) before joining\n" +
-            "NEVER - check is disabled.\n" +
-            "ATTACK - check will be performed only during bot-attack.\n" +
-            "ALWAYS - check will be always performed.")
-    private final String serverListCheckMode = "ATTACK";
+        @Comment("Server-list check will force users to add your server\n" +
+                "to their server list (send a ping) before joining\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
+        private final String serverListCheckMode = "ATTACK";
 
-    @Comment("Should every user (except if he is whitelisted)\n" + "" +
-            "be disconnected when there is an bot attack?\n" +
-            "true - Better protection and HUGE performance boost\n" +
-            "false - Allow NEW players connecting during attack.")
-    private final boolean lockdownOnAttack = true;
+        @Comment("Should every user (except if he is whitelisted)\n" + "" +
+                "be disconnected when there is an bot attack?\n" +
+                "true - Better protection and HUGE performance boost\n" +
+                "false - Allow NEW players connecting during attack.")
+        private final boolean lockdownOnAttack = true;
 
-    @Comment("How many connections per second must be made,\n" +
-            "to activate the attack mode temporally?")
-    private final int attackConnectionThreshold = 6;
+        @Comment("How many connections per second must be made,\n" +
+                "to activate the attack mode temporally?")
+        private final int attackConnectionThreshold = 6;
 
-    @Comment("How often (in seconds) the plugin should check if amount of connections\n" +
-            "is slower than 'attack-connection-treshold' and disable attack mode?\n" +
-            "(!) Requires restart to apply.")
-    private final long attackResetInterval = 80L;
+        @Comment("How often (in seconds) the plugin should check if amount of connections\n" +
+                "is slower than 'attack-connection-treshold' and disable attack mode?\n" +
+                "(!) Requires restart to apply.")
+        private final long attackResetInterval = 80L;
 
-    @Comment("Set to false to disable update checker.")
-    private final boolean updateChecker = true;
+        @Comment("Set to false to disable update checker.")
+        private final boolean updateChecker = true;
 
-    @Comment("Time in minutes before auto-saving data.\n" +
-            "(!) Requires restart to apply.")
-    private final long autoSaveInterval = 10L;
+        @Comment("Time in minutes before auto-saving data.\n" +
+                "(!) Requires restart to apply.")
+        private final long autoSaveInterval = 10L;
 
-    @Comment("Enabling this will log positive bot detections in the console.")
-    private boolean debug;
+        @Comment("Enabling this will log positive bot detections in the console.")
+        private boolean debug;
+
+        public String reconnectCheckMode() {
+            return this.reconnectCheckMode;
+        }
+
+        public String serverListCheckMode() {
+            return this.serverListCheckMode;
+        }
+
+        public boolean lockdownOnAttack() {
+            return this.lockdownOnAttack;
+        }
+
+        public int attackConnectionThreshold() {
+            return this.attackConnectionThreshold;
+        }
+
+        public long attackResetInterval() {
+            return this.attackResetInterval;
+        }
+
+        public boolean updateChecker() {
+            return this.updateChecker;
+        }
+
+        public long autoSaveInterval() {
+            return this.autoSaveInterval;
+        }
+
+        public boolean debug() {
+            return this.debug;
+        }
+    }
 
     public Geographical geographical() {
         return this.geographical;
@@ -277,35 +316,7 @@ public class PluginConfiguration {
         return this.autoWhitelist;
     }
 
-    public String reconnectCheckMode() {
-        return this.reconnectCheckMode;
-    }
-
-    public String serverListCheckMode() {
-        return this.serverListCheckMode;
-    }
-
-    public boolean lockdownOnAttack() {
-        return this.lockdownOnAttack;
-    }
-
-    public int attackConnectionThreshold() {
-        return this.attackConnectionThreshold;
-    }
-
-    public long attackResetInterval() {
-        return this.attackResetInterval;
-    }
-
-    public boolean updateChecker() {
-        return this.updateChecker;
-    }
-
-    public long autoSaveInterval() {
-        return this.autoSaveInterval;
-    }
-
-    public boolean debug() {
-        return this.debug;
+    public Misc misc() {
+        return this.misc;
     }
 }

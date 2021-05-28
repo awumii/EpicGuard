@@ -71,6 +71,7 @@ public class GeoManager {
                     .build();
         } catch (IOException ex) {
             logger.warning("Couldn't download or initialize the GeoIP databases, please check your internet connection. Geographic features will be disabled.");
+            ex.printStackTrace();
         }
     }
 
@@ -95,6 +96,7 @@ public class GeoManager {
                 }
                 entry = tarInput.getNextTarEntry();
             }
+
             // Closing InputStream and removing archive file.
             tarInput.close();
             archive.delete();
@@ -109,7 +111,7 @@ public class GeoManager {
             try {
                 return this.countryReader.country(inetAddress).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
-                logger.warning("Couldn't find the country for the address: " + address);
+                logger.warning("Couldn't find the country for the address: " + address + ", " + ex.getMessage());
             }
         }
         return "unknown";
@@ -123,7 +125,7 @@ public class GeoManager {
             try {
                 return this.cityReader.city(inetAddress).getCity().getName();
             } catch (IOException | GeoIp2Exception ex) {
-                logger.warning("Couldn't find the city for the address: " + address);
+                logger.warning("Couldn't find the city for the address: " + address + ", " + ex.getMessage());
             }
         }
         return "unknown";
@@ -135,7 +137,7 @@ public class GeoManager {
         try {
             return InetAddress.getByName(address);
         } catch (UnknownHostException ex) {
-            logger.warning("Couldn't resolve the InetAddress for the host: " + address);
+            logger.warning("Couldn't resolve the InetAddress for the host: " + address + ", " + ex.getMessage());
         }
         return null;
     }

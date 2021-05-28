@@ -43,7 +43,7 @@ subprojects {
         implementation 'org.apache.commons:commons-compress:1.20'
         implementation 'com.google.guava:guava:30.1.1-jre'
         implementation 'com.github.simplix-softworks:SimplixStorage:3.2.2'
-        implementation 'org.spongepowered:configurate-yaml:4.1.1'
+        implementation 'org.spongepowered:configurate-hocon:4.1.1'
 
         // Provided dependencies.
         compileOnly 'org.apache.logging.log4j:log4j-core:2.14.1'
@@ -54,13 +54,17 @@ subprojects {
         minimize()
 
         relocate 'org.bstats', 'me.xneox.epicguard.libs.bstats'
-        relocate 'org.spongepowered.configurate', 'me.xneox.epicguard.libs.configurate'
         relocate 'com.fasterxml', 'me.xneox.epicguard.libs.fasterxml'
         relocate 'com.maxmind', 'me.xneox.epicguard.libs.maxmind'
         relocate 'de.leonhard.storage', 'me.xneox.epicguard.libs.storage'
         relocate 'com.google.common', 'me.xneox.epicguard.libs.google.common'
+        relocate 'org.spongepowered.configurate', 'me.xneox.epicguard.libs.configurate'
+        relocate 'org.yaml.snakeyaml', 'me.xneox.epicguard.libs.snakeyaml'
+        relocate 'io.leangen.geantyref', 'me.xneox.epicguard.libs.geantyref'
 
+        // Exclude useless text files
         exclude 'mozilla/'
+        exclude 'org/apache/commons/codec/'
     }
 }
 

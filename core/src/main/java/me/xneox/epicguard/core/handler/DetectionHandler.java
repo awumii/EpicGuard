@@ -32,7 +32,7 @@ import java.util.*;
  * It performs every antibot check (except SettingsCheck).
  */
 public class DetectionHandler {
-    private final Collection<Check> checks = new HashSet<>();
+    private final List<Check> checks = new ArrayList<>();
     private final EpicGuard epicGuard;
 
     public DetectionHandler(EpicGuard epicGuard) {
@@ -61,7 +61,7 @@ public class DetectionHandler {
         Valid.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().attackConnectionThreshold()) {
+        if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {
             this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
         }
 
@@ -75,7 +75,7 @@ public class DetectionHandler {
         PendingUser user = new PendingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
-                if (this.epicGuard.config().debug()) {
+                if (this.epicGuard.config().misc().debug()) {
                     this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }

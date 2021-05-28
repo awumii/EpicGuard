@@ -24,7 +24,7 @@ public final class VersionUtils {
     private static boolean available;
 
     public static void checkForUpdates(EpicGuard epicGuard) {
-        if (!epicGuard.config().updateChecker()) {
+        if (!epicGuard.config().misc().updateChecker()) {
             return;
         }
 
