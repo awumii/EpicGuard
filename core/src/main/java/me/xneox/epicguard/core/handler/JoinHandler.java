@@ -15,10 +15,11 @@
 
 package me.xneox.epicguard.core.handler;
 
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.WhitelistMode;
 import me.xneox.epicguard.core.user.User;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
+import me.xneox.epicguard.core.util.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -42,34 +43,34 @@ public class JoinHandler {
      * @param nickname Nickname of the online player.
      */
     public void handle(@Nonnull UUID uuid, @Nonnull String address, @Nonnull String nickname) {
-        Validate.notNull(uuid, "UUID cannot be null!");
-        Validate.notNull(address, "Address cannot be null!");
+        Valid.notNull(uuid, "UUID cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
 
-        User user = this.epicGuard.getUserManager().getOrCreate(uuid);
+        User user = this.epicGuard.userManager().getOrCreate(uuid);
 
         // Schedule a delayed task to whitelist the player.
-        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.getConfig().autoWhitelist);
+        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.config().autoWhitelist().mode());
         if (mode != WhitelistMode.DISABLED) {
-            this.epicGuard.getPlatform().runTaskLater(() -> {
+            this.epicGuard.platform().runTaskLater(() -> {
                 if (user != null) {
-                    if (mode == WhitelistMode.BOTH || mode == WhitelistMode.ADDRESS) {
-                        this.epicGuard.getStorageManager().whitelistPut(address);
+                    if (mode == WhitelistMode.MIXED || mode == WhitelistMode.ADDRESS) {
+                        this.epicGuard.storageManager().whitelistPut(address);
                     }
 
-                    if (mode == WhitelistMode.BOTH || mode == WhitelistMode.NICKNAME) {
-                        this.epicGuard.getStorageManager().whitelistPut(nickname);
+                    if (mode == WhitelistMode.MIXED || mode == WhitelistMode.NICKNAME) {
+                        this.epicGuard.storageManager().whitelistPut(nickname);
                     }
                 }
-            }, this.epicGuard.getConfig().autoWhitelistTime);
+            }, this.epicGuard.config().autoWhitelist().timeOnline());
         }
 
         // Schedule a delayed task to check if the player has sent the Settings packet.
-        if (this.epicGuard.getConfig().settingsCheck) {
-            this.epicGuard.getPlatform().runTaskLater(() -> {
-                if (user != null && !user.hasChangedSettings()) {
-                    this.epicGuard.getPlatform().disconnectUser(user, this.epicGuard.getMessages().kickMessageSettings);
+        if (this.epicGuard.config().settingsCheck().enabled()) {
+            this.epicGuard.platform().runTaskLater(() -> {
+                if (user != null && !user.settingsChanged()) {
+                    this.epicGuard.platform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.messages().disconnect().settingsPacket()));
                 }
-            }, this.epicGuard.getConfig().settingsCheckDelay);
+            }, this.epicGuard.config().settingsCheck().delay());
         }
     }
 }

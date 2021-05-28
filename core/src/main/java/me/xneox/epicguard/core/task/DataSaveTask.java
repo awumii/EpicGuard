@@ -26,6 +26,6 @@ public class DataSaveTask implements Runnable {
 
     @Override
     public void run() {
-        this.epicGuard.getStorageManager().getProvider().save();
+        this.epicGuard.storageManager().provider().save();
     }
 }

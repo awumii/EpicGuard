@@ -19,22 +19,27 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.manager.*;
+import me.xneox.epicguard.core.proxy.ProxyManager;
 import me.xneox.epicguard.core.storage.StorageManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
-import me.xneox.epicguard.core.util.ConfigHelper;
 import me.xneox.epicguard.core.logging.LogFilter;
+import me.xneox.epicguard.core.util.ConfigUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The main, core class of EpicGuard.
+ */
 public class EpicGuard {
     private final StorageManager storageManager;
     private final GeoManager geoManager;
     private final UserManager userManager;
     private final AttackManager attackManager;
+    private final ProxyManager proxyManager;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
@@ -44,77 +49,102 @@ public class EpicGuard {
     public EpicGuard(Platform platform) {
         this.platform = platform;
 
-        getLogger().info("Loading configuration...");
-        this.reloadConfig();
+        logger().info("Loading configuration...");
+        this.loadConfigurations();
 
-        getLogger().info("Initializing managers...");
+        logger().info("Initializing managers...");
         this.storageManager = new StorageManager();
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
-        this.geoManager = new GeoManager(this.getLogger());
+        this.proxyManager = new ProxyManager(this);
+        this.geoManager = new GeoManager(this.logger());
 
-        getLogger().info("Initializing LogFilter...");
+        logger().info("Initializing LogFilter...");
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
             new LogFilter(this).register();
         } catch (ClassNotFoundException e) {
-            getLogger().warning("LogFilter can't be enabled, because log4j is not found.");
-            getLogger().warning("If you want to use this feature, switch to Waterfall/Travertine."); // This can only occur on bungeecord.
+            logger().warning("LogFilter can't be enabled, because log4j is not found.");
+            logger().warning("If you want to use this feature, switch to Waterfall/Travertine."); // This can only occur on bungeecord.
         }
 
-        getLogger().info("Scheduling tasks...");
-        this.platform.scheduleTask(new MonitorTask(this), 1L);
-        this.platform.scheduleTask(new UpdateCheckerTask(this), 1800L);
-        this.platform.scheduleTask(new AttackResetTask(this), this.config.attackResetInterval);
-        this.platform.scheduleTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.autoSaveInterval));
+        logger().info("Scheduling tasks...");
+        this.platform.runTaskRepeating(new MonitorTask(this), 1L);
+        this.platform.runTaskRepeating(new UpdateCheckerTask(this), 1800L);
+        this.platform.runTaskRepeating(new AttackResetTask(this), this.config.misc().attackResetInterval());
+        this.platform.runTaskRepeating(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
-        EpicGuardAPI.setInstance(this);
-        getLogger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.getVersion());
+        EpicGuardAPI.INSTANCE.setInstance(this);
+        checkOutdatedJava();
+        logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
     }
 
-    public void reloadConfig() {
+    /**
+     * Loads the configuration and messages.
+     */
+    public void loadConfigurations() {
         File dataFolder = new File("plugins/EpicGuard");
         dataFolder.mkdir();
 
-        File configurationFile = new File(dataFolder, "config.yml");
-        File messagesFile = new File(dataFolder, "messages.yml");
-        this.config = ConfigHelper.loadConfig(configurationFile, PluginConfiguration.class);
-        this.messages = ConfigHelper.loadConfig(messagesFile, MessagesConfiguration.class);
+        File configurationFile = new File(dataFolder, "settings.conf");
+        File messagesFile = new File(dataFolder, "messages.conf");
+
+        this.config = ConfigUtils.loadConfig(configurationFile, PluginConfiguration.class);
+        this.messages = ConfigUtils.loadConfig(messagesFile, MessagesConfiguration.class);
     }
 
+    /**
+     * Safely shut down the plugin, saving the data.
+     */
     public void shutdown() {
-        this.storageManager.getProvider().save();
+        this.storageManager.provider().save();
     }
 
-    public GuardLogger getLogger() {
-        return this.platform.getGuardLogger();
+    private void checkOutdatedJava() {
+        // Java 8 support will be dropped soon.
+        String javaVer = System.getProperty("java.version");
+        if (javaVer.startsWith("1.8")) {
+            logger().error("*******************************************************");
+            logger().error("YOU ARE RUNNING ON AN OUTDATED VERSION OF JAVA (" + javaVer + ")");
+            logger().error("Support for this version will be dropped soon, it is recommended to update to Java 16.");
+            logger().error("It that's not possible, update to at least Java 11.");
+            logger().error("*******************************************************");
+        }
     }
 
-    public Platform getPlatform() {
-        return platform;
+    public GuardLogger logger() {
+        return this.platform.logger();
     }
 
-    public PluginConfiguration getConfig() {
-        return config;
+    public Platform platform() {
+        return this.platform;
     }
 
-    public MessagesConfiguration getMessages() {
-        return messages;
+    public PluginConfiguration config() {
+        return this.config;
     }
 
-    public UserManager getUserManager() {
-        return userManager;
+    public MessagesConfiguration messages() {
+        return this.messages;
     }
 
-    public GeoManager getGeoManager() {
-        return geoManager;
+    public UserManager userManager() {
+        return this.userManager;
     }
 
-    public StorageManager getStorageManager() {
-        return storageManager;
+    public GeoManager geoManager() {
+        return this.geoManager;
     }
 
-    public AttackManager getAttackManager() {
-        return attackManager;
+    public StorageManager storageManager() {
+        return this.storageManager;
+    }
+
+    public AttackManager attackManager() {
+        return this.attackManager;
+    }
+
+    public ProxyManager proxyManager() {
+        return this.proxyManager;
     }
 }

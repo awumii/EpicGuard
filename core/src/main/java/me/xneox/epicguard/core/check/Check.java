@@ -41,14 +41,14 @@ public abstract class Check {
      * @return The return value is based on the check's behaviour. True means positive detection, false means negative.
      */
     public boolean assertCheck(CheckMode mode, boolean expression) {
-        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
+        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
             return expression;
         }
         return false;
     }
 
     @Nonnull
-    public abstract List<String> getKickMessage();
+    public abstract List<String> kickMessage();
 
     /**
      * This method contains the entire behaviour on the check.

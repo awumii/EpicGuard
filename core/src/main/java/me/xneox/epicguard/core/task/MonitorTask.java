@@ -31,16 +31,16 @@ public class MonitorTask implements Runnable {
 
     @Override
     public void run() {
-        MessagesConfiguration config = this.epicGuard.getMessages();
-        String monitor = config.monitor
-                .replace("%cps%", String.valueOf(this.epicGuard.getAttackManager().getConnectionCounter()))
-                .replace("%status%", this.epicGuard.getAttackManager().isAttack() ? config.attack : config.noAttack);
+        MessagesConfiguration config = this.epicGuard.messages();
+        String monitor = config.actionbarMonitor()
+                .replace("%cps%", String.valueOf(this.epicGuard.attackManager().connectionCounter()))
+                .replace("%status%", this.epicGuard.attackManager().isAttack() ? config.actionbarAttack() : config.actionbarNoAttack());
 
-        this.epicGuard.getUserManager().getUsers().stream()
-                .filter(User::hasNotifications)
-                .forEach(user -> this.epicGuard.getPlatform().sendActionBar(monitor, user));
+        this.epicGuard.userManager().users().stream()
+                .filter(User::notifications)
+                .forEach(user -> this.epicGuard.platform().sendActionBar(monitor, user));
 
         // Because this task is repeating every second, we can reset the connections/s counter.
-        this.epicGuard.getAttackManager().resetConnectionCounter();
+        this.epicGuard.attackManager().resetConnectionCounter();
     }
 }

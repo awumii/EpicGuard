@@ -1,6 +1,6 @@
 name: EpicGuard
 version: '${projectVersion}'
-main: me.xneox.epicguard.bungee.PlatformBungee
+main: me.xneox.epicguard.bungee.EpicGuardBungee
 
 author: xNeox
 website: https://www.spigotmc.org/resources/72369/

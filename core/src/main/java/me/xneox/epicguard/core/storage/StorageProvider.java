@@ -13,24 +13,24 @@ public abstract class StorageProvider {
 
     protected Map<String, List<String>> accountMap;
 
-    public Collection<String> getAddressWhitelist() {
-        return addressWhitelist;
+    public Collection<String> addressBlacklist() {
+        return this.addressBlacklist;
     }
 
-    public Collection<String> getAddressBlacklist() {
-        return addressBlacklist;
+    public Collection<String> addressWhitelist() {
+        return this.addressWhitelist;
     }
 
-    public Collection<String> getNameBlacklist() {
-        return nameBlacklist;
+    public Collection<String> nameBlacklist() {
+        return this.nameBlacklist;
     }
 
-    public Collection<String> getNameWhitelist() {
-        return nameWhitelist;
+    public Collection<String> nameWhitelist() {
+        return this.nameWhitelist;
     }
 
-    public Map<String, List<String>> getAccountMap() {
-        return accountMap;
+    public Map<String, List<String>> accountMap() {
+        return this.accountMap;
     }
 
     public abstract void load();

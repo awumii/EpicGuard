@@ -70,22 +70,22 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public @NotNull GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger logger() {
         return this.logger;
     }
 
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        ProxyServer.getInstance().getPlayer(user.getUUID()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
+        ProxyServer.getInstance().getPlayer(user.uuid()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        ProxyServer.getInstance().getPlayer(user.getUUID()).disconnect(BungeeUtils.createComponent(message));
+        ProxyServer.getInstance().getPlayer(user.uuid()).disconnect(BungeeUtils.createComponent(message));
     }
 
     @Override
-    public String getVersion() {
+    public String version() {
         return this.getDescription().getVersion();
     }
 
@@ -95,7 +95,7 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void scheduleTask(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
     }
 }

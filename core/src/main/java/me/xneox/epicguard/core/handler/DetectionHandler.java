@@ -15,11 +15,12 @@
 
 package me.xneox.epicguard.core.handler;
 
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.PendingUser;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
+import me.xneox.epicguard.core.util.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -31,13 +32,13 @@ import java.util.*;
  * It performs every antibot check (except SettingsCheck).
  */
 public class DetectionHandler {
-    private final Collection<Check> checks = new HashSet<>();
+    private final List<Check> checks = new ArrayList<>();
     private final EpicGuard epicGuard;
 
     public DetectionHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
 
-        checks.add(new AttackCheck(epicGuard));
+        checks.add(new LockdownCheck(epicGuard));
         checks.add(new BlacklistCheck(epicGuard));
         checks.add(new GeographicalCheck(epicGuard));
         checks.add(new ServerListCheck(epicGuard));
@@ -56,17 +57,17 @@ public class DetectionHandler {
      */
     @Nonnull
     public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
-        Validate.notNull(address, "Address cannot be null!");
-        Validate.notNull(nickname, "Nickname cannot be null!");
+        Valid.notNull(address, "Address cannot be null!");
+        Valid.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
-        if (this.epicGuard.getAttackManager().incrementConnectionCounter() >= this.epicGuard.getConfig().maxCps) {
-            this.epicGuard.getAttackManager().setAttack(true); // If yes, then activate the attack mode.
+        if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {
+            this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
         }
 
         // Check if the user is whitelisted, if yes, return empty result (undetected).
-        if (this.epicGuard.getStorageManager().isWhitelisted(address)
-                || this.epicGuard.getStorageManager().isWhitelisted(nickname)) {
+        if (this.epicGuard.storageManager().isWhitelisted(address)
+                || this.epicGuard.storageManager().isWhitelisted(nickname)) {
             return Optional.empty();
         }
 
@@ -74,23 +75,19 @@ public class DetectionHandler {
         PendingUser user = new PendingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
-                if (this.epicGuard.getConfig().debug) {
-                    this.epicGuard.getLogger().info("(Debug) " + nickname + "/" + address + " detected by " +
+                if (this.epicGuard.config().misc().debug()) {
+                    this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " +
                             check.getClass().getSimpleName());
                 }
 
                 // Positive detection, kicking the player!
-                // Also, the kick message is a list so we need to convert it to a string.
-
-                StringBuilder builder = new StringBuilder();
-                check.getKickMessage().forEach(line -> builder.append(line).append("\n"));
-                return Optional.of(builder.toString());
+                return Optional.of(StringUtils.buildMultilineString(check.kickMessage()));
             }
         }
 
         // Checks finished with no detection, the player is considered legitimate and is allowed to join the server
         // Also we update his account nickname history.
-        this.epicGuard.getStorageManager().updateAccounts(user);
+        this.epicGuard.storageManager().updateAccounts(user);
         return Optional.empty();
     }
 }

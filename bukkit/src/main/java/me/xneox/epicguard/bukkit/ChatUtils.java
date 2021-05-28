@@ -11,10 +11,12 @@ public final class ChatUtils {
 
     public static void checkUnsupportedVersion(GuardLogger logger) {
         if (Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].startsWith("v1_8")) {
-            logger.warning(" WARNING - YOU ARE RUNNING ON AN OUTDATED");
-            logger.warning(" AND UNSUPPORTED VERSION OF MINECRAFT (1.8).");
-            logger.warning(" Please update to the latest server software.");
-            logger.warning(" No support will be provided for any issues.");
+            logger.error("*******************************************************");
+            logger.error(" WARNING - YOU ARE RUNNING ON AN OUTDATED");
+            logger.error(" AND UNSUPPORTED VERSION OF MINECRAFT (1.8).");
+            logger.error(" Please update to the latest server software.");
+            logger.error(" No support will be provided for any issues.");
+            logger.error("*******************************************************");
         }
     }
 

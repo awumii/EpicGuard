@@ -24,5 +24,5 @@ public abstract class Sender<C> {
     public abstract boolean isPlayer();
 
     @Nullable
-    public abstract UUID getUUID();
+    public abstract UUID uuid();
 }

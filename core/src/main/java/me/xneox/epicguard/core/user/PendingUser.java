@@ -30,11 +30,11 @@ public class PendingUser {
         this.nickname = nickname;
     }
 
-    public String getAddress() {
+    public String address() {
         return this.address;
     }
 
-    public String getNickname() {
+    public String nickname() {
         return this.nickname;
     }
 
@@ -43,12 +43,12 @@ public class PendingUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PendingUser pendingUser = (PendingUser) o;
-        return Objects.equal(getAddress(), pendingUser.getAddress()) &&
-                Objects.equal(getNickname(), pendingUser.getNickname());
+        return Objects.equal(address(), pendingUser.address()) &&
+                Objects.equal(nickname(), pendingUser.nickname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getAddress(), getNickname());
+        return Objects.hashCode(address(), nickname());
     }
 }

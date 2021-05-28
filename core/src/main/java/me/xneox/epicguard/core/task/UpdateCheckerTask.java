@@ -28,10 +28,10 @@ public class UpdateCheckerTask implements Runnable {
     @Override
     public void run() {
         VersionUtils.checkForUpdates(this.epicGuard);
-        if (VersionUtils.isAvailable()) {
-            this.epicGuard.getLogger().info(this.epicGuard.getMessages().updateAvailable
-                    .replace("{NEWVER}", VersionUtils.getRemoteVersion())
-                    .replace("{OLDVER}", this.epicGuard.getPlatform().getVersion()));
+        if (VersionUtils.updateAvailable()) {
+            this.epicGuard.logger().info(this.epicGuard.messages().updateAvailable()
+                    .replace("{NEWVER}", VersionUtils.removeVersion())
+                    .replace("{OLDVER}", this.epicGuard.platform().version()));
         }
     }
 }

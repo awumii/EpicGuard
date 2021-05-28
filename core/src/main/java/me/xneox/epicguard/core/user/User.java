@@ -36,30 +36,30 @@ public class User {
      * @return The user's UUID.
      */
     @Nonnull
-    public UUID getUUID() {
+    public UUID uuid() {
         return uuid;
     }
 
     /**
      * @return Whenever the user has enabled the status notifications.
      */
-    public boolean hasNotifications() {
+    public boolean notifications() {
         return notifications;
+    }
+
+    public void notifications(boolean notifications) {
+        this.notifications = notifications;
     }
 
     /**
      * @return Whenever the user has sent the Settings packet at least once.
      */
-    public boolean hasChangedSettings() {
+    public boolean settingsChanged() {
         return settingsChanged;
     }
 
-    public void setSettingsChanged(boolean settingsChanged) {
+    public void settingsChanged(boolean settingsChanged) {
         this.settingsChanged = settingsChanged;
-    }
-
-    public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
     }
 
     @Override
@@ -67,12 +67,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return hasNotifications() == user.hasNotifications() &&
+        return notifications() == user.notifications() &&
                 Objects.equal(uuid, user.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(uuid, hasNotifications());
+        return Objects.hashCode(uuid, notifications());
     }
 }

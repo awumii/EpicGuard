@@ -25,8 +25,6 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
 
-import java.util.List;
-
 /**
  * This class will register a Log4J filter.
  * Filtered messages can be configured in the configuration.
@@ -64,9 +62,9 @@ public class LogFilter extends AbstractFilter {
     }
 
     private Result isLoggable(String message) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().consoleFilterMode);
-        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.getAttackManager().isAttack()) {
-            for (String string : this.epicGuard.getConfig().consoleFilter) {
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().consoleFilter().filterMode());
+        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
+            for (String string : this.epicGuard.config().consoleFilter().filterMessages()) {
                 if (message.contains(string)) {
                     return Result.DENY;
                 }

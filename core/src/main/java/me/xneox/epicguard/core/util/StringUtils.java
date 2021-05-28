@@ -13,24 +13,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.task;
+package me.xneox.epicguard.core.util;
 
-import me.xneox.epicguard.core.EpicGuard;
+import de.leonhard.storage.util.Valid;
 
-/**
- * This task disables attack-mode if the connections per seconds are lower than configured.
- */
-public class AttackResetTask implements Runnable {
-    private final EpicGuard epicGuard;
+import javax.annotation.Nonnull;
+import java.util.List;
 
-    public AttackResetTask(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
+public final class StringUtils {
+    /**
+     * Builds a multiline string for disconnect messages.
+     */
+    @Nonnull
+    public static String buildMultilineString(@Nonnull List<String> list) {
+        Valid.notNull(list, "Kick message cannot be null!");
+
+        StringBuilder builder = new StringBuilder();
+        list.forEach(line -> builder.append(line).append("\n"));
+        return builder.toString();
     }
 
-    @Override
-    public void run() {
-        if (this.epicGuard.attackManager().connectionCounter() < this.epicGuard.config().misc().attackConnectionThreshold()) {
-            this.epicGuard.attackManager().attack(false);
-        }
-    }
+    private StringUtils() {}
 }

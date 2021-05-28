@@ -23,4 +23,9 @@ public class JavaLogger implements GuardLogger {
     public void warning(String message) {
         this.logger.warning(message);
     }
+
+    @Override
+    public void error(String message) {
+        this.logger.severe(message);
+    }
 }

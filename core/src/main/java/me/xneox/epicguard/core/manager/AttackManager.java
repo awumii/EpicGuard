@@ -34,11 +34,11 @@ public class AttackManager {
         return this.attack;
     }
 
-    public void setAttack(boolean attack) {
+    public void attack(boolean attack) {
         this.attack = attack;
     }
 
-    public int getConnectionCounter() {
+    public int connectionCounter() {
         return this.connectionCounter.get();
     }
 

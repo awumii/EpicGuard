@@ -25,7 +25,7 @@ public class BungeeSender extends Sender<CommandSender> {
     }
 
     @Override
-    public UUID getUUID() {
+    public UUID uuid() {
         return this.isPlayer() ? ((ProxiedPlayer) this.sender).getUniqueId() : null;
     }
 }

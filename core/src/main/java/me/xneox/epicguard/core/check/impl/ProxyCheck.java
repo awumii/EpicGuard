@@ -15,56 +15,30 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.PendingUser;
-import me.xneox.epicguard.core.util.URLUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This will check if the user is using a VPN or a proxy.
- * TODO: Rewrite this, to only use custom proxy checking services, and allow multiple ones at time.
  */
 public class ProxyCheck extends Check {
-    private final Cache<String, Boolean> detectionMap = CacheBuilder.newBuilder()
-            .expireAfterWrite(this.epicGuard.getConfig().proxyCheckCacheDuration, TimeUnit.MINUTES)
-            .build();
-
     public ProxyCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().proxyCheck);
-        return this.assertCheck(mode, this.isProxy(user.getAddress()));
-    }
-
-    private boolean isProxy(String address) {
-        return this.detectionMap.asMap().computeIfAbsent(address, ip -> {
-            String apiUrl;
-
-            if (this.epicGuard.getConfig().customProxyCheck.equals("disabled")) {
-                // Use the default API service - proxycheck.io.
-                apiUrl = "http://proxycheck.io/v2/" + ip + "?key=" + this.epicGuard.getConfig().proxyCheckKey + "&vpn=1";
-            } else {
-                // Use the custom API service.
-                apiUrl = this.epicGuard.getConfig().customProxyCheck.replace("%ip%", ip);
-            }
-
-            String response = URLUtils.readString(apiUrl);
-            return response != null && this.epicGuard.getConfig().proxyCheckResponseContains.stream().anyMatch(response::contains);
-        });
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().proxyCheck().checkMode());
+        return this.assertCheck(mode, this.epicGuard.proxyManager().isProxy(user.address()));
     }
 
     @Override
-    public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().kickMessageProxy;
+    public @Nonnull List<String> kickMessage() {
+        return this.epicGuard.messages().disconnect().proxy();
     }
 }

@@ -33,12 +33,12 @@ public class ServerListCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.getConfig().serverListCheck);
-        return this.assertCheck(mode, !this.epicGuard.getStorageManager().getPingCache().contains(user.getAddress()));
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().serverListCheckMode());
+        return this.assertCheck(mode, !this.epicGuard.storageManager().pingCache().contains(user.address()));
     }
 
     @Override
-    public @Nonnull List<String> getKickMessage() {
-        return this.epicGuard.getMessages().kickMessageServerList;
+    public @Nonnull List<String> kickMessage() {
+        return this.epicGuard.messages().disconnect().serverListPing();
     }
 }

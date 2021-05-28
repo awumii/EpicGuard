@@ -16,11 +16,9 @@
 package me.xneox.epicguard.core.storage;
 
 import com.google.common.net.InetAddresses;
-import de.leonhard.storage.Json;
-import me.xneox.epicguard.core.EpicGuard;
+import de.leonhard.storage.util.Valid;
 import me.xneox.epicguard.core.storage.impl.JsonStorageProvider;
 import me.xneox.epicguard.core.user.PendingUser;
-import org.diorite.libs.org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,7 +39,7 @@ public class StorageManager {
         this.provider.load();
     }
 
-    public StorageProvider getProvider() {
+    public StorageProvider provider() {
         return provider;
     }
 
@@ -49,23 +47,23 @@ public class StorageManager {
      * Retrieves a list of nicknames used by specified IP Address.
      */
     @Nonnull
-    public List<String> getAccounts(@Nonnull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
-        return this.provider.getAccountMap().getOrDefault(user.getAddress(), new ArrayList<>());
+    public List<String> accounts(@Nonnull PendingUser user) {
+        Valid.notNull(user, "BotUser cannot be null!");
+        return this.provider.accountMap().getOrDefault(user.address(), new ArrayList<>());
     }
 
     /**
      * If the user's address is not in the accountMap, it will be added.
      */
     public void updateAccounts(@Nonnull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
+        Valid.notNull(user, "BotUser cannot be null!");
 
-        List<String> accounts = this.getAccounts(user);
-        if (!accounts.contains(user.getNickname())) {
-            accounts.add(user.getNickname());
+        List<String> accounts = this.accounts(user);
+        if (!accounts.contains(user.nickname())) {
+            accounts.add(user.nickname());
         }
 
-        this.provider.getAccountMap().put(user.getAddress(), accounts);
+        this.provider.accountMap().put(user.address(), accounts);
     }
 
     /**
@@ -74,7 +72,7 @@ public class StorageManager {
      */
     @Nullable
     public String findByNickname(@Nonnull String nickname) {
-        return this.provider.getAccountMap().entrySet().stream()
+        return this.provider.accountMap().entrySet().stream()
                 .filter(entry -> entry.getValue().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
                 .findFirst()
                 .map(Map.Entry::getKey)
@@ -83,52 +81,52 @@ public class StorageManager {
 
     public void blacklistPut(@Nonnull String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.provider.getAddressBlacklist().add(value);
+            this.provider.addressBlacklist().add(value);
         } else {
-            this.provider.getNameBlacklist().add(value);
+            this.provider.nameBlacklist().add(value);
         }
     }
 
     public void whitelistPut(@Nonnull String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.provider.getAddressWhitelist().add(value);
+            this.provider.addressWhitelist().add(value);
         } else {
-            this.provider.getNameWhitelist().add(value);
+            this.provider.nameWhitelist().add(value);
         }
     }
 
     public boolean isBlacklisted(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            return this.provider.getAddressBlacklist().contains(value);
+            return this.provider.addressBlacklist().contains(value);
         }
-        return this.provider.getNameBlacklist().contains(value);
+        return this.provider.nameBlacklist().contains(value);
     }
 
     public boolean isWhitelisted(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            return this.provider.getAddressWhitelist().contains(value);
+            return this.provider.addressWhitelist().contains(value);
         }
-        return this.provider.getNameWhitelist().contains(value);
+        return this.provider.nameWhitelist().contains(value);
     }
 
     public void removeBlacklist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.provider.getAddressBlacklist().remove(value);
+            this.provider.addressBlacklist().remove(value);
         } else {
-            this.provider.getNameBlacklist().remove(value);
+            this.provider.nameBlacklist().remove(value);
         }
     }
 
     public void removeWhitelist(String value) {
         if (InetAddresses.isInetAddress(value)) {
-            this.provider.getAddressWhitelist().remove(value);
+            this.provider.addressWhitelist().remove(value);
         } else {
-            this.provider.getNameWhitelist().remove(value);
+            this.provider.nameWhitelist().remove(value);
         }
     }
 
     @Nonnull
-    public Collection<String> getPingCache() {
+    public Collection<String> pingCache() {
         return this.pingCache;
     }
 }

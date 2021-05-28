@@ -35,12 +35,12 @@ public interface Platform {
      * @return An implementation of the {@link GuardLogger} compatible with your platform.
      */
     @Nonnull
-    GuardLogger getGuardLogger();
+    GuardLogger logger();
 
     /**
      * @return Version of the plugin.
      */
-    String getVersion();
+    String version();
 
     /**
      * Send an action bar message to the specified user (find the player using User#getUUID).
@@ -72,5 +72,5 @@ public interface Platform {
      * @param task The task to be scheduled.
      * @param seconds Delay in seconds between each runs of the task.
      */
-    void scheduleTask(@Nonnull Runnable task, long seconds);
+    void runTaskRepeating(@Nonnull Runnable task, long seconds);
 }

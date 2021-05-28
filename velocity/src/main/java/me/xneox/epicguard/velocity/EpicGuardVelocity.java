@@ -87,22 +87,22 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public @NotNull GuardLogger getGuardLogger() {
+    public @NotNull GuardLogger logger() {
         return this.logger;
     }
 
     @Override
     public void sendActionBar(@Nonnull String message, @Nonnull User user) {
-        this.server.getPlayer(user.getUUID()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
+        this.server.getPlayer(user.uuid()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
     }
 
     @Override
     public void disconnectUser(@Nonnull User user, @Nonnull String message) {
-        this.server.getPlayer(user.getUUID()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
+        this.server.getPlayer(user.uuid()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
     }
 
     @Override
-    public String getVersion() {
+    public String version() {
         Optional<PluginContainer> container = this.server.getPluginManager().fromInstance(this);
         if (container.isPresent()) {
             Optional<String> version = container.get().getDescription().getVersion();
@@ -122,7 +122,7 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void scheduleTask(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
         this.server.getScheduler()
                 .buildTask(this, task)
                 .repeat(seconds, TimeUnit.SECONDS)

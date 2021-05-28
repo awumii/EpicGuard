@@ -24,7 +24,7 @@ public class BukkitSender extends Sender<CommandSender> {
     }
 
     @Override
-    public UUID getUUID() {
+    public UUID uuid() {
         return this.isPlayer() ? ((Player) this.sender).getUniqueId() : null;
     }
 }

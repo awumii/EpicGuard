@@ -24,19 +24,19 @@ public final class VersionUtils {
     private static boolean available;
 
     public static void checkForUpdates(EpicGuard epicGuard) {
-        if (!epicGuard.getConfig().updateChecker) {
+        if (!epicGuard.config().misc().updateChecker()) {
             return;
         }
 
         remoteVersion = URLUtils.readString(CHECK_URL);
-        available = !epicGuard.getPlatform().getVersion().equals(remoteVersion);
+        available = !epicGuard.platform().version().equals(remoteVersion);
     }
 
-    public static boolean isAvailable() {
+    public static boolean updateAvailable() {
         return available;
     }
 
-    public static String getRemoteVersion() {
+    public static String removeVersion() {
         return remoteVersion;
     }
 

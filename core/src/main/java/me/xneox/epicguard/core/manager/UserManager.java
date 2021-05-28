@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserManager {
     private final Map<UUID, User> userMap = new ConcurrentHashMap<>();
 
-    public Collection<User> getUsers() {
+    public Collection<User> users() {
         return this.userMap.values();
     }
 

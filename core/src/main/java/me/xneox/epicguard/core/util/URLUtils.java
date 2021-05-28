@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.util;
 
-import org.diorite.libs.org.apache.commons.lang3.Validate;
+import de.leonhard.storage.util.Valid;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +31,7 @@ public final class URLUtils {
 
     @Nullable
     public static String readString(@Nonnull String url) {
-        Validate.notNull(url, "URL cannot be null!");
+        Valid.notNull(url, "URL cannot be null!");
 
         try {
             URLConnection connection = new URL(url).openConnection();
