@@ -32,6 +32,8 @@ public class PluginConfiguration {
     private final AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
     private final SettingsCheck settingsCheck = new SettingsCheck();
     private final NicknameCheck nicknameCheck = new NicknameCheck();
+    private final NameSimilarityCheck nameSimilarityCheck = new NameSimilarityCheck();
+
     private final ConsoleFilter consoleFilter = new ConsoleFilter();
     private final AutoWhitelist autoWhitelist = new AutoWhitelist();
     private final Misc misc = new Misc();
@@ -162,6 +164,39 @@ public class PluginConfiguration {
 
         public String expression() {
             return this.expression;
+        }
+    }
+
+    @ConfigSerializable
+    public static final class NameSimilarityCheck {
+        @Comment("NameSimilarityCheck will detect similar nicknames\n"
+                + "of the connecting users.\n" +
+                "NEVER - check is disabled.\n" +
+                "ATTACK - check will be performed only during bot-attack.\n" +
+                "ALWAYS - check will be always performed.")
+        private final String checkMode = "ATTACK";
+
+        @Comment("How many nicknames should be keep in the history?\n" +
+                "When an user is connecting to the server, his nickname will be added to the history.\n" +
+                "Then the nickname will be compared with other nicknames stored in the history.\n" +
+                "(!) Requires restart to apply.")
+        private final int historySize = 10;
+
+        @Comment("The lower the distance, the similar the names.\n" +
+                "If the distance detected is lower or the same as\n" +
+                "configured below, it will be considered as a positive detection.")
+        private final int distance = 1;
+
+        public String checkMode() {
+            return this.checkMode;
+        }
+
+        public int historySize() {
+            return this.historySize;
+        }
+
+        public int distance() {
+            return this.distance;
         }
     }
 
@@ -306,6 +341,10 @@ public class PluginConfiguration {
 
     public NicknameCheck nicknameCheck() {
         return this.nicknameCheck;
+    }
+
+    public NameSimilarityCheck nameSimilarityCheck() {
+        return this.nameSimilarityCheck;
     }
 
     public ConsoleFilter consoleFilter() {

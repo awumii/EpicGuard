@@ -105,9 +105,10 @@ public class EpicGuard {
         String javaVer = System.getProperty("java.version");
         if (javaVer.startsWith("1.8")) {
             logger().error("*******************************************************");
-            logger().error("YOU ARE RUNNING ON AN OUTDATED VERSION OF JAVA (" + javaVer + ")");
-            logger().error("Support for this version will be dropped soon, it is recommended to update to Java 16.");
-            logger().error("It that's not possible, update to at least Java 11.");
+            logger().error(" YOU ARE RUNNING ON AN OUTDATED VERSION OF JAVA (" + javaVer + ")");
+            logger().error(" Support for this version will be dropped soon, it is recommended to update to Java 16.");
+            logger().error(" It that's not possible, update to at least Java 11.");
+            logger().error(" https://neox.gitbook.io/epicguard-wiki/faq#java-8");
             logger().error("*******************************************************");
         }
     }

@@ -179,6 +179,10 @@ public class MessagesConfiguration {
                 "&8» &7You have been kicked by &bAntiBot Protection&7:",
                 "&8» &cYou must add our server to your servers list to verify yourself.");
 
+        private final List<String> nameSimilarity = Arrays.asList(
+                "&8» &7You have been kicked by &bAntiBot Protection&7:",
+                "&8» &cYour nickname is too similar to other users connecting to the server.");
+
         private final List<String> settingsPacket = Arrays.asList(
                 "&8» &7You have been kicked by &bAntiBot Protection&7:",
                 "&8» &cBot-like behaviour detected, please join the server again.");
@@ -213,6 +217,10 @@ public class MessagesConfiguration {
 
         public List<String> serverListPing() {
             return this.serverListPing;
+        }
+
+        public List<String> nameSimilarity() {
+            return this.nameSimilarity;
         }
 
         public List<String> settingsPacket() {

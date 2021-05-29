@@ -45,6 +45,7 @@ public class DetectionHandler {
         checks.add(new ReconnectCheck(epicGuard));
         checks.add(new AccountLimitCheck(epicGuard));
         checks.add(new NicknameCheck(epicGuard));
+        checks.add(new NameSimilarityCheck(epicGuard));
         checks.add(new ProxyCheck(epicGuard));
     }
 

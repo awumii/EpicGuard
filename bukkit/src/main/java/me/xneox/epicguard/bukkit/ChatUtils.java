@@ -16,6 +16,7 @@ public final class ChatUtils {
             logger.error(" AND UNSUPPORTED VERSION OF MINECRAFT (1.8).");
             logger.error(" Please update to the latest server software.");
             logger.error(" No support will be provided for any issues.");
+            logger.error(" https://neox.gitbook.io/epicguard-wiki/faq#spigot-1-8");
             logger.error("*******************************************************");
         }
     }
