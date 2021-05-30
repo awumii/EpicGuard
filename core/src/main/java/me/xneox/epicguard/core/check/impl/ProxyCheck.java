@@ -34,7 +34,7 @@ public class ProxyCheck extends Check {
     @Override
     public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().proxyCheck().checkMode());
-        return this.assertCheck(mode, this.epicGuard.proxyManager().isProxy(user.address()));
+        return this.evaluate(mode, this.epicGuard.proxyManager().isProxy(user.address()));
     }
 
     @Override

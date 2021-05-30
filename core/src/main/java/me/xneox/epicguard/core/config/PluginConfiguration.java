@@ -26,30 +26,45 @@ import java.util.List;
 @ConfigSerializable
 public class PluginConfiguration {
 
-    // Config sections
+    @Comment("GeographicalCheck will filter countries/cities your players can connect from.")
     private final Geographical geographical = new Geographical();
+
+    @Comment("Detect users who are connecting using proxies or VPNs.")
     private final ProxyCheck proxyCheck = new ProxyCheck();
+
+    @Comment("This check will limit how many accounts can be registered from single IP address")
     private final AccountLimitCheck accountLimitCheck = new AccountLimitCheck();
+
+    @Comment("Every vanilla client sends the Settings packet shortly after joining.\n" +
+            "Some bots doesn't do this, and this check will try to detect that.")
     private final SettingsCheck settingsCheck = new SettingsCheck();
+
+    @Comment("Nickname-check will block players if their nickname matches\n" +
+            "the regex expression set below.")
     private final NicknameCheck nicknameCheck = new NicknameCheck();
+
+    @Comment("NameSimilarityCheck will detect similar nicknames of the connecting users\n" +
+            "(!) Experimental! https://neox.gitbook.io/epicguard-wiki/configuring/name-similarity-check")
     private final NameSimilarityCheck nameSimilarityCheck = new NameSimilarityCheck();
 
-    private final ConsoleFilter consoleFilter = new ConsoleFilter();
+    @Comment("If a player is online for long enough (see option below)\n" +
+            "He will be added to the whitelist, and be exempt from every future detections")
     private final AutoWhitelist autoWhitelist = new AutoWhitelist();
+
+    private final ConsoleFilter consoleFilter = new ConsoleFilter();
     private final Misc misc = new Misc();
 
     @ConfigSerializable
     public static final class Geographical {
-        @Comment("Country check will filter countries/cities your players can connect from.\n" +
-                "NEVER - check is disabled.\n" +
+        @Comment("NEVER - check is disabled.\n" +
                 "ATTACK - check will be performed only during bot-attack.\n" +
                 "ALWAYS - check will be always performed.")
         private final String checkMode = "NEVER";
 
         @Comment("This will define if the 'countries' list should be a blacklist or a whitelist.\n" +
-                "BLACKLIST - countries below are blocked\n" +
-                "WHITELIST - only countries below are allowed")
-        private final String checkType = "BLACKLIST";
+                "true - configured countries are blocked\n" +
+                "false - only configured countries are allowed")
+        private final boolean isBlacklist = false;
 
         @Comment("List of country codes: https://dev.maxmind.com/geoip/legacy/codes/iso3166/")
         private final List<String> countries = Arrays.asList("US", "DE");
@@ -61,8 +76,8 @@ public class PluginConfiguration {
             return this.checkMode;
         }
 
-        public String checkType() {
-            return this.checkType;
+        public boolean isBlacklist() {
+            return this.isBlacklist;
         }
 
         public List<String> countries() {
@@ -76,8 +91,7 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class ProxyCheck {
-        @Comment("Detect users who are connecting using proxies or VPNs.\n" +
-                "NEVER - check is disabled.\n" +
+        @Comment("NEVER - check is disabled.\n" +
                 "ATTACK - check will be performed only during bot-attack.\n" +
                 "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
@@ -108,8 +122,7 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class AccountLimitCheck {
-        @Comment("This check will limit how many accounts can be registered from single IP address\n" +
-                "NEVER - check is disabled.\n" +
+        @Comment("NEVER - check is disabled.\n" +
                 "ATTACK - check will be performed only during bot-attack.\n" +
                 "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
@@ -128,8 +141,7 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class SettingsCheck {
-        @Comment("Every vanilla client sends the Settings packet shortly after joining.\n" +
-                "Some bots doesn't do this, and this check will try to detect that.")
+        @Comment("Enable or disable this check.")
         private final boolean enabled = true;
 
         @Comment("Delay in seconds after which we check if the player has already sent this packet.\n" +
@@ -147,9 +159,7 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class NicknameCheck {
-        @Comment("Nickname-check will block players if their nickname matches\n"
-                + "the regex expression set below.\n" +
-                "NEVER - check is disabled.\n" +
+        @Comment("NEVER - check is disabled.\n" +
                 "ATTACK - check will be performed only during bot-attack.\n" +
                 "ALWAYS - check will be always performed.")
         private final String checkMode = "ALWAYS";
@@ -169,22 +179,21 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class NameSimilarityCheck {
-        @Comment("NameSimilarityCheck will detect similar nicknames\n"
-                + "of the connecting users.\n" +
-                "NEVER - check is disabled.\n" +
+        @Comment("NEVER - check is disabled.\n" +
                 "ATTACK - check will be performed only during bot-attack.\n" +
                 "ALWAYS - check will be always performed.")
-        private final String checkMode = "ATTACK";
+        private final String checkMode = "NEVER";
 
         @Comment("How many nicknames should be keep in the history?\n" +
                 "When an user is connecting to the server, his nickname will be added to the history.\n" +
                 "Then the nickname will be compared with other nicknames stored in the history.\n" +
                 "(!) Requires restart to apply.")
-        private final int historySize = 10;
+        private final int historySize = 5;
 
         @Comment("The lower the distance, the similar the names.\n" +
-                "If the distance detected is lower or the same as\n" +
-                "configured below, it will be considered as a positive detection.")
+                "If the distance detected is lower or same as configured here,\n" +
+                "it will be considered as a positive detection.\n" +
+                "Values below 1 are ignored, as it means identical name.")
         private final int distance = 1;
 
         public String checkMode() {
@@ -229,9 +238,7 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static final class AutoWhitelist {
-        @Comment("If a player is online for long enough (see option below)\n" +
-                "He will be added to the whitelist, and be exempt from every future detections" +
-                "ADDRESS - Only whitelist the user's IP address.\n" +
+        @Comment("ADDRESS - Only whitelist the user's IP address.\n" +
                 "NICKNAME - Only whitelist the user's nickname.\n" +
                 "MIXED - Whitelist the user's IP address AND nickname.\n" +
                 "DISABLED - Disable this feature")

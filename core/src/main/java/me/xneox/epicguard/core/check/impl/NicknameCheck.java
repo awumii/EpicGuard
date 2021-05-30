@@ -20,7 +20,7 @@ public class NicknameCheck extends Check {
     @Override
     public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().nicknameCheck().checkMode());
-        return this.assertCheck(mode, user.nickname().matches(this.epicGuard.config().nicknameCheck().expression()));
+        return this.evaluate(mode, user.nickname().matches(this.epicGuard.config().nicknameCheck().expression()));
     }
 
     @Nonnull

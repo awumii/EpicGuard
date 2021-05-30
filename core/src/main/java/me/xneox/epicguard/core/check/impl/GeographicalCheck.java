@@ -34,7 +34,7 @@ public class GeographicalCheck extends Check {
     @Override
     public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().geographical().checkMode());
-        return this.assertCheck(mode, this.isRestricted(user.address()));
+        return this.evaluate(mode, this.isRestricted(user.address()));
     }
 
     private boolean isRestricted(String address) {
@@ -45,10 +45,10 @@ public class GeographicalCheck extends Check {
             return true;
         }
 
-        if (this.epicGuard.config().geographical().checkType().equals("WHITELIST")) {
-            return !this.epicGuard.config().geographical().countries().contains(country);
-        } else {
+        if (this.epicGuard.config().geographical().isBlacklist()) {
             return this.epicGuard.config().geographical().countries().contains(country);
+        } else {
+            return !this.epicGuard.config().geographical().countries().contains(country);
         }
     }
 

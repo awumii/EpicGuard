@@ -37,7 +37,7 @@ public class AccountLimitCheck extends Check {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().accountLimitCheck().checkMode());
         List<String> accounts = this.epicGuard.storageManager().accounts(user);
 
-        return this.assertCheck(mode, !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
+        return this.evaluate(mode, !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
     }
 
     @Override

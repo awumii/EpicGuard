@@ -3,6 +3,7 @@ package me.xneox.epicguard.core.check.impl;
 import com.google.common.collect.EvictingQueue;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.PendingUser;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
@@ -21,11 +22,20 @@ public class NameSimilarityCheck extends Check {
 
     @Override
     public boolean handle(@Nonnull PendingUser user) {
+        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().nameSimilarityCheck().checkMode());
+
         for (String nick : this.nameHistory) {
-            if (this.distanceAlgorithm.apply(nick, user.nickname()) <= this.epicGuard.config().nameSimilarityCheck().distance()) {
-                return true;
+            if (nick.equals(user.nickname())) {
+                return false; // ignore identical nickname.
+            }
+
+            int distance = this.distanceAlgorithm.apply(nick, user.nickname());
+            if (distance <= this.epicGuard.config().nameSimilarityCheck().distance()) {
+                return this.evaluate(mode, true);
             }
         }
+
+        this.nameHistory.add(user.nickname());
         return false;
     }
 

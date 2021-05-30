@@ -53,11 +53,11 @@ public class JoinHandler {
         if (mode != WhitelistMode.DISABLED) {
             this.epicGuard.platform().runTaskLater(() -> {
                 if (user != null) {
-                    if (mode == WhitelistMode.MIXED || mode == WhitelistMode.ADDRESS) {
+                    if ((mode == WhitelistMode.MIXED || mode == WhitelistMode.ADDRESS) && !this.epicGuard.storageManager().isWhitelisted(address)) {
                         this.epicGuard.storageManager().whitelistPut(address);
                     }
 
-                    if (mode == WhitelistMode.MIXED || mode == WhitelistMode.NICKNAME) {
+                    if ((mode == WhitelistMode.MIXED || mode == WhitelistMode.NICKNAME) && !this.epicGuard.storageManager().isWhitelisted(nickname)) {
                         this.epicGuard.storageManager().whitelistPut(nickname);
                     }
                 }

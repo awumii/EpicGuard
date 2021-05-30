@@ -34,7 +34,7 @@ public class ServerListCheck extends Check {
     @Override
     public boolean handle(@Nonnull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().serverListCheckMode());
-        return this.assertCheck(mode, !this.epicGuard.storageManager().pingCache().contains(user.address()));
+        return this.evaluate(mode, !this.epicGuard.storageManager().pingCache().contains(user.address()));
     }
 
     @Override

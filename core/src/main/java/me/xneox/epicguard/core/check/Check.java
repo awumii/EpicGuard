@@ -40,7 +40,7 @@ public abstract class Check {
      * @param expression The expression
      * @return The return value is based on the check's behaviour. True means positive detection, false means negative.
      */
-    public boolean assertCheck(CheckMode mode, boolean expression) {
+    public boolean evaluate(CheckMode mode, boolean expression) {
         if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
             return expression;
         }
