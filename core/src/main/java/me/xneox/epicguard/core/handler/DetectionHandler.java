@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.handler;
 
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
@@ -58,8 +58,8 @@ public class DetectionHandler {
      */
     @Nonnull
     public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
-        Valid.notNull(address, "Address cannot be null!");
-        Valid.notNull(nickname, "Nickname cannot be null!");
+        Validate.notNull(address, "Address cannot be null!");
+        Validate.notNull(nickname, "Nickname cannot be null!");
 
         // Increment the connections per second and check if it's bigger than max-cps in config.
         if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {

@@ -1,7 +1,7 @@
 package me.xneox.epicguard.core.command;
 
 import com.google.common.net.InetAddresses;
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.PendingUser;
@@ -26,8 +26,8 @@ public class GuardCommandExecutor {
 
     @SuppressWarnings("UnstableApiUsage")
     public void handle(@Nonnull String[] args, @Nonnull Sender<?> sender) {
-        Valid.notNull(args, "Command arguments cannot be null!");
-        Valid.notNull(args, "Command subject cannot be null!");
+        Validate.notNull(args, "Command arguments cannot be null!");
+        Validate.notNull(args, "Command subject cannot be null!");
 
         MessagesConfiguration.Command config = this.epicGuard.messages().command();
         String prefix = this.epicGuard.messages().command().prefix();
@@ -145,8 +145,8 @@ public class GuardCommandExecutor {
 
     @Nullable
     public Collection<String> onTabComplete(@Nonnull String[] args) {
-        Valid.notNull(args, "Command arguments cannot be null!");
-        Valid.notNull(args, "Command subject cannot be null!");
+        Validate.notNull(args, "Command arguments cannot be null!");
+        Validate.notNull(args, "Command subject cannot be null!");
 
         if (args.length == 1) {
             return Arrays.asList("stats", "status", "analyze", "reload", "whitelist", "blacklist");

@@ -62,6 +62,7 @@ subprojects {
         relocate 'org.spongepowered.configurate', 'me.xneox.epicguard.libs.configurate'
         relocate 'org.yaml.snakeyaml', 'me.xneox.epicguard.libs.snakeyaml'
         relocate 'io.leangen.geantyref', 'me.xneox.epicguard.libs.geantyref'
+        relocate 'com.typesafe.config', 'me.xneox.epicguard.libs.config'
 
         // Exclude useless text files
         exclude 'mozilla/'

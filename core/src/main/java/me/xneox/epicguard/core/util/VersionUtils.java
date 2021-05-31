@@ -17,29 +17,36 @@ package me.xneox.epicguard.core.util;
 
 import me.xneox.epicguard.core.EpicGuard;
 
+import java.util.function.Consumer;
+
 public final class VersionUtils {
     private static final String CHECK_URL = "https://api.spigotmc.org/legacy/update.php?resource=72369";
 
-    private static String remoteVersion;
-    private static boolean available;
-
-    public static void checkForUpdates(EpicGuard epicGuard) {
+    /**
+     * Checks the latest version to see if there's any update available.
+     *
+     * @param epicGuard EpicGuard instance.
+     * @param action Action to run when there's an update available.
+     */
+    public static void checkForUpdates(EpicGuard epicGuard, Consumer<String> action) {
         if (!epicGuard.config().misc().updateChecker()) {
             return;
         }
 
-        remoteVersion = URLUtils.readString(CHECK_URL);
-        available = !epicGuard.platform().version().equals(remoteVersion);
+        String latest = URLUtils.readString(CHECK_URL);
+        if (latest == null) {
+            epicGuard.logger().warning("Could not fetch the latest version.");
+            return;
+        }
+
+        if (parse(latest) > parse(epicGuard.platform().version())) {
+            action.accept(latest);
+        }
     }
 
-    public static boolean updateAvailable() {
-        return available;
+    private static int parse(String version) {
+        return Integer.parseInt(version.replace(".", ""));
     }
 
-    public static String removeVersion() {
-        return remoteVersion;
-    }
-
-    private VersionUtils() {
-    }
+    private VersionUtils() {}
 }

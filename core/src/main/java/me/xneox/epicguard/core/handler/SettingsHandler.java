@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.handler;
 
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
 
 import javax.annotation.Nonnull;
@@ -40,7 +40,7 @@ public class SettingsHandler {
      * @param uuid UUID of the online player.
      */
     public void handle(@Nonnull UUID uuid) {
-        Valid.notNull(uuid, "UUID cannot be null!");
+        Validate.notNull(uuid, "UUID cannot be null!");
         this.epicGuard.userManager().getOrCreate(uuid).settingsChanged(true);
     }
 }

@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.handler;
 
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
 
 import javax.annotation.Nonnull;
@@ -38,7 +38,7 @@ public class DisconnectHandler {
      * @param uuid UUID of the (offline) player.
      */
     public void handle(@Nonnull UUID uuid) {
-        Valid.notNull(uuid, "UUID cannot be null!");
+        Validate.notNull(uuid, "UUID cannot be null!");
         this.epicGuard.userManager().removeUser(uuid);
     }
 }

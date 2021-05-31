@@ -15,9 +15,11 @@
 
 package me.xneox.epicguard.core.util;
 
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public final class StringUtils {
@@ -26,7 +28,7 @@ public final class StringUtils {
      */
     @Nonnull
     public static String buildMultilineString(@Nonnull List<String> list) {
-        Valid.notNull(list, "Kick message cannot be null!");
+        Validate.notNull(list, "Kick message cannot be null!");
 
         StringBuilder builder = new StringBuilder();
         list.forEach(line -> builder.append(line).append("\n"));

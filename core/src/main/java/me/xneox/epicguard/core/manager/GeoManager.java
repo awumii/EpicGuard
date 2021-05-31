@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.manager;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.util.FileUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -77,9 +77,9 @@ public class GeoManager {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void downloadDatabase(@Nonnull File database, @Nonnull File archive, @Nonnull String url) throws IOException {
-        Valid.notNull(database, "Database file cannot be null!");
-        Valid.notNull(archive, "Archive file cannot be null!");
-        Valid.notNull(url, "Download URL cannot be null!");
+        Validate.notNull(database, "Database file cannot be null!");
+        Validate.notNull(archive, "Archive file cannot be null!");
+        Validate.notNull(url, "Download URL cannot be null!");
 
         if (!database.exists() || System.currentTimeMillis() - database.lastModified() > TimeUnit.DAYS.toMillis(7L)) {
             // Database does not exist or is outdated, and need to be downloaded.
@@ -111,7 +111,7 @@ public class GeoManager {
             try {
                 return this.countryReader.country(inetAddress).getCountry().getIsoCode();
             } catch (IOException | GeoIp2Exception ex) {
-                logger.warning("Couldn't find the country for the address: " + address + ", " + ex.getMessage());
+                logger.warning("Couldn't find the country for the address " + address + ": " + ex.getMessage());
             }
         }
         return "unknown";
@@ -119,13 +119,13 @@ public class GeoManager {
 
     @Nonnull
     public String city(@Nonnull String address) {
-        Valid.notNull(address, "Address cannot be null!");
+        Validate.notNull(address, "Address cannot be null!");
         InetAddress inetAddress = this.parseAddress(address);
         if (inetAddress != null && this.cityReader != null) {
             try {
                 return this.cityReader.city(inetAddress).getCity().getName();
             } catch (IOException | GeoIp2Exception ex) {
-                logger.warning("Couldn't find the city for the address: " + address + ", " + ex.getMessage());
+                logger.warning("Couldn't find the city for the address " + address + ": " + ex.getMessage());
             }
         }
         return "unknown";
@@ -133,11 +133,11 @@ public class GeoManager {
 
     @Nullable
     public InetAddress parseAddress(@Nonnull String address) {
-        Valid.notNull(address, "Address cannot be null!");
+        Validate.notNull(address, "Address cannot be null!");
         try {
             return InetAddress.getByName(address);
         } catch (UnknownHostException ex) {
-            logger.warning("Couldn't resolve the InetAddress for the host: " + address + ", " + ex.getMessage());
+            logger.warning("Couldn't resolve the InetAddress for the host " + address + ": " + ex.getMessage());
         }
         return null;
     }

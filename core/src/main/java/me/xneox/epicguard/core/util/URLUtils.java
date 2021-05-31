@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.util;
 
-import de.leonhard.storage.util.Valid;
+import org.apache.commons.lang3.Validate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +31,7 @@ public final class URLUtils {
 
     @Nullable
     public static String readString(@Nonnull String url) {
-        Valid.notNull(url, "URL cannot be null!");
+        Validate.notNull(url, "URL cannot be null!");
 
         try {
             URLConnection connection = new URL(url).openConnection();
@@ -44,7 +44,8 @@ public final class URLUtils {
                 return scanner.hasNext() ? scanner.next() : "";
             }
         } catch (IOException e) {
-            LOGGER.warning("Couldn't read the content of: " + url + " (" + e.getMessage() + "). Please check your internet connection.");
+            LOGGER.warning("Couldn't read the content of " + url);
+            LOGGER.warning("Details: " + e.getMessage());
         }
         return null;
     }

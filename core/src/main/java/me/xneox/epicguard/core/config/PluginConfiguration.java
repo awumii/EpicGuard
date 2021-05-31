@@ -105,7 +105,7 @@ public class PluginConfiguration {
         @Comment("How long in SECONDS responses from proxy check should be cached?\n" +
                 "Higher value increases performance, but keep in mind that if user\n" +
                 "disables their VPN but the cache hasn't expired yet, he will still be detected.")
-        private int cacheDuration = 120;
+        private int cacheDuration = 300;
 
         public String checkMode() {
             return this.checkMode;
