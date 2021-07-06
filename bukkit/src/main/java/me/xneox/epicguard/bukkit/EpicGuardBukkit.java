@@ -58,7 +58,6 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
         }
 
         new Metrics(this, 5845);
-        ChatUtils.checkUnsupportedVersion(this.logger);
     }
 
     @Override
