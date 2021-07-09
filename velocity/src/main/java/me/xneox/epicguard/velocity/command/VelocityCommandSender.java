@@ -1,21 +1,21 @@
-package me.xneox.epicguard.bukkit.command;
+package me.xneox.epicguard.velocity.command;
 
-import me.xneox.epicguard.bukkit.ChatUtils;
+import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.command.Sender;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import me.xneox.epicguard.velocity.AdventureUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class BukkitSender extends Sender<CommandSender> {
-    protected BukkitSender(CommandSender sender) {
+public class VelocityCommandSender extends Sender<CommandSource> {
+    protected VelocityCommandSender(CommandSource sender) {
         super(sender);
     }
 
     @Override
     public void sendMessage(@NotNull String message) {
-        this.sender.sendMessage(ChatUtils.colored(message));
+        this.sender.sendMessage(AdventureUtils.createComponent(message));
     }
 
     @Override

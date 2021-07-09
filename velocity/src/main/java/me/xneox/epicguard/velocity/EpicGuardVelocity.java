@@ -30,7 +30,7 @@ import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.User;
-import me.xneox.epicguard.velocity.command.VelocityGuardCommandExecutor;
+import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import org.bstats.velocity.Metrics;
 
@@ -69,7 +69,7 @@ public class EpicGuardVelocity implements Platform {
                 .aliases("guard")
                 .build();
 
-        commandManager.register(meta, new VelocityGuardCommandExecutor(this.epicGuard));
+        commandManager.register(meta, new VelocityCommandExecutor(this.epicGuard));
 
         EventManager eventManager = this.server.getEventManager();
         eventManager.register(this, new PostLoginListener(this.epicGuard));

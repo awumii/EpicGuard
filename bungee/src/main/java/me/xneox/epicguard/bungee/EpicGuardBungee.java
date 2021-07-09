@@ -19,7 +19,7 @@ import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
 import me.xneox.epicguard.bungee.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.GuardCommandExecutor;
+import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
@@ -59,7 +59,7 @@ public class EpicGuardBungee extends Plugin implements Platform {
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
         pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
-        pm.registerCommand(this, new BungeeCommandExecutor(new GuardCommandExecutor(this.epicGuard)));
+        pm.registerCommand(this, new BungeeCommandExecutor(new CommandExecutor(this.epicGuard)));
 
         new Metrics(this, 5956);
     }

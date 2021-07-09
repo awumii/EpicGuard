@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.bukkit;
 
-import me.xneox.epicguard.bukkit.command.BukkitGuardCommandExecutor;
+import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
 import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.logging.GuardLogger;
@@ -52,7 +52,7 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
 
         PluginCommand command = this.getCommand("epicguard");
         if (command != null) {
-            BukkitGuardCommandExecutor cmdExecutor = new BukkitGuardCommandExecutor(this.epicGuard);
+            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(this.epicGuard);
             command.setExecutor(cmdExecutor);
             command.setTabCompleter(cmdExecutor);
         }
