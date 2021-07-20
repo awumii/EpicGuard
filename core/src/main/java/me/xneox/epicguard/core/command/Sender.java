@@ -1,9 +1,8 @@
 package me.xneox.epicguard.core.command;
 
-
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class Sender<C> {

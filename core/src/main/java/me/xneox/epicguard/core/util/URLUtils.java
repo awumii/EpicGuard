@@ -17,8 +17,8 @@ package me.xneox.epicguard.core.util;
 
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;

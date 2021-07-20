@@ -20,14 +20,14 @@ shadowJar {
     minimize()
 
     relocate "org.bstats", "me.xneox.epicguard.libs.bstats"
+    relocate "org.spongepowered.configurate", "me.xneox.epicguard.libs.configurate"
+    relocate "org.apache.commons", "me.xneox.epicguard.libs.apachecommons"
     relocate "com.fasterxml", "me.xneox.epicguard.libs.fasterxml"
     relocate "com.maxmind", "me.xneox.epicguard.libs.maxmind"
-    relocate "de.leonhard.storage", "me.xneox.epicguard.libs.storage"
-    relocate "com.google.common", "me.xneox.epicguard.libs.google.common"
-    relocate "org.spongepowered.configurate", "me.xneox.epicguard.libs.configurate"
-    relocate "org.yaml.snakeyaml", "me.xneox.epicguard.libs.snakeyaml"
-    relocate "io.leangen.geantyref", "me.xneox.epicguard.libs.geantyref"
+    relocate "com.google.common", "me.xneox.epicguard.libs.googlecommons"
     relocate "com.typesafe.config", "me.xneox.epicguard.libs.config"
+    relocate "io.leangen.geantyref", "me.xneox.epicguard.libs.geantyref"
+    relocate "de.leonhard.storage", "me.xneox.epicguard.libs.storage"
 
     // Exclude useless text files
     exclude "mozilla/"

@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(":core")
+    compileOnly project(":core")
 
     implementation "org.bstats:bstats-bungeecord:2.2.1"
     implementation "org.jetbrains:annotations:21.0.1"

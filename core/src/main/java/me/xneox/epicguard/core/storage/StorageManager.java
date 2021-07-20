@@ -20,8 +20,8 @@ import me.xneox.epicguard.core.storage.impl.JsonStorageProvider;
 import me.xneox.epicguard.core.user.PendingUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**

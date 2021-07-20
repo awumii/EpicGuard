@@ -16,8 +16,8 @@
 package me.xneox.epicguard.core.util;
 
 import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.nio.channels.ReadableByteChannel;
 
 public final class FileUtils {
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void downloadFile(@Nonnull String urlFrom, @Nonnull File file) throws IOException {
+    public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
         Validate.notNull(urlFrom, "Download URL cannot be null!");
         Validate.notNull(urlFrom, "Target file cannot be null!");
 

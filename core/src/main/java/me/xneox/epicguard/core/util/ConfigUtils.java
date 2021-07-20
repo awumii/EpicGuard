@@ -2,8 +2,8 @@ package me.xneox.epicguard.core.util;
 
 import me.xneox.epicguard.core.config.ConfigLoader;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.util.logging.Logger;
 

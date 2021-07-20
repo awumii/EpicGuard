@@ -23,7 +23,6 @@ import me.xneox.epicguard.core.util.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +59,7 @@ public class DetectionHandler {
      * @return Disconnect message, or an empty Optional if undetected.
      */
     @NotNull
-    public Optional<String> handle(@NotNull String address, @Nonnull String nickname) {
+    public Optional<String> handle(@NotNull String address, @NotNull String nickname) {
         Validate.notNull(address, "Address cannot be null!");
         Validate.notNull(nickname, "Nickname cannot be null!");
 
