@@ -10,6 +10,7 @@ dependencies {
     implementation "com.google.guava:guava:30.1.1-jre"
     implementation "com.github.simplix-softworks:SimplixStorage:3.2.3"
     implementation "org.spongepowered:configurate-hocon:4.1.1"
+    implementation "com.zaxxer:HikariCP:4.0.3"
 
     // Provided dependencies.
     compileOnly "org.apache.logging.log4j:log4j-core:2.14.1"
@@ -28,6 +29,7 @@ shadowJar {
     relocate "com.typesafe.config", "me.xneox.epicguard.libs.config"
     relocate "io.leangen.geantyref", "me.xneox.epicguard.libs.geantyref"
     relocate "de.leonhard.storage", "me.xneox.epicguard.libs.storage"
+    relocate "com.zaxxer.hikari", "me.xneox.epicguard.libs.hikari"
 
     // Exclude useless text files
     exclude "mozilla/"

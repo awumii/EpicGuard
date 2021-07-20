@@ -72,5 +72,5 @@ public interface Platform {
      * @param task The task to be scheduled.
      * @param seconds Delay in seconds between each runs of the task.
      */
-    void runTaskRepeating(@NotNull Runnable task, long seconds);
+    void scheduleRepeatingTask(@NotNull Runnable task, long seconds);
 }

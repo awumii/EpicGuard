@@ -29,6 +29,7 @@ import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigUtils;
+import me.xneox.epicguard.core.util.FileUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -55,7 +56,7 @@ public class EpicGuard {
         this.loadConfigurations();
 
         logger().info("Initializing managers...");
-        this.storageManager = new StorageManager();
+        this.storageManager = new StorageManager(this);
         this.attackManager = new AttackManager();
         this.userManager = new UserManager();
         this.proxyManager = new ProxyManager(this);
@@ -71,10 +72,10 @@ public class EpicGuard {
         }
 
         logger().info("Scheduling tasks...");
-        this.platform.runTaskRepeating(new MonitorTask(this), 1L);
-        this.platform.runTaskRepeating(new UpdateCheckerTask(this), 1800L);
-        this.platform.runTaskRepeating(new AttackResetTask(this), this.config.misc().attackResetInterval());
-        this.platform.runTaskRepeating(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
+        this.platform.scheduleRepeatingTask(new MonitorTask(this), 1L);
+        this.platform.scheduleRepeatingTask(new UpdateCheckerTask(this), 1800L);
+        this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
+        this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
         EpicGuardAPI.INSTANCE.setInstance(this);
         logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
@@ -84,7 +85,7 @@ public class EpicGuard {
      * Loads the configuration and messages.
      */
     public void loadConfigurations() {
-        File dataFolder = new File("plugins/EpicGuard");
+        File dataFolder = new File(FileUtils.EPICGUARD_DIR);
         dataFolder.mkdir();
 
         File configurationFile = new File(dataFolder, "settings.conf");

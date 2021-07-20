@@ -93,7 +93,7 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
+    public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
     }
 }

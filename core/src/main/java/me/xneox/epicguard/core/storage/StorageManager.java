@@ -16,7 +16,8 @@
 package me.xneox.epicguard.core.storage;
 
 import com.google.common.net.InetAddresses;
-import me.xneox.epicguard.core.storage.impl.JsonStorageProvider;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.storage.impl.SQLiteProvider;
 import me.xneox.epicguard.core.user.PendingUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -31,16 +32,23 @@ import java.util.*;
  */
 @SuppressWarnings("UnstableApiUsage")
 public class StorageManager {
-    private final StorageProvider provider; // Storage implementation.
+    private final StorageProvider provider;
+    private final Map<String, AddressMeta> addresses = new HashMap<>();
     private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server.
 
-    public StorageManager() {
-        this.provider = new JsonStorageProvider();
-        this.provider.load();
+    public StorageManager(EpicGuard epicGuard) {
+        this.provider = new SQLiteProvider(this);
+        try {
+            this.provider.load();
+            this.provider.load();
+        } catch (Exception e) {
+            epicGuard.logger().error("Could not load plugin's storage");
+            e.printStackTrace();
+        }
     }
 
-    public StorageProvider provider() {
-        return provider;
+    public Map<String, AddressMeta> addresses() {
+        return this.addresses;
     }
 
     /**

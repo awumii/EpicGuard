@@ -121,7 +121,7 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
+    public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
         this.server.getScheduler()
                 .buildTask(this, task)
                 .repeat(seconds, TimeUnit.SECONDS)

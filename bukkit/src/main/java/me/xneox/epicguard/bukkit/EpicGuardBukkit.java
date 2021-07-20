@@ -95,7 +95,7 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
+    public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
     }
 }
