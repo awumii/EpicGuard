@@ -27,14 +27,14 @@ public class MessagesConfiguration {
     private Command command = new Command();
     private Disconnect disconnect = new Disconnect();
 
-    private String actionbarMonitor = "&cEpicGuard &8» &6%cps% &7connections/s &8| %status%";
+    private String actionbarMonitor = "&cEpicGuard &8// &6%cps% &7connections/s &8| %status%";
     private String actionbarNoAttack = "&7No attack...";
     private String actionbarAttack = "&cAttack detected!";
     private String updateAvailable = "A new update is available: {NEWVER} (You are still on {OLDVER})";
 
     @ConfigSerializable
     public static class Command {
-        private String prefix = " &cEpicGuard &8▸ &7";
+        private String prefix = " &cEpicGuard &8// &7";
         private String usage = "&cCorrect usage: &6{USAGE}";
         private String unknownCommand = "&cUnknown command, use &6/epicguard &cfor available commands.";
         private String whitelistAdd = "&7The user &a{USER} &7has been added to the whitelist.";

@@ -7,6 +7,7 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -40,7 +41,7 @@ public class WhitelistCommand implements SubCommand {
     }
 
     @Override
-    public @Nullable Collection<String> suggest(@NotNull String[] args, @NotNull EpicGuard epicGuard) {
+    public @NotNull Collection<String> suggest(@NotNull String[] args, @NotNull EpicGuard epicGuard) {
         if (args.length == 2) {
             return Arrays.asList("add", "remove");
         }
@@ -48,6 +49,6 @@ public class WhitelistCommand implements SubCommand {
         if (args[1].equalsIgnoreCase("remove")) {
             return epicGuard.storageManager().provider().addressWhitelist();
         }
-        return null;
+        return new ArrayList<>();
     }
 }

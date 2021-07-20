@@ -2,9 +2,9 @@ package me.xneox.epicguard.core.command;
 
 import me.xneox.epicguard.core.command.sub.*;
 import me.xneox.epicguard.core.EpicGuard;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -12,7 +12,6 @@ import java.util.*;
  */
 public class CommandExecutor {
     private final Map<String, SubCommand> commandMap = new HashMap<>();
-
     private final EpicGuard epicGuard;
 
     public CommandExecutor(EpicGuard epicGuard) {
@@ -43,7 +42,7 @@ public class CommandExecutor {
         command.execute(sender, args, this.epicGuard);
     }
 
-    @Nullable
+    @NotNull
     public Collection<String> onTabComplete(@Nonnull String[] args) {
         // If no argument is specified, send all available subcommands.
         if (args.length == 1) {
@@ -54,6 +53,6 @@ public class CommandExecutor {
         if (command != null) {
             return command.suggest(args, this.epicGuard);
         }
-        return null;
+        return new ArrayList<>();
     }
 }

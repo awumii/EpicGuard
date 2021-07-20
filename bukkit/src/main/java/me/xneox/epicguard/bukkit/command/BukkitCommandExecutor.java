@@ -7,6 +7,7 @@ import org.bukkit.command.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BukkitCommandExecutor extends CommandExecutor implements org.bukkit.command.CommandExecutor, TabCompleter {
@@ -22,6 +23,6 @@ public class BukkitCommandExecutor extends CommandExecutor implements org.bukkit
 
     @Override
     public @Nullable List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String alias, @Nonnull String[] args) {
-        return (List<String>) this.onTabComplete(args);
+        return new ArrayList<>(this.onTabComplete(args));
     }
 }
