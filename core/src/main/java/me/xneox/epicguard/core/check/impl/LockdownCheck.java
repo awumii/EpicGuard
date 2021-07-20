@@ -18,8 +18,8 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.PendingUser;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -31,12 +31,12 @@ public class LockdownCheck extends Check {
     }
 
     @Override
-    public boolean handle(@Nonnull PendingUser user) {
+    public boolean handle(@NotNull PendingUser user) {
         return this.epicGuard.attackManager().isAttack() && this.epicGuard.config().misc().lockdownOnAttack();
     }
 
     @Override
-    public @Nonnull List<String> kickMessage() {
+    public @NotNull List<String> kickMessage() {
         return this.epicGuard.messages().disconnect().attackLockdown();
     }
 }

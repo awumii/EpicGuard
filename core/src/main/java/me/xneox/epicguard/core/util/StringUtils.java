@@ -16,18 +16,16 @@
 package me.xneox.epicguard.core.util;
 
 import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 public final class StringUtils {
     /**
      * Builds a multiline string for disconnect messages.
      */
-    @Nonnull
-    public static String buildMultilineString(@Nonnull List<String> list) {
+    @NotNull
+    public static String buildMultilineString(@NotNull List<String> list) {
         Validate.notNull(list, "Kick message cannot be null!");
 
         StringBuilder builder = new StringBuilder();

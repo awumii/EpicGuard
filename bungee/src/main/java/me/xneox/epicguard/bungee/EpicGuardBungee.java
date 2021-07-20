@@ -31,8 +31,6 @@ import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
 import org.jetbrains.annotations.NotNull;
 
-
-import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
 public class EpicGuardBungee extends Plugin implements Platform {
@@ -75,12 +73,12 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+    public void sendActionBar(@NotNull String message, @NotNull User user) {
         ProxyServer.getInstance().getPlayer(user.uuid()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
     }
 
     @Override
-    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
+    public void disconnectUser(@NotNull User user, @NotNull String message) {
         ProxyServer.getInstance().getPlayer(user.uuid()).disconnect(BungeeUtils.createComponent(message));
     }
 
@@ -90,12 +88,12 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void runTaskLater(@Nonnull Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, TimeUnit.SECONDS);
     }
 
     @Override
-    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
     }
 }

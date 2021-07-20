@@ -4,8 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.URLUtils;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,7 +29,7 @@ public class ProxyManager {
      * @param address The checked IP address.
      * @return Whenever the address is detected to be a proxy or not.
      */
-    public boolean isProxy(@Nonnull String address) {
+    public boolean isProxy(@NotNull String address) {
         return this.resultCache.asMap().computeIfAbsent(address, userIp -> {
             for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
                 String response = URLUtils.readString(service.url().replace("%ip%", userIp));

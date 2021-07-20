@@ -1,8 +1,8 @@
 package me.xneox.epicguard.core.util;
 
 import me.xneox.epicguard.core.config.ConfigLoader;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.util.logging.Logger;
@@ -15,7 +15,7 @@ public final class ConfigUtils {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Nullable
-    public static <C> C loadConfig(@Nonnull File file, Class<C> implementation) {
+    public static <C> C loadConfig(@NotNull File file, Class<C> implementation) {
         try {
             file.createNewFile(); // create new file if it doesn't exist.
 

@@ -33,10 +33,9 @@ import me.xneox.epicguard.core.user.User;
 import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import org.bstats.velocity.Metrics;
-
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import javax.annotation.Nonnull;
+
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -92,12 +91,12 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+    public void sendActionBar(@NotNull String message, @NotNull User user) {
         this.server.getPlayer(user.uuid()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
     }
 
     @Override
-    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
+    public void disconnectUser(@NotNull User user, @NotNull String message) {
         this.server.getPlayer(user.uuid()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
     }
 
@@ -114,7 +113,7 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void runTaskLater(@Nonnull Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         this.server.getScheduler()
                 .buildTask(this, task)
                 .delay(seconds, TimeUnit.SECONDS)
@@ -122,7 +121,7 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
         this.server.getScheduler()
                 .buildTask(this, task)
                 .repeat(seconds, TimeUnit.SECONDS)

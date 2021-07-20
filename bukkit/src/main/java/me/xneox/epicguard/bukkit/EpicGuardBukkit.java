@@ -18,8 +18,8 @@ package me.xneox.epicguard.bukkit;
 import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
 import me.xneox.epicguard.bukkit.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.Platform;
+import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.user.User;
 import net.md_5.bungee.api.ChatMessageType;
@@ -31,8 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nonnull;
 
 public class EpicGuardBukkit extends JavaPlugin implements Platform {
     private EpicGuard epicGuard;
@@ -76,7 +74,7 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@Nonnull String message, @Nonnull User user) {
+    public void sendActionBar(@NotNull String message, @NotNull User user) {
         Player player = Bukkit.getPlayer(user.uuid());
         if (player != null) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
@@ -84,7 +82,7 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void disconnectUser(@Nonnull User user, @Nonnull String message) {
+    public void disconnectUser(@NotNull User user, @NotNull String message) {
         Player player = Bukkit.getPlayer(user.uuid());
         if (player != null) {
             player.kickPlayer(ChatUtils.colored(message));
@@ -92,12 +90,12 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void runTaskLater(@Nonnull Runnable task, long seconds) {
+    public void runTaskLater(@NotNull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
     }
 
     @Override
-    public void runTaskRepeating(@Nonnull Runnable task, long seconds) {
+    public void runTaskRepeating(@NotNull Runnable task, long seconds) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
     }
 }

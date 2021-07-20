@@ -2,23 +2,24 @@
 
 <img align="right" src="https://i.imgur.com/3oehYSw.jpg" height="200" width="200">
 
-EpicGuard is a bot protection plugin for minecraft servers, supporting bukkit, bungeecord and velocity environments. Highly configurable and customizable.
+EpicGuard is an antibot plugin for minecraft servers, supporting bukkit, bungeecord and velocity. Highly configurable and customizable.
 
+**NOTE: The current code is under heavy refactoring, but it should be stable**
 ## Building
 After cloning the repository, run the following command in the repository root:
 ```
-./gradlew
+./gradlew build
 ```
 Or, if you are on Windows:
 ```
-gradlew.bat
+gradlew.bat build
 ```
 The final jar file will be located in `build/libs/EpicGuard-<version>-all.jar`
 
 ## Some features
  * All checks can be configured as you want, you can make them checking every time, only during an attack or disable some of them completely.
- * Compatible with Spigot, PaperSpigot (and other forks), BungeeCord, Waterfall (and other forks), and Velocity.
- * Block VPNs and proxies, using the proxycheck.io service (or other api, if you want).
+ * Compatible with Spigot(+forks), BungeeCord(+forks), and Velocity.
+ * Block VPNs and proxies, specify your own detection services.
  * Allow or block specific countries/cities.
  * Automatic whitelisting, so real players won't be affected during bot attack.
  * Attack status displayed on the action bar.
@@ -26,6 +27,7 @@ The final jar file will be located in `build/libs/EpicGuard-<version>-all.jar`
  * Throttle connections to the server.
  * Limit how many nicknames can be used by one IP address.
  * Force users to ping the server or add it to their server list.
+ * Detect similar nicknames of connecting players.
 
 **If you want to see more, go to the [Resource Page](https://www.spigotmc.org/resources/72369/).**
 

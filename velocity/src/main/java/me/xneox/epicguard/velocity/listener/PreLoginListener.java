@@ -21,7 +21,6 @@ import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import me.xneox.epicguard.velocity.AdventureUtils;
-import net.kyori.adventure.text.Component;
 
 public class PreLoginListener extends DetectionHandler {
     public PreLoginListener(EpicGuard epicGuard) {

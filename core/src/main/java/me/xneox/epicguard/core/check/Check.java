@@ -17,8 +17,8 @@ package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.PendingUser;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class Check {
@@ -47,7 +47,7 @@ public abstract class Check {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     public abstract List<String> kickMessage();
 
     /**
@@ -57,5 +57,5 @@ public abstract class Check {
      * @return true if detection is positive (detected as bot).
      * @param user An {@link PendingUser} object with the information about the user.
      */
-    public abstract boolean handle(@Nonnull PendingUser user);
+    public abstract boolean handle(@NotNull PendingUser user);
 }

@@ -1,6 +1,8 @@
 package me.xneox.epicguard.core.command;
 
-import javax.annotation.Nonnull;
+
+import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nullable;
 import java.util.UUID;
 
@@ -11,7 +13,7 @@ public abstract class Sender<C> {
         this.sender = sender;
     }
 
-    public abstract void sendMessage(@Nonnull String message);
+    public abstract void sendMessage(@NotNull String message);
 
     public abstract boolean isPlayer();
 

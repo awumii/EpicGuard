@@ -10,6 +10,7 @@ dependencies {
     implementation project(":core")
 
     implementation "org.bstats:bstats-bungeecord:2.2.1"
+    implementation "org.jetbrains:annotations:21.0.1"
     compileOnly "io.github.waterfallmc:waterfall-api:1.17-R0.1-SNAPSHOT"
 }
 

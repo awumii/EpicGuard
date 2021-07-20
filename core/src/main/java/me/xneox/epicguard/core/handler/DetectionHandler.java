@@ -15,15 +15,18 @@
 
 package me.xneox.epicguard.core.handler;
 
-import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.PendingUser;
 import me.xneox.epicguard.core.util.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Handler for PreLogin listeners.
@@ -56,8 +59,8 @@ public class DetectionHandler {
      * @param nickname Nickname of the connecting user.
      * @return Disconnect message, or an empty Optional if undetected.
      */
-    @Nonnull
-    public Optional<String> handle(@Nonnull String address, @Nonnull String nickname) {
+    @NotNull
+    public Optional<String> handle(@NotNull String address, @Nonnull String nickname) {
         Validate.notNull(address, "Address cannot be null!");
         Validate.notNull(nickname, "Nickname cannot be null!");
 

@@ -15,10 +15,10 @@
 
 package me.xneox.epicguard.core.handler;
 
-import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.EpicGuard;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 /**
  * Handler for the ServerListPing listeners.
@@ -36,7 +36,7 @@ public class PingHandler {
      *
      * @param address Address of the pinger.
      */
-    public void handle(@Nonnull String address) {
+    public void handle(@NotNull String address) {
         Validate.notNull(address, "Address cannot be null!");
         this.epicGuard.storageManager().pingCache().add(address);
     }

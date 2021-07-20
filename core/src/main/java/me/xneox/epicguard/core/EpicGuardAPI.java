@@ -15,10 +15,10 @@
 
 package me.xneox.epicguard.core;
 
-import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.manager.GeoManager;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -36,7 +36,7 @@ public class EpicGuardAPI {
      *
      * @return An instance of {@link GeoManager}.
      */
-    @Nonnull
+    @NotNull
     public GeoManager getGeoManager() {
         isAvailable();
         return this.epicGuard.geoManager();
@@ -53,7 +53,7 @@ public class EpicGuardAPI {
     /**
      * @return An immutable Collection which contains whitelisted addresses.
      */
-    @Nonnull
+    @NotNull
     public Collection<String> getWhitelistedAddresses() {
         isAvailable();
         return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().addressWhitelist());
@@ -62,7 +62,7 @@ public class EpicGuardAPI {
     /**
      * @return An immutable Collection which contains blacklisted addresses.
      */
-    @Nonnull
+    @NotNull
     public Collection<String> getBlacklistedAddresses() {
         isAvailable();
         return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().addressWhitelist());
@@ -71,7 +71,7 @@ public class EpicGuardAPI {
     /**
      * @return An immutable Collection which contains whitelisted nicknames.
      */
-    @Nonnull
+    @NotNull
     public Collection<String> getWhitelistedNicknames() {
         isAvailable();
         return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().nameWhitelist());
@@ -80,7 +80,7 @@ public class EpicGuardAPI {
     /**
      * @return An immutable Collection which contains blacklisted nicknames.
      */
-    @Nonnull
+    @NotNull
     public Collection<String> getBlacklistedNicknames() {
         isAvailable();
         return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().nameBlacklist());
@@ -99,7 +99,7 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public void blacklistAddress(@Nonnull String address) {
+    public void blacklistAddress(@NotNull String address) {
         isAvailable();
         Validate.notNull(address, "Address cannot be null!");
 
@@ -112,7 +112,7 @@ public class EpicGuardAPI {
      *
      * @param address Address to be blacklisted.
      */
-    public void whitelistAddress(@Nonnull String address) {
+    public void whitelistAddress(@NotNull String address) {
         isAvailable();
         Validate.notNull(address, "Address cannot be null!");
 
@@ -126,7 +126,7 @@ public class EpicGuardAPI {
      *
      * @param instance Instance of {@link EpicGuard} class.
      */
-    protected void setInstance(@Nonnull EpicGuard instance) {
+    protected void setInstance(@NotNull EpicGuard instance) {
         if (this.epicGuard == null) {
             this.epicGuard = instance;
         } else {

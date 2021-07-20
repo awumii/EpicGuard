@@ -18,12 +18,10 @@ package me.xneox.epicguard.bungee.listener;
 import me.xneox.epicguard.bungee.BungeeUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.event.EventPriority;
 
 public class PreLoginListener extends DetectionHandler implements Listener {
     public PreLoginListener(EpicGuard epicGuard) {

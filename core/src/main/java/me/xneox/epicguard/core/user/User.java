@@ -16,8 +16,8 @@
 package me.xneox.epicguard.core.user;
 
 import com.google.common.base.Objects;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 
 /**
@@ -35,7 +35,7 @@ public class User {
     /**
      * @return The user's UUID.
      */
-    @Nonnull
+    @NotNull
     public UUID uuid() {
         return uuid;
     }

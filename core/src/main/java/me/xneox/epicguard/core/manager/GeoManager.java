@@ -18,14 +18,14 @@ package me.xneox.epicguard.core.manager;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.util.FileUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,7 +76,7 @@ public class GeoManager {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void downloadDatabase(@Nonnull File database, @Nonnull File archive, @Nonnull String url) throws IOException {
+    private void downloadDatabase(@NotNull File database, @NotNull File archive, @NotNull String url) throws IOException {
         Validate.notNull(database, "Database file cannot be null!");
         Validate.notNull(archive, "Archive file cannot be null!");
         Validate.notNull(url, "Download URL cannot be null!");
@@ -104,8 +104,8 @@ public class GeoManager {
         }
     }
 
-    @Nonnull
-    public String countryCode(@Nonnull String address) {
+    @NotNull
+    public String countryCode(@NotNull String address) {
         InetAddress inetAddress = this.parseAddress(address);
         if (inetAddress != null && this.countryReader != null) {
             try {
@@ -117,8 +117,8 @@ public class GeoManager {
         return "unknown";
     }
 
-    @Nonnull
-    public String city(@Nonnull String address) {
+    @NotNull
+    public String city(@NotNull String address) {
         Validate.notNull(address, "Address cannot be null!");
         InetAddress inetAddress = this.parseAddress(address);
         if (inetAddress != null && this.cityReader != null) {
@@ -132,7 +132,7 @@ public class GeoManager {
     }
 
     @Nullable
-    public InetAddress parseAddress(@Nonnull String address) {
+    public InetAddress parseAddress(@NotNull String address) {
         Validate.notNull(address, "Address cannot be null!");
         try {
             return InetAddress.getByName(address);

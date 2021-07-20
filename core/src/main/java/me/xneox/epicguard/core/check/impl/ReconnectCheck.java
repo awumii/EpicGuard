@@ -19,8 +19,8 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.PendingUser;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ReconnectCheck extends Check {
     }
 
     @Override
-    public boolean handle(@Nonnull PendingUser user) {
+    public boolean handle(@NotNull PendingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().reconnectCheckMode());
         return this.evaluate(mode, needsReconnect(user));
     }
@@ -50,7 +50,7 @@ public class ReconnectCheck extends Check {
     }
 
     @Override
-    public @Nonnull List<String> kickMessage() {
+    public @NotNull List<String> kickMessage() {
         return this.epicGuard.messages().disconnect().reconnect();
     }
 }

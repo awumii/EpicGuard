@@ -17,8 +17,8 @@ package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.user.User;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 /**
  * This is the most important part of the EpicGuard's platform implementation.
@@ -34,7 +34,7 @@ public interface Platform {
      *
      * @return An implementation of the {@link GuardLogger} compatible with your platform.
      */
-    @Nonnull
+    @NotNull
     GuardLogger logger();
 
     /**
@@ -48,7 +48,7 @@ public interface Platform {
      * @param message Message to be sent.
      * @param user The user the message has to be sent to.
      */
-    void sendActionBar(@Nonnull String message, @Nonnull User user);
+    void sendActionBar(@NotNull String message, @NotNull User user);
 
     /**
      * Kicks the user from the server with a specified message (find the player using User#getUUID).
@@ -56,7 +56,7 @@ public interface Platform {
      * @param user The user to be kicked.
      * @param message The kick message.
      */
-    void disconnectUser(@Nonnull User user, @Nonnull String message);
+    void disconnectUser(@NotNull User user, @NotNull String message);
 
     /**
      * Schedules a task to be run asynchronously after the specified time (in seconds).
@@ -64,7 +64,7 @@ public interface Platform {
      * @param task The task to be scheduled.
      * @param seconds Delay in seconds after the task should be ran.
      */
-    void runTaskLater(@Nonnull Runnable task, long seconds);
+    void runTaskLater(@NotNull Runnable task, long seconds);
 
     /**
      * Schedules a task to be run asynchronously repeatedly with fixed delay (in seconds).
@@ -72,5 +72,5 @@ public interface Platform {
      * @param task The task to be scheduled.
      * @param seconds Delay in seconds between each runs of the task.
      */
-    void runTaskRepeating(@Nonnull Runnable task, long seconds);
+    void runTaskRepeating(@NotNull Runnable task, long seconds);
 }

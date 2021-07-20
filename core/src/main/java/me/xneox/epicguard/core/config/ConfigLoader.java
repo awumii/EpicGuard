@@ -17,20 +17,20 @@ package me.xneox.epicguard.core.config;
 
 import me.xneox.epicguard.core.proxy.ProxyService;
 import me.xneox.epicguard.core.proxy.ProxyServiceSerializer;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 
 public class ConfigLoader<C> {
     private final HoconConfigurationLoader loader;
     private ObjectMapper<C> mapper;
 
-    public ConfigLoader(@Nonnull File file, @Nonnull Class<C> implementation) {
+    public ConfigLoader(@NotNull File file, @NotNull Class<C> implementation) {
         this.loader = HoconConfigurationLoader.builder()
                 .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE)))
                 .file(file)
@@ -43,12 +43,12 @@ public class ConfigLoader<C> {
         }
     }
 
-    @Nonnull
+    @NotNull
     public C load() throws ConfigurateException {
         return this.mapper.load(this.loader.load());
     }
 
-    public void save(@Nonnull C config) throws ConfigurateException {
+    public void save(@NotNull C config) throws ConfigurateException {
         CommentedConfigurationNode node = this.loader.createNode();
         this.mapper.save(config, node);
         this.loader.save(node);

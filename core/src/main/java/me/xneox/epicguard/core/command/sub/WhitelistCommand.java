@@ -5,7 +5,6 @@ import me.xneox.epicguard.core.command.Sender;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

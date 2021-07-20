@@ -16,11 +16,11 @@
 package me.xneox.epicguard.core.storage;
 
 import com.google.common.net.InetAddresses;
-import org.apache.commons.lang3.Validate;
 import me.xneox.epicguard.core.storage.impl.JsonStorageProvider;
 import me.xneox.epicguard.core.user.PendingUser;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -46,8 +46,8 @@ public class StorageManager {
     /**
      * Retrieves a list of nicknames used by specified IP Address.
      */
-    @Nonnull
-    public List<String> accounts(@Nonnull PendingUser user) {
+    @NotNull
+    public List<String> accounts(@NotNull PendingUser user) {
         Validate.notNull(user, "BotUser cannot be null!");
         return this.provider.accountMap().getOrDefault(user.address(), new ArrayList<>());
     }
@@ -55,7 +55,7 @@ public class StorageManager {
     /**
      * If the user's address is not in the accountMap, it will be added.
      */
-    public void updateAccounts(@Nonnull PendingUser user) {
+    public void updateAccounts(@NotNull PendingUser user) {
         Validate.notNull(user, "BotUser cannot be null!");
 
         List<String> accounts = this.accounts(user);
@@ -71,7 +71,7 @@ public class StorageManager {
      * Returns null if not found.
      */
     @Nullable
-    public String findByNickname(@Nonnull String nickname) {
+    public String findByNickname(@NotNull String nickname) {
         return this.provider.accountMap().entrySet().stream()
                 .filter(entry -> entry.getValue().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
                 .findFirst()
@@ -79,7 +79,7 @@ public class StorageManager {
                 .orElse(null);
     }
 
-    public void blacklistPut(@Nonnull String value) {
+    public void blacklistPut(@NotNull String value) {
         if (InetAddresses.isInetAddress(value)) {
             this.provider.addressBlacklist().add(value);
         } else {
@@ -87,7 +87,7 @@ public class StorageManager {
         }
     }
 
-    public void whitelistPut(@Nonnull String value) {
+    public void whitelistPut(@NotNull String value) {
         if (InetAddresses.isInetAddress(value)) {
             this.provider.addressWhitelist().add(value);
         } else {
@@ -125,7 +125,7 @@ public class StorageManager {
         }
     }
 
-    @Nonnull
+    @NotNull
     public Collection<String> pingCache() {
         return this.pingCache;
     }

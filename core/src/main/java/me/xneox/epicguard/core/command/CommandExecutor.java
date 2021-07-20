@@ -1,11 +1,13 @@
 package me.xneox.epicguard.core.command;
 
-import me.xneox.epicguard.core.command.sub.*;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.command.sub.*;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class holds all registered subcommands, and handles the user command/tab suggestion input.
@@ -25,7 +27,7 @@ public class CommandExecutor {
         this.commandMap.put("whitelist", new WhitelistCommand());
     }
 
-    public void handle(@Nonnull String[] args, @Nonnull Sender<?> sender) {
+    public void handle(@NotNull String[] args, @NotNull Sender<?> sender) {
         String prefix = this.epicGuard.messages().command().prefix();
         if (args.length < 1) {
             sender.sendMessage(prefix + "&7You are running &6EpicGuard v" + this.epicGuard.platform().version()
@@ -43,7 +45,7 @@ public class CommandExecutor {
     }
 
     @NotNull
-    public Collection<String> onTabComplete(@Nonnull String[] args) {
+    public Collection<String> onTabComplete(@NotNull String[] args) {
         // If no argument is specified, send all available subcommands.
         if (args.length == 1) {
             return this.commandMap.keySet();

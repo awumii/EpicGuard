@@ -18,8 +18,8 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.PendingUser;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -31,13 +31,13 @@ public class BlacklistCheck extends Check {
     }
 
     @Override
-    public boolean handle(@Nonnull PendingUser user) {
+    public boolean handle(@NotNull PendingUser user) {
         return this.epicGuard.storageManager().isBlacklisted(user.address())
                 || this.epicGuard.storageManager().isBlacklisted(user.nickname());
     }
 
     @Override
-    public @Nonnull List<String> kickMessage() {
+    public @NotNull List<String> kickMessage() {
         return this.epicGuard.messages().disconnect().blacklisted();
     }
 }

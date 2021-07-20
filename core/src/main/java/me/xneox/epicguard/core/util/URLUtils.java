@@ -16,8 +16,8 @@
 package me.xneox.epicguard.core.util;
 
 import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +30,7 @@ public final class URLUtils {
     private static final Logger LOGGER = Logger.getLogger(URLUtils.class.getName());
 
     @Nullable
-    public static String readString(@Nonnull String url) {
+    public static String readString(@NotNull String url) {
         Validate.notNull(url, "URL cannot be null!");
 
         try {

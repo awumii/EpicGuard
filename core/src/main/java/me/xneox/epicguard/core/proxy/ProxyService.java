@@ -1,6 +1,6 @@
 package me.xneox.epicguard.core.proxy;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a service used for proxy detection.
@@ -17,7 +17,7 @@ public class ProxyService {
     /**
      * @return URL of this service.
      */
-    @Nonnull
+    @NotNull
     public String url() {
         return this.url;
     }
@@ -25,7 +25,7 @@ public class ProxyService {
     /**
      * @return Configured regex expression used for deciding whenever the detection is positive or not.
      */
-    @Nonnull
+    @NotNull
     public String responseContains() {
         return this.responseRegex;
     }

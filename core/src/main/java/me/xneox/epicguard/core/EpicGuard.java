@@ -18,14 +18,16 @@ package me.xneox.epicguard.core;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.manager.*;
+import me.xneox.epicguard.core.logging.LogFilter;
+import me.xneox.epicguard.core.manager.AttackManager;
+import me.xneox.epicguard.core.manager.GeoManager;
+import me.xneox.epicguard.core.manager.UserManager;
 import me.xneox.epicguard.core.proxy.ProxyManager;
 import me.xneox.epicguard.core.storage.StorageManager;
 import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
-import me.xneox.epicguard.core.logging.LogFilter;
 import me.xneox.epicguard.core.util.ConfigUtils;
 
 import java.io.File;
