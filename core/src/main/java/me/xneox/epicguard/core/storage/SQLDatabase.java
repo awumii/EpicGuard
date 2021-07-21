@@ -2,6 +2,7 @@ package me.xneox.epicguard.core.storage;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.FileUtils;
 
 import java.sql.PreparedStatement;
@@ -15,21 +16,38 @@ public class SQLDatabase {
     private final StorageManager storageManager;
     private HikariDataSource source;
 
-    public SQLDatabase(StorageManager storageManager) throws SQLException {
+    public SQLDatabase(StorageManager storageManager, PluginConfiguration.Storage config) {
         this.storageManager = storageManager;
-        this.connect();
+        this.connect(config);
     }
 
     /**
-     * Connecting to the database, and creating the default table.
+     * Initial connection to the database.
      */
-    private void connect() throws SQLException {
-        // TODO: Add mysql here
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:sqlite:" + FileUtils.EPICGUARD_DIR + "/data/storage.db");
+    private void connect(PluginConfiguration.Storage config) {
+        HikariConfig cfg = new HikariConfig();
+        if (config.useMySQL()) {
+            cfg.setJdbcUrl("jdbc:mysql://" + config.host() + ':' + config.port() + '/' + config.database());
+            cfg.setUsername(config.user());
+            cfg.setPassword(config.password());
+            cfg.addDataSourceProperty("useSSL", config.useSSL());
 
-        this.source = new HikariDataSource(config);
+            // some additional settings
+            cfg.addDataSourceProperty("useServerPrepStmts", true);
+            cfg.addDataSourceProperty("cachePrepStmts", true);
+            cfg.addDataSourceProperty("prepStmtCacheSize", 250);
+        } else {
+            cfg.setJdbcUrl("jdbc:sqlite://" + FileUtils.EPICGUARD_DIR + "/data/storage.db");
+        }
 
+        this.source = new HikariDataSource(cfg);
+    }
+
+    /**
+     * Loads the address data from the default table.
+     */
+    public void loadData() throws SQLException {
+        // Creating the default table.
         String tableCreateStatement = "CREATE TABLE IF NOT EXISTS epicguard_addresses(" +
                 "`address` VARCHAR(255) NOT NULL, " +
                 "`blacklisted` BOOLEAN NOT NULL, " +
@@ -39,12 +57,7 @@ public class SQLDatabase {
 
         Statement createStatement = this.source.getConnection().createStatement();
         createStatement.executeUpdate(tableCreateStatement);
-    }
 
-    /**
-     * Loads the address data from the default table.
-     */
-    public void loadData() throws SQLException {
         // Load addresses from database
         PreparedStatement statement = this.source.getConnection().prepareStatement("SELECT * FROM epicguard_addresses");
         ResultSet rs = statement.executeQuery();

@@ -26,6 +26,6 @@ tasks.build.dependsOn tasks.shadowJar
 dependencies {
     implementation project(":core")
     implementation project(":bukkit")
-    implementation project("bungee")
-    implementation project("velocity")
+    implementation project(":bungee")
+    implementation project(":velocity")
 }

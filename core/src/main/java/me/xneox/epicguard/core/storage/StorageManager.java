@@ -33,13 +33,14 @@ import java.util.stream.Collectors;
  */
 public class StorageManager {
     private final BiMap<String, AddressMeta> addresses = HashBiMap.create();
-    private SQLDatabase database;
+    private final SQLDatabase database;
 
     private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
 
     public StorageManager(EpicGuard epicGuard) {
+        this.database = new SQLDatabase(this, epicGuard.config().storage());
+
         try {
-            this.database = new SQLDatabase(this);
             this.database.loadData();
         } catch (Exception e) {
             epicGuard.logger().error("Could not load plugin's storage");
