@@ -18,3 +18,7 @@ dependencies {
 processResources {
     expand projectVersion: project.version
 }
+
+shadowJar {
+    relocate "org.bstats", "me.xneox.epicguard.bungee.bstats"
+}

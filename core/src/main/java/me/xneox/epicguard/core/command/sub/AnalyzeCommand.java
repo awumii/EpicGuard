@@ -8,6 +8,8 @@ import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 public class AnalyzeCommand implements SubCommand {
     @Override
     public void execute(@NotNull Sender<?> sender, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
@@ -37,5 +39,10 @@ public class AnalyzeCommand implements SubCommand {
                     .replace("{ACCOUNT-AMOUNT}", String.valueOf(meta.nicknames().size()))
                     .replace("{NICKNAMES}", String.join(", ", meta.nicknames())));
         }
+    }
+
+    @Override
+    public @NotNull Collection<String> suggest(@NotNull String[] args, @NotNull EpicGuard epicGuard) {
+        return epicGuard.storageManager().addresses().keySet();
     }
 }

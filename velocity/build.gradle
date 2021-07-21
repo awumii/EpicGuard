@@ -20,3 +20,7 @@ dependencies {
 blossom {
     replaceToken("{version}", project.version)
 }
+
+shadowJar {
+    relocate "org.bstats", "me.xneox.epicguard.velocity.bstats"
+}

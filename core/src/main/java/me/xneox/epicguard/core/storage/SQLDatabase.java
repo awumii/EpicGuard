@@ -37,7 +37,7 @@ public class SQLDatabase {
             cfg.addDataSourceProperty("cachePrepStmts", true);
             cfg.addDataSourceProperty("prepStmtCacheSize", 250);
         } else {
-            cfg.setJdbcUrl("jdbc:sqlite://" + FileUtils.EPICGUARD_DIR + "/data/storage.db");
+            cfg.setJdbcUrl("jdbc:sqlite:" + FileUtils.EPICGUARD_DIR + "/data/storage.db");
         }
 
         this.source = new HikariDataSource(cfg);
@@ -77,10 +77,9 @@ public class SQLDatabase {
     public void saveData() throws SQLException {
         for (Map.Entry<String, AddressMeta> entry : this.storageManager.addresses().entrySet()) {
             PreparedStatement ps = this.source.getConnection().prepareStatement(
-                    "INSERT INTO epicguard_addresses(address, blacklisted, whitelisted, nicknames)" +
-                            " VALUES (?, ?, ?, ?) " +
-                            "ON DUPLICATE KEY UPDATE " +
-                            "address=VALUES(address), blacklisted=VALUES(blacklisted), whitelisted=VALUES(whitelisted), nicknames=VALUES(nicknames)");
+                    "INSERT OR REPLACE INTO epicguard_addresses" +
+                    " (address, blacklisted, whitelisted, nicknames)" +
+                    " VALUES (?, ?, ?, ?)");
 
             AddressMeta meta = entry.getValue();
             ps.setString(1, entry.getKey());

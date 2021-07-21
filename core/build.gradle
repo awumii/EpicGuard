@@ -20,7 +20,6 @@ dependencies {
 shadowJar {
     minimize()
 
-    relocate "org.bstats", "me.xneox.epicguard.libs.bstats"
     relocate "org.spongepowered.configurate", "me.xneox.epicguard.libs.configurate"
     relocate "org.apache.commons", "me.xneox.epicguard.libs.apachecommons"
     relocate "com.fasterxml", "me.xneox.epicguard.libs.fasterxml"
