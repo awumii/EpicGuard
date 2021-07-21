@@ -23,12 +23,12 @@ import java.util.UUID;
 /**
  * Represents an player who is currently connected to the server.
  */
-public class User {
+public class OnlineUser {
     private final UUID uuid;
     private boolean notifications;
     private boolean settingsChanged;
 
-    public User(UUID uuid) {
+    public OnlineUser(UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -66,9 +66,9 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return notifications() == user.notifications() &&
-                Objects.equal(uuid, user.uuid);
+        OnlineUser onlineUser = (OnlineUser) o;
+        return notifications() == onlineUser.notifications() &&
+                Objects.equal(uuid, onlineUser.uuid);
     }
 
     @Override

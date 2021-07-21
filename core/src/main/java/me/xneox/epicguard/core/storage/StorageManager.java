@@ -19,7 +19,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.net.InetAddresses;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -92,7 +92,7 @@ public class StorageManager {
      * Checks if the address meta of connecting user contains his current nickname.
      * If absent, it is added.
      */
-    public void updateAccounts(@NotNull PendingUser user) {
+    public void updateAccounts(@NotNull ConnectingUser user) {
         List<String> accounts = addressMeta(user.address()).nicknames();
         if (!accounts.contains(user.nickname())) {
             accounts.add(user.nickname());

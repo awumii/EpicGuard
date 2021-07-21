@@ -29,7 +29,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
 import org.bstats.velocity.Metrics;
@@ -91,13 +91,13 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull User user) {
-        this.server.getPlayer(user.uuid()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
+    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
+        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @NotNull String message) {
-        this.server.getPlayer(user.uuid()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
+        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
     }
 
     @Override

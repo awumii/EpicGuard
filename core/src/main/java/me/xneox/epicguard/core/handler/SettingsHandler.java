@@ -16,13 +16,14 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.user.OnlineUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 /**
- * If the user has sent the Settings packet, it will be marked on their {@link me.xneox.epicguard.core.user.User}
+ * If the user has sent the Settings packet, it will be marked on their {@link OnlineUser}
  * object.
  * This packet is sent after joining the server by the vanilla client.
  */

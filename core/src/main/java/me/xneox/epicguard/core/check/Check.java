@@ -16,7 +16,7 @@
 package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public abstract class Check {
      * When returning a value, use the assertCheck() method found above.
      *
      * @return true if detection is positive (detected as bot).
-     * @param user An {@link PendingUser} object with the information about the user.
+     * @param user An {@link ConnectingUser} object with the information about the user.
      */
-    public abstract boolean handle(@NotNull PendingUser user);
+    public abstract boolean handle(@NotNull ConnectingUser user);
 }

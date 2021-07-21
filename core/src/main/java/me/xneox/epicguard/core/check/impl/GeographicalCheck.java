@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class GeographicalCheck extends Check {
     }
 
     @Override
-    public boolean handle(@NotNull PendingUser user) {
+    public boolean handle(@NotNull ConnectingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().geographical().checkMode());
         return this.evaluate(mode, this.isRestricted(user.address()));
     }

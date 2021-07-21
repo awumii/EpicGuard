@@ -16,11 +16,12 @@
 package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.manager.GeoManager;
+import me.xneox.epicguard.core.storage.AddressMeta;
+import me.xneox.epicguard.core.storage.StorageManager;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Class which can be safely used by other projects.
@@ -38,15 +39,24 @@ public class EpicGuardAPI {
      */
     @NotNull
     public GeoManager getGeoManager() {
-        isAvailable();
+        checkAvailability();
         return this.epicGuard.geoManager();
+    }
+
+    /**
+     * @return The storage manager, which is used for various things regarding address data.
+     */
+    @NotNull
+    public StorageManager storageManager() {
+        checkAvailability();
+        return this.epicGuard.storageManager();
     }
 
     /**
      * @return true if server is under attack, false if not.
      */
     public boolean isUnderAttack() {
-        isAvailable();
+        checkAvailability();
         return this.epicGuard.attackManager().isAttack();
     }
 
@@ -55,8 +65,8 @@ public class EpicGuardAPI {
      */
     @NotNull
     public Collection<String> getWhitelistedAddresses() {
-        isAvailable();
-        return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().addressWhitelist());
+        checkAvailability();
+        return this.epicGuard.storageManager().viewAddresses(AddressMeta::whitelisted);
     }
 
     /**
@@ -64,60 +74,16 @@ public class EpicGuardAPI {
      */
     @NotNull
     public Collection<String> getBlacklistedAddresses() {
-        isAvailable();
-        return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().addressWhitelist());
-    }
-
-    /**
-     * @return An immutable Collection which contains whitelisted nicknames.
-     */
-    @NotNull
-    public Collection<String> getWhitelistedNicknames() {
-        isAvailable();
-        return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().nameWhitelist());
-    }
-
-    /**
-     * @return An immutable Collection which contains blacklisted nicknames.
-     */
-    @NotNull
-    public Collection<String> getBlacklistedNicknames() {
-        isAvailable();
-        return Collections.unmodifiableCollection(this.epicGuard.storageManager().provider().nameBlacklist());
+        checkAvailability();
+        return this.epicGuard.storageManager().viewAddresses(AddressMeta::blacklisted);
     }
 
     /**
      * @return Current connections per second.
      */
     public int getConnectionsPerSecond() {
-        isAvailable();
+        checkAvailability();
         return this.epicGuard.attackManager().connectionCounter();
-    }
-
-    /**
-     * Adds the provided address to blacklist, if it is not already there.
-     *
-     * @param address Address to be blacklisted.
-     */
-    public void blacklistAddress(@NotNull String address) {
-        isAvailable();
-        Validate.notNull(address, "Address cannot be null!");
-
-        this.epicGuard.storageManager().blacklistPut(address);
-    }
-
-    /**
-     * Adds the provided address to whitelist.
-     * Also, removes the address from blacklist.
-     *
-     * @param address Address to be blacklisted.
-     */
-    public void whitelistAddress(@NotNull String address) {
-        isAvailable();
-        Validate.notNull(address, "Address cannot be null!");
-
-        this.epicGuard.storageManager().whitelistPut(address);
-        this.epicGuard.storageManager().provider().addressBlacklist().remove(address);
     }
 
     /**
@@ -137,7 +103,7 @@ public class EpicGuardAPI {
     /**
      * Checks if the EpicGuard has been initialized already.
      */
-    public void isAvailable() {
+    public void checkAvailability() {
         Validate.notNull(this.epicGuard, "Can't acces EpicGuardAPI because the plugin is not initialized. Have you set is as dependency?.");
     }
 }

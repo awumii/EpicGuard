@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core.manager;
 
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 
 import java.util.Collection;
 import java.util.Map;
@@ -23,17 +23,17 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * This manager will cache the {@link User} object's of the currently online players.
+ * This manager will cache the {@link OnlineUser} object's of the currently online players.
  */
 public class UserManager {
-    private final Map<UUID, User> userMap = new ConcurrentHashMap<>();
+    private final Map<UUID, OnlineUser> userMap = new ConcurrentHashMap<>();
 
-    public Collection<User> users() {
+    public Collection<OnlineUser> users() {
         return this.userMap.values();
     }
 
-    public User getOrCreate(UUID uuid) {
-        return this.userMap.computeIfAbsent(uuid, User::new);
+    public OnlineUser getOrCreate(UUID uuid) {
+        return this.userMap.computeIfAbsent(uuid, OnlineUser::new);
     }
 
     public void removeUser(UUID uuid) {

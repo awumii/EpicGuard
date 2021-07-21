@@ -238,18 +238,15 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static class AutoWhitelist {
-        @Comment("ADDRESS - Only whitelist the user's IP address.\n" +
-                "NICKNAME - Only whitelist the user's nickname.\n" +
-                "MIXED - Whitelist the user's IP address AND nickname.\n" +
-                "DISABLED - Disable this feature")
-        private String mode = "MIXED";
+        @Comment("Enable automatic whitelisting of the user's address.")
+        private boolean enabled = false;
 
         @Comment("Time in seconds the player must be online\n" +
                 "to be added to the EpicGuard's whitelist.")
-        private int timeOnline = 240;
+        private int timeOnline = 600;
 
-        public String mode() {
-            return this.mode;
+        public boolean enabled() {
+            return this.enabled;
         }
 
         public int timeOnline() {
@@ -295,7 +292,7 @@ public class PluginConfiguration {
         private long autoSaveInterval = 10L;
 
         @Comment("Enabling this will log positive bot detections in the console.")
-        private boolean debug;
+        private boolean debug = false;
 
         public String reconnectCheckMode() {
             return this.reconnectCheckMode;

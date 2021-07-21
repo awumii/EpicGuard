@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -29,21 +29,21 @@ import java.util.List;
  * This check will force player to reconnect if he is connecting for the first time.
  */
 public class ReconnectCheck extends Check {
-    private final Collection<PendingUser> pendingUserCache = new HashSet<>();
+    private final Collection<ConnectingUser> connectingUserCache = new HashSet<>();
 
     public ReconnectCheck(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @Override
-    public boolean handle(@NotNull PendingUser user) {
+    public boolean handle(@NotNull ConnectingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().reconnectCheckMode());
         return this.evaluate(mode, needsReconnect(user));
     }
 
-    private boolean needsReconnect(PendingUser pendingUser) {
-        if (!this.pendingUserCache.contains(pendingUser)) {
-            this.pendingUserCache.add(pendingUser);
+    private boolean needsReconnect(ConnectingUser connectingUser) {
+        if (!this.connectingUserCache.contains(connectingUser)) {
+            this.connectingUserCache.add(connectingUser);
             return true;
         }
         return false;

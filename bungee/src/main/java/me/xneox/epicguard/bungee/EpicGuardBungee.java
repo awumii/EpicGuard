@@ -23,7 +23,7 @@ import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -73,13 +73,13 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull User user) {
-        ProxyServer.getInstance().getPlayer(user.uuid()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
+    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
+        ProxyServer.getInstance().getPlayer(onlineUser.uuid()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @NotNull String message) {
-        ProxyServer.getInstance().getPlayer(user.uuid()).disconnect(BungeeUtils.createComponent(message));
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
+        ProxyServer.getInstance().getPlayer(onlineUser.uuid()).disconnect(BungeeUtils.createComponent(message));
     }
 
     @Override

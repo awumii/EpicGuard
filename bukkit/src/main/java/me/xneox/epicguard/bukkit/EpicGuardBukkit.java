@@ -21,7 +21,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bstats.bukkit.Metrics;
@@ -74,16 +74,16 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull User user) {
-        Player player = Bukkit.getPlayer(user.uuid());
+    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
+        Player player = Bukkit.getPlayer(onlineUser.uuid());
         if (player != null) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
         }
     }
 
     @Override
-    public void disconnectUser(@NotNull User user, @NotNull String message) {
-        Player player = Bukkit.getPlayer(user.uuid());
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
+        Player player = Bukkit.getPlayer(onlineUser.uuid());
         if (player != null) {
             player.kickPlayer(ChatUtils.colored(message));
         }
