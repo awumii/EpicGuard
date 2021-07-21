@@ -1,17 +1,16 @@
 package me.xneox.epicguard.core.storage;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class AddressMeta {
+    private final List<String> nicknames;
     private boolean blacklisted;
     private boolean whitelisted;
-    private List<String> nicknames;
 
-    public AddressMeta(boolean blacklisted, boolean whitelisted, String nicknames) {
+    public AddressMeta(boolean blacklisted, boolean whitelisted, List<String> nicknames) {
         this.blacklisted = blacklisted;
         this.whitelisted = whitelisted;
-        this.nicknames = Arrays.asList(nicknames.split(","));
+        this.nicknames = nicknames;
     }
 
     public boolean blacklisted() {
@@ -32,9 +31,5 @@ public class AddressMeta {
 
     public List<String> nicknames() {
         return this.nicknames;
-    }
-
-    public void nicknames(List<String> nicknames) {
-        this.nicknames = nicknames;
     }
 }

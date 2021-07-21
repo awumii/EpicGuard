@@ -47,7 +47,7 @@ public class MessagesConfiguration {
         private String notBlacklisted = "&cThe user &6{USER} &cis not in the blacklist!";
         private String reloaded = "&7Succesfully reloaded config and messages!";
         private String toggleStatus = "&7You have toggled your attack status!";
-        private String analysisFailed = "&cCould not find address for this nickname, or provided address is invalid.";
+        private String invalidArgument = "&cCould not resolve address for this nickname, or provided address is invalid.";
 
         private List<String> mainCommand = Arrays.asList(
                 "",
@@ -55,8 +55,8 @@ public class MessagesConfiguration {
                 "",
                 " &8▸ &7Under attack: {ATTACK}",
                 " &8▸ &7Connections: &e{CPS}/s",
-                " &8▸ &7Blacklist: &e{BLACKLISTED-IPS} &7IPs, &e{BLACKLISTED-NAMES} &7nicks",
-                " &8▸ &7Whitelisted IPs: &e{WHITELISTED-IPS} &7IPs, &e{WHITELISTED-NAMES} &7nicks",
+                " &8▸ &7Blacklist: &e{BLACKLISTED-IPS} &7IPs",
+                " &8▸ &7Whitelist: &e{WHITELISTED-IPS} &7IPs",
                 "",
                 " &8/&fguard status &8- &7Toggle attack status on actionbar.",
                 " &8/&fguard reload &8- &7Reload config and messages.",
@@ -132,8 +132,8 @@ public class MessagesConfiguration {
             return this.toggleStatus;
         }
 
-        public String analysisFailed() {
-            return this.analysisFailed;
+        public String invalidArgument() {
+            return this.invalidArgument;
         }
 
         public List<String> mainCommand() {

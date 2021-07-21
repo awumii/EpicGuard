@@ -1,28 +1,30 @@
-package me.xneox.epicguard.core.storage.impl;
+package me.xneox.epicguard.core.storage;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.xneox.epicguard.core.storage.AddressMeta;
-import me.xneox.epicguard.core.storage.StorageManager;
-import me.xneox.epicguard.core.storage.StorageProvider;
 import me.xneox.epicguard.core.util.FileUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Map;
 
-public class SQLiteProvider implements StorageProvider {
+public class SQLDatabase {
     private final StorageManager storageManager;
     private HikariDataSource source;
 
-    public SQLiteProvider(StorageManager storageManager) {
+    public SQLDatabase(StorageManager storageManager) throws SQLException {
         this.storageManager = storageManager;
+        this.connect();
     }
 
-    @Override
-    public void load() throws SQLException {
+    /**
+     * Connecting to the database, and creating the default table.
+     */
+    private void connect() throws SQLException {
+        // TODO: Add mysql here
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:sqlite:" + FileUtils.EPICGUARD_DIR + "/data/storage.db");
 
@@ -37,7 +39,12 @@ public class SQLiteProvider implements StorageProvider {
 
         Statement createStatement = this.source.getConnection().createStatement();
         createStatement.executeUpdate(tableCreateStatement);
+    }
 
+    /**
+     * Loads the address data from the default table.
+     */
+    public void loadData() throws SQLException {
         // Load addresses from database
         PreparedStatement statement = this.source.getConnection().prepareStatement("SELECT * FROM epicguard_addresses");
         ResultSet rs = statement.executeQuery();
@@ -47,12 +54,14 @@ public class SQLiteProvider implements StorageProvider {
             boolean whitelisted = rs.getBoolean(3);
             String seenNames = rs.getString(4);
 
-            this.storageManager.addresses().put(address, new AddressMeta(blacklisted, whitelisted, seenNames));
+            this.storageManager.addresses().put(address, new AddressMeta(blacklisted, whitelisted, Arrays.asList(seenNames.split(","))));
         }
     }
 
-    @Override
-    public void save() throws SQLException {
+    /**
+     * Inserts address data from memory to the default table.
+     */
+    public void saveData() throws SQLException {
         for (Map.Entry<String, AddressMeta> entry : this.storageManager.addresses().entrySet()) {
             PreparedStatement ps = this.source.getConnection().prepareStatement(
                     "INSERT INTO epicguard_addresses(address, blacklisted, whitelisted, nicknames)" +

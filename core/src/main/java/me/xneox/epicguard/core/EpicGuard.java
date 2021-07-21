@@ -32,6 +32,7 @@ import me.xneox.epicguard.core.util.ConfigUtils;
 import me.xneox.epicguard.core.util.FileUtils;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -81,9 +82,6 @@ public class EpicGuard {
         logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
     }
 
-    /**
-     * Loads the configuration and messages.
-     */
     public void loadConfigurations() {
         File dataFolder = new File(FileUtils.EPICGUARD_DIR);
         dataFolder.mkdir();
@@ -95,11 +93,13 @@ public class EpicGuard {
         this.messages = ConfigUtils.loadConfig(messagesFile, MessagesConfiguration.class);
     }
 
-    /**
-     * Safely shut down the plugin, saving the data.
-     */
     public void shutdown() {
-        this.storageManager.provider().save();
+        try {
+            this.storageManager.database().saveData();
+        } catch (SQLException ex) {
+            this.logger().error("Could not save data to the SQL database during shutdown.");
+            ex.printStackTrace();
+        }
     }
 
     public GuardLogger logger() {

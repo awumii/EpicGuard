@@ -4,6 +4,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.Sender;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
+import me.xneox.epicguard.core.storage.AddressMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -20,21 +21,27 @@ public class WhitelistCommand implements SubCommand {
             return;
         }
 
+        AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[2]);
+        if (meta == null) {
+            sender.sendMessage(config.prefix() + config.invalidArgument());
+            return;
+        }
+
         if (args[1].equalsIgnoreCase("add")) {
-            if (epicGuard.storageManager().isWhitelisted(args[2])) {
+            if (meta.whitelisted()) {
                 sender.sendMessage(config.prefix() + config.alreadyWhitelisted().replace("{USER}", args[2]));
                 return;
             }
 
-            epicGuard.storageManager().whitelistPut(args[2]);
+            meta.whitelisted(true);
             sender.sendMessage(config.prefix() + config.whitelistAdd().replace("{USER}", args[2]));
         } else if (args[1].equalsIgnoreCase("remove")) {
-            if (!epicGuard.storageManager().isWhitelisted(args[2])) {
+            if (!meta.whitelisted()) {
                 sender.sendMessage(config.prefix() + config.notWhitelisted().replace("{USER}", args[2]));
                 return;
             }
 
-            epicGuard.storageManager().removeWhitelist(args[2]);
+            meta.whitelisted(false);
             sender.sendMessage(config.prefix() + config.whitelistRemove().replace("{USER}", args[2]));
         }
     }
@@ -46,7 +53,7 @@ public class WhitelistCommand implements SubCommand {
         }
 
         if (args[1].equalsIgnoreCase("remove")) {
-            return epicGuard.storageManager().provider().addressWhitelist();
+            return epicGuard.storageManager().viewAddresses(AddressMeta::whitelisted);
         }
         return new ArrayList<>();
     }

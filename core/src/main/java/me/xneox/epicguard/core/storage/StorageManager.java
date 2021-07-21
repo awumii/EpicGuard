@@ -15,63 +15,64 @@
 
 package me.xneox.epicguard.core.storage;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.net.InetAddresses;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.storage.impl.SQLiteProvider;
 import me.xneox.epicguard.core.user.PendingUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * This class manages the stored data and some global cache.
- *
- * TODO: Other storage implementations than just JSON.
  */
-@SuppressWarnings("UnstableApiUsage")
 public class StorageManager {
-    private final StorageProvider provider;
-    private final Map<String, AddressMeta> addresses = new HashMap<>();
-    private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server.
+    private final BiMap<String, AddressMeta> addresses = HashBiMap.create();
+    private SQLDatabase database;
+
+    private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
 
     public StorageManager(EpicGuard epicGuard) {
-        this.provider = new SQLiteProvider(this);
         try {
-            this.provider.load();
-            this.provider.load();
+            this.database = new SQLDatabase(this);
+            this.database.loadData();
         } catch (Exception e) {
             epicGuard.logger().error("Could not load plugin's storage");
             e.printStackTrace();
         }
     }
 
-    public Map<String, AddressMeta> addresses() {
-        return this.addresses;
-    }
-
     /**
-     * Retrieves a list of nicknames used by specified IP Address.
+     * Returns an {@link AddressMeta} for the specified address.
+     * Creates a new AddressMeta if it doesen't exist for this address.
      */
     @NotNull
-    public List<String> accounts(@NotNull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
-        return this.provider.accountMap().getOrDefault(user.address(), new ArrayList<>());
+    public AddressMeta addressMeta(@NotNull String address) {
+        Validate.notNull(address, "Can't get meta for null address!");
+        return this.addresses.computeIfAbsent(address, s -> new AddressMeta(false, false, new ArrayList<>()));
     }
 
     /**
-     * If the user's address is not in the accountMap, it will be added.
+     * When an address is specified:
+     *   - Redirects to the {@link #addressMeta(String)} method.
+     *   - Never returns null.
+     *
+     * When an nickname is specified:
+     *   - Tries to detect last used address by this nickname.
+     *   - If found, redirects to the {@link #addressMeta(String)} method.
+     *   - If not found, returns null.
      */
-    public void updateAccounts(@NotNull PendingUser user) {
-        Validate.notNull(user, "BotUser cannot be null!");
-
-        List<String> accounts = this.accounts(user);
-        if (!accounts.contains(user.nickname())) {
-            accounts.add(user.nickname());
-        }
-
-        this.provider.accountMap().put(user.address(), accounts);
+    @Nullable
+    public AddressMeta resolveAddressMeta(@NotNull String value) {
+        Validate.notNull(value, "Can't resolve meta for null value!");
+        //noinspection UnstableApiUsage
+        String address = InetAddresses.isInetAddress(value) ? value : lastSeenAddress(value);
+        return address != null ? addressMeta(address) : null;
     }
 
     /**
@@ -79,58 +80,44 @@ public class StorageManager {
      * Returns null if not found.
      */
     @Nullable
-    public String findByNickname(@NotNull String nickname) {
-        return this.provider.accountMap().entrySet().stream()
-                .filter(entry -> entry.getValue().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
+    public String lastSeenAddress(@NotNull String nickname) {
+        return this.addresses.entrySet().stream()
+                .filter(entry -> entry.getValue().nicknames().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
                 .findFirst()
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
 
-    public void blacklistPut(@NotNull String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            this.provider.addressBlacklist().add(value);
-        } else {
-            this.provider.nameBlacklist().add(value);
+    /**
+     * Checks if the address meta of connecting user contains his current nickname.
+     * If absent, it is added.
+     */
+    public void updateAccounts(@NotNull PendingUser user) {
+        List<String> accounts = addressMeta(user.address()).nicknames();
+        if (!accounts.contains(user.nickname())) {
+            accounts.add(user.nickname());
         }
     }
 
-    public void whitelistPut(@NotNull String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            this.provider.addressWhitelist().add(value);
-        } else {
-            this.provider.nameWhitelist().add(value);
-        }
+    /**
+     * A legacy method for viewing addresses that meet a specific condition.
+     * For example, this can return whitelisted or blacklisted addresses.
+     *
+     * Returned list is immutable, used only for statistics and command suggestions.
+     */
+    public List<String> viewAddresses(Predicate<AddressMeta> predicate) {
+        return this.addresses.entrySet().stream()
+                .filter(entry -> predicate.test(entry.getValue()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toUnmodifiableList()); //TODO: Replace with java 16's toList
     }
 
-    public boolean isBlacklisted(String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            return this.provider.addressBlacklist().contains(value);
-        }
-        return this.provider.nameBlacklist().contains(value);
+    public BiMap<String, AddressMeta> addresses() {
+        return this.addresses;
     }
 
-    public boolean isWhitelisted(String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            return this.provider.addressWhitelist().contains(value);
-        }
-        return this.provider.nameWhitelist().contains(value);
-    }
-
-    public void removeBlacklist(String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            this.provider.addressBlacklist().remove(value);
-        } else {
-            this.provider.nameBlacklist().remove(value);
-        }
-    }
-
-    public void removeWhitelist(String value) {
-        if (InetAddresses.isInetAddress(value)) {
-            this.provider.addressWhitelist().remove(value);
-        } else {
-            this.provider.nameWhitelist().remove(value);
-        }
+    public SQLDatabase database() {
+        return this.database;
     }
 
     @NotNull

@@ -5,10 +5,8 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.Sender;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.storage.AddressMeta;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class AnalyzeCommand implements SubCommand {
     @Override
@@ -20,32 +18,24 @@ public class AnalyzeCommand implements SubCommand {
             return;
         }
 
-        String address = null;
-        if (InetAddresses.isInetAddress(args[1])) {
-            address = args[1];
-        } else {
-            String possibleAddress = epicGuard.storageManager().findByNickname(args[1]);
-            if (possibleAddress != null) {
-                address = possibleAddress;
-            }
-        }
-
-        if (address == null) {
-            sender.sendMessage(config.prefix() + config.analysisFailed());
+        AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[1]);
+        if (meta == null) {
+            sender.sendMessage(config.prefix() + config.invalidArgument());
             return;
         }
 
-        List<String> accounts = epicGuard.storageManager().accounts(new PendingUser(address, null));
+        //noinspection UnstableApiUsage
+        String address = InetAddresses.isInetAddress(args[1]) ? args[1] : epicGuard.storageManager().addresses().inverse().get(meta);
 
         for (String line : config.analyzeCommand()) {
             sender.sendMessage(line
                     .replace("{ADDRESS}", address)
                     .replace("{COUNTRY}", epicGuard.geoManager().countryCode(address))
                     .replace("{CITY}", epicGuard.geoManager().city(address))
-                    .replace("{WHITELISTED}", epicGuard.storageManager().isWhitelisted(address) ? "&a✔" : "&c✖")
-                    .replace("{BLACKLISTED}", epicGuard.storageManager().isBlacklisted(address) ? "&a✔" : "&c✖")
-                    .replace("{ACCOUNT-AMOUNT}", String.valueOf(accounts.size()))
-                    .replace("{NICKNAMES}", String.join(", ", accounts)));
+                    .replace("{WHITELISTED}", meta.whitelisted() ? "&a✔" : "&c✖")
+                    .replace("{BLACKLISTED}", meta.blacklisted() ? "&a✔" : "&c✖")
+                    .replace("{ACCOUNT-AMOUNT}", String.valueOf(meta.nicknames().size()))
+                    .replace("{NICKNAMES}", String.join(", ", meta.nicknames())));
         }
     }
 }
