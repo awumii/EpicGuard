@@ -60,8 +60,10 @@ public class MessagesConfiguration {
                 "",
                 " &8/&fguard status &8- &7Toggle attack status on actionbar.",
                 " &8/&fguard reload &8- &7Reload config and messages.",
+                " &8/&fguard save &8- &7Save data to the database.",
                 " &8/&fguard analyze <nick/address> &8- &7Perform detailed analysis on specified user.",
-                " &8/&fguard whitelist <add/remove> <nick/address> &8- &7whitelist/unwhitelist an address or nickname.",
+                " &8/&fguard whitelist <add/remove> <nick/address> &8- &7Whitelist/unwhitelist an address or nickname.",
+                " &8/&fguard blacklist <add/remove> <nick/address> &8- &7Blacklist/unblacklist an address or nickname.",
                 "");
 
         private List<String> analyzeCommand = Arrays.asList(

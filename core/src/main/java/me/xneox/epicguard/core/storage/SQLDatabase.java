@@ -5,10 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.FileUtils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -76,17 +73,20 @@ public class SQLDatabase {
      */
     public void saveData() throws SQLException {
         for (Map.Entry<String, AddressMeta> entry : this.storageManager.addresses().entrySet()) {
-            PreparedStatement ps = this.source.getConnection().prepareStatement(
-                    "INSERT OR REPLACE INTO epicguard_addresses" +
-                    " (address, blacklisted, whitelisted, nicknames)" +
-                    " VALUES (?, ?, ?, ?)");
 
-            AddressMeta meta = entry.getValue();
-            ps.setString(1, entry.getKey());
-            ps.setBoolean(2, meta.blacklisted());
-            ps.setBoolean(3, meta.whitelisted());
-            ps.setString(4, String.join(",", meta.nicknames()));
-            ps.execute();
+            try (Connection connection = this.source.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(
+                         "INSERT OR REPLACE INTO epicguard_addresses" +
+                            " (address, blacklisted, whitelisted, nicknames)" +
+                            " VALUES (?, ?, ?, ?)");) {
+
+                AddressMeta meta = entry.getValue();
+                ps.setString(1, entry.getKey());
+                ps.setBoolean(2, meta.blacklisted());
+                ps.setBoolean(3, meta.whitelisted());
+                ps.setString(4, String.join(",", meta.nicknames()));
+                ps.execute();
+            }
         }
     }
 }

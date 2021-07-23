@@ -25,6 +25,7 @@ public class CommandExecutor {
         this.commandMap.put("reload", new ReloadCommand());
         this.commandMap.put("status", new StatusCommand());
         this.commandMap.put("whitelist", new WhitelistCommand());
+        this.commandMap.put("save", new SaveCommand());
     }
 
     public void handle(@NotNull String[] args, @NotNull Sender<?> sender) {
