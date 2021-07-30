@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.user.OnlineUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 /**
  * Handler for the PlayerQuit/Disconnect listeners.
- * Used for removing the {@link me.xneox.epicguard.core.user.User} instance from cache.
+ * Used for removing the {@link OnlineUser} instance from cache.
  */
 public class DisconnectHandler {
     private final EpicGuard epicGuard;

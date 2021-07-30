@@ -16,7 +16,7 @@
 package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -46,17 +46,17 @@ public interface Platform {
      * Send an action bar message to the specified user (find the player using User#getUUID).
      *
      * @param message Message to be sent.
-     * @param user The user the message has to be sent to.
+     * @param onlineUser The user the message has to be sent to.
      */
-    void sendActionBar(@NotNull String message, @NotNull User user);
+    void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser);
 
     /**
      * Kicks the user from the server with a specified message (find the player using User#getUUID).
      *
-     * @param user The user to be kicked.
+     * @param onlineUser The user to be kicked.
      * @param message The kick message.
      */
-    void disconnectUser(@NotNull User user, @NotNull String message);
+    void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message);
 
     /**
      * Schedules a task to be run asynchronously after the specified time (in seconds).
@@ -72,5 +72,5 @@ public interface Platform {
      * @param task The task to be scheduled.
      * @param seconds Delay in seconds between each runs of the task.
      */
-    void runTaskRepeating(@NotNull Runnable task, long seconds);
+    void scheduleRepeatingTask(@NotNull Runnable task, long seconds);
 }

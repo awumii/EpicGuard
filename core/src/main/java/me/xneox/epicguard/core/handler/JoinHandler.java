@@ -16,8 +16,8 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.WhitelistMode;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.storage.AddressMeta;
+import me.xneox.epicguard.core.user.OnlineUser;
 import me.xneox.epicguard.core.util.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -46,20 +46,14 @@ public class JoinHandler {
         Validate.notNull(uuid, "UUID cannot be null!");
         Validate.notNull(address, "Address cannot be null!");
 
-        User user = this.epicGuard.userManager().getOrCreate(uuid);
+        OnlineUser onlineUser = this.epicGuard.userManager().getOrCreate(uuid);
 
         // Schedule a delayed task to whitelist the player.
-        WhitelistMode mode = WhitelistMode.valueOf(this.epicGuard.config().autoWhitelist().mode());
-        if (mode != WhitelistMode.DISABLED) {
+        if (this.epicGuard.config().autoWhitelist().enabled()) {
             this.epicGuard.platform().runTaskLater(() -> {
-                if (user != null) {
-                    if ((mode == WhitelistMode.MIXED || mode == WhitelistMode.ADDRESS) && !this.epicGuard.storageManager().isWhitelisted(address)) {
-                        this.epicGuard.storageManager().whitelistPut(address);
-                    }
-
-                    if ((mode == WhitelistMode.MIXED || mode == WhitelistMode.NICKNAME) && !this.epicGuard.storageManager().isWhitelisted(nickname)) {
-                        this.epicGuard.storageManager().whitelistPut(nickname);
-                    }
+                if (onlineUser != null) { // check if player has logged out
+                    AddressMeta meta = this.epicGuard.storageManager().addressMeta(address);
+                    meta.whitelisted(true);
                 }
             }, this.epicGuard.config().autoWhitelist().timeOnline());
         }
@@ -67,8 +61,8 @@ public class JoinHandler {
         // Schedule a delayed task to check if the player has sent the Settings packet.
         if (this.epicGuard.config().settingsCheck().enabled()) {
             this.epicGuard.platform().runTaskLater(() -> {
-                if (user != null && !user.settingsChanged()) {
-                    this.epicGuard.platform().disconnectUser(user, StringUtils.buildMultilineString(this.epicGuard.messages().disconnect().settingsPacket()));
+                if (onlineUser != null && !onlineUser.settingsChanged()) {
+                    this.epicGuard.platform().disconnectUser(onlineUser, StringUtils.buildMultilineString(this.epicGuard.messages().disconnect().settingsPacket()));
                 }
             }, this.epicGuard.config().settingsCheck().delay());
         }

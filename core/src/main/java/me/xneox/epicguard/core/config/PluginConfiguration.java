@@ -53,6 +53,7 @@ public class PluginConfiguration {
 
     private ConsoleFilter consoleFilter = new ConsoleFilter();
     private Misc misc = new Misc();
+    private Storage storage = new Storage();
 
     @ConfigSerializable
     public static class Geographical {
@@ -238,18 +239,15 @@ public class PluginConfiguration {
 
     @ConfigSerializable
     public static class AutoWhitelist {
-        @Comment("ADDRESS - Only whitelist the user's IP address.\n" +
-                "NICKNAME - Only whitelist the user's nickname.\n" +
-                "MIXED - Whitelist the user's IP address AND nickname.\n" +
-                "DISABLED - Disable this feature")
-        private String mode = "MIXED";
+        @Comment("Enable automatic whitelisting of the user's address.")
+        private boolean enabled = false;
 
         @Comment("Time in seconds the player must be online\n" +
                 "to be added to the EpicGuard's whitelist.")
-        private int timeOnline = 240;
+        private int timeOnline = 600;
 
-        public String mode() {
-            return this.mode;
+        public boolean enabled() {
+            return this.enabled;
         }
 
         public int timeOnline() {
@@ -295,7 +293,7 @@ public class PluginConfiguration {
         private long autoSaveInterval = 10L;
 
         @Comment("Enabling this will log positive bot detections in the console.")
-        private boolean debug;
+        private boolean debug = false;
 
         public String reconnectCheckMode() {
             return this.reconnectCheckMode;
@@ -327,6 +325,45 @@ public class PluginConfiguration {
 
         public boolean debug() {
             return this.debug;
+        }
+    }
+
+    @ConfigSerializable
+    public static class Storage {
+
+        @Comment("false - use SQLite for storage\n" +
+                "true - use MYSQL for storage" +
+                "(!) This option requires a restart. Changing storage type will reset your current data.")
+        private boolean useMySQL = false;
+
+        private String host = "127.0.0.1";
+        private int port = 3306;
+        private String database = "database";
+        private String user = "username";
+        private String password = "password";
+
+        public boolean useMySQL() {
+            return this.useMySQL;
+        }
+
+        public String host() {
+            return this.host;
+        }
+
+        public int port() {
+            return this.port;
+        }
+
+        public String database() {
+            return this.database;
+        }
+
+        public String user() {
+            return this.user;
+        }
+
+        public String password() {
+            return this.password;
         }
     }
 
@@ -364,5 +401,9 @@ public class PluginConfiguration {
 
     public Misc misc() {
         return this.misc;
+    }
+
+    public Storage storage() {
+        return this.storage;
     }
 }

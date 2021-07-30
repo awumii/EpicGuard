@@ -2,14 +2,20 @@ plugins {
     id "java"
 }
 
+repositories {
+    maven { url "https://repo.aikar.co/content/groups/aikar/" }
+}
+
 dependencies {
     // Shaded dependencies.
     implementation "com.maxmind.geoip2:geoip2:2.15.0"
     implementation "org.apache.commons:commons-compress:1.20"
     implementation "org.apache.commons:commons-text:1.9"
     implementation "com.google.guava:guava:30.1.1-jre"
-    implementation "com.github.simplix-softworks:SimplixStorage:3.2.3"
     implementation "org.spongepowered:configurate-hocon:4.1.1"
+    implementation "org.jetbrains:annotations:21.0.1"
+    implementation "com.zaxxer:HikariCP:4.0.3"
+    implementation "co.aikar:idb-core:1.0.0-SNAPSHOT"
 
     // Provided dependencies.
     compileOnly "org.apache.logging.log4j:log4j-core:2.14.1"
@@ -19,7 +25,6 @@ dependencies {
 shadowJar {
     minimize()
 
-    relocate "org.bstats", "me.xneox.epicguard.libs.bstats"
     relocate "org.spongepowered.configurate", "me.xneox.epicguard.libs.configurate"
     relocate "org.apache.commons", "me.xneox.epicguard.libs.apachecommons"
     relocate "com.fasterxml", "me.xneox.epicguard.libs.fasterxml"
@@ -27,7 +32,8 @@ shadowJar {
     relocate "com.google.common", "me.xneox.epicguard.libs.googlecommons"
     relocate "com.typesafe.config", "me.xneox.epicguard.libs.config"
     relocate "io.leangen.geantyref", "me.xneox.epicguard.libs.geantyref"
-    relocate "de.leonhard.storage", "me.xneox.epicguard.libs.storage"
+    relocate "com.zaxxer.hikari", "me.xneox.epicguard.libs.hikari"
+    relocate "co.aikar.idb", "me.xneox.epicguard.libs.idb"
 
     // Exclude useless text files
     exclude "mozilla/"

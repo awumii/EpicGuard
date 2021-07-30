@@ -4,7 +4,7 @@ import com.google.common.collect.EvictingQueue;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class NameSimilarityCheck extends Check {
     }
 
     @Override
-    public boolean handle(@NotNull PendingUser user) {
+    public boolean handle(@NotNull ConnectingUser user) {
         CheckMode mode = CheckMode.valueOf(this.epicGuard.config().nameSimilarityCheck().checkMode());
 
         for (String nick : this.nameHistory) {

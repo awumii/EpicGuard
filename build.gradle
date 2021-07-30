@@ -3,8 +3,10 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
-group = "me.xneox"
-version = "6.0.0"
+allprojects {
+    group = "me.xneox"
+    version = "6.0.0"
+}
 
 subprojects {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -26,6 +28,6 @@ tasks.build.dependsOn tasks.shadowJar
 dependencies {
     implementation project(":core")
     implementation project(":bukkit")
-    implementation project("bungee")
-    implementation project("velocity")
+    implementation project(":bungee")
+    implementation project(":velocity")
 }

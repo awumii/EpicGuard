@@ -17,7 +17,7 @@ package me.xneox.epicguard.core.task;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
-import me.xneox.epicguard.core.user.User;
+import me.xneox.epicguard.core.user.OnlineUser;
 
 /**
  * This task displays current attack status on the actionbar of users who enabled them.
@@ -37,7 +37,7 @@ public class MonitorTask implements Runnable {
                 .replace("%status%", this.epicGuard.attackManager().isAttack() ? config.actionbarAttack() : config.actionbarNoAttack());
 
         this.epicGuard.userManager().users().stream()
-                .filter(User::notifications)
+                .filter(OnlineUser::notifications)
                 .forEach(user -> this.epicGuard.platform().sendActionBar(monitor, user));
 
         // Because this task is repeating every second, we can reset the connections/s counter.

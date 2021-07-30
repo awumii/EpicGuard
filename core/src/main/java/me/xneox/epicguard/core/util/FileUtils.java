@@ -27,6 +27,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public final class FileUtils {
+    public static final String EPICGUARD_DIR = "plugins/EpicGuard";
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
         Validate.notNull(urlFrom, "Download URL cannot be null!");

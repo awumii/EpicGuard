@@ -50,7 +50,7 @@ public class GeoManager {
         this.logger = logger;
         logger.info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
-        String parent = "plugins/EpicGuard/data";
+        String parent = FileUtils.EPICGUARD_DIR + "/data";
         File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
         File cityDatabase = new File(parent, "GeoLite2-City.mmdb");
         File countryArchive = new File(parent, "GeoLite2-Country.tar.gz");

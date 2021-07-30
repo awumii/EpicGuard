@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.handler;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
-import me.xneox.epicguard.core.user.PendingUser;
+import me.xneox.epicguard.core.user.ConnectingUser;
 import me.xneox.epicguard.core.util.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -69,13 +69,12 @@ public class DetectionHandler {
         }
 
         // Check if the user is whitelisted, if yes, return empty result (undetected).
-        if (this.epicGuard.storageManager().isWhitelisted(address)
-                || this.epicGuard.storageManager().isWhitelisted(nickname)) {
+        if (this.epicGuard.storageManager().addressMeta(address).whitelisted()) {
             return Optional.empty();
         }
 
         // Performing all checks, we are using PendingUser
-        PendingUser user = new PendingUser(address, nickname);
+        ConnectingUser user = new ConnectingUser(address, nickname);
         for (Check check : this.checks) {
             if (check.handle(user)) {
                 if (this.epicGuard.config().misc().debug()) {
