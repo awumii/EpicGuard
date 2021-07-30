@@ -341,7 +341,6 @@ public class PluginConfiguration {
         private String database = "database";
         private String user = "username";
         private String password = "password";
-        private boolean useSSL = false;
 
         public boolean useMySQL() {
             return this.useMySQL;
@@ -365,10 +364,6 @@ public class PluginConfiguration {
 
         public String password() {
             return this.password;
-        }
-
-        public boolean useSSL() {
-            return this.useSSL;
         }
     }
 
