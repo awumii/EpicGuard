@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bukkit.listener;
+package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.PingHandler;

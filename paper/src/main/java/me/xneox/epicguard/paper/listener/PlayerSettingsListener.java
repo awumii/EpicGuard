@@ -13,26 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bukkit.listener;
+package me.xneox.epicguard.paper.listener;
 
-import me.xneox.epicguard.bukkit.ChatUtils;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.DetectionHandler;
+import me.xneox.epicguard.core.handler.SettingsHandler;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerLocaleChangeEvent;
 
-public class PlayerPreLoginListener extends DetectionHandler implements Listener {
-    public PlayerPreLoginListener(EpicGuard epicGuard) {
+public class PlayerSettingsListener extends SettingsHandler implements Listener {
+    public PlayerSettingsListener(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPreLogin(AsyncPlayerPreLoginEvent event) {
-        String address = event.getAddress().getHostAddress();
-        String nickname = event.getName();
-
-        this.handle(address, nickname).ifPresent(result -> event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatUtils.colored(result)));
+    @EventHandler
+    public void onSettingsChanged(PlayerLocaleChangeEvent event) {
+        this.handle(event.getPlayer().getUniqueId());
     }
 }

@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.handler;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import me.xneox.epicguard.core.user.OnlineUser;
-import me.xneox.epicguard.core.util.StringUtils;
+import me.xneox.epicguard.core.util.MessageUtils;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,7 +62,7 @@ public class JoinHandler {
         if (this.epicGuard.config().settingsCheck().enabled()) {
             this.epicGuard.platform().runTaskLater(() -> {
                 if (onlineUser != null && !onlineUser.settingsChanged()) {
-                    this.epicGuard.platform().disconnectUser(onlineUser, StringUtils.buildMultilineString(this.epicGuard.messages().disconnect().settingsPacket()));
+                    this.epicGuard.platform().disconnectUser(onlineUser, MessageUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
                 }
             }, this.epicGuard.config().settingsCheck().delay());
         }

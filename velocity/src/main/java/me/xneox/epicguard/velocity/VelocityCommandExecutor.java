@@ -1,24 +1,25 @@
-package me.xneox.epicguard.velocity.command;
+package me.xneox.epicguard.velocity;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.command.CommandExecutor;
 
 import java.util.List;
 
-public class VelocityCommandExecutor extends CommandExecutor implements SimpleCommand {
+public class VelocityCommandExecutor implements SimpleCommand {
+    private final EpicGuard epicGuard;
+
     public VelocityCommandExecutor(EpicGuard epicGuard) {
-        super(epicGuard);
+        this.epicGuard = epicGuard;
     }
 
     @Override
     public void execute(Invocation invocation) {
-        this.handle(invocation.arguments(), new VelocityCommandSender(invocation.source()));
+        this.epicGuard.commandHandler().handleCommand(invocation.arguments(), invocation.source());
     }
 
     @Override
     public List<String> suggest(Invocation invocation) {
-        return (List<String>) this.onTabComplete(invocation.arguments());
+        return (List<String>) this.epicGuard.commandHandler().handleSuggestions(invocation.arguments());
     }
 
     @Override

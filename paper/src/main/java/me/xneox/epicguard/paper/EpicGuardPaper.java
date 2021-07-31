@@ -13,17 +13,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bukkit;
+package me.xneox.epicguard.paper;
 
-import me.xneox.epicguard.bukkit.command.BukkitCommandExecutor;
-import me.xneox.epicguard.bukkit.listener.*;
+import me.xneox.epicguard.paper.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -31,8 +30,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class EpicGuardBukkit extends JavaPlugin implements Platform {
+public class EpicGuardPaper extends JavaPlugin implements Platform {
     private EpicGuard epicGuard;
     private GuardLogger logger;
 
@@ -74,18 +74,15 @@ public class EpicGuardBukkit extends JavaPlugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
-        Player player = Bukkit.getPlayer(onlineUser.uuid());
-        if (player != null) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.colored(message)));
-        }
+    public @Nullable Audience audience(OnlineUser user) {
+        return Bukkit.getPlayer(user.uuid());
     }
 
     @Override
-    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
         Player player = Bukkit.getPlayer(onlineUser.uuid());
         if (player != null) {
-            player.kickPlayer(ChatUtils.colored(message));
+            player.kick(message);
         }
     }
 

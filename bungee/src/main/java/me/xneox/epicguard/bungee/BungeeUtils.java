@@ -1,11 +1,12 @@
 package me.xneox.epicguard.bungee;
 
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public final class BungeeUtils {
-    public static TextComponent createComponent(String text) {
-        return new TextComponent(ChatColor.translateAlternateColorCodes('&', text));
+    public static BaseComponent[] toLegacyComponent(Component component) {
+        return BungeeComponentSerializer.get().serialize(component);
     }
 
     private BungeeUtils() {}

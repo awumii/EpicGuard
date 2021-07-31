@@ -23,20 +23,20 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
-import me.xneox.epicguard.velocity.command.VelocityCommandExecutor;
 import me.xneox.epicguard.velocity.listener.*;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(
@@ -91,25 +91,18 @@ public class EpicGuardVelocity implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
-        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.sendActionBar(AdventureUtils.createComponent(message)));
-    }
-
-    @Override
-    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
-        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(AdventureUtils.createComponent(message)));
-    }
-
-    @Override
     public String version() {
-        Optional<PluginContainer> container = this.server.getPluginManager().fromInstance(this);
-        if (container.isPresent()) {
-            Optional<String> version = container.get().getDescription().getVersion();
-            if (version.isPresent()) {
-                return version.get();
-            }
-        }
-        return null;
+        return "{version}";
+    }
+
+    @Override
+    public @Nullable Audience audience(@NotNull OnlineUser user) {
+        return this.server.getPlayer(user.uuid()).orElse(null);
+    }
+
+    @Override
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
+        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(message));
     }
 
     @Override

@@ -2,6 +2,9 @@ package me.xneox.epicguard.core.command;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.sub.*;
+import me.xneox.epicguard.core.util.MessageUtils;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,11 +15,11 @@ import java.util.Map;
 /**
  * This class holds all registered subcommands, and handles the user command/tab suggestion input.
  */
-public class CommandExecutor {
+public class CommandHandler {
     private final Map<String, SubCommand> commandMap = new HashMap<>();
     private final EpicGuard epicGuard;
 
-    public CommandExecutor(EpicGuard epicGuard) {
+    public CommandHandler(EpicGuard epicGuard) {
         this.epicGuard = epicGuard;
 
         this.commandMap.put("analyze", new AnalyzeCommand());
@@ -28,25 +31,25 @@ public class CommandExecutor {
         this.commandMap.put("save", new SaveCommand());
     }
 
-    public void handle(@NotNull String[] args, @NotNull Sender<?> sender) {
+    public void handleCommand(@NotNull String[] args, @NotNull Audience audience) {
         String prefix = this.epicGuard.messages().command().prefix();
         if (args.length < 1) {
-            sender.sendMessage(prefix + "&7You are running &6EpicGuard v" + this.epicGuard.platform().version()
-                    + "&7. Run &c/guard help &7to see available commands and statistics.");
+            audience.sendMessage(Component.text("&7You are running &6EpicGuard v" + this.epicGuard.platform().version()
+                    + "&7. Run &c/guard help &7to see available commands and statistics."));
             return;
         }
 
         SubCommand command = this.commandMap.get(args[0]);
         if (command == null) {
-            sender.sendMessage(prefix + this.epicGuard.messages().command().unknownCommand());
+            audience.sendMessage(MessageUtils.component(prefix + this.epicGuard.messages().command().unknownCommand()));
             return;
         }
 
-        command.execute(sender, args, this.epicGuard);
+        command.execute(audience, args, this.epicGuard);
     }
 
     @NotNull
-    public Collection<String> onTabComplete(@NotNull String[] args) {
+    public Collection<String> handleSuggestions(@NotNull String[] args) {
         // If no argument is specified, send all available subcommands.
         if (args.length == 1) {
             return this.commandMap.keySet();

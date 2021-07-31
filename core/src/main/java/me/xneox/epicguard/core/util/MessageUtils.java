@@ -15,23 +15,38 @@
 
 package me.xneox.epicguard.core.util;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public final class StringUtils {
+public final class MessageUtils {
+    private static final LegacyComponentSerializer SERIALIZER = LegacyComponentSerializer.builder()
+            .character('&')
+            .hexCharacter('#')
+            .hexColors()
+            .build();
+
+    @NotNull
+    public static TextComponent component(String message) {
+        return SERIALIZER.deserialize(message);
+    }
+
     /**
      * Builds a multiline string for disconnect messages.
      */
     @NotNull
-    public static String buildMultilineString(@NotNull List<String> list) {
+    public static TextComponent multilineComponent(@NotNull List<String> list) {
         Validate.notNull(list, "Kick message cannot be null!");
 
         StringBuilder builder = new StringBuilder();
-        list.forEach(line -> builder.append(line).append("\n"));
-        return builder.toString();
+        for (String line : list) {
+            builder.append(line).append("\n");
+        }
+        return component(builder.toString());
     }
 
-    private StringUtils() {}
+    private MessageUtils() {}
 }

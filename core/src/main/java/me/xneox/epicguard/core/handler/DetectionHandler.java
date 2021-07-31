@@ -19,7 +19,8 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.*;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import me.xneox.epicguard.core.util.StringUtils;
+import me.xneox.epicguard.core.util.MessageUtils;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,7 +60,7 @@ public class DetectionHandler {
      * @return Disconnect message, or an empty Optional if undetected.
      */
     @NotNull
-    public Optional<String> handle(@NotNull String address, @NotNull String nickname) {
+    public Optional<Component> handle(@NotNull String address, @NotNull String nickname) {
         Validate.notNull(address, "Address cannot be null!");
         Validate.notNull(nickname, "Nickname cannot be null!");
 
@@ -83,7 +84,7 @@ public class DetectionHandler {
                 }
 
                 // Positive detection, kicking the player!
-                return Optional.of(StringUtils.buildMultilineString(check.kickMessage()));
+                return Optional.of(MessageUtils.multilineComponent(check.kickMessage()));
             }
         }
 

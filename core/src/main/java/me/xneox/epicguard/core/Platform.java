@@ -17,7 +17,10 @@ package me.xneox.epicguard.core;
 
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -43,12 +46,10 @@ public interface Platform {
     String version();
 
     /**
-     * Send an action bar message to the specified user (find the player using User#getUUID).
-     *
-     * @param message Message to be sent.
-     * @param onlineUser The user the message has to be sent to.
+     * Returns an audience for the provided user.
      */
-    void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser);
+    @Nullable
+    Audience audience(@NotNull OnlineUser user);
 
     /**
      * Kicks the user from the server with a specified message (find the player using User#getUUID).
@@ -56,7 +57,7 @@ public interface Platform {
      * @param onlineUser The user to be kicked.
      * @param message The kick message.
      */
-    void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message);
+    void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message);
 
     /**
      * Schedules a task to be run asynchronously after the specified time (in seconds).

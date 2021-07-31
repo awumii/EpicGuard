@@ -13,22 +13,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bukkit.listener;
+package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.DisconnectHandler;
+import me.xneox.epicguard.core.handler.DetectionHandler;
+import me.xneox.epicguard.core.util.MessageUtils;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-public class PlayerQuitListener extends DisconnectHandler implements Listener {
-
-    public PlayerQuitListener(EpicGuard epicGuard) {
+public class PlayerPreLoginListener extends DetectionHandler implements Listener {
+    public PlayerPreLoginListener(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPreLogin(AsyncPlayerPreLoginEvent event) {
+        String address = event.getAddress().getHostAddress();
+        String nickname = event.getName();
+
+        this.handle(address, nickname).ifPresent(result ->
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, result));
     }
 }

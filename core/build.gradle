@@ -8,6 +8,8 @@ repositories {
 
 dependencies {
     // Shaded dependencies.
+    implementation "net.kyori:adventure-api:4.8.1"
+    implementation "net.kyori:adventure-text-serializer-legacy:4.8.1"
     implementation "com.maxmind.geoip2:geoip2:2.15.0"
     implementation "org.apache.commons:commons-compress:1.21"
     implementation "org.apache.commons:commons-text:1.9"

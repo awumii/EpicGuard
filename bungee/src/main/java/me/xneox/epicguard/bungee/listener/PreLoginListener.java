@@ -36,7 +36,7 @@ public class PreLoginListener extends DetectionHandler implements Listener {
 
         this.handle(address, nickname).ifPresent(result -> {
             event.setCancelled(true);
-            event.setCancelReason(BungeeUtils.createComponent(result));
+            event.setCancelReason(BungeeUtils.toLegacyComponent(result));
         });
     }
 }

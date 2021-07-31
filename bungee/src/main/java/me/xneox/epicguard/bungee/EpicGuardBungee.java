@@ -15,27 +15,31 @@
 
 package me.xneox.epicguard.bungee;
 
-import me.xneox.epicguard.bungee.command.BungeeCommandExecutor;
 import me.xneox.epicguard.bungee.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.command.CommandExecutor;
 import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
-import net.md_5.bungee.api.ChatMessageType;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
 public class EpicGuardBungee extends Plugin implements Platform {
     private EpicGuard epicGuard;
     private GuardLogger logger;
+
+    private BungeeAudiences adventure;
 
     @Override
     public void onEnable() {
@@ -49,6 +53,7 @@ public class EpicGuardBungee extends Plugin implements Platform {
         }
 
         this.epicGuard = new EpicGuard(this);
+        this.adventure = BungeeAudiences.create(this);
 
         PluginManager pm = this.getProxy().getPluginManager();
         pm.registerListener(this, new PreLoginListener(this.epicGuard));
@@ -57,7 +62,7 @@ public class EpicGuardBungee extends Plugin implements Platform {
         pm.registerListener(this, new ServerPingListener(this.epicGuard));
         pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
-        pm.registerCommand(this, new BungeeCommandExecutor(new CommandExecutor(this.epicGuard)));
+        pm.registerCommand(this, new BungeeCommandExecutor(this));
 
         new Metrics(this, 5956);
     }
@@ -73,18 +78,22 @@ public class EpicGuardBungee extends Plugin implements Platform {
     }
 
     @Override
-    public void sendActionBar(@NotNull String message, @NotNull OnlineUser onlineUser) {
-        ProxyServer.getInstance().getPlayer(onlineUser.uuid()).sendMessage(ChatMessageType.ACTION_BAR, BungeeUtils.createComponent(message));
-    }
-
-    @Override
-    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull String message) {
-        ProxyServer.getInstance().getPlayer(onlineUser.uuid()).disconnect(BungeeUtils.createComponent(message));
-    }
-
-    @Override
     public String version() {
         return this.getDescription().getVersion();
+    }
+
+    @Override
+    public @Nullable Audience audience(@NotNull OnlineUser user) {
+        ProxiedPlayer player = ProxyServer.getInstance().getPlayer(user.uuid());
+        if (player != null) {
+            return this.adventure.player(player);
+        }
+        return null;
+    }
+
+    @Override
+    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component component) {
+        ProxyServer.getInstance().getPlayer(onlineUser.uuid()).disconnect(BungeeUtils.toLegacyComponent(component));
     }
 
     @Override
@@ -95,5 +104,13 @@ public class EpicGuardBungee extends Plugin implements Platform {
     @Override
     public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
         this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
+    }
+
+    public BungeeAudiences adventure() {
+        return this.adventure;
+    }
+
+    public EpicGuard epicGuard() {
+        return this.epicGuard;
     }
 }

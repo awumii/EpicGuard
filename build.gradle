@@ -26,12 +26,20 @@ subprojects {
     }
 }
 
-tasks.build.dependsOn tasks.shadowJar
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
+
+    shadowJar {
+        relocate "net.kyori", "me.xneox.epicguard.libs.kyori" // idk why it doesen't relocate on core module... todo rewrite the whole buildscript
+    }
+}
 
 // Include all platforms in one jar.
 dependencies {
     implementation project(":core")
-    implementation project(":bukkit")
+    implementation project(":paper")
     implementation project(":bungee")
     implementation project(":velocity")
 }

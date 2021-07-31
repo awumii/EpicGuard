@@ -13,21 +13,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bukkit.listener;
+package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.SettingsHandler;
+import me.xneox.epicguard.core.handler.JoinHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLocaleChangeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerSettingsListener extends SettingsHandler implements Listener {
-    public PlayerSettingsListener(EpicGuard epicGuard) {
+public class PlayerJoinListener extends JoinHandler implements Listener {
+    public PlayerJoinListener(EpicGuard epicGuard) {
         super(epicGuard);
     }
 
     @EventHandler
-    public void onSettingsChanged(PlayerLocaleChangeEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress(), player.getName());
     }
 }

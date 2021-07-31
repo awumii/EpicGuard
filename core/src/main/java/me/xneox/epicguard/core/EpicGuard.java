@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core;
 
+import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.logging.GuardLogger;
@@ -39,20 +40,25 @@ import java.util.concurrent.TimeUnit;
  * The main, core class of EpicGuard.
  */
 public class EpicGuard {
-    private final StorageManager storageManager;
-    private final GeoManager geoManager;
-    private final UserManager userManager;
-    private final AttackManager attackManager;
-    private final ProxyManager proxyManager;
+    private final Platform platform;
+
+    private StorageManager storageManager;
+    private GeoManager geoManager;
+    private UserManager userManager;
+    private AttackManager attackManager;
+    private ProxyManager proxyManager;
+
+    private CommandHandler commandHandler;
 
     private PluginConfiguration config;
     private MessagesConfiguration messages;
 
-    private final Platform platform;
-
     public EpicGuard(Platform platform) {
         this.platform = platform;
+        this.startup();
+    }
 
+    private void startup() {
         logger().info("Loading configuration...");
         this.loadConfigurations();
 
@@ -62,6 +68,8 @@ public class EpicGuard {
         this.userManager = new UserManager();
         this.proxyManager = new ProxyManager(this);
         this.geoManager = new GeoManager(this.logger());
+
+        this.commandHandler = new CommandHandler(this);
 
         logger().info("Initializing LogFilter...");
         try {
@@ -136,5 +144,9 @@ public class EpicGuard {
 
     public ProxyManager proxyManager() {
         return this.proxyManager;
+    }
+
+    public CommandHandler commandHandler() {
+        return this.commandHandler;
     }
 }
