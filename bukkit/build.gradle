@@ -13,11 +13,6 @@ dependencies {
     compileOnly "io.papermc.paper:paper-api:1.17-R0.1-SNAPSHOT"
 }
 
-// Replace version in plugin.yml
-processResources {
-    expand projectVersion: project.version
-}
-
 shadowJar {
     relocate "org.bstats", "me.xneox.epicguard.bukkit.bstats"
 }

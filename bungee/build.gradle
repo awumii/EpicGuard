@@ -14,11 +14,6 @@ dependencies {
     compileOnly "io.github.waterfallmc:waterfall-api:1.17-R0.1-SNAPSHOT"
 }
 
-// Replace version in bungee.yml
-processResources {
-    expand projectVersion: project.version
-}
-
 shadowJar {
     relocate "org.bstats", "me.xneox.epicguard.bungee.bstats"
 }

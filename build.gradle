@@ -20,6 +20,10 @@ subprojects {
         maven { url = "https://repo.maven.apache.org/maven2/" }
         maven { url = "https://jitpack.io" }
     }
+
+    processResources {
+        expand projectVersion: project.version
+    }
 }
 
 tasks.build.dependsOn tasks.shadowJar
