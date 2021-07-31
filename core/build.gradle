@@ -16,7 +16,7 @@ dependencies {
     implementation "com.google.guava:guava:30.1.1-jre"
     implementation "org.spongepowered:configurate-hocon:4.1.1"
     implementation "org.jetbrains:annotations:21.0.1"
-    implementation "com.zaxxer:HikariCP:4.0.3"
+    implementation "com.zaxxer:HikariCP:5.0.0"
     implementation "co.aikar:idb-core:1.0.0-SNAPSHOT"
 
     // Provided dependencies.
