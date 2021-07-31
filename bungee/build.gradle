@@ -16,5 +16,6 @@ dependencies {
 }
 
 shadowJar {
+    relocate "net.kyori.adventure", "me.xneox.epicguard.bungee.adventure"
     relocate "org.bstats", "me.xneox.epicguard.bungee.bstats"
 }

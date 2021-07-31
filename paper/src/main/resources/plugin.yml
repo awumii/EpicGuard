@@ -1,6 +1,6 @@
 name: EpicGuard
 version: '${projectVersion}'
-main: me.xneox.epicguard.bukkit.EpicGuardBukkit
+main: me.xneox.epicguard.paper.EpicGuardPaper
 api-version: 1.13
 
 author: xNeox

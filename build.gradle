@@ -30,10 +30,6 @@ tasks {
     build {
         dependsOn(shadowJar)
     }
-
-    shadowJar {
-        relocate "net.kyori", "me.xneox.epicguard.libs.kyori" // idk why it doesen't relocate on core module... todo rewrite the whole buildscript
-    }
 }
 
 // Include all platforms in one jar.

@@ -1,3 +1,18 @@
+/*
+ * EpicGuard is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * EpicGuard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
 package me.xneox.epicguard.core.command;
 
 import me.xneox.epicguard.core.EpicGuard;
@@ -5,6 +20,7 @@ import me.xneox.epicguard.core.command.sub.*;
 import me.xneox.epicguard.core.util.MessageUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,8 +50,10 @@ public class CommandHandler {
     public void handleCommand(@NotNull String[] args, @NotNull Audience audience) {
         String prefix = this.epicGuard.messages().command().prefix();
         if (args.length < 1) {
-            audience.sendMessage(Component.text("&7You are running &6EpicGuard v" + this.epicGuard.platform().version()
-                    + "&7. Run &c/guard help &7to see available commands and statistics."));
+            audience.sendMessage(Component.text(
+                    "You are running EpicGuard v" + this.epicGuard.platform().version()
+                    + ". Run /guard help to see available commands and statistics.")
+                    .color(TextColor.fromHexString("#99ff00")));
             return;
         }
 
