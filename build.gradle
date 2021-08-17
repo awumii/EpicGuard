@@ -9,8 +9,10 @@ allprojects {
 }
 
 subprojects {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    // IF I TOUCH THIS THEN BUILD FAILS. WHAT THE FUCK
+    // PLEASE SOMEONE JUST REWRITE THIS FOR ME I WASTED TOO MUCH TIME ON THIS
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     apply plugin: "java"
     apply plugin: "com.github.johnrengelman.shadow"
