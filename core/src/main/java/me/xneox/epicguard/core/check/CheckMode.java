@@ -16,11 +16,11 @@
 package me.xneox.epicguard.core.check;
 
 /**
- * Determines when an {@link Check} should be performed.
- * Can be configured in the config for some checks.
+ * Determines when an {@link Check} should be performed. Can be configured in the config for some
+ * checks.
  */
 public enum CheckMode {
-    NEVER,
-    ALWAYS,
-    ATTACK
+  NEVER,
+  ALWAYS,
+  ATTACK
 }

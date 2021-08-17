@@ -15,64 +15,40 @@
 
 package me.xneox.epicguard.core.user;
 
-import com.google.common.base.Objects;
+import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-/**
- * Represents an player who is currently connected to the server.
- */
+/** Represents an player who is currently connected to the server. */
 public class OnlineUser {
-    private final UUID uuid;
-    private boolean notifications;
-    private boolean settingsChanged;
+  private final UUID uuid;
+  private boolean notifications;
+  private boolean settingsChanged;
 
-    public OnlineUser(UUID uuid) {
-        this.uuid = uuid;
-    }
+  public OnlineUser(UUID uuid) {
+    this.uuid = uuid;
+  }
 
-    /**
-     * @return The user's UUID.
-     */
-    @NotNull
-    public UUID uuid() {
-        return uuid;
-    }
+  /** @return The user's UUID. */
+  @NotNull
+  public UUID uuid() {
+    return uuid;
+  }
 
-    /**
-     * @return Whenever the user has enabled the status notifications.
-     */
-    public boolean notifications() {
-        return notifications;
-    }
+  /** @return Whenever the user has enabled the status notifications. */
+  public boolean notifications() {
+    return notifications;
+  }
 
-    public void notifications(boolean notifications) {
-        this.notifications = notifications;
-    }
+  public void notifications(boolean notifications) {
+    this.notifications = notifications;
+  }
 
-    /**
-     * @return Whenever the user has sent the Settings packet at least once.
-     */
-    public boolean settingsChanged() {
-        return settingsChanged;
-    }
+  /** @return Whenever the user has sent the Settings packet at least once. */
+  public boolean settingsChanged() {
+    return settingsChanged;
+  }
 
-    public void settingsChanged(boolean settingsChanged) {
-        this.settingsChanged = settingsChanged;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OnlineUser onlineUser = (OnlineUser) o;
-        return notifications() == onlineUser.notifications() &&
-                Objects.equal(uuid, onlineUser.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(uuid, notifications());
-    }
+  public void settingsChanged(boolean settingsChanged) {
+    this.settingsChanged = settingsChanged;
+  }
 }

@@ -3,12 +3,12 @@ version: '${projectVersion}'
 main: me.xneox.epicguard.paper.EpicGuardPaper
 api-version: 1.13
 
-author: xNeox
-website: https://www.spigotmc.org/resources/72369/
+author: neox
+website: https://github.com/xxneox/EpicGuard
 description: Bot protection system for Minecraft servers.
 
 commands:
   epicguard:
     description: Main plugin command.
     permission: epicguard.admin
-    aliases: [ab, guard, eg, antibot]
+    aliases: [ ab, guard, eg, antibot ]

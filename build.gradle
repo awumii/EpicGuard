@@ -9,8 +9,8 @@ allprojects {
 }
 
 subprojects {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 
     apply plugin: "java"
     apply plugin: "com.github.johnrengelman.shadow"
@@ -36,6 +36,6 @@ tasks {
 dependencies {
     implementation project(":core")
     implementation project(":paper")
-    implementation project(":bungee")
+    implementation project(":waterfall")
     implementation project(":velocity")
 }

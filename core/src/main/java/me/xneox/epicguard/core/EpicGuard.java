@@ -15,11 +15,13 @@
 
 package me.xneox.epicguard.core;
 
+import java.io.File;
+import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.LogFilter;
+import me.xneox.epicguard.core.util.LogFilter;
 import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.GeoManager;
 import me.xneox.epicguard.core.manager.UserManager;
@@ -29,124 +31,119 @@ import me.xneox.epicguard.core.task.AttackResetTask;
 import me.xneox.epicguard.core.task.DataSaveTask;
 import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
-import me.xneox.epicguard.core.util.ConfigUtils;
+import me.xneox.epicguard.core.util.ConfigurationLoader;
 import me.xneox.epicguard.core.util.FileUtils;
+import org.slf4j.Logger;
+import org.spongepowered.configurate.ConfigurateException;
 
-import java.io.File;
-import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
-
-/**
- * The main, core class of EpicGuard.
- */
+/** The main, core class of EpicGuard. */
 public class EpicGuard {
-    private final Platform platform;
+  private final Platform platform;
 
-    private StorageManager storageManager;
-    private GeoManager geoManager;
-    private UserManager userManager;
-    private AttackManager attackManager;
-    private ProxyManager proxyManager;
+  private StorageManager storageManager;
+  private GeoManager geoManager;
+  private UserManager userManager;
+  private AttackManager attackManager;
+  private ProxyManager proxyManager;
 
-    private CommandHandler commandHandler;
+  private CommandHandler commandHandler;
 
-    private PluginConfiguration config;
-    private MessagesConfiguration messages;
+  private PluginConfiguration config;
+  private MessagesConfiguration messages;
 
-    public EpicGuard(Platform platform) {
-        this.platform = platform;
-        this.startup();
+  public EpicGuard(Platform platform) {
+    this.platform = platform;
+    this.startup();
+  }
+
+  private void startup() {
+    logger().info("Loading configuration...");
+    this.loadConfigurations();
+
+    logger().info("Initializing managers...");
+    this.storageManager = new StorageManager(this);
+    this.attackManager = new AttackManager();
+    this.userManager = new UserManager();
+    this.proxyManager = new ProxyManager(this);
+    this.geoManager = new GeoManager(this);
+
+    this.commandHandler = new CommandHandler(this);
+
+    logger().info("Initializing LogFilter...");
+    new LogFilter(this).register();
+
+    logger().info("Scheduling tasks...");
+    this.platform.scheduleRepeatingTask(new MonitorTask(this), 1L);
+    this.platform.scheduleRepeatingTask(new UpdateCheckerTask(this), 1800L);
+    this.platform.scheduleRepeatingTask(
+        new AttackResetTask(this), this.config.misc().attackResetInterval());
+    this.platform.scheduleRepeatingTask(
+        new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
+
+    EpicGuardAPI.INSTANCE.setInstance(this);
+    logger()
+        .info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
+  }
+
+  public void loadConfigurations() {
+    File configurationFile = new File(FileUtils.EPICGUARD_DIR, "settings.conf");
+    File messagesFile = new File(FileUtils.EPICGUARD_DIR, "messages.conf");
+
+    try {
+      this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
+      this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
+    } catch (ConfigurateException e) {
+      logger().error("Could not load the configuration.");
+      e.printStackTrace();
     }
+  }
 
-    private void startup() {
-        logger().info("Loading configuration...");
-        this.loadConfigurations();
-
-        logger().info("Initializing managers...");
-        this.storageManager = new StorageManager(this);
-        this.attackManager = new AttackManager();
-        this.userManager = new UserManager();
-        this.proxyManager = new ProxyManager(this);
-        this.geoManager = new GeoManager(this.logger());
-
-        this.commandHandler = new CommandHandler(this);
-
-        logger().info("Initializing LogFilter...");
-        try {
-            Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
-            new LogFilter(this).register();
-        } catch (ClassNotFoundException e) {
-            logger().warning("LogFilter can't be enabled, because log4j is not found.");
-            logger().warning("If you want to use this feature, switch to Waterfall/Travertine."); // This can only occur on bungeecord.
-        }
-
-        logger().info("Scheduling tasks...");
-        this.platform.scheduleRepeatingTask(new MonitorTask(this), 1L);
-        this.platform.scheduleRepeatingTask(new UpdateCheckerTask(this), 1800L);
-        this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
-        this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
-
-        EpicGuardAPI.INSTANCE.setInstance(this);
-        logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
+  public void shutdown() {
+    try {
+      this.storageManager.database().saveData();
+    } catch (SQLException ex) {
+      this.logger().error("Could not save data to the SQL database during shutdown.");
+      ex.printStackTrace();
     }
+  }
 
-    public void loadConfigurations() {
-        File dataFolder = new File(FileUtils.EPICGUARD_DIR);
-        dataFolder.mkdir();
+  public Logger logger() {
+    return this.platform.logger();
+  }
 
-        File configurationFile = new File(dataFolder, "settings.conf");
-        File messagesFile = new File(dataFolder, "messages.conf");
+  public Platform platform() {
+    return this.platform;
+  }
 
-        this.config = ConfigUtils.loadConfig(configurationFile, PluginConfiguration.class);
-        this.messages = ConfigUtils.loadConfig(messagesFile, MessagesConfiguration.class);
-    }
+  public PluginConfiguration config() {
+    return this.config;
+  }
 
-    public void shutdown() {
-        try {
-            this.storageManager.database().saveData();
-        } catch (SQLException ex) {
-            this.logger().error("Could not save data to the SQL database during shutdown.");
-            ex.printStackTrace();
-        }
-    }
+  public MessagesConfiguration messages() {
+    return this.messages;
+  }
 
-    public GuardLogger logger() {
-        return this.platform.logger();
-    }
+  public UserManager userManager() {
+    return this.userManager;
+  }
 
-    public Platform platform() {
-        return this.platform;
-    }
+  public GeoManager geoManager() {
+    return this.geoManager;
+  }
 
-    public PluginConfiguration config() {
-        return this.config;
-    }
+  public StorageManager storageManager() {
+    return this.storageManager;
+  }
 
-    public MessagesConfiguration messages() {
-        return this.messages;
-    }
+  public AttackManager attackManager() {
+    return this.attackManager;
+  }
 
-    public UserManager userManager() {
-        return this.userManager;
-    }
+  public ProxyManager proxyManager() {
+    return this.proxyManager;
+  }
 
-    public GeoManager geoManager() {
-        return this.geoManager;
-    }
-
-    public StorageManager storageManager() {
-        return this.storageManager;
-    }
-
-    public AttackManager attackManager() {
-        return this.attackManager;
-    }
-
-    public ProxyManager proxyManager() {
-        return this.proxyManager;
-    }
-
-    public CommandHandler commandHandler() {
-        return this.commandHandler;
-    }
+  public CommandHandler commandHandler() {
+    return this.commandHandler;
+  }
 }

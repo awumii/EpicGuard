@@ -13,9 +13,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee.listener;
+package me.xneox.epicguard.waterfall.listener;
 
-import me.xneox.epicguard.bungee.BungeeUtils;
+import me.xneox.epicguard.waterfall.BungeeUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -24,19 +24,19 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class PreLoginListener extends DetectionHandler implements Listener {
-    public PreLoginListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PreLoginListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler(priority = Byte.MIN_VALUE)
-    public void onPreLogin(PreLoginEvent event) {
-        PendingConnection connection = event.getConnection();
-        String address = connection.getAddress().getAddress().getHostAddress();
-        String nickname = connection.getName();
+  @EventHandler(priority = Byte.MIN_VALUE)
+  public void onPreLogin(PreLoginEvent event) {
+    PendingConnection connection = event.getConnection();
+    String address = connection.getAddress().getAddress().getHostAddress();
+    String nickname = connection.getName();
 
-        this.handle(address, nickname).ifPresent(result -> {
-            event.setCancelled(true);
-            event.setCancelReason(BungeeUtils.toLegacyComponent(result));
-        });
-    }
+    this.handle(address, nickname).ifPresent(result -> {
+      event.setCancelled(true);
+      event.setCancelReason(BungeeUtils.toLegacyComponent(result));
+    });
+  }
 }

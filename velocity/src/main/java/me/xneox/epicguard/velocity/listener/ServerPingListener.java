@@ -22,12 +22,12 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.PingHandler;
 
 public class ServerPingListener extends PingHandler {
-    public ServerPingListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public ServerPingListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Subscribe(order = PostOrder.FIRST)
-    public void onPing(ProxyPingEvent event) {
-        this.handle(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
-    }
+  @Subscribe(order = PostOrder.FIRST)
+  public void onPing(ProxyPingEvent event) {
+    this.handle(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
+  }
 }

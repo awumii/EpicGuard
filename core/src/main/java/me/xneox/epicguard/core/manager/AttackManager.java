@@ -17,41 +17,39 @@ package me.xneox.epicguard.core.manager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * This class holds variables related to the current server attack status.
- */
+/** This class holds variables related to the current server attack status. */
 public class AttackManager {
-    private final AtomicInteger connectionCounter = new AtomicInteger();
-    private boolean attack;
+  private final AtomicInteger connectionCounter = new AtomicInteger();
+  private boolean attack;
 
-    /**
-     * Attack-mode is a special temporary state, that indicates that the server is under attack.
-     * It triggers when connection counter is above the threshold.
-     *
-     * @return State of the attack-mode
-     */
-    public boolean isAttack() {
-        return this.attack;
-    }
+  /**
+   * Attack-mode is a special temporary state, that indicates that the server is under attack. It
+   * triggers when connection counter is above the threshold.
+   *
+   * @return State of the attack-mode
+   */
+  public boolean isAttack() {
+    return this.attack;
+  }
 
-    public void attack(boolean attack) {
-        this.attack = attack;
-    }
+  public void attack(boolean attack) {
+    this.attack = attack;
+  }
 
-    public int connectionCounter() {
-        return this.connectionCounter.get();
-    }
+  public int connectionCounter() {
+    return this.connectionCounter.get();
+  }
 
-    public void resetConnectionCounter() {
-        this.connectionCounter.set(0);
-    }
+  public void resetConnectionCounter() {
+    this.connectionCounter.set(0);
+  }
 
-    /**
-     * Increments the connection per second counter, and returns it's current value
-     *
-     * @return Current connections per second.
-     */
-    public int incrementConnectionCounter() {
-        return this.connectionCounter.incrementAndGet();
-    }
+  /**
+   * Increments the connection per second counter, and returns it's current value
+   *
+   * @return Current connections per second.
+   */
+  public int incrementConnectionCounter() {
+    return this.connectionCounter.incrementAndGet();
+  }
 }

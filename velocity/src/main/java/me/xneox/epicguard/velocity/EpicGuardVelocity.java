@@ -24,12 +24,15 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.impl.SLF4JLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
-import me.xneox.epicguard.velocity.listener.*;
+import me.xneox.epicguard.velocity.listener.DisconnectListener;
+import me.xneox.epicguard.velocity.listener.PlayerSettingsListener;
+import me.xneox.epicguard.velocity.listener.PostLoginListener;
+import me.xneox.epicguard.velocity.listener.PreLoginListener;
+import me.xneox.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bstats.velocity.Metrics;
@@ -37,87 +40,78 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.concurrent.TimeUnit;
-
 @Plugin(
-        id = "epicguard",
-        name = "EpicGuard",
-        version = "{version}",
-        description = "Bot protection system for Minecraft servers.",
-        authors = "xNeox")
+    id = "epicguard",
+    name = "EpicGuard",
+    version = "{version}",
+    description = "Bot protection system for Minecraft servers.",
+    authors = "neox")
 public class EpicGuardVelocity implements Platform {
-    private final ProxyServer server;
-    private final GuardLogger logger;
-    private final Metrics.Factory metricsFactory;
+  private final ProxyServer server;
+  private final Logger logger;
+  private final Metrics.Factory metricsFactory;
 
-    private EpicGuard epicGuard;
+  private EpicGuard epicGuard;
 
-    @Inject
-    public EpicGuardVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
-        this.server = server;
-        this.logger = new SLF4JLogger(logger);
-        this.metricsFactory = metricsFactory;
-    }
+  @Inject
+  public EpicGuardVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
+    this.server = server;
+    this.logger = logger;
+    this.metricsFactory = metricsFactory;
+  }
 
-    @Subscribe
-    public void onEnable(ProxyInitializeEvent e) {
-        this.epicGuard = new EpicGuard(this);
+  @Subscribe
+  public void onEnable(ProxyInitializeEvent e) {
+    this.epicGuard = new EpicGuard(this);
 
-        CommandManager commandManager = this.server.getCommandManager();
-        CommandMeta meta = commandManager.metaBuilder("epicguard")
-                .aliases("guard")
-                .build();
+    CommandManager commandManager = this.server.getCommandManager();
+    CommandMeta meta = commandManager.metaBuilder("epicguard").aliases("guard").build();
 
-        commandManager.register(meta, new VelocityCommandExecutor(this.epicGuard));
+    commandManager.register(meta, new VelocityCommandExecutor(this.epicGuard));
 
-        EventManager eventManager = this.server.getEventManager();
-        eventManager.register(this, new PostLoginListener(this.epicGuard));
-        eventManager.register(this, new PreLoginListener(this.epicGuard));
-        eventManager.register(this, new DisconnectListener(this.epicGuard));
-        eventManager.register(this, new ServerPingListener(this.epicGuard));
-        eventManager.register(this, new PlayerSettingsListener(this.epicGuard));
+    EventManager eventManager = this.server.getEventManager();
+    eventManager.register(this, new PostLoginListener(this.epicGuard));
+    eventManager.register(this, new PreLoginListener(this.epicGuard));
+    eventManager.register(this, new DisconnectListener(this.epicGuard));
+    eventManager.register(this, new ServerPingListener(this.epicGuard));
+    eventManager.register(this, new PlayerSettingsListener(this.epicGuard));
 
-        this.metricsFactory.make(this, 10417);
-    }
+    this.metricsFactory.make(this, 10417);
+  }
 
-    @Subscribe
-    public void onDisable(ProxyShutdownEvent e) {
-        this.epicGuard.shutdown();
-    }
+  @Subscribe
+  public void onDisable(ProxyShutdownEvent e) {
+    this.epicGuard.shutdown();
+  }
 
-    @Override
-    public @NotNull GuardLogger logger() {
-        return this.logger;
-    }
+  @NotNull
+  @Override
+  public Logger logger() {
+    return this.logger;
+  }
 
-    @Override
-    public String version() {
-        return "{version}";
-    }
+  @Override
+  public String version() {
+    return "{version}";
+  }
 
-    @Override
-    public @Nullable Audience audience(@NotNull OnlineUser user) {
-        return this.server.getPlayer(user.uuid()).orElse(null);
-    }
+  @Override
+  public @Nullable Audience audience(@NotNull OnlineUser user) {
+    return this.server.getPlayer(user.uuid()).orElse(null);
+  }
 
-    @Override
-    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
-        this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(message));
-    }
+  @Override
+  public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
+    this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(message));
+  }
 
-    @Override
-    public void runTaskLater(@NotNull Runnable task, long seconds) {
-        this.server.getScheduler()
-                .buildTask(this, task)
-                .delay(seconds, TimeUnit.SECONDS)
-                .schedule();
-    }
+  @Override
+  public void runTaskLater(@NotNull Runnable task, long seconds) {
+    this.server.getScheduler().buildTask(this, task).delay(seconds, TimeUnit.SECONDS).schedule();
+  }
 
-    @Override
-    public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
-        this.server.getScheduler()
-                .buildTask(this, task)
-                .repeat(seconds, TimeUnit.SECONDS)
-                .schedule();
-    }
+  @Override
+  public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
+    this.server.getScheduler().buildTask(this, task).repeat(seconds, TimeUnit.SECONDS).schedule();
+  }
 }

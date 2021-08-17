@@ -15,45 +15,42 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * This will check if the user's geographical location is allowed based on the configured behaviour.
  */
 public class GeographicalCheck extends Check {
-    public GeographicalCheck(EpicGuard epicGuard) {
-        super(epicGuard);
+  public GeographicalCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
+
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    return this.evaluate(this.epicGuard.config().geographical().checkMode(), this.isRestricted(user.address()));
+  }
+
+  private boolean isRestricted(String address) {
+    String country = this.epicGuard.geoManager().countryCode(address);
+    String city = this.epicGuard.geoManager().city(address);
+
+    if (this.epicGuard.config().geographical().cityBlacklist().contains(city)) {
+      return true;
     }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().geographical().checkMode());
-        return this.evaluate(mode, this.isRestricted(user.address()));
+    if (this.epicGuard.config().geographical().isBlacklist()) {
+      return this.epicGuard.config().geographical().countries().contains(country);
+    } else {
+      return !this.epicGuard.config().geographical().countries().contains(country);
     }
+  }
 
-    private boolean isRestricted(String address) {
-        String country = this.epicGuard.geoManager().countryCode(address);
-        String city = this.epicGuard.geoManager().city(address);
-
-        if (this.epicGuard.config().geographical().cityBlacklist().contains(city)) {
-            return true;
-        }
-
-        if (this.epicGuard.config().geographical().isBlacklist()) {
-            return this.epicGuard.config().geographical().countries().contains(country);
-        } else {
-            return !this.epicGuard.config().geographical().countries().contains(country);
-        }
-    }
-
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().geographical();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().geographical();
+  }
 }

@@ -15,28 +15,26 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-/**
- * This check will deny any connection if the attack mode is active.
- */
+/** This check will deny any connection if the attack mode is active. */
 public class LockdownCheck extends Check {
-    public LockdownCheck(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public LockdownCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        return this.epicGuard.attackManager().isAttack() && this.epicGuard.config().misc().lockdownOnAttack();
-    }
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    return this.epicGuard.attackManager().isAttack()
+        && this.epicGuard.config().misc().lockdownOnAttack();
+  }
 
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().attackLockdown();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().attackLockdown();
+  }
 }

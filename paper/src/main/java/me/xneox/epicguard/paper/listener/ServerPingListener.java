@@ -23,12 +23,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class ServerPingListener extends PingHandler implements Listener {
-    public ServerPingListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public ServerPingListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPing(ServerListPingEvent event) {
-        this.handle(event.getAddress().getHostAddress());
-    }
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onPing(ServerListPingEvent event) {
+    this.handle(event.getAddress().getHostAddress());
+  }
 }

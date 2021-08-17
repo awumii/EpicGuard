@@ -22,13 +22,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener extends DisconnectHandler implements Listener {
+  public PlayerQuitListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    public PlayerQuitListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
-    }
+  @EventHandler
+  public void onQuit(PlayerQuitEvent event) {
+    this.handle(event.getPlayer().getUniqueId());
+  }
 }

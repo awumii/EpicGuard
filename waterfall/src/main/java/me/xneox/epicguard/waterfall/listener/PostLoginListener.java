@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee.listener;
+package me.xneox.epicguard.waterfall.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.JoinHandler;
@@ -23,13 +23,13 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class PostLoginListener extends JoinHandler implements Listener {
-    public PostLoginListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PostLoginListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler
-    public void onPostLogin(PostLoginEvent event) {
-        ProxiedPlayer player = event.getPlayer();
-        this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress(), player.getName());
-    }
+  @EventHandler
+  public void onPostLogin(PostLoginEvent event) {
+    ProxiedPlayer player = event.getPlayer();
+    this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
+  }
 }

@@ -19,17 +19,17 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.VersionUtils;
 
 public class UpdateCheckerTask implements Runnable {
-    private final EpicGuard epicGuard;
+  private final EpicGuard epicGuard;
 
-    public UpdateCheckerTask(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
-    }
+  public UpdateCheckerTask(EpicGuard epicGuard) {
+    this.epicGuard = epicGuard;
+  }
 
-    @Override
-    public void run() {
-        VersionUtils.checkForUpdates(this.epicGuard, update ->
-                this.epicGuard.logger().info(this.epicGuard.messages().updateAvailable()
-                .replace("{NEWVER}", update)
-                .replace("{OLDVER}", this.epicGuard.platform().version())));
-    }
+  @Override
+  public void run() {
+    VersionUtils.checkForUpdates(this.epicGuard, update ->
+        this.epicGuard .logger().info(this.epicGuard.messages().updateAvailable()
+            .replace("{NEWVER}", update)
+            .replace("{OLDVER}", this.epicGuard.platform().version())));
+  }
 }

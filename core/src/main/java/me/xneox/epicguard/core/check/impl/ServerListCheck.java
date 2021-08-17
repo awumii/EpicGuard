@@ -15,30 +15,26 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-/**
- * This will check if the user has pinged the server (added it to their server list).
- */
+/** This will check if the user has pinged the server (added it to their server list). */
 public class ServerListCheck extends Check {
-    public ServerListCheck(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public ServerListCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().serverListCheckMode());
-        return this.evaluate(mode, !this.epicGuard.storageManager().pingCache().contains(user.address()));
-    }
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    return this.evaluate(this.epicGuard.config().misc().serverListCheckMode(),
+        !this.epicGuard.storageManager().pingCache().contains(user.address()));
+  }
 
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().serverListPing();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().serverListPing();
+  }
 }

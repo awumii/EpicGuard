@@ -1,5 +1,5 @@
 rootProject.name = "EpicGuard"
 include ":core"
 include ":velocity"
-include ":bungee"
+include ":waterfall"
 include ":paper"

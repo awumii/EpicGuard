@@ -1,0 +1,7 @@
+name: EpicGuard
+version: '${projectVersion}'
+main: me.xneox.epicguard.waterfall.EpicGuardWaterfall
+
+author: neox
+website: https://github.com/xxneox/EpicGuard
+description: Bot protection system for Minecraft servers.

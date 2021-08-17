@@ -22,13 +22,13 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DisconnectHandler;
 
 public class DisconnectListener extends DisconnectHandler {
-    public DisconnectListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public DisconnectListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Subscribe
-    public void onDisconnect(DisconnectEvent event) {
-        Player player = event.getPlayer();
-        this.handle(player.getUniqueId());
-    }
+  @Subscribe
+  public void onDisconnect(DisconnectEvent event) {
+    Player player = event.getPlayer();
+    this.handle(player.getUniqueId());
+  }
 }

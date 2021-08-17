@@ -15,30 +15,27 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-/**
- * This will check if the user is using a VPN or a proxy.
- */
+/** This will check if the user is using a VPN or a proxy. */
 public class ProxyCheck extends Check {
-    public ProxyCheck(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public ProxyCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().proxyCheck().checkMode());
-        return this.evaluate(mode, this.epicGuard.proxyManager().isProxy(user.address()));
-    }
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    return this.evaluate(this.epicGuard.config().proxyCheck().checkMode(),
+        this.epicGuard.proxyManager().isProxy(user.address()));
+  }
 
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().proxy();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().proxy();
+  }
 }

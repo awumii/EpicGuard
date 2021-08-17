@@ -15,40 +15,24 @@
 
 package me.xneox.epicguard.core.user;
 
-import com.google.common.base.Objects;
-
 /**
- * This class holds address and nickname of the user,
- * who is currently being checked (or cached) by the antibot checks.
+ * This class holds address and nickname of the user, who is currently being checked (or cached) by
+ * the antibot checks.
  */
 public class ConnectingUser {
-    private final String address;
-    private final String nickname;
+  private final String address;
+  private final String nickname;
 
-    public ConnectingUser(String address, String nickname) {
-        this.address = address;
-        this.nickname = nickname;
-    }
+  public ConnectingUser(String address, String nickname) {
+    this.address = address;
+    this.nickname = nickname;
+  }
 
-    public String address() {
-        return this.address;
-    }
+  public String address() {
+    return this.address;
+  }
 
-    public String nickname() {
-        return this.nickname;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ConnectingUser connectingUser = (ConnectingUser) o;
-        return Objects.equal(address(), connectingUser.address()) &&
-                Objects.equal(nickname(), connectingUser.nickname());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(address(), nickname());
-    }
+  public String nickname() {
+    return this.nickname;
+  }
 }

@@ -13,16 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee;
+package me.xneox.epicguard.waterfall.listener;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.handler.PingHandler;
+import net.md_5.bungee.api.event.ProxyPingEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
-public final class BungeeUtils {
-    public static BaseComponent[] toLegacyComponent(Component component) {
-        return BungeeComponentSerializer.get().serialize(component);
-    }
+public class ServerPingListener extends PingHandler implements Listener {
+  public ServerPingListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    private BungeeUtils() {}
+  @EventHandler(priority = Byte.MIN_VALUE)
+  public void onPing(ProxyPingEvent event) {
+    this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
+  }
 }

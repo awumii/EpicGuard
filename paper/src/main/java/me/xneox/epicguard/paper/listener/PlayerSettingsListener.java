@@ -22,12 +22,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
 
 public class PlayerSettingsListener extends SettingsHandler implements Listener {
-    public PlayerSettingsListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PlayerSettingsListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler
-    public void onSettingsChanged(PlayerLocaleChangeEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
-    }
+  @EventHandler
+  public void onSettingsChanged(PlayerLocaleChangeEvent event) {
+    this.handle(event.getPlayer().getUniqueId());
+  }
 }

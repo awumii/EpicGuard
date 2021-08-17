@@ -15,38 +15,35 @@
 
 package me.xneox.epicguard.core.util;
 
+import java.util.function.Consumer;
 import me.xneox.epicguard.core.EpicGuard;
 
-import java.util.function.Consumer;
-
 public final class VersionUtils {
-    private static final String CHECK_URL = "https://api.spigotmc.org/legacy/update.php?resource=72369";
+  private static final String CHECK_URL = "https://raw.githubusercontent.com/xxneox/EpicGuard/master/VERSION.txt";
 
-    /**
-     * Checks the latest version to see if there's any update available.
-     *
-     * @param epicGuard EpicGuard instance.
-     * @param action Action to run when there's an update available.
-     */
-    public static void checkForUpdates(EpicGuard epicGuard, Consumer<String> action) {
-        if (!epicGuard.config().misc().updateChecker()) {
-            return;
-        }
-
-        String latest = URLUtils.readString(CHECK_URL);
-        if (latest == null) {
-            epicGuard.logger().warning("Could not fetch the latest version.");
-            return;
-        }
-
-        if (parse(latest) > parse(epicGuard.platform().version())) {
-            action.accept(latest);
-        }
+  /**
+   * Checks the latest version to see if there's any update available.
+   *
+   * @param epicGuard EpicGuard instance.
+   * @param action Action to run when there's an update available.
+   */
+  public static void checkForUpdates(EpicGuard epicGuard, Consumer<String> action) {
+    if (!epicGuard.config().misc().updateChecker()) {
+      return;
     }
 
-    private static int parse(String version) {
-        return Integer.parseInt(version.replace(".", ""));
+    String latest = URLUtils.readString(CHECK_URL);
+    if (latest == null) {
+      epicGuard.logger().warn("Could not fetch the latest version.");
+      return;
     }
 
-    private VersionUtils() {}
+    if (parse(latest) > parse(epicGuard.platform().version())) {
+      action.accept(latest);
+    }
+  }
+
+  private static int parse(String version) {
+    return Integer.parseInt(version.replace(".", ""));
+  }
 }

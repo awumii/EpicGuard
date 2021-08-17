@@ -15,33 +15,31 @@
 
 package me.xneox.epicguard.core.check.impl;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 /**
- * This check will limit how many accounts can be created on one address.
- * TODO: Fix this buggy mess. Sometimes working perfectly and sometimes not at all.
+ * This check will limit how many accounts can be created on one address. TODO: Fix this buggy mess.
+ * Sometimes working perfectly and sometimes not at all.
  */
 public class AccountLimitCheck extends Check {
-    public AccountLimitCheck(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public AccountLimitCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().accountLimitCheck().checkMode());
-        List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
 
-        return this.evaluate(mode, !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
-    }
+    return this.evaluate(this.epicGuard.config().accountLimitCheck().checkMode(),
+        !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
+  }
 
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().accountLimit();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().accountLimit();
+  }
 }

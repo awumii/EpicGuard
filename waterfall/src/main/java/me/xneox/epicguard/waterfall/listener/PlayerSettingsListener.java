@@ -13,21 +13,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee.listener;
+package me.xneox.epicguard.waterfall.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.PingHandler;
-import net.md_5.bungee.api.event.ProxyPingEvent;
+import me.xneox.epicguard.core.handler.SettingsHandler;
+import net.md_5.bungee.api.event.SettingsChangedEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-public class ServerPingListener extends PingHandler implements Listener {
-    public ServerPingListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+public class PlayerSettingsListener extends SettingsHandler implements Listener {
+  public PlayerSettingsListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler(priority = Byte.MIN_VALUE)
-    public void onPing(ProxyPingEvent event) {
-        this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
-    }
+  @EventHandler
+  public void onSettingsChanged(SettingsChangedEvent event) {
+    this.handle(event.getPlayer().getUniqueId());
+  }
 }

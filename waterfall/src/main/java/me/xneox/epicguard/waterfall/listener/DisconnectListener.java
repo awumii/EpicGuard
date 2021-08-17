@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee.listener;
+package me.xneox.epicguard.waterfall.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DisconnectHandler;
@@ -22,12 +22,12 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class DisconnectListener extends DisconnectHandler implements Listener {
-    public DisconnectListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public DisconnectListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @EventHandler
-    public void onPostLogin(PlayerDisconnectEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
-    }
+  @EventHandler
+  public void onPostLogin(PlayerDisconnectEvent event) {
+    this.handle(event.getPlayer().getUniqueId());
+  }
 }

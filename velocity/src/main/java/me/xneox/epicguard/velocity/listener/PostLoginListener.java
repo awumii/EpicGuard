@@ -22,13 +22,13 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.JoinHandler;
 
 public class PostLoginListener extends JoinHandler {
-    public PostLoginListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PostLoginListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Subscribe
-    public void onPostLogin(PostLoginEvent event) {
-        Player player = event.getPlayer();
-        this.handle(player.getUniqueId(), player.getRemoteAddress().getAddress().getHostAddress(), player.getUsername());
-    }
+  @Subscribe
+  public void onPostLogin(PostLoginEvent event) {
+    Player player = event.getPlayer();
+    this.handle(player.getUniqueId(), player.getRemoteAddress().getAddress().getHostAddress());
+  }
 }

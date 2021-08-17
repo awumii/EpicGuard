@@ -15,47 +15,48 @@
 
 package me.xneox.epicguard.core.check;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 public abstract class Check {
-    protected final EpicGuard epicGuard;
+  protected final EpicGuard epicGuard;
 
-    public Check(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
+  public Check(EpicGuard epicGuard) {
+    this.epicGuard = epicGuard;
+  }
+
+  /**
+   * It will check the {@link CheckMode} configuration of the current check, and assert the
+   * following behaviour:
+   *
+   * <p>If the mode is ALWAYS, it will return the value of the specified expression. If the mode is
+   * ATTACK, it will return the value of the expression ONLY if there's an attack. If the mode is
+   * NEVER, it will return false.
+   *
+   * @param mode The configured mode of this check.
+   * @param expression The expression
+   * @return The return value is based on the check's behaviour. True means positive detection,
+   *     false means negative.
+   */
+  public boolean evaluate(CheckMode mode, boolean expression) {
+    if (mode == CheckMode.ALWAYS
+        || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
+      return expression;
     }
+    return false;
+  }
 
-    /**
-     * It will check the {@link CheckMode} configuration of the current check,
-     * and assert the following behaviour:
-     *
-     * If the mode is ALWAYS, it will return the value of the specified expression.
-     * If the mode is ATTACK, it will return the value of the expression ONLY if there's an attack.
-     * If the mode is NEVER, it will return false.
-     *
-     * @param mode The configured mode of this check.
-     * @param expression The expression
-     * @return The return value is based on the check's behaviour. True means positive detection, false means negative.
-     */
-    public boolean evaluate(CheckMode mode, boolean expression) {
-        if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
-            return expression;
-        }
-        return false;
-    }
+  @NotNull
+  public abstract List<String> kickMessage();
 
-    @NotNull
-    public abstract List<String> kickMessage();
-
-    /**
-     * This method contains the entire behaviour on the check.
-     * When returning a value, use the assertCheck() method found above.
-     *
-     * @return true if detection is positive (detected as bot).
-     * @param user An {@link ConnectingUser} object with the information about the user.
-     */
-    public abstract boolean handle(@NotNull ConnectingUser user);
+  /**
+   * This method contains the entire behaviour on the check. When returning a value, use the
+   * assertCheck() method found above.
+   *
+   * @return true if detection is positive (detected as bot).
+   * @param user An {@link ConnectingUser} object with the information about the user.
+   */
+  public abstract boolean handle(@NotNull ConnectingUser user);
 }

@@ -15,12 +15,14 @@
 
 package me.xneox.epicguard.paper;
 
-import me.xneox.epicguard.paper.listener.*;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.logging.GuardLogger;
-import me.xneox.epicguard.core.logging.impl.JavaLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
+import me.xneox.epicguard.paper.listener.PlayerJoinListener;
+import me.xneox.epicguard.paper.listener.PlayerPreLoginListener;
+import me.xneox.epicguard.paper.listener.PlayerQuitListener;
+import me.xneox.epicguard.paper.listener.PlayerSettingsListener;
+import me.xneox.epicguard.paper.listener.ServerPingListener;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bstats.bukkit.Metrics;
@@ -31,68 +33,68 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 public class EpicGuardPaper extends JavaPlugin implements Platform {
-    private EpicGuard epicGuard;
-    private GuardLogger logger;
+  private EpicGuard epicGuard;
 
-    @Override
-    public void onEnable() {
-        this.logger = new JavaLogger(this.getLogger());
-        this.epicGuard = new EpicGuard(this);
+  @Override
+  public void onEnable() {
+    this.epicGuard = new EpicGuard(this);
 
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
-        pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
-        pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
-        pm.registerEvents(new ServerPingListener(this.epicGuard), this);
-        pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
+    PluginManager pm = Bukkit.getPluginManager();
+    pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
+    pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
+    pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
+    pm.registerEvents(new ServerPingListener(this.epicGuard), this);
+    pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
 
-        PluginCommand command = this.getCommand("epicguard");
-        if (command != null) {
-            BukkitCommandExecutor cmdExecutor = new BukkitCommandExecutor(this.epicGuard);
-            command.setExecutor(cmdExecutor);
-            command.setTabCompleter(cmdExecutor);
-        }
-
-        new Metrics(this, 5845);
+    PluginCommand command = this.getCommand("epicguard");
+    if (command != null) {
+      PaperCommandExecutor cmdExecutor = new PaperCommandExecutor(this.epicGuard);
+      command.setExecutor(cmdExecutor);
+      command.setTabCompleter(cmdExecutor);
     }
 
-    @Override
-    public void onDisable() {
-        this.epicGuard.shutdown();
-    }
+    new Metrics(this, 5845);
+  }
 
-    @Override
-    public @NotNull GuardLogger logger() {
-        return this.logger;
-    }
+  @Override
+  public void onDisable() {
+    this.epicGuard.shutdown();
+  }
 
-    @Override
-    public String version() {
-        return this.getDescription().getVersion();
-    }
+  @Override
+  @NotNull
+  public Logger logger() {
+    return this.getSLF4JLogger();
+  }
 
-    @Override
-    public @Nullable Audience audience(OnlineUser user) {
-        return Bukkit.getPlayer(user.uuid());
-    }
+  @Override
+  public String version() {
+    return this.getDescription().getVersion();
+  }
 
-    @Override
-    public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
-        Player player = Bukkit.getPlayer(onlineUser.uuid());
-        if (player != null) {
-            player.kick(message);
-        }
-    }
+  @Override
+  public @Nullable Audience audience(OnlineUser user) {
+    return Bukkit.getPlayer(user.uuid());
+  }
 
-    @Override
-    public void runTaskLater(@NotNull Runnable task, long seconds) {
-        Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
+  @Override
+  public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
+    Player player = Bukkit.getPlayer(onlineUser.uuid());
+    if (player != null) {
+      player.kick(message);
     }
+  }
 
-    @Override
-    public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
-    }
+  @Override
+  public void runTaskLater(@NotNull Runnable task, long seconds) {
+    Bukkit.getScheduler().runTaskLater(this, task, seconds * 20L);
+  }
+
+  @Override
+  public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
+    Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
+  }
 }

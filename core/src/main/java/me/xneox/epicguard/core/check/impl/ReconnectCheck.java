@@ -15,42 +15,37 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckMode;
-import me.xneox.epicguard.core.user.ConnectingUser;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.user.ConnectingUser;
+import org.jetbrains.annotations.NotNull;
 
-/**
- * This check will force player to reconnect if he is connecting for the first time.
- */
+/** This check will force player to reconnect if he is connecting for the first time. */
 public class ReconnectCheck extends Check {
-    private final Collection<ConnectingUser> connectingUserCache = new HashSet<>();
+  private final Collection<ConnectingUser> connectingUserCache = new HashSet<>();
 
-    public ReconnectCheck(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public ReconnectCheck(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Override
-    public boolean handle(@NotNull ConnectingUser user) {
-        CheckMode mode = CheckMode.valueOf(this.epicGuard.config().misc().reconnectCheckMode());
-        return this.evaluate(mode, needsReconnect(user));
-    }
+  @Override
+  public boolean handle(@NotNull ConnectingUser user) {
+    return this.evaluate(this.epicGuard.config().misc().reconnectCheckMode(), this.needsReconnect(user));
+  }
 
-    private boolean needsReconnect(ConnectingUser connectingUser) {
-        if (!this.connectingUserCache.contains(connectingUser)) {
-            this.connectingUserCache.add(connectingUser);
-            return true;
-        }
-        return false;
+  private boolean needsReconnect(ConnectingUser connectingUser) {
+    if (!this.connectingUserCache.contains(connectingUser)) {
+      this.connectingUserCache.add(connectingUser);
+      return true;
     }
+    return false;
+  }
 
-    @Override
-    public @NotNull List<String> kickMessage() {
-        return this.epicGuard.messages().disconnect().reconnect();
-    }
+  @Override
+  public @NotNull List<String> kickMessage() {
+    return this.epicGuard.messages().disconnect().reconnect();
+  }
 }

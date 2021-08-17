@@ -21,12 +21,12 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.SettingsHandler;
 
 public class PlayerSettingsListener extends SettingsHandler {
-    public PlayerSettingsListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PlayerSettingsListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Subscribe
-    public void onPostLogin(PlayerSettingsChangedEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
-    }
+  @Subscribe
+  public void onPostLogin(PlayerSettingsChangedEvent event) {
+    this.handle(event.getPlayer().getUniqueId());
+  }
 }

@@ -19,25 +19,24 @@ import me.xneox.epicguard.core.EpicGuard;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
-
 /**
- * Handler for the ServerListPing listeners.
- * Used for the ServerListCheck to verify if the user has pinged the server (added it to their list).
+ * Handler for the ServerListPing listeners. Used for the ServerListCheck to verify if the user has
+ * pinged the server (added it to their list).
  */
 public class PingHandler {
-    private final EpicGuard epicGuard;
+  private final EpicGuard epicGuard;
 
-    public PingHandler(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
-    }
+  public PingHandler(EpicGuard epicGuard) {
+    this.epicGuard = epicGuard;
+  }
 
-    /**
-     * Handling the user who just pinged the server.
-     *
-     * @param address Address of the pinger.
-     */
-    public void handle(@NotNull String address) {
-        Validate.notNull(address, "Address cannot be null!");
-        this.epicGuard.storageManager().pingCache().add(address);
-    }
+  /**
+   * Handling the user who just pinged the server.
+   *
+   * @param address Address of the pinger.
+   */
+  public void handle(@NotNull String address) {
+    Validate.notNull(address, "Address cannot be null!");
+    this.epicGuard.storageManager().pingCache().add(address);
+  }
 }

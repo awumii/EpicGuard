@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.command.sub;
 
+import java.util.Optional;
+import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
@@ -26,23 +28,21 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-import java.util.UUID;
-
 public class StatusCommand implements SubCommand {
-    @Override
-    public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
-        MessagesConfiguration.Command config = epicGuard.messages().command();
+  @Override
+  public void execute(
+      @NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
+    MessagesConfiguration.Command config = epicGuard.messages().command();
 
-        //TODO: Fix this because for some reason UUID is always null (on Paper)
-        // not sure if it works on other platforms? even Player doesn't contain the UUID pointer here...
-        Optional<UUID> optional = audience.get(Identity.UUID);
-        optional.ifPresentOrElse(uuid -> {
-            OnlineUser onlineUser = epicGuard.userManager().getOrCreate(uuid);
-            onlineUser.notifications(!onlineUser.notifications());
+    // This will always fail on paper, since Pointers are not implemented there yet: https://github.com/PaperMC/Paper/pull/5708
+    Optional<UUID> optional = audience.get(Identity.UUID);
+    optional.ifPresentOrElse(uuid -> {
+      OnlineUser onlineUser = epicGuard.userManager().getOrCreate(uuid);
+      onlineUser.notifications(!onlineUser.notifications());
 
-            audience.sendMessage(MessageUtils.component(config.prefix() + config.toggleStatus()));
-        }, () -> audience.sendMessage(Component.text("This command is unavailable in the current environment.")
-                .color(TextColor.fromHexString("#ff6600"))));
-    }
+      audience.sendMessage(MessageUtils.component(config.prefix() + config.toggleStatus()));
+      }, () -> audience.sendMessage(
+          Component.text("This command is unavailable in the current environment.")
+              .color(TextColor.fromHexString("#ff6600"))));
+  }
 }

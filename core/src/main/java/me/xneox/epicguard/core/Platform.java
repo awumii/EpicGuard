@@ -15,63 +15,44 @@
 
 package me.xneox.epicguard.core;
 
-import me.xneox.epicguard.core.logging.GuardLogger;
 import me.xneox.epicguard.core.user.OnlineUser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
-
-/**
- * This is the most important part of the EpicGuard's platform implementation.
- * The main class of every platform has to implement this interface.
- *
- * The first thing the platforms has to do is to initialize the logger.
- */
 public interface Platform {
-    /**
-     * There are already two implementations of this logger, meant to be used as a wrapper around
-     * your platform's logging system.
-     * {@link me.xneox.epicguard.core.logging.impl.SLF4JLogger} and {@link me.xneox.epicguard.core.logging.impl.JavaLogger}
-     *
-     * @return An implementation of the {@link GuardLogger} compatible with your platform.
-     */
-    @NotNull
-    GuardLogger logger();
+  @NotNull
+  Logger logger();
 
-    /**
-     * @return Version of the plugin.
-     */
-    String version();
+  String version();
 
-    /**
-     * Returns an audience for the provided user.
-     */
-    @Nullable
-    Audience audience(@NotNull OnlineUser user);
+  /** Returns an audience for the provided user. */
+  @Nullable
+  Audience audience(@NotNull OnlineUser user);
 
-    /**
-     * Kicks the user from the server with a specified message (find the player using User#getUUID).
-     *
-     * @param onlineUser The user to be kicked.
-     * @param message The kick message.
-     */
-    void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message);
+  /**
+   * Kicks the user from the server with a specified message (find the player using User#getUUID).
+   *
+   * @param onlineUser The user to be kicked.
+   * @param message The kick message.
+   */
+  void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message);
 
-    /**
-     * Schedules a task to be run asynchronously after the specified time (in seconds).
-     *
-     * @param task The task to be scheduled.
-     * @param seconds Delay in seconds after the task should be ran.
-     */
-    void runTaskLater(@NotNull Runnable task, long seconds);
+  /**
+   * Schedules a task to be run asynchronously after the specified time (in seconds).
+   *
+   * @param task The task to be scheduled.
+   * @param seconds Delay in seconds after the task should be ran.
+   */
+  void runTaskLater(@NotNull Runnable task, long seconds);
 
-    /**
-     * Schedules a task to be run asynchronously repeatedly with fixed delay (in seconds).
-     *
-     * @param task The task to be scheduled.
-     * @param seconds Delay in seconds between each runs of the task.
-     */
-    void scheduleRepeatingTask(@NotNull Runnable task, long seconds);
+  /**
+   * Schedules a task to be run asynchronously repeatedly with fixed delay (in seconds).
+   *
+   * @param task The task to be scheduled.
+   * @param seconds Delay in seconds between each runs of the task.
+   */
+  void scheduleRepeatingTask(@NotNull Runnable task, long seconds);
 }

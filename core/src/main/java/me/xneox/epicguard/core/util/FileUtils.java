@@ -15,9 +15,6 @@
 
 package me.xneox.epicguard.core.util;
 
-import org.apache.commons.lang3.Validate;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,31 +22,32 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 
 public final class FileUtils {
-    public static final String EPICGUARD_DIR = "plugins/EpicGuard";
+  public static final String EPICGUARD_DIR = "plugins/EpicGuard";
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
-        Validate.notNull(urlFrom, "Download URL cannot be null!");
-        Validate.notNull(urlFrom, "Target file cannot be null!");
+  private FileUtils() {}
 
-        file.delete();
-        file.createNewFile();
+  @SuppressWarnings("ResultOfMethodCallIgnored")
+  public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
+    Validate.notNull(urlFrom, "Download URL cannot be null!");
+    Validate.notNull(urlFrom, "Target file cannot be null!");
 
-        URLConnection connection = new URL(urlFrom).openConnection();
-        connection.addRequestProperty("User-Agent", "Mozilla/4.0");
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
+    file.delete();
+    file.createNewFile();
 
-        ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
-        FileOutputStream out = new FileOutputStream(file);
-        out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+    URLConnection connection = new URL(urlFrom).openConnection();
+    connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+    connection.setConnectTimeout(5000);
+    connection.setReadTimeout(5000);
 
-        out.close();
-        channel.close();
-    }
+    ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
+    FileOutputStream out = new FileOutputStream(file);
+    out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
 
-    private FileUtils() {
-    }
+    out.close();
+    channel.close();
+  }
 }

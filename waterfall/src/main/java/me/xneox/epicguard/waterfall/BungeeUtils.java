@@ -13,21 +13,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.bungee.listener;
+package me.xneox.epicguard.waterfall;
 
-import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.SettingsHandler;
-import net.md_5.bungee.api.event.SettingsChangedEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
+import net.md_5.bungee.api.chat.BaseComponent;
 
-public class PlayerSettingsListener extends SettingsHandler implements Listener {
-    public PlayerSettingsListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
-
-    @EventHandler
-    public void onSettingsChanged(SettingsChangedEvent event) {
-        this.handle(event.getPlayer().getUniqueId());
-    }
+public final class BungeeUtils {
+  /**
+   * Converts an Adventure component to a bungeecord's component.
+   */
+  public static BaseComponent[] toLegacyComponent(Component component) {
+    return BungeeComponentSerializer.get().serialize(component);
+  }
 }

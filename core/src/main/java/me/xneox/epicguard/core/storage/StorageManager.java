@@ -18,111 +18,106 @@ package me.xneox.epicguard.core.storage;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.net.InetAddresses;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-/**
- * This class manages the stored data and some global cache.
- */
+/** This class manages the stored data and some global cache. */
 public class StorageManager {
-    private final BiMap<String, AddressMeta> addresses = HashBiMap.create();
-    private final SQLDatabase database;
+  private final BiMap<String, AddressMeta> addresses = HashBiMap.create();
+  private final SQLDatabase database;
 
-    private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
+  private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
 
-    public StorageManager(EpicGuard epicGuard) {
-        this.database = new SQLDatabase(this, epicGuard.config().storage());
+  public StorageManager(EpicGuard epicGuard) {
+    this.database = new SQLDatabase(this, epicGuard.config().storage());
 
-        try {
-            this.database.loadData();
-        } catch (Exception e) {
-            epicGuard.logger().error("Could not load plugin's storage");
-            e.printStackTrace();
-        }
+    try {
+      this.database.loadData();
+    } catch (Exception e) {
+      epicGuard.logger().error("Could not load plugin's storage");
+      e.printStackTrace();
     }
+  }
 
-    /**
-     * Returns an {@link AddressMeta} for the specified address.
-     * Creates a new AddressMeta if it doesen't exist for this address.
-     */
-    @NotNull
-    public AddressMeta addressMeta(@NotNull String address) {
-        Validate.notNull(address, "Can't get meta for null address!");
-        return this.addresses.computeIfAbsent(address, s -> new AddressMeta(false, false, new ArrayList<>()));
-    }
+  /**
+   * Returns an {@link AddressMeta} for the specified address. Creates a new AddressMeta if it
+   * doesen't exist for this address.
+   */
+  @NotNull
+  public AddressMeta addressMeta(@NotNull String address) {
+    Validate.notNull(address, "Can't get meta for null address!");
+    return this.addresses.computeIfAbsent(address, s -> new AddressMeta(false, false, new ArrayList<>()));
+  }
 
-    /**
-     * When an address is specified:
-     *   - Redirects to the {@link #addressMeta(String)} method.
-     *   - Never returns null.
-     *
-     * When an nickname is specified:
-     *   - Tries to detect last used address by this nickname.
-     *   - If found, redirects to the {@link #addressMeta(String)} method.
-     *   - If not found, returns null.
-     */
-    @Nullable
-    public AddressMeta resolveAddressMeta(@NotNull String value) {
-        Validate.notNull(value, "Can't resolve meta for null value!");
-        //noinspection UnstableApiUsage
-        String address = InetAddresses.isInetAddress(value) ? value : lastSeenAddress(value);
-        return address != null ? addressMeta(address) : null;
-    }
+  /**
+   * When an address is specified: - Redirects to the {@link #addressMeta(String)} method. - Never
+   * returns null.
+   *
+   * <p>When an nickname is specified: - Tries to detect last used address by this nickname. - If
+   * found, redirects to the {@link #addressMeta(String)} method. - If not found, returns null.
+   */
+  @Nullable
+  public AddressMeta resolveAddressMeta(@NotNull String value) {
+    Validate.notNull(value, "Can't resolve meta for null value!");
+    //noinspection UnstableApiUsage
+    String address = InetAddresses.isInetAddress(value) ? value : lastSeenAddress(value);
+    return address != null ? addressMeta(address) : null;
+  }
 
-    /**
-     * Searches for the last used address of the specified nickname.
-     * Returns null if not found.
-     */
-    @Nullable
-    public String lastSeenAddress(@NotNull String nickname) {
-        return this.addresses.entrySet().stream()
-                .filter(entry -> entry.getValue().nicknames().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
-                .findFirst()
-                .map(Map.Entry::getKey)
-                .orElse(null);
-    }
+  /** Searches for the last used address of the specified nickname. Returns null if not found. */
+  @Nullable
+  public String lastSeenAddress(@NotNull String nickname) {
+    return this.addresses.entrySet().stream()
+        .filter(entry -> entry.getValue().nicknames().stream().anyMatch(nick -> nick.equalsIgnoreCase(nickname)))
+        .findFirst()
+        .map(Map.Entry::getKey)
+        .orElse(null);
+  }
 
-    /**
-     * Checks if the address meta of connecting user contains his current nickname.
-     * If absent, it is added.
-     */
-    public void updateAccounts(@NotNull ConnectingUser user) {
-        List<String> accounts = addressMeta(user.address()).nicknames();
-        if (!accounts.contains(user.nickname())) {
-            accounts.add(user.nickname());
-        }
+  /**
+   * Checks if the address meta of connecting user contains his current nickname. If absent, it is
+   * added.
+   */
+  public void updateAccounts(@NotNull ConnectingUser user) {
+    List<String> accounts = addressMeta(user.address()).nicknames();
+    if (!accounts.contains(user.nickname())) {
+      accounts.add(user.nickname());
     }
+  }
 
-    /**
-     * A legacy method for viewing addresses that meet a specific condition.
-     * For example, this can return whitelisted or blacklisted addresses.
-     *
-     * Returned list is immutable, used only for statistics and command suggestions.
-     */
-    public List<String> viewAddresses(Predicate<AddressMeta> predicate) {
-        return this.addresses.entrySet().stream()
-                .filter(entry -> predicate.test(entry.getValue()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toUnmodifiableList()); //TODO: Replace with java 16's toList
-    }
+  /**
+   * A legacy method for viewing addresses that meet a specific condition. For example, this can
+   * return whitelisted or blacklisted addresses.
+   *
+   * <p>Returned list is immutable, used only for statistics and command suggestions.
+   */
+  public List<String> viewAddresses(Predicate<AddressMeta> predicate) {
+    return this.addresses.entrySet().stream()
+        .filter(entry -> predicate.test(entry.getValue()))
+        .map(Map.Entry::getKey)
+        .toList();
+  }
 
-    public BiMap<String, AddressMeta> addresses() {
-        return this.addresses;
-    }
+  public BiMap<String, AddressMeta> addresses() {
+    return this.addresses;
+  }
 
-    public SQLDatabase database() {
-        return this.database;
-    }
+  public SQLDatabase database() {
+    return this.database;
+  }
 
-    @NotNull
-    public Collection<String> pingCache() {
-        return this.pingCache;
-    }
+  @NotNull
+  public Collection<String> pingCache() {
+    return this.pingCache;
+  }
 }

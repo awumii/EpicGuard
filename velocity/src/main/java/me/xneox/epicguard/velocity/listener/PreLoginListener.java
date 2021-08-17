@@ -22,16 +22,16 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DetectionHandler;
 
 public class PreLoginListener extends DetectionHandler {
-    public PreLoginListener(EpicGuard epicGuard) {
-        super(epicGuard);
-    }
+  public PreLoginListener(EpicGuard epicGuard) {
+    super(epicGuard);
+  }
 
-    @Subscribe(order = PostOrder.FIRST)
-    public void onPreLogin(PreLoginEvent event) {
-        String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
-        String nickname = event.getUsername();
+  @Subscribe(order = PostOrder.FIRST)
+  public void onPreLogin(PreLoginEvent event) {
+    String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
+    String nickname = event.getUsername();
 
-        this.handle(address, nickname).ifPresent(result ->
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result)));
-    }
+    this.handle(address, nickname).ifPresent(result ->
+        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result)));
+  }
 }

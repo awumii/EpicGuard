@@ -15,24 +15,23 @@
 
 package me.xneox.epicguard.core.task;
 
+import java.sql.SQLException;
 import me.xneox.epicguard.core.EpicGuard;
 
-import java.sql.SQLException;
-
 public class DataSaveTask implements Runnable {
-    private final EpicGuard epicGuard;
+  private final EpicGuard epicGuard;
 
-    public DataSaveTask(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
-    }
+  public DataSaveTask(EpicGuard epicGuard) {
+    this.epicGuard = epicGuard;
+  }
 
-    @Override
-    public void run() {
-        try {
-            this.epicGuard.storageManager().database().saveData();
-        } catch (SQLException ex) {
-            this.epicGuard.logger().error("Could not save data to the SQL database.");
-            ex.printStackTrace();
-        }
+  @Override
+  public void run() {
+    try {
+      this.epicGuard.storageManager().database().saveData();
+    } catch (SQLException ex) {
+      this.epicGuard.logger().error("Could not save data to the SQL database.");
+      ex.printStackTrace();
     }
+  }
 }

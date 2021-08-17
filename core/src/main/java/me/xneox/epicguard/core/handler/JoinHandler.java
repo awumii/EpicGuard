@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core.handler;
 
+import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import me.xneox.epicguard.core.user.OnlineUser;
@@ -22,49 +23,46 @@ import me.xneox.epicguard.core.util.MessageUtils;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Handler for the PlayerJoin or PostLogin listeners
- * Used for the auto-whitelist feature, and for SettingsCheck.
+ * Handler for the PlayerJoin or PostLogin listeners Used for the auto-whitelist feature, and for
+ * SettingsCheck.
  */
 public class JoinHandler {
-    private final EpicGuard epicGuard;
+  private final EpicGuard epicGuard;
 
-    public JoinHandler(EpicGuard epicGuard) {
-        this.epicGuard = epicGuard;
+  public JoinHandler(EpicGuard epicGuard) {
+    this.epicGuard = epicGuard;
+  }
+
+  /**
+   * Handling the player who just have joined to the server.
+   *
+   * @param uuid UUID of the online player.
+   * @param address Address of the online player.
+   */
+  public void handle(@NotNull UUID uuid, @NotNull String address) {
+    Validate.notNull(uuid, "UUID cannot be null!");
+    Validate.notNull(address, "Address cannot be null!");
+
+    OnlineUser user = this.epicGuard.userManager().getOrCreate(uuid);
+
+    // Schedule a delayed task to whitelist the player.
+    if (this.epicGuard.config().autoWhitelist().enabled()) {
+      this.epicGuard.platform().runTaskLater(() -> {
+        if (user != null) { // check if player has logged out
+          AddressMeta meta = this.epicGuard.storageManager().addressMeta(address);
+          meta.whitelisted(true);
+        }
+      }, this.epicGuard.config().autoWhitelist().timeOnline());
     }
 
-    /**
-     * Handling the player who just have joined to the server.
-     *
-     * @param uuid UUID of the online player.
-     * @param address Address of the online player.
-     * @param nickname Nickname of the online player.
-     */
-    public void handle(@NotNull UUID uuid, @NotNull String address, @NotNull String nickname) {
-        Validate.notNull(uuid, "UUID cannot be null!");
-        Validate.notNull(address, "Address cannot be null!");
-
-        OnlineUser onlineUser = this.epicGuard.userManager().getOrCreate(uuid);
-
-        // Schedule a delayed task to whitelist the player.
-        if (this.epicGuard.config().autoWhitelist().enabled()) {
-            this.epicGuard.platform().runTaskLater(() -> {
-                if (onlineUser != null) { // check if player has logged out
-                    AddressMeta meta = this.epicGuard.storageManager().addressMeta(address);
-                    meta.whitelisted(true);
-                }
-            }, this.epicGuard.config().autoWhitelist().timeOnline());
+    // Schedule a delayed task to check if the player has sent the Settings packet.
+    if (this.epicGuard.config().settingsCheck().enabled()) {
+      this.epicGuard.platform().runTaskLater(() -> {
+        if (user != null && !user.settingsChanged()) {
+          this.epicGuard.platform().disconnectUser(user, MessageUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
         }
-
-        // Schedule a delayed task to check if the player has sent the Settings packet.
-        if (this.epicGuard.config().settingsCheck().enabled()) {
-            this.epicGuard.platform().runTaskLater(() -> {
-                if (onlineUser != null && !onlineUser.settingsChanged()) {
-                    this.epicGuard.platform().disconnectUser(onlineUser, MessageUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
-                }
-            }, this.epicGuard.config().settingsCheck().delay());
-        }
+      }, this.epicGuard.config().settingsCheck().delay());
     }
+  }
 }
