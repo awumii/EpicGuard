@@ -101,7 +101,8 @@ public class StorageManager {
    *
    * <p>Returned list is immutable, used only for statistics and command suggestions.
    */
-  public List<String> viewAddresses(Predicate<AddressMeta> predicate) {
+  @NotNull
+  public List<String> viewAddresses(@NotNull Predicate<AddressMeta> predicate) {
     return this.addresses.entrySet().stream()
         .filter(entry -> predicate.test(entry.getValue()))
         .map(Map.Entry::getKey)
@@ -116,7 +117,6 @@ public class StorageManager {
     return this.database;
   }
 
-  @NotNull
   public Collection<String> pingCache() {
     return this.pingCache;
   }

@@ -39,7 +39,7 @@ public class MonitorTask implements Runnable {
 
     for (OnlineUser user : this.epicGuard.userManager().users()) {
       if (user.notifications()) {
-        Audience audience = this.epicGuard.platform().audience(user);
+        Audience audience = this.epicGuard.platform().audience(user.uuid());
         if (audience != null) {
           audience.sendActionBar(monitor);
         }

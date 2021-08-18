@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.velocity.listener;
 
+import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
@@ -27,11 +28,11 @@ public class PreLoginListener extends DetectionHandler {
   }
 
   @Subscribe(order = PostOrder.FIRST)
-  public void onPreLogin(PreLoginEvent event) {
+  public EventTask onPreLogin(PreLoginEvent event) {
     String address = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
     String nickname = event.getUsername();
 
-    this.handle(address, nickname).ifPresent(result ->
-        event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result)));
+    return EventTask.async(() ->
+        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result))));
   }
 }

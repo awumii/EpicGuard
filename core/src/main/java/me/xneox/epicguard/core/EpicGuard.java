@@ -61,11 +61,11 @@ public class EpicGuard {
     this.loadConfigurations();
 
     logger().info("Initializing managers...");
+    this.geoManager = new GeoManager(this);
     this.storageManager = new StorageManager(this);
+    this.proxyManager = new ProxyManager(this);
     this.attackManager = new AttackManager();
     this.userManager = new UserManager();
-    this.proxyManager = new ProxyManager(this);
-    this.geoManager = new GeoManager(this);
 
     this.commandHandler = new CommandHandler(this);
 
@@ -75,14 +75,11 @@ public class EpicGuard {
     logger().info("Scheduling tasks...");
     this.platform.scheduleRepeatingTask(new MonitorTask(this), 1L);
     this.platform.scheduleRepeatingTask(new UpdateCheckerTask(this), 1800L);
-    this.platform.scheduleRepeatingTask(
-        new AttackResetTask(this), this.config.misc().attackResetInterval());
-    this.platform.scheduleRepeatingTask(
-        new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
+    this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
+    this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
     EpicGuardAPI.INSTANCE.setInstance(this);
-    logger()
-        .info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
+    logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
   }
 
   public void loadConfigurations() {

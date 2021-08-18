@@ -5,12 +5,11 @@ plugins {
 
 allprojects {
     group = "me.xneox"
-    version = "6.0.0"
+    version = "7.0.0"
 }
 
 subprojects {
-    // IF I TOUCH THIS THEN BUILD FAILS. WHAT THE FUCK
-    // PLEASE SOMEONE JUST REWRITE THIS FOR ME I WASTED TOO MUCH TIME ON THIS
+    // TODO: REWRITE EVERYTHING HERE
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 

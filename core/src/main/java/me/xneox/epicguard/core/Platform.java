@@ -15,7 +15,7 @@
 
 package me.xneox.epicguard.core;
 
-import me.xneox.epicguard.core.user.OnlineUser;
+import java.util.UUID;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -30,15 +30,15 @@ public interface Platform {
 
   /** Returns an audience for the provided user. */
   @Nullable
-  Audience audience(@NotNull OnlineUser user);
+  Audience audience(@NotNull UUID uuid);
 
   /**
    * Kicks the user from the server with a specified message (find the player using User#getUUID).
    *
-   * @param onlineUser The user to be kicked.
+   * @param uuid The UUID of user to be kicked.
    * @param message The kick message.
    */
-  void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message);
+  void disconnectUser(@NotNull UUID uuid, @NotNull Component message);
 
   /**
    * Schedules a task to be run asynchronously after the specified time (in seconds).

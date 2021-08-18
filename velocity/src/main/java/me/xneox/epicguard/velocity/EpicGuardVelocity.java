@@ -24,6 +24,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
@@ -96,13 +97,14 @@ public class EpicGuardVelocity implements Platform {
   }
 
   @Override
-  public @Nullable Audience audience(@NotNull OnlineUser user) {
-    return this.server.getPlayer(user.uuid()).orElse(null);
+  @Nullable
+  public Audience audience(@NotNull UUID uuid) {
+    return this.server.getPlayer(uuid).orElse(null);
   }
 
   @Override
-  public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
-    this.server.getPlayer(onlineUser.uuid()).ifPresent(player -> player.disconnect(message));
+  public void disconnectUser(@NotNull UUID uuid, @NotNull Component message) {
+    this.server.getPlayer(uuid).ifPresent(player -> player.disconnect(message));
   }
 
   @Override

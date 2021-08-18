@@ -60,7 +60,7 @@ public class JoinHandler {
     if (this.epicGuard.config().settingsCheck().enabled()) {
       this.epicGuard.platform().runTaskLater(() -> {
         if (user != null && !user.settingsChanged()) {
-          this.epicGuard.platform().disconnectUser(user, MessageUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
+          this.epicGuard.platform().disconnectUser(uuid, MessageUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
         }
       }, this.epicGuard.config().settingsCheck().delay());
     }

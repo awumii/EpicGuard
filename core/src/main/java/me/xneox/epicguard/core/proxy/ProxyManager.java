@@ -29,10 +29,9 @@ public class ProxyManager {
 
   public ProxyManager(EpicGuard epicGuard) {
     this.epicGuard = epicGuard;
-    this.resultCache =
-        CacheBuilder.newBuilder()
-            .expireAfterWrite(epicGuard.config().proxyCheck().cacheDuration(), TimeUnit.SECONDS)
-            .build();
+    this.resultCache = CacheBuilder.newBuilder()
+        .expireAfterWrite(epicGuard.config().proxyCheck().cacheDuration(), TimeUnit.SECONDS)
+        .build();
   }
 
   /**

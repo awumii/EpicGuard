@@ -15,9 +15,9 @@
 
 package me.xneox.epicguard.paper;
 
+import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.user.OnlineUser;
 import me.xneox.epicguard.paper.listener.PlayerJoinListener;
 import me.xneox.epicguard.paper.listener.PlayerPreLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerQuitListener;
@@ -76,13 +76,14 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
   }
 
   @Override
-  public @Nullable Audience audience(OnlineUser user) {
-    return Bukkit.getPlayer(user.uuid());
+  @Nullable
+  public Audience audience(@NotNull UUID uuid) {
+    return Bukkit.getPlayer(uuid);
   }
 
   @Override
-  public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component message) {
-    Player player = Bukkit.getPlayer(onlineUser.uuid());
+  public void disconnectUser(@NotNull UUID uuid, @NotNull Component message) {
+    Player player = Bukkit.getPlayer(uuid);
     if (player != null) {
       player.kick(message);
     }

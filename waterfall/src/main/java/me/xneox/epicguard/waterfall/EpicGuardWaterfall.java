@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.waterfall;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.waterfall.listener.DisconnectListener;
 import me.xneox.epicguard.waterfall.listener.PlayerSettingsListener;
@@ -23,7 +24,6 @@ import me.xneox.epicguard.waterfall.listener.PreLoginListener;
 import me.xneox.epicguard.waterfall.listener.ServerPingListener;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.user.OnlineUser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
@@ -76,8 +76,8 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
 
   @Override
   @Nullable
-  public Audience audience(@NotNull OnlineUser user) {
-    ProxiedPlayer player = ProxyServer.getInstance().getPlayer(user.uuid());
+  public Audience audience(@NotNull UUID uuid) {
+    ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
     if (player != null) {
       return this.adventure.player(player);
     }
@@ -85,9 +85,9 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
   }
 
   @Override
-  public void disconnectUser(@NotNull OnlineUser onlineUser, @NotNull Component component) {
+  public void disconnectUser(@NotNull UUID uuid, @NotNull Component component) {
     ProxyServer.getInstance()
-        .getPlayer(onlineUser.uuid())
+        .getPlayer(uuid)
         .disconnect(BungeeUtils.toLegacyComponent(component));
   }
 
