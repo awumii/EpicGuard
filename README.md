@@ -4,7 +4,7 @@ NOTE: The current code is under heavy refactoring.
 Releases may be outdated, use [latest builds](https://github.com/xxneox/EpicGuard/actions)
 
 ## Supported platforms
-* [Paper 1.17.1+](https://papermc.io/)
+* [Paper 1.16.5+](https://papermc.io/)
 * [Velocity 3.0.0+](https://velocitypowered.com/)
 * BungeeCord (you have to use [Waterfall](https://papermc.io/downloads#Waterfall))
 * Java 16 is required.
