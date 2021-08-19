@@ -11,7 +11,7 @@ dependencies {
     compileOnly project(":core")
 
     implementation "org.bstats:bstats-velocity:2.2.1"
-    implementation "mysql:mysql-connector-java:5.1.33"
+    implementation "mysql:mysql-connector-java:5.1.49"
     implementation "org.xerial:sqlite-jdbc:3.36.0.1"
 
     compileOnly "com.velocitypowered:velocity-api:3.0.0"
