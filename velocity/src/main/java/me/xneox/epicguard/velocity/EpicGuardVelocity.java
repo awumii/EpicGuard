@@ -28,7 +28,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.user.OnlineUser;
+import me.xneox.epicguard.core.util.logging.LogWrapper;
+import me.xneox.epicguard.core.util.logging.impl.SLF4JWrapper;
 import me.xneox.epicguard.velocity.listener.DisconnectListener;
 import me.xneox.epicguard.velocity.listener.PlayerSettingsListener;
 import me.xneox.epicguard.velocity.listener.PostLoginListener;
@@ -49,7 +50,7 @@ import org.slf4j.Logger;
     authors = "neox")
 public class EpicGuardVelocity implements Platform {
   private final ProxyServer server;
-  private final Logger logger;
+  private final LogWrapper logger;
   private final Metrics.Factory metricsFactory;
 
   private EpicGuard epicGuard;
@@ -57,7 +58,7 @@ public class EpicGuardVelocity implements Platform {
   @Inject
   public EpicGuardVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
     this.server = server;
-    this.logger = logger;
+    this.logger = new SLF4JWrapper(logger);
     this.metricsFactory = metricsFactory;
   }
 
@@ -87,7 +88,7 @@ public class EpicGuardVelocity implements Platform {
 
   @NotNull
   @Override
-  public Logger logger() {
+  public LogWrapper logger() {
     return this.logger;
   }
 

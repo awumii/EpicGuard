@@ -43,9 +43,8 @@ public class StorageManager {
 
     try {
       this.database.loadData();
-    } catch (Exception e) {
-      epicGuard.logger().error("Could not load plugin's storage");
-      e.printStackTrace();
+    } catch (Exception exception) {
+      epicGuard.logger().error("Could not load plugin's storage", exception);
     }
   }
 

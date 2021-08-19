@@ -17,6 +17,8 @@ package me.xneox.epicguard.waterfall;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import me.xneox.epicguard.core.util.logging.LogWrapper;
+import me.xneox.epicguard.core.util.logging.impl.SLF4JWrapper;
 import me.xneox.epicguard.waterfall.listener.DisconnectListener;
 import me.xneox.epicguard.waterfall.listener.PlayerSettingsListener;
 import me.xneox.epicguard.waterfall.listener.PostLoginListener;
@@ -34,15 +36,15 @@ import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 public class EpicGuardWaterfall extends Plugin implements Platform {
   private EpicGuard epicGuard;
-
+  private LogWrapper logger;
   private BungeeAudiences adventure;
 
   @Override
   public void onEnable() {
+    this.logger = new SLF4JWrapper(this.getSLF4JLogger());
     this.epicGuard = new EpicGuard(this);
     this.adventure = BungeeAudiences.create(this);
 
@@ -65,8 +67,8 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
 
   @Override
   @NotNull
-  public Logger logger() {
-    return this.getSLF4JLogger();
+  public LogWrapper logger() {
+    return this.logger;
   }
 
   @Override

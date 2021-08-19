@@ -13,24 +13,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.task;
+package me.xneox.epicguard.core.util.logging;
 
-import java.sql.SQLException;
-import me.xneox.epicguard.core.EpicGuard;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class DataSaveTask implements Runnable {
-  private final EpicGuard epicGuard;
+public interface LogWrapper {
+  void info(@NotNull String message);
 
-  public DataSaveTask(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
-  }
+  void warn(@NotNull String message);
 
-  @Override
-  public void run() {
-    try {
-      this.epicGuard.storageManager().database().saveData();
-    } catch (SQLException exception) {
-      this.epicGuard.logger().error("Could not save data to the SQL database.", exception);
-    }
-  }
+  void error(@NotNull String message, @Nullable Throwable throwable);
 }

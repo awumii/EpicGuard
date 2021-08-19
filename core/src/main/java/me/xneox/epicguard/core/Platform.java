@@ -16,15 +16,15 @@
 package me.xneox.epicguard.core;
 
 import java.util.UUID;
+import me.xneox.epicguard.core.util.logging.LogWrapper;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 public interface Platform {
   @NotNull
-  Logger logger();
+  LogWrapper logger();
 
   String version();
 

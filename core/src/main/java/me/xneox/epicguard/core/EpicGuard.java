@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
-import me.xneox.epicguard.core.util.LogFilter;
+import me.xneox.epicguard.core.util.logging.LogFilter;
 import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.GeoManager;
 import me.xneox.epicguard.core.manager.UserManager;
@@ -33,7 +33,7 @@ import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigurationLoader;
 import me.xneox.epicguard.core.util.FileUtils;
-import org.slf4j.Logger;
+import me.xneox.epicguard.core.util.logging.LogWrapper;
 import org.spongepowered.configurate.ConfigurateException;
 
 /** The main, core class of EpicGuard. */
@@ -89,22 +89,20 @@ public class EpicGuard {
     try {
       this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
       this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
-    } catch (ConfigurateException e) {
-      logger().error("Could not load the configuration.");
-      e.printStackTrace();
+    } catch (ConfigurateException exception) {
+      logger().error("Could not load the configuration.", exception);
     }
   }
 
   public void shutdown() {
     try {
       this.storageManager.database().saveData();
-    } catch (SQLException ex) {
-      this.logger().error("Could not save data to the SQL database during shutdown.");
-      ex.printStackTrace();
+    } catch (SQLException exception) {
+      this.logger().error("Could not save data to the SQL database during shutdown.", exception);
     }
   }
 
-  public Logger logger() {
+  public LogWrapper logger() {
     return this.platform.logger();
   }
 

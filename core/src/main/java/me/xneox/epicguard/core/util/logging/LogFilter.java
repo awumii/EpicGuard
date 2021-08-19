@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.util;
+package me.xneox.epicguard.core.util.logging;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.CheckMode;

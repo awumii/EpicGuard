@@ -18,6 +18,8 @@ package me.xneox.epicguard.paper;
 import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
+import me.xneox.epicguard.core.util.logging.LogWrapper;
+import me.xneox.epicguard.core.util.logging.impl.JavaLoggerWrapper;
 import me.xneox.epicguard.paper.listener.PlayerJoinListener;
 import me.xneox.epicguard.paper.listener.PlayerPreLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerQuitListener;
@@ -33,13 +35,14 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 public class EpicGuardPaper extends JavaPlugin implements Platform {
   private EpicGuard epicGuard;
+  private LogWrapper logger;
 
   @Override
   public void onEnable() {
+    this.logger = new JavaLoggerWrapper(this.getLogger());
     this.epicGuard = new EpicGuard(this);
 
     PluginManager pm = Bukkit.getPluginManager();
@@ -66,8 +69,8 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
 
   @Override
   @NotNull
-  public Logger logger() {
-    return this.getSLF4JLogger();
+  public LogWrapper logger() {
+    return this.logger;
   }
 
   @Override
