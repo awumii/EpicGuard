@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import me.xneox.epicguard.core.EpicGuard;
 
 public final class VersionUtils {
+  public static final String VERSION = "{version}"; // replaced by the blossom task.
   private static final String CHECK_URL = "https://raw.githubusercontent.com/xxneox/EpicGuard/master/VERSION.txt";
 
   /**
@@ -38,7 +39,7 @@ public final class VersionUtils {
       return;
     }
 
-    if (parse(latest) > parse(epicGuard.platform().version())) {
+    if (parse(latest) > parse(VERSION)) {
       action.accept(latest);
     }
   }

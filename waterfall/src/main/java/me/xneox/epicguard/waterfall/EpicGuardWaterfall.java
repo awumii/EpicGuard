@@ -72,11 +72,6 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
   }
 
   @Override
-  public String version() {
-    return this.getDescription().getVersion();
-  }
-
-  @Override
   @Nullable
   public Audience audience(@NotNull UUID uuid) {
     ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);

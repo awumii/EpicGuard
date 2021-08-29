@@ -30,6 +30,6 @@ public class UpdateCheckerTask implements Runnable {
     VersionUtils.checkForUpdates(this.epicGuard, update ->
         this.epicGuard .logger().info(this.epicGuard.messages().updateAvailable()
             .replace("{NEWVER}", update)
-            .replace("{OLDVER}", this.epicGuard.platform().version())));
+            .replace("{OLDVER}", VersionUtils.VERSION)));
   }
 }

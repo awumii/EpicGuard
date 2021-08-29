@@ -28,6 +28,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
+import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.core.util.logging.LogWrapper;
 import me.xneox.epicguard.core.util.logging.impl.SLF4JWrapper;
 import me.xneox.epicguard.velocity.listener.DisconnectListener;
@@ -45,7 +46,7 @@ import org.slf4j.Logger;
 @Plugin(
     id = "epicguard",
     name = "EpicGuard",
-    version = "{version}",
+    version = VersionUtils.VERSION,
     description = "Bot protection system for Minecraft servers.",
     authors = "neox")
 public class EpicGuardVelocity implements Platform {
@@ -90,11 +91,6 @@ public class EpicGuardVelocity implements Platform {
   @Override
   public LogWrapper logger() {
     return this.logger;
-  }
-
-  @Override
-  public String version() {
-    return "{version}";
   }
 
   @Override

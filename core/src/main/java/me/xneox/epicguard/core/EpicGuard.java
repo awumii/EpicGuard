@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
+import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.core.util.logging.LogFilter;
 import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.GeoManager;
@@ -79,7 +80,7 @@ public class EpicGuard {
     this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
     EpicGuardAPI.INSTANCE.setInstance(this);
-    logger().info("Startup completed successfully. Welcome to EpicGuard v" + this.platform.version());
+    logger().info("Startup completed successfully. Welcome to EpicGuard v" + VersionUtils.VERSION);
   }
 
   public void loadConfigurations() {

@@ -23,12 +23,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface Platform {
+  /**
+   * @return A wrapper of the platform plugin's logger.
+   */
   @NotNull
   LogWrapper logger();
 
-  String version();
-
-  /** Returns an audience for the provided user. */
+  /**
+   *
+   * @param uuid UUID of the online user.
+   * @return an audience for the provided user's uuid.
+   */
   @Nullable
   Audience audience(@NotNull UUID uuid);
 

@@ -1,5 +1,0 @@
-rootProject.name = "EpicGuard"
-include ":core"
-include ":velocity"
-include ":waterfall"
-include ":paper"

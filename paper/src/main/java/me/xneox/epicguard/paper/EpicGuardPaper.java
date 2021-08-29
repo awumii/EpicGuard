@@ -74,11 +74,6 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
   }
 
   @Override
-  public String version() {
-    return this.getDescription().getVersion();
-  }
-
-  @Override
   @Nullable
   public Audience audience(@NotNull UUID uuid) {
     return Bukkit.getPlayer(uuid);
