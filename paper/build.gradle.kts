@@ -8,7 +8,7 @@ dependencies {
 tasks {
     shadowJar {
         archiveFileName.set("EpicGuardPaper-${project.version}.jar")
-        relocate("org.bstats", "me.xneox.epicguard.paper    .bstats")
+        relocate("org.bstats", "me.xneox.epicguard.paper.bstats")
     }
 
     processResources {

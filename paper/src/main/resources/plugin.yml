@@ -1,5 +1,5 @@
 name: EpicGuard
-version: '${projectVersion}'
+version: '${version}'
 main: me.xneox.epicguard.paper.EpicGuardPaper
 api-version: 1.13
 

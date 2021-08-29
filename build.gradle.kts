@@ -27,7 +27,12 @@ subprojects {
             // Exclude useless text files
             exclude("mozilla/")
             exclude("org/apache/commons/codec/")
-            minimize()
+
+            // Minimize, but exclude drivers shaded in the velocity platform
+            minimize {
+                exclude(dependency("mysql:.*:.*"))
+                exclude(dependency("org.xerial:sqlite-jdbc:.*"))
+            }
 
             // Copy compiled platform jars to '/out' directory for convenience.
             doLast {
