@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.lang3.Validate;

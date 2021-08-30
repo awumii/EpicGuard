@@ -18,7 +18,6 @@ package me.xneox.epicguard.core.check.impl;
 import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.CheckMode;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
