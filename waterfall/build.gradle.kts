@@ -3,6 +3,8 @@ dependencies {
 
     implementation("org.bstats:bstats-bungeecord:2.2.1")
     implementation("net.kyori:adventure-platform-bungeecord:4.0.0-SNAPSHOT")
+    implementation("org.xerial:sqlite-jdbc:3.36.0.3") // MySQL driver is present on bungee, but SQLite is not.
+    
     compileOnly("io.github.waterfallmc:waterfall-api:1.17-R0.1-SNAPSHOT")
 }
 
