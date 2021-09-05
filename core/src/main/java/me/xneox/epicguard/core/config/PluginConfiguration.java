@@ -394,16 +394,16 @@ public class PluginConfiguration {
         false - use SQLite for storage
         true - use MYSQL for storage
         (!) This option requires a restart. Changing storage type will reset your current data.""")
-    private boolean useMySQL = false;
+    private boolean useMysql = false;
 
     private String host = "127.0.0.1";
     private int port = 3306;
-    private String database = "database";
-    private String user = "username";
-    private String password = "password";
+    private String database = "database!";
+    private String user = "username!";
+    private String password = "password!";
 
     public boolean useMySQL() {
-      return this.useMySQL;
+      return this.useMysql;
     }
 
     public String host() {

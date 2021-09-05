@@ -18,7 +18,6 @@ package me.xneox.epicguard.core;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
-import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.ExceptionUtils;

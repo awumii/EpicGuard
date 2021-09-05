@@ -12,6 +12,6 @@ public final class ExceptionUtils {
     logger.error("  > Details: " + details);
     logger.error("  > Platform: " + EpicGuardAPI.INSTANCE.platformVersion());
     logger.error("  > Stacktrace: ");
-    throwable.printStackTrace();
+    logger.error("", throwable);
   }
 }
