@@ -26,8 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
 public class NameSimilarityCheck extends Check {
-  private final Queue<String> nameHistory =
-      EvictingQueue.create(this.epicGuard.config().nameSimilarityCheck().historySize());
+  private final Queue<String> nameHistory = EvictingQueue.create(this.epicGuard.config().nameSimilarityCheck().historySize());
   private final LevenshteinDistance distanceAlgorithm = LevenshteinDistance.getDefaultInstance();
 
   public NameSimilarityCheck(EpicGuard epicGuard) {
@@ -36,19 +35,21 @@ public class NameSimilarityCheck extends Check {
 
   @Override
   public boolean handle(@NotNull ConnectingUser user) {
-    for (String nick : this.nameHistory) {
-      if (nick.equals(user.nickname())) {
-        return false; // ignore identical nickname.
+    synchronized (this.nameHistory) {
+      for (String nick : this.nameHistory) {
+        if (nick.equals(user.nickname())) {
+          return false; // ignore identical nickname.
+        }
+
+        int distance = this.distanceAlgorithm.apply(nick, user.nickname());
+        if (distance <= this.epicGuard.config().nameSimilarityCheck().distance()) {
+          return this.evaluate(this.epicGuard.config().nameSimilarityCheck().checkMode(), true);
+        }
       }
 
-      int distance = this.distanceAlgorithm.apply(nick, user.nickname());
-      if (distance <= this.epicGuard.config().nameSimilarityCheck().distance()) {
-        return this.evaluate(this.epicGuard.config().nameSimilarityCheck().checkMode(), true);
-      }
+      this.nameHistory.add(user.nickname());
+      return false;
     }
-
-    this.nameHistory.add(user.nickname());
-    return false;
   }
 
   @Override
