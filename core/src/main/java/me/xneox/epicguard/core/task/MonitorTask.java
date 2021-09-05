@@ -18,7 +18,7 @@ package me.xneox.epicguard.core.task;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.OnlineUser;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 
@@ -33,7 +33,7 @@ public class MonitorTask implements Runnable {
   @Override
   public void run() {
     MessagesConfiguration config = this.epicGuard.messages();
-    Component monitor = MessageUtils.component(config.actionbarMonitor()
+    Component monitor = TextUtils.component(config.actionbarMonitor()
         .replace("%cps%", String.valueOf(this.epicGuard.attackManager().connectionCounter()))
         .replace("%status%", this.epicGuard.attackManager().isUnderAttack() ? config.actionbarAttack() : config.actionbarNoAttack()));
 

@@ -27,6 +27,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.util.ExceptionUtils;
 import me.xneox.epicguard.core.util.FileUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -72,9 +73,7 @@ public class GeoManager {
 
       this.cityReader = new DatabaseReader.Builder(cityDatabase).withCache(new CHMCache()).build();
     } catch (IOException ex) {
-      epicGuard.logger().warn("Couldn't download or initialize the GeoIP databases, please check your internet connection.");
-      epicGuard.logger().warn("Geographic features will be disabled.");
-      ex.printStackTrace();
+      ExceptionUtils.report("Couldn't download or initialize the GeoIP databases, please check your internet connection.", ex);
     }
   }
 

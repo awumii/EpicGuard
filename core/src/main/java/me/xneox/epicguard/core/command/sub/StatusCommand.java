@@ -21,7 +21,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.OnlineUser;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
@@ -40,7 +40,7 @@ public class StatusCommand implements SubCommand {
       OnlineUser onlineUser = epicGuard.userManager().getOrCreate(uuid);
       onlineUser.notifications(!onlineUser.notifications());
 
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.toggleStatus()));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.toggleStatus()));
       }, () -> audience.sendMessage(
           Component.text("This command is unavailable in the current environment.")
               .color(TextColor.fromHexString("#ff6600"))));

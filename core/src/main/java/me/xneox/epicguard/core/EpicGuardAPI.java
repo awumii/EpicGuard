@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core;
 
 import java.util.Collection;
-
 import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.GeoManager;
 import me.xneox.epicguard.core.storage.AddressMeta;
@@ -28,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
  * A singleton API class which can be safely used by other projects.
  */
 public class EpicGuardAPI {
+
   public static final EpicGuardAPI INSTANCE = new EpicGuardAPI();
   private EpicGuard epicGuard;
 
@@ -43,27 +43,35 @@ public class EpicGuardAPI {
     return this.epicGuard.geoManager();
   }
 
-  /** @return The storage manager, which is used for various things regarding address data. */
+  /**
+   * @return The storage manager, which is used for various things regarding address data.
+   */
   @NotNull
   public StorageManager storageManager() {
     checkAvailability();
     return this.epicGuard.storageManager();
   }
 
-  /** @return The attack manager which contains methods for managing the attack status. */
+  /**
+   * @return The attack manager which contains methods for managing the attack status.
+   */
   public AttackManager attackManager() {
     checkAvailability();
     return this.epicGuard.attackManager();
   }
 
-  /** @return An immutable Collection which contains whitelisted addresses. */
+  /**
+   * @return An immutable Collection which contains whitelisted addresses.
+   */
   @NotNull
   public Collection<String> whitelistedAddresses() {
     checkAvailability();
     return this.epicGuard.storageManager().viewAddresses(AddressMeta::whitelisted);
   }
 
-  /** @return An immutable Collection which contains blacklisted addresses. */
+  /**
+   * @return An immutable Collection which contains blacklisted addresses.
+   */
   @NotNull
   public Collection<String> blacklistedAddresses() {
     checkAvailability();
@@ -71,11 +79,26 @@ public class EpicGuardAPI {
   }
 
   /**
+   * @return The platform name and version EpicGuard is currently running on.
+   */
+  @NotNull
+  public String platformVersion() {
+    return this.epicGuard.platform().platformVersion();
+  }
+
+  /**
+   * @return The instance of EpicGuard's core. Use at your own risk.
+   */
+  public EpicGuard instance() {
+    return this.epicGuard;
+  }
+
+  /**
    * This method is used during initialization to set an instance. Can't be used twice.
    *
    * @param instance Instance of {@link EpicGuard} class.
    */
-  protected void setInstance(@NotNull EpicGuard instance) {
+  protected void instance(@NotNull EpicGuard instance) {
     if (this.epicGuard == null) {
       this.epicGuard = instance;
     } else {
@@ -83,8 +106,11 @@ public class EpicGuardAPI {
     }
   }
 
-  /** Checks if the EpicGuard has been initialized already. */
+  /**
+   * Checks if the EpicGuard has been initialized already.
+   */
   public void checkAvailability() {
-    Validate.notNull(this.epicGuard, "Can't acces EpicGuardAPI because the plugin is not initialized. Have you set is as dependency?.");
+    Validate.notNull(this.epicGuard,
+        "Can't acces EpicGuardAPI because the plugin is not initialized. Have you set is as dependency?.");
   }
 }

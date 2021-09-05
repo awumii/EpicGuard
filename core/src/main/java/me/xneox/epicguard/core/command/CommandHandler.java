@@ -27,7 +27,7 @@ import me.xneox.epicguard.core.command.sub.ReloadCommand;
 import me.xneox.epicguard.core.command.sub.SaveCommand;
 import me.xneox.epicguard.core.command.sub.StatusCommand;
 import me.xneox.epicguard.core.command.sub.WhitelistCommand;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import me.xneox.epicguard.core.util.VersionUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -65,7 +65,7 @@ public class CommandHandler {
 
     SubCommand command = this.commandMap.get(args[0]);
     if (command == null) {
-      audience.sendMessage(MessageUtils.component(prefix + this.epicGuard.messages().command().unknownCommand()));
+      audience.sendMessage(TextUtils.component(prefix + this.epicGuard.messages().command().unknownCommand()));
       return;
     }
 

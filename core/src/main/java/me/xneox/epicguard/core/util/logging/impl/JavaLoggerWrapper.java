@@ -21,6 +21,9 @@ import me.xneox.epicguard.core.util.logging.LogWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * LogWrapper implementation for java.util.logging Logger
+ */
 public class JavaLoggerWrapper implements LogWrapper {
   private final Logger logger;
 

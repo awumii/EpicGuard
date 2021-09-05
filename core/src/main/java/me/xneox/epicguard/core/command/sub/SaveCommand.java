@@ -18,7 +18,8 @@ package me.xneox.epicguard.core.command.sub;
 import java.sql.SQLException;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.ExceptionUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,11 +28,11 @@ public class SaveCommand implements SubCommand {
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     try {
       epicGuard.storageManager().database().saveData();
-      audience.sendMessage(MessageUtils.component(epicGuard.messages().command().prefix() + "&aData has been saved succesfully."));
+      audience.sendMessage(TextUtils.component(epicGuard.messages().command().prefix() + "&aData has been saved succesfully."));
     } catch (SQLException ex) {
-      audience.sendMessage(MessageUtils.component(epicGuard.messages().command().prefix() +
+      audience.sendMessage(TextUtils.component(epicGuard.messages().command().prefix() +
           "&cAn exception ocurred when saving data. See console for details."));
-      ex.printStackTrace();
+      ExceptionUtils.report("Could not save data to the SQL database (command-induced)", ex);
     }
   }
 }

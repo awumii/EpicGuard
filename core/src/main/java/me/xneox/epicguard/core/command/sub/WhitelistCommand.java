@@ -22,7 +22,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.storage.AddressMeta;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,33 +32,37 @@ public class WhitelistCommand implements SubCommand {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
     if (args.length != 3) {
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.usage()
+      audience.sendMessage(TextUtils.component(config.prefix() + config.usage()
           .replace("{USAGE}", "/guard whitelist <add/remove> <nickname/address>")));
       return;
     }
 
     AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[2]);
     if (meta == null) {
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.invalidArgument()));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.invalidArgument()));
       return;
     }
 
     if (args[1].equalsIgnoreCase("add")) {
       if (meta.whitelisted()) {
-        audience.sendMessage(MessageUtils.component(config.prefix() + config.alreadyWhitelisted().replace("{USER}", args[2])));
+        audience.sendMessage(
+            TextUtils.component(config.prefix() + config.alreadyWhitelisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.whitelisted(true);
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.whitelistAdd().replace("{USER}", args[2])));
+      audience.sendMessage(
+          TextUtils.component(config.prefix() + config.whitelistAdd().replace("{USER}", args[2])));
     } else if (args[1].equalsIgnoreCase("remove")) {
       if (!meta.whitelisted()) {
-        audience.sendMessage(MessageUtils.component(config.prefix() + config.notWhitelisted().replace("{USER}", args[2])));
+        audience.sendMessage(
+            TextUtils.component(config.prefix() + config.notWhitelisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.whitelisted(false);
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.whitelistRemove().replace("{USER}", args[2])));
+      audience.sendMessage(
+          TextUtils.component(config.prefix() + config.whitelistRemove().replace("{USER}", args[2])));
     }
   }
 

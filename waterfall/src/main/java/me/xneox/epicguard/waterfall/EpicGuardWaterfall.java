@@ -67,6 +67,12 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
 
   @Override
   @NotNull
+  public String platformVersion() {
+    return ProxyServer.getInstance().getName() + "-" + ProxyServer.getInstance().getVersion();
+  }
+
+  @Override
+  @NotNull
   public LogWrapper logger() {
     return this.logger;
   }

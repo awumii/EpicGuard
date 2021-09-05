@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.command.CommandHandler;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
+import me.xneox.epicguard.core.util.ExceptionUtils;
 import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.core.util.logging.LogFilter;
 import me.xneox.epicguard.core.manager.AttackManager;
@@ -58,6 +59,7 @@ public class EpicGuard {
   }
 
   private void startup() {
+    logger().info("Running on: " + this.platform.platformVersion());
     logger().info("Loading configuration...");
     this.loadConfigurations();
 
@@ -79,7 +81,7 @@ public class EpicGuard {
     this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
     this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
-    EpicGuardAPI.INSTANCE.setInstance(this);
+    EpicGuardAPI.INSTANCE.instance(this);
     logger().info("Startup completed successfully. Welcome to EpicGuard v" + VersionUtils.VERSION);
   }
 
@@ -91,7 +93,7 @@ public class EpicGuard {
       this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
       this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
     } catch (ConfigurateException exception) {
-      logger().error("Could not load the configuration.", exception);
+      ExceptionUtils.report("Couldn't load the configuration file", exception);
     }
   }
 
@@ -99,7 +101,7 @@ public class EpicGuard {
     try {
       this.storageManager.database().saveData();
     } catch (SQLException exception) {
-      this.logger().error("Could not save data to the SQL database during shutdown.", exception);
+      ExceptionUtils.report("Could not save data to the SQL database (during shutdown)", exception);
     }
   }
 

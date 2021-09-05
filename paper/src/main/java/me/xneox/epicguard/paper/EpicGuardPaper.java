@@ -69,6 +69,12 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
 
   @Override
   @NotNull
+  public String platformVersion() {
+    return Bukkit.getVersion();
+  }
+
+  @Override
+  @NotNull
   public LogWrapper logger() {
     return this.logger;
   }

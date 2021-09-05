@@ -24,4 +24,8 @@ public interface LogWrapper {
   void warn(@NotNull String message);
 
   void error(@NotNull String message, @Nullable Throwable throwable);
+
+  default void error(@NotNull String message) {
+    this.error(message, null);
+  }
 }

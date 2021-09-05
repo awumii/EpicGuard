@@ -21,7 +21,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.storage.AddressMeta;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,14 +31,14 @@ public class AnalyzeCommand implements SubCommand {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
     if (args.length != 2) {
-      audience.sendMessage(MessageUtils.component(config.prefix() +
+      audience.sendMessage(TextUtils.component(config.prefix() +
           config.usage().replace("{USAGE}", "/guard analyze <nickname/address>")));
       return;
     }
 
     AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[1]);
     if (meta == null) {
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.invalidArgument()));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.invalidArgument()));
       return;
     }
 
@@ -46,7 +46,7 @@ public class AnalyzeCommand implements SubCommand {
     String address = InetAddresses.isInetAddress(args[1]) ? args[1] : epicGuard.storageManager().addresses().inverse().get(meta);
 
     for (String line : config.analyzeCommand()) {
-      audience.sendMessage(MessageUtils.component(line
+      audience.sendMessage(TextUtils.component(line
           .replace("{ADDRESS}", address)
           .replace("{COUNTRY}", epicGuard.geoManager().countryCode(address))
           .replace("{CITY}", epicGuard.geoManager().city(address))

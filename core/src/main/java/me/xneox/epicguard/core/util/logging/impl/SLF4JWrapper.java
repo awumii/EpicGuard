@@ -20,6 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+/**
+ * LogWrapper implementation for org.slf4j Logger
+ */
 public class SLF4JWrapper implements LogWrapper {
   private final Logger logger;
 

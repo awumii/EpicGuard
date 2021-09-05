@@ -87,6 +87,12 @@ public class EpicGuardVelocity implements Platform {
     this.epicGuard.shutdown();
   }
 
+  @Override
+  @NotNull
+  public String platformVersion() {
+    return this.server.getVersion().toString();
+  }
+
   @NotNull
   @Override
   public LogWrapper logger() {

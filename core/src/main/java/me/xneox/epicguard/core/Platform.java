@@ -24,6 +24,12 @@ import org.jetbrains.annotations.Nullable;
 
 public interface Platform {
   /**
+   * @return Name and version of this platform.
+   */
+  @NotNull
+  String platformVersion();
+
+  /**
    * @return A wrapper of the platform plugin's logger.
    */
   @NotNull

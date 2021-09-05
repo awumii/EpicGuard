@@ -22,7 +22,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.storage.AddressMeta;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,33 +33,37 @@ public class BlacklistCommand implements SubCommand {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
     if (args.length != 3) {
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.usage()
+      audience.sendMessage(TextUtils.component(config.prefix() + config.usage()
           .replace("{USAGE}", "/guard blacklist <add/remove> <nickname/address>")));
       return;
     }
 
     AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[2]);
     if (meta == null) {
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.invalidArgument()));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.invalidArgument()));
       return;
     }
 
     if (args[1].equalsIgnoreCase("add")) {
       if (meta.blacklisted()) {
-        audience.sendMessage(MessageUtils.component(config.prefix() + config.alreadyBlacklisted().replace("{USER}", args[2])));
+        audience.sendMessage(
+            TextUtils.component(config.prefix() + config.alreadyBlacklisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.blacklisted(true);
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.blacklistAdd().replace("{USER}", args[2])));
+      audience.sendMessage(
+          TextUtils.component(config.prefix() + config.blacklistAdd().replace("{USER}", args[2])));
     } else if (args[1].equalsIgnoreCase("remove")) {
       if (!meta.blacklisted()) {
-        audience.sendMessage(MessageUtils.component(config.prefix() + config.notBlacklisted().replace("{USER}", args[2])));
+        audience.sendMessage(
+            TextUtils.component(config.prefix() + config.notBlacklisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.blacklisted(false);
-      audience.sendMessage(MessageUtils.component(config.prefix() + config.blacklistRemove().replace("{USER}", args[2])));
+      audience.sendMessage(
+          TextUtils.component(config.prefix() + config.blacklistRemove().replace("{USER}", args[2])));
     }
   }
 

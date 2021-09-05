@@ -38,7 +38,7 @@ public class ConfigurationLoader<C> {
     try {
       this.mapper = ObjectMapper.factory().get(implementation);
     } catch (SerializationException e) {
-      e.printStackTrace();
+      ExceptionUtils.report("Couldn't create the object mapper for configuration: " + implementation.getSimpleName(), e);
     }
   }
 

@@ -21,7 +21,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
-public final class MessageUtils {
+public final class TextUtils {
   private static final LegacyComponentSerializer SERIALIZER = LegacyComponentSerializer.builder()
       .character('&')
       .hexCharacter('#')

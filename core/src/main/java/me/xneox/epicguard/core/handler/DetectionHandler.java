@@ -30,7 +30,7 @@ import me.xneox.epicguard.core.check.impl.ProxyCheck;
 import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import me.xneox.epicguard.core.util.MessageUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +91,7 @@ public class DetectionHandler {
         }
 
         // Positive detection, kicking the player!
-        return Optional.of(MessageUtils.multilineComponent(check.kickMessage()));
+        return Optional.of(TextUtils.multilineComponent(check.kickMessage()));
       }
     }
 
