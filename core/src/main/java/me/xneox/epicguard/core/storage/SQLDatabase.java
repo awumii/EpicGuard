@@ -27,6 +27,7 @@ import java.util.Map;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.FileUtils;
 
+// TODO: Maybe don't keep all data in the memory? Some caching system instead of bulk read/write. Low priority currently.
 public class SQLDatabase {
   private final StorageManager storageManager;
 
@@ -50,15 +51,13 @@ public class SQLDatabase {
 
   /** Loads the address data from the default table. */
   public void loadData() throws SQLException {
-    DB.executeUpdate(
-        "CREATE TABLE IF NOT EXISTS epicguard_addresses("
-            + "`address` VARCHAR(255) NOT NULL PRIMARY KEY, "
-            + "`blacklisted` BOOLEAN NOT NULL, "
-            + "`whitelisted` BOOLEAN NOT NULL, "
-            + "`nicknames` TEXT NOT NULL"
-            + ")");
+    DB.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_addresses("
+        + "`address` VARCHAR(255) NOT NULL PRIMARY KEY, "
+        + "`blacklisted` BOOLEAN NOT NULL, "
+        + "`whitelisted` BOOLEAN NOT NULL, "
+        + "`nicknames` TEXT NOT NULL"
+        + ")");
 
-    // TODO: don't do this
     for (DbRow row : DB.getResults("SELECT * FROM epicguard_addresses")) {
       AddressMeta meta =
           new AddressMeta(
@@ -75,11 +74,9 @@ public class SQLDatabase {
     for (Map.Entry<String, AddressMeta> entry : this.storageManager.addresses().entrySet()) {
       AddressMeta meta = entry.getValue();
 
-      // TODO: don't do this
-      DB.executeInsert(
-          "INSERT OR REPLACE INTO epicguard_addresses"
-              + " (address, blacklisted, whitelisted, nicknames)"
-              + " VALUES (?, ?, ?, ?)",
+      DB.executeInsert("REPLACE INTO"
+              + " epicguard_addresses(address, blacklisted, whitelisted, nicknames)"
+              + " VALUES(?, ?, ?, ?)",
           entry.getKey(),
           meta.blacklisted(),
           meta.whitelisted(),
