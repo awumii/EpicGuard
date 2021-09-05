@@ -42,7 +42,7 @@ public abstract class Check {
    */
   public boolean evaluate(CheckMode mode, boolean expression) {
     if (mode == CheckMode.ALWAYS
-        || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
+        || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isUnderAttack()) {
       return expression;
     }
     return false;

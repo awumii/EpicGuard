@@ -29,7 +29,7 @@ public class LockdownCheck extends Check {
 
   @Override
   public boolean handle(@NotNull ConnectingUser user) {
-    return this.epicGuard.attackManager().isAttack()
+    return this.epicGuard.attackManager().isUnderAttack()
         && this.epicGuard.config().misc().lockdownOnAttack();
   }
 

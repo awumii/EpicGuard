@@ -63,7 +63,7 @@ public class LogFilter extends AbstractFilter {
 
   private Result isLoggable(String message) {
     CheckMode mode = this.epicGuard.config().consoleFilter().filterMode();
-    if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isAttack()) {
+    if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isUnderAttack()) {
       for (String string : this.epicGuard.config().consoleFilter().filterMessages()) {
         if (message.contains(string)) {
           return Result.DENY;

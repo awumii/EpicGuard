@@ -16,6 +16,8 @@
 package me.xneox.epicguard.core;
 
 import java.util.Collection;
+
+import me.xneox.epicguard.core.manager.AttackManager;
 import me.xneox.epicguard.core.manager.GeoManager;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import me.xneox.epicguard.core.storage.StorageManager;
@@ -23,7 +25,7 @@ import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Class which can be safely used by other projects. Methods won't be changed/removed after updates.
+ * A singleton API class which can be safely used by other projects.
  */
 public class EpicGuardAPI {
   public static final EpicGuardAPI INSTANCE = new EpicGuardAPI();
@@ -36,7 +38,7 @@ public class EpicGuardAPI {
    * @return An instance of {@link GeoManager}.
    */
   @NotNull
-  public GeoManager getGeoManager() {
+  public GeoManager geoManager() {
     checkAvailability();
     return this.epicGuard.geoManager();
   }
@@ -48,30 +50,24 @@ public class EpicGuardAPI {
     return this.epicGuard.storageManager();
   }
 
-  /** @return true if server is under attack, false if not. */
-  public boolean isUnderAttack() {
+  /** @return The attack manager which contains methods for managing the attack status. */
+  public AttackManager attackManager() {
     checkAvailability();
-    return this.epicGuard.attackManager().isAttack();
+    return this.epicGuard.attackManager();
   }
 
   /** @return An immutable Collection which contains whitelisted addresses. */
   @NotNull
-  public Collection<String> getWhitelistedAddresses() {
+  public Collection<String> whitelistedAddresses() {
     checkAvailability();
     return this.epicGuard.storageManager().viewAddresses(AddressMeta::whitelisted);
   }
 
   /** @return An immutable Collection which contains blacklisted addresses. */
   @NotNull
-  public Collection<String> getBlacklistedAddresses() {
+  public Collection<String> blacklistedAddresses() {
     checkAvailability();
     return this.epicGuard.storageManager().viewAddresses(AddressMeta::blacklisted);
-  }
-
-  /** @return Current connections per second. */
-  public int getConnectionsPerSecond() {
-    checkAvailability();
-    return this.epicGuard.attackManager().connectionCounter();
   }
 
   /**

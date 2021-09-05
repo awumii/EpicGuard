@@ -28,7 +28,7 @@ public class AttackManager {
    *
    * @return State of the attack-mode
    */
-  public boolean isAttack() {
+  public boolean isUnderAttack() {
     return this.attack;
   }
 

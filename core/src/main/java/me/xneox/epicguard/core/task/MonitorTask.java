@@ -35,7 +35,7 @@ public class MonitorTask implements Runnable {
     MessagesConfiguration config = this.epicGuard.messages();
     Component monitor = MessageUtils.component(config.actionbarMonitor()
         .replace("%cps%", String.valueOf(this.epicGuard.attackManager().connectionCounter()))
-        .replace("%status%", this.epicGuard.attackManager().isAttack() ? config.actionbarAttack() : config.actionbarNoAttack()));
+        .replace("%status%", this.epicGuard.attackManager().isUnderAttack() ? config.actionbarAttack() : config.actionbarNoAttack()));
 
     for (OnlineUser user : this.epicGuard.userManager().users()) {
       if (user.notifications()) {
