@@ -28,7 +28,7 @@ subprojects {
             exclude("mozilla/")
             exclude("org/apache/commons/codec/")
 
-            // Minimize, but exclude drivers shaded in the velocity platform
+            // Minimize, but exclude drivers shaded in the velocity platform.
             minimize {
                 exclude(dependency("mysql:.*:.*"))
                 exclude(dependency("org.xerial:sqlite-jdbc:.*"))
