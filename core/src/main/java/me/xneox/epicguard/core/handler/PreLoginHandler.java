@@ -41,11 +41,11 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>It performs every antibot check (except SettingsCheck).
  */
-public class DetectionHandler {
+public abstract class PreLoginHandler {
   private final List<Check> checks = new ArrayList<>();
   private final EpicGuard epicGuard;
 
-  public DetectionHandler(EpicGuard epicGuard) {
+  public PreLoginHandler(EpicGuard epicGuard) {
     this.epicGuard = epicGuard;
 
     checks.add(new LockdownCheck(epicGuard));

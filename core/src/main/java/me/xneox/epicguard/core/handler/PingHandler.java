@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
  * Handler for the ServerListPing listeners. Used for the ServerListCheck to verify if the user has
  * pinged the server (added it to their list).
  */
-public class PingHandler {
+public abstract class PingHandler {
   private final EpicGuard epicGuard;
 
   public PingHandler(EpicGuard epicGuard) {

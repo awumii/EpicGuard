@@ -20,7 +20,7 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.core.util.logging.LogWrapper;
 import me.xneox.epicguard.core.util.logging.impl.JavaLoggerWrapper;
-import me.xneox.epicguard.paper.listener.PlayerJoinListener;
+import me.xneox.epicguard.paper.listener.PlayerPostLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerPreLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerQuitListener;
 import me.xneox.epicguard.paper.listener.PlayerSettingsListener;
@@ -48,13 +48,13 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
     PluginManager pm = Bukkit.getPluginManager();
     pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
     pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
-    pm.registerEvents(new PlayerJoinListener(this.epicGuard), this);
+    pm.registerEvents(new PlayerPostLoginListener(this.epicGuard), this);
     pm.registerEvents(new ServerPingListener(this.epicGuard), this);
     pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
 
     PluginCommand command = this.getCommand("epicguard");
     if (command != null) {
-      PaperCommandExecutor cmdExecutor = new PaperCommandExecutor(this.epicGuard);
+      PaperCommandHandler cmdExecutor = new PaperCommandHandler(this.epicGuard);
       command.setExecutor(cmdExecutor);
       command.setTabCompleter(cmdExecutor);
     }

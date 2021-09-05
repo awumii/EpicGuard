@@ -16,13 +16,13 @@
 package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.DetectionHandler;
+import me.xneox.epicguard.core.handler.PreLoginHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-public class PlayerPreLoginListener extends DetectionHandler implements Listener {
+public class PlayerPreLoginListener extends PreLoginHandler implements Listener {
   public PlayerPreLoginListener(EpicGuard epicGuard) {
     super(epicGuard);
   }

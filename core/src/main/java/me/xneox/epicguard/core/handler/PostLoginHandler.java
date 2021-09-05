@@ -27,10 +27,10 @@ import org.jetbrains.annotations.NotNull;
  * Handler for the PlayerJoin or PostLogin listeners Used for the auto-whitelist feature, and for
  * SettingsCheck.
  */
-public class JoinHandler {
+public abstract class PostLoginHandler {
   private final EpicGuard epicGuard;
 
-  public JoinHandler(EpicGuard epicGuard) {
+  public PostLoginHandler(EpicGuard epicGuard) {
     this.epicGuard = epicGuard;
   }
 

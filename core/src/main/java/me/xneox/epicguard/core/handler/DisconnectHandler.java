@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * Handler for the PlayerQuit/Disconnect listeners. Used for removing the {@link OnlineUser}
  * instance from cache.
  */
-public class DisconnectHandler {
+public abstract class DisconnectHandler {
   private final EpicGuard epicGuard;
 
   public DisconnectHandler(EpicGuard epicGuard) {

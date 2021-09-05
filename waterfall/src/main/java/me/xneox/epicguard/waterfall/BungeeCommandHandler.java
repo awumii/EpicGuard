@@ -15,26 +15,29 @@
 
 package me.xneox.epicguard.waterfall;
 
+import me.xneox.epicguard.core.command.CommandHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 // why bungee... why Command is an abstract class?
-public class BungeeCommandExecutor extends Command implements TabExecutor {
-  private final EpicGuardWaterfall epicGuardWaterfall;
+public class BungeeCommandHandler extends Command implements TabExecutor {
+  private final CommandHandler commandHandler;
+  private final EpicGuardWaterfall plugin;
 
-  public BungeeCommandExecutor(EpicGuardWaterfall epicGuardWaterfall) {
+  public BungeeCommandHandler(EpicGuardWaterfall plugin) {
     super("epicguard", "epicguard.admin", "guard", "eg", "ab", "antibot");
-    this.epicGuardWaterfall = epicGuardWaterfall;
+    this.plugin = plugin;
+    this.commandHandler = new CommandHandler(plugin.epicGuard());
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    this.epicGuardWaterfall.epicGuard().commandHandler().handleCommand(args, this.epicGuardWaterfall.adventure().sender(sender));
+    this.commandHandler.handleCommand(args, this.plugin.adventure().sender(sender));
   }
 
   @Override
   public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-    return this.epicGuardWaterfall.epicGuard().commandHandler().handleSuggestions(args);
+    return this.commandHandler.handleSuggestions(args);
   }
 }

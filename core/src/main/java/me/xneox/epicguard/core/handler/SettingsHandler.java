@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * If the user has sent the Settings packet, it will be marked on their {@link OnlineUser} object.
  * This packet is sent after joining the server by the vanilla client.
  */
-public class SettingsHandler {
+public abstract class SettingsHandler {
   private final EpicGuard epicGuard;
 
   public SettingsHandler(EpicGuard epicGuard) {

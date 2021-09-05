@@ -19,9 +19,9 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.JoinHandler;
+import me.xneox.epicguard.core.handler.PostLoginHandler;
 
-public class PostLoginListener extends JoinHandler {
+public class PostLoginListener extends PostLoginHandler {
   public PostLoginListener(EpicGuard epicGuard) {
     super(epicGuard);
   }

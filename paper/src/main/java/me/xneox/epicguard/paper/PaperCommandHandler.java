@@ -18,6 +18,7 @@ package me.xneox.epicguard.paper;
 import java.util.ArrayList;
 import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.command.CommandHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,21 +26,19 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PaperCommandExecutor implements CommandExecutor, TabCompleter {
-  private final EpicGuard epicGuard;
-
-  public PaperCommandExecutor(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
+public class PaperCommandHandler extends CommandHandler implements CommandExecutor, TabCompleter {
+  public PaperCommandHandler(EpicGuard epicGuard) {
+    super(epicGuard);
   }
 
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-    this.epicGuard.commandHandler().handleCommand(args, sender);
+    this.handleCommand(args, sender);
     return true;
   }
 
   @Override
   public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-    return new ArrayList<>(this.epicGuard.commandHandler().handleSuggestions(args));
+    return new ArrayList<>(this.handleSuggestions(args));
   }
 }

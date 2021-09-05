@@ -20,9 +20,9 @@ import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.DetectionHandler;
+import me.xneox.epicguard.core.handler.PreLoginHandler;
 
-public class PreLoginListener extends DetectionHandler {
+public class PreLoginListener extends PreLoginHandler {
   public PreLoginListener(EpicGuard epicGuard) {
     super(epicGuard);
   }

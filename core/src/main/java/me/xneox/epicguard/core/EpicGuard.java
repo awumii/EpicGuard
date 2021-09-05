@@ -48,8 +48,6 @@ public class EpicGuard {
   private AttackManager attackManager;
   private ProxyManager proxyManager;
 
-  private CommandHandler commandHandler;
-
   private PluginConfiguration config;
   private MessagesConfiguration messages;
 
@@ -69,8 +67,6 @@ public class EpicGuard {
     this.proxyManager = new ProxyManager(this);
     this.attackManager = new AttackManager();
     this.userManager = new UserManager();
-
-    this.commandHandler = new CommandHandler(this);
 
     logger().info("Initializing LogFilter...");
     new LogFilter(this).register();
@@ -139,9 +135,5 @@ public class EpicGuard {
 
   public ProxyManager proxyManager() {
     return this.proxyManager;
-  }
-
-  public CommandHandler commandHandler() {
-    return this.commandHandler;
   }
 }

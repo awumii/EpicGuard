@@ -16,13 +16,13 @@
 package me.xneox.epicguard.waterfall.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.JoinHandler;
+import me.xneox.epicguard.core.handler.PostLoginHandler;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-public class PostLoginListener extends JoinHandler implements Listener {
+public class PostLoginListener extends PostLoginHandler implements Listener {
   public PostLoginListener(EpicGuard epicGuard) {
     super(epicGuard);
   }

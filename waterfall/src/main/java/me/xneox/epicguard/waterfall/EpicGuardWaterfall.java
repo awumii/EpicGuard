@@ -55,7 +55,7 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
     pm.registerListener(this, new ServerPingListener(this.epicGuard));
     pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
-    pm.registerCommand(this, new BungeeCommandExecutor(this));
+    pm.registerCommand(this, new BungeeCommandHandler(this));
 
     new Metrics(this, 5956);
   }

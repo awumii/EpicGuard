@@ -16,14 +16,14 @@
 package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.JoinHandler;
+import me.xneox.epicguard.core.handler.PostLoginHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoinListener extends JoinHandler implements Listener {
-  public PlayerJoinListener(EpicGuard epicGuard) {
+public class PlayerPostLoginListener extends PostLoginHandler implements Listener {
+  public PlayerPostLoginListener(EpicGuard epicGuard) {
     super(epicGuard);
   }
 
