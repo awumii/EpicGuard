@@ -17,10 +17,10 @@ package me.xneox.epicguard.core.check.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
+import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 /** This check will force player to reconnect if he is connecting for the first time. */
@@ -28,12 +28,12 @@ public class ReconnectCheck extends Check {
   private final Collection<ConnectingUser> connectingUserCache = new HashSet<>();
 
   public ReconnectCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().reconnect(), epicGuard.config().reconnectCheck().priority());
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
-    return this.evaluate(this.epicGuard.config().misc().reconnectCheckMode(), this.needsReconnect(user));
+  public boolean isDetected(@NotNull ConnectingUser user) {
+    return this.evaluate(this.epicGuard.config().reconnectCheck().checkMode(), this.needsReconnect(user));
   }
 
   private boolean needsReconnect(ConnectingUser connectingUser) {
@@ -42,10 +42,5 @@ public class ReconnectCheck extends Check {
       return true;
     }
     return false;
-  }
-
-  @Override
-  public @NotNull List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().reconnect();
   }
 }

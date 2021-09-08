@@ -22,24 +22,18 @@ import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This check will limit how many accounts can be created on one address. TODO: Fix this buggy mess.
- * Sometimes working perfectly and sometimes not at all.
+ * This check will limit how many accounts can be created on one address.
  */
 public class AccountLimitCheck extends Check {
   public AccountLimitCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().accountLimit(), epicGuard.config().accountLimitCheck().priority());
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
+  public boolean isDetected(@NotNull ConnectingUser user) {
     List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
 
     return this.evaluate(this.epicGuard.config().accountLimitCheck().checkMode(),
         !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
-  }
-
-  @Override
-  public @NotNull List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().accountLimit();
   }
 }

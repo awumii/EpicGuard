@@ -15,9 +15,9 @@
 
 package me.xneox.epicguard.core.handler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.check.impl.AccountLimitCheck;
@@ -30,33 +30,32 @@ import me.xneox.epicguard.core.check.impl.ProxyCheck;
 import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import me.xneox.epicguard.core.util.TextUtils;
-import net.kyori.adventure.text.Component;
-import org.apache.commons.lang3.Validate;
+import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Handler for PreLogin listeners. Most important handler, should be called as soon as possible, and
- * asynchronously.
- *
- * <p>It performs every antibot check (except SettingsCheck).
+ * Handler for PreLogin listeners. It performs every antibot check (except SettingsCheck).
  */
 public abstract class PreLoginHandler {
-  private final List<Check> checks = new ArrayList<>();
+  private final Set<Check> pipeline = new TreeSet<>();
   private final EpicGuard epicGuard;
 
   public PreLoginHandler(EpicGuard epicGuard) {
     this.epicGuard = epicGuard;
 
-    checks.add(new LockdownCheck(epicGuard));
-    checks.add(new BlacklistCheck(epicGuard));
-    checks.add(new GeographicalCheck(epicGuard));
-    checks.add(new ServerListCheck(epicGuard));
-    checks.add(new ReconnectCheck(epicGuard));
-    checks.add(new AccountLimitCheck(epicGuard));
-    checks.add(new NicknameCheck(epicGuard));
-    checks.add(new NameSimilarityCheck(epicGuard));
-    checks.add(new ProxyCheck(epicGuard));
+    // This will be automatically sorted based on the configured priority.
+    pipeline.add(new LockdownCheck(epicGuard));
+    pipeline.add(new BlacklistCheck(epicGuard));
+    pipeline.add(new NicknameCheck(epicGuard));
+    pipeline.add(new GeographicalCheck(epicGuard));
+    pipeline.add(new ServerListCheck(epicGuard));
+    pipeline.add(new ReconnectCheck(epicGuard));
+    pipeline.add(new AccountLimitCheck(epicGuard));
+    pipeline.add(new NameSimilarityCheck(epicGuard));
+    pipeline.add(new ProxyCheck(epicGuard));
+
+    epicGuard.logger().info("Order of the detection pipeline: " +
+        String.join(", ", this.pipeline.stream().map(check -> check.getClass().getSimpleName()).toList()));
   }
 
   /**
@@ -67,10 +66,7 @@ public abstract class PreLoginHandler {
    * @return Disconnect message, or an empty Optional if undetected.
    */
   @NotNull
-  public Optional<Component> handle(@NotNull String address, @NotNull String nickname) {
-    Validate.notNull(address, "Address cannot be null!");
-    Validate.notNull(nickname, "Nickname cannot be null!");
-
+  public Optional<TextComponent> handle(@NotNull String address, @NotNull String nickname) {
     // Increment the connections per second and check if it's bigger than max-cps in config.
     if (this.epicGuard.attackManager().incrementConnectionCounter()
         >= this.epicGuard.config().misc().attackConnectionThreshold()) {
@@ -84,14 +80,14 @@ public abstract class PreLoginHandler {
 
     // Performing all checks, we are using PendingUser
     ConnectingUser user = new ConnectingUser(address, nickname);
-    for (Check check : this.checks) {
-      if (check.handle(user)) {
+    for (Check check : this.pipeline) {
+      if (check.isDetected(user)) {
         if (this.epicGuard.config().misc().debug()) {
           this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " + check.getClass().getSimpleName());
         }
 
         // Positive detection, kicking the player!
-        return Optional.of(TextUtils.multilineComponent(check.kickMessage()));
+        return Optional.of(check.detectionMessage());
       }
     }
 

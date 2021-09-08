@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core.check.impl;
 
 import com.google.common.collect.EvictingQueue;
-import java.util.List;
 import java.util.Queue;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
@@ -30,11 +29,11 @@ public class NameSimilarityCheck extends Check {
   private final LevenshteinDistance distanceAlgorithm = LevenshteinDistance.getDefaultInstance();
 
   public NameSimilarityCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().nameSimilarity(), epicGuard.config().nameSimilarityCheck().priority());
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
+  public boolean isDetected(@NotNull ConnectingUser user) {
     synchronized (this.nameHistory) {
       for (String nick : this.nameHistory) {
         if (nick.equals(user.nickname())) {
@@ -50,10 +49,5 @@ public class NameSimilarityCheck extends Check {
       this.nameHistory.add(user.nickname());
       return false;
     }
-  }
-
-  @Override
-  public @NotNull List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().nameSimilarity();
   }
 }

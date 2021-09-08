@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
@@ -26,11 +25,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GeographicalCheck extends Check {
   public GeographicalCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().geographical(), epicGuard.config().geographical().priority());
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
+  public boolean isDetected(@NotNull ConnectingUser user) {
     return this.evaluate(this.epicGuard.config().geographical().checkMode(), this.isRestricted(user.address()));
   }
 
@@ -47,10 +46,5 @@ public class GeographicalCheck extends Check {
     } else {
       return !this.epicGuard.config().geographical().countries().contains(country);
     }
-  }
-
-  @Override
-  public @NotNull List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().geographical();
   }
 }

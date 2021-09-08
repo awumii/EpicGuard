@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
@@ -24,16 +23,11 @@ import org.jetbrains.annotations.NotNull;
 /** This will just check if the user is blacklisted. */
 public class BlacklistCheck extends Check {
   public BlacklistCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().blacklisted(), 98); // will always be executed secondly.
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
+  public boolean isDetected(@NotNull ConnectingUser user) {
     return this.epicGuard.storageManager().addressMeta(user.address()).blacklisted();
-  }
-
-  @Override
-  public @NotNull List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().blacklisted();
   }
 }

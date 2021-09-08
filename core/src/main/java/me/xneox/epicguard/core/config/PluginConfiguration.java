@@ -23,6 +23,7 @@ import me.xneox.epicguard.core.proxy.ProxyService;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 
+@SuppressWarnings("ALL") // make intellij shut up about using final fields that would break the config loader.
 @ConfigSerializable
 public class PluginConfiguration {
 
@@ -47,6 +48,13 @@ public class PluginConfiguration {
       + "(!) Experimental! https://neox.gitbook.io/epicguard-wiki/configuring/name-similarity-check")
   private NameSimilarityCheck nameSimilarityCheck = new NameSimilarityCheck();
 
+  @Comment("ReconnectCheck will force new users to join the server again.")
+  private ReconnectCheck reconnectCheck = new ReconnectCheck();
+
+  @Comment("Server-list check will force users to add your server\n"
+      + "to their server list (send a ping) before joining")
+  private ServerListCheck serverListCheck = new ServerListCheck();
+
   @Comment("If a player is online for long enough (see option below)\n"
       + "He will be added to the whitelist, and be exempt from every future detections")
   private AutoWhitelist autoWhitelist = new AutoWhitelist();
@@ -55,46 +63,6 @@ public class PluginConfiguration {
   private Misc misc = new Misc();
   private Storage storage = new Storage();
 
-  public Geographical geographical() {
-    return this.geographical;
-  }
-
-  public ProxyCheck proxyCheck() {
-    return this.proxyCheck;
-  }
-
-  public AccountLimitCheck accountLimitCheck() {
-    return this.accountLimitCheck;
-  }
-
-  public SettingsCheck settingsCheck() {
-    return this.settingsCheck;
-  }
-
-  public NicknameCheck nicknameCheck() {
-    return this.nicknameCheck;
-  }
-
-  public NameSimilarityCheck nameSimilarityCheck() {
-    return this.nameSimilarityCheck;
-  }
-
-  public ConsoleFilter consoleFilter() {
-    return this.consoleFilter;
-  }
-
-  public AutoWhitelist autoWhitelist() {
-    return this.autoWhitelist;
-  }
-
-  public Misc misc() {
-    return this.misc;
-  }
-
-  public Storage storage() {
-    return this.storage;
-  }
-
   @ConfigSerializable
   public static class Geographical {
     @Comment("""
@@ -102,6 +70,12 @@ public class PluginConfiguration {
         ATTACK - check will be performed only during bot-attack.
         ALWAYS - check will be always performed.""")
     private CheckMode checkMode = CheckMode.NEVER;
+
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 7;
 
     @Comment("""
             This will define if the 'countries' list should be a blacklist or a whitelist.
@@ -117,6 +91,10 @@ public class PluginConfiguration {
 
     public CheckMode checkMode() {
       return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
     }
 
     public boolean isBlacklist() {
@@ -141,6 +119,12 @@ public class PluginConfiguration {
     private CheckMode checkMode = CheckMode.ALWAYS;
 
     @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 1;
+
+    @Comment("""
             You can set as many proxy checking services as you want here.
             If you're not familiar with regex, see https://regexr.com/
             For example, (yes|proxy) will check if the response contains either 'yes' or 'proxy'""")
@@ -157,6 +141,10 @@ public class PluginConfiguration {
 
     public CheckMode checkMode() {
       return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
     }
 
     public List<ProxyService> services() {
@@ -176,11 +164,21 @@ public class PluginConfiguration {
             ALWAYS - check will be always performed.""")
     private CheckMode checkMode = CheckMode.ALWAYS;
 
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 3;
+
     @Comment("Limit of accounts per one IP address.")
     private int limit = 3;
 
     public CheckMode checkMode() {
       return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
     }
 
     public int accountLimit() {
@@ -215,6 +213,12 @@ public class PluginConfiguration {
             ALWAYS - check will be always performed.""")
     private CheckMode checkMode = CheckMode.ALWAYS;
 
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 8;
+
     @Comment(
         "Default value will check if the nickname contains 'bot' or 'mcspam'.\n"
             + "You can use https://regex101.com/ for making and testing your own expression.")
@@ -222,6 +226,10 @@ public class PluginConfiguration {
 
     public CheckMode checkMode() {
       return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
     }
 
     public String expression() {
@@ -236,6 +244,12 @@ public class PluginConfiguration {
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
     private CheckMode checkMode = CheckMode.NEVER;
+
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 2;
 
     @Comment("""
             How many nicknames should be keep in the history?
@@ -255,12 +269,62 @@ public class PluginConfiguration {
       return this.checkMode;
     }
 
+    public int priority() {
+      return this.priority;
+    }
+
     public int historySize() {
       return this.historySize;
     }
 
     public int distance() {
       return this.distance;
+    }
+  }
+
+  @ConfigSerializable
+  public static class ReconnectCheck {
+    @Comment("""
+            NEVER - check is disabled.
+            ATTACK - check will be performed only during bot-attack.
+            ALWAYS - check will be always performed.""")
+    private CheckMode checkMode = CheckMode.ATTACK;
+
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 4;
+
+    public CheckMode checkMode() {
+      return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
+    }
+  }
+
+  @ConfigSerializable
+  public static class ServerListCheck {
+    @Comment("""
+            NEVER - check is disabled.
+            ATTACK - check will be performed only during bot-attack.
+            ALWAYS - check will be always performed.""")
+    private CheckMode checkMode = CheckMode.ATTACK;
+
+    @Comment("""
+        Checks with bigger priority will be executed before the checks with lower priority.
+        (!) Requires a restart.
+        """)
+    private int priority = 5;
+
+    public CheckMode checkMode() {
+      return this.checkMode;
+    }
+
+    public int priority() {
+      return this.priority;
     }
   }
 
@@ -314,21 +378,6 @@ public class PluginConfiguration {
   @ConfigSerializable
   public static class Misc {
     @Comment("""
-            ReconnectCheck will force new users to join the server again.
-            NEVER - check is disabled.
-            ATTACK - check will be performed only during bot-attack.
-            ALWAYS - check will be always performed.""")
-    private CheckMode reconnectCheckMode = CheckMode.ATTACK;
-
-    @Comment("""
-            Server-list check will force users to add your server
-            to their server list (send a ping) before joining
-            NEVER - check is disabled.
-            ATTACK - check will be performed only during bot-attack.
-            ALWAYS - check will be always performed.""")
-    private CheckMode serverListCheckMode = CheckMode.ATTACK;
-
-    @Comment("""
             Should every user (except if he is whitelisted)
             be disconnected when there is an bot attack?
             true - Better protection and HUGE performance boost
@@ -348,19 +397,12 @@ public class PluginConfiguration {
     @Comment("Set to false to disable update checker.")
     private boolean updateChecker = true;
 
-    @Comment("Time in minutes before auto-saving data.\n" + "(!) Requires restart to apply.")
+    @Comment("Time in minutes before auto-saving data.\n" +
+        "(!) Requires restart to apply.")
     private long autoSaveInterval = 10L;
 
     @Comment("Enabling this will log positive bot detections in the console.")
     private boolean debug = false;
-
-    public CheckMode reconnectCheckMode() {
-      return this.reconnectCheckMode;
-    }
-
-    public CheckMode serverListCheckMode() {
-      return this.serverListCheckMode;
-    }
 
     public boolean lockdownOnAttack() {
       return this.lockdownOnAttack;
@@ -425,5 +467,57 @@ public class PluginConfiguration {
     public String password() {
       return this.password;
     }
+  }
+
+  // ========================
+  //         GETTERS
+  // ========================
+
+  public Geographical geographical() {
+    return this.geographical;
+  }
+
+  public ProxyCheck proxyCheck() {
+    return this.proxyCheck;
+  }
+
+  public AccountLimitCheck accountLimitCheck() {
+    return this.accountLimitCheck;
+  }
+
+  public SettingsCheck settingsCheck() {
+    return this.settingsCheck;
+  }
+
+  public NicknameCheck nicknameCheck() {
+    return this.nicknameCheck;
+  }
+
+  public NameSimilarityCheck nameSimilarityCheck() {
+    return this.nameSimilarityCheck;
+  }
+
+  public ReconnectCheck reconnectCheck() {
+    return this.reconnectCheck;
+  }
+
+  public ServerListCheck serverListCheck() {
+    return this.serverListCheck;
+  }
+
+  public ConsoleFilter consoleFilter() {
+    return this.consoleFilter;
+  }
+
+  public AutoWhitelist autoWhitelist() {
+    return this.autoWhitelist;
+  }
+
+  public Misc misc() {
+    return this.misc;
+  }
+
+  public Storage storage() {
+    return this.storage;
   }
 }

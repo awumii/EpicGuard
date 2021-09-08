@@ -15,7 +15,6 @@
 
 package me.xneox.epicguard.core.check.impl;
 
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
@@ -24,18 +23,12 @@ import org.jetbrains.annotations.NotNull;
 /** This check will try to match the user's nickname with the configured expression. */
 public class NicknameCheck extends Check {
   public NicknameCheck(EpicGuard epicGuard) {
-    super(epicGuard);
+    super(epicGuard, epicGuard.messages().disconnect().nickname(), epicGuard.config().nicknameCheck().priority());
   }
 
   @Override
-  public boolean handle(@NotNull ConnectingUser user) {
+  public boolean isDetected(@NotNull ConnectingUser user) {
     return this.evaluate(this.epicGuard.config().nicknameCheck().checkMode(),
         user.nickname().matches(this.epicGuard.config().nicknameCheck().expression()));
-  }
-
-  @NotNull
-  @Override
-  public List<String> kickMessage() {
-    return this.epicGuard.messages().disconnect().nickname();
   }
 }
