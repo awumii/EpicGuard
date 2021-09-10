@@ -57,6 +57,8 @@ public class EpicGuard {
 
   private void startup() {
     logger().info("Running on: " + this.platform.platformVersion());
+    EpicGuardAPI.INSTANCE.instance(this);
+
     logger().info("Loading configuration...");
     this.loadConfigurations();
 
@@ -76,7 +78,6 @@ public class EpicGuard {
     this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
     this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
-    EpicGuardAPI.INSTANCE.instance(this);
     logger().info("Startup completed successfully. Welcome to EpicGuard v" + VersionUtils.VERSION);
   }
 

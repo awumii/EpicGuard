@@ -15,6 +15,8 @@
 
 package me.xneox.epicguard.core.handler;
 
+import com.google.common.net.InetAddresses;
+import java.net.InetAddress;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -71,6 +73,13 @@ public abstract class PreLoginHandler {
     if (this.epicGuard.attackManager().incrementConnectionCounter()
         >= this.epicGuard.config().misc().attackConnectionThreshold()) {
       this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
+    }
+
+    // this is also a workaround for an issue for players connecting using GeyserMC. Proper fix needed.
+    // noinspection UnstableApiUsage
+    if (!InetAddresses.isInetAddress(address)) {
+      this.epicGuard.logger().warn("Skipping checks for [" + address + "/" + nickname + "]: invalid address.");
+      return Optional.empty();
     }
 
     // Check if the user is whitelisted, if yes, return empty result (undetected).

@@ -19,17 +19,18 @@ import java.util.Arrays;
 import java.util.List;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
+@SuppressWarnings("ALL") // make intellij shut up about using final fields that would break the config loader.
 @ConfigSerializable
 public class MessagesConfiguration {
 
   // Config sections.
-  private final Command command = new Command();
-  private final Disconnect disconnect = new Disconnect();
+  private Command command = new Command();
+  private Disconnect disconnect = new Disconnect();
 
-  private final String actionbarMonitor = "&cEpicGuard &8// &6%cps% &7connections/s &8| %status%";
-  private final String actionbarNoAttack = "&7No attack...";
-  private final String actionbarAttack = "&cAttack detected!";
-  private final String updateAvailable = "A new update is available: {NEWVER} (You are still on {OLDVER})";
+  private String actionbarMonitor = "&cEpicGuard &8// &6%cps% &7connections/s &8| %status%";
+  private String actionbarNoAttack = "&7No attack...";
+  private String actionbarAttack = "&cAttack detected!";
+  private String updateAvailable = "A new update is available: {NEWVER} (You are still on {OLDVER})";
 
   public Command command() {
     return this.command;
@@ -57,22 +58,22 @@ public class MessagesConfiguration {
 
   @ConfigSerializable
   public static class Command {
-    private final String prefix = " &cEpicGuard &8// &7";
-    private final String usage = "&cCorrect usage: &6{USAGE}";
-    private final String unknownCommand = "&cUnknown command, use &6/epicguard &cfor available commands.";
-    private final String whitelistAdd = "&7The user &a{USER} &7has been added to the whitelist.";
-    private final String whitelistRemove = "The user &6{USER} &7has been removed from the whitelist";
-    private final String blacklistAdd = "&7The user &c{USER} &7has been added to the blacklist.";
-    private final String blacklistRemove = "&7The user &6{USER} &7has been removed from the blacklist.";
-    private final String alreadyWhitelisted = "&cThe user &6{USER} &cis already whitelisted!";
-    private final String alreadyBlacklisted = "&cThe user &6{USER} &cis already blacklisted!";
-    private final String notWhitelisted = "&cThe user &6{USER} &cis not in whitelist!";
-    private final String notBlacklisted = "&cThe user &6{USER} &cis not in the blacklist!";
-    private final String reloaded = "&7Succesfully reloaded config and messages!";
-    private final String toggleStatus = "&7You have toggled your attack status!";
-    private final String invalidArgument = "&cCould not resolve address for this nickname, or provided address is invalid.";
+    private String prefix = " &cEpicGuard &8// &7";
+    private String usage = "&cCorrect usage: &6{USAGE}";
+    private String unknownCommand = "&cUnknown command, use &6/epicguard &cfor available commands.";
+    private String whitelistAdd = "&7The user &a{USER} &7has been added to the whitelist.";
+    private String whitelistRemove = "The user &6{USER} &7has been removed from the whitelist";
+    private String blacklistAdd = "&7The user &c{USER} &7has been added to the blacklist.";
+    private String blacklistRemove = "&7The user &6{USER} &7has been removed from the blacklist.";
+    private String alreadyWhitelisted = "&cThe user &6{USER} &cis already whitelisted!";
+    private String alreadyBlacklisted = "&cThe user &6{USER} &cis already blacklisted!";
+    private String notWhitelisted = "&cThe user &6{USER} &cis not in whitelist!";
+    private String notBlacklisted = "&cThe user &6{USER} &cis not in the blacklist!";
+    private String reloaded = "&7Succesfully reloaded config and messages!";
+    private String toggleStatus = "&7You have toggled your attack status!";
+    private String invalidArgument = "&cCould not resolve address for this nickname, or provided address is invalid.";
 
-    private final List<String> mainCommand =
+    private List<String> mainCommand =
         Arrays.asList(
             "",
             " &6EpicGuard Protection System &8- &7Running version &f{VERSION}",
@@ -90,7 +91,7 @@ public class MessagesConfiguration {
             " &8/&fguard blacklist <add/remove> <nick/address> &8- &7Blacklist/unblacklist an address or nickname.",
             "");
 
-    private final List<String> analyzeCommand =
+    private List<String> analyzeCommand =
         Arrays.asList(
             "",
             " &6EpicGuard Analysis System &8- &7Results for &f{ADDRESS}",
@@ -174,43 +175,43 @@ public class MessagesConfiguration {
 
   @ConfigSerializable
   public static class Disconnect {
-    private final List<String> geographical = Arrays.asList(
+    private List<String> geographical = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYour country/city is not allowed on this server.");
 
-    private final List<String> blacklisted = Arrays.asList(
+    private List<String> blacklisted = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYou have been blacklisted on this server.");
 
-    private final List<String> attackLockdown = Arrays.asList(
+    private List<String> attackLockdown = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cServer is under attack, please wait some seconds before joining.");
 
-    private final List<String> proxy = Arrays.asList(
+    private List<String> proxy = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYou are using VPN or Proxy.");
 
-    private final List<String> reconnect = Arrays.asList(
+    private List<String> reconnect = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cJoin the server again.");
 
-    private final List<String> nickname = Arrays.asList(
+    private List<String> nickname = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYou nickname is not allowed on this server.");
 
-    private final List<String> accountLimit = Arrays.asList(
+    private List<String> accountLimit = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYou have too many accounts on your IP address.");
 
-    private final List<String> serverListPing = Arrays.asList(
+    private List<String> serverListPing = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYou must add our server to your servers list to verify yourself.");
 
-    private final List<String> nameSimilarity = Arrays.asList(
+    private List<String> nameSimilarity = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cYour nickname is too similar to other users connecting to the server.");
 
-    private final List<String> settingsPacket = Arrays.asList(
+    private List<String> settingsPacket = Arrays.asList(
         "&8» &7You have been kicked by &bAntiBot Protection&7:",
         "&8» &cBot-like behaviour detected, please join the server again.");
 
