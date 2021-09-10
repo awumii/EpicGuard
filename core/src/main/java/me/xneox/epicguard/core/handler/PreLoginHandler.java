@@ -75,7 +75,7 @@ public abstract class PreLoginHandler {
       this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
     }
 
-    // this is also a workaround for an issue for players connecting using GeyserMC. Proper fix needed.
+    // this is also a workaround for an issue with players connecting using GeyserMC. Proper fix needed.
     // noinspection UnstableApiUsage
     if (!InetAddresses.isInetAddress(address)) {
       this.epicGuard.logger().warn("Skipping checks for [" + address + "/" + nickname + "]: invalid address.");

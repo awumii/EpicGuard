@@ -40,7 +40,7 @@ subprojects {
                 if (!archiveFile.get().asFile.name.startsWith("core")) {
                     copy {
                         from(archiveFile)
-                        into("${rootProject.projectDir}/out")
+                        into("${rootProject.projectDir}/build")
                     }
                 }
             }
