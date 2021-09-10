@@ -5,3 +5,6 @@ main: me.xneox.epicguard.waterfall.EpicGuardWaterfall
 author: neox
 website: https://github.com/xxneox/EpicGuard
 description: Bot protection system for Minecraft servers.
+
+libraries:
+  - org.xerial:sqlite-jdbc:3.36.0.3
