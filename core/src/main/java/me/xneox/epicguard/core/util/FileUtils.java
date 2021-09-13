@@ -22,7 +22,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import org.apache.commons.lang3.Validate;
+import me.xneox.epicguard.core.EpicGuardAPI;
 import org.jetbrains.annotations.NotNull;
 
 public final class FileUtils {
@@ -30,11 +30,10 @@ public final class FileUtils {
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
   public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
-    Validate.notNull(urlFrom, "Download URL cannot be null!");
-    Validate.notNull(urlFrom, "Target file cannot be null!");
-
     file.delete();
     file.createNewFile();
+
+    EpicGuardAPI.INSTANCE.instance().logger().info("Downloading file from " + urlFrom + " to " + file.getAbsolutePath());
 
     URLConnection connection = new URL(urlFrom).openConnection();
     connection.addRequestProperty("User-Agent", "Mozilla/4.0");

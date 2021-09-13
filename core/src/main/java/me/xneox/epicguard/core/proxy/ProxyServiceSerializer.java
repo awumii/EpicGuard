@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.proxy;
 
 import java.lang.reflect.Type;
+import java.util.regex.Pattern;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -30,13 +31,13 @@ public class ProxyServiceSerializer implements TypeSerializer<ProxyService> {
     ConfigurationNode urlNode = node.node("url");
     String url = urlNode.getString();
 
-    ConfigurationNode responseRegexNode = node.node("responseRegex");
-    String responseRegex = responseRegexNode.getString();
+    ConfigurationNode matcherNode = node.node("matcher");
+    String matcher = matcherNode.getString();
 
-    if (url == null && responseRegex == null) {
+    if (url == null || matcher == null) {
       throw new SerializationException("Invalid proxy-services configuration.");
     }
-    return new ProxyService(url, responseRegex);
+    return new ProxyService(url, matcher);
   }
 
   @Override
@@ -47,6 +48,6 @@ public class ProxyServiceSerializer implements TypeSerializer<ProxyService> {
     }
 
     target.node("url").set(service.url());
-    target.node("responseRegex").set(service.responseContains());
+    target.node("matcher").set(service.matcher().pattern());
   }
 }

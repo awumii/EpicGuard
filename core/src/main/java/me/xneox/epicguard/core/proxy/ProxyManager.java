@@ -32,6 +32,10 @@ public class ProxyManager {
     this.resultCache = CacheBuilder.newBuilder()
         .expireAfterWrite(epicGuard.config().proxyCheck().cacheDuration(), TimeUnit.SECONDS)
         .build();
+
+    for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
+      epicGuard.logger().warn(service.url() + "<>" + service.matcher());
+    }
   }
 
   /**
@@ -44,8 +48,8 @@ public class ProxyManager {
   public boolean isProxy(@NotNull String address) {
     return this.resultCache.asMap().computeIfAbsent(address, userIp -> {
       for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
-        String response = URLUtils.readString(service.url().replace("%ip%", userIp));
-        if (response != null && response.matches(service.responseContains())) {
+        String response = URLUtils.readString(service.url().replace("{IP}", userIp));
+        if (response != null && service.matcher().matcher(response).find()) {
           return true;
         }
       }

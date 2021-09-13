@@ -91,6 +91,7 @@ public abstract class PreLoginHandler {
     ConnectingUser user = new ConnectingUser(address, nickname);
     for (Check check : this.pipeline) {
       if (check.isDetected(user)) {
+        // debug info
         if (this.epicGuard.config().misc().debug()) {
           this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " + check.getClass().getSimpleName());
         }

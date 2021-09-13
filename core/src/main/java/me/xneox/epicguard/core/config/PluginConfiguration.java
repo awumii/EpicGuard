@@ -126,12 +126,11 @@ public class PluginConfiguration {
 
     @Comment("""
             You can set as many proxy checking services as you want here.
-            If you're not familiar with regex, see https://regexr.com/
-            For example, (yes|proxy) will check if the response contains either 'yes' or 'proxy'""")
-    private List<ProxyService> services =
-        Collections.singletonList(
-            new ProxyService(
-                "https://proxycheck.io/v2/{IP}?key=YOUR_KEY&risk=1&vpn=1", "(yes|proxy)"));
+            If you're not familiar with regex, see https://regexr.com/ or https://regex101.com/
+            For example, (yes|VPN) will check if the response contains either 'yes' or 'VPN'""")
+    private List<ProxyService> registeredServices = Arrays.asList(
+        new ProxyService("https://proxycheck.io/v2/{IP}?key=PROXYCHECK_KEY&risk=1&vpn=1", "(yes|VPN)"),
+        new ProxyService("https://check.getipintel.net/check.php?ip={IP}&contact=user@example.com", "1"));
 
     @Comment("""
             How long in SECONDS responses from proxy check should be cached?
@@ -148,7 +147,7 @@ public class PluginConfiguration {
     }
 
     public List<ProxyService> services() {
-      return this.services;
+      return this.registeredServices;
     }
 
     public int cacheDuration() {

@@ -15,16 +15,17 @@
 
 package me.xneox.epicguard.core.proxy;
 
+import java.util.regex.Pattern;
 import org.jetbrains.annotations.NotNull;
 
 /** Represents a service used for proxy detection. */
 public class ProxyService {
   private final String url;
-  private final String responseRegex;
+  private final Pattern matcher;
 
-  public ProxyService(String url, String responseRegex) {
+  public ProxyService(String url, String matcher) {
     this.url = url;
-    this.responseRegex = responseRegex;
+    this.matcher = Pattern.compile(matcher);
   }
 
   /** @return URL of this service. */
@@ -38,7 +39,7 @@ public class ProxyService {
    *     not.
    */
   @NotNull
-  public String responseContains() {
-    return this.responseRegex;
+  public Pattern matcher() {
+    return this.matcher;
   }
 }
