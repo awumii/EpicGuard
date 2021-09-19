@@ -23,6 +23,7 @@ blossom {
     replaceToken("{version}", project.version, "src/main/java/me/xneox/epicguard/core/util/VersionUtils.java")
 }
 
+// Publish to jitpack.org
 publishing {
     publications {
         create<MavenPublication>("maven") {

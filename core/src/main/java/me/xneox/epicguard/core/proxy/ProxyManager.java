@@ -32,10 +32,6 @@ public class ProxyManager {
     this.resultCache = CacheBuilder.newBuilder()
         .expireAfterWrite(epicGuard.config().proxyCheck().cacheDuration(), TimeUnit.SECONDS)
         .build();
-
-    for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
-      epicGuard.logger().warn(service.url() + "<>" + service.matcher());
-    }
   }
 
   /**

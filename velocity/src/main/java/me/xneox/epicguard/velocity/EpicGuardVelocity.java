@@ -48,6 +48,7 @@ import org.slf4j.Logger;
     name = "EpicGuard",
     version = VersionUtils.VERSION,
     description = "Bot protection system for Minecraft servers.",
+    url = "https://github.com/xxneox/EpicGuard",
     authors = "neox")
 public class EpicGuardVelocity implements Platform {
   private final ProxyServer server;

@@ -1,5 +1,5 @@
 name: EpicGuard
-version: '${version}'
+version: ${version}
 main: me.xneox.epicguard.waterfall.EpicGuardWaterfall
 
 author: neox

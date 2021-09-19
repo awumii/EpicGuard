@@ -6,17 +6,6 @@ dependencies {
 }
 
 tasks {
-    shadowJar {
-        archiveFileName.set("EpicGuardPaper-${project.version}.jar")
-        relocate("org.bstats", "me.xneox.epicguard.paper.bstats")
-    }
-
-    processResources {
-        filesMatching("plugin.yml") {
-            expand("version" to project.version)
-        }
-    }
-
     build {
         dependsOn(shadowJar)
     }
