@@ -26,7 +26,7 @@ public class BungeeCommandHandler extends Command implements TabExecutor {
   private final EpicGuardWaterfall plugin;
 
   public BungeeCommandHandler(EpicGuardWaterfall plugin) {
-    super("epicguard", "epicguard.admin", "guard", "eg", "ab", "antibot");
+    super("epicguard", "epicguard.admin", "guard", "epicguardbungee", "guardbungee");
     this.plugin = plugin;
     this.commandHandler = new CommandHandler(plugin.epicGuard());
   }

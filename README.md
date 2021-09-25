@@ -22,6 +22,21 @@ A simple AntiBot plugin for newest Minecraft versions.
 * Live actionbar statistics. 
 * Automatic whitelisting.
 * Console filter.
+
+## Commands & Permissions
+To be able to use commands, give yourself the **epicguard.admin** permission.  
+On different platforms there are additional aliases available, such as **/guardvelocity** or **/epicguardpaper**
+
+| Command                                      | Description                                                            |
+|----------------------------------------------|------------------------------------------------------------------------|
+| /guard help                                  | Displays all available commands.                                       |
+| /guard reload                                | Reloads config and messages.                                           |
+| /guard whitelist <add/remove> <nick/address> | Whitelist/unwhitelist an address or nickname.                          |
+| /guard blacklist <add/remove> <nick/address> | Blacklist/unblacklist an address or nickname.                          |
+| /guard analyze <nick/address>                | Displays detailed information about the specified address or nickname. |
+| /guard status                                | Toggles live attack information on actionbar.                          |
+| /guard save                                  | Forces save to the database.                                           |
+
 ## Using EpicGuard in your project:
 <details>
 <summary>Gradle (Groovy)</summary>
@@ -83,21 +98,24 @@ Make sure that EpicGuard is fully loaded before your plugin.
 ```java
 // Importing the API class.
 import me.xneox.epicguard.core.EpicGuardAPI;
+import me.xneox.epicguard.core.manager.AttackManager;
 
-// Accessing the EpicGuardAPI instance.
-EpicGuardAPI api = EpicGuardAPI.INSTANCE;
+public class EpicGuardAPIExample {
+  // Accessing the EpicGuardAPI instance.
+  EpicGuardAPI api = EpicGuardAPI.INSTANCE;
 
-// Example #1: using the AttackManager class:
-AttackManager attackManager = api.attackManager();
+  // Obtaining the AttackManager instance:
+  AttackManager attackManager = api.attackManager();
 
-boolean isUnderAttack = attackManager.isUnderAttack(); // checking if server is under attack.
-int cps = attackManager.connectionCounter(); // checking current connections per second.        
-        
-api.attackManager().attack(false); // disabling the attack mode.
-api.attackManager().resetConnectionCounter() // reset the connection counter.
-        
-// Example #3: checking user's country:
-String countryId = api.geoManager().countryCode("127.0.0.1") 
+  // Checking if server is under attack.
+  boolean isUnderAttack = attackManager.isUnderAttack();
+
+  // checking current connections per second.
+  int cps = attackManager.connectionCounter();
+  
+  // Checking user's country:
+  String countryId = api.geoManager().countryCode("127.0.0.1");
+}
 ```
 </details>
 

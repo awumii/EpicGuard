@@ -1,7 +1,7 @@
 name: EpicGuard
 version: '${version}'
 main: me.xneox.epicguard.paper.EpicGuardPaper
-api-version: 1.13
+api-version: 1.16
 
 author: neox
 website: https://github.com/xxneox/EpicGuard
@@ -11,4 +11,4 @@ commands:
   epicguard:
     description: Main plugin command.
     permission: epicguard.admin
-    aliases: [ ab, guard, eg, antibot ]
+    aliases: [ guard, epicguardpaper, guardpaper ]

@@ -69,7 +69,10 @@ public class EpicGuardVelocity implements Platform {
     this.epicGuard = new EpicGuard(this);
 
     CommandManager commandManager = this.server.getCommandManager();
-    CommandMeta meta = commandManager.metaBuilder("epicguard").aliases("guard").build();
+    CommandMeta meta = commandManager
+        .metaBuilder("epicguard")
+        .aliases("guard", "epicguardvelocity", "guardvelocity")
+        .build();
 
     commandManager.register(meta, new VelocityCommandHandler(this.epicGuard));
 

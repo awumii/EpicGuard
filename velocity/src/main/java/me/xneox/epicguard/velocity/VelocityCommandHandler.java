@@ -16,9 +16,12 @@
 package me.xneox.epicguard.velocity;
 
 import com.velocitypowered.api.command.SimpleCommand;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.CommandHandler;
+import net.kyori.adventure.text.Component;
 
 public class VelocityCommandHandler extends CommandHandler implements SimpleCommand {
   public VelocityCommandHandler(EpicGuard epicGuard) {
@@ -32,7 +35,7 @@ public class VelocityCommandHandler extends CommandHandler implements SimpleComm
 
   @Override
   public List<String> suggest(Invocation invocation) {
-    return (List<String>) this.handleSuggestions(invocation.arguments());
+    return new ArrayList<>(this.handleSuggestions(invocation.arguments()));
   }
 
   @Override
