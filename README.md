@@ -1,14 +1,14 @@
-# EpicGuard [![GitHub stars](https://img.shields.io/github/stars/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/stargazers) [![GitHub forks](https://img.shields.io/github/forks/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/network) [![GitHub issues](https://img.shields.io/github/issues/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/issues) [![GitHub license](https://img.shields.io/github/license/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/blob/master/LICENSE) [![Java CI](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml/badge.svg)](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml)
+# 🛡 EpicGuard [![GitHub stars](https://img.shields.io/github/stars/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/stargazers) [![GitHub forks](https://img.shields.io/github/forks/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/network) [![GitHub issues](https://img.shields.io/github/issues/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/issues) [![GitHub license](https://img.shields.io/github/license/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/blob/master/LICENSE) [![Java CI](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml/badge.svg)](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml)
 A simple AntiBot plugin for newest Minecraft versions.
 
-## Supported platforms
+## ✅ Supported platforms
 * [Paper 1.16.5+](https://papermc.io/) *(all paper forks are supported)*
 * [Velocity 3.0.0+](https://velocitypowered.com/)
-* BungeeCord (you have to use [Waterfall](https://papermc.io/downloads#Waterfall))
-* Java 16+ is required.
+* BungeeCord *([Waterfall](https://papermc.io/downloads#Waterfall) required)*
+* Java **16**+ is required.
 
-## Features
-* A total of 8 configurable antibot checks:
+## ✨ Features
+* A total of **8** configurable antibot checks:
   * Geographical check - country/city blacklist or whitelist.
   * VPN/Proxy check - configurable services and caching.
   * Nickname check - block certain nickname patterns using regex.
@@ -23,7 +23,7 @@ A simple AntiBot plugin for newest Minecraft versions.
 * Automatic whitelisting.
 * Console filter.
 
-## Commands & Permissions
+## 📚 Commands & Permissions
 To be able to use commands, give yourself the **epicguard.admin** permission.  
 On different platforms there are additional aliases available, such as **/guardvelocity** or **/epicguardpaper**
 
@@ -37,7 +37,7 @@ On different platforms there are additional aliases available, such as **/guardv
 | /guard status                                | Toggles live attack information on actionbar.                          |
 | /guard save                                  | Forces save to the database.                                           |
 
-## Using EpicGuard in your project:
+## 🔧 Using EpicGuard in your project:
 <details>
 <summary>Gradle (Groovy)</summary>
 
@@ -90,7 +90,7 @@ dependencies {
 </details>
 
 <details>
-<summary>Accessing the API</summary>
+<summary>Using the API</summary>
 Make sure that EpicGuard is fully loaded before your plugin.
 
 [Click to see the API class](https://github.com/xxneox/EpicGuard/blob/master/core/src/main/java/me/xneox/epicguard/core/EpicGuardAPI.java)
@@ -119,6 +119,6 @@ public class EpicGuardAPIExample {
 ```
 </details>
 
-## Support
+## ❓ Support
 If you found an issue with the plugin, you can either create a new [Issue](https://github.com/xxneox/EpicGuard/issues), or join the discord support server.
 [![Discord](https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png)](https://discord.gg/VkfhFCv)
