@@ -18,18 +18,18 @@ package me.xneox.epicguard.core.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 import me.xneox.epicguard.core.EpicGuardAPI;
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This util helps with performing URL requests.
+ */
 public final class URLUtils {
   @Nullable
   public static String readString(@NotNull String url) {

@@ -17,7 +17,9 @@ package me.xneox.epicguard.core.task;
 
 import me.xneox.epicguard.core.EpicGuard;
 
-/** This task disables attack-mode if the connections per seconds are lower than configured. */
+/**
+ * This task disables attack-mode if the connections per seconds are lower than configured.
+ */
 public class AttackResetTask implements Runnable {
   private final EpicGuard epicGuard;
 

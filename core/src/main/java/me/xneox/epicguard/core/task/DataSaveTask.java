@@ -19,6 +19,9 @@ import java.sql.SQLException;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.ExceptionUtils;
 
+/**
+ * This task saves data to the database.
+ */
 public class DataSaveTask implements Runnable {
   private final EpicGuard epicGuard;
 

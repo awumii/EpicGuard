@@ -20,7 +20,9 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-/** This check will deny any connection if the attack mode is active. */
+/**
+ * This check denies any connection if the attack mode is active.
+ */
 public class LockdownCheck extends Check {
   public LockdownCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().attackLockdown(), 99); // will always be executed first

@@ -25,26 +25,25 @@ import java.nio.channels.ReadableByteChannel;
 import me.xneox.epicguard.core.EpicGuardAPI;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This util helps with managing files.
+ */
 public final class FileUtils {
   public static final String EPICGUARD_DIR = "plugins/EpicGuard";
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
   public static void downloadFile(@NotNull String urlFrom, @NotNull File file) throws IOException {
+    EpicGuardAPI.INSTANCE.instance().logger().info("Downloading file from " + urlFrom + " to " + file.getAbsolutePath());
+
+    // Make sure the original file will be replaced, if it exists
     file.delete();
     file.createNewFile();
 
-    EpicGuardAPI.INSTANCE.instance().logger().info("Downloading file from " + urlFrom + " to " + file.getAbsolutePath());
+    URLConnection connection = URLUtils.openConnection(urlFrom);
+    try (ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
+        FileOutputStream out = new FileOutputStream(file)) {
 
-    URLConnection connection = new URL(urlFrom).openConnection();
-    connection.addRequestProperty("User-Agent", "Mozilla/4.0");
-    connection.setConnectTimeout(5000);
-    connection.setReadTimeout(5000);
-
-    ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
-    FileOutputStream out = new FileOutputStream(file);
-    out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
-
-    out.close();
-    channel.close();
+      out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+    }
   }
 }

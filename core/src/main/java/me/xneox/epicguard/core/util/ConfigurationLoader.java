@@ -25,13 +25,18 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+/**
+ * This class loads the configuration, maps values, and saves to the file.
+ *
+ * @param <C> the configuration class
+ */
 public class ConfigurationLoader<C> {
   private final HoconConfigurationLoader loader;
   private ObjectMapper<C> mapper;
 
   public ConfigurationLoader(@NotNull File file, @NotNull Class<C> implementation) {
     this.loader = HoconConfigurationLoader.builder()
-        .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE)))
+        .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE))) //todo move this out of here
         .file(file)
         .build();
 

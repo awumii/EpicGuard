@@ -20,7 +20,9 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-/** This check will try to match the user's nickname with the configured expression. */
+/**
+ * This check tries to match the user's nickname with the configured regex pattern.
+ */
 public class NicknameCheck extends Check {
   public NicknameCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().nickname(), epicGuard.config().nicknameCheck().priority());

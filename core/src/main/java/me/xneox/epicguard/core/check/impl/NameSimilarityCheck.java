@@ -23,6 +23,11 @@ import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This check caches nicknames of the recently connecting users,
+ * and uses {@link LevenshteinDistance} to check similarity between them.
+ * Not tested, may be unstable.
+ */
 @SuppressWarnings("UnstableApiUsage")
 public class NameSimilarityCheck extends Check {
   private final Queue<String> nameHistory = EvictingQueue.create(this.epicGuard.config().nameSimilarityCheck().historySize());

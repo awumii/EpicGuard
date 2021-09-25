@@ -23,9 +23,11 @@ import me.xneox.epicguard.core.user.ConnectingUser;
 import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
-/** This check will force player to reconnect if he is connecting for the first time. */
+/**
+ * This check forces player to reconnect if they are connecting for the first time.
+ */
 public class ReconnectCheck extends Check {
-  private final Collection<ConnectingUser> connectingUserCache = new HashSet<>();
+  private final Collection<ConnectingUser> connectingUserCache = new HashSet<>(); //todo: thread safety :/
 
   public ReconnectCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().reconnect(), epicGuard.config().reconnectCheck().priority());

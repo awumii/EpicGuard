@@ -21,7 +21,7 @@ import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This will check if the user's geographical location is allowed based on the configured behaviour.
+ * This checks if the user's geographical location is allowed based on the current configuration.
  */
 public class GeographicalCheck extends Check {
   public GeographicalCheck(EpicGuard epicGuard) {

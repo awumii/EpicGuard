@@ -30,11 +30,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class StatusCommand implements SubCommand {
   @Override
-  public void execute(
-      @NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
+  public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
-    // This will always fail on paper, since Pointers are not implemented there yet: https://github.com/PaperMC/Paper/pull/5708
+    // TODO: Paper implemented Pointers recently, but this code still fails on Velocity. Should be rewritten anyway.
     Optional<UUID> optional = audience.get(Identity.UUID);
     optional.ifPresentOrElse(uuid -> {
       OnlineUser onlineUser = epicGuard.userManager().getOrCreate(uuid);

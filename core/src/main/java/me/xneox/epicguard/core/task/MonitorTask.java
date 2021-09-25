@@ -22,7 +22,9 @@ import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 
-/** This task displays current attack status on the actionbar of users who enabled them. */
+/**
+ * This task displays current attack status on the actionbar of users who enabled them.
+ */
 public class MonitorTask implements Runnable {
   private final EpicGuard epicGuard;
 

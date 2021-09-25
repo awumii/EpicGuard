@@ -18,6 +18,9 @@ package me.xneox.epicguard.core.util.logging;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * A wrapper around the platform's logger.
+ */
 public interface LogWrapper {
   void info(@NotNull String message);
 

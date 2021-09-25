@@ -219,9 +219,9 @@ public class PluginConfiguration {
     private int priority = 8;
 
     @Comment(
-        "Default value will check if the nickname contains 'bot' or 'mcspam'.\n"
+        "Default value will check if the nickname contains 'bot' or 'mcdown'.\n"
             + "You can use https://regex101.com/ for making and testing your own expression.")
-    private String expression = "(?i).*(bot|mcspam).*";
+    private String expression = "(?i).*(bot|mcdown).*";
 
     public CheckMode checkMode() {
       return this.checkMode;

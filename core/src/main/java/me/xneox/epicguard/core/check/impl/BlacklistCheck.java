@@ -20,7 +20,9 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-/** This will just check if the user is blacklisted. */
+/**
+ * This just checks if the user is blacklisted.
+ */
 public class BlacklistCheck extends Check {
   public BlacklistCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().blacklisted(), 98); // will always be executed secondly.

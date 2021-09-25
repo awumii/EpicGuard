@@ -22,7 +22,7 @@ import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This check will limit how many accounts can be created on one address.
+ * This check limits how many accounts can be created on one address.
  */
 public class AccountLimitCheck extends Check {
   public AccountLimitCheck(EpicGuard epicGuard) {

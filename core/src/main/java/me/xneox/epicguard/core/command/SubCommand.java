@@ -21,10 +21,30 @@ import me.xneox.epicguard.core.EpicGuard;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A subcommand of the /epicguard command.
+ */
 public interface SubCommand {
+
+  /**
+   * Handles the execution of this subcommand
+   *
+   * @param audience the executor of this subcommand
+   * @param args arguments provided by the executor
+   * @param epicGuard instance of {@link EpicGuard}
+   */
   void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard);
 
-  default @NotNull Collection<String> suggest(@NotNull String[] args, @NotNull EpicGuard epicGuard) {
+  /**
+   * Handles the tab-completion of this subcommand.
+   * Returns available suggestions if possible.
+   *
+   * @param args arguments provided by the executor
+   * @param epicGuard instance of {@link EpicGuard}
+   * @return available suggestions, or an empty ArrayList
+   */
+  @NotNull
+  default Collection<String> suggest(@NotNull String[] args, @NotNull EpicGuard epicGuard) {
     return new ArrayList<>();
   }
 }

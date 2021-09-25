@@ -18,12 +18,11 @@ package me.xneox.epicguard.core.handler;
 import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.OnlineUser;
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Handler for the PlayerQuit/Disconnect listeners. Used for removing the {@link OnlineUser}
- * instance from cache.
+ * Handler for the PlayerQuit/Disconnect listeners.
+ * Used for removing the {@link OnlineUser} instance from cache.
  */
 public abstract class DisconnectHandler {
   private final EpicGuard epicGuard;
@@ -38,7 +37,6 @@ public abstract class DisconnectHandler {
    * @param uuid UUID of the (offline) player.
    */
   public void handle(@NotNull UUID uuid) {
-    Validate.notNull(uuid, "UUID cannot be null!");
     this.epicGuard.userManager().removeUser(uuid);
   }
 }

@@ -28,8 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BlacklistCommand implements SubCommand {
   @Override
-  public void execute(
-      @NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
+  public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
     if (args.length != 3) {

@@ -20,7 +20,9 @@ import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
-/** This will check if the user has pinged the server (added it to their server list). */
+/**
+ * This check forces the user has to ping the server before joining.
+ */
 public class ServerListCheck extends Check {
   public ServerListCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().serverListPing(), epicGuard.config().serverListCheck().priority());

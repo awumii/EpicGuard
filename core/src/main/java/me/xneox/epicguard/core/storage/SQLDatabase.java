@@ -27,7 +27,12 @@ import java.util.Map;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.FileUtils;
 
-// TODO: Maybe don't keep all data in the memory? Some caching system instead of bulk read/write. Low priority currently.
+/**
+ * This class manages the SQL database for storing all known {@link AddressMeta}'s
+ * SQLite and MySQL are both supported with the same queries.
+ *
+ * TODO: Maybe don't keep all data in the memory? Some caching system instead of bulk read/write. Low priority currently.
+ */
 public class SQLDatabase {
   private final StorageManager storageManager;
 
@@ -36,7 +41,9 @@ public class SQLDatabase {
     this.connect(config);
   }
 
-  /** Initial connection to the database. */
+  /**
+   * Preparing the database connection
+   */
   private void connect(PluginConfiguration.Storage config) {
     DatabaseOptions.DatabaseOptionsBuilder builder = DatabaseOptions.builder();
     if (config.useMySQL()) {
@@ -49,7 +56,9 @@ public class SQLDatabase {
     DB.setGlobalDatabase(database);
   }
 
-  /** Loads the address data from the default table. */
+  /**
+   * Loads the address data from the default table.
+   */
   public void loadData() throws SQLException {
     DB.executeUpdate("CREATE TABLE IF NOT EXISTS epicguard_addresses("
         + "`address` VARCHAR(255) NOT NULL PRIMARY KEY, "

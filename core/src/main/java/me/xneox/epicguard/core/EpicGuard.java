@@ -37,7 +37,10 @@ import me.xneox.epicguard.core.util.FileUtils;
 import me.xneox.epicguard.core.util.logging.LogWrapper;
 import org.spongepowered.configurate.ConfigurateException;
 
-/** The main, core class of EpicGuard. */
+/**
+ * The main class of the EpicGuard's core.
+ * Initializes everything and holds all managers.
+ */
 public class EpicGuard {
   private final Platform platform;
 

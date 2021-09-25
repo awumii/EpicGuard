@@ -22,7 +22,9 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.URLUtils;
 import org.jetbrains.annotations.NotNull;
 
-/** Performs requests to registered ProxyServices and caches the results. */
+/**
+ * Performs requests to the registered ProxyServices and caches the results.
+ */
 public class ProxyManager {
   private final EpicGuard epicGuard;
   private final Cache<String, Boolean> resultCache;
@@ -35,8 +37,8 @@ public class ProxyManager {
   }
 
   /**
-   * This method will send requests to the registered ProxyServices until the result is positive. If
-   * the result is present in cache, the value from the cache will be returned instead.
+   * This method reads the response from all the registered ProxyServices until the detection is positive.
+   * If the result is present in cache, the value from the cache will be returned instead.
    *
    * @param address The checked IP address.
    * @return Whenever the address is detected to be a proxy or not.

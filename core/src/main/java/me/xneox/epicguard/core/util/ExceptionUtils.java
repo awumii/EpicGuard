@@ -4,6 +4,9 @@ import me.xneox.epicguard.core.EpicGuardAPI;
 import me.xneox.epicguard.core.util.logging.LogWrapper;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This util helps with logging exceptions.
+ */
 public final class ExceptionUtils {
   public static void report(@NotNull String details, @NotNull Throwable throwable) {
     LogWrapper logger = EpicGuardAPI.INSTANCE.instance().logger();

@@ -23,17 +23,16 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.util.ExceptionUtils;
 import me.xneox.epicguard.core.util.FileUtils;
+import me.xneox.epicguard.core.util.TextUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This class manages the GeoLite2's databases, downloads and updates them if needed. It also
@@ -68,9 +67,7 @@ public class GeoManager {
           cityArchive,
           "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=LARAgQo3Fw7W9ZMS&suffix=tar.gz");
 
-      this.countryReader =
-          new DatabaseReader.Builder(countryDatabase).withCache(new CHMCache()).build();
-
+      this.countryReader = new DatabaseReader.Builder(countryDatabase).withCache(new CHMCache()).build();
       this.cityReader = new DatabaseReader.Builder(cityDatabase).withCache(new CHMCache()).build();
     } catch (IOException ex) {
       ExceptionUtils.report("Couldn't download or initialize the GeoIP databases, please check your internet connection.", ex);
@@ -104,7 +101,7 @@ public class GeoManager {
 
   @NotNull
   public String countryCode(@NotNull String address) {
-    InetAddress inetAddress = this.parseAddress(address);
+    InetAddress inetAddress = TextUtils.parseAddress(address);
     if (inetAddress != null && this.countryReader != null) {
       try {
         return this.countryReader.country(inetAddress).getCountry().getIsoCode();
@@ -117,7 +114,7 @@ public class GeoManager {
 
   @NotNull
   public String city(@NotNull String address) {
-    InetAddress inetAddress = this.parseAddress(address);
+    InetAddress inetAddress = TextUtils.parseAddress(address);
     if (inetAddress != null && this.cityReader != null) {
       try {
         return this.cityReader.city(inetAddress).getCity().getName();
@@ -126,15 +123,5 @@ public class GeoManager {
       }
     }
     return "unknown";
-  }
-
-  @Nullable
-  public InetAddress parseAddress(@NotNull String address) {
-    try {
-      return InetAddress.getByName(address);
-    } catch (UnknownHostException ex) {
-      this.epicGuard.logger().warn("Couldn't resolve the InetAddress for the host " + address + ": " + ex.getMessage());
-    }
-    return null;
   }
 }

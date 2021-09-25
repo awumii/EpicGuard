@@ -17,6 +17,10 @@ package me.xneox.epicguard.core.storage;
 
 import java.util.List;
 
+/**
+ * AddressMeta holds information about an IP address.
+ * All known AddressMeta's are stored in the database and cached in the {@link StorageManager}
+ */
 public class AddressMeta {
   private final List<String> nicknames;
   private boolean blacklisted;

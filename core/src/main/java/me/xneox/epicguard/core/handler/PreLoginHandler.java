@@ -15,8 +15,6 @@
 
 package me.xneox.epicguard.core.handler;
 
-import com.google.common.net.InetAddresses;
-import java.net.InetAddress;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,6 +30,7 @@ import me.xneox.epicguard.core.check.impl.ProxyCheck;
 import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
+import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,14 +69,13 @@ public abstract class PreLoginHandler {
   @NotNull
   public Optional<TextComponent> handle(@NotNull String address, @NotNull String nickname) {
     // Increment the connections per second and check if it's bigger than max-cps in config.
-    if (this.epicGuard.attackManager().incrementConnectionCounter()
-        >= this.epicGuard.config().misc().attackConnectionThreshold()) {
+    if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {
       this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
     }
 
-    // this is also a workaround for an issue with players connecting using GeyserMC. Proper fix needed.
-    // noinspection UnstableApiUsage
-    if (!InetAddresses.isInetAddress(address)) {
+    // Make sure the connecting address is valid.
+    // This is also a workaround for an issue with players connecting using GeyserMC. Proper fix needed.
+    if (TextUtils.parseAddress(address) == null) {
       this.epicGuard.logger().warn("Skipping checks for [" + address + "/" + nickname + "]: invalid address.");
       return Optional.empty();
     }
@@ -87,7 +85,6 @@ public abstract class PreLoginHandler {
       return Optional.empty();
     }
 
-    // Performing all checks, we are using PendingUser
     ConnectingUser user = new ConnectingUser(address, nickname);
     for (Check check : this.pipeline) {
       if (check.isDetected(user)) {

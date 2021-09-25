@@ -15,11 +15,15 @@
 
 package me.xneox.epicguard.core.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
+import me.xneox.epicguard.core.EpicGuardAPI;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class TextUtils {
   private static final LegacyComponentSerializer SERIALIZER = LegacyComponentSerializer.builder()
@@ -28,12 +32,21 @@ public final class TextUtils {
       .hexColors()
       .build();
 
+  /**
+   * Constructs a {@link TextComponent} from legacy string.
+   * Supports legacy color-codes by "&" and hex colors by "&#"
+   *
+   * @param message the original string
+   * @return a component created from the string
+   */
   @NotNull
   public static TextComponent component(String message) {
     return SERIALIZER.deserialize(message);
   }
 
-  /** Builds a multiline string for disconnect messages. */
+  /**
+   * Builds a multiline {@link TextComponent} from list of strings.
+   */
   @NotNull
   public static TextComponent multilineComponent(@NotNull List<String> list) {
     Validate.notNull(list, "Kick message cannot be null!");
@@ -43,5 +56,22 @@ public final class TextUtils {
       builder.append(line).append("\n");
     }
     return component(builder.toString());
+  }
+
+  /**
+   * Tries to parse an {@link InetAddress} from the provided string.
+   * For more information, see {@link InetAddress#getByName(String)}
+   *
+   * @param address String representation of a hostname
+   * @return the parsed InetAddress
+   */
+  @Nullable
+  public static InetAddress parseAddress(@NotNull String address) {
+    try {
+      return InetAddress.getByName(address);
+    } catch (UnknownHostException ex) {
+      EpicGuardAPI.INSTANCE.instance().logger().warn("Couldn't resolve the InetAddress for the host " + address + ": " + ex.getMessage());
+    }
+    return null;
   }
 }

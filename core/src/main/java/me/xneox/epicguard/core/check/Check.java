@@ -35,15 +35,22 @@ public abstract class Check implements Comparable<Check> {
   }
 
   /**
-   * It will check the {@link CheckMode} configuration of the current check, and assert the
-   * following behaviour:
+   * Method containing the check's logic, it's return value determines if
+   * the user will be disconnected or if the pipeline will continue checking the user.
    *
-   * If the mode is ALWAYS, it will return the value of the specified expression. If the mode is
-   * ATTACK, it will return the value of the expression ONLY if there's an attack. If the mode is
-   * NEVER, it will return false.
+   * @param user the connecting user.
+   * @return true if detected, false if not
+   */
+  public abstract boolean isDetected(@NotNull ConnectingUser user);
+
+  /**
+   * This method asserts the following behavoiur based on the provided {@link CheckMode}:
+   *  - If the mode is ALWAYS, it will return the value of the specified expression.
+   *  - If the mode is ATTACK, it will return the value of the expression ONLY if there's an attack.
+   *  - If the mode is NEVER, it will return false.
    *
-   * @param mode The configured mode of this check.
-   * @param expression The expression
+   * @param mode the configured {@link CheckMode} for this check
+   * @param expression the base check's result
    * @return The return value is based on the check's behaviour. True means positive detection,
    *     false means negative.
    */
@@ -55,19 +62,22 @@ public abstract class Check implements Comparable<Check> {
   }
 
   /**
-   * This method contains the entire behaviour on the check. When returning a value, use the
-   * assertCheck() method found above.
+   * A formatted {@link TextComponent} which is a disconnect message for this check.
    *
-   * @return true if detection is positive (detected as bot).
-   * @param user An {@link ConnectingUser} object with the information about the user.
+   * @return disconnect message of this check
    */
-  public abstract boolean isDetected(@NotNull ConnectingUser user);
-
   @NotNull
   public TextComponent detectionMessage() {
     return this.detectionMessage;
   }
 
+  /**
+   * Compares the priority of this check to another check.
+   * Used to automatically sort the checks in the pipeline.
+   *
+   * @param other the other check
+   * @return result of the method {@link Integer#compare(int, int)}
+   */
   @Override
   public int compareTo(@NotNull Check other) {
     return Integer.compare(other.priority, this.priority);

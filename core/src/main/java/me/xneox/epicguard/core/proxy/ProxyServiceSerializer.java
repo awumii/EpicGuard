@@ -22,7 +22,9 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
 
-/** Configuration serializer and deserializer for ProxyService object. */
+/**
+ * Configurate serializer and deserializer for the configured {@link ProxyService}.
+ */
 public class ProxyServiceSerializer implements TypeSerializer<ProxyService> {
   public static final ProxyServiceSerializer INSTANCE = new ProxyServiceSerializer();
 

@@ -24,8 +24,8 @@ import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Handler for the PlayerJoin or PostLogin listeners Used for the auto-whitelist feature, and for
- * SettingsCheck.
+ * Handler for the PlayerJoin or PostLogin listeners Used for the auto-whitelist feature,
+ * and for SettingsCheck.
  */
 public abstract class PostLoginHandler {
   private final EpicGuard epicGuard;
@@ -41,9 +41,6 @@ public abstract class PostLoginHandler {
    * @param address Address of the online player.
    */
   public void handle(@NotNull UUID uuid, @NotNull String address) {
-    Validate.notNull(uuid, "UUID cannot be null!");
-    Validate.notNull(address, "Address cannot be null!");
-
     OnlineUser user = this.epicGuard.userManager().getOrCreate(uuid);
 
     // Schedule a delayed task to whitelist the player.

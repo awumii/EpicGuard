@@ -31,9 +31,11 @@ import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** This class manages the stored data and some global cache. */
+/**
+ * This class caches all known {@link AddressMeta}'s and performs various operations on them.
+ */
 public class StorageManager {
-  private final BiMap<String, AddressMeta> addresses = HashBiMap.create();
+  private final BiMap<String, AddressMeta> addresses = HashBiMap.create(); //TODO: HashBiMap is not thread safe, this may cause issues.
   private final SQLDatabase database;
 
   private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
@@ -54,7 +56,6 @@ public class StorageManager {
    */
   @NotNull
   public AddressMeta addressMeta(@NotNull String address) {
-    Validate.notNull(address, "Can't get meta for null address!");
     return this.addresses.computeIfAbsent(address, s -> new AddressMeta(false, false, new ArrayList<>()));
   }
 
@@ -67,7 +68,6 @@ public class StorageManager {
    */
   @Nullable
   public AddressMeta resolveAddressMeta(@NotNull String value) {
-    Validate.notNull(value, "Can't resolve meta for null value!");
     //noinspection UnstableApiUsage
     String address = InetAddresses.isInetAddress(value) ? value : lastSeenAddress(value);
     return address != null ? addressMeta(address) : null;

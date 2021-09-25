@@ -18,7 +18,9 @@ package me.xneox.epicguard.core.proxy;
 import java.util.regex.Pattern;
 import org.jetbrains.annotations.NotNull;
 
-/** Represents a service used for proxy detection. */
+/**
+ * Represents a service used for proxy detection.
+ */
 public class ProxyService {
   private final String url;
   private final Pattern matcher;
@@ -28,15 +30,16 @@ public class ProxyService {
     this.matcher = Pattern.compile(matcher);
   }
 
-  /** @return URL of this service. */
+  /**
+   * @return URL of this service.
+   */
   @NotNull
   public String url() {
     return this.url;
   }
 
   /**
-   * @return Configured regex expression used for deciding whenever the detection is positive or
-   *     not.
+   * @return Pattern used for deciding whenever the detection is positive or not.
    */
   @NotNull
   public Pattern matcher() {

@@ -18,6 +18,10 @@ package me.xneox.epicguard.core.util;
 import java.util.function.Consumer;
 import me.xneox.epicguard.core.EpicGuard;
 
+/**
+ * This util holds current EpicGuard version and checks for the latest available version.
+ * TODO: Rewrite to automatically get latest release from github (and proper semver parsing)
+ */
 public final class VersionUtils {
   public static final String VERSION = "{version}"; // replaced by the blossom task.
   private static final String CHECK_URL = "https://raw.githubusercontent.com/xxneox/EpicGuard/master/VERSION.txt";
@@ -25,18 +29,12 @@ public final class VersionUtils {
   /**
    * Checks the latest version to see if there's any update available.
    *
-   * @param epicGuard EpicGuard instance.
    * @param action Action to run when there's an update available.
    */
-  public static void checkForUpdates(EpicGuard epicGuard, Consumer<String> action) {
-    if (!epicGuard.config().misc().updateChecker()) {
-      return;
-    }
-
+  public static void checkForUpdates(Consumer<String> action) {
     String latest = URLUtils.readString(CHECK_URL);
     if (latest == null) {
-      epicGuard.logger().warn("Could not fetch the latest version.");
-      return;
+      return; // a warning will be thrown by the URLUtils anyway.
     }
 
     if (parse(latest) > parse(VERSION)) {
@@ -44,6 +42,13 @@ public final class VersionUtils {
     }
   }
 
+  /**
+   * A primitive version parsing. Replaces all dots in the version string
+   * and returns the result as an integer. (todo: proper parsing)
+   *
+   * @param version Version string, eg. "5.1.0"
+   * @return an int version value, eg. "510"
+   */
   private static int parse(String version) {
     return Integer.parseInt(version.replace(".", ""));
   }

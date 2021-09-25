@@ -36,7 +36,6 @@ public interface Platform {
   LogWrapper logger();
 
   /**
-   *
    * @param uuid UUID of the online user.
    * @return an audience for the provided user's uuid.
    */

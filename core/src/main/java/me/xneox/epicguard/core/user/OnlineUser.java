@@ -18,7 +18,9 @@ package me.xneox.epicguard.core.user;
 import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
-/** Represents an player who is currently connected to the server. */
+/**
+ * Represents a player who is currently connected to the server.
+ */
 public class OnlineUser {
   private final UUID uuid;
   private boolean notifications;
@@ -28,24 +30,30 @@ public class OnlineUser {
     this.uuid = uuid;
   }
 
-  /** @return The user's UUID. */
+  /**
+   * @return the user's UUID.
+   */
   @NotNull
   public UUID uuid() {
-    return uuid;
+    return this.uuid;
   }
 
-  /** @return Whenever the user has enabled the status notifications. */
+  /**
+   * @return whenever the user has enabled the status notifications.
+   */
   public boolean notifications() {
-    return notifications;
+    return this.notifications;
   }
 
   public void notifications(boolean notifications) {
     this.notifications = notifications;
   }
 
-  /** @return Whenever the user has sent the Settings packet at least once. */
+  /**
+   * @return whenever the user has sent the Settings packet at least once.
+   */
   public boolean settingsChanged() {
-    return settingsChanged;
+    return this.settingsChanged;
   }
 
   public void settingsChanged(boolean settingsChanged) {

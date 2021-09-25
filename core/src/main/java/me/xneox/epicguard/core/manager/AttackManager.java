@@ -17,7 +17,9 @@ package me.xneox.epicguard.core.manager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** This class holds variables related to the current server attack status. */
+/**
+ * This class holds variables related to the current server attack status.
+ */
 public class AttackManager {
   private final AtomicInteger connectionCounter = new AtomicInteger();
   private boolean attack;

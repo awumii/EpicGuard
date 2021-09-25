@@ -16,11 +16,10 @@
 package me.xneox.epicguard.core.handler;
 
 import me.xneox.epicguard.core.EpicGuard;
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Handler for the ServerListPing listeners. Used for the ServerListCheck to verify if the user has
+ * Handler for the ServerListPing listeners. Used by ServerListCheck to verify if the user has
  * pinged the server (added it to their list).
  */
 public abstract class PingHandler {
@@ -36,7 +35,6 @@ public abstract class PingHandler {
    * @param address Address of the pinger.
    */
   public void handle(@NotNull String address) {
-    Validate.notNull(address, "Address cannot be null!");
     this.epicGuard.storageManager().pingCache().add(address);
   }
 }

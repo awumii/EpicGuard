@@ -21,7 +21,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import me.xneox.epicguard.core.user.OnlineUser;
 
-/** This manager will cache the {@link OnlineUser} object's of the currently online players. */
+/**
+ * This manager caches the {@link OnlineUser} for currently online players
+ */
 public class UserManager {
   private final Map<UUID, OnlineUser> userMap = new ConcurrentHashMap<>();
 

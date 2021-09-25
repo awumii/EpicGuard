@@ -15,9 +15,13 @@
 
 package me.xneox.epicguard.core.user;
 
+import com.google.common.base.Objects;
+
 /**
- * This class holds address and nickname of the user, who is currently being checked (or cached) by
- * the antibot checks.
+ * Represents a user who is currently connecting to the server.
+ * It is also cached by some checks.
+ *
+ * TODO: Convert to record when gradle shadow supports it.
  */
 public class ConnectingUser {
   private final String address;
@@ -34,5 +38,23 @@ public class ConnectingUser {
 
   public String nickname() {
     return this.nickname;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ConnectingUser that = (ConnectingUser) o;
+    return Objects.equal(address, that.address)
+        && Objects.equal(nickname, that.nickname);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(address, nickname);
   }
 }

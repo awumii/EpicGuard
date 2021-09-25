@@ -18,10 +18,12 @@ package me.xneox.epicguard.core.check.impl;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.check.Check;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
-/** This will check if the user is using a VPN or a proxy. */
+/**
+ * This checks if the user is using a VPN or a proxy.
+ * The detection logic is located in {@link me.xneox.epicguard.core.proxy.ProxyManager}
+ */
 public class ProxyCheck extends Check {
   public ProxyCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().proxy(), epicGuard.config().proxyCheck().priority());
