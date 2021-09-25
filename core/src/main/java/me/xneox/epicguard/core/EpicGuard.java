@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
-import me.xneox.epicguard.core.util.ExceptionUtils;
+import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.core.util.logging.LogFilter;
 import me.xneox.epicguard.core.manager.AttackManager;
@@ -92,7 +92,7 @@ public class EpicGuard {
       this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
       this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
     } catch (ConfigurateException exception) {
-      ExceptionUtils.report("Couldn't load the configuration file", exception);
+      LogUtils.catchException("Couldn't load the configuration file", exception);
     }
   }
 
@@ -100,7 +100,7 @@ public class EpicGuard {
     try {
       this.storageManager.database().saveData();
     } catch (SQLException exception) {
-      ExceptionUtils.report("Could not save data to the SQL database (during shutdown)", exception);
+      LogUtils.catchException("Could not save data to the SQL database (during shutdown)", exception);
     }
   }
 

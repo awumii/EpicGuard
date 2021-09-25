@@ -17,7 +17,7 @@ package me.xneox.epicguard.core.task;
 
 import java.sql.SQLException;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.util.ExceptionUtils;
+import me.xneox.epicguard.core.util.LogUtils;
 
 /**
  * This task saves data to the database.
@@ -34,7 +34,7 @@ public class DataSaveTask implements Runnable {
     try {
       this.epicGuard.storageManager().database().saveData();
     } catch (SQLException exception) {
-      ExceptionUtils.report("Could not save data to the SQL database (save-task)", exception);
+      LogUtils.catchException("Could not save data to the SQL database (save-task)", exception);
     }
   }
 }

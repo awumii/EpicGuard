@@ -33,15 +33,21 @@ public class StatusCommand implements SubCommand {
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     MessagesConfiguration.Command config = epicGuard.messages().command();
 
-    // TODO: Paper implemented Pointers recently, but this code still fails on Velocity. Should be rewritten anyway.
-    Optional<UUID> optional = audience.get(Identity.UUID);
-    optional.ifPresentOrElse(uuid -> {
+    //TODO: Paper implemented Pointers in build #277 and this code works fine on that build, but
+    // even though Pointers are also implemented on Velocity, the don't work there...
+    if (!audience.pointers().supports(Identity.UUID)) {
+      audience.sendMessage(Component
+          .text("This command is unavailable in the current environment.")
+          .color(TextColor.fromHexString("#ff6600")));
+      return;
+    }
+
+    Optional<UUID> uuidOptional = audience.pointers().get(Identity.UUID);
+    uuidOptional.ifPresent(uuid -> {
+      // UUID is present, enable notifications.
       OnlineUser onlineUser = epicGuard.userManager().getOrCreate(uuid);
       onlineUser.notifications(!onlineUser.notifications());
-
       audience.sendMessage(TextUtils.component(config.prefix() + config.toggleStatus()));
-      }, () -> audience.sendMessage(
-          Component.text("This command is unavailable in the current environment.")
-              .color(TextColor.fromHexString("#ff6600"))));
+    });
   }
 }

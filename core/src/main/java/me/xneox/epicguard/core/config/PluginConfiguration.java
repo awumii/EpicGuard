@@ -400,7 +400,7 @@ public class PluginConfiguration {
         "(!) Requires restart to apply.")
     private long autoSaveInterval = 10L;
 
-    @Comment("Enabling this will log positive bot detections in the console.")
+    @Comment("Enabling this will log additional useful information, such as performed detections.")
     private boolean debug = false;
 
     public boolean lockdownOnAttack() {

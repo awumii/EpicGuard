@@ -26,7 +26,7 @@ import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.util.ExceptionUtils;
+import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.FileUtils;
 import me.xneox.epicguard.core.util.TextUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -70,7 +70,7 @@ public class GeoManager {
       this.countryReader = new DatabaseReader.Builder(countryDatabase).withCache(new CHMCache()).build();
       this.cityReader = new DatabaseReader.Builder(cityDatabase).withCache(new CHMCache()).build();
     } catch (IOException ex) {
-      ExceptionUtils.report("Couldn't download or initialize the GeoIP databases, please check your internet connection.", ex);
+      LogUtils.catchException("Couldn't download or initialize the GeoIP databases, please check your internet connection.", ex);
     }
   }
 

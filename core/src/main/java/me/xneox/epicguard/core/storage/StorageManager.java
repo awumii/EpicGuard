@@ -26,8 +26,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import me.xneox.epicguard.core.util.ExceptionUtils;
-import org.apache.commons.lang3.Validate;
+import me.xneox.epicguard.core.util.LogUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,7 +45,7 @@ public class StorageManager {
     try {
       this.database.loadData();
     } catch (Exception exception) {
-      ExceptionUtils.report("Could not load data from SQL database", exception);
+      LogUtils.catchException("Could not load data from SQL database", exception);
     }
   }
 

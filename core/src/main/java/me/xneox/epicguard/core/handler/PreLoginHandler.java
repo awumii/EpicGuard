@@ -30,6 +30,7 @@ import me.xneox.epicguard.core.check.impl.ProxyCheck;
 import me.xneox.epicguard.core.check.impl.ReconnectCheck;
 import me.xneox.epicguard.core.check.impl.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
+import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
@@ -68,9 +69,12 @@ public abstract class PreLoginHandler {
    */
   @NotNull
   public Optional<TextComponent> handle(@NotNull String address, @NotNull String nickname) {
+    LogUtils.debug("Handling incoming connection: " + address + "/" + nickname);
+
     // Increment the connections per second and check if it's bigger than max-cps in config.
     if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {
-      this.epicGuard.attackManager().attack(true); // If yes, then activate the attack mode.
+      this.epicGuard.logger().warn("Enabling attack-mode (" + this.epicGuard.attackManager().connectionCounter() + " con/s)");
+      this.epicGuard.attackManager().attack(true);
     }
 
     // Make sure the connecting address is valid.
@@ -82,18 +86,15 @@ public abstract class PreLoginHandler {
 
     // Check if the user is whitelisted, if yes, return empty result (undetected).
     if (this.epicGuard.storageManager().addressMeta(address).whitelisted()) {
+      LogUtils.debug("Skipping whitelisted user: " + address + "/" + nickname);
       return Optional.empty();
     }
 
     ConnectingUser user = new ConnectingUser(address, nickname);
     for (Check check : this.pipeline) {
       if (check.isDetected(user)) {
-        // debug info
-        if (this.epicGuard.config().misc().debug()) {
-          this.epicGuard.logger().info("(Debug) " + nickname + "/" + address + " detected by " + check.getClass().getSimpleName());
-        }
-
         // Positive detection, kicking the player!
+        LogUtils.debug(nickname + "/" + address + " detected by " + check.getClass().getSimpleName());
         return Optional.of(check.detectionMessage());
       }
     }
