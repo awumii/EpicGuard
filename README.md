@@ -37,6 +37,11 @@ On different platforms there are additional aliases available, such as **/guardv
 | /guard status                                | Toggles live attack information on actionbar.                          |
 | /guard save                                  | Forces save to the database.                                           |
 
+## 💻 Contributing
+We are open to contributions! Look for some "TODO"s in the code, there's always some work to do.  
+Because of a lack of time and motivation, no new features are being implemented in the project, aside from bug fixes and code improvements. Maybe you have an idea that's worth implementing?  
+You can join our Discord server for better communication.
+
 ## 🔧 Using EpicGuard in your project:
 <details>
 <summary>Gradle (Groovy)</summary>

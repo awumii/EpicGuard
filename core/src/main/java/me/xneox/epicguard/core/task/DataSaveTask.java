@@ -34,7 +34,7 @@ public class DataSaveTask implements Runnable {
     try {
       this.epicGuard.storageManager().database().saveData();
     } catch (SQLException exception) {
-      LogUtils.catchException("Could not save data to the SQL database (save-task)", exception);
+      LogUtils.catchException("Could not save data to the SQL database (save-task)", exception, false);
     }
   }
 }

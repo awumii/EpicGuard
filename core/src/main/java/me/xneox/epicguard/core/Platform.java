@@ -65,4 +65,9 @@ public interface Platform {
    * @param seconds Delay in seconds between each runs of the task.
    */
   void scheduleRepeatingTask(@NotNull Runnable task, long seconds);
+
+  /**
+   * Disable the EpicGuard plugin, in case a critical error occurs.
+   */
+  void disablePlugin();
 }

@@ -13,15 +13,21 @@ public final class LogUtils {
   /**
    * Catches a Throwable and prints a detailed error message.
    *
-   * @param throwable the caught exception
    * @param details details about where the error has occurred
+   * @param throwable the caught exception
+   * @param critical a critical error that makes EpicGuard unable to function properly.
    */
-  public static void catchException(@NotNull String details, @NotNull Throwable throwable) {
+  public static void catchException(@NotNull String details, @NotNull Throwable throwable, boolean critical) {
     LOGGER.error("An error occurred in EpicGuard!");
     LOGGER.error("  > Details: " + details);
     LOGGER.error("  > Platform: " + EpicGuardAPI.INSTANCE.platformVersion());
     LOGGER.error("  > Stacktrace: ");
     LOGGER.error("", throwable);
+
+    // Critical error - shutting down the plugin!
+    if (critical) {
+      EpicGuardAPI.INSTANCE.instance().platform().disablePlugin();
+    }
   }
 
   /**

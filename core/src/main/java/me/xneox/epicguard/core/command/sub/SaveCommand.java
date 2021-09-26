@@ -32,7 +32,7 @@ public class SaveCommand implements SubCommand {
     } catch (SQLException ex) {
       audience.sendMessage(TextUtils.component(epicGuard.messages().command().prefix() +
           "&cAn exception ocurred when saving data. See console for details."));
-      LogUtils.catchException("Could not save data to the SQL database (command-induced)", ex);
+      LogUtils.catchException("Could not save data to the SQL database (command-induced)", ex, false);
     }
   }
 }

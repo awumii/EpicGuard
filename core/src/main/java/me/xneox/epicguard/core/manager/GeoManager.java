@@ -70,7 +70,7 @@ public class GeoManager {
       this.countryReader = new DatabaseReader.Builder(countryDatabase).withCache(new CHMCache()).build();
       this.cityReader = new DatabaseReader.Builder(cityDatabase).withCache(new CHMCache()).build();
     } catch (IOException ex) {
-      LogUtils.catchException("Couldn't download or initialize the GeoIP databases, please check your internet connection.", ex);
+      LogUtils.catchException("Couldn't download the GeoIP databases, please check your internet connection.", ex, false);
     }
   }
 

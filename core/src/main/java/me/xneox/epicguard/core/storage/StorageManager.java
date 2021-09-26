@@ -45,7 +45,7 @@ public class StorageManager {
     try {
       this.database.loadData();
     } catch (Exception exception) {
-      LogUtils.catchException("Could not load data from SQL database", exception);
+      LogUtils.catchException("Could not load data from SQL database", exception, true);
     }
   }
 

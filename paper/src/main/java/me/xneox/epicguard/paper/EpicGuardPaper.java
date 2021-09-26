@@ -102,4 +102,9 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
   public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
     Bukkit.getScheduler().runTaskTimerAsynchronously(this, task, 20L, seconds * 20L);
   }
+
+  @Override
+  public void disablePlugin() {
+    Bukkit.getPluginManager().disablePlugin(this);
+  }
 }
