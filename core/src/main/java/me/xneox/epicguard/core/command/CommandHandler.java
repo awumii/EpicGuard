@@ -74,7 +74,7 @@ public class CommandHandler {
   @NotNull
   public Collection<String> handleSuggestions(@NotNull String[] args) {
     // If no argument is specified, send all available subcommands.
-    if (args.length == 1 || args.length < 1) {
+    if (args.length <= 1) {
       return this.commandMap.keySet();
     }
 
