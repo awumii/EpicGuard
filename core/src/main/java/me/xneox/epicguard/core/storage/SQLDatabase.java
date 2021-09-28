@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Map;
 import me.xneox.epicguard.core.config.PluginConfiguration;
 import me.xneox.epicguard.core.util.FileUtils;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class manages the SQL database for storing all known {@link AddressMeta}'s
@@ -35,16 +36,18 @@ import me.xneox.epicguard.core.util.FileUtils;
  */
 public class SQLDatabase {
   private final StorageManager storageManager;
+  private final PluginConfiguration.Storage config;
 
   public SQLDatabase(StorageManager storageManager, PluginConfiguration.Storage config) {
     this.storageManager = storageManager;
-    this.connect(config);
+    this.config = config;
+    this.connect();
   }
 
   /**
    * Preparing the database connection
    */
-  private void connect(PluginConfiguration.Storage config) {
+  private void connect() {
     DatabaseOptions.DatabaseOptionsBuilder builder = DatabaseOptions.builder();
     if (config.useMySQL()) {
       builder.mysql(config.user(), config.password(), config.database(), config.host() + ":" + config.port());
@@ -70,8 +73,8 @@ public class SQLDatabase {
     for (DbRow row : DB.getResults("SELECT * FROM epicguard_addresses")) {
       AddressMeta meta =
           new AddressMeta(
-              row.getInt("blacklisted") == 1,
-              row.getInt("whitelisted") == 1,
+              getBoolean(row, "blacklisted"),
+              getBoolean(row, "whitelisted"),
               new ArrayList<>(Arrays.asList(row.getString("nicknames").split(","))));
 
       this.storageManager.addresses().put(row.getString("address"), meta);
@@ -91,5 +94,13 @@ public class SQLDatabase {
           meta.whitelisted(),
           String.join(",", meta.nicknames()));
     }
+  }
+
+  // i hate this
+  private boolean getBoolean(@NotNull DbRow row, @NotNull String column) {
+    if (this.config.useMySQL()) {
+      return row.get(column);
+    }
+    return row.getInt(column) == 1;
   }
 }
