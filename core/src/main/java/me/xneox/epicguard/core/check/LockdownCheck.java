@@ -15,14 +15,22 @@
 
 package me.xneox.epicguard.core.check;
 
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.check.AbstractCheck;
+import me.xneox.epicguard.core.user.ConnectingUser;
+import org.jetbrains.annotations.NotNull;
+
 /**
- * Determines when an {@link Check} should be performed.
- * Can be configured in the config for some checks.
- *
- * TODO: This is also used for other things than checks, should be renamed
+ * This check denies any connection if the attack mode is active.
  */
-public enum CheckMode {
-  NEVER,
-  ALWAYS,
-  ATTACK
+public class LockdownCheck extends AbstractCheck {
+  public LockdownCheck(EpicGuard epicGuard) {
+    super(epicGuard, epicGuard.messages().disconnect().attackLockdown(), 99); // will always be executed first
+  }
+
+  @Override
+  public boolean isDetected(@NotNull ConnectingUser user) {
+    return this.epicGuard.attackManager().isUnderAttack()
+        && this.epicGuard.config().misc().lockdownOnAttack();
+  }
 }

@@ -123,11 +123,4 @@ public class EpicGuardVelocity implements Platform {
   public void scheduleRepeatingTask(@NotNull Runnable task, long seconds) {
     this.server.getScheduler().buildTask(this, task).repeat(seconds, TimeUnit.SECONDS).schedule();
   }
-
-  @Override
-  public void disablePlugin() {
-    // A very ugly way to forcefully crash the plugin to prevent it from further loading.
-    // Velocity has no method to fully disable a plugin.
-    throw new EpicGuardCrashedException();
-  }
 }

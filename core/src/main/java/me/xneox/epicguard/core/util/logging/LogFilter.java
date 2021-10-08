@@ -16,7 +16,7 @@
 package me.xneox.epicguard.core.util.logging;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.CheckMode;
+import me.xneox.epicguard.core.util.ToggleState;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
@@ -62,8 +62,8 @@ public class LogFilter extends AbstractFilter {
   }
 
   private Result isLoggable(String message) {
-    CheckMode mode = this.epicGuard.config().consoleFilter().filterMode();
-    if (mode == CheckMode.ALWAYS || mode == CheckMode.ATTACK && this.epicGuard.attackManager().isUnderAttack()) {
+    ToggleState state = this.epicGuard.config().consoleFilter().filterMode();
+    if (state == ToggleState.ALWAYS || state == ToggleState.ATTACK && this.epicGuard.attackManager().isUnderAttack()) {
       for (String string : this.epicGuard.config().consoleFilter().filterMessages()) {
         if (message.contains(string)) {
           return Result.DENY;

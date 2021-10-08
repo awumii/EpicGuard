@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core.util;
 
 import java.util.function.Consumer;
-import me.xneox.epicguard.core.EpicGuard;
 
 /**
  * This util holds current EpicGuard version and checks for the latest available version.

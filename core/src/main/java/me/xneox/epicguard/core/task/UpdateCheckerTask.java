@@ -21,12 +21,7 @@ import me.xneox.epicguard.core.util.VersionUtils;
 /**
  * This task checks for updates, and if a new version is found, it will be printed to the console.
  */
-public class UpdateCheckerTask implements Runnable {
-  private final EpicGuard epicGuard;
-
-  public UpdateCheckerTask(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
-  }
+public record UpdateCheckerTask(EpicGuard epicGuard) implements Runnable {
 
   @Override
   public void run() {

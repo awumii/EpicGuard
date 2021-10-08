@@ -39,7 +39,7 @@ public class ProxyServiceSerializer implements TypeSerializer<ProxyService> {
     if (url == null || matcher == null) {
       throw new SerializationException("Invalid proxy-services configuration.");
     }
-    return new ProxyService(url, matcher);
+    return new ProxyService(url, Pattern.compile(matcher));
   }
 
   @Override

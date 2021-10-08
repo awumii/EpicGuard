@@ -41,11 +41,12 @@ public class StorageManager {
 
   public StorageManager(EpicGuard epicGuard) {
     this.database = new SQLDatabase(this, epicGuard.config().storage());
+    this.database.connect();
 
     try {
       this.database.loadData();
     } catch (Exception exception) {
-      LogUtils.catchException("Could not load data from SQL database", exception, true);
+      LogUtils.catchException("Could not load data from SQL database", exception);
     }
   }
 
@@ -59,11 +60,14 @@ public class StorageManager {
   }
 
   /**
-   * When an address is specified: - Redirects to the {@link #addressMeta(String)} method. - Never
-   * returns null.
+   * When an address is specified:
+   * - Redirects to the {@link #addressMeta(String)} method.
+   * - Never returns null.
    *
-   * <p>When an nickname is specified: - Tries to detect last used address by this nickname. - If
-   * found, redirects to the {@link #addressMeta(String)} method. - If not found, returns null.
+   * When a nickname is specified:
+   * - Tries to detect last used address by this nickname.
+   * - If found, redirects to the {@link #addressMeta(String)} method.
+   * - If not found, returns null.
    */
   @Nullable
   public AddressMeta resolveAddressMeta(@NotNull String value) {
@@ -72,7 +76,9 @@ public class StorageManager {
     return address != null ? addressMeta(address) : null;
   }
 
-  /** Searches for the last used address of the specified nickname. Returns null if not found. */
+  /**
+   * Searches for the last used address of the specified nickname.
+   */
   @Nullable
   public String lastSeenAddress(@NotNull String nickname) {
     return this.addresses.entrySet().stream()
@@ -83,8 +89,8 @@ public class StorageManager {
   }
 
   /**
-   * Checks if the address meta of connecting user contains his current nickname. If absent, it is
-   * added.
+   * Checks if the address meta of connecting user contains his current nickname.
+   * If absent, it is added.
    */
   public void updateAccounts(@NotNull ConnectingUser user) {
     List<String> accounts = addressMeta(user.address()).nicknames();
@@ -97,7 +103,7 @@ public class StorageManager {
    * A legacy method for viewing addresses that meet a specific condition. For example, this can
    * return whitelisted or blacklisted addresses.
    *
-   * <p>Returned list is immutable, used only for statistics and command suggestions.
+   * Returned list is immutable, used only for statistics and command suggestions.
    */
   @NotNull
   public List<String> viewAddresses(@NotNull Predicate<AddressMeta> predicate) {

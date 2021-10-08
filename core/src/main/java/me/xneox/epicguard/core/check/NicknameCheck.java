@@ -13,27 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This check limits how many accounts can be created on one address.
+ * This check tries to match the user's nickname with the configured regex pattern.
  */
-public class AccountLimitCheck extends Check {
-  public AccountLimitCheck(EpicGuard epicGuard) {
-    super(epicGuard, epicGuard.messages().disconnect().accountLimit(), epicGuard.config().accountLimitCheck().priority());
+public class NicknameCheck extends AbstractCheck {
+  public NicknameCheck(EpicGuard epicGuard) {
+    super(epicGuard, epicGuard.messages().disconnect().nickname(), epicGuard.config().nicknameCheck().priority());
   }
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
-
-    return this.evaluate(this.epicGuard.config().accountLimitCheck().checkMode(),
-        !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
+    return this.evaluate(this.epicGuard.config().nicknameCheck().checkMode(),
+        user.nickname().matches(this.epicGuard.config().nicknameCheck().expression()));
   }
 }

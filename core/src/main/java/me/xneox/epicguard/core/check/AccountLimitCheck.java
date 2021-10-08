@@ -13,24 +13,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
+import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This check forces the user has to ping the server before joining.
+ * This check limits how many accounts can be created on one address.
  */
-public class ServerListCheck extends Check {
-  public ServerListCheck(EpicGuard epicGuard) {
-    super(epicGuard, epicGuard.messages().disconnect().serverListPing(), epicGuard.config().serverListCheck().priority());
+public class AccountLimitCheck extends AbstractCheck {
+  public AccountLimitCheck(EpicGuard epicGuard) {
+    super(epicGuard, epicGuard.messages().disconnect().accountLimit(), epicGuard.config().accountLimitCheck().priority());
   }
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    return this.evaluate(this.epicGuard.config().serverListCheck().checkMode(),
-        !this.epicGuard.storageManager().pingCache().contains(user.address()));
+    List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
+
+    return this.evaluate(this.epicGuard.config().accountLimitCheck().checkMode(),
+        !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
   }
 }

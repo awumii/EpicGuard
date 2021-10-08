@@ -18,8 +18,6 @@ package me.xneox.epicguard.waterfall.listener;
 import me.xneox.epicguard.waterfall.BungeeUtils;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.PreLoginHandler;
-import me.xneox.epicguard.waterfall.EpicGuardWaterfall;
-import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -31,9 +29,9 @@ public class PreLoginListener extends PreLoginHandler implements Listener {
 
   @EventHandler(priority = Byte.MIN_VALUE)
   public void onPreLogin(PreLoginEvent event) {
-    PendingConnection connection = event.getConnection();
-    String address = connection.getAddress().getAddress().getHostAddress();
-    String nickname = connection.getName();
+    //noinspection deprecation
+    String address = event.getConnection().getAddress().getAddress().getHostAddress();
+    String nickname = event.getConnection().getName();
 
     this.handle(address, nickname).ifPresent(result -> {
       event.setCancelled(true);

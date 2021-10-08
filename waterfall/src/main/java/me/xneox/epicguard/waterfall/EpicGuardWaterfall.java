@@ -104,13 +104,6 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
     this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
   }
 
-  @Override
-  public void disablePlugin() {
-    // A very ugly way to forcefully crash the plugin to prevent it from further loading.
-    // BungeeCord has no method to fully disable a plugin.
-    throw new EpicGuardCrashedException();
-  }
-
   public BungeeAudiences adventure() {
     return this.adventure;
   }

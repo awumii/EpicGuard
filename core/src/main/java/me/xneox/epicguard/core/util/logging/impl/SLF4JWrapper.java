@@ -23,12 +23,7 @@ import org.slf4j.Logger;
 /**
  * LogWrapper implementation for org.slf4j Logger
  */
-public class SLF4JWrapper implements LogWrapper {
-  private final Logger logger;
-
-  public SLF4JWrapper(Logger logger) {
-    this.logger = logger;
-  }
+public record SLF4JWrapper(Logger logger) implements LogWrapper {
 
   @Override
   public void info(@NotNull String message) {

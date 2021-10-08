@@ -21,28 +21,5 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Represents a service used for proxy detection.
  */
-public class ProxyService {
-  private final String url;
-  private final Pattern matcher;
-
-  public ProxyService(String url, String matcher) {
-    this.url = url;
-    this.matcher = Pattern.compile(matcher);
-  }
-
-  /**
-   * @return URL of this service.
-   */
-  @NotNull
-  public String url() {
-    return this.url;
-  }
-
-  /**
-   * @return Pattern used for deciding whenever the detection is positive or not.
-   */
-  @NotNull
-  public Pattern matcher() {
-    return this.matcher;
-  }
+public record ProxyService(@NotNull String url, @NotNull Pattern matcher) {
 }

@@ -13,25 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This checks if the user is using a VPN or a proxy.
- * The detection logic is located in {@link me.xneox.epicguard.core.proxy.ProxyManager}
+ * This check forces the user has to ping the server before joining.
  */
-public class ProxyCheck extends Check {
-  public ProxyCheck(EpicGuard epicGuard) {
-    super(epicGuard, epicGuard.messages().disconnect().proxy(), epicGuard.config().proxyCheck().priority());
+public class ServerListCheck extends AbstractCheck {
+  public ServerListCheck(EpicGuard epicGuard) {
+    super(epicGuard, epicGuard.messages().disconnect().serverListPing(), epicGuard.config().serverListCheck().priority());
   }
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    return this.evaluate(this.epicGuard.config().proxyCheck().checkMode(),
-        this.epicGuard.proxyManager().isProxy(user.address()));
+    return this.evaluate(this.epicGuard.config().serverListCheck().checkMode(),
+        !this.epicGuard.storageManager().pingCache().contains(user.address()));
   }
 }

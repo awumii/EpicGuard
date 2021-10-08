@@ -15,46 +15,11 @@
 
 package me.xneox.epicguard.core.user;
 
-import com.google.common.base.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a user who is currently connecting to the server.
  * It is also cached by some checks.
- *
- * TODO: Convert to record when gradle shadow supports it.
  */
-public class ConnectingUser {
-  private final String address;
-  private final String nickname;
-
-  public ConnectingUser(String address, String nickname) {
-    this.address = address;
-    this.nickname = nickname;
-  }
-
-  public String address() {
-    return this.address;
-  }
-
-  public String nickname() {
-    return this.nickname;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ConnectingUser that = (ConnectingUser) o;
-    return Objects.equal(address, that.address)
-        && Objects.equal(nickname, that.nickname);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(address, nickname);
-  }
+public record ConnectingUser(@NotNull String address, @NotNull String nickname) {
 }

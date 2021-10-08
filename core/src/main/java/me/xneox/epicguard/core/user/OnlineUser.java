@@ -15,6 +15,7 @@
 
 package me.xneox.epicguard.core.user;
 
+import com.google.common.base.Objects;
 import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,5 +59,22 @@ public class OnlineUser {
 
   public void settingsChanged(boolean settingsChanged) {
     this.settingsChanged = settingsChanged;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    OnlineUser that = (OnlineUser) o;
+    return Objects.equal(uuid, that.uuid);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(uuid);
   }
 }

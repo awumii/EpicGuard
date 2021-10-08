@@ -24,12 +24,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * LogWrapper implementation for java.util.logging Logger
  */
-public class JavaLoggerWrapper implements LogWrapper {
-  private final Logger logger;
-
-  public JavaLoggerWrapper(Logger logger) {
-    this.logger = logger;
-  }
+public record JavaLoggerWrapper(Logger logger) implements LogWrapper {
 
   @Override
   public void info(@NotNull String message) {

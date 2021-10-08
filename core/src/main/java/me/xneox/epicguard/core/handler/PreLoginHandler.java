@@ -19,16 +19,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
-import me.xneox.epicguard.core.check.impl.AccountLimitCheck;
-import me.xneox.epicguard.core.check.impl.BlacklistCheck;
-import me.xneox.epicguard.core.check.impl.GeographicalCheck;
-import me.xneox.epicguard.core.check.impl.LockdownCheck;
-import me.xneox.epicguard.core.check.impl.NameSimilarityCheck;
-import me.xneox.epicguard.core.check.impl.NicknameCheck;
-import me.xneox.epicguard.core.check.impl.ProxyCheck;
-import me.xneox.epicguard.core.check.impl.ReconnectCheck;
-import me.xneox.epicguard.core.check.impl.ServerListCheck;
+import me.xneox.epicguard.core.check.AbstractCheck;
+import me.xneox.epicguard.core.check.AccountLimitCheck;
+import me.xneox.epicguard.core.check.BlacklistCheck;
+import me.xneox.epicguard.core.check.GeographicalCheck;
+import me.xneox.epicguard.core.check.LockdownCheck;
+import me.xneox.epicguard.core.check.NameSimilarityCheck;
+import me.xneox.epicguard.core.check.NicknameCheck;
+import me.xneox.epicguard.core.check.ProxyCheck;
+import me.xneox.epicguard.core.check.ReconnectCheck;
+import me.xneox.epicguard.core.check.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.TextUtils;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
  * Handler for PreLogin listeners. It performs every antibot check (except SettingsCheck).
  */
 public abstract class PreLoginHandler {
-  private final Set<Check> pipeline = new TreeSet<>();
+  private final Set<AbstractCheck> pipeline = new TreeSet<>();
   private final EpicGuard epicGuard;
 
   public PreLoginHandler(EpicGuard epicGuard) {
@@ -91,7 +91,7 @@ public abstract class PreLoginHandler {
     }
 
     ConnectingUser user = new ConnectingUser(address, nickname);
-    for (Check check : this.pipeline) {
+    for (AbstractCheck check : this.pipeline) {
       if (check.isDetected(user)) {
         // Positive detection, kicking the player!
         LogUtils.debug(nickname + "/" + address + " detected by " + check.getClass().getSimpleName());

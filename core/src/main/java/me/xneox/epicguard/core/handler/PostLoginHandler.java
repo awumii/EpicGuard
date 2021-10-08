@@ -20,7 +20,6 @@ import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import me.xneox.epicguard.core.user.OnlineUser;
 import me.xneox.epicguard.core.util.TextUtils;
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -25,19 +25,16 @@ import net.kyori.adventure.text.Component;
 /**
  * This task displays current attack status on the actionbar of users who enabled them.
  */
-public class MonitorTask implements Runnable {
-  private final EpicGuard epicGuard;
-
-  public MonitorTask(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
-  }
+public record MonitorTask(EpicGuard epicGuard) implements Runnable {
 
   @Override
   public void run() {
     MessagesConfiguration config = this.epicGuard.messages();
     Component monitor = TextUtils.component(config.actionbarMonitor()
         .replace("%cps%", String.valueOf(this.epicGuard.attackManager().connectionCounter()))
-        .replace("%status%", this.epicGuard.attackManager().isUnderAttack() ? config.actionbarAttack() : config.actionbarNoAttack()));
+        .replace("%status%",
+            this.epicGuard.attackManager().isUnderAttack() ? config.actionbarAttack()
+                : config.actionbarNoAttack()));
 
     for (OnlineUser user : this.epicGuard.userManager().users()) {
       if (user.notifications()) {

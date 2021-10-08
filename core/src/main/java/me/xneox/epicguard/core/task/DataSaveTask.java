@@ -22,19 +22,14 @@ import me.xneox.epicguard.core.util.LogUtils;
 /**
  * This task saves data to the database.
  */
-public class DataSaveTask implements Runnable {
-  private final EpicGuard epicGuard;
-
-  public DataSaveTask(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
-  }
+public record DataSaveTask(EpicGuard epicGuard) implements Runnable {
 
   @Override
   public void run() {
     try {
       this.epicGuard.storageManager().database().saveData();
     } catch (SQLException exception) {
-      LogUtils.catchException("Could not save data to the SQL database (save-task)", exception, false);
+      LogUtils.catchException("Could not save data to the SQL database (save-task)", exception);
     }
   }
 }

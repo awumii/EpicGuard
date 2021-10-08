@@ -20,16 +20,12 @@ import me.xneox.epicguard.core.EpicGuard;
 /**
  * This task disables attack-mode if the connections per seconds are lower than configured.
  */
-public class AttackResetTask implements Runnable {
-  private final EpicGuard epicGuard;
-
-  public AttackResetTask(EpicGuard epicGuard) {
-    this.epicGuard = epicGuard;
-  }
+public record AttackResetTask(EpicGuard epicGuard) implements Runnable {
 
   @Override
   public void run() {
-    if (this.epicGuard.attackManager().connectionCounter() < this.epicGuard.config().misc().attackConnectionThreshold()) {
+    if (this.epicGuard.attackManager().connectionCounter() < this.epicGuard.config().misc()
+        .attackConnectionThreshold()) {
       this.epicGuard.attackManager().attack(false);
     }
   }

@@ -30,6 +30,8 @@ public class PostLoginListener extends PostLoginHandler implements Listener {
   @EventHandler
   public void onPostLogin(PostLoginEvent event) {
     ProxiedPlayer player = event.getPlayer();
+
+    //noinspection deprecation
     this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
   }
 }

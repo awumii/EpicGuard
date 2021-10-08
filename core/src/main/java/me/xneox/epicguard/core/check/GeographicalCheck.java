@@ -13,17 +13,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * This checks if the user's geographical location is allowed based on the current configuration.
  */
-public class GeographicalCheck extends Check {
+public class GeographicalCheck extends AbstractCheck {
   public GeographicalCheck(EpicGuard epicGuard) {
     super(epicGuard, epicGuard.messages().disconnect().geographical(), epicGuard.config().geographical().priority());
   }

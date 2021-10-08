@@ -13,22 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.waterfall.listener;
+package me.xneox.epicguard.core.util;
 
-import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.handler.PingHandler;
-import net.md_5.bungee.api.event.ProxyPingEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
+import me.xneox.epicguard.core.check.AbstractCheck;
 
-public class ServerPingListener extends PingHandler implements Listener {
-  public ServerPingListener(EpicGuard epicGuard) {
-    super(epicGuard);
-  }
-
-  @EventHandler(priority = Byte.MIN_VALUE)
-  public void onPing(ProxyPingEvent event) {
-    //noinspection deprecation
-    this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
-  }
+/**
+ * Determines when an {@link AbstractCheck} should be performed.
+ * Can be configured in the config for some checks.
+ *
+ * TODO: This is also used for other things than checks, should be renamed
+ */
+public enum ToggleState {
+  NEVER,
+  ALWAYS,
+  ATTACK
 }

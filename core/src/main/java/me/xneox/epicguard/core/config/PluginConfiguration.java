@@ -16,9 +16,9 @@
 package me.xneox.epicguard.core.config;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import me.xneox.epicguard.core.check.CheckMode;
+import java.util.regex.Pattern;
+import me.xneox.epicguard.core.util.ToggleState;
 import me.xneox.epicguard.core.proxy.ProxyService;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -69,7 +69,7 @@ public class PluginConfiguration {
         NEVER - check is disabled.
         ATTACK - check will be performed only during bot-attack.
         ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.NEVER;
+    private ToggleState checkMode = ToggleState.NEVER;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -89,7 +89,7 @@ public class PluginConfiguration {
     @Comment("If a player tries to connect from city listed here, he will be blocked.")
     private List<String> cityBlacklist = Arrays.asList("ExampleCity", "AnotherCity");
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -116,7 +116,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.ALWAYS;
+    private ToggleState checkMode = ToggleState.ALWAYS;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -129,8 +129,7 @@ public class PluginConfiguration {
             If you're not familiar with regex, see https://regexr.com/ or https://regex101.com/
             For example, (yes|VPN) will check if the response contains either 'yes' or 'VPN'""")
     private List<ProxyService> registeredServices = Arrays.asList(
-        new ProxyService("https://proxycheck.io/v2/{IP}?key=PROXYCHECK_KEY&risk=1&vpn=1", "(yes|VPN)"),
-        new ProxyService("https://check.getipintel.net/check.php?ip={IP}&contact=user@example.com", "1"));
+        new ProxyService("https://proxycheck.io/v2/{IP}?key=PROXYCHECK_KEY&risk=1&vpn=1", Pattern.compile("(yes|VPN)")));
 
     @Comment("""
             How long in SECONDS responses from proxy check should be cached?
@@ -138,7 +137,7 @@ public class PluginConfiguration {
             disables their VPN but the cache hasn't expired yet, he will still be detected.""")
     private int cacheDuration = 300;
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -161,7 +160,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.ALWAYS;
+    private ToggleState checkMode = ToggleState.ALWAYS;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -172,7 +171,7 @@ public class PluginConfiguration {
     @Comment("Limit of accounts per one IP address.")
     private int limit = 3;
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -210,7 +209,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.ALWAYS;
+    private ToggleState checkMode = ToggleState.ALWAYS;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -223,7 +222,7 @@ public class PluginConfiguration {
             + "You can use https://regex101.com/ for making and testing your own expression.")
     private String expression = "(?i).*(bot|mcdown).*";
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -242,7 +241,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.NEVER;
+    private ToggleState checkMode = ToggleState.NEVER;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -264,7 +263,7 @@ public class PluginConfiguration {
             Values below 1 are ignored, as it means identical name.""")
     private int distance = 1;
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -287,7 +286,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.ATTACK;
+    private ToggleState checkMode = ToggleState.ATTACK;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -295,7 +294,7 @@ public class PluginConfiguration {
         """)
     private int priority = 4;
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -310,7 +309,7 @@ public class PluginConfiguration {
             NEVER - check is disabled.
             ATTACK - check will be performed only during bot-attack.
             ALWAYS - check will be always performed.""")
-    private CheckMode checkMode = CheckMode.ATTACK;
+    private ToggleState checkMode = ToggleState.ATTACK;
 
     @Comment("""
         Checks with bigger priority will be executed before the checks with lower priority.
@@ -318,7 +317,7 @@ public class PluginConfiguration {
         """)
     private int priority = 5;
 
-    public CheckMode checkMode() {
+    public ToggleState checkMode() {
       return this.checkMode;
     }
 
@@ -334,7 +333,7 @@ public class PluginConfiguration {
             NEVER - feature is disabled.
             ATTACK - feature will work only during bot-attack.
             ALWAYS - feature will always work.""")
-    private CheckMode filterMode = CheckMode.ATTACK;
+    private ToggleState filterMode = ToggleState.ATTACK;
 
     @Comment("If log message contains one of these words, it will\n"
         + "be hidden. This can save a lot of CPU on big attacks.")
@@ -347,7 +346,7 @@ public class PluginConfiguration {
             "lost connection",
             "InitialHandler");
 
-    public CheckMode filterMode() {
+    public ToggleState filterMode() {
       return this.filterMode;
     }
 

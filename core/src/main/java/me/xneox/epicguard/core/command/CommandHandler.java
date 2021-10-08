@@ -30,8 +30,6 @@ import me.xneox.epicguard.core.command.sub.WhitelistCommand;
 import me.xneox.epicguard.core.util.TextUtils;
 import me.xneox.epicguard.core.util.VersionUtils;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
 /**

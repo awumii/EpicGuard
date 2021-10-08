@@ -13,23 +13,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This just checks if the user is blacklisted.
+ * This checks if the user is using a VPN or a proxy.
+ * The detection logic is located in {@link me.xneox.epicguard.core.proxy.ProxyManager}
  */
-public class BlacklistCheck extends Check {
-  public BlacklistCheck(EpicGuard epicGuard) {
-    super(epicGuard, epicGuard.messages().disconnect().blacklisted(), 98); // will always be executed secondly.
+public class ProxyCheck extends AbstractCheck {
+  public ProxyCheck(EpicGuard epicGuard) {
+    super(epicGuard, epicGuard.messages().disconnect().proxy(), epicGuard.config().proxyCheck().priority());
   }
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    return this.epicGuard.storageManager().addressMeta(user.address()).blacklisted();
+    return this.evaluate(this.epicGuard.config().proxyCheck().checkMode(),
+        this.epicGuard.proxyManager().isProxy(user.address()));
   }
 }

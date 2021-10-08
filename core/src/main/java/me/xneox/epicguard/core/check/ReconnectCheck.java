@@ -13,20 +13,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
 import java.util.Collection;
 import java.util.HashSet;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
-import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * This check forces player to reconnect if they are connecting for the first time.
  */
-public class ReconnectCheck extends Check {
+public class ReconnectCheck extends AbstractCheck {
   private final Collection<ConnectingUser> connectingUserCache = new HashSet<>(); //todo: thread safety :/
 
   public ReconnectCheck(EpicGuard epicGuard) {

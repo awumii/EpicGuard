@@ -29,25 +29,17 @@ import me.xneox.epicguard.core.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class manages the SQL database for storing all known {@link AddressMeta}'s
- * SQLite and MySQL are both supported with the same queries.
- *
- * TODO: Maybe don't keep all data in the memory? Some caching system instead of bulk read/write. Low priority currently.
+ * This class manages the SQL database for storing all known {@link AddressMeta}'s SQLite and MySQL
+ * are both supported with the same queries.
+ * <p>
+ * TODO: Maybe don't keep all data in the memory? Some caching system instead of bulk read/write.
  */
-public class SQLDatabase {
-  private final StorageManager storageManager;
-  private final PluginConfiguration.Storage config;
-
-  public SQLDatabase(StorageManager storageManager, PluginConfiguration.Storage config) {
-    this.storageManager = storageManager;
-    this.config = config;
-    this.connect();
-  }
+public record SQLDatabase(@NotNull StorageManager storageManager, @NotNull PluginConfiguration.Storage config) {
 
   /**
    * Preparing the database connection
    */
-  private void connect() {
+  public void connect() {
     DatabaseOptions.DatabaseOptionsBuilder builder = DatabaseOptions.builder();
     if (config.useMySQL()) {
       builder.mysql(config.user(), config.password(), config.database(), config.host() + ":" + config.port());
@@ -55,7 +47,10 @@ public class SQLDatabase {
       builder.sqlite(FileUtils.EPICGUARD_DIR + "/data/storage.db");
     }
 
-    Database database = PooledDatabaseOptions.builder().options(builder.build()).createHikariDatabase();
+    Database database = PooledDatabaseOptions.builder()
+        .options(builder.build())
+        .createHikariDatabase();
+
     DB.setGlobalDatabase(database);
   }
 
@@ -81,7 +76,9 @@ public class SQLDatabase {
     }
   }
 
-  /** Inserts address data from memory to the default table. */
+  /**
+   * Inserts address data from memory to the default table.
+   */
   public void saveData() throws SQLException {
     for (Map.Entry<String, AddressMeta> entry : this.storageManager.addresses().entrySet()) {
       AddressMeta meta = entry.getValue();

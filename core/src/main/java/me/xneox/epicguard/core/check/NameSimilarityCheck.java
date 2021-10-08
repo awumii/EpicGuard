@@ -13,12 +13,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package me.xneox.epicguard.core.check.impl;
+package me.xneox.epicguard.core.check;
 
 import com.google.common.collect.EvictingQueue;
 import java.util.Queue;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.Check;
+import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * Not tested, may be unstable.
  */
 @SuppressWarnings("UnstableApiUsage")
-public class NameSimilarityCheck extends Check {
+public class NameSimilarityCheck extends AbstractCheck {
   private final Queue<String> nameHistory = EvictingQueue.create(this.epicGuard.config().nameSimilarityCheck().historySize());
   private final LevenshteinDistance distanceAlgorithm = LevenshteinDistance.getDefaultInstance();
 

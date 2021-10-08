@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.storage;
 
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * AddressMeta holds information about an IP address.
@@ -26,7 +27,7 @@ public class AddressMeta {
   private boolean blacklisted;
   private boolean whitelisted;
 
-  public AddressMeta(boolean blacklisted, boolean whitelisted, List<String> nicknames) {
+  public AddressMeta(boolean blacklisted, boolean whitelisted, @NotNull List<String> nicknames) {
     this.blacklisted = blacklisted;
     this.whitelisted = whitelisted;
     this.nicknames = nicknames;
@@ -48,6 +49,7 @@ public class AddressMeta {
     this.whitelisted = whitelisted;
   }
 
+  @NotNull
   public List<String> nicknames() {
     return this.nicknames;
   }

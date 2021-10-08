@@ -92,7 +92,7 @@ public class EpicGuard {
       this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
       this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
     } catch (ConfigurateException exception) {
-      LogUtils.catchException("Couldn't load the configuration file", exception, true);
+      LogUtils.catchException("Couldn't load the configuration file", exception);
     }
   }
 
@@ -100,7 +100,7 @@ public class EpicGuard {
     try {
       this.storageManager.database().saveData();
     } catch (SQLException exception) {
-      LogUtils.catchException("Could not save data to the SQL database (during shutdown)", exception, false);
+      LogUtils.catchException("Could not save data to the SQL database (during shutdown)", exception);
     }
   }
 
