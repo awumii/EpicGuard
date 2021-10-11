@@ -27,7 +27,7 @@ public class OnlineUser {
   private boolean notifications;
   private boolean settingsChanged;
 
-  public OnlineUser(UUID uuid) {
+  public OnlineUser(@NotNull UUID uuid) {
     this.uuid = uuid;
   }
 

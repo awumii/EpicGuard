@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * This class holds all registered subcommands, and handles the user command/tab suggestion input.
+ * TODO: Better command system
  */
 public class CommandHandler {
   private final Map<String, SubCommand> commandMap = new HashMap<>();

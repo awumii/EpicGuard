@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import me.xneox.epicguard.core.user.OnlineUser;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This manager caches the {@link OnlineUser} for currently online players
@@ -27,15 +29,30 @@ import me.xneox.epicguard.core.user.OnlineUser;
 public class UserManager {
   private final Map<UUID, OnlineUser> userMap = new ConcurrentHashMap<>();
 
+  @NotNull
   public Collection<OnlineUser> users() {
     return this.userMap.values();
   }
 
-  public OnlineUser getOrCreate(UUID uuid) {
+  /**
+   * Returns the {@link OnlineUser} for the specified
+   * UUID. Creates a new object if absent.
+   */
+  @NotNull
+  public OnlineUser getOrCreate(@NotNull UUID uuid) {
     return this.userMap.computeIfAbsent(uuid, OnlineUser::new);
   }
 
-  public void removeUser(UUID uuid) {
+  /**
+   * Returns the {@link OnlineUser} for the specified
+   * UUID, or null if the user is offline.
+   */
+  @Nullable
+  public OnlineUser get(@NotNull UUID uuid) {
+    return this.userMap.get(uuid);
+  }
+
+  public void removeUser(@NotNull UUID uuid) {
     this.userMap.remove(uuid);
   }
 }

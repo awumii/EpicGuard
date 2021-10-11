@@ -20,8 +20,6 @@ import me.xneox.epicguard.core.check.AbstractCheck;
 /**
  * Determines when an {@link AbstractCheck} should be performed.
  * Can be configured in the config for some checks.
- *
- * TODO: This is also used for other things than checks, should be renamed
  */
 public enum ToggleState {
   NEVER,

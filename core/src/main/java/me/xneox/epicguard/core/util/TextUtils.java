@@ -40,7 +40,7 @@ public final class TextUtils {
    * @return a component created from the string
    */
   @NotNull
-  public static TextComponent component(String message) {
+  public static TextComponent component(@NotNull String message) {
     return SERIALIZER.deserialize(message);
   }
 

@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.util;
 
 import java.util.function.Consumer;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This util holds current EpicGuard version and checks for the latest available version.
@@ -30,7 +31,7 @@ public final class VersionUtils {
    *
    * @param action Action to run when there's an update available.
    */
-  public static void checkForUpdates(Consumer<String> action) {
+  public static void checkForUpdates(@NotNull Consumer<String> action) {
     String latest = URLUtils.readString(CHECK_URL);
     if (latest == null) {
       return; // a warning will be thrown by the URLUtils anyway.
@@ -48,7 +49,7 @@ public final class VersionUtils {
    * @param version Version string, eg. "5.1.0"
    * @return an int version value, eg. "510"
    */
-  private static int parse(String version) {
+  private static int parse(@NotNull String version) {
     return Integer.parseInt(version.replace(".", ""));
   }
 }
