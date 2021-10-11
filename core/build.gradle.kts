@@ -14,7 +14,7 @@ dependencies {
     implementation("co.aikar:idb-core:1.0.0-SNAPSHOT")
 
     compileOnly("net.kyori:adventure-api:4.9.2")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:4.9.1")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.9.2")
     compileOnly("org.apache.logging.log4j:log4j-core:2.14.1")
     compileOnly("org.slf4j:slf4j-api:1.7.32")
 }
