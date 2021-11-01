@@ -19,6 +19,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.URLUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +47,12 @@ public class ProxyManager {
   public boolean isProxy(@NotNull String address) {
     return this.resultCache.asMap().computeIfAbsent(address, userIp -> {
       for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
-        String response = URLUtils.readString(service.url().replace("{IP}", userIp));
+        String requestUrl = service.url().replace("{IP}", userIp);
+        LogUtils.debug("Sending request to: " + requestUrl);
+
+        String response = URLUtils.readString(requestUrl);
+        LogUtils.debug("Received response: " + response);
+
         if (response != null && service.matcher().matcher(response).find()) {
           return true;
         }

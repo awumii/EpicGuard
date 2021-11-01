@@ -31,7 +31,6 @@ import me.xneox.epicguard.core.check.ReconnectCheck;
 import me.xneox.epicguard.core.check.ServerListCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import me.xneox.epicguard.core.util.LogUtils;
-import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
@@ -73,15 +72,8 @@ public abstract class PreLoginHandler {
 
     // Increment the connections per second and check if it's bigger than max-cps in config.
     if (this.epicGuard.attackManager().incrementConnectionCounter() >= this.epicGuard.config().misc().attackConnectionThreshold()) {
-      this.epicGuard.logger().warn("Enabling attack-mode (" + this.epicGuard.attackManager().connectionCounter() + " con/s)");
+      this.epicGuard.logger().warn("Enabling attack-mode (" + this.epicGuard.attackManager().connectionCounter() + " connections/s)");
       this.epicGuard.attackManager().attack(true);
-    }
-
-    // Make sure the connecting address is valid.
-    // This is also a workaround for an issue with players connecting using GeyserMC. Proper fix needed.
-    if (TextUtils.parseAddress(address) == null) {
-      this.epicGuard.logger().warn("Skipping checks for [" + address + "/" + nickname + "]: invalid address.");
-      return Optional.empty();
     }
 
     // Check if the user is whitelisted, if yes, return empty result (undetected).
@@ -93,14 +85,12 @@ public abstract class PreLoginHandler {
     ConnectingUser user = new ConnectingUser(address, nickname);
     for (AbstractCheck check : this.pipeline) {
       if (check.isDetected(user)) {
-        // Positive detection, kicking the player!
         LogUtils.debug(nickname + "/" + address + " detected by " + check.getClass().getSimpleName());
         return Optional.of(check.detectionMessage());
       }
     }
 
-    // Checks finished with no detection, the player is considered legitimate and is allowed to join the server
-    // Also we update his account nickname history.
+    LogUtils.debug(nickname + "/" + address + " has passed all checks and is allowed to connect.");
     this.epicGuard.storageManager().updateAccounts(user);
     return Optional.empty();
   }
