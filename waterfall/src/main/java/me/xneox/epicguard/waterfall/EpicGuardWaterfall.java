@@ -33,7 +33,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
-import org.bstats.bungeecord.Metrics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,8 +55,6 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
     pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
     pm.registerCommand(this, new BungeeCommandHandler(this));
-
-    new Metrics(this, 5956);
   }
 
   @Override

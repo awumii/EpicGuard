@@ -27,7 +27,6 @@ import me.xneox.epicguard.paper.listener.PlayerSettingsListener;
 import me.xneox.epicguard.paper.listener.ServerPingListener;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
@@ -58,8 +57,6 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
       command.setExecutor(cmdExecutor);
       command.setTabCompleter(cmdExecutor);
     }
-
-    new Metrics(this, 5845);
   }
 
   @Override

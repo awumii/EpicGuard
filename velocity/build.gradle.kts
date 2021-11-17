@@ -2,7 +2,6 @@ dependencies {
     implementation(project(":core"))
 
     // TODO: Download these on runtime.
-    implementation("org.bstats:bstats-velocity:2.2.1")
     implementation("mysql:mysql-connector-java:8.0.27")
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
 

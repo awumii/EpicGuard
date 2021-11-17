@@ -38,7 +38,6 @@ import me.xneox.epicguard.velocity.listener.PreLoginListener;
 import me.xneox.epicguard.velocity.listener.ServerPingListener;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import org.bstats.velocity.Metrics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -53,15 +52,13 @@ import org.slf4j.Logger;
 public class EpicGuardVelocity implements Platform {
   private final ProxyServer server;
   private final LogWrapper logger;
-  private final Metrics.Factory metricsFactory;
 
   private EpicGuard epicGuard;
 
   @Inject
-  public EpicGuardVelocity(ProxyServer server, Logger logger, Metrics.Factory metricsFactory) {
+  public EpicGuardVelocity(ProxyServer server, Logger logger) {
     this.server = server;
     this.logger = new SLF4JWrapper(logger);
-    this.metricsFactory = metricsFactory;
   }
 
   @Subscribe
@@ -82,8 +79,6 @@ public class EpicGuardVelocity implements Platform {
     eventManager.register(this, new DisconnectListener(this.epicGuard));
     eventManager.register(this, new ServerPingListener(this.epicGuard));
     eventManager.register(this, new PlayerSettingsListener(this.epicGuard));
-
-    this.metricsFactory.make(this, 10417);
   }
 
   @Subscribe

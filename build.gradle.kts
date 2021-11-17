@@ -21,7 +21,6 @@ subprojects {
         val platformName = project.name.capitalize()
         archiveFileName.set("EpicGuard$platformName-${project.version}.jar")
 
-        relocate("org.bstats", "me.xneox.epicguard.${project.name}.bstats")
         relocate("org.spongepowered.configurate", "me.xneox.epicguard.libs.configurate")
         relocate("org.apache.commons", "me.xneox.epicguard.libs.apachecommons")
         relocate("com.fasterxml", "me.xneox.epicguard.libs.fasterxml")
