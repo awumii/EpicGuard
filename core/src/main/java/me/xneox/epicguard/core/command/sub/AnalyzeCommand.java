@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class AnalyzeCommand implements SubCommand {
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
-    MessagesConfiguration.Command config = epicGuard.messages().command();
+    var config = epicGuard.messages().command();
 
     if (args.length != 2) {
       audience.sendMessage(TextUtils.component(config.prefix() +
@@ -36,7 +36,7 @@ public class AnalyzeCommand implements SubCommand {
       return;
     }
 
-    AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[1]);
+    var meta = epicGuard.storageManager().resolveAddressMeta(args[1]);
     if (meta == null) {
       audience.sendMessage(TextUtils.component(config.prefix() + config.invalidArgument()));
       return;

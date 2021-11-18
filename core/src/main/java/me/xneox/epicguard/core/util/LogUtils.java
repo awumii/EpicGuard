@@ -16,14 +16,14 @@
 package me.xneox.epicguard.core.util;
 
 import me.xneox.epicguard.core.EpicGuardAPI;
-import me.xneox.epicguard.core.util.logging.LogWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 /**
  * This util helps with various logging operations.
  */
 public final class LogUtils {
-  private static final LogWrapper LOGGER = EpicGuardAPI.INSTANCE.instance().logger();
+  private static final Logger LOGGER = EpicGuardAPI.INSTANCE.instance().logger();
 
   /**
    * Catches a Throwable and prints a detailed error message.

@@ -28,6 +28,6 @@ public class ServerPingListener extends PingHandler {
 
   @Subscribe(order = PostOrder.FIRST)
   public void onPing(ProxyPingEvent event) {
-    this.handle(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
+    this.onPing(event.getConnection().getRemoteAddress().getAddress().getHostAddress());
   }
 }

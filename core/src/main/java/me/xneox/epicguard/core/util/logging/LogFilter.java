@@ -37,7 +37,7 @@ public class LogFilter extends AbstractFilter {
   }
 
   public void register() {
-    Logger logger = (Logger) LogManager.getRootLogger();
+    var logger = (Logger) LogManager.getRootLogger();
     logger.addFilter(this);
   }
 
@@ -62,7 +62,7 @@ public class LogFilter extends AbstractFilter {
   }
 
   private Result isLoggable(String message) {
-    ToggleState state = this.epicGuard.config().consoleFilter().filterMode();
+    var state = this.epicGuard.config().consoleFilter().filterMode();
     if (state == ToggleState.ALWAYS || state == ToggleState.ATTACK && this.epicGuard.attackManager().isUnderAttack()) {
       for (String string : this.epicGuard.config().consoleFilter().filterMessages()) {
         if (message.contains(string)) {

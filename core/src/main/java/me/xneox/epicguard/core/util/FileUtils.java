@@ -18,7 +18,6 @@ package me.xneox.epicguard.core.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import me.xneox.epicguard.core.EpicGuardAPI;
@@ -38,11 +37,11 @@ public final class FileUtils {
     file.delete();
     file.createNewFile();
 
-    URLConnection connection = URLUtils.openConnection(urlFrom);
+    var connection = URLUtils.openConnection(urlFrom);
     try (ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
-        FileOutputStream out = new FileOutputStream(file)) {
+        var outputStream = new FileOutputStream(file)) {
 
-      out.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+      outputStream.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
     }
   }
 }

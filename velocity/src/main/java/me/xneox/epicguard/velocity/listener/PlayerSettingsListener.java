@@ -27,6 +27,6 @@ public class PlayerSettingsListener extends SettingsHandler {
 
   @Subscribe
   public void onPostLogin(PlayerSettingsChangedEvent event) {
-    this.handle(event.getPlayer().getUniqueId());
+    this.onSettingsChanged(event.getPlayer().getUniqueId());
   }
 }

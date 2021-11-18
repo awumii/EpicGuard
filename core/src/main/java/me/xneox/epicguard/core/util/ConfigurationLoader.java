@@ -15,11 +15,7 @@
 
 package me.xneox.epicguard.core.util;
 
-import java.io.File;
-import me.xneox.epicguard.core.proxy.ProxyService;
-import me.xneox.epicguard.core.proxy.ProxyServiceSerializer;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
@@ -34,11 +30,8 @@ public class ConfigurationLoader<C> {
   private final HoconConfigurationLoader loader;
   private ObjectMapper<C> mapper;
 
-  public ConfigurationLoader(@NotNull File file, @NotNull Class<C> implementation) {
-    this.loader = HoconConfigurationLoader.builder()
-        .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE))) //todo move this out of here
-        .file(file)
-        .build();
+  public ConfigurationLoader(@NotNull Class<C> implementation, @NotNull HoconConfigurationLoader loader) {
+    this.loader = loader;
 
     try {
       this.mapper = ObjectMapper.factory().get(implementation);
@@ -49,14 +42,13 @@ public class ConfigurationLoader<C> {
 
   @NotNull
   public C load() throws ConfigurateException {
-    C configuration = this.mapper.load(this.loader.load());
-
+    var configuration = this.mapper.load(this.loader.load());
     this.save(configuration); // write default values
     return configuration;
   }
 
   public void save(@NotNull C config) throws ConfigurateException {
-    CommentedConfigurationNode node = this.loader.createNode();
+    var node = this.loader.createNode();
     this.mapper.save(config, node);
     this.loader.save(node);
   }

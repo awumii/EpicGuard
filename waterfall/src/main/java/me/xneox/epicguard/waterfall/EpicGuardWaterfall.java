@@ -17,44 +17,38 @@ package me.xneox.epicguard.waterfall;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import me.xneox.epicguard.core.util.logging.LogWrapper;
-import me.xneox.epicguard.core.util.logging.impl.SLF4JWrapper;
+import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.Platform;
 import me.xneox.epicguard.waterfall.listener.DisconnectListener;
 import me.xneox.epicguard.waterfall.listener.PlayerSettingsListener;
 import me.xneox.epicguard.waterfall.listener.PostLoginListener;
 import me.xneox.epicguard.waterfall.listener.PreLoginListener;
 import me.xneox.epicguard.waterfall.listener.ServerPingListener;
-import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.Platform;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.api.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 public class EpicGuardWaterfall extends Plugin implements Platform {
   private EpicGuard epicGuard;
-  private LogWrapper logger;
   private BungeeAudiences adventure;
 
   @Override
   public void onEnable() {
-    this.logger = new SLF4JWrapper(this.getSLF4JLogger());
     this.epicGuard = new EpicGuard(this);
     this.adventure = BungeeAudiences.create(this);
 
-    PluginManager pm = this.getProxy().getPluginManager();
-    pm.registerListener(this, new PreLoginListener(this.epicGuard));
-    pm.registerListener(this, new DisconnectListener(this.epicGuard));
-    pm.registerListener(this, new PostLoginListener(this.epicGuard));
-    pm.registerListener(this, new ServerPingListener(this.epicGuard));
-    pm.registerListener(this, new PlayerSettingsListener(this.epicGuard));
+    var pluginManager = this.getProxy().getPluginManager();
+    pluginManager.registerListener(this, new PreLoginListener(this.epicGuard));
+    pluginManager.registerListener(this, new DisconnectListener(this.epicGuard));
+    pluginManager.registerListener(this, new PostLoginListener(this.epicGuard));
+    pluginManager.registerListener(this, new ServerPingListener(this.epicGuard));
+    pluginManager.registerListener(this, new PlayerSettingsListener(this.epicGuard));
 
-    pm.registerCommand(this, new BungeeCommandHandler(this));
+    pluginManager.registerCommand(this, new BungeeCommandHandler(this));
   }
 
   @Override
@@ -63,21 +57,18 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
   }
 
   @Override
-  @NotNull
-  public String platformVersion() {
+  public @NotNull String platformVersion() {
     return ProxyServer.getInstance().getName() + "-" + ProxyServer.getInstance().getVersion();
   }
 
   @Override
-  @NotNull
-  public LogWrapper logger() {
-    return this.logger;
+  public @NotNull Logger logger() {
+    return this.getSLF4JLogger();
   }
 
   @Override
-  @Nullable
   public Audience audience(@NotNull UUID uuid) {
-    ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
+    var player = ProxyServer.getInstance().getPlayer(uuid);
     if (player != null) {
       return this.adventure.player(player);
     }
@@ -101,10 +92,12 @@ public class EpicGuardWaterfall extends Plugin implements Platform {
     this.getProxy().getScheduler().schedule(this, task, seconds, seconds, TimeUnit.SECONDS);
   }
 
+  @NotNull
   public BungeeAudiences adventure() {
     return this.adventure;
   }
 
+  @NotNull
   public EpicGuard epicGuard() {
     return this.epicGuard;
   }

@@ -18,8 +18,6 @@ package me.xneox.epicguard.paper;
 import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.Platform;
-import me.xneox.epicguard.core.util.logging.LogWrapper;
-import me.xneox.epicguard.core.util.logging.impl.JavaLoggerWrapper;
 import me.xneox.epicguard.paper.listener.PlayerPostLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerPreLoginListener;
 import me.xneox.epicguard.paper.listener.PlayerQuitListener;
@@ -28,34 +26,30 @@ import me.xneox.epicguard.paper.listener.ServerPingListener;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 public class EpicGuardPaper extends JavaPlugin implements Platform {
   private EpicGuard epicGuard;
-  private LogWrapper logger;
 
   @Override
   public void onEnable() {
-    this.logger = new JavaLoggerWrapper(this.getLogger());
     this.epicGuard = new EpicGuard(this);
 
-    PluginManager pm = Bukkit.getPluginManager();
-    pm.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
-    pm.registerEvents(new PlayerQuitListener(this.epicGuard), this);
-    pm.registerEvents(new PlayerPostLoginListener(this.epicGuard), this);
-    pm.registerEvents(new ServerPingListener(this.epicGuard), this);
-    pm.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
+    var pluginManager = Bukkit.getPluginManager();
+    pluginManager.registerEvents(new PlayerPreLoginListener(this.epicGuard), this);
+    pluginManager.registerEvents(new PlayerQuitListener(this.epicGuard), this);
+    pluginManager.registerEvents(new PlayerPostLoginListener(this.epicGuard), this);
+    pluginManager.registerEvents(new ServerPingListener(this.epicGuard), this);
+    pluginManager.registerEvents(new PlayerSettingsListener(this.epicGuard), this);
 
-    PluginCommand command = this.getCommand("epicguard");
+    var command = this.getCommand("epicguard");
     if (command != null) {
-      PaperCommandHandler cmdExecutor = new PaperCommandHandler(this.epicGuard);
-      command.setExecutor(cmdExecutor);
-      command.setTabCompleter(cmdExecutor);
+      var handler = new PaperCommandHandler(this.epicGuard);
+      command.setExecutor(handler);
+      command.setTabCompleter(handler);
     }
   }
 
@@ -65,26 +59,23 @@ public class EpicGuardPaper extends JavaPlugin implements Platform {
   }
 
   @Override
-  @NotNull
-  public String platformVersion() {
+  public @NotNull String platformVersion() {
     return Bukkit.getVersion();
   }
 
   @Override
-  @NotNull
-  public LogWrapper logger() {
-    return this.logger;
+  public @NotNull Logger logger() {
+    return this.getSLF4JLogger();
   }
 
   @Override
-  @Nullable
-  public Audience audience(@NotNull UUID uuid) {
+  public @Nullable Audience audience(@NotNull UUID uuid) {
     return Bukkit.getPlayer(uuid);
   }
 
   @Override
   public void disconnectUser(@NotNull UUID uuid, @NotNull Component message) {
-    Player player = Bukkit.getPlayer(uuid);
+    var player = Bukkit.getPlayer(uuid);
     if (player != null) {
       player.kick(message);
     }

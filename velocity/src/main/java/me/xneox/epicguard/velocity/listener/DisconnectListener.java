@@ -17,7 +17,6 @@ package me.xneox.epicguard.velocity.listener;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
-import com.velocitypowered.api.proxy.Player;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.DisconnectHandler;
 
@@ -28,7 +27,7 @@ public class DisconnectListener extends DisconnectHandler {
 
   @Subscribe
   public void onDisconnect(DisconnectEvent event) {
-    Player player = event.getPlayer();
-    this.handle(player.getUniqueId());
+    var player = event.getPlayer();
+    this.onDisconnect(player.getUniqueId());
   }
 }

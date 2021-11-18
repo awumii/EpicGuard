@@ -28,6 +28,6 @@ public record UpdateCheckerTask(EpicGuard epicGuard) implements Runnable {
     VersionUtils.checkForUpdates(latest ->
         this.epicGuard.logger().info(this.epicGuard.messages().updateAvailable()
             .replace("{NEWVER}", latest)
-            .replace("{OLDVER}", VersionUtils.VERSION)));
+            .replace("{OLDVER}", VersionUtils.CURRENT_VERSION)));
   }
 }

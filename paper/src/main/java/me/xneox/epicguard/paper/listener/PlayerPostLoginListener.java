@@ -17,7 +17,6 @@ package me.xneox.epicguard.paper.listener;
 
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.handler.PostLoginHandler;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,7 +28,7 @@ public class PlayerPostLoginListener extends PostLoginHandler implements Listene
 
   @EventHandler
   public void onJoin(PlayerJoinEvent event) {
-    Player player = event.getPlayer();
-    this.handle(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
+    var player = event.getPlayer();
+    this.onPostLogin(player.getUniqueId(), player.getAddress().getAddress().getHostAddress());
   }
 }

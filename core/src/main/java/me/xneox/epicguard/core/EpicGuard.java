@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.config.PluginConfiguration;
+import me.xneox.epicguard.core.proxy.ProxyService;
+import me.xneox.epicguard.core.proxy.ProxyServiceSerializer;
 import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.VersionUtils;
 import me.xneox.epicguard.core.util.logging.LogFilter;
@@ -34,8 +36,10 @@ import me.xneox.epicguard.core.task.MonitorTask;
 import me.xneox.epicguard.core.task.UpdateCheckerTask;
 import me.xneox.epicguard.core.util.ConfigurationLoader;
 import me.xneox.epicguard.core.util.FileUtils;
-import me.xneox.epicguard.core.util.logging.LogWrapper;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 /**
  * The main class of the EpicGuard's core.
@@ -81,16 +85,22 @@ public class EpicGuard {
     this.platform.scheduleRepeatingTask(new AttackResetTask(this), this.config.misc().attackResetInterval());
     this.platform.scheduleRepeatingTask(new DataSaveTask(this), TimeUnit.MINUTES.toSeconds(this.config.misc().autoSaveInterval()));
 
-    logger().info("Startup completed successfully. Welcome to EpicGuard v" + VersionUtils.VERSION);
+    logger().info("Startup completed successfully. Welcome to EpicGuard v" + VersionUtils.CURRENT_VERSION);
   }
 
   public void loadConfigurations() {
-    File configurationFile = new File(FileUtils.EPICGUARD_DIR, "settings.conf");
-    File messagesFile = new File(FileUtils.EPICGUARD_DIR, "messages.conf");
+    var configLoader = HoconConfigurationLoader.builder()
+        .defaultOptions(opt -> opt.serializers(builder -> builder.register(ProxyService.class, ProxyServiceSerializer.INSTANCE)))
+        .file(new File(FileUtils.EPICGUARD_DIR, "settings.conf"))
+        .build();
+
+    var messagesLoader = HoconConfigurationLoader.builder()
+        .file(new File(FileUtils.EPICGUARD_DIR, "messages.conf"))
+        .build();
 
     try {
-      this.config = new ConfigurationLoader<>(configurationFile, PluginConfiguration.class).load();
-      this.messages = new ConfigurationLoader<>(messagesFile, MessagesConfiguration.class).load();
+      this.config = new ConfigurationLoader<>(PluginConfiguration.class, configLoader).load();
+      this.messages = new ConfigurationLoader<>(MessagesConfiguration.class, messagesLoader).load();
     } catch (ConfigurateException exception) {
       LogUtils.catchException("Couldn't load the configuration file", exception);
     }
@@ -98,44 +108,53 @@ public class EpicGuard {
 
   public void shutdown() {
     try {
-      this.storageManager.database().saveData();
+      this.storageManager.database().save();
     } catch (SQLException exception) {
       LogUtils.catchException("Could not save data to the SQL database (during shutdown)", exception);
     }
   }
 
-  public LogWrapper logger() {
+  @NotNull
+  public Logger logger() {
     return this.platform.logger();
   }
 
+  @NotNull
   public Platform platform() {
     return this.platform;
   }
 
+  @NotNull
   public PluginConfiguration config() {
     return this.config;
   }
 
+  @NotNull
   public MessagesConfiguration messages() {
     return this.messages;
   }
 
+  @NotNull
   public UserManager userManager() {
     return this.userManager;
   }
 
+  @NotNull
   public GeoManager geoManager() {
     return this.geoManager;
   }
 
+  @NotNull
   public StorageManager storageManager() {
     return this.storageManager;
   }
 
+  @NotNull
   public AttackManager attackManager() {
     return this.attackManager;
   }
 
+  @NotNull
   public ProxyManager proxyManager() {
     return this.proxyManager;
   }

@@ -47,10 +47,10 @@ public class ProxyManager {
   public boolean isProxy(@NotNull String address) {
     return this.resultCache.asMap().computeIfAbsent(address, userIp -> {
       for (ProxyService service : this.epicGuard.config().proxyCheck().services()) {
-        String requestUrl = service.url().replace("{IP}", userIp);
-        LogUtils.debug("Sending request to: " + requestUrl);
+        String url = service.url().replace("{IP}", userIp);
+        LogUtils.debug("Sending request to: " + url);
 
-        String response = URLUtils.readString(requestUrl);
+        String response = URLUtils.readString(url);
         LogUtils.debug("Received response: " + response);
 
         if (response != null && service.matcher().matcher(response).find()) {

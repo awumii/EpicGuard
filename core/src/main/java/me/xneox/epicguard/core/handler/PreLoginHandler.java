@@ -67,7 +67,7 @@ public abstract class PreLoginHandler {
    * @return Disconnect message, or an empty Optional if undetected.
    */
   @NotNull
-  public Optional<TextComponent> handle(@NotNull String address, @NotNull String nickname) {
+  public Optional<TextComponent> onPreLogin(@NotNull String address, @NotNull String nickname) {
     LogUtils.debug("Handling incoming connection: " + address + "/" + nickname);
 
     // Increment the connections per second and check if it's bigger than max-cps in config.
@@ -82,7 +82,7 @@ public abstract class PreLoginHandler {
       return Optional.empty();
     }
 
-    ConnectingUser user = new ConnectingUser(address, nickname);
+    var user = new ConnectingUser(address, nickname);
     for (AbstractCheck check : this.pipeline) {
       if (check.isDetected(user)) {
         LogUtils.debug(nickname + "/" + address + " detected by " + check.getClass().getSimpleName());

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 public class ReloadCommand implements SubCommand {
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
-    MessagesConfiguration.Command config = epicGuard.messages().command();
+    var config = epicGuard.messages().command();
 
     epicGuard.loadConfigurations();
     audience.sendMessage(TextUtils.component(config.prefix() + config.reloaded()));

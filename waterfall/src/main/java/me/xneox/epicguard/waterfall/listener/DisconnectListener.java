@@ -28,6 +28,6 @@ public class DisconnectListener extends DisconnectHandler implements Listener {
 
   @EventHandler
   public void onPostLogin(PlayerDisconnectEvent event) {
-    this.handle(event.getPlayer().getUniqueId());
+    this.onDisconnect(event.getPlayer().getUniqueId());
   }
 }

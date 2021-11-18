@@ -39,13 +39,15 @@ public abstract class PostLoginHandler {
    * @param uuid UUID of the online player.
    * @param address Address of the online player.
    */
-  public void handle(@NotNull UUID uuid, @NotNull String address) {
+  public void onPostLogin(@NotNull UUID uuid, @NotNull String address) {
     // Schedule a delayed task to whitelist the player.
     if (this.epicGuard.config().autoWhitelist().enabled()) {
       this.epicGuard.platform().runTaskLater(() -> {
-        OnlineUser user = this.epicGuard.userManager().get(uuid);
-        if (user != null) { // check if player has logged out
-          AddressMeta meta = this.epicGuard.storageManager().addressMeta(address);
+        var user = this.epicGuard.userManager().get(uuid);
+
+        // check if player has logged out
+        if (user != null) {
+          var meta = this.epicGuard.storageManager().addressMeta(address);
           meta.whitelisted(true);
         }
       }, this.epicGuard.config().autoWhitelist().timeOnline());
@@ -54,7 +56,7 @@ public abstract class PostLoginHandler {
     // Schedule a delayed task to check if the player has sent the Settings packet.
     if (this.epicGuard.config().settingsCheck().enabled()) {
       this.epicGuard.platform().runTaskLater(() -> {
-        OnlineUser user = this.epicGuard.userManager().get(uuid);
+        var user = this.epicGuard.userManager().get(uuid);
         if (user != null && !user.settingsChanged()) {
           this.epicGuard.platform().disconnectUser(uuid, TextUtils.multilineComponent(this.epicGuard.messages().disconnect().settingsPacket()));
         }

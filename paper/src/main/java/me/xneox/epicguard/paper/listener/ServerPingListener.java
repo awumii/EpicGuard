@@ -29,6 +29,6 @@ public class ServerPingListener extends PingHandler implements Listener {
 
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPing(ServerListPingEvent event) {
-    this.handle(event.getAddress().getHostAddress());
+    this.onPing(event.getAddress().getHostAddress());
   }
 }

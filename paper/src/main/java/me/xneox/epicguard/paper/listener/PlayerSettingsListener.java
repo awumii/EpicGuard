@@ -28,6 +28,6 @@ public class PlayerSettingsListener extends SettingsHandler implements Listener 
 
   @EventHandler
   public void onSettingsChanged(PlayerLocaleChangeEvent event) {
-    this.handle(event.getPlayer().getUniqueId());
+    this.onSettingsChanged(event.getPlayer().getUniqueId());
   }
 }

@@ -27,7 +27,7 @@ public class SaveCommand implements SubCommand {
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     try {
-      epicGuard.storageManager().database().saveData();
+      epicGuard.storageManager().database().save();
       audience.sendMessage(TextUtils.component(epicGuard.messages().command().prefix() + "&aData has been saved succesfully."));
     } catch (SQLException ex) {
       audience.sendMessage(TextUtils.component(epicGuard.messages().command().prefix() +

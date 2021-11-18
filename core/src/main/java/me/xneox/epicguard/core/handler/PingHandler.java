@@ -34,7 +34,7 @@ public abstract class PingHandler {
    *
    * @param address Address of the pinger.
    */
-  public void handle(@NotNull String address) {
+  public void onPing(@NotNull String address) {
     this.epicGuard.storageManager().pingCache().add(address);
   }
 }

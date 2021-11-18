@@ -28,6 +28,6 @@ public class PlayerQuitListener extends DisconnectHandler implements Listener {
 
   @EventHandler
   public void onQuit(PlayerQuitEvent event) {
-    this.handle(event.getPlayer().getUniqueId());
+    this.onDisconnect(event.getPlayer().getUniqueId());
   }
 }

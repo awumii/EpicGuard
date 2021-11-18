@@ -11,7 +11,6 @@ dependencies {
     implementation("org.spongepowered:configurate-hocon:4.1.2")
     implementation("org.jetbrains:annotations:22.0.0")
     implementation("com.zaxxer:HikariCP:5.0.0")
-    implementation("co.aikar:idb-core:1.0.0-SNAPSHOT")
 
     compileOnly("net.kyori:adventure-api:4.9.3")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.9.3")

@@ -22,14 +22,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.FileUtils;
+import me.xneox.epicguard.core.util.LogUtils;
 import me.xneox.epicguard.core.util.TextUtils;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.jetbrains.annotations.NotNull;
@@ -48,14 +46,15 @@ public class GeoManager {
     this.epicGuard = epicGuard;
     epicGuard.logger().info("This product includes GeoLite2 data created by MaxMind, available from https://www.maxmind.com");
 
-    File parent = new File(FileUtils.EPICGUARD_DIR, "/data");
+    var parent = new File(FileUtils.EPICGUARD_DIR, "/data");
     //noinspection ResultOfMethodCallIgnored
     parent.mkdirs();
 
-    File countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
-    File cityDatabase = new File(parent, "GeoLite2-City.mmdb");
-    File countryArchive = new File(parent, "GeoLite2-Country.tar.gz");
-    File cityArchive = new File(parent, "GeoLite2-City.tar.gz");
+    var countryDatabase = new File(parent, "GeoLite2-Country.mmdb");
+    var cityDatabase = new File(parent, "GeoLite2-City.mmdb");
+
+    var countryArchive = new File(parent, "GeoLite2-Country.tar.gz");
+    var cityArchive = new File(parent, "GeoLite2-City.tar.gz");
 
     try {
       this.downloadDatabase(
@@ -82,13 +81,15 @@ public class GeoManager {
       FileUtils.downloadFile(url, archive);
 
       this.epicGuard.logger().info("Extracting the database from the tar archive...");
-      TarArchiveInputStream tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
-      TarArchiveEntry entry = tarInput.getNextTarEntry();
+      var tarInput = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(archive)));
+
+      var entry = tarInput.getNextTarEntry();
       while (entry != null) {
         // Extracting the database (.mmdb) database we are looking for.
         if (entry.getName().endsWith(database.getName())) {
           IOUtils.copy(tarInput, new FileOutputStream(database));
         }
+
         entry = tarInput.getNextTarEntry();
       }
 
@@ -101,7 +102,7 @@ public class GeoManager {
 
   @NotNull
   public String countryCode(@NotNull String address) {
-    InetAddress inetAddress = TextUtils.parseAddress(address);
+    var inetAddress = TextUtils.parseAddress(address);
     if (inetAddress != null && this.countryReader != null) {
       try {
         return this.countryReader.country(inetAddress).getCountry().getIsoCode();
@@ -114,7 +115,7 @@ public class GeoManager {
 
   @NotNull
   public String city(@NotNull String address) {
-    InetAddress inetAddress = TextUtils.parseAddress(address);
+    var inetAddress = TextUtils.parseAddress(address);
     if (inetAddress != null && this.cityReader != null) {
       try {
         return this.cityReader.city(inetAddress).getCity().getName();

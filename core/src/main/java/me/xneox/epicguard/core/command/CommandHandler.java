@@ -55,19 +55,20 @@ public class CommandHandler {
   public void handleCommand(@NotNull String[] args, @NotNull Audience audience) {
     // No arguments provided - send the version message.
     if (args.length < 1) {
-      audience.sendMessage(TextUtils.component("&#99ff00 You are running EpicGuard v" + VersionUtils.VERSION +
+      audience.sendMessage(TextUtils.component("&#99ff00 You are running EpicGuard v" + VersionUtils.CURRENT_VERSION
+          +
           " on " + this.epicGuard.platform().platformVersion()));
       audience.sendMessage(TextUtils.component("&#99ff00 Run &l/guard help &#99ff00to see available commands and statistics"));
       return;
     }
 
-    SubCommand command = this.commandMap.get(args[0]);
-    if (command == null) {
+    var subCommand = this.commandMap.get(args[0]);
+    if (subCommand == null) {
       audience.sendMessage(TextUtils.component(this.epicGuard.messages().command().prefix() + this.epicGuard.messages().command().unknownCommand()));
       return;
     }
 
-    command.execute(audience, args, this.epicGuard);
+    subCommand.execute(audience, args, this.epicGuard);
   }
 
   @NotNull
@@ -77,9 +78,9 @@ public class CommandHandler {
       return this.commandMap.keySet();
     }
 
-    SubCommand command = this.commandMap.get(args[0]);
-    if (command != null) {
-      return command.suggest(args, this.epicGuard);
+    var subCommand = this.commandMap.get(args[0]);
+    if (subCommand != null) {
+      return subCommand.suggest(args, this.epicGuard);
     }
     return new ArrayList<>();
   }

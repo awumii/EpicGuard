@@ -33,6 +33,6 @@ public class PreLoginListener extends PreLoginHandler {
     String nickname = event.getUsername();
 
     return EventTask.async(() ->
-        this.handle(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result))));
+        this.onPreLogin(address, nickname).ifPresent(result -> event.setResult(PreLoginEvent.PreLoginComponentResult.denied(result))));
   }
 }

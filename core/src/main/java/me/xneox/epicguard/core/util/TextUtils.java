@@ -51,7 +51,7 @@ public final class TextUtils {
   public static TextComponent multilineComponent(@NotNull List<String> list) {
     Validate.notNull(list, "Kick message cannot be null!");
 
-    StringBuilder builder = new StringBuilder();
+    var builder = new StringBuilder();
     for (String line : list) {
       builder.append(line).append("\n");
     }

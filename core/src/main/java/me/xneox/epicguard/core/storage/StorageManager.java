@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import me.xneox.epicguard.core.EpicGuard;
+import me.xneox.epicguard.core.storage.impl.MySQLProvider;
+import me.xneox.epicguard.core.storage.impl.SQLiteProvider;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import me.xneox.epicguard.core.util.LogUtils;
 import org.jetbrains.annotations.NotNull;
@@ -35,16 +37,20 @@ import org.jetbrains.annotations.Nullable;
  */
 public class StorageManager {
   private final BiMap<String, AddressMeta> addresses = HashBiMap.create(); //TODO: HashBiMap is not thread safe, this may cause issues.
-  private final SQLDatabase database;
+  private final StorageProvider provider;
 
   private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
 
   public StorageManager(EpicGuard epicGuard) {
-    this.database = new SQLDatabase(this, epicGuard.config().storage());
-    this.database.connect();
+    if (epicGuard.config().storage().useMySQL()) {
+      this.provider = new MySQLProvider(this);
+    } else {
+      this.provider = new SQLiteProvider(this);
+    }
 
     try {
-      this.database.loadData();
+      this.provider.connect(epicGuard.config().storage());
+      this.provider.load();
     } catch (Exception exception) {
       LogUtils.catchException("Could not load data from SQL database", exception);
     }
@@ -113,14 +119,17 @@ public class StorageManager {
         .toList();
   }
 
+  @NotNull
   public BiMap<String, AddressMeta> addresses() {
     return this.addresses;
   }
 
-  public SQLDatabase database() {
-    return this.database;
+  @NotNull
+  public StorageProvider database() {
+    return this.provider;
   }
 
+  @NotNull
   public Collection<String> pingCache() {
     return this.pingCache;
   }

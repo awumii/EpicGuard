@@ -33,7 +33,7 @@ public class PreLoginListener extends PreLoginHandler implements Listener {
     String address = event.getConnection().getAddress().getAddress().getHostAddress();
     String nickname = event.getConnection().getName();
 
-    this.handle(address, nickname).ifPresent(result -> {
+    this.onPreLogin(address, nickname).ifPresent(result -> {
       event.setCancelled(true);
       event.setCancelReason(BungeeUtils.toLegacyComponent(result));
     });

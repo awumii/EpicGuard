@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public class WhitelistCommand implements SubCommand {
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
-    MessagesConfiguration.Command config = epicGuard.messages().command();
+    var config = epicGuard.messages().command();
 
     if (args.length != 3) {
       audience.sendMessage(TextUtils.component(config.prefix() + config.usage()
@@ -37,7 +37,7 @@ public class WhitelistCommand implements SubCommand {
       return;
     }
 
-    AddressMeta meta = epicGuard.storageManager().resolveAddressMeta(args[2]);
+    var meta = epicGuard.storageManager().resolveAddressMeta(args[2]);
     if (meta == null) {
       audience.sendMessage(TextUtils.component(config.prefix() + config.invalidArgument()));
       return;
@@ -45,24 +45,20 @@ public class WhitelistCommand implements SubCommand {
 
     if (args[1].equalsIgnoreCase("add")) {
       if (meta.whitelisted()) {
-        audience.sendMessage(
-            TextUtils.component(config.prefix() + config.alreadyWhitelisted().replace("{USER}", args[2])));
+        audience.sendMessage(TextUtils.component(config.prefix() + config.alreadyWhitelisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.whitelisted(true);
-      audience.sendMessage(
-          TextUtils.component(config.prefix() + config.whitelistAdd().replace("{USER}", args[2])));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.whitelistAdd().replace("{USER}", args[2])));
     } else if (args[1].equalsIgnoreCase("remove")) {
       if (!meta.whitelisted()) {
-        audience.sendMessage(
-            TextUtils.component(config.prefix() + config.notWhitelisted().replace("{USER}", args[2])));
+        audience.sendMessage(TextUtils.component(config.prefix() + config.notWhitelisted().replace("{USER}", args[2])));
         return;
       }
 
       meta.whitelisted(false);
-      audience.sendMessage(
-          TextUtils.component(config.prefix() + config.whitelistRemove().replace("{USER}", args[2])));
+      audience.sendMessage(TextUtils.component(config.prefix() + config.whitelistRemove().replace("{USER}", args[2])));
     }
   }
 

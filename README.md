@@ -2,10 +2,10 @@
 A simple AntiBot plugin for newest Minecraft versions.
 
 ## ✅ Supported platforms
-* [Paper 1.16.5+](https://papermc.io/) *(all paper forks are supported)*
-* [Velocity 3.0.0+](https://velocitypowered.com/)
-* BungeeCord *([Waterfall](https://papermc.io/downloads#Waterfall) required)*
-* Java **16**+ is required.
+* [Paper 1.16+](https://papermc.io/) *(all paper forks are supported)*
+* [Velocity 3.0+](https://velocitypowered.com/)
+* BungeeCord *([Waterfall](https://papermc.io/downloads#Waterfall) required fork)*
+* Java **16**
 
 ## ✨ Features
 * A total of **8** configurable antibot checks:
@@ -89,6 +89,7 @@ dependencies {
        <groupId>com.github.xxneox</groupId>
        <artifactId>EpicGuard</artifactId>
        <version>[VERSION OR COMMIT ID HERE]</version>
+       <scope>provided</scope>
    </dependency>
 </dependencies>
 ```

@@ -15,9 +15,7 @@
 
 package me.xneox.epicguard.core.check;
 
-import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,8 +29,7 @@ public class AccountLimitCheck extends AbstractCheck {
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    List<String> accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
-
+    var accounts = this.epicGuard.storageManager().addressMeta(user.address()).nicknames();
     return this.evaluate(this.epicGuard.config().accountLimitCheck().checkMode(),
         !accounts.contains(user.nickname()) && accounts.size() >= this.epicGuard.config().accountLimitCheck().accountLimit());
   }

@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.UUID;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
-import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.user.OnlineUser;
 import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
@@ -31,10 +30,9 @@ import org.jetbrains.annotations.NotNull;
 public class StatusCommand implements SubCommand {
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
-    MessagesConfiguration.Command config = epicGuard.messages().command();
+    var config = epicGuard.messages().command();
 
-    //TODO: Paper implemented Pointers in build #277 and this code works fine on that build, but
-    // even though Pointers are also implemented on Velocity, the don't work there...
+    // for some reason not working in Velocity
     if (!audience.pointers().supports(Identity.UUID)) {
       audience.sendMessage(Component
           .text("This command is unavailable in the current environment.")

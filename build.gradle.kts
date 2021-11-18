@@ -28,7 +28,6 @@ subprojects {
         relocate("com.google.common", "me.xneox.epicguard.libs.googlecommons")
         relocate("com.typesafe.config", "me.xneox.epicguard.libs.config")
         relocate("com.zaxxer.hikari", "me.xneox.epicguard.libs.hikari")
-        relocate("co.aikar.idb", "me.xneox.epicguard.libs.idb")
         relocate("io.leangen.geantyref", "me.xneox.epicguard.libs.geantyref")
 
         // Minimize, but exclude drivers shaded in the velocity platform.

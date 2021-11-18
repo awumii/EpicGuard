@@ -16,19 +16,18 @@
 package me.xneox.epicguard.core.util;
 
 import java.util.function.Consumer;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * This util holds current EpicGuard version and checks for the latest available version.
- * TODO: Rewrite to automatically get latest release from github (and proper semver parsing)
  */
 public final class VersionUtils {
-  public static final String VERSION = "{version}"; // replaced by the blossom task.
+  public static final String CURRENT_VERSION = "{version}"; // replaced by the blossom task.
   private static final String CHECK_URL = "https://raw.githubusercontent.com/xxneox/EpicGuard/master/VERSION.txt";
 
   /**
    * Checks the latest version to see if there's any update available.
-   *
    * @param action Action to run when there's an update available.
    */
   public static void checkForUpdates(@NotNull Consumer<String> action) {
@@ -37,19 +36,41 @@ public final class VersionUtils {
       return; // a warning will be thrown by the URLUtils anyway.
     }
 
-    if (parse(latest) > parse(VERSION)) {
+    var latestVersion = new Version(latest);
+    var currentVersion = new Version(CURRENT_VERSION);
+
+    // 1 means outdated, 0 means up-to-date, -1 means newer than released.
+    if (latestVersion.compareTo(currentVersion) > 0) {
       action.accept(latest);
     }
   }
 
   /**
-   * A primitive version parsing. Replaces all dots in the version string
-   * and returns the result as an integer. (todo: proper parsing)
-   *
-   * @param version Version string, eg. "5.1.0"
-   * @return an int version value, eg. "510"
+   * @author brianguertin (https://gist.github.com/brianguertin/ada4b65c6d1c4f6d3eee3c12b6ce021b)
+   * Slightly modified.
    */
-  private static int parse(@NotNull String version) {
-    return Integer.parseInt(version.replace(".", ""));
+  public static class Version implements Comparable<Version> {
+    public final int[] numbers;
+
+    public Version(@NonNull String version) {
+      var split = version.split("-")[0].split("\\.");
+      numbers = new int[split.length];
+      for (int i = 0; i < split.length; i++) {
+        numbers[i] = Integer.parseInt(split[i]);
+      }
+    }
+
+    @Override
+    public int compareTo(@NonNull Version another) {
+      int maxLength = Math.max(numbers.length, another.numbers.length);
+      for (int i = 0; i < maxLength; i++) {
+        int left = i < numbers.length ? numbers[i] : 0;
+        int right = i < another.numbers.length ? another.numbers[i] : 0;
+        if (left != right) {
+          return left < right ? -1 : 1;
+        }
+      }
+      return 0;
+    }
   }
 }

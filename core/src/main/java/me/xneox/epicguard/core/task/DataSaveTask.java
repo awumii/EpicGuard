@@ -27,7 +27,7 @@ public record DataSaveTask(EpicGuard epicGuard) implements Runnable {
   @Override
   public void run() {
     try {
-      this.epicGuard.storageManager().database().saveData();
+      this.epicGuard.storageManager().database().save();
     } catch (SQLException exception) {
       LogUtils.catchException("Could not save data to the SQL database (save-task)", exception);
     }

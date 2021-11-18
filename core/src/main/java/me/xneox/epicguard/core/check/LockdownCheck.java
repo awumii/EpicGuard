@@ -16,7 +16,6 @@
 package me.xneox.epicguard.core.check;
 
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +29,6 @@ public class LockdownCheck extends AbstractCheck {
 
   @Override
   public boolean isDetected(@NotNull ConnectingUser user) {
-    return this.epicGuard.attackManager().isUnderAttack()
-        && this.epicGuard.config().misc().lockdownOnAttack();
+    return this.epicGuard.attackManager().isUnderAttack() && this.epicGuard.config().misc().lockdownOnAttack();
   }
 }

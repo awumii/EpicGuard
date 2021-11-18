@@ -29,6 +29,6 @@ public class ServerPingListener extends PingHandler implements Listener {
   @EventHandler(priority = Byte.MIN_VALUE)
   public void onPing(ProxyPingEvent event) {
     //noinspection deprecation
-    this.handle(event.getConnection().getAddress().getAddress().getHostAddress());
+    this.onPing(event.getConnection().getAddress().getAddress().getHostAddress());
   }
 }
