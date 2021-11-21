@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import me.xneox.epicguard.core.EpicGuardAPI;
+import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -43,5 +44,26 @@ public final class FileUtils {
 
       outputStream.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
     }
+  }
+
+  /**
+   * Creates new file, catches eventual exception and logs to debug.
+   *
+   * @param file The file to be created.
+   * @return The created file.
+   */
+  @NotNull
+  public static File create(@NotNull File file) {
+    Validate.notNull(file, "Can't create null file!");
+
+    try {
+      if (file.createNewFile()) {
+        LogUtils.debug("Created new file: " + file.getPath());
+      }
+    } catch (IOException e) {
+      LogUtils.catchException("Can't create database file", e);
+    }
+
+    return file;
   }
 }

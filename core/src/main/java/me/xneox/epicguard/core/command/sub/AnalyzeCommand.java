@@ -26,6 +26,8 @@ import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
 
 public class AnalyzeCommand implements SubCommand {
+
+  @SuppressWarnings("UnstableApiUsage")
   @Override
   public void execute(@NotNull Audience audience, @NotNull String[] args, @NotNull EpicGuard epicGuard) {
     var config = epicGuard.messages().command();
@@ -42,8 +44,18 @@ public class AnalyzeCommand implements SubCommand {
       return;
     }
 
-    //noinspection UnstableApiUsage
-    String address = InetAddresses.isInetAddress(args[1]) ? args[1] : epicGuard.storageManager().addresses().inverse().get(meta);
+    // Assume that executor provided an address as the argument.
+    String address = args[1];
+
+    // If executor provided nickname as the argument instead, we have to find their IP address.
+    if (!InetAddresses.isInetAddress(args[1])) {
+      for (var entry : epicGuard.storageManager().addresses().entrySet()) {
+        if (entry.getValue().equals(meta)) {
+          address = entry.getKey();
+          break;
+        }
+      }
+    }
 
     for (String line : config.analyzeCommand()) {
       audience.sendMessage(TextUtils.component(line

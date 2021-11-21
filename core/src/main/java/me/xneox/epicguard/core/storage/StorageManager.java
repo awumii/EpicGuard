@@ -15,18 +15,15 @@
 
 package me.xneox.epicguard.core.storage;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.net.InetAddresses;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.storage.impl.MySQLProvider;
-import me.xneox.epicguard.core.storage.impl.SQLiteProvider;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import me.xneox.epicguard.core.util.LogUtils;
 import org.jetbrains.annotations.NotNull;
@@ -36,21 +33,15 @@ import org.jetbrains.annotations.Nullable;
  * This class caches all known {@link AddressMeta}'s and performs various operations on them.
  */
 public class StorageManager {
-  private final BiMap<String, AddressMeta> addresses = HashBiMap.create(); //TODO: HashBiMap is not thread safe, this may cause issues.
-  private final StorageProvider provider;
-
-  private final Collection<String> pingCache = new HashSet<>(); // Stores addresses of users who pinged the server. //TODO: Move this
+  private final Map<String, AddressMeta> addresses = new ConcurrentHashMap<>();
+  private final Collection<String> pingCache = new HashSet<>();
+  private final Database database;
 
   public StorageManager(EpicGuard epicGuard) {
-    if (epicGuard.config().storage().useMySQL()) {
-      this.provider = new MySQLProvider(this);
-    } else {
-      this.provider = new SQLiteProvider(this);
-    }
+    this.database = new Database(epicGuard);
 
     try {
-      this.provider.connect(epicGuard.config().storage());
-      this.provider.load();
+      this.database.connect();
     } catch (Exception exception) {
       LogUtils.catchException("Could not load data from SQL database", exception);
     }
@@ -99,7 +90,7 @@ public class StorageManager {
    * If absent, it is added.
    */
   public void updateAccounts(@NotNull ConnectingUser user) {
-    List<String> accounts = addressMeta(user.address()).nicknames();
+    var accounts = this.addressMeta(user.address()).nicknames();
     if (!accounts.contains(user.nickname())) {
       accounts.add(user.nickname());
     }
@@ -120,13 +111,13 @@ public class StorageManager {
   }
 
   @NotNull
-  public BiMap<String, AddressMeta> addresses() {
+  public Map<String, AddressMeta> addresses() {
     return this.addresses;
   }
 
   @NotNull
-  public StorageProvider database() {
-    return this.provider;
+  public Database database() {
+    return this.database;
   }
 
   @NotNull

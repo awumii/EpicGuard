@@ -109,6 +109,7 @@ public class EpicGuard {
   public void shutdown() {
     try {
       this.storageManager.database().save();
+      this.storageManager.database().shutdown();
     } catch (SQLException exception) {
       LogUtils.catchException("Could not save data to the SQL database (during shutdown)", exception);
     }

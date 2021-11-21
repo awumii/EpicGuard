@@ -15,16 +15,16 @@
 
 package me.xneox.epicguard.core.command.sub;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.SubCommand;
-import me.xneox.epicguard.core.config.MessagesConfiguration;
 import me.xneox.epicguard.core.storage.AddressMeta;
 import me.xneox.epicguard.core.util.TextUtils;
 import net.kyori.adventure.audience.Audience;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class BlacklistCommand implements SubCommand {
   @Override

@@ -16,12 +16,12 @@
 package me.xneox.epicguard.core.check;
 
 import com.google.common.collect.EvictingQueue;
-import java.util.Queue;
 import me.xneox.epicguard.core.EpicGuard;
-import me.xneox.epicguard.core.check.AbstractCheck;
 import me.xneox.epicguard.core.user.ConnectingUser;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Queue;
 
 /**
  * This check caches nicknames of the recently connecting users,

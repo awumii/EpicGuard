@@ -16,6 +16,7 @@
 package me.xneox.epicguard.core.storage;
 
 import java.util.List;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -52,5 +53,23 @@ public class AddressMeta {
   @NotNull
   public List<String> nicknames() {
     return this.nicknames;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AddressMeta that = (AddressMeta) o;
+    return blacklisted == that.blacklisted && whitelisted == that.whitelisted
+        && Objects.equals(nicknames, that.nicknames);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(nicknames, blacklisted, whitelisted);
   }
 }
