@@ -55,8 +55,7 @@ public class CommandHandler {
   public void handleCommand(@NotNull String[] args, @NotNull Audience audience) {
     // No arguments provided - send the version message.
     if (args.length < 1) {
-      audience.sendMessage(TextUtils.component("&#99ff00 You are running EpicGuard v" + VersionUtils.CURRENT_VERSION
-          +
+      audience.sendMessage(TextUtils.component("&#99ff00 You are running EpicGuard v" + VersionUtils.CURRENT_VERSION +
           " on " + this.epicGuard.platform().platformVersion()));
       audience.sendMessage(TextUtils.component("&#99ff00 Run &l/guard help &#99ff00to see available commands and statistics"));
       return;

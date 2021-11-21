@@ -1,11 +1,11 @@
 # 🛡 EpicGuard [![GitHub stars](https://img.shields.io/github/stars/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/stargazers) [![GitHub forks](https://img.shields.io/github/forks/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/network) [![GitHub issues](https://img.shields.io/github/issues/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/issues) [![GitHub license](https://img.shields.io/github/license/xxneox/EpicGuard)](https://github.com/xxneox/EpicGuard/blob/master/LICENSE) [![Java CI](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml/badge.svg)](https://github.com/xxneox/EpicGuard/actions/workflows/gradle.yml)
 A simple AntiBot plugin for newest Minecraft versions.
 
-## ✅ Supported platforms
-* [Paper 1.16+](https://papermc.io/) *(all paper forks are supported)*
+## ✅ Supported platforms / Latest release requirements
+* [Paper 1.17+](https://papermc.io/) *(all paper forks are supported)*
 * [Velocity 3.0+](https://velocitypowered.com/)
 * BungeeCord *([Waterfall](https://papermc.io/downloads#Waterfall) required fork)*
-* Java **16**
+* Java **17**
 
 ## ✨ Features
 * A total of **8** configurable antibot checks:
