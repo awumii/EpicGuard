@@ -32,10 +32,14 @@ public final class LogUtils {
    * @param throwable the caught exception
    */
   public static void catchException(@NotNull String details, @NotNull Throwable throwable) {
-    LOGGER.error("An error occurred in EpicGuard!");
-    LOGGER.error("  > Details: " + details);
-    LOGGER.error("  > Platform: " + EpicGuardAPI.INSTANCE.platformVersion());
-    LOGGER.error("  > Stacktrace: ");
+    LOGGER.error("An error occurred in EpicGuard v" + VersionUtils.CURRENT_VERSION);
+    if (VersionUtils.isUpdateAvailable()) {
+      LOGGER.error("  (!) Your version is outdated. Update before sending bug report!");
+    }
+
+    LOGGER.error(" > Details: " + details);
+    LOGGER.error(" > Platform: " + EpicGuardAPI.INSTANCE.platformVersion());
+    LOGGER.error(" > Stacktrace: ");
     LOGGER.error("", throwable);
   }
 

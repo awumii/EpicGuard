@@ -26,6 +26,8 @@ public final class VersionUtils {
   public static final String CURRENT_VERSION = "{version}"; // replaced by the blossom task.
   private static final String CHECK_URL = "https://raw.githubusercontent.com/xxneox/EpicGuard/master/VERSION.txt";
 
+  private static boolean updateAvailable;
+
   /**
    * Checks the latest version to see if there's any update available.
    * @param action Action to run when there's an update available.
@@ -41,13 +43,17 @@ public final class VersionUtils {
 
     // 1 means outdated, 0 means up-to-date, -1 means newer than released.
     if (latestVersion.compareTo(currentVersion) > 0) {
+      updateAvailable = true;
       action.accept(latest);
     }
   }
 
-  /**
-   * @author brianguertin (https://gist.github.com/brianguertin/ada4b65c6d1c4f6d3eee3c12b6ce021b)
-   * Slightly modified.
+  public static boolean isUpdateAvailable() {
+    return updateAvailable;
+  }
+
+  /*
+    @author brianguertin (https://gist.github.com/brianguertin/ada4b65c6d1c4f6d3eee3c12b6ce021b)
    */
   public static class Version implements Comparable<Version> {
     public final int[] numbers;

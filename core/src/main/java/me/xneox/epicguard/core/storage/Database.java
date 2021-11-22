@@ -38,7 +38,6 @@ public class Database {
     }
 
     this.source = new HikariDataSource(hikariConfig);
-    this.load();
   }
 
   // Creating default table and reading addresses from the database.

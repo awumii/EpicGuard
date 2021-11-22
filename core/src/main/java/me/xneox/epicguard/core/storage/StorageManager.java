@@ -39,11 +39,14 @@ public class StorageManager {
 
   public StorageManager(EpicGuard epicGuard) {
     this.database = new Database(epicGuard);
+  }
 
+  public void setupDatabase() {
     try {
       this.database.connect();
+      this.database.load();
     } catch (Exception exception) {
-      LogUtils.catchException("Could not load data from SQL database", exception);
+      LogUtils.catchException("Could not connect to the database. Check if your connection is configured correctly.", exception);
     }
   }
 

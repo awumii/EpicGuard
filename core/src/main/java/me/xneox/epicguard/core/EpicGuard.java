@@ -71,10 +71,12 @@ public class EpicGuard {
 
     logger().info("Initializing managers...");
     this.geoManager = new GeoManager(this);
-    this.storageManager = new StorageManager(this);
     this.proxyManager = new ProxyManager(this);
     this.attackManager = new AttackManager();
     this.userManager = new UserManager();
+
+    this.storageManager = new StorageManager(this);
+    this.storageManager.setupDatabase();
 
     logger().info("Initializing LogFilter...");
     new LogFilter(this).register();
