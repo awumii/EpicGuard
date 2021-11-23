@@ -32,9 +32,15 @@ public class Database {
       hikariConfig.addDataSourceProperty("cachePrepStmts", true);
       hikariConfig.addDataSourceProperty("prepStmtCacheSize", 250);
       hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
+      hikariConfig.addDataSourceProperty("useServerPrepStmts", true);
     } else {
       var file = FileUtils.create(new File(FileUtils.EPICGUARD_DIR, "database.db"));
       hikariConfig.setJdbcUrl("jdbc:sqlite:" + file.getPath());
+    }
+
+    // Enable leak detection when debug is enabled.
+    if (this.core.config().misc().debug()) {
+      hikariConfig.setLeakDetectionThreshold(30000);
     }
 
     this.source = new HikariDataSource(hikariConfig);
@@ -42,7 +48,7 @@ public class Database {
 
   // Creating default table and reading addresses from the database.
   public void load() throws SQLException {
-    try (var statement = this.source.getConnection().prepareStatement(
+    try (var connection = this.source.getConnection(); var statement = connection.prepareStatement(
         "CREATE TABLE IF NOT EXISTS epicguard_addresses("
         + "`address` VARCHAR(255) NOT NULL PRIMARY KEY, "
         + "`blacklisted` BOOLEAN NOT NULL, "
@@ -52,7 +58,7 @@ public class Database {
       statement.executeUpdate();
     }
 
-    try (var statement = this.source.getConnection().prepareStatement("SELECT * FROM epicguard_addresses");
+    try (var connection = this.source.getConnection(); var statement = connection.prepareStatement("SELECT * FROM epicguard_addresses");
         var rs = statement.executeQuery()) {
 
       while (rs.next()) {
@@ -71,7 +77,7 @@ public class Database {
     for (Map.Entry<String, AddressMeta> entry : this.core.storageManager().addresses().entrySet()) {
       var meta = entry.getValue();
 
-      try (var statement = this.source.getConnection().prepareStatement(
+      try (var connection = this.source.getConnection(); var statement = connection.prepareStatement(
           "REPLACE INTO"
           + " epicguard_addresses(address, blacklisted, whitelisted, nicknames)"
           + " VALUES(?, ?, ?, ?)")) {
@@ -90,14 +96,4 @@ public class Database {
   public void shutdown() {
     this.source.close();
   }
-
-  // i hate this
-  /*
-  private boolean getBoolean(@NotNull ResultSet resultSet, @NotNull String column) {
-    if (this.core.config().storage().useMySQL()) {
-      return resultSet.getBoolean(column);
-    }
-    return resultSet.getInt(column) == 1;
-  }
-   */
 }
