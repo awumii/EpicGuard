@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 dependencies {
     implementation(project(":core"))
 
-    implementation("net.kyori:adventure-platform-bungeecord:4.0.0")
+    implementation("net.kyori:adventure-platform-bungeecord:4.0.1")
     compileOnly("io.github.waterfallmc:waterfall-api:1.17-R0.1-SNAPSHOT")
 }
 

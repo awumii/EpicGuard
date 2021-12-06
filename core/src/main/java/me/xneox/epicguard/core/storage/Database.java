@@ -20,11 +20,13 @@ public class Database {
   }
 
   // Initial connection to the database, obtaining HikariDataSource.
-  public void connect() throws SQLException {
+  public void connect() throws SQLException, ClassNotFoundException {
     var config = this.core.config().storage();
     var hikariConfig = new HikariConfig();
 
     if (config.useMySQL()) {
+      Class.forName("com.mysql.cj.jdbc.Driver"); // Driver is not loaded on Velocity
+
       hikariConfig.setJdbcUrl("jdbc:mysql://" + config.host() + ":" + config.port() + "/" + config.database());
       hikariConfig.setUsername(config.user());
       hikariConfig.setPassword(config.password());
@@ -35,6 +37,8 @@ public class Database {
       hikariConfig.addDataSourceProperty("useServerPrepStmts", true);
     } else {
       var file = FileUtils.create(new File(FileUtils.EPICGUARD_DIR, "database.db"));
+
+      Class.forName("org.sqlite.JDBC"); // Driver is not loaded on Waterfall/Velocity
       hikariConfig.setJdbcUrl("jdbc:sqlite:" + file.getPath());
     }
 
