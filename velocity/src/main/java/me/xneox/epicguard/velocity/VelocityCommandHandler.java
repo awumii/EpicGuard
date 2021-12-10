@@ -16,13 +16,11 @@
 package me.xneox.epicguard.velocity;
 
 import com.velocitypowered.api.command.SimpleCommand;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.CommandHandler;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 
 public class VelocityCommandHandler extends CommandHandler implements SimpleCommand {
   public VelocityCommandHandler(EpicGuard epicGuard) {
