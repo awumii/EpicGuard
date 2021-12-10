@@ -16,10 +16,13 @@
 package me.xneox.epicguard.velocity;
 
 import com.velocitypowered.api.command.SimpleCommand;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import me.xneox.epicguard.core.EpicGuard;
 import me.xneox.epicguard.core.command.CommandHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 
 public class VelocityCommandHandler extends CommandHandler implements SimpleCommand {
   public VelocityCommandHandler(EpicGuard epicGuard) {
@@ -28,12 +31,13 @@ public class VelocityCommandHandler extends CommandHandler implements SimpleComm
 
   @Override
   public void execute(Invocation invocation) {
-    this.handleCommand(invocation.arguments(), invocation.source());
+    if (!hasPermission(invocation)) invocation.source().sendMessage(Component.text("§cYou don't have permission! (epicguard.admin)"));
+    handleCommand(invocation.arguments(), invocation.source());
   }
 
   @Override
   public List<String> suggest(Invocation invocation) {
-    return new ArrayList<>(this.handleSuggestions(invocation.arguments()));
+    return new ArrayList<>(handleSuggestions(invocation.arguments()));
   }
 
   @Override
