@@ -14,7 +14,7 @@ dependencies {
 
     compileOnly("net.kyori:adventure-api:4.9.3")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.9.3")
-    compileOnly("org.apache.logging.log4j:log4j-core:2.15.0")
+    compileOnly("org.apache.logging.log4j:log4j-core:2.16.0")
     compileOnly("org.slf4j:slf4j-api:1.7.32")
 }
 
