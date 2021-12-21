@@ -37,12 +37,11 @@ On different platforms there are additional aliases available, such as **/guardv
 | /guard status                                | Toggles live attack information on actionbar.                          |
 | /guard save                                  | Forces save to the database.                                           |
 
-## 💻 Contributing
-We are open to contributions! Look for some "TODO"s in the code, there's always some work to do.  
-Because of a lack of time and motivation, no new features are being implemented in the project, aside from bug fixes and code improvements. Maybe you have an idea that's worth implementing?  
-You can join our Discord server for better communication.
+## ⚠️ Current state of the project
+I (xxneox) am basically the only maintainer of this project. I don't have time to work on it anymore, so it's only getting bugfixes and important changes. Support is only given for important issues. This repository *might* get archived at any time.
 
-## 🔧 Using EpicGuard in your project:
+## 🔧 Using EpicGuard API in your project:
+The api is not very advanced, and there is not much you can do with it for now.
 <details>
 <summary>Gradle (Groovy)</summary>
 
@@ -125,6 +124,10 @@ public class EpicGuardAPIExample {
 ```
 </details>
 
-## ❓ Support
-If you found an issue with the plugin, you can either create a new [Issue](https://github.com/xxneox/EpicGuard/issues), or join the discord support server.
-[![Discord](https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png)](https://discord.gg/VkfhFCv)
+## 🕵️ Privacy disclaimers
+* This plugin connect to various external services, to fully work as intended.
+  * [Maxind's Geolite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2) (country and city) are downloaded at the first startup and updated every week. Geolocation of your users is checked locally on your server. 
+  * *In the default configuration*, IP addresses of connecting users are sent to https://proxycheck.io/ to check if they're not using a proxy or a VPN.
+  * IPs and nicknames associated with them are stored in the local database *(as plain text(!))*.
+  * This plugin periodically checks the latest version released in this repository. *This feature can be disabled.*
+  * *There is no metrics system or any other kind of data collection.*
