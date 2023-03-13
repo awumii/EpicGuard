@@ -9,7 +9,7 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.9")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.spongepowered:configurate-hocon:4.1.2")
-    implementation("org.jetbrains:annotations:23.0.0")
+    implementation("org.jetbrains:annotations:24.0.1")
     implementation("com.zaxxer:HikariCP:5.0.0")
 
     compileOnly("net.kyori:adventure-api:4.9.3")
