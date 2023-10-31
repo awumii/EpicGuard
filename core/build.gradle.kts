@@ -10,7 +10,7 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.spongepowered:configurate-hocon:4.1.2")
     implementation("org.jetbrains:annotations:23.0.0")
-    implementation("com.zaxxer:HikariCP:5.0.0")
+    implementation("com.zaxxer:HikariCP:5.0.1")
 
     compileOnly("net.kyori:adventure-api:4.9.3")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.9.3")
